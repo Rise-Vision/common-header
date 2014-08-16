@@ -5,20 +5,28 @@ angular.module("risevision.common.header", [
   "risevision.common.cache",
   "risevision.common.company",
   "risevision.common.localstorage",
-  "risevision.common.header.templates",
-  "risevision.common.loading",
   'ui.bootstrap'
 ])
 .directive('commonHeader', ['$modal', '$rootScope', '$q', 'apiAuth', '$loading',
-  '$interval', 'oauthAPILoader', 'cacheService', '$log', "logout", "$templateCache",
-  function($modal, $rootScope, $q, apiAuth, $loading, $interval,
-    oauthAPILoader, cacheService, $log, logout, $templateCache) {
+  'shoppingCartService', '$interval', 'oauthAPILoader', 'storeAPILoader',
+  '$log',
+  function($modal, $rootScope, $q, apiAuth, $loading, shoppingCart, $interval,
+    oauthAPILoader, storeAPILoader, $log) {
     return {
       restrict: 'E',
-      template: $templateCache.get("common-header.html"),
+      templateUrl: 'view/common-header.html',
       scope: false,
       link: function(scope, iElement, iAttrs) {
         scope.navCollapsed = true;
+
+        $rootScope.$on("rvAuth.$authenticate", function(data) {
+          scope.userState = apiAuth.getUserState();
+        });
+
+        $rootScope.$on("rvAuth.$signOut", function () {
+          scope.userState = apiAuth.getUserState();
+        });
+
         // Login Modal
         scope.loginModal = function(size) {
           var modalInstance = $modal.open({
@@ -29,7 +37,7 @@ angular.module("risevision.common.header", [
         };
 
         scope.logout = function () {
-          return logout();
+          apiAuth.$signOut();
         };
 
         // Show Add Sub-Company Modal
@@ -89,14 +97,14 @@ angular.module("risevision.common.header", [
   }
 ])
 .controller('AuthModalCtrl', ['$scope', '$modalInstance', '$window',
-  'apiAuth', 'login',
-  function($scope, $modalInstance, $window, apiAuth, login) {
-    $scope.closeModal = function() {
-      $modalInstance.dismiss('cancel');
+  'apiAuth',
+  function($scope, $modalInstance, $window, apiAuth) {
+
+    $scope.authenticate = function() {
+      apiAuth.$authenticate(true);
+      $modalInstance.dismiss();
     };
-    $scope.login = function () {
-      return login();
-    };
+
   }
 ])
 .controller('SubCompanyModalCtrl', ['$scope', '$modalInstance', '$modal',

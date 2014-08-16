@@ -41,9 +41,9 @@
 		</div>
 
 		<!-- If User Authenticated -->
-		<ul class="nav navbar-nav navbar-right actions-nav" ng-show="userState.authStatus === 1">
+		<ul class="nav navbar-nav navbar-right actions-nav" ng-show="userState.authStatus == 1">
 			<!-- Notifications -->
-			<li class="dropdown" ng-if="companyLoaded">
+			<li class="dropdown" ng-if="userState.selectedCompanyId">
 				<a href="" class="dropdown-toggle">
 					<i class="glyphicons bell"></i>
 					<span class="label label-danger">{{messages.length}}</span>
@@ -57,7 +57,7 @@
 				</ul>
 			</li>
 			<!-- Shopping Cart -->
-			<li class="shopping-cart" ng-init="updateCartIcon()" ng-show="userState.companyLoaded">
+			<li class="shopping-cart" ng-init="updateCartIcon()" ng-show="userState.selectedCompanyId">
 				<a href="">
 					<i class="glyphicons shopping_cart"></i>
 					<span id="cartBadge" class="label label-primary">7</span>
@@ -121,7 +121,7 @@
 				</ul>
 			</li>
 			<!-- END Current App -->
-			<li class="dropdown" ng-show="companyLoaded">
+			<li class="dropdown" ng-show="userState.selectedCompanyId">
 				<a href="" class="dropdown-toggle" data-toggle="dropdown">
 					<i class="glyphicons cogwheel"></i>
 				</a>
@@ -134,11 +134,11 @@
 						<i ng-if="!subCompanySelected" class="glyphicons home"></i>
 						<!-- warning -->
 						<i ng-if="subCompanySelected" class="glyphicons warning_sign glyphicon-danger"></i>
-						{{userState.selectedCompany.name}}
+						{{selectedCompanyName}}
 						<div ng-if="subCompanySelected" class="danger">This is a Sub-Company of your Company.</div>
 					</li>
-					<li ng-if="userState.subCompanySelected" class="divider"></li>
-					<li ng-if="userState.subCompanySelected">
+					<li ng-if="subCompanySelected" class="divider"></li>
+					<li ng-if="subCompanySelected">
 						<a href="" ng-click="resetCompany()">
 							<i class="glyphicons home"></i>
 							<span class="item-name">Switch To My Company</span>
@@ -201,7 +201,7 @@
 					</li>
 					<li class="divider"></li>
 					<li>
-						<a href="" ng-click="logout()" class="sign-out-button">
+						<a href="" ng-click="logout()">
 							<i class="glyphicons log_out"></i>
 							<span class="item-name">Sign Out</span>
 						</a>
@@ -220,13 +220,9 @@
 				</a>
 			</li>
 		</ul>
-		<!-- Loading ... -->
-		<ul class="nav navbar-nav navbar-right" ng-show="userState.authStatus === -1">
-			<li>Loading...</li>
-		</ul>
 	</div>
 	<div ng-if="subCompanySelected" class="sub-company-alert">
-		You’re in a Sub-Company of your Company. Current Company - {{userState.selectedCompanyName}}
+		You’re in a Sub-Company of your Company. Current Company - {{selectedCompanyName}}
 	</div>
 </nav>
 <!-- END Common Header Navbar -->
@@ -241,9 +237,9 @@
 		<button type="button" ng-click="closeModal()" class="close"><span>&times;</span><span class="sr-only">Close</span></button>
 	</div>
 	<div class="modal-body authorization-modal">
-		<img ng-src="{{userState.user.profile.picture}}" class="profile-img">
+		<img src="img/avatar_2x.jpg" class="profile-img">
 		<p>Please authorize your Google Account to register with Rise Vision.</p>
-		<button type="button" class="btn btn-success btn-lg btn-block authorize-button" ng-click="login(); closeModal();">Authorize</button>
+		<button type="button" ng-click="authenticate(true)" class="btn btn-success btn-lg btn-block">Authorize</button>
 	</div>
 </script>
 

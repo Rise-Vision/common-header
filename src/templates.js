@@ -47,9 +47,9 @@ app.run(["$templateCache", function($templateCache) {
     "		</div>\n" +
     "\n" +
     "		<!-- If User Authenticated -->\n" +
-    "		<ul class=\"nav navbar-nav navbar-right actions-nav\" ng-show=\"userState.authStatus === 1\">\n" +
+    "		<ul class=\"nav navbar-nav navbar-right actions-nav\" ng-show=\"userState.authStatus == 1\">\n" +
     "			<!-- Notifications -->\n" +
-    "			<li class=\"dropdown\" ng-if=\"companyLoaded\">\n" +
+    "			<li class=\"dropdown\" ng-if=\"userState.selectedCompanyId\">\n" +
     "				<a href=\"\" class=\"dropdown-toggle\">\n" +
     "					<i class=\"glyphicons bell\"></i>\n" +
     "					<span class=\"label label-danger\">{{messages.length}}</span>\n" +
@@ -63,7 +63,7 @@ app.run(["$templateCache", function($templateCache) {
     "				</ul>\n" +
     "			</li>\n" +
     "			<!-- Shopping Cart -->\n" +
-    "			<li class=\"shopping-cart\" ng-init=\"updateCartIcon()\" ng-show=\"userState.companyLoaded\">\n" +
+    "			<li class=\"shopping-cart\" ng-init=\"updateCartIcon()\" ng-show=\"userState.selectedCompanyId\">\n" +
     "				<a href=\"\">\n" +
     "					<i class=\"glyphicons shopping_cart\"></i>\n" +
     "					<span id=\"cartBadge\" class=\"label label-primary\">7</span>\n" +
@@ -127,7 +127,7 @@ app.run(["$templateCache", function($templateCache) {
     "				</ul>\n" +
     "			</li>\n" +
     "			<!-- END Current App -->\n" +
-    "			<li class=\"dropdown\" ng-show=\"companyLoaded\">\n" +
+    "			<li class=\"dropdown\" ng-show=\"userState.selectedCompanyId\">\n" +
     "				<a href=\"\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">\n" +
     "					<i class=\"glyphicons cogwheel\"></i>\n" +
     "				</a>\n" +
@@ -140,11 +140,11 @@ app.run(["$templateCache", function($templateCache) {
     "						<i ng-if=\"!subCompanySelected\" class=\"glyphicons home\"></i>\n" +
     "						<!-- warning -->\n" +
     "						<i ng-if=\"subCompanySelected\" class=\"glyphicons warning_sign glyphicon-danger\"></i>\n" +
-    "						{{userState.selectedCompany.name}}\n" +
+    "						{{selectedCompanyName}}\n" +
     "						<div ng-if=\"subCompanySelected\" class=\"danger\">This is a Sub-Company of your Company.</div>\n" +
     "					</li>\n" +
-    "					<li ng-if=\"userState.subCompanySelected\" class=\"divider\"></li>\n" +
-    "					<li ng-if=\"userState.subCompanySelected\">\n" +
+    "					<li ng-if=\"subCompanySelected\" class=\"divider\"></li>\n" +
+    "					<li ng-if=\"subCompanySelected\">\n" +
     "						<a href=\"\" ng-click=\"resetCompany()\">\n" +
     "							<i class=\"glyphicons home\"></i>\n" +
     "							<span class=\"item-name\">Switch To My Company</span>\n" +
@@ -207,7 +207,7 @@ app.run(["$templateCache", function($templateCache) {
     "					</li>\n" +
     "					<li class=\"divider\"></li>\n" +
     "					<li>\n" +
-    "						<a href=\"\" ng-click=\"logout()\" class=\"sign-out-button\">\n" +
+    "						<a href=\"\" ng-click=\"logout()\">\n" +
     "							<i class=\"glyphicons log_out\"></i>\n" +
     "							<span class=\"item-name\">Sign Out</span>\n" +
     "						</a>\n" +
@@ -226,13 +226,9 @@ app.run(["$templateCache", function($templateCache) {
     "				</a>\n" +
     "			</li>\n" +
     "		</ul>\n" +
-    "		<!-- Loading ... -->\n" +
-    "		<ul class=\"nav navbar-nav navbar-right\" ng-show=\"userState.authStatus === -1\">\n" +
-    "			<li>Loading...</li>\n" +
-    "		</ul>\n" +
     "	</div>\n" +
     "	<div ng-if=\"subCompanySelected\" class=\"sub-company-alert\">\n" +
-    "		You’re in a Sub-Company of your Company. Current Company - {{userState.selectedCompanyName}}\n" +
+    "		You’re in a Sub-Company of your Company. Current Company - {{selectedCompanyName}}\n" +
     "	</div>\n" +
     "</nav>\n" +
     "<!-- END Common Header Navbar -->\n" +
@@ -247,9 +243,9 @@ app.run(["$templateCache", function($templateCache) {
     "		<button type=\"button\" ng-click=\"closeModal()\" class=\"close\"><span>&times;</span><span class=\"sr-only\">Close</span></button>\n" +
     "	</div>\n" +
     "	<div class=\"modal-body authorization-modal\">\n" +
-    "		<img ng-src=\"{{userState.user.profile.picture}}\" class=\"profile-img\">\n" +
+    "		<img src=\"img/avatar_2x.jpg\" class=\"profile-img\">\n" +
     "		<p>Please authorize your Google Account to register with Rise Vision.</p>\n" +
-    "		<button type=\"button\" class=\"btn btn-success btn-lg btn-block authorize-button\" ng-click=\"login(); closeModal();\">Authorize</button>\n" +
+    "		<button type=\"button\" ng-click=\"authenticate(true)\" class=\"btn btn-success btn-lg btn-block\">Authorize</button>\n" +
     "	</div>\n" +
     "</script>\n" +
     "\n" +
