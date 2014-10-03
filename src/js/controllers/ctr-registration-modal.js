@@ -44,20 +44,26 @@ angular.module("risevision.common.header")
       });
 
       $scope.save = function () {
-        //update terms and conditions date
-        $scope.registering = true;
-        $loading.start("registration-modal");
-        registerAccount(userState.getUsername(), $scope.profile).then(
-          function () {
-            $modalInstance.close("success");
-            uiStatusManager.invalidateStatus("registrationComplete");
-          },
-          function (err) {alert("Error: " + JSON.stringify(err));
-          $log.error(err);}).finally(function () {
-            $scope.registering = false;
-            $loading.stop("registration-modal");
-            userState.authenticate(false);
-          });
+        $scope.registrationForm.accepted.$pristine = false;
+        $scope.registrationForm.email.$pristine = false;
+
+        if(!$scope.registrationForm.$invalid) {
+           //update terms and conditions date
+           $scope.registering = true;
+           $loading.start("registration-modal");
+           registerAccount(userState.getUsername(), $scope.profile).then(
+             function () {
+               $modalInstance.close("success");
+               uiStatusManager.invalidateStatus("registrationComplete");
+             },
+             function (err) {alert("Error: " + JSON.stringify(err));
+             $log.error(err);}).finally(function () {
+               $scope.registering = false;
+               $loading.stop("registration-modal");
+               userState.authenticate(false);
+             });
+        }
+
       };
     }
 ]);

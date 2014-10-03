@@ -34,18 +34,9 @@
 
     it("should authorize", function() {
       assert.eventually.isTrue(element(by.css("button.sign-in")).isDisplayed(), "Sign in button should show");
-      //dialog does not show
-      assert.eventually.isFalse(element(by.css(".authorization-modal")).isPresent(), "Auth modal should not show in the beginning");
       //click on sign in button
       browser.executeScript("gapi.setPendingSignInUser('michael.sanchez@awesome.io')");
       element(by.css("button.sign-in")).click();
-      //dialog shows
-      assert.eventually.isTrue(element(by.css(".authorization-modal")).isDisplayed(), "Auth modal should show after clicking on sign in");
-      assert.eventually.isTrue(element(by.css(".authorize-button")).isDisplayed(), "Auth button should exist in auth modal");
-      //click authorize
-      element(by.css(".authorize-button")).click();
-      //auth dialog should disappear
-      assert.eventually.isFalse(element(by.css(".authorization-modal")).isPresent(), "Auth modal should close");
     });
 
     it("should retain auth status upon refresh", function () {

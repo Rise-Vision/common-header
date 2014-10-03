@@ -12,16 +12,17 @@ rv-spinner-start-active="1">
   for system notices and other critical information. We promise,
    only system notices, we won't send you anything else unless you
   sign up for the newsletter below, and we won't share your email address
-  with anyone else. Promise!</p>
+  with anyone else.</p>
 
   <form role="form" name="registrationForm">
     <div class="form-group" ng-class="{ 'has-error' : registrationForm.email.$invalid && !userForm.email.$pristine }">
       <label for="email">Email</label>
       <input type="email" class="form-control email"
       name="email"
-      id="email" placeholder="Enter email" required
+      id="email" required
       ng-model="profile.email">
-      <p ng-show="registrationForm.email.$invalid && !registrationForm.email.$pristine" class="help-block">Enter a valid email.</p>
+      <p ng-show="registrationForm.email.$invalid && !registrationForm.email.$pristine"
+        class="help-block validation-error-message-email">Enter a valid email.</p>
     </div>
     <!-- Terms of Service and Privacy -->
     <div class="checkbox form-group" ng-class="{ 'has-error' : registrationForm.accepted.$invalid && !userForm.accepted.$pristine }">
@@ -30,20 +31,21 @@ rv-spinner-start-active="1">
         ng-model="profile.accepted"
         class="accept-terms-checkbox" required />
       I accept the terms of <a href="http://www.risevision.com/terms-service-privacy/" target="_blank">Service and Privacy</a>
-      <p ng-show="registrationForm.accepted.$invalid && !registrationForm.accepted.$pristine" class="help-block">You must accept terms and condtions.</p>
+      <p ng-show="registrationForm.accepted.$invalid && !registrationForm.accepted.$pristine"
+        class="help-block validation-error-message-accepted">You must accept terms and condtions.</p>
       </label>
     </div>
     <!-- Newsletter -->
     <div class="checkbox form-group">
       <label>
-        <input type="checkbox" ng-model="profile.mailSyncEnabled"> Sign up for our Newsletter
+        <input type="checkbox" ng-model="profile.mailSyncEnabled"> Sign up for our newsletter
       </label>
     </div>
     <div class="form-group">
       <button ng-click="save()"
         type="button"
         class="btn btn-success btn-fixed-width registration-save-button"
-        ng-disabled="registrationForm.$invalid || registering">
+        ng-disabled="registering">
         Save <i class="fa fa-white fa-check icon-right"></i>
       </button>
       <button type="button" class="btn btn-primary btn-fixed-width"
