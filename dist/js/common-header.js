@@ -1072,10 +1072,10 @@ app.run(["$templateCache", function($templateCache) {
     "  <button type=\"button\" class=\"close\" ng-click=\"closeModal()\" aria-hidden=\"true\">\n" +
     "    <i class=\"fa fa-times\"></i>\n" +
     "  </button>\n" +
-    "  <h2 id=\"sub-company-label\" class=\"modal-title add-subcompany-modal\">Sign Out</h2>\n" +
+    "  <h2 id=\"sign-out-label\" class=\"modal-title\">Sign Out</h2>\n" +
     "</div>\n" +
-    "<div class=\"modal-body select-subcompany-modal\">\n" +
-    "  <form role=\"form\" name=\"forms.companyForm\">\n" +
+    "<div class=\"modal-body sign-out-modal\">\n" +
+    "  <form role=\"form\">\n" +
     "    <p>\n" +
     "      Signing out does not sign you out of your Google Account.\n" +
     "    </p>\n" +
@@ -1083,7 +1083,7 @@ app.run(["$templateCache", function($templateCache) {
     "      If you are on a shared computer you should sign out of your Google Account.\n" +
     "    </p>\n" +
     "    <p>\n" +
-    "      <button type=\"button\" class=\"btn\" ng-click=\"singOut()\" ng-disabled=\"forms.companyForm.$invalid\">Sign Out\n" +
+    "      <button type=\"button\" class=\"btn sign-out-rv-only-button\" ng-click=\"singOut()\">Sign Out\n" +
     "        <i class=\"fa fa-sign-out fa-lg icon-right\"></i>\n" +
     "      </button>\n" +
     "    </p>\n" +
@@ -1094,7 +1094,8 @@ app.run(["$templateCache", function($templateCache) {
     "    </p>\n" +
     "  </form>\n" +
     "</div>\n" +
-    "<iframe name=\"logoutFrame\" id=\"logoutFrame\" style='display:none'></iframe>");
+    "<iframe name=\"logoutFrame\" id=\"logoutFrame\" style='display:none'></iframe>\n" +
+    "");
 }]);
 })();
 
