@@ -83,10 +83,14 @@ angular.module("risevision.common.header")
     };
 
     $scope.logout = function () {
-      userState.signOut().then(function (){
-        alert("If you are using a public computer, please do not forget to log out of Google Account, or close your browser window if you are using Incognito mode. ");
-      }, function (err) {
-        $log.error("sign out failed", err);
+      $scope.confirmSignOut();
+    };
+
+    $scope.confirmSignOut = function(size) {
+      $modal.open({
+        template: $templateCache.get("signout-modal.html"),
+        controller: "SignOutModalCtrl",
+        size: size
       });
     };
 
