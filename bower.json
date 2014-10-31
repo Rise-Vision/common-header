@@ -38,12 +38,14 @@
     "ng-biscuit": "~0.2.1",
     "mustache": "~0.8.2",
     "ng-csv": "~0.2.3",
-    "angular-touch": "1.2.24"
+    "angular-touch": "1.2.24",
+    "angular-local-storage": "~0.1.4"
   },
   "devDependencies": {
     "lodash": "~2.4.1",
     "JSONedit": "~0.1.0",
-    "q": "1.0.1"
+    "q": "1.0.1",
+    "rv-gapi-mock": "https://github.com/Rise-Vision/gapi-mock.git"
   },
   "resolutions": {
     "jquery": "~1.11.1"

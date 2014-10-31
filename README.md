@@ -44,7 +44,7 @@ At this time Chrome is the only browser that this project and Rise Vision suppor
 <!--provide exact details on how to setup the local environment for at least Windows, and if doable, Linux and Mac-->
 
 ``` bash
-npm run dev-install
+npm run dev
 ```
 
 ### Run Local

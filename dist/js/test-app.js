@@ -1,3 +1,660 @@
+require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+function EventEmitter() {
+  this._events = this._events || {};
+  this._maxListeners = this._maxListeners || undefined;
+}
+module.exports = EventEmitter;
+
+// Backwards-compat with node 0.10.x
+EventEmitter.EventEmitter = EventEmitter;
+
+EventEmitter.prototype._events = undefined;
+EventEmitter.prototype._maxListeners = undefined;
+
+// By default EventEmitters will print a warning if more than 10 listeners are
+// added to it. This is a useful default which helps finding memory leaks.
+EventEmitter.defaultMaxListeners = 10;
+
+// Obviously not all Emitters should be limited to 10. This function allows
+// that to be increased. Set to zero for unlimited.
+EventEmitter.prototype.setMaxListeners = function(n) {
+  if (!isNumber(n) || n < 0 || isNaN(n))
+    throw TypeError('n must be a positive number');
+  this._maxListeners = n;
+  return this;
+};
+
+EventEmitter.prototype.emit = function(type) {
+  var er, handler, len, args, i, listeners;
+
+  if (!this._events)
+    this._events = {};
+
+  // If there is no 'error' event listener then throw.
+  if (type === 'error') {
+    if (!this._events.error ||
+        (isObject(this._events.error) && !this._events.error.length)) {
+      er = arguments[1];
+      if (er instanceof Error) {
+        throw er; // Unhandled 'error' event
+      }
+      throw TypeError('Uncaught, unspecified "error" event.');
+    }
+  }
+
+  handler = this._events[type];
+
+  if (isUndefined(handler))
+    return false;
+
+  if (isFunction(handler)) {
+    switch (arguments.length) {
+      // fast cases
+      case 1:
+        handler.call(this);
+        break;
+      case 2:
+        handler.call(this, arguments[1]);
+        break;
+      case 3:
+        handler.call(this, arguments[1], arguments[2]);
+        break;
+      // slower
+      default:
+        len = arguments.length;
+        args = new Array(len - 1);
+        for (i = 1; i < len; i++)
+          args[i - 1] = arguments[i];
+        handler.apply(this, args);
+    }
+  } else if (isObject(handler)) {
+    len = arguments.length;
+    args = new Array(len - 1);
+    for (i = 1; i < len; i++)
+      args[i - 1] = arguments[i];
+
+    listeners = handler.slice();
+    len = listeners.length;
+    for (i = 0; i < len; i++)
+      listeners[i].apply(this, args);
+  }
+
+  return true;
+};
+
+EventEmitter.prototype.addListener = function(type, listener) {
+  var m;
+
+  if (!isFunction(listener))
+    throw TypeError('listener must be a function');
+
+  if (!this._events)
+    this._events = {};
+
+  // To avoid recursion in the case that type === "newListener"! Before
+  // adding it to the listeners, first emit "newListener".
+  if (this._events.newListener)
+    this.emit('newListener', type,
+              isFunction(listener.listener) ?
+              listener.listener : listener);
+
+  if (!this._events[type])
+    // Optimize the case of one listener. Don't need the extra array object.
+    this._events[type] = listener;
+  else if (isObject(this._events[type]))
+    // If we've already got an array, just append.
+    this._events[type].push(listener);
+  else
+    // Adding the second element, need to change to array.
+    this._events[type] = [this._events[type], listener];
+
+  // Check for listener leak
+  if (isObject(this._events[type]) && !this._events[type].warned) {
+    var m;
+    if (!isUndefined(this._maxListeners)) {
+      m = this._maxListeners;
+    } else {
+      m = EventEmitter.defaultMaxListeners;
+    }
+
+    if (m && m > 0 && this._events[type].length > m) {
+      this._events[type].warned = true;
+      console.error('(node) warning: possible EventEmitter memory ' +
+                    'leak detected. %d listeners added. ' +
+                    'Use emitter.setMaxListeners() to increase limit.',
+                    this._events[type].length);
+      if (typeof console.trace === 'function') {
+        // not supported in IE 10
+        console.trace();
+      }
+    }
+  }
+
+  return this;
+};
+
+EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+
+EventEmitter.prototype.once = function(type, listener) {
+  if (!isFunction(listener))
+    throw TypeError('listener must be a function');
+
+  var fired = false;
+
+  function g() {
+    this.removeListener(type, g);
+
+    if (!fired) {
+      fired = true;
+      listener.apply(this, arguments);
+    }
+  }
+
+  g.listener = listener;
+  this.on(type, g);
+
+  return this;
+};
+
+// emits a 'removeListener' event iff the listener was removed
+EventEmitter.prototype.removeListener = function(type, listener) {
+  var list, position, length, i;
+
+  if (!isFunction(listener))
+    throw TypeError('listener must be a function');
+
+  if (!this._events || !this._events[type])
+    return this;
+
+  list = this._events[type];
+  length = list.length;
+  position = -1;
+
+  if (list === listener ||
+      (isFunction(list.listener) && list.listener === listener)) {
+    delete this._events[type];
+    if (this._events.removeListener)
+      this.emit('removeListener', type, listener);
+
+  } else if (isObject(list)) {
+    for (i = length; i-- > 0;) {
+      if (list[i] === listener ||
+          (list[i].listener && list[i].listener === listener)) {
+        position = i;
+        break;
+      }
+    }
+
+    if (position < 0)
+      return this;
+
+    if (list.length === 1) {
+      list.length = 0;
+      delete this._events[type];
+    } else {
+      list.splice(position, 1);
+    }
+
+    if (this._events.removeListener)
+      this.emit('removeListener', type, listener);
+  }
+
+  return this;
+};
+
+EventEmitter.prototype.removeAllListeners = function(type) {
+  var key, listeners;
+
+  if (!this._events)
+    return this;
+
+  // not listening for removeListener, no need to emit
+  if (!this._events.removeListener) {
+    if (arguments.length === 0)
+      this._events = {};
+    else if (this._events[type])
+      delete this._events[type];
+    return this;
+  }
+
+  // emit removeListener for all listeners on all events
+  if (arguments.length === 0) {
+    for (key in this._events) {
+      if (key === 'removeListener') continue;
+      this.removeAllListeners(key);
+    }
+    this.removeAllListeners('removeListener');
+    this._events = {};
+    return this;
+  }
+
+  listeners = this._events[type];
+
+  if (isFunction(listeners)) {
+    this.removeListener(type, listeners);
+  } else {
+    // LIFO order
+    while (listeners.length)
+      this.removeListener(type, listeners[listeners.length - 1]);
+  }
+  delete this._events[type];
+
+  return this;
+};
+
+EventEmitter.prototype.listeners = function(type) {
+  var ret;
+  if (!this._events || !this._events[type])
+    ret = [];
+  else if (isFunction(this._events[type]))
+    ret = [this._events[type]];
+  else
+    ret = this._events[type].slice();
+  return ret;
+};
+
+EventEmitter.listenerCount = function(emitter, type) {
+  var ret;
+  if (!emitter._events || !emitter._events[type])
+    ret = 0;
+  else if (isFunction(emitter._events[type]))
+    ret = 1;
+  else
+    ret = emitter._events[type].length;
+  return ret;
+};
+
+function isFunction(arg) {
+  return typeof arg === 'function';
+}
+
+function isNumber(arg) {
+  return typeof arg === 'number';
+}
+
+function isObject(arg) {
+  return typeof arg === 'object' && arg !== null;
+}
+
+function isUndefined(arg) {
+  return arg === void 0;
+}
+
+},{}],2:[function(require,module,exports){
+
+module.exports = exports = Change;
+
+/*!
+ * Change object constructor
+ *
+ * The `change` object passed to Object.observe callbacks
+ * is immutable so we create a new one to modify.
+ */
+
+function Change (path, change) {
+  this.path = path;
+  this.name = change.name;
+  this.type = change.type;
+  this.object = change.object;
+  this.value = change.object[change.name];
+  this.oldValue = change.oldValue;
+}
+
+
+},{}],3:[function(require,module,exports){
+
+/**
+ * Expose `debug()` as the module.
+ */
+
+module.exports = debug;
+
+/**
+ * Create a debugger with the given `name`.
+ *
+ * @param {String} name
+ * @return {Type}
+ * @api public
+ */
+
+function debug(name) {
+  if (!debug.enabled(name)) return function(){};
+
+  return function(fmt){
+    fmt = coerce(fmt);
+
+    var curr = new Date;
+    var ms = curr - (debug[name] || curr);
+    debug[name] = curr;
+
+    fmt = name
+      + ' '
+      + fmt
+      + ' +' + debug.humanize(ms);
+
+    // This hackery is required for IE8
+    // where `console.log` doesn't have 'apply'
+    window.console
+      && console.log
+      && Function.prototype.apply.call(console.log, console, arguments);
+  }
+}
+
+/**
+ * The currently active debug mode names.
+ */
+
+debug.names = [];
+debug.skips = [];
+
+/**
+ * Enables a debug mode by name. This can include modes
+ * separated by a colon and wildcards.
+ *
+ * @param {String} name
+ * @api public
+ */
+
+debug.enable = function(name) {
+  try {
+    localStorage.debug = name;
+  } catch(e){}
+
+  var split = (name || '').split(/[\s,]+/)
+    , len = split.length;
+
+  for (var i = 0; i < len; i++) {
+    name = split[i].replace('*', '.*?');
+    if (name[0] === '-') {
+      debug.skips.push(new RegExp('^' + name.substr(1) + '$'));
+    }
+    else {
+      debug.names.push(new RegExp('^' + name + '$'));
+    }
+  }
+};
+
+/**
+ * Disable debug output.
+ *
+ * @api public
+ */
+
+debug.disable = function(){
+  debug.enable('');
+};
+
+/**
+ * Humanize the given `ms`.
+ *
+ * @param {Number} m
+ * @return {String}
+ * @api private
+ */
+
+debug.humanize = function(ms) {
+  var sec = 1000
+    , min = 60 * 1000
+    , hour = 60 * min;
+
+  if (ms >= hour) return (ms / hour).toFixed(1) + 'h';
+  if (ms >= min) return (ms / min).toFixed(1) + 'm';
+  if (ms >= sec) return (ms / sec | 0) + 's';
+  return ms + 'ms';
+};
+
+/**
+ * Returns true if the given mode name is enabled, false otherwise.
+ *
+ * @param {String} name
+ * @return {Boolean}
+ * @api public
+ */
+
+debug.enabled = function(name) {
+  for (var i = 0, len = debug.skips.length; i < len; i++) {
+    if (debug.skips[i].test(name)) {
+      return false;
+    }
+  }
+  for (var i = 0, len = debug.names.length; i < len; i++) {
+    if (debug.names[i].test(name)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+/**
+ * Coerce `val`.
+ */
+
+function coerce(val) {
+  if (val instanceof Error) return val.stack || val.message;
+  return val;
+}
+
+// persist
+
+try {
+  if (window.localStorage) debug.enable(localStorage.debug);
+} catch(e){}
+
+},{}],"observed":[function(require,module,exports){
+// http://wiki.ecmascript.org/doku.php?id=harmony:observe
+
+var Change = require('./change');
+var Emitter = require('events').EventEmitter;
+var debug = require('debug')('observed');
+
+module.exports = exports = Observable;
+
+/**
+ * Observable constructor.
+ *
+ * The passed `subject` will be observed for changes to
+ * all properties, included nested objects and arrays.
+ *
+ * An `EventEmitter` will be returned. This emitter will
+ * emit the following events:
+ *
+ * - add
+ * - update
+ * - delete
+ * - reconfigure
+ *
+ * // - setPrototype?
+ *
+ * @param {Object} subject
+ * @param {Observable} [parent] (internal use)
+ * @param {String} [prefix] (internal use)
+ * @return {EventEmitter}
+ */
+
+function Observable (subject, parent, prefix) {
+  if ('object' != typeof subject)
+    throw new TypeError('object expected. got: ' + typeof subject);
+
+  if (!(this instanceof Observable))
+    return new Observable(subject, parent, prefix);
+
+  debug('new', subject, !!parent, prefix);
+
+  Emitter.call(this);
+  this._bind(subject, parent, prefix);
+};
+
+// add emitter capabilities
+for (var i in Emitter.prototype) {
+  Observable.prototype[i] = Emitter.prototype[i];
+}
+
+Observable.prototype.observers = undefined;
+Observable.prototype.onchange = undefined;
+Observable.prototype.subject = undefined;
+
+/**
+ * Binds this Observable to `subject`.
+ *
+ * @param {Object} subject
+ * @param {Observable} [parent]
+ * @param {String} [prefix]
+ * @api private
+ */
+
+Observable.prototype._bind = function (subject, parent, prefix) {
+  if (this.subject) throw new Error('already bound!');
+  if (null == subject) throw new TypeError('subject cannot be null');
+
+  debug('_bind', subject);
+
+  this.subject = subject;
+
+  if (parent) {
+    parent.observers.push(this);
+  } else {
+    this.observers = [this];
+  }
+
+  this.onchange = onchange(parent || this, prefix);
+  Object.observe(this.subject, this.onchange);
+
+  this._walk(parent || this, prefix);
+}
+
+/**
+ * Pending change events are not emitted until after the next
+ * turn of the event loop. This method forces the engines hand
+ * and triggers all events now.
+ *
+ * @api public
+ */
+
+Observable.prototype.deliverChanges = function () {
+  debug('deliverChanges')
+  this.observers.forEach(function(o) {
+    Object.deliverChangeRecords(o.onchange);
+  });
+}
+
+/**
+ * Walk down through the tree of our `subject`, observing
+ * objects along the way.
+ *
+ * @param {Observable} [parent]
+ * @param {String} [prefix]
+ * @api private
+ */
+
+Observable.prototype._walk = function (parent, prefix) {
+  debug('_walk');
+
+  var object = this.subject;
+
+  // keys?
+  Object.keys(object).forEach(function (name) {
+    var value = object[name];
+
+    if ('object' != typeof value) return;
+    if (null == value) return;
+
+    var path = prefix
+      ? prefix + '.' + name
+      : name;
+
+    new Observable(value, parent, path);
+  });
+}
+
+/**
+ * Stop listening to all bound objects
+ */
+
+Observable.prototype.stop = function () {
+  debug('stop');
+
+  this.observers.forEach(function (observer) {
+    Object.unobserve(observer.subject, observer.onchange);
+  });
+}
+
+/**
+ * Stop listening to changes on `subject`
+ *
+ * @param {Object} subject
+ * @api private
+ */
+
+Observable.prototype._remove = function (subject) {
+  debug('_remove', subject);
+
+  this.observers = this.observers.filter(function (observer) {
+    if (subject == observer.subject) {
+      Object.unobserve(observer.subject, observer.onchange);
+      return false;
+    }
+
+    return true;
+  });
+}
+
+/*!
+ * Creates an Object.observe `onchange` listener
+ */
+
+function onchange (parent, prefix) {
+  return function (ary) {
+    debug('onchange', prefix);
+
+    ary.forEach(function (change) {
+      var object = change.object;
+      var type = change.type;
+      var name = change.name;
+      var value = object[name];
+
+      var path = prefix
+        ? prefix + '.' + name
+        : name
+
+      if ('add' == type && null != value && 'object' == typeof value) {
+        new Observable(value, parent, path);
+      } else if ('delete' == type && 'object' == typeof change.oldValue) {
+        parent._remove(change.oldValue);
+      }
+
+      change = new Change(path, change);
+      parent.emit(type, change);
+      parent.emit(type + ' ' + path, change);
+      parent.emit('change', change);
+      parent.emit('change' + ' ' + path, change);
+    })
+  }
+}
+
+
+},{"./change":2,"debug":3,"events":1}]},{},[]);
+
 (function ( root, factory ) {
     if ( typeof define === 'function' && define.amd ) {
         // AMD. Register as an anonymous module.
@@ -2074,7 +2731,7 @@ gapiMockData.companies = [
     "id":"1",
     "name":"Michael Sanchez",
     "email" :"michael.sanchez@awesome.io",
-    "picture" : "http://api.randomuser.me/portraits/med/men/22.jpg",
+    "picture" : "data:image/jpeg;base64,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",
     "given_name":"Michael",
     "family_name":"Sanchez",
     "link":"https://plus.google.com/1",
@@ -2095,7 +2752,7 @@ gapiMockData.companies = [
     "id":"2",
     "name":"John Doe",
     "email" :"john.doe@awesome.io",
-    "picture" : "http://api.randomuser.me/portraits/med/men/12.jpg",
+    "picture" : "data:image/jpeg;base64,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",
     "given_name":"John",
     "family_name":"Doe",
     "link":"https://plus.google.com/2",
@@ -2716,7 +3373,7 @@ gapiMockData.companies = [
 
 }));
 
-(function (_, $, window, gapiMockData, Mustache, document) {
+(function (_, $, window, gapiMockData, Mustache, document, O, localStorage) {
   "use strict";
 
   /*global _,gapi,Mustache: false */
@@ -2731,30 +3388,6 @@ gapiMockData.companies = [
         real = true;
       }
   }
-
-  function setCookie(cname, cvalue, exdays) {
-    if(!exdays) {
-      exdays = 999;
-    }
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+d.toUTCString();
-    document.cookie = cname + "=" + cvalue + "; " + expires;
-  }
-
-  function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(";");
-    for(var i=0; i<ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) === " ") { c = c.substring(1); }
-        if (c.indexOf(name) !== -1) {
-          return c.substring(name.length,c.length);
-        }
-    }
-    return "";
-  }
-
 
   if(real) {
 
@@ -2817,11 +3450,16 @@ gapiMockData.companies = [
 
     };
 
-    var fakeDb;
+    var fakeDb = window.gapi._fakeDb = {serverDelay: 0};
 
+    var _clearObj = function (obj) {
+      for (var member in obj) {
+        delete obj[member];
+      }
+    };
     window.gapi.resetDb = function () {
       if(!window.gapi._fakeDb) {
-        fakeDb = window.gapi._fakeDb = {serverDelay: 0};
+        _clearObj(fakeDb);
       }
       fakeDb.companies = _.cloneDeep(gapiMockData.companies);
       fakeDb.accounts = _.cloneDeep(gapiMockData.accounts);
@@ -2867,7 +3505,7 @@ gapiMockData.companies = [
     };
 
     window.gapi.setPendingSignInUser = function (username) {
-      window.gapi._pendingUser = username;
+      localStorage.setItem("risevision.gapi-mock.pendingUser", username);
     };
 
     var resp = function (item) {
@@ -2895,11 +3533,29 @@ gapiMockData.companies = [
     var systemMessages = gapiMockData.systemMessages;
 
    if(localStorage.getItem("fakeGoogleDb")) {
-     fakeDb = window.gapi._fakeDb = JSON.parse(localStorage.getItem("fakeGoogleDb"));
+     _clearObj(fakeDb);
+     _.extend(fakeDb, JSON.parse(localStorage.getItem("fakeGoogleDb")));
    }
    else {
      window.gapi.resetDb();
    }
+
+   var oDb = O(fakeDb);
+   var _saving = false;
+   oDb.on("change", function () {
+     //prevent multiple saving events
+     // save only at the end of the execution cycle and if a save event is not already
+     //scheduled
+     if(!_saving) {
+       _saving = true;
+       setTimeout(function () {
+         localStorage.setItem("fakeGoogleDb", JSON.stringify(fakeDb || {}));
+         console.log("fakeGoogleDb persisted to localStorage.");
+         _saving = false;
+       });
+     }
+
+   });
 
     gapi.client = {
       load: function(path, version, cb) {
@@ -3509,171 +4165,6 @@ gapiMockData.companies = [
           };
         }
       }
-    },
-    setApiKey: function() {
-    },
-    tasks: {
-      tasks: {
-        update: function() {
-          return {
-            execute: function(cb) {
-              delayed(cb, {});
-            }
-          };
-        },
-        delete: function() {
-          return {
-            execute: function(cb) {
-              delayed(cb);
-            }
-          };
-        },
-        insert: function() {
-          return {
-            execute: function() {
-            }
-          };
-        },
-        list: function() {
-          return {
-            execute: function(cb) {
-              return delayed(cb, {
-                "kind": "tasks#tasks",
-                "items": [
-                {
-                  "kind": "tasks#task",
-                  "id": "MDE5MzU2Njg4NDcyNjMxOTE4MzE6Njk1MzUzOTY2OjQ3NTg4MjQyMg",
-                  "title": "x1",
-                  "updated": "2012-08-10T22:07:22.000Z",
-                  "position": "00000000000000410311",
-                  "status": "needsAction"
-                },
-                {
-                  "kind": "tasks#task",
-                  "id": "MDE5MzU2Njg4NDcyNjMxOTE4MzE6Njk1MzUzOTY2OjE0ODU0NTE1NDc",
-                  "title": "x2",
-                  "updated": "2012-08-10T22:07:25.000Z",
-                  "position": "00000000000000615467",
-                  "status": "needsAction"
-                },
-                {
-                  "kind": "tasks#task",
-                  "id": "MDE5MzU2Njg4NDcyNjMxOTE4MzE6Njk1MzUzOTY2OjgxNTQ5MTA3Nw",
-                  "title": "x3",
-                  "updated": "2012-08-12T14:30:49.000Z",
-                  "position": "00000000000000820623",
-                  "status": "completed",
-                  "completed": "2012-08-12T14:30:49.000Z"
-                }
-                ],
-                "result": {
-                  "kind": "tasks#tasks",
-                  "items": [
-                  {
-                    "kind": "tasks#task",
-                    "id": "MDE5MzU2Njg4NDcyNjMxOTE4MzE6Njk1MzUzOTY2OjQ3NTg4MjQyMg",
-                    "title": "x1",
-                    "updated": "2012-08-10T22:07:22.000Z",
-                    "position": "00000000000000410311",
-                    "status": "needsAction"
-                  },
-                  {
-                    "kind": "tasks#task",
-                    "id": "MDE5MzU2Njg4NDcyNjMxOTE4MzE6Njk1MzUzOTY2OjE0ODU0NTE1NDc",
-                    "title": "x2",
-                    "updated": "2012-08-10T22:07:25.000Z",
-                    "position": "00000000000000615467",
-                    "status": "needsAction"
-                  },
-                  {
-                    "kind": "tasks#task",
-                    "id": "MDE5MzU2Njg4NDcyNjMxOTE4MzE6Njk1MzUzOTY2OjgxNTQ5MTA3Nw",
-                    "title": "x3",
-                    "updated": "2012-08-12T14:30:49.000Z",
-                    "position": "00000000000000820623",
-                    "status": "completed",
-                    "completed": "2012-08-12T14:30:49.000Z"
-                  }
-                  ]
-                }
-              });
-            }
-          };
-        }
-      },
-      tasklists: {
-        update: function() {
-          return {
-            execute: function(cb) {
-              delayed(cb, {});
-            }
-          };
-        },
-        delete: function() {
-          return {
-            execute: function(cb) {
-              delayed(cb, {});
-            }
-          };
-        },
-        insert: function() {
-          return {
-            execute: function(cb) {
-              // Used for the 'Creating a list' test
-              delayed(cb, {
-                "id": "1",
-                "kind": "tasks#taskList",
-                "title": "Example list",
-                "updated": "2013-01-14T13:58:48.000Z"
-              });
-            }
-          };
-        },
-        list: function(options) {
-
-          options = options || {};
-
-
-          return {
-            execute: function(cb) {
-              delayed(cb, {
-                "kind": "tasks#taskLists",
-                "items": [
-                {
-                  "kind": "tasks#taskList",
-                  "id": "MDE5MzU2Njg4NDcyNjMxOTE4MzE6MDow",
-                  "title": "Default List",
-                  "updated": "2012-08-14T13:58:48.000Z",
-                },
-                {
-                  "kind": "tasks#taskList",
-                  "id": "MDE5MzU2Njg4NDcyNjMxOTE4MzE6NDg3ODA5MzA2OjA",
-                  "title": "Writing",
-                  "updated": "2012-07-22T17:58:19.000Z",
-                }
-                ],
-                "result": {
-                  "kind": "tasks#taskLists",
-                  "items": [
-                  {
-                    "kind": "tasks#taskList",
-                    "id": "MDE5MzU2Njg4NDcyNjMxOTE4MzE6MDow",
-                    "title": "Default List",
-                    "updated": "2012-08-14T13:58:48.000Z",
-                  },
-                  {
-                    "kind": "tasks#taskList",
-                    "id": "MDE5MzU2Njg4NDcyNjMxOTE4MzE6NDg3ODA5MzA2OjA",
-                    "title": "Writing",
-                    "updated": "2012-07-22T17:58:19.000Z",
-                  }
-                  ]
-                }
-              });
-            }
-          };
-        }
-      }
     }
   };
 
@@ -3711,6 +4202,7 @@ gapiMockData.companies = [
         }
 
         fakeDb.tokenMap[accessToken] = username;
+        fakeDb.tokenMap = _.clone(fakeDb.tokenMap); // need this to get watch to work
         return {
           "state": "",
           "access_token": accessToken,
@@ -3736,7 +4228,6 @@ gapiMockData.companies = [
         var modalStr = Mustache.render(googleAuthDialogTemplate, {accounts: fakeDb.oauthAccounts});
 
         var tokenResult;
-
           var signInAs = function (username, next) {
             tokenResult = generateToken(username);
             next(function () {
@@ -3749,12 +4240,11 @@ gapiMockData.companies = [
               }
             });
           };
-
-          if(window.gapi._pendingUser) {
-            signInAs(window.gapi._pendingUser, function(cb1) {
+          if(localStorage.getItem("risevision.gapi-mock.pendingUser")) {
+            signInAs(localStorage.getItem("risevision.gapi-mock.pendingUser"), function(cb1) {
               cb1();
             });
-            delete window.gapi._pendingUser;
+            localStorage.removeItem("risevision.gapi-mock.pendingUser");
           }
           else {
             var modal = $(modalStr).modal({
@@ -3791,11 +4281,11 @@ gapiMockData.companies = [
     },
     setToken: function (token) {
       if(token) {
-        setCookie("gapi-mock-auth-token", JSON.stringify(token));
+        localStorage.setItem("gapi-mock-auth-token", JSON.stringify(token));
       }
     },
     getToken: function () {
-      var tokenStr = getCookie("gapi-mock-auth-token");
+      var tokenStr = localStorage.getItem("gapi-mock-auth-token");
       if(tokenStr) {
         return JSON.parse(tokenStr);
       }
@@ -3805,8 +4295,10 @@ gapiMockData.companies = [
     }
   };
 
-  window.handleClientJSLoad();
+  if(window.handleClientJSLoad) {
+    window.handleClientJSLoad();
+  }
   }
 
 
-})(_, $, window, window.gapiMockData, Mustache, document);
+})(_, $, window, window.gapiMockData, Mustache, document, require("observed"), localStorage);

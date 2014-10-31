@@ -1157,9 +1157,9 @@ app.run(["$templateCache", function($templateCache) {
     "  <button type=\"button\" class=\"close\" ng-click=\"closeModal()\" aria-hidden=\"true\">\n" +
     "    <i class=\"fa fa-times\"></i>\n" +
     "  </button>\n" +
-    "  <h2 id=\"sub-company-label\" class=\"modal-title add-subcompany-modal\">Add Sub-Company</h2>\n" +
+    "  <h2 id=\"sub-company-label\" class=\"modal-title\">Add Sub-Company</h2>\n" +
     "</div>\n" +
-    "<div class=\"modal-body select-subcompany-modal\">\n" +
+    "<div class=\"modal-body select-subcompany-modal pt-add-subcompany-modal\">\n" +
     "  <form role=\"form\" name=\"forms.companyForm\">\n" +
     "    <div ng-include=\"'company-fields.html'\"></div>\n" +
     "    <div class=\"form-group\">\n" +

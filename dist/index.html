@@ -47,7 +47,7 @@
           <h3 class="inline">System Messages</h3>
           <button class="btn" ng-click="clearSystemMessages()" id="clear-system-messages-button">Clear</button>
           <button class="btn" ng-click="resetSystemMessages()" id="reset-system-messages-button">Reset</button>
-          <div><json child="db.systemMessages.items" default-collapsed="false" type="'object'">
+          <div><json child="db.systemMessages" default-collapsed="false" type="'object'">
           </json></div>
         </div>
         <div class="jsonView col-md-3"></div>
@@ -112,6 +112,7 @@
     <script type="text/javascript">
       angular.module("test-app", ["ngRoute", "risevision.common.config", "risevision.common.header", "JSONedit"])
       .value("STORE_URL", "/test/e2e/")
+      .value("GOOGLE_OAUTH2_URL", "/components/rv-gapi-mock/google-oauth2.html")
 
       .config(['$routeProvider', function($routeProvider) {
         $routeProvider.
@@ -206,12 +207,6 @@
           deleteAllCookies();
 
           insertParam("realGapi", 1);
-        }
-
-        if(!$scope.realGapiLoaded) {
-          $scope.$watch("db", function (newVal) {
-            localStorage.setItem("fakeGoogleDb", JSON.stringify(newVal || {}));
-          }, true);
         }
       })
 

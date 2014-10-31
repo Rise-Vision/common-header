@@ -1157,9 +1157,9 @@ app.run(["$templateCache", function($templateCache) {
     "  <button type=\"button\" class=\"close\" ng-click=\"closeModal()\" aria-hidden=\"true\">\n" +
     "    <i class=\"fa fa-times\"></i>\n" +
     "  </button>\n" +
-    "  <h2 id=\"sub-company-label\" class=\"modal-title add-subcompany-modal\">Add Sub-Company</h2>\n" +
+    "  <h2 id=\"sub-company-label\" class=\"modal-title\">Add Sub-Company</h2>\n" +
     "</div>\n" +
-    "<div class=\"modal-body select-subcompany-modal\">\n" +
+    "<div class=\"modal-body select-subcompany-modal pt-add-subcompany-modal\">\n" +
     "  <form role=\"form\" name=\"forms.companyForm\">\n" +
     "    <div ng-include=\"'company-fields.html'\"></div>\n" +
     "    <div class=\"form-group\">\n" +
@@ -3197,32 +3197,74 @@ angular.module("risevision.common.geodata", [])
 (function (angular) {
   "use strict";
 
+
+  // var pendingAccessToken, pendingState;
+
+  var stripLeadingSlash = function (str) {
+    if(str[0] === "/") { str = str.slice(1); }
+    return str;
+  };
+
+  var parseParams = function (str) {
+    var params = {};
+    str.split("&").forEach(function (fragment) {
+      var fragmentArray = fragment.split("=");
+      params[fragmentArray[0]] = fragmentArray[1];
+    });
+    return params;
+  };
+
   angular.module("risevision.common.userstate",
     ["risevision.common.gapi", "risevision.common.localstorage",
     "risevision.common.config", "risevision.core.cache",
     "risevision.core.oauth2", "ngBiscuit",
     "risevision.core.util", "risevision.core.userprofile",
-    "risevision.core.company", "risevision.common.loading"
+    "risevision.core.company", "risevision.common.loading",
+    "LocalStorageModule"
   ])
 
   // constants (you can override them in your app as needed)
   .value("DEFAULT_PROFILE_PICTURE", "http://api.randomuser.me/portraits/med/men/33.jpg")
   .value("OAUTH2_SCOPES", "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile")
+  .value("GOOGLE_OAUTH2_URL", "https://accounts.google.com/o/oauth2/auth")
 
-
-    // .run(["$location", function ($location) {
-    //   // alert(JSON.stringify($location.search()));
-    // }])
+    .run(["$location", "userState", "$log", "gapiLoader", "localStorageService",
+      function ($location, userState, $log, gapiLoader, localStorageService) {
+      var path = $location.path();
+      var params = parseParams(stripLeadingSlash(path));
+      $log.debug("URL params", params);
+      if(params.access_token) {
+        gapiLoader().then(function (gApi) {
+          $log.debug("Setting token", params.access_token);
+          gApi.auth.setToken( {access_token: params.access_token});
+          userState._setUserToken(params.access_token);
+          userState.authenticate();
+        });
+      }
+      var sFromStorage = localStorageService.get("risevision.common.userState");
+      if(sFromStorage) {
+        userState._restoreState(sFromStorage);
+        localStorageService.remove("risevision.common.userState"); //clear
+      }
+      if (params.state) {
+        var state = JSON.parse(params.state);
+        if(state.u) {
+          $location.path(state.u);
+        }
+      }
+    }])
 
   .factory("userState", [
     "$injector", "$q", "$log", "oauth2APILoader", "$location", "CLIENT_ID",
     "gapiLoader", "pick", "cookieStore", "OAUTH2_SCOPES", "userInfoCache",
     "getOAuthUserInfo", "getUserProfile", "getCompany", "$rootScope",
-    "$interval", "$loading", "rvStorage", "$window", "$document",
+    "$interval", "$loading", "rvStorage", "$window", "GOOGLE_OAUTH2_URL",
+    "localStorageService", "$document",
     function ($injector, $q, $log, oauth2APILoader, $location, CLIENT_ID,
     gapiLoader, pick, cookieStore, OAUTH2_SCOPES, userInfoCache,
     getOAuthUserInfo, getUserProfile, getCompany, $rootScope,
-    $interval, $loading, rvStorage, $window, $document) {
+    $interval, $loading, rvStorage, $window, GOOGLE_OAUTH2_URL,
+    localStorageService, $document) {
     //singleton factory that represents userState throughout application
 
     var _state = {
@@ -3480,7 +3522,7 @@ angular.module("risevision.common.geodata", [])
        return authorizeDeferred.promise;
      };
 
-     var redirect = false;
+     var redirect = true;
 
      var authenticateRedirect = function(forceAuth) {
 
@@ -3493,12 +3535,14 @@ angular.module("risevision.common.geodata", [])
 
         var loc = $window.location.href.substr(0, $window.location.href.indexOf("#")) || $window.location.href;
 
-        $window.location = "https://accounts.google.com/o/oauth2/auth" +
+        localStorageService.set("risevision.common.userState", _state);
+
+        $window.location = GOOGLE_OAUTH2_URL +
           "?response_type=token" +
           "&scope=" + encodeURIComponent(OAUTH2_SCOPES) +
           "&client_id=" + CLIENT_ID +
           "&redirect_uri=" + encodeURIComponent(loc) +
-          "&state=" + encodeURIComponent(JSON.stringify({u: _state, f: $location.href}));
+          "&state=" + encodeURIComponent(JSON.stringify({u: $location.path()}));
 
         var deferred = $q.defer();
         // returns a promise that never get fulfilled since we are redirecting
@@ -3517,34 +3561,37 @@ angular.module("risevision.common.geodata", [])
            userInfoCache.removeAll();
          }
          // This flag indicates a potentially authenticated user.
-         var userAuthed = (angular.isDefined(_state.userToken) && _state.userToken !== null);
-         $log.debug("userAuthed", userAuthed);
+         gapiLoader().then(function () {
+          var userAuthed = (angular.isDefined(_state.userToken) && _state.userToken !== null);
+          //var userAuthed = gApi.auth.getToken() !== null;
+          $log.debug("userAuthed", userAuthed);
 
-         if (forceAuth || userAuthed === true) {
-           _authorize(!forceAuth)
-           .then(function(authResult) {
-             if (authResult && ! authResult.error) {
-               authenticateDeferred.resolve();
-             }
-             else {
-               _clearUserToken();
-               $log.debug("Authentication Error: " + authResult.error);
-               authenticateDeferred.reject("Authentication Error: " + authResult.error);
-             }
-           }, function () {
-             _clearUserToken();
-             authenticateDeferred.reject();}).finally(function (){
-               $loading.stopGlobal("risevision.user.authenticate");
-             });
-         }
-         else {
-           var msg = "user is not authenticated";
-           $log.debug(msg);
-           _clearUserToken();
-           authenticateDeferred.reject(msg);
-           _clearObj(_state.user);
-           $loading.stopGlobal("risevision.user.authenticate");
-         }
+          if (forceAuth || userAuthed === true) {
+            _authorize(!forceAuth)
+            .then(function(authResult) {
+              if (authResult && ! authResult.error) {
+                authenticateDeferred.resolve();
+              }
+              else {
+                _clearUserToken();
+                $log.debug("Authentication Error: " + authResult.error);
+                authenticateDeferred.reject("Authentication Error: " + authResult.error);
+              }
+            }, function () {
+              _clearUserToken();
+              authenticateDeferred.reject();}).finally(function (){
+                $loading.stopGlobal("risevision.user.authenticate");
+              });
+          }
+          else {
+            var msg = "user is not authenticated";
+            $log.debug(msg);
+           //  _clearUserToken();
+            authenticateDeferred.reject(msg);
+            _clearObj(_state.user);
+            $loading.stopGlobal("risevision.user.authenticate");
+          }
+         });
        };
        _proceed();
 
@@ -3638,7 +3685,12 @@ angular.module("risevision.common.geodata", [])
       authenticate: redirect? authenticateRedirect : authenticate,
       signOut: signOut,
       refreshProfile: refreshProfile,
-      getAccessToken: getAccessToken
+      getAccessToken: getAccessToken,
+      _restoreState: function (s) {
+        angular.extend(_state, s);
+        $log.debug("userState restored with", s); },
+      _setUserToken: function (token) {
+        _state.userToken = token; }
     };
 
     window.userState = userState;

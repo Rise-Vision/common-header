@@ -50,7 +50,7 @@
           <h3 class="inline">System Messages</h3>
           <button class="btn" ng-click="clearSystemMessages()" id="clear-system-messages-button">Clear</button>
           <button class="btn" ng-click="resetSystemMessages()" id="reset-system-messages-button">Reset</button>
-          <div><json child="db.systemMessages.items" default-collapsed="false" type="'object'">
+          <div><json child="db.systemMessages" default-collapsed="false" type="'object'">
           </json></div>
         </div>
         <div class="jsonView col-md-3"></div>
@@ -115,8 +115,8 @@
     <script type="text/javascript" src="../../components/lodash/dist/lodash.js"></script>
     <script type="text/javascript" src="../../components/jquery-ui/ui/jquery-ui.js"></script>
     <script type="text/javascript" src="../../components/ng-csv/build/ng-csv.js"></script>
-
     <script type="text/javascript" src="../../components/angular-ui-sortable/sortable.js"></script>
+    <script type="text/javascript" src="../../components/angular-local-storage/dist/angular-local-storage.js"></script>
 
     <!-- endbuild -->
 
@@ -166,14 +166,15 @@
     <!-- endbuild -->
 
     <!-- build:js js/test-app.js -->
+    <script type="text/javascript" src="../../components/rv-gapi-mock/observed-browser.js"></script>
     <script type="text/javascript" src="../../components/JSONedit/js/JSONEdit.js"></script>
-    <script type="text/javascript" src="../gapi-mock-data/_mock-data.js"></script>
-    <script type="text/javascript" src="../gapi-mock-data/users.js"></script>
-    <script type="text/javascript" src="../gapi-mock-data/companies.js"></script>
-    <script type="text/javascript" src="../gapi-mock-data/accounts.js"></script>
-    <script type="text/javascript" src="../gapi-mock-data/systemmessages.js"></script>
+    <script type="text/javascript" src="../../components/rv-gapi-mock/_mock-data.js"></script>
+    <script type="text/javascript" src="../../components/rv-gapi-mock/gapi-mock-data/users.js"></script>
+    <script type="text/javascript" src="../../components/rv-gapi-mock/gapi-mock-data/companies.js"></script>
+    <script type="text/javascript" src="../../components/rv-gapi-mock/gapi-mock-data/accounts.js"></script>
+    <script type="text/javascript" src="../../components/rv-gapi-mock/gapi-mock-data/systemmessages.js"></script>
     <script type="text/javascript" src="../../components/mustache/mustache.js"></script>
-    <script type="text/javascript" src="../gapi-mock.js"></script>
+    <script type="text/javascript" src="../../components/rv-gapi-mock/gapi-mock.js"></script>
     <!-- endbuild -->
     <style>
 
@@ -189,6 +190,7 @@
     <script type="text/javascript">
       angular.module("test-app", ["ngRoute", "risevision.common.config", "risevision.common.header", "JSONedit"])
       .value("STORE_URL", "/test/e2e/")
+      .value("GOOGLE_OAUTH2_URL", "/components/rv-gapi-mock/google-oauth2.html")
 
       .config(['$routeProvider', function($routeProvider) {
         $routeProvider.
@@ -283,12 +285,6 @@
           deleteAllCookies();
 
           insertParam("realGapi", 1);
-        }
-
-        if(!$scope.realGapiLoaded) {
-          $scope.$watch("db", function (newVal) {
-            localStorage.setItem("fakeGoogleDb", JSON.stringify(newVal || {}));
-          }, true);
         }
       })
 

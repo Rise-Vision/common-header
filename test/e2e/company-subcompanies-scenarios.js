@@ -75,7 +75,7 @@
           assert.eventually.isTrue(element(by.css(".add-subcompany-menu-button")).isDisplayed(),
             "Add subcompany menu item should show");
           element(by.css(".add-subcompany-menu-button")).click();
-          assert.eventually.isTrue(element(by.css(".add-subcompany-modal")).isDisplayed(),
+          assert.eventually.isTrue(element(by.css(".pt-add-subcompany-modal")).isDisplayed(),
             "Add subcompany dialog should show");
             ptor.sleep(500);
         });

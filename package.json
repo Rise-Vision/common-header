@@ -20,7 +20,7 @@
   },
   "scripts": {
     "test": "gulp test",
-    "dev": "npm install; bower install"
+    "dev": "npm install; bower install; cd components/rv-gapi-mock; bower install; cd ../.."
   },
   "repository": {
     "type": "git",

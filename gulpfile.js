@@ -109,6 +109,7 @@ var unitTestFiles = [
   "components/angular-mocks/angular-mocks.js",
   "components/angular-spinner/angular-spinner.js",
   "components/ng-biscuit/dist/ng-biscuit.js",
+  "components/angular-local-storage/dist/angular-local-storage.js",
   "components/rv-loading/loading.js",
   "components/ng-gapi-loader/src/js/*.js",
   "components/ng-core-api-client/src/js/*.js",
