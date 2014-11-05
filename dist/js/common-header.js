@@ -78,7 +78,7 @@ app.run(["$templateCache", function($templateCache) {
     "</li>\n" +
     "<!-- If User NOT Authenticated -->\n" +
     "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
-    "  <button type=\"button\" class=\"sign-in top-auth-button\" ng-click=\"login()\">\n" +
+    "  <button type=\"button\" class=\"sign-in top-auth-button\" ng-click=\"login('registrationComplete')\">\n" +
     "    Sign In <img src=\"//rise-vision.github.io/style-guide/img/avatar_2x.jpg\">\n" +
     "  </button>\n" +
     "</li>\n" +
@@ -1516,9 +1516,10 @@ angular.module("risevision.common.header")
 angular.module("risevision.common.header")
 .controller("AuthButtonsCtr", ["$scope", "$modal", "$templateCache",
   "userState", "$loading", "cookieStore",
-  "$log", "uiStatusManager", "oauth2APILoader",
+  "$log", "uiStatusManager", "oauth2APILoader", "bindToScopeWithWatch",
   function($scope, $modal, $templateCache, userState,
-  $loading, cookieStore, $log, uiStatusManager, oauth2APILoader) {
+  $loading, cookieStore, $log, uiStatusManager, oauth2APILoader,
+  bindToScopeWithWatch) {
 
     window.$loading = $loading; //DEBUG
 
@@ -1578,8 +1579,7 @@ angular.module("risevision.common.header")
       function (loggedIn) { $scope.isLoggedIn = loggedIn;
         if(loggedIn === true) { $scope.userPicture = userState.getUserPicture();}
       });
-    $scope.$watch(function () {return userState.isRiseVisionUser();},
-      function (isRvUser) { $scope.isRiseVisionUser = isRvUser; });
+    bindToScopeWithWatch(userState.isRiseVisionUser, "isRiseVisionUser", $scope);
 
     //repopulate profile upon change of current user
     $scope.$watch(function () {return userState.getUsername();},
@@ -1588,12 +1588,23 @@ angular.module("risevision.common.header")
           $scope.profile = userState.getCopyOfProfile();
         }});
 
+    //render dialogs based on status the UI is stuck on
+    $scope.$watch(function () { return uiStatusManager.getStatus(); },
+      function (newStatus){
+        if(newStatus) {
+        //render a dialog based on the status current UI is in
+        if(newStatus === "signedInWithGoogle") {
+          $scope.login();
+        }
+      }
+    });
+
     // Login Modal
-    $scope.login = function() {
+    $scope.login = function (endStatus) {
       $loading.startGlobal("auth-buttons-login");
       userState.authenticate(true).then().finally(function(){
         $loading.stopGlobal("auth-buttons-login");
-        uiStatusManager.invalidateStatus("registrationComplete");
+        uiStatusManager.invalidateStatus(endStatus);
       });
     };
 
@@ -3542,6 +3553,8 @@ angular.module("risevision.common.geodata", [])
           "&scope=" + encodeURIComponent(OAUTH2_SCOPES) +
           "&client_id=" + CLIENT_ID +
           "&redirect_uri=" + encodeURIComponent(loc) +
+          //http://stackoverflow.com/a/14393492
+          "&prompt=select_account" +
           "&state=" + encodeURIComponent(JSON.stringify({u: $location.path()}));
 
         var deferred = $q.defer();

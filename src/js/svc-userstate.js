@@ -346,6 +346,8 @@
           "&scope=" + encodeURIComponent(OAUTH2_SCOPES) +
           "&client_id=" + CLIENT_ID +
           "&redirect_uri=" + encodeURIComponent(loc) +
+          //http://stackoverflow.com/a/14393492
+          "&prompt=select_account" +
           "&state=" + encodeURIComponent(JSON.stringify({u: $location.path()}));
 
         var deferred = $q.defer();
