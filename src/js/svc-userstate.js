@@ -46,6 +46,15 @@
       if (tocken !== _state.userToken) {
         //token change indicates that user either signed in, or signed out, or changed account in other app
         $window.location.reload();
+      } else if (_state.userToken) {
+        //make sure user is not signed out of Google account outside of the CH enabled apps
+        $loading.startGlobal("risevision.user.authenticate"); //spinner will be stop inside authenticate()
+        authenticate(false).finally(function() {
+          if (!_state.userToken) {
+            $log.debug("Authentication failed. Reloading...");
+            $window.location.reload();
+          }
+        });
       }
     };
 
