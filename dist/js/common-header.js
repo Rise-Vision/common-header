@@ -3247,7 +3247,7 @@ angular.module("risevision.common.geodata", [])
         $loading.startGlobal("risevision.user.authenticate"); //spinner will be stop inside authenticate()
         authenticate(false).finally(function() {
           if (!_state.userToken) {
-            $log.debug("It looks like user has signed out of Google account. Relaoding...");
+            $log.debug("Authentication failed. Reloading...");
             $window.location.reload();
           }
         });

@@ -20,16 +20,26 @@ var env = process.env.NODE_ENV || "dev",
     concat = require("gulp-concat"),
     rename = require("gulp-rename"),
     usemin = require("gulp-usemin"),
-    es = require("event-stream");
+    es = require("event-stream"),
+    uglify = require("gulp-uglify"),
+    minifyCss = require("gulp-minify-css");
 
 
 gulp.task("html", ["lint"], function () {
-  return gulp.src("test/e2e/index.html")
+  return es.concat(
+    gulp.src("test/e2e/index.html")
     .pipe(usemin({
-    js: [], //disable mangle just for $routeProvider in controllers.js
-    css: []
-  }))
-  .pipe(gulp.dest("dist/"));
+      js: [],
+      css: []}))
+    .pipe(gulp.dest("dist/")),
+    //minified
+    gulp.src("test/e2e/index.html")
+    .pipe(usemin({
+      js: [uglify(), rename({suffix: ".min"})],
+      css: [minifyCss(), rename({suffix: ".min"})]
+    }))
+    .pipe(gulp.dest("dist/"))
+  );
 });
 
 
