@@ -5,9 +5,13 @@ angular.module("risevision.common.header")
   function($scope, userState, $log, $sce, getCoreSystemMessages,
     systemMessages) {
 
-    $scope.messages = systemMessages;
     $scope.$watch(function () {return userState.isRiseVisionUser();},
       function (isRvUser) { $scope.isRiseVisionUser = isRvUser; });
+
+    $scope.$watch(function () {return systemMessages;},
+      function (sm) { 
+        $scope.messages = sm.length ? sm.slice(0) : [];
+    });
 
     $scope.renderHtml = function(html_code)
     { return $sce.trustAsHtml(html_code); };
