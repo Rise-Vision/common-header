@@ -44,22 +44,7 @@ angular.module("risevision.common.header")
             userState.registrationModalInstance = $modal.open({
               template: $templateCache.get("registration-modal.html"),
               controller: "RegistrationModalCtrl",
-              backdrop: "static",
-              resolve: {
-                account: function (getUserProfile, getAccount) {
-                  return getUserProfile(userState.getUsername())
-                  .then(null, function(resp) {
-                    if (resp && resp.message === "User has not yet accepted the Terms of Service") {
-                      return getAccount();
-                    } else {
-                      return null;
-                    }
-                  })
-                  .catch(function() { return null; } );
-                  // console.log(userState);
-                  // return getAccount().catch(function(data){return data;}, function(){return null;});
-                }
-              }
+              backdrop: "static"
             });
           }
 

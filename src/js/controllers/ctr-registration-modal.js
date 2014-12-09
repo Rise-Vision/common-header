@@ -3,20 +3,16 @@ angular.module("risevision.common.header")
   "$scope", "$modalInstance",
   "$loading", "registerAccount", "$log", "cookieStore",
   "userState", "pick", "uiFlowManager", "humanReadableError",
-  "agreeToTermsAndUpdateUser", "account",
   function($scope, $modalInstance, $loading, registerAccount, $log,
-    cookieStore, userState, pick, uiFlowManager, humanReadableError,
-    agreeToTermsAndUpdateUser, account) {
+    cookieStore, userState, pick, uiFlowManager, humanReadableError) {
 
-      var newUser = !account;
-
-      var copyOfProfile = account ? account : userState.getCopyOfProfile() || {};
+      var copyOfProfile = userState.getCopyOfProfile() || {};
 
       //remove cookie so that it will show next time user refreshes page
       cookieStore.remove("surpressRegistration");
 
 
-      $scope.profile = pick(copyOfProfile, "email", "mailSyncEnabled", "firstName", "lastName");
+      $scope.profile = pick(copyOfProfile, "email", "mailSyncEnabled");
       $scope.registering = false;
 
       $scope.profile.accepted =
@@ -58,34 +54,21 @@ angular.module("risevision.common.header")
         $scope.forms.registrationForm.email.$pristine = false;
 
         if(!$scope.forms.registrationForm.$invalid) {
-          //update terms and conditions date
-          $scope.registering = true;
-          $loading.start("registration-modal");
-
-
-          var action;
-          if (newUser) {
-          action = registerAccount(userState.getUsername(), $scope.profile);
-          } else {
-          action = agreeToTermsAndUpdateUser(userState.getUsername(), $scope.profile);
-          }
-
-          action.then(
-            function () {
-              userState.authenticate(false).then()
-              .finally(function () {
-                $modalInstance.close("success");
-                $loading.stop("registration-modal");
-              });
-            },
-            function (err) {
-              alert("Error: " + humanReadableError(err));
-              $log.error(err);
-            })
-          .finally(function () {
-            $scope.registering = false;
-            userState.authenticate(false);
-          });
+           //update terms and conditions date
+           $scope.registering = true;
+           $loading.start("registration-modal");
+           registerAccount(userState.getUsername(), $scope.profile).then(
+             function () {
+               userState.authenticate(false).then().finally(function () {
+                 $modalInstance.close("success");
+               });
+             },
+             function (err) {alert("Error: " + humanReadableError(err));
+             $log.error(err);}).finally(function () {
+               $scope.registering = false;
+               $loading.stop("registration-modal");
+               userState.authenticate(false);
+             });
         }
 
       };

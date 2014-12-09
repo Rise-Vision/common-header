@@ -1580,22 +1580,7 @@ angular.module("risevision.common.header")
             userState.registrationModalInstance = $modal.open({
               template: $templateCache.get("registration-modal.html"),
               controller: "RegistrationModalCtrl",
-              backdrop: "static",
-              resolve: {
-                account: function (getUserProfile, getAccount) {
-                  return getUserProfile(userState.getUsername())
-                  .then(null, function(resp) {
-                    if (resp && resp.message === "User has not yet accepted the Terms of Service") {
-                      return getAccount();
-                    } else {
-                      return null;
-                    }
-                  })
-                  .catch(function() { return null; } );
-                  // console.log(userState);
-                  // return getAccount().catch(function(data){return data;}, function(){return null;});
-                }
-              }
+              backdrop: "static"
             });
           }
 
@@ -1908,20 +1893,16 @@ angular.module("risevision.common.header")
   "$scope", "$modalInstance",
   "$loading", "registerAccount", "$log", "cookieStore",
   "userState", "pick", "uiFlowManager", "humanReadableError",
-  "agreeToTermsAndUpdateUser", "account",
   function($scope, $modalInstance, $loading, registerAccount, $log,
-    cookieStore, userState, pick, uiFlowManager, humanReadableError,
-    agreeToTermsAndUpdateUser, account) {
+    cookieStore, userState, pick, uiFlowManager, humanReadableError) {
 
-      var newUser = !account;
-
-      var copyOfProfile = account ? account : userState.getCopyOfProfile() || {};
+      var copyOfProfile = userState.getCopyOfProfile() || {};
 
       //remove cookie so that it will show next time user refreshes page
       cookieStore.remove("surpressRegistration");
 
 
-      $scope.profile = pick(copyOfProfile, "email", "mailSyncEnabled", "firstName", "lastName");
+      $scope.profile = pick(copyOfProfile, "email", "mailSyncEnabled");
       $scope.registering = false;
 
       $scope.profile.accepted =
@@ -1963,34 +1944,21 @@ angular.module("risevision.common.header")
         $scope.forms.registrationForm.email.$pristine = false;
 
         if(!$scope.forms.registrationForm.$invalid) {
-          //update terms and conditions date
-          $scope.registering = true;
-          $loading.start("registration-modal");
-
-
-          var action;
-          if (newUser) {
-          action = registerAccount(userState.getUsername(), $scope.profile);
-          } else {
-          action = agreeToTermsAndUpdateUser(userState.getUsername(), $scope.profile);
-          }
-
-          action.then(
-            function () {
-              userState.authenticate(false).then()
-              .finally(function () {
-                $modalInstance.close("success");
-                $loading.stop("registration-modal");
-              });
-            },
-            function (err) {
-              alert("Error: " + humanReadableError(err));
-              $log.error(err);
-            })
-          .finally(function () {
-            $scope.registering = false;
-            userState.authenticate(false);
-          });
+           //update terms and conditions date
+           $scope.registering = true;
+           $loading.start("registration-modal");
+           registerAccount(userState.getUsername(), $scope.profile).then(
+             function () {
+               userState.authenticate(false).then().finally(function () {
+                 $modalInstance.close("success");
+               });
+             },
+             function (err) {alert("Error: " + humanReadableError(err));
+             $log.error(err);}).finally(function () {
+               $scope.registering = false;
+               $loading.stop("registration-modal");
+               userState.authenticate(false);
+             });
         }
 
       };
@@ -2402,7 +2370,7 @@ angular.module("risevision.common.header")
   "userRoleMap", "humanReadableError", "$loading", "$timeout",
   function ($scope, addUser, $modalInstance, companyId, userState,
   userRoleMap, humanReadableError, $loading) {
-    $scope.user = {mailSyncEnabled: false};
+    $scope.user = {};
     $scope.isAdd = true;
 
     //push roles into array
@@ -4096,22 +4064,6 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
     };
   }])
 
-  .factory("agreeToTermsAndUpdateUser", ["$q", "$log",
-  "createCompany", "agreeToTerms", "updateUser",
-  function ($q, $log, createCompany, agreeToTerms, updateUser) {
-    return function (username, basicProfile) {
-      $log.debug("registerAccount called.", username, basicProfile);
-      var deferred = $q.defer();
-      agreeToTerms().then().finally(function () {
-        updateUser(username, basicProfile).then(function (resp) {
-          if(resp.result) { deferred.resolve(); }
-          else { deferred.reject(); }
-        }, deferred.reject).finally("registerAccount ended");
-      });
-      return deferred.promise;
-    };
-  }])
-
   .factory("registerAccount", ["$q", "$log",
   "createCompany", "addAccount", "updateUser",
   function ($q, $log, createCompany, addAccount, updateUser) {
@@ -4142,27 +4094,6 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
             }
             else {
               deferred.reject("addAccount");
-            }
-        });
-      });
-      return deferred.promise;
-    };
-  }])
-
-  .factory("getAccount", ["$q", "riseAPILoader", "$log",
-  function ($q, riseAPILoader, $log) {
-    return function () {
-      $log.debug("getAccount called.");
-      var deferred = $q.defer();
-      riseAPILoader().then(function (riseApi) {
-        var request = riseApi.account.get();
-        request.execute(function (resp) {
-            $log.debug("getAccount resp", resp);
-            if(resp.item) {
-              deferred.resolve(resp.item);
-            }
-            else {
-              deferred.reject("getAccount");
             }
         });
       });
@@ -4324,7 +4255,8 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
 
   "use strict";
   angular.module("risevision.core.userprofile", [
-  "risevision.common.gapi", "risevision.core.oauth2"])
+  "risevision.common.gapi", "risevision.core.oauth2",
+  "risevision.core.cache"])
 
   .value("userRoleMap", {
     "ce": "Content Editor",
@@ -4337,23 +4269,11 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
   })
 
   .factory("getUserProfile", ["oauth2APILoader", "coreAPILoader", "$q", "$log",
-  function (oauth2APILoader, coreAPILoader, $q, $log) {
-    var _username;
-    var _cachedPromises = {};
-
+  "getOAuthUserInfo", "userInfoCache",
+  function (oauth2APILoader, coreAPILoader, $q, $log, getOAuthUserInfo,
+    userInfoCache) {
     return function (username, clearCache) {
-
-      var deferred;
-
-      if (username === _username && !clearCache &&
-        _cachedPromises[username] !== null) {
-        //avoid calling API if username didn't change
-        return _cachedPromises[username].promise;
-      }
-      else {
-        _username = username;
-        _cachedPromises[username] = deferred = $q.defer();
-      }
+      var deferred = $q.defer();
 
       if(!username) {
         deferred.reject("getUserProfile failed: username param is required.");
@@ -4361,32 +4281,45 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
       }
       else {
 
+        //clear cache if instructed so
+        if(clearCache) {
+          userInfoCache.remove("profile-" + username);
+        }
+
         var criteria = {};
         if (username) {criteria.username = username; }
         $log.debug("getUserProfile called", criteria);
-
-        $q.all([oauth2APILoader(), coreAPILoader()]).then(function (results){
-          var coreApi = results[1];
-          // var oauthUserInfo = results[2];
-          coreApi.user.get(criteria).execute(function (resp){
-            if (resp.error || !resp.result) {
-              deferred.reject(resp);
-            }
-            else {
-              $log.debug("getUser resp", resp);
-                //get user profile
+        if(userInfoCache.get("profile-" +  username)) {
+          //skip if already exists
+          $log.debug("getUserProfile resp from cache", "profile-" + username, userInfoCache.get("profile-" + username));
+          deferred.resolve(userInfoCache.get("profile-" + username));
+        }
+        else {
+          $q.all([oauth2APILoader(), coreAPILoader()]).then(function (results){
+            var coreApi = results[1];
+            // var oauthUserInfo = results[2];
+            coreApi.user.get(criteria).execute(function (resp){
+              if (resp.error || !resp.result) {
+                deferred.reject(resp);
+              }
+              else {
+                $log.debug("getUser resp", resp);
+                  //get user profile
+                userInfoCache.put("profile-" + username, resp.item);
                 deferred.resolve(resp.item);
-            }
-          });
-        }, deferred.reject);
+              }
+            });
+          }, deferred.reject);
+        }
+
       }
       return deferred.promise;
     };
   }])
 
   .factory("updateUser", ["$q", "coreAPILoader", "$log",
-  "getUserProfile", "pick",
-  function ($q, coreAPILoader, $log, getUserProfile, pick) {
+  "userInfoCache", "getUserProfile", "pick",
+  function ($q, coreAPILoader, $log, userInfoCache, getUserProfile, pick) {
     return function (username, profile) {
       var deferred = $q.defer();
       profile = pick(profile, "mailSyncEnabled",
@@ -4401,7 +4334,8 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
               deferred.reject(resp);
             }
             else if (resp.result) {
-              getUserProfile(username, true).then(function() {deferred.resolve(resp);});
+              userInfoCache.remove("profile-" + username);
+              getUserProfile(username).then(function() {deferred.resolve(resp);});
             }
             else {
               deferred.reject("updateUser");
@@ -4417,8 +4351,8 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
     return function (companyId, username, profile) {
       var deferred = $q.defer();
       coreAPILoader().then(function (coreApi) {
-        profile = pick(profile, "mailSyncEnabled",
-          "email", "firstName", "lastName", "telephone", "roles", "status");
+        profile = pick(profile, "firstName", "lastName",
+          "email", "telephone", "roles", "status");
         var request = coreApi.user.add({
           username: username,
           companyId: companyId,
