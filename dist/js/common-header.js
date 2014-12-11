@@ -5243,6 +5243,12 @@ angular.module("risevision.common.gapi", [])
     return gapiClientLoaderGenerator("rise", "v0", baseUrl);
   }])
 
+  .factory("storeAPILoader", ["STORE_ENDPOINT_URL", "gapiClientLoaderGenerator", "$location",
+    function (STORE_ENDPOINT_URL, gapiClientLoaderGenerator, $location) {
+    var baseUrl = $location.search().store_api_base_url ? $location.search().store_api_base_url + "/_ah/api": STORE_ENDPOINT_URL;
+    return gapiClientLoaderGenerator("store", "v0.01", baseUrl);
+  }])
+
   .factory("discoveryAPILoader", ["CORE_URL", "gapiClientLoaderGenerator", "$location",
     function (CORE_URL, gapiClientLoaderGenerator, $location) {
         var baseUrl = $location.search().core_api_base_url ? $location.search().core_api_base_url + "/_ah/api": CORE_URL;
