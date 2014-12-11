@@ -17,7 +17,6 @@
   angular.module("risevision.common.config")
     .value("CORE_URL", "https://rvacore-test.appspot.com/_ah/api")
     .value("STORE_URL", "https://localhost:8000")
-    .value("STORE_ENDPOINT_URL", "https://store-dot-rvacore-test.appspot.com/_ah/api")
     .value("GSFP_URL", "https://gsfp-dot-rvacore-test.appspot.com/fp")
   ;
 })(angular);
