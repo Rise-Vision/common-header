@@ -5,12 +5,24 @@ angular.module("risevision.common.header")
     selectedCompanyUrlHandler) {
     $scope.inRVAFrame = userState.inRVAFrame();
 
-    $scope.$watch(function () {return userState.getSelectedCompanyId(); },
-    function (newCompanyId) {
-      if(newCompanyId) {
-        $scope.isSubcompanySelected = userState.isSubcompanySelected();
-        selectedCompanyUrlHandler.updateUrl();
-      }
+    // $scope.$watch(function () {return userState.getSelectedCompanyId(); },
+    // function (newCompanyId) {
+    //   if(newCompanyId) {
+    //     $scope.isSubcompanySelected = userState.isSubcompanySelected();
+    //     selectedCompanyUrlHandler.updateUrl();
+    //   }
+    // });
+
+    //auto append current company id to URL
+    $scope.$on("$stateChangeSuccess", function() {
+      var w = $scope.$watch(function () {return userState.getSelectedCompanyId(); },
+      function (newCompanyId) {
+        if(newCompanyId) {
+          $scope.isSubcompanySelected = userState.isSubcompanySelected();
+          selectedCompanyUrlHandler.updateUrl();
+          w();
+        }
+      });
     });
 
     $scope.$watch(function () {return userState.getSelectedCompanyName(); },
@@ -32,8 +44,8 @@ angular.module("risevision.common.header")
     $scope.$watch(function () {return userState.isRiseAdmin(); },
     function (isRvAdmin) { $scope.isRiseVisionAdmin = isRvAdmin; });
 
-    $scope.$on("risevision.user.authorized", function () {
-      selectedCompanyUrlHandler.init();
+    $scope.$watch(function () { return userState.isRiseVisionUser();}, function (is) {
+      if(is) { selectedCompanyUrlHandler.init(); }
     });
 
     //detect selectCompany changes on route UI

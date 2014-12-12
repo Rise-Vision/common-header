@@ -303,8 +303,6 @@
                        //populate userCompany
                        return getCompany().then(function(company) {
                          _clearAndCopy(company, _state.userCompany);
-                         _clearAndCopy(company, _state.selectedCompany);
-
                        }, function () { _clearObj(_state.userCompany);
                        }).finally(function () {
                         authorizeDeferred.resolve(authResult);

@@ -1493,7 +1493,6 @@ angular.module("risevision.common.header", [
         viewPortTag.name = "viewport";
         viewPortTag.content = "width=device-width, initial-scale=1, user-scalable=no";
         $document[0].getElementsByTagName("head")[0].appendChild(viewPortTag);
-
       }
     };
   }
@@ -1697,12 +1696,24 @@ angular.module("risevision.common.header")
     selectedCompanyUrlHandler) {
     $scope.inRVAFrame = userState.inRVAFrame();
 
-    $scope.$watch(function () {return userState.getSelectedCompanyId(); },
-    function (newCompanyId) {
-      if(newCompanyId) {
-        $scope.isSubcompanySelected = userState.isSubcompanySelected();
-        selectedCompanyUrlHandler.updateUrl();
-      }
+    // $scope.$watch(function () {return userState.getSelectedCompanyId(); },
+    // function (newCompanyId) {
+    //   if(newCompanyId) {
+    //     $scope.isSubcompanySelected = userState.isSubcompanySelected();
+    //     selectedCompanyUrlHandler.updateUrl();
+    //   }
+    // });
+
+    //auto append current company id to URL
+    $scope.$on("$stateChangeSuccess", function() {
+      var w = $scope.$watch(function () {return userState.getSelectedCompanyId(); },
+      function (newCompanyId) {
+        if(newCompanyId) {
+          $scope.isSubcompanySelected = userState.isSubcompanySelected();
+          selectedCompanyUrlHandler.updateUrl();
+          w();
+        }
+      });
     });
 
     $scope.$watch(function () {return userState.getSelectedCompanyName(); },
@@ -1724,8 +1735,8 @@ angular.module("risevision.common.header")
     $scope.$watch(function () {return userState.isRiseAdmin(); },
     function (isRvAdmin) { $scope.isRiseVisionAdmin = isRvAdmin; });
 
-    $scope.$on("risevision.user.authorized", function () {
-      selectedCompanyUrlHandler.init();
+    $scope.$watch(function () { return userState.isRiseVisionUser();}, function (is) {
+      if(is) { selectedCompanyUrlHandler.init(); }
     });
 
     //detect selectCompany changes on route UI
@@ -3617,8 +3628,6 @@ angular.module("risevision.common.geodata", [])
                        //populate userCompany
                        return getCompany().then(function(company) {
                          _clearAndCopy(company, _state.userCompany);
-                         _clearAndCopy(company, _state.selectedCompany);
-
                        }, function () { _clearObj(_state.userCompany);
                        }).finally(function () {
                         authorizeDeferred.resolve(authResult);
@@ -4897,8 +4906,8 @@ function (loadFastpass, userState) {
   "risevision.common.userstate"])
 
     .service("selectedCompanyUrlHandler", ["$location", "userState",
-      "getCompany", "$rootScope", "$log",
-      function ($location, userState, getCompany, $rootScope, $log) {
+      "getCompany", "$rootScope", "$log", "$q",
+      function ($location, userState, getCompany, $rootScope, $log, $q) {
 
         var that = this;
         if($location.search().cid && !userState.isLoggedIn()) {
@@ -4924,7 +4933,11 @@ function (loadFastpass, userState) {
             userState.getSelectedCompanyId() !== userState.getUserCompanyId()) {
             $location.search("cid", null);
           }
-          that.updateSelectedCompanyFromUrl();
+          that.updateSelectedCompanyFromUrl().finally(function () {
+            if(!userState.getSelectedCompanyId()) {
+              userState.resetCompany();
+            }
+          });
         };
 
         this.updateUrl = function () {
@@ -4943,13 +4956,17 @@ function (loadFastpass, userState) {
           }
         };
         this.updateSelectedCompanyFromUrl = function () {
+          var deferred = $q.defer();
           var newCompanyId = $location.search().cid;
-          if(userState.getSelectedCompanyId() &&
-            newCompanyId && newCompanyId !== userState.getSelectedCompanyId()) {
+          if(newCompanyId && newCompanyId !== userState.getSelectedCompanyId()) {
             getCompany(newCompanyId).then(function (company) {
               userState.switchCompany(company);
-            });
+            }).finally(deferred.resolve);
           }
+          else {
+            deferred.reject();
+          }
+          return deferred.promise;
         };
     }]);
   }
@@ -5244,12 +5261,6 @@ angular.module("risevision.common.gapi", [])
     function (CORE_URL, gapiClientLoaderGenerator, $location) {
     var baseUrl = $location.search().core_api_base_url ? $location.search().core_api_base_url + "/_ah/api": CORE_URL;
     return gapiClientLoaderGenerator("rise", "v0", baseUrl);
-  }])
-
-  .factory("storeAPILoader", ["STORE_ENDPOINT_URL", "gapiClientLoaderGenerator", "$location",
-    function (STORE_ENDPOINT_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().store_api_base_url ? $location.search().store_api_base_url + "/_ah/api": STORE_ENDPOINT_URL;
-    return gapiClientLoaderGenerator("store", "v0.01", baseUrl);
   }])
 
   .factory("discoveryAPILoader", ["CORE_URL", "gapiClientLoaderGenerator", "$location",

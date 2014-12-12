@@ -3960,20 +3960,7 @@ gapiMockData.companies = [
           };
         }
       }
-    },
-    //store API - BEGIN
-    store: {
-        cards: {
-          get: function () {
-            return {
-              execute: function (cb) {
-                  delayed(cb, resp({items:[]}));
-              }
-            };
-          }
-        }
-      }
-    //store API - END
+    }
   };
 
   var googleAuthDialogTemplate = "<div class=\"modal\">" +

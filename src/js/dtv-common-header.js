@@ -85,7 +85,6 @@ angular.module("risevision.common.header", [
         viewPortTag.name = "viewport";
         viewPortTag.content = "width=device-width, initial-scale=1, user-scalable=no";
         $document[0].getElementsByTagName("head")[0].appendChild(viewPortTag);
-
       }
     };
   }

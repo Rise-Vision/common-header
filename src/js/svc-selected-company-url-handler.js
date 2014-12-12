@@ -6,8 +6,8 @@
   "risevision.common.userstate"])
 
     .service("selectedCompanyUrlHandler", ["$location", "userState",
-      "getCompany", "$rootScope", "$log",
-      function ($location, userState, getCompany, $rootScope, $log) {
+      "getCompany", "$rootScope", "$log", "$q",
+      function ($location, userState, getCompany, $rootScope, $log, $q) {
 
         var that = this;
         if($location.search().cid && !userState.isLoggedIn()) {
@@ -33,7 +33,11 @@
             userState.getSelectedCompanyId() !== userState.getUserCompanyId()) {
             $location.search("cid", null);
           }
-          that.updateSelectedCompanyFromUrl();
+          that.updateSelectedCompanyFromUrl().finally(function () {
+            if(!userState.getSelectedCompanyId()) {
+              userState.resetCompany();
+            }
+          });
         };
 
         this.updateUrl = function () {
@@ -52,13 +56,17 @@
           }
         };
         this.updateSelectedCompanyFromUrl = function () {
+          var deferred = $q.defer();
           var newCompanyId = $location.search().cid;
-          if(userState.getSelectedCompanyId() &&
-            newCompanyId && newCompanyId !== userState.getSelectedCompanyId()) {
+          if(newCompanyId && newCompanyId !== userState.getSelectedCompanyId()) {
             getCompany(newCompanyId).then(function (company) {
               userState.switchCompany(company);
-            });
+            }).finally(deferred.resolve);
           }
+          else {
+            deferred.reject();
+          }
+          return deferred.promise;
         };
     }]);
   }
