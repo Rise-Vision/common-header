@@ -48,7 +48,7 @@ angular.module("risevision.common.header")
     };
 
     $scope.setCompany = function (company) {
-      $modalInstance.close(company);
+      $modalInstance.close(company.id);
     };
 
     $scope.handleScroll = function (event, isEndEvent) {

@@ -31,8 +31,7 @@
           });
         };
 
-        this.updateUrl = function () {
-          var selectedCompanyId = userState.getSelectedCompanyId();
+        this.updateUrl = function (selectedCompanyId) {
           // This parameter is only appended to the url if the user is logged in
           if (selectedCompanyId && selectedCompanyId !== userState.getUserCompanyId()) {
             if ($location.search().cid !== selectedCompanyId) {

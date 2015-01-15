@@ -9,7 +9,7 @@ angular.module("risevision.common.header")
     function (newCompanyId) {
       if(newCompanyId) {
         $scope.isSubcompanySelected = userState.isSubcompanySelected();
-        selectedCompanyUrlHandler.updateUrl();
+        selectedCompanyUrlHandler.updateUrl(newCompanyId);
       }
     });
 
@@ -88,7 +88,7 @@ angular.module("risevision.common.header")
           }
         }
       });
-      modalInstance.result.then(userState.switchCompany);
+      modalInstance.result.then(selectedCompanyUrlHandler.updateUrl);
     };
 
     // Show Move Company Modal

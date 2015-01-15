@@ -1725,7 +1725,7 @@ angular.module("risevision.common.header")
     function (newCompanyId) {
       if(newCompanyId) {
         $scope.isSubcompanySelected = userState.isSubcompanySelected();
-        selectedCompanyUrlHandler.updateUrl();
+        selectedCompanyUrlHandler.updateUrl(newCompanyId);
       }
     });
 
@@ -1804,7 +1804,7 @@ angular.module("risevision.common.header")
           }
         }
       });
-      modalInstance.result.then(userState.switchCompany);
+      modalInstance.result.then(selectedCompanyUrlHandler.updateUrl);
     };
 
     // Show Move Company Modal
@@ -2285,7 +2285,7 @@ angular.module("risevision.common.header")
     };
 
     $scope.setCompany = function (company) {
-      $modalInstance.close(company);
+      $modalInstance.close(company.id);
     };
 
     $scope.handleScroll = function (event, isEndEvent) {
@@ -4954,8 +4954,7 @@ function (loadFastpass, userState) {
           });
         };
 
-        this.updateUrl = function () {
-          var selectedCompanyId = userState.getSelectedCompanyId();
+        this.updateUrl = function (selectedCompanyId) {
           // This parameter is only appended to the url if the user is logged in
           if (selectedCompanyId && selectedCompanyId !== userState.getUserCompanyId()) {
             if ($location.search().cid !== selectedCompanyId) {
