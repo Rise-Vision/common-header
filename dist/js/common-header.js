@@ -3895,7 +3895,7 @@ angular.module("risevision.common.geodata", [])
         var loc, path, search, state;
         
         // Redirect to full URL path
-        if (!$rootScope.redirectToRoot) {
+        if ($rootScope.redirectToRoot === false) {
           loc = $window.location.href.substr(0, $window.location.href.indexOf("#")) || $window.location.href;
         }
         // Redirect to the URL root and append pathname back to the URL
@@ -4858,10 +4858,6 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
       "postalCode", "timeZoneOffset", "telephone", "fax", "companyStatus",
       "notificationEmails", "mailSyncEnabled", "sellerId", "isTest"
     ])
-    .constant("COMPANY_SEARCH_FIELDS", [
-      "name", "id", "street", "unit", "city", "province", "country",
-      "postalCode", "telephone", "fax"
-    ])
 
     .factory("createCompany", ["$q", "coreAPILoader", "COMPANY_WRITABLE_FIELDS",
       "pick",
@@ -5029,28 +5025,13 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
     }])
 
     .service("companyService", ["coreAPILoader", "$q", "$log", "getCompany",
-      "COMPANY_SEARCH_FIELDS",
-      function (coreAPILoader, $q, $log, getCompany, COMPANY_SEARCH_FIELDS) {
-        
-      var createSearchQuery = function(fields, search) {
-        var query = "";
-        
-        for (var i in fields) {
-          query += "OR " + fields[i] + ":~\'" + search + "\' ";
-        }
-        
-        query = query ? query.substring(3) : "";
-          
-        return query.trim();
-      }
+      function (coreAPILoader, $q, $log, getCompany) {
 
       this.getCompanies = function (companyId, search, cursor, count, sort) {
         var deferred = $q.defer();
-        var query = search ? createSearchQuery(COMPANY_SEARCH_FIELDS, search) : "";
-          
         var obj = {
           "companyId": companyId,
-          "search": query,
+          "search": search,
           "cursor": cursor,
           "count": count,
           "sort": sort
@@ -5806,58 +5787,3 @@ angular.module("risevision.store.data-gadgets", [])
     };
 
   }]);
-
-(function () {
-  "use strict";
-
-  angular.module("risevision.common.components.last-modified", [])
-    .directive("lastModified", ["$templateCache",
-      function ($templateCache) {
-        return {
-          restrict: "E",
-          scope: {
-            changeDate: "=",
-            changedBy: "="
-          },
-          template: $templateCache.get("last-modified/last-modified.html"),
-          link: function ($scope) {
-            $scope.$watch("changedBy", function(newVal) {
-              $scope.changedBy = newVal ? newVal : "N/A";
-            });
-          } //link()
-        };
-      }
-    ]);
-}());
-
-(function () {
-  "use strict";
-
-  // Simple filter that removes the domain from an email
-  // for example, bld@riseholdings.com would return bld
-  angular.module("risevision.common.components.last-modified")
-    .filter("username", function () {
-      return function (email) {
-        var username = email;
-        if (email && email.indexOf("@") !== -1) {
-          username = email.substring(0, email.indexOf("@"));
-        }
-        return username;
-      };
-    });
-}());
-
-(function(module) {
-try { app = angular.module("risevision.common.components.last-modified"); }
-catch(err) { app = angular.module("risevision.common.components.last-modified", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("last-modified/last-modified.html",
-    "<span class=\"text-muted\">\n" +
-    "  <small>\n" +
-    "    Saved {{changeDate | date:'d-MMM-yyyy h:mm a'}} by {{changedBy | username}}\n" +
-    "  </small>\n" +
-    "</span>\n" +
-    "");
-}]);
-})();
