@@ -10,6 +10,7 @@ angular.module("risevision.common.header", [
   "risevision.common.loading",
   "risevision.ui-flow",
   "risevision.common.systemmessages", "risevision.core.systemmessages",
+  "risevision.core.countries",
   "risevision.core.oauth2",
   "risevision.common.geodata",
   "risevision.store.data-gadgets",
@@ -20,6 +21,7 @@ angular.module("risevision.common.header", [
   "checklist-model",
   "ui.bootstrap", "ngSanitize", "rvScrollEvent", "ngCsv", "ngTouch",
   "risevision.common.components.last-modified",
+  "risevision.common.components.countries",
   "risevision.common.svg"
 ])
 

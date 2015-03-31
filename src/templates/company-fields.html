@@ -39,10 +39,7 @@
       <label for="company-settings-country" class="control-label">
         Country
       </label>
-      <select id="company-settings-country" class="form-control selectpicker"
-        ng-model="company.country" ng-options="c[1] as c[0] for c in countries">
-        <option value="">&lt; Select Country &gt;</option>
-      </select>
+      <country-dropdown country="company.country"></country-dropdown>
     </div>
   </div>
   <div class="col-md-3">
