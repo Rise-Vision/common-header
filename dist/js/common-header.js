@@ -460,10 +460,7 @@ app.run(["$templateCache", function($templateCache) {
     "      <label for=\"company-settings-country\" class=\"control-label\">\n" +
     "        Country\n" +
     "      </label>\n" +
-    "      <select id=\"company-settings-country\" class=\"form-control selectpicker\"\n" +
-    "        ng-model=\"company.country\" ng-options=\"c[1] as c[0] for c in countries\">\n" +
-    "        <option value=\"\">&lt; Select Country &gt;</option>\n" +
-    "      </select>\n" +
+    "      <country-dropdown country=\"company.country\"></country-dropdown>\n" +
     "    </div>\n" +
     "  </div>\n" +
     "  <div class=\"col-md-3\">\n" +
@@ -855,9 +852,7 @@ app.run(["$templateCache", function($templateCache) {
     "    </div>\n" +
     "    <div class=\"form-group\">\n" +
     "      <label for=\"country\">Country</label>\n" +
-    "      <select id=\"country\" class=\"form-control selectpicker\" ng-model=\"addr.country\" ng-options=\"c[1] as c[0] for c in countries\">\n" +
-    "        <option value=\"\">&lt; Select Country &gt;</option>\n" +
-    "      </select>\n" +
+    "      <country-dropdown country=\"addr.country\"></country-dropdown>\n" +
     "    </div>\n" +
     "    <div class=\"form-group\">\n" +
     "      <label for=\"province\">State / Province</label>\n" +
@@ -1522,6 +1517,7 @@ angular.module("risevision.common.header", [
   "risevision.common.loading",
   "risevision.ui-flow",
   "risevision.common.systemmessages", "risevision.core.systemmessages",
+  "risevision.core.countries",
   "risevision.core.oauth2",
   "risevision.common.geodata",
   "risevision.store.data-gadgets",
@@ -1532,6 +1528,7 @@ angular.module("risevision.common.header", [
   "checklist-model",
   "ui.bootstrap", "ngSanitize", "rvScrollEvent", "ngCsv", "ngTouch",
   "risevision.common.components.last-modified",
+  "risevision.common.components.countries",
   "risevision.common.svg"
 ])
 
@@ -2223,15 +2220,14 @@ angular.module("risevision.common.header")
 angular.module("risevision.common.header")
 
 .controller("CompanySettingsModalCtrl", ["$scope", "$modalInstance",
-  "updateCompany", "companyId", "COUNTRIES", "REGIONS_CA", "REGIONS_US", "TIMEZONES",
+  "updateCompany", "companyId", "REGIONS_CA", "REGIONS_US", "TIMEZONES",
   "getCompany", "regenerateCompanyField", "$window", "$loading", "humanReadableError",
   "userState", "deleteCompany",
   function($scope, $modalInstance, updateCompany, companyId,
-    COUNTRIES, REGIONS_CA, REGIONS_US, TIMEZONES, getCompany, regenerateCompanyField,
+    REGIONS_CA, REGIONS_US, TIMEZONES, getCompany, regenerateCompanyField,
     $window, $loading, humanReadableError, userState, deleteCompany) {
 
     $scope.company = {id: companyId};
-    $scope.countries = COUNTRIES;
     $scope.regionsCA = REGIONS_CA;
     $scope.regionsUS = REGIONS_US;
     $scope.timezones = TIMEZONES;
@@ -2348,14 +2344,13 @@ angular.module("risevision.common.header")
 
 angular.module("risevision.common.header")
 .controller("SubCompanyModalCtrl", ["$scope", "$modalInstance", "$modal",
-  "$templateCache", "createCompany", "COUNTRIES", "REGIONS_CA", "REGIONS_US",
+  "$templateCache", "createCompany", "REGIONS_CA", "REGIONS_US",
   "TIMEZONES", "userState", "$loading", "humanReadableError",
   function($scope, $modalInstance, $modal, $templateCache,
-    createCompany, COUNTRIES, REGIONS_CA, REGIONS_US, TIMEZONES, userState, 
+    createCompany, REGIONS_CA, REGIONS_US, TIMEZONES, userState, 
     $loading, humanReadableError) {
 
     $scope.company = {};
-    $scope.countries = COUNTRIES;
     $scope.regionsCA = REGIONS_CA;
     $scope.regionsUS = REGIONS_US;
     $scope.timezones = TIMEZONES;
@@ -3178,243 +3173,6 @@ angular.module("risevision.common.header")
 })(angular);
 
 angular.module("risevision.common.geodata", [])
-.value("COUNTRIES",
-        [["Afghanistan", "AF"],
-        ["Albania", "AL"],
-        ["Algeria", "DZ"],
-        ["American Samoa", "AS"],
-        ["Andorra", "AD"],
-        ["Angola", "AO"],
-        ["Anguilla", "AI"],
-        ["Antarctica", "AQ"],
-        ["Antigua and Barbuda", "AG"],
-        ["Argentina", "AR"],
-        ["Armenia", "AM"],
-        ["Aruba", "AW"],
-        ["Australia", "AU"],
-        ["Austria", "AT"],
-        ["Azerbaijan", "AZ"],
-        ["Bahamas", "BS"],
-        ["Bahrain", "BH"],
-        ["Bangladesh", "BD"],
-        ["Barbados", "BB"],
-        ["Belarus", "BY"],
-        ["Belgium", "BE"],
-        ["Belize", "BZ"],
-        ["Benin", "BJ"],
-        ["Bermuda", "BM"],
-        ["Bhutan", "BT"],
-        ["Bolivia", "BO"],
-        ["Bosnia and Herzegovina", "BA"],
-        ["Botswana", "BW"],
-        ["Bouvet Island", "BV"],
-        ["Brazil", "BR"],
-        ["British Indian Ocean Territory", "IO"],
-        ["British Virgin Islands", "VG"],
-        ["Brunei Darussalam", "BN"],
-        ["Bulgaria", "BG"],
-        ["Burkina Faso", "BF"],
-        ["Burundi", "BI"],
-        ["Cambodia", "KH"],
-        ["Cameroon", "CM"],
-        ["Canada", "CA"],
-        ["Cape Verde", "CV"],
-        ["Cayman Islands", "KY"],
-        ["Central African Republic", "CF"],
-        ["Chad", "TD"],
-        ["Chile", "CL"],
-        ["China", "CN"],
-        ["Christmas Island", "CX"],
-        ["Cocos", "CC"],
-        ["Colombia", "CO"],
-        ["Comoros", "KM"],
-        ["Congo", "CG"],
-        ["Cook Islands", "CK"],
-        ["Costa Rica", "CR"],
-        ["Croatia", "HR"],
-        ["Cuba", "CU"],
-        ["Cyprus", "CY"],
-        ["Czech Republic", "CZ"],
-        ["Denmark", "DK"],
-        ["Djibouti", "DJ"],
-        ["Dominica", "DM"],
-        ["Dominican Republic", "DO"],
-        ["Ecuador", "EC"],
-        ["Egypt", "EG"],
-        ["El Salvador", "SV"],
-        ["Equatorial Guinea", "GQ"],
-        ["Eritrea", "ER"],
-        ["Estonia", "EE"],
-        ["Ethiopia", "ET"],
-        ["Falkland Islands", "FK"],
-        ["Faroe Islands", "FO"],
-        ["Fiji", "FJ"],
-        ["Finland", "FI"],
-        ["France", "FR"],
-        ["French Guiana", "GF"],
-        ["French Polynesia", "PF"],
-        ["French Southern Territories", "TF"],
-        ["Gabon", "GA"],
-        ["Gambia", "GM"],
-        ["Georgia", "GE"],
-        ["Germany", "DE"],
-        ["Ghana", "GH"],
-        ["Gibraltar", "GI"],
-        ["Greece", "GR"],
-        ["Greenland", "GL"],
-        ["Grenada", "GD"],
-        ["Guadeloupe", "GP"],
-        ["Guam", "GU"],
-        ["Guatemala", "GT"],
-        ["Guinea", "GN"],
-        ["Guinea-Bissau", "GW"],
-        ["Guyana", "GY"],
-        ["Haiti", "HT"],
-        ["Heard and McDonald Islands", "HM"],
-        ["Honduras", "HN"],
-        ["Hong Kong", "HK"],
-        ["Hungary", "HU"],
-        ["Iceland", "IS"],
-        ["India", "IN"],
-        ["Indonesia", "ID"],
-        ["Iran", "IR"],
-        ["Iraq", "IQ"],
-        ["Ireland", "IE"],
-        ["Israel", "IL"],
-        ["Italy", "IT"],
-        ["Ivory Coast", "CI"],
-        ["Jamaica", "JM"],
-        ["Japan", "JP"],
-        ["Jordan", "JO"],
-        ["Kazakhstan", "KZ"],
-        ["Kenya", "KE"],
-        ["Kiribati", "KI"],
-        ["Kuwait", "KW"],
-        ["Kyrgyzstan", "KG"],
-        ["Laos", "LA"],
-        ["Latvia", "LV"],
-        ["Lebanon", "LB"],
-        ["Lesotho", "LS"],
-        ["Liberia", "LR"],
-        ["Libya", "LY"],
-        ["Liechtenstein", "LI"],
-        ["Lithuania", "LT"],
-        ["Luxembourg", "LU"],
-        ["Macau", "MO"],
-        ["Macedonia", "MK"],
-        ["Madagascar", "MG"],
-        ["Malawi", "MW"],
-        ["Malaysia", "MY"],
-        ["Maldives", "MV"],
-        ["Mali", "ML"],
-        ["Malta", "MT"],
-        ["Marshall Islands", "MH"],
-        ["Martinique", "MQ"],
-        ["Mauritania", "MR"],
-        ["Mauritius", "MU"],
-        ["Mayotte", "YT"],
-        ["Mexico", "MX"],
-        ["Micronesia", "FM"],
-        ["Moldova", "MD"],
-        ["Monaco", "MC"],
-        ["Mongolia", "MN"],
-        ["Montserrat", "MS"],
-        ["Morocco", "MA"],
-        ["Mozambique", "MZ"],
-        ["Myanmar", "MM"],
-        ["Namibia", "NA"],
-        ["Nauru", "NR"],
-        ["Nepal", "NP"],
-        ["Netherlands", "NL"],
-        ["Netherlands Antilles", "AN"],
-        ["New Caledonia", "NC"],
-        ["New Zealand", "NZ"],
-        ["Nicaragua", "NI"],
-        ["Niger", "NE"],
-        ["Nigeria", "NG"],
-        ["Niue", "NU"],
-        ["Norfolk Island", "NF"],
-        ["North Korea", "KP"],
-        ["Northern Mariana Islands", "MP"],
-        ["Norway", "NO"],
-        ["Oman", "OM"],
-        ["Pakistan", "PK"],
-        ["Palau", "PW"],
-        ["Panama", "PA"],
-        ["Papua New Guinea", "PG"],
-        ["Paraguay", "PY"],
-        ["Peru", "PE"],
-        ["Philippines", "PH"],
-        ["Pitcairn", "PN"],
-        ["Poland", "PL"],
-        ["Portugal", "PT"],
-        ["Puerto Rico", "PR"],
-        ["Qatar", "QA"],
-        ["Reunion", "RE"],
-        ["Romania", "RO"],
-        ["Russian Federation", "RU"],
-        ["Rwanda", "RW"],
-        ["S. Georgia and S. Sandwich Islands", "GS"],
-        ["Saint Kitts and Nevis", "KN"],
-        ["Saint Lucia", "LC"],
-        ["Saint Vincent and The Grenadines", "VC"],
-        ["Samoa", "WS"],
-        ["San Marino", "SM"],
-        ["Sao Tome and Principe", "ST"],
-        ["Saudi Arabia", "SA"],
-        ["Serbia", "RS"],
-        ["Senegal", "SN"],
-        ["Seychelles", "SC"],
-        ["Sierra Leone", "SL"],
-        ["Singapore", "SG"],
-        ["Slovakia", "SK"],
-        ["Slovenia", "SI"],
-        ["Solomon Islands", "SB"],
-        ["Somalia", "SO"],
-        ["South Africa", "ZA"],
-        ["South Korea", "KR"],
-        ["Spain", "ES"],
-        ["Sri Lanka", "LK"],
-        ["St. Helena", "SH"],
-        ["St. Pierre and Miquelon", "PM"],
-        ["Sudan", "SD"],
-        ["Suriname", "SR"],
-        ["Svalbard and Jan Mayen Islands", "SJ"],
-        ["Swaziland", "SZ"],
-        ["Sweden", "SE"],
-        ["Switzerland", "CH"],
-        ["Syria", "SY"],
-        ["Taiwan", "TW"],
-        ["Tajikistan", "TJ"],
-        ["Tanzania", "TZ"],
-        ["Thailand", "TH"],
-        ["Togo", "TG"],
-        ["Tokelau", "TK"],
-        ["Tonga", "TO"],
-        ["Trinidad and Tobago", "TT"],
-        ["Tunisia", "TN"],
-        ["Turkey", "TR"],
-        ["Turkmenistan", "TM"],
-        ["Turks and Caicos Islands", "TC"],
-        ["Tuvalu", "TV"],
-        ["Uganda", "UG"],
-        ["Ukraine", "UA"],
-        ["United Arab Emirates", "AE"],
-        ["United Kingdom", "UK"],
-        ["United States", "US"],
-        ["Uruguay", "UY"],
-        ["US Minor Outlying Islands", "UM"],
-        ["US Virgin Islands", "VI"],
-        ["Uzbekistan", "UZ"],
-        ["Vanuatu", "VU"],
-        ["Venezuela", "VE"],
-        ["Viet Nam", "VN"],
-        ["Wallis and Futuna Islands", "WF"],
-        ["Western Sahara", "EH"],
-        ["Yemen", "YE"],
-        ["Zambia", "ZM"],
-        ["Zimbabwe", "ZW"]])
-
     .value("REGIONS_CA", [
         ["Alberta", "AB"],
         ["British Columbia", "BC"],
@@ -5209,6 +4967,54 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
 
 })(angular);
 
+(function (angular) {
+
+  "use strict";
+
+  angular.module("risevision.core.countries", ["risevision.common.gapi"])
+
+  .factory("getCoreCountries", ["coreAPILoader", "$q", "$log",
+      function (coreAPILoader, $q, $log) {
+        var deferred;
+        return function () {
+          if (deferred) {
+            return deferred.promise;
+          }
+          else {
+            deferred = $q.defer();  
+          }
+          
+          coreAPILoader().then(function (coreApi) {
+            return coreApi.country.list();
+          })
+          .then(function (resp) {
+            var items = resp.result;
+            if(!(items instanceof Array) && items.items) { items = items.items; }
+
+            deferred.resolve(items);
+          })
+          .then(null, function(e) {
+            $log.debug("getCoreCountries failed", e);
+            deferred.reject(e);
+            
+            deferred = null;
+          });
+          return deferred.promise;
+        };
+    }])
+  .factory("COUNTRIES", ["getCoreCountries", 
+    function (getCoreCountries) {
+      var countries = [];
+     
+      getCoreCountries().then(function(result) {
+        Array.prototype.push.apply(countries, result);
+      })
+      
+      return countries;
+  }]);
+
+})(angular);
+
 "use strict";
 
 angular.module("risevision.common.fastpass", [])
@@ -5858,6 +5664,42 @@ app.run(["$templateCache", function($templateCache) {
     "    Saved {{changeDate | date:'d-MMM-yyyy h:mm a'}} by {{changedBy | username}}\n" +
     "  </small>\n" +
     "</span>\n" +
+    "");
+}]);
+})();
+
+(function () {
+  "use strict";
+
+  angular.module("risevision.common.components.countries", [
+    "risevision.core.countries"
+  ])
+    .directive("countryDropdown", ["$templateCache", "COUNTRIES",
+      function ($templateCache, COUNTRIES) {
+        return {
+          restrict: "E",
+          scope: {
+            country: "="
+          },
+          template: $templateCache.get("countries/country-dropdown.html"),
+          link: function ($scope) {
+            $scope.countries = COUNTRIES;
+          } //link()
+        };
+      }
+    ]);
+}());
+
+(function(module) {
+try { app = angular.module("risevision.common.components.countries"); }
+catch(err) { app = angular.module("risevision.common.components.countries", []); }
+app.run(["$templateCache", function($templateCache) {
+  "use strict";
+  $templateCache.put("countries/country-dropdown.html",
+    "<select id=\"country-dropdown\" class=\"form-control selectpicker\"\n" +
+    "  ng-model=\"country\" ng-disabled=\"!countries.length\" ng-options=\"c.code as c.name for c in countries | orderBy: 'name'\">\n" +
+    "  <option value=\"\">&lt; Select Country &gt;</option>\n" +
+    "</select>\n" +
     "");
 }]);
 })();

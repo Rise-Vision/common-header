@@ -69,9 +69,7 @@
     </div>
     <div class="form-group">
       <label for="country">Country</label>
-      <select id="country" class="form-control selectpicker" ng-model="addr.country" ng-options="c[1] as c[0] for c in countries">
-        <option value="">&lt; Select Country &gt;</option>
-      </select>
+      <country-dropdown country="addr.country"></country-dropdown>
     </div>
     <div class="form-group">
       <label for="province">State / Province</label>
