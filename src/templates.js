@@ -852,9 +852,7 @@ app.run(["$templateCache", function($templateCache) {
     "    </div>\n" +
     "    <div class=\"form-group\">\n" +
     "      <label for=\"country\">Country</label>\n" +
-    "      <select id=\"country\" class=\"form-control selectpicker\" ng-model=\"addr.country\" ng-options=\"c[1] as c[0] for c in countries\">\n" +
-    "        <option value=\"\">&lt; Select Country &gt;</option>\n" +
-    "      </select>\n" +
+    "      <country-dropdown country=\"addr.country\"></country-dropdown>\n" +
     "    </div>\n" +
     "    <div class=\"form-group\">\n" +
     "      <label for=\"province\">State / Province</label>\n" +
