@@ -1019,6 +1019,14 @@ app.run(["$templateCache", function($templateCache) {
     "    <p class=\"text-muted\">All you need is a Google Account. No credit card. No personal information. No risk.</p>\n" +
     "\n" +
     "    <a class=\"add-top btn btn-hg btn-primary\" id=\"google-registration-button\" ng-click=\"login('registrationComplete')\">Get Started with Google <i class=\"fa fa-google fa-lg icon-right\"></i></a>\n" +
+    "\n" +
+    "    <div class=\"content-box content-box-warning\">\n" +
+    "      <div class=\"content-box-body\">\n" +
+    "        <p><strong>Cookies Are Disabled</strong></p>\n" +
+    "        <p>Rise Vision needs to use cookies to properly function. Please enable cookies on your web browser and refresh this page.</p>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "\n" +
     "    <p class=\"text-muted remove-bottom add-top\">Don't have a Google Account? <a href=\"https://accounts.google.com/signup\" target=\"_blank\">Get One Here</a></p>\n" +
     "    <p class=\"text-muted\">Already a Rise Vision User? <a ng-click=\"$event.preventDefault(); login('registrationComplete');\" ng-href=\"#\">Sign In</a></p>\n" +
     "  </div><!--signup-modal-->\n" +
