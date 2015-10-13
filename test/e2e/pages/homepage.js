@@ -2,7 +2,13 @@
 (function(module) {
   'use strict';
 
-  var CommonHeaderMenuPage = function () {
+  var helper = require('rv-common-e2e').helper;
+  var CommonHeaderPage = require('rv-common-e2e').commonHeaderPage;
+
+  var HomePage = function () {
+    var commonHeaderPage = new CommonHeaderPage(),
+      homepage = new HomePage();
+
     var url = "http://localhost:8099/test/e2e";
     
     var registerUserButton = element(by.css(".register-user-menu-button"));
@@ -28,6 +34,27 @@
 
     this.get = function() {
       browser.get(url);
+    };
+    
+    this.signOut = function() {
+      homepage.getProfilePic().isDisplayed().then(function(value) {
+        if (value) {
+          homepage.getProfilePic().click();
+
+          //shows sign-out menu item
+          expect(homepage.getSignOutButton().isDisplayed()).to.eventually.be.true;
+
+          //click sign out
+          homepage.getSignOutButton().click();
+          
+          helper.wait(homepage.getSignOutModal(), 'Sign Out Modal');
+          
+          homepage.getSignOutRvOnlyButton().click();
+
+          //signed out; sign-in button shows
+          helper.wait(commonHeaderPage.getSignInButton(), 'Sign In Button');
+        }
+      });
     };
 
     this.getRegisterUserButton = function() {
@@ -96,5 +123,5 @@
 
   };
 
-  module.exports = CommonHeaderMenuPage;
+  module.exports = HomePage;
 })(module);
