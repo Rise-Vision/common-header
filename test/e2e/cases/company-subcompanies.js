@@ -13,7 +13,6 @@
   var helper = require('rv-common-e2e').helper;
 
   var CompanySubcompaniesScenarios = function() {
-    browser.driver.manage().window().setSize(1280, 768);
 
     describe("Companies Settings", function() {
       this.timeout(2000);// to allow for protactor to load the seperate page
