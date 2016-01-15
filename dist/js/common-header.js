@@ -3940,11 +3940,22 @@ angular.module("risevision.common.geodata", [])
           // Warning: Root folder must have CH available for this to work,
           // otherwise no redirect is performed!
           else {
-            loc = $window.location.origin + "/";
-            // Remove first character (/) from path since we're adding it to loc
-            path = $window.location.pathname ? $window.location.pathname.substring(
-              1) : "";
-            search = $window.location.search;
+            var redirectTo = localStorageService.get(
+              "risevision.common.redirectTo");
+            if (redirectTo) {
+              var parser = document.createElement("a");
+              parser.href = redirectTo;
+
+              loc = parser.protocol + "//" + parser.host + "/";
+              path = parser.pathname ? parser.pathname.substring(1) : "";
+              search = parser.search;
+            } else {
+              loc = $window.location.origin + "/";
+              // Remove first character (/) from path since we're adding it to loc
+              path = $window.location.pathname ? $window.location.pathname
+                .substring(1) : "";
+              search = $window.location.search;
+            }
           }
 
           // double encode since response gets decoded once!
