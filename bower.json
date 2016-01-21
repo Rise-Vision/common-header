@@ -28,6 +28,7 @@
     "angular-spinner": "~0.4.0",
     "checklist-model": "~0.1.3",
     "angular-mocks": "~1.3.0",
+    "angular-ui-router": "^0.2.15",
     "lodash": "~2.4.1",
     "jquery": "~1.11.1",
     "angular-ui-flow-manager": "https://github.com/Rise-Vision/angular-ui-flow-manager.git",

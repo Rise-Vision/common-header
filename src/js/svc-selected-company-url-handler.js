@@ -4,28 +4,55 @@
 
   angular.module("risevision.common.company", [])
 
-  .service("selectedCompanyUrlHandler", ["$location", "userState",
-    function ($location, userState) {
+  .service("selectedCompanyUrlHandler", ["$state", "$stateParams",
+    "$location", "userState",
+    function ($state, $stateParams, $location, userState) {
+      // Called when the selectedCompanyId is changed
       this.updateUrl = function () {
         var selectedCompanyId = userState.getSelectedCompanyId();
         // This parameter is only appended to the url if the user is logged in
-        if (selectedCompanyId && $location.search().cid !==
-          selectedCompanyId) {
-          $location.search("cid", selectedCompanyId);
+        if (selectedCompanyId) {
+          if ($stateParams.hasOwnProperty("cid")) {
+            if ($stateParams.cid !== selectedCompanyId) {
+              $state.go($state.current, {
+                cid: selectedCompanyId
+              }, {
+                // Don't send notification
+                notify: false
+              });
+            }
+          } else if ($location.search().cid !== selectedCompanyId) {
+            $location.search("cid", selectedCompanyId);
+          }
         }
       };
 
       this.updateSelectedCompanyFromUrl = function () {
-        var newCompanyId = $location.search().cid;
+        var newCompanyId = $stateParams.cid || $location.search().cid;
+
         if (newCompanyId && userState.getUserCompanyId() &&
           newCompanyId !== userState.getSelectedCompanyId()) {
+          // The CID is changed in the URL; switch company
           userState.switchCompany(newCompanyId);
         } else if (!newCompanyId && userState.getSelectedCompanyId()) {
-          var currentURL = $location.absUrl();
-          $location.search("cid", userState.getSelectedCompanyId());
-          if (currentURL === $location.destUrl) {
-            // see explanation below
-            $location.replace();
+          // The CID is missing in the URL; add it
+          if ($stateParams.hasOwnProperty("cid")) {
+            // Always replace, CID is missing
+            // If $stateParams has the 'cid' property, it eliminates
+            // Scenario #2 described below
+            $state.go($state.current, {
+              cid: userState.getSelectedCompanyId()
+            }, {
+              location: "replace",
+              notify: false
+            });
+          } else {
+            var currentURL = $location.absUrl();
+            $location.search("cid", userState.getSelectedCompanyId());
+            if (currentURL === $location.destUrl) {
+              // see explanation below
+              $location.replace();
+            }
           }
         }
       };

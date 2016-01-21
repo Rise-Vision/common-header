@@ -1,4 +1,5 @@
 angular.module("risevision.common.header", [
+  "ui.router",
   "risevision.common.userstate",
   "risevision.common.account",
   "risevision.common.gapi",
