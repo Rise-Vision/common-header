@@ -36,7 +36,7 @@
     "ng-core-api-client": "https://github.com/Rise-Vision/ng-core-api-client.git",
     "rv-common-style": "https://github.com/Rise-Vision/common-style.git#v1.3.41",
     "rv-loading": "https://github.com/Rise-Vision/rv-loading.git",
-    "rv-common-app-components": "https://github.com/Rise-Vision/common-app-components.git",
+    "rv-common-app-components": "https://github.com/Rise-Vision/common-app-components.git#fix/close-timeline",
     "rv-common-svg": "https://github.com/Rise-Vision/common-svg.git",
     "component-subscription-status": "https://github.com/Rise-Vision/component-subscription-status.git#master",
     "rv-common-i18n": "https://github.com/Rise-Vision/common-i18n.git",
