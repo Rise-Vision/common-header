@@ -1,4 +1,4 @@
-<li ng-show="!isLoggedIn || (isLoggedIn && isRiseVisionUser)" dropdown class="dropdown hidden-xs">
+<li ng-show="!isLoggedIn || (isLoggedIn && isRiseVisionUser)" dropdown class="dropdown hidden-xs add-left">
   <button id="helpDropdownButton" dropdown-toggle class="dropdown-toggle btn btn-primary"><span class="hidden-sm hidden-xs hidden-md">Need Help</span><i class="fa fa-question icon-white"></i></button>
   <div class="dropdown-menu app-navigation" role="menu">
       <ng-include
@@ -9,7 +9,7 @@
 </li>
 
 <!-- Mobile -->
-<li ng-show="!isLoggedIn || (isLoggedIn && isRiseVisionUser)" class="visible-xs-inline-block" >
+<li ng-show="!isLoggedIn || (isLoggedIn && isRiseVisionUser)" class="visible-xs-inline-block add-left" >
     <button class="dropdown-toggle btn btn-primary"
        action-sheet="'help-dropdown-menu.html'"
        action-sheet-class="app-navigation">

@@ -70,8 +70,8 @@ app.run(["$templateCache", function($templateCache) {
     "</li>\n" +
     "\n" +
     "<!-- Mobile -->\n" +
-    "<li class=\"visible-xs-inline-block\" >\n" +
-    "  <a href=\"\" class=\"company-buttons-icon-mobile\"\n" +
+    "<li class=\"visible-xs\">\n" +
+    "  <a href=\"\" class=\"dropdown-toggle btn btn-link\"\n" +
     "  action-sheet=\"'app-nav-buttons-menu.html'\"\n" +
     "  action-sheet-class=\"app-navigation\">\n" +
     "    <i class=\"fa fa-th\"></i>\n" +
@@ -225,83 +225,87 @@ app.run(["$templateCache", function($templateCache) {
   "use strict";
   $templateCache.put("common-header.html",
     "<!-- Common Header Navbar -->\n" +
-    "<nav class=\"navbar navbar-default navbar-static-top\"\n" +
+    "<nav class=\"navbar navbar-default\"\n" +
     "	ng-class=\"{'active-banner': isSubcompanySelected() || isTestCompanySelected()}\" role=\"navigation\">\n" +
     "	<div class=\"container\">\n" +
-    "		<div class=\"navbar-header\" style=\"width: 100%;\">\n" +
+    "		<div class=\"navbar-header\">\n" +
+    "\n" +
     "			<a class=\"navbar-brand visible-md visible-lg\"\n" +
     "			  href=\"http://www.risevision.com/\" target=\"{{newTabHome ? '_blank' : '_self'}}\" ng-if=\"!inRVAFrame\">\n" +
     "				<img src=\"//s3.amazonaws.com/Rise-Images/UI/logo.svg\" class=\"img-responsive logo-small\" width=\"113\" height=\"42\" alt=\"Rise Vision\">\n" +
     "			</a>\n" +
+    "\n" +
     "			<a class=\"navbar-brand hidden-md hidden-lg text-center\"\n" +
     "				href=\"\" off-canvas-toggle>\n" +
     "				<i class=\"fa fa-bars\"></i>\n" +
     "			</a>\n" +
-    "			<!-- If User Authenticated -->\n" +
-    "			<!-- Action Nav -->\n" +
-    "			<ul class=\"nav navbar-nav navbar-right actions-nav pull-right\">\n" +
-    "				<!-- Help Dropdown -->\n" +
-    "				<ng-include\n" +
-    "					replace-include\n" +
-    "					ng-controller=\"HelpDropdownButtonCtrl\"\n" +
-    "					src=\"'help-dropdown.html'\"\n" +
-    "				></ng-include>\n" +
-    "				<!-- END Help Dropdown -->\n" +
-    "				<!-- Notifications -->\n" +
-    "				<ng-include\n" +
-    "					replace-include\n" +
-    "					ng-if=\"!inRVAFrame\"\n" +
-    "				  ng-controller=\"SystemMessagesButtonCtrl\"\n" +
-    "					src=\"'system-messages-button.html'\"\n" +
-    "				></ng-include>\n" +
-    "				<!-- Shopping Cart -->\n" +
-    "				<ng-include\n" +
-    "					replace-include\n" +
-    "					ng-controller=\"ShoppingCartButtonCtrl\"\n" +
-    "					src=\"'shoppingcart-button.html'\"\n" +
-    "				></ng-include>\n" +
-    "				<!-- Shopping Cart -->\n" +
-    "				<ng-include\n" +
-    "					replace-include\n" +
-    "					ng-if=\"inRVAFrame\"\n" +
-    "					ng-controller=\"CloseFrameButtonCtrl\"\n" +
-    "					src=\"'close-frame-button.html'\"\n" +
-    "				></ng-include>\n" +
-    "				<!-- Current App -->\n" +
-    "				<ng-include\n" +
-    "					ng-if=\"!inRVAFrame\"\n" +
-    "					replace-include\n" +
-    "					src=\"'app-nav-buttons.html'\"\n" +
-    "				></ng-include>\n" +
-    "				<!-- END Current App -->\n" +
-    "				<!-- Auth -->\n" +
-    "				<ng-include\n" +
-    "					replace-include\n" +
-    "					ng-if=\"!inRVAFrame\"\n" +
-    "				  ng-controller=\"AuthButtonsCtr\"\n" +
-    "					src=\"'auth-buttons.html'\"\n" +
-    "				></ng-include>\n" +
-    "				<li ng-if=\"inRVAFrame\"\n" +
-    "				  ng-controller=\"AuthButtonsCtr\"></li>\n" +
-    "			</ul>\n" +
-    "			<!-- END Action Nav -->\n" +
+    "		</div><!--navbar-header-->\n" +
+    "			\n" +
+    "		<!-- If User Authenticated -->\n" +
+    "		<!-- Action Nav -->\n" +
+    "		<ul class=\"nav navbar-nav navbar-right actions-nav pull-right\">\n" +
+    "			\n" +
+    "			<!-- Notifications -->\n" +
+    "			<ng-include\n" +
+    "				replace-include\n" +
+    "				ng-if=\"!inRVAFrame\"\n" +
+    "			  ng-controller=\"SystemMessagesButtonCtrl\"\n" +
+    "				src=\"'system-messages-button.html'\"\n" +
+    "			></ng-include>\n" +
+    "			<!-- Shopping Cart -->\n" +
+    "			<!-- Help Dropdown -->\n" +
+    "			<ng-include\n" +
+    "				replace-include\n" +
+    "				ng-controller=\"HelpDropdownButtonCtrl\"\n" +
+    "				src=\"'help-dropdown.html'\"\n" +
+    "			></ng-include>\n" +
+    "			<!-- END Help Dropdown -->\n" +
+    "			<ng-include\n" +
+    "				replace-include\n" +
+    "				ng-controller=\"ShoppingCartButtonCtrl\"\n" +
+    "				src=\"'shoppingcart-button.html'\"\n" +
+    "			></ng-include>\n" +
+    "			<!-- Shopping Cart -->\n" +
+    "			<ng-include\n" +
+    "				replace-include\n" +
+    "				ng-if=\"inRVAFrame\"\n" +
+    "				ng-controller=\"CloseFrameButtonCtrl\"\n" +
+    "				src=\"'close-frame-button.html'\"\n" +
+    "			></ng-include>\n" +
+    "			<!-- Current App -->\n" +
+    "			<ng-include\n" +
+    "				ng-if=\"!inRVAFrame\"\n" +
+    "				replace-include\n" +
+    "				src=\"'app-nav-buttons.html'\"\n" +
+    "			></ng-include>\n" +
+    "			<!-- END Current App -->\n" +
+    "			<!-- Auth -->\n" +
+    "			<ng-include\n" +
+    "				replace-include\n" +
+    "				ng-if=\"!inRVAFrame\"\n" +
+    "			  ng-controller=\"AuthButtonsCtr\"\n" +
+    "				src=\"'auth-buttons.html'\"\n" +
+    "			></ng-include>\n" +
+    "			<li ng-if=\"inRVAFrame\"\n" +
+    "			  ng-controller=\"AuthButtonsCtr\"></li>\n" +
+    "		</ul>\n" +
+    "		<!-- END Action Nav -->\n" +
     "\n" +
-    "			<!-- Nav Links -->\n" +
-    "			<div class=\"navbar-collapse navbar-left hidden-xs hidden-sm\">\n" +
-    "				<ul class=\"nav navbar-nav\">\n" +
-    "					<li ng-repeat=\"opt in navOptions\">\n" +
-    "						<a ng-if=\"opt.cid\" ng-href=\"{{opt.link}}\" link-cid target=\"{{opt.target}}\" ng-class=\"{'selected': opt.states && opt.states.indexOf(navSelected) > -1}\">{{opt.title}}</a>\n" +
-    "						<a ng-if=\"!opt.cid\" ng-href=\"{{opt.link}}\" target=\"{{opt.target}}\" ng-class=\"{'selected': opt.states && opt.states.indexOf(navSelected) > -1}\">{{opt.title}}</a>\n" +
-    "					</li>\n" +
-    "					<li ng-if=\"!inRVAFrame && !hideHelpMenu\">\n" +
-    "						<a href=\"http://www.risevision.com/help/\" target=\"_blank\">\n" +
-    "							Help\n" +
-    "						</a>\n" +
-    "					</li>\n" +
-    "				</ul>\n" +
-    "			</div>\n" +
-    "			<!-- END Nav Links -->\n" +
+    "		<!-- Nav Links -->\n" +
+    "		<div class=\"navbar-left hidden-xs hidden-sm\">\n" +
+    "			<ul class=\"nav navbar-nav\">\n" +
+    "				<li ng-repeat=\"opt in navOptions\">\n" +
+    "					<a ng-if=\"opt.cid\" ng-href=\"{{opt.link}}\" link-cid target=\"{{opt.target}}\" ng-class=\"{'selected': opt.states && opt.states.indexOf(navSelected) > -1}\">{{opt.title}}</a>\n" +
+    "					<a ng-if=\"!opt.cid\" ng-href=\"{{opt.link}}\" target=\"{{opt.target}}\" ng-class=\"{'selected': opt.states && opt.states.indexOf(navSelected) > -1}\">{{opt.title}}</a>\n" +
+    "				</li>\n" +
+    "				<li ng-if=\"!inRVAFrame && !hideHelpMenu\">\n" +
+    "					<a href=\"http://www.risevision.com/help/\" target=\"_blank\">\n" +
+    "						Help\n" +
+    "					</a>\n" +
+    "				</li>\n" +
+    "			</ul>\n" +
     "		</div>\n" +
+    "		<!-- END Nav Links -->	\n" +
     "\n" +
     "		<ng-include\n" +
     "		replace-include\n" +
@@ -316,7 +320,7 @@ app.run(["$templateCache", function($templateCache) {
     "</nav>\n" +
     "\n" +
     "<div ng-show=\"cookieEnabled === false\" class=\"bg-warning add-padding text-center\">\n" +
-    "    <small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small>\n" +
+    "  <small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small>\n" +
     "</div>\n" +
     "\n" +
     "<ng-include\n" +
@@ -767,7 +771,6 @@ catch(err) { app = angular.module("risevision.common.header.templates", []); }
 app.run(["$templateCache", function($templateCache) {
   "use strict";
   $templateCache.put("help-dropdown-menu.html",
-    "\n" +
     "<ul>\n" +
     "    <li><a id=\"askCommunityButton\" href=\"https://community.risevision.com/rise_vision_inc\" target=\"_blank\">Ask the Community</a></li>\n" +
     "    <li>\n" +
@@ -789,7 +792,7 @@ catch(err) { app = angular.module("risevision.common.header.templates", []); }
 app.run(["$templateCache", function($templateCache) {
   "use strict";
   $templateCache.put("help-dropdown.html",
-    "<li ng-show=\"!isLoggedIn || (isLoggedIn && isRiseVisionUser)\" dropdown class=\"dropdown hidden-xs\">\n" +
+    "<li ng-show=\"!isLoggedIn || (isLoggedIn && isRiseVisionUser)\" dropdown class=\"dropdown hidden-xs add-left\">\n" +
     "  <button id=\"helpDropdownButton\" dropdown-toggle class=\"dropdown-toggle btn btn-primary\"><span class=\"hidden-sm hidden-xs hidden-md\">Need Help</span><i class=\"fa fa-question icon-white\"></i></button>\n" +
     "  <div class=\"dropdown-menu app-navigation\" role=\"menu\">\n" +
     "      <ng-include\n" +
@@ -800,7 +803,7 @@ app.run(["$templateCache", function($templateCache) {
     "</li>\n" +
     "\n" +
     "<!-- Mobile -->\n" +
-    "<li ng-show=\"!isLoggedIn || (isLoggedIn && isRiseVisionUser)\" class=\"visible-xs-inline-block\" >\n" +
+    "<li ng-show=\"!isLoggedIn || (isLoggedIn && isRiseVisionUser)\" class=\"visible-xs-inline-block add-left\" >\n" +
     "    <button class=\"dropdown-toggle btn btn-primary\"\n" +
     "       action-sheet=\"'help-dropdown-menu.html'\"\n" +
     "       action-sheet-class=\"app-navigation\">\n" +
