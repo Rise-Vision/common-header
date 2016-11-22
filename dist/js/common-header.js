@@ -136,7 +136,7 @@ app.run(["$templateCache", function($templateCache) {
     "        <span><strong>{{companyName}}</strong></span>\n" +
     "      </div>\n" +
     "      <img ng-src=\"{{userPicture}}\"\n" +
-    "        class=\"profile-pic\" width=\"30\" height=\"30\" alt=\"User\" />\n" +
+    "        class=\"profile-pic\" width=\"32\" height=\"32\" alt=\"User\" />\n" +
     "    </a>\n" +
     "    <div class=\"dropdown-menu\" role=\"menu\">\n" +
     "      <ng-include\n" +
