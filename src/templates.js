@@ -391,6 +391,12 @@ app.run(["$templateCache", function($templateCache) {
     "      <span class=\"item-name\">Company Users</span>\n" +
     "    </a>\n" +
     "  </li>\n" +
+    "  <li>\n" +
+    "    <a href=\"#\" class=\"action company-users-menu-button\">\n" +
+    "      <i class=\"fa fa-bullhorn\"></i>\n" +
+    "      <span class=\"item-name\">Alerts Settings</span>\n" +
+    "    </a>\n" +
+    "  </li>\n" +
     "</ul>\n" +
     "");
 }]);
