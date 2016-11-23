@@ -6,13 +6,12 @@
 <ul>
   <li ng-show="isRiseVisionUser">
     <a href="" ng-click="userSettings()" class="user-settings-button action">
-      <i class="fa fa-user"></i>
-      <span class="item-name">User Settings</span>
+      <i class="fa fa-user icon-left"></i><span class="item-name">User Settings</span>
     </a>
   </li>
 
   <span ng-if="isLoggedIn && !isRiseVisionUser" class="google-account" class="username">{{username}}</span>
-
+  <li class="divider"></li>
   <li class="dropdown-footer text-right" ng-show="isLoggedIn">
     <button class="sign-out-button btn btn-sm btn-default" ng-controller="SignOutButtonCtrl" ng-click="logout()">Sign Out<i class="fa fa-sign-out icon-right"></i>
   </li>
