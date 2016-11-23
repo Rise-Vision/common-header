@@ -95,13 +95,12 @@ app.run(["$templateCache", function($templateCache) {
     "<ul>\n" +
     "  <li ng-show=\"isRiseVisionUser\">\n" +
     "    <a href=\"\" ng-click=\"userSettings()\" class=\"user-settings-button action\">\n" +
-    "      <i class=\"fa fa-user\"></i>\n" +
-    "      <span class=\"item-name\">User Settings</span>\n" +
+    "      <i class=\"fa fa-user icon-left\"></i><span class=\"item-name\">User Settings</span>\n" +
     "    </a>\n" +
     "  </li>\n" +
     "\n" +
     "  <span ng-if=\"isLoggedIn && !isRiseVisionUser\" class=\"google-account\" class=\"username\">{{username}}</span>\n" +
-    "\n" +
+    "  <li class=\"divider\"></li>\n" +
     "  <li class=\"dropdown-footer text-right\" ng-show=\"isLoggedIn\">\n" +
     "    <button class=\"sign-out-button btn btn-sm btn-default\" ng-controller=\"SignOutButtonCtrl\" ng-click=\"logout()\">Sign Out<i class=\"fa fa-sign-out icon-right\"></i>\n" +
     "  </li>\n" +
@@ -375,28 +374,25 @@ app.run(["$templateCache", function($templateCache) {
     "\n" +
     "  <li ng-show=\"isUserAdmin || isRiseAdmin\">\n" +
     "    <a href=\"\" ng-click=\"addSubCompany()\" class=\"action add-subcompany-menu-button\">\n" +
-    "      <i class=\"fa fa-plus\"></i>\n" +
-    "      <span class=\"item-name\">Add Sub-Company</span>\n" +
+    "      <i class=\"fa fa-plus icon-left\"></i><span class=\"item-name\">Add Sub-Company</span>\n" +
     "    </a>\n" +
     "  </li>\n" +
     "  <li ng-show=\"isUserAdmin || isRiseAdmin\">\n" +
     "    <a href=\"\" ng-click=\"companySettings()\" class=\"action company-settings-menu-button\">\n" +
-    "      <i class=\"fa fa-building\"></i>\n" +
-    "      <span class=\"item-name\">Company Settings</span>\n" +
+    "      <i class=\"fa fa-building icon-left\"></i><span class=\"item-name\">Company Settings</span>\n" +
     "    </a>\n" +
     "  </li>\n" +
     "  <li ng-show=\"isUserAdmin || isRiseAdmin\">\n" +
     "    <a href=\"\" data-toggle=\"modal\" ng-click=\"companyUsers()\" class=\"action company-users-menu-button\">\n" +
-    "      <i class=\"fa fa-users\"></i>\n" +
-    "      <span class=\"item-name\">Company Users</span>\n" +
+    "      <i class=\"fa fa-users icon-left\"></i><span class=\"item-name\">Company Users</span>\n" +
     "    </a>\n" +
     "  </li>\n" +
     "  <li>\n" +
     "    <a href=\"#\" class=\"action company-users-menu-button\">\n" +
-    "      <i class=\"fa fa-bullhorn\"></i>\n" +
-    "      <span class=\"item-name\">Alerts Settings</span>\n" +
+    "      <i class=\"fa fa-bullhorn icon-left\"></i><span class=\"item-name\">Alerts Settings</span>\n" +
     "    </a>\n" +
     "  </li>\n" +
+    "  <li class=\"divider\"></li>\n" +
     "</ul>\n" +
     "");
 }]);
