@@ -309,6 +309,7 @@ gulp.task("bump", function(){
    environment variable (default environment is dev)
 */
 gulp.task("config", function() {
+  console.log('Environment is ' + env);
   return gulp.src(["./src/js/config/" + env + ".js"])
     .pipe(rename("config.js"))
     .pipe(gulp.dest("./src/js/config"));

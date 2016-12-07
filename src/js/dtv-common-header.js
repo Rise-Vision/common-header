@@ -67,8 +67,10 @@ angular.module("risevision.common.header", [
         $scope.isTestCompanySelected = userState.isTestCompanySelected;
 
         // If nav options not provided use defaults
-        if (!$scope[attr.navOptions]) {
-          $scope.navOptions = [{
+
+        var navOptions = $scope[attr.navOptions];
+        if (!navOptions) {
+          navOptions = [{
             title: "Home",
             link: "#/"
           }, {
@@ -85,7 +87,13 @@ angular.module("risevision.common.header", [
             link: "http://rva.risevision.com/",
             target: "_blank"
           }];
+          $scope.navOptions = navOptions;
         }
+
+        navOptions.forEach(function (opt) {
+          //default all target to blank
+          opt.target = opt.target || "_blank";
+        });
 
         //default to true
         $scope.hideShoppingCart = attr.hideShoppingCart !== "0" &&
