@@ -1694,7 +1694,7 @@ angular.module("risevision.common.header.directives")
             return parseInt(viewValue, 10) || 0;
           });
           ctrl.$formatters.push(function (viewValue) {
-            return "" + viewValue;
+            return typeof viewValue === "undefined" ? "" : "" + viewValue;
           });
         }
       };
