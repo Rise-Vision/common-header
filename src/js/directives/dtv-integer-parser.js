@@ -5,8 +5,11 @@ angular.module("risevision.common.header.directives")
       return {
         require: "ngModel",
         link: function (scope, ele, attr, ctrl) {
-          ctrl.$parsers.unshift(function (viewValue) {
+          ctrl.$parsers.push(function (viewValue) {
             return parseInt(viewValue, 10) || 0;
+          });
+          ctrl.$formatters.push(function (viewValue) {
+            return "" + viewValue;
           });
         }
       };
