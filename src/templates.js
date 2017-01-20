@@ -329,7 +329,7 @@ app.run(["$templateCache", function($templateCache) {
     "	</div>\n" +
     "</nav>\n" +
     "\n" +
-    "<div ng-show=\"cookieEnabled === false\" class=\"bg-warning add-padding text-center\">\n" +
+    "<div ng-show=\"cookieEnabled === false\" class=\"bg-warning text-center u_padding-sm\">\n" +
     "    <small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small>\n" +
     "</div>\n" +
     "\n" +
