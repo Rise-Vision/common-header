@@ -53,6 +53,5 @@
     "rv-common-style": "fix/utility-namespace",
     "rv-common-app-components": "fix/utility-namespace",
     "component-subscription-status": "fix/utility-namespace"
-
   }
 }
