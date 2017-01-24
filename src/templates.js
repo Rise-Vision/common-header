@@ -177,7 +177,7 @@ app.run(["$templateCache", function($templateCache) {
     "<!-- If User NOT Authenticated -->\n" +
     "<li ng-show=\"!undetermined && isLoggedIn === false\" ng-controller=\"SignUpButtonCtrl\">\n" +
     "  <button type=\"button\" ng-click=\"openSignUpModal()\"\n" +
-    "  class=\"btn-primary btn add-right\">\n" +
+    "  class=\"btn-primary btn u_margin-right\">\n" +
     "   Sign Up Free</button>\n" +
     "</li>\n" +
     "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
@@ -521,7 +521,7 @@ app.run(["$templateCache", function($templateCache) {
     "		<search-filter filter-config=\"filterConfig\" search=\"search\" do-search=\"doSearch\"></search-filter> \n" +
     "\n" +
     "		<!-- List of Companies -->\n" +
-    "		<div class=\"panel panel-default scrollable-list half-top\"\n" +
+    "		<div class=\"panel panel-default scrollable-list u_margin-sm-top\"\n" +
     "		  scrolling-list=\"loadCompanies()\"\n" +
     "		  rv-spinner rv-spinner-key=\"company-selector-modal-list\"\n" +
     "			rv-spinner-start-active=\"1\"\n" +
@@ -713,12 +713,12 @@ app.run(["$templateCache", function($templateCache) {
     "</div>\n" +
     "<div class=\"modal-body company-users-modal\" stop-event=\"touchend\">\n" +
     "  <!-- CSV Button -->\n" +
-    "  <div class=\"row action-bar add-bottom\" ng-if=\"false\">\n" +
+    "  <div class=\"row action-bar u_margin-lg-bottom\" ng-if=\"false\">\n" +
     "    <button class=\"btn btn-secondary\" ng-csv=\"users\"\n" +
     "      filename=\"users.csv\">Download to CSV</button>\n" +
     "  </div>\n" +
     "  <!-- Search -->\n" +
-    "  <div class=\"input-group company-search add-bottom\">\n" +
+    "  <div class=\"input-group company-search u_margin-lg-bottom\">\n" +
     "    <input id=\"csSearch\" type=\"text\" class=\"form-control\"\n" +
     "      placeholder=\"Search Users\"\n" +
     "      ng-model=\"search.searchString\"\n" +
@@ -804,7 +804,7 @@ app.run(["$templateCache", function($templateCache) {
   "use strict";
   $templateCache.put("help-dropdown.html",
     "<li ng-show=\"!isLoggedIn || (isLoggedIn && isRiseVisionUser)\" dropdown class=\"dropdown hidden-xs\">\n" +
-    "  <button id=\"helpDropdownButton\" dropdown-toggle class=\"dropdown-toggle btn btn-primary\"><span class=\"hidden-sm hidden-xs hidden-md\">Need Help</span><i class=\"fa fa-question icon-white\"></i></button>\n" +
+    "  <button id=\"helpDropdownButton\" dropdown-toggle class=\"dropdown-toggle btn btn-primary\"><span class=\"hidden-sm hidden-xs hidden-md\">Need Help</span><i class=\"fa fa-question u_icon-white\"></i></button>\n" +
     "  <div class=\"dropdown-menu app-navigation\" role=\"menu\">\n" +
     "      <ng-include\n" +
     "              replace-include\n" +
@@ -818,7 +818,7 @@ app.run(["$templateCache", function($templateCache) {
     "    <button class=\"dropdown-toggle btn btn-primary\"\n" +
     "       action-sheet=\"'help-dropdown-menu.html'\"\n" +
     "       action-sheet-class=\"app-navigation\">\n" +
-    "        <i class=\"fa fa-question icon-white\"></i>\n" +
+    "        <i class=\"fa fa-question u_icon-white\"></i>\n" +
     "    </button>\n" +
     "</li>\n" +
     "\n" +
@@ -841,7 +841,7 @@ app.run(["$templateCache", function($templateCache) {
     "    </div>\n" +
     "    <div class=\"modal-body\" stop-event=\"touchend\">\n" +
     "\n" +
-    "        <div class=\"add-bottom blank-state\">\n" +
+    "        <div class=\"u_margin-lg-bottom blank-state\">\n" +
     "            <div class=\"product-graphic\" ng-show=\"['trial-available', 'not-subscribed'].indexOf(subscriptionStatus.statusCode) >= 0\">\n" +
     "                <img itemprop=\"image\" class=\"img-responsive\" src=\"https://s3.amazonaws.com/Store-Products/Rise-Vision/support_image.png\">\n" +
     "            </div>\n" +
@@ -855,25 +855,25 @@ app.run(["$templateCache", function($templateCache) {
     "\n" +
     "                <div ng-show=\"subscriptionStatus.statusCode === 'on-trial'\" class=\"subscription-status trial\">\n" +
     "                    <span  ng-bind-html=\"'subscription-status.expanded-' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted\"></span>\n" +
-    "                    <a class=\"btn btn-primary add-left\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss()\" target=\"_blank\">\n" +
+    "                    <a class=\"btn btn-primary u_margin-left\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss()\" target=\"_blank\">\n" +
     "                        <span>Subscribe Now!</span>\n" +
     "                    </a>\n" +
     "                </div>\n" +
     "                <div ng-show=\"subscriptionStatus.statusCode === 'trial-expired'\" class=\"subscription-status expired\">\n" +
     "                    <span translate=\"subscription-status.expanded-expired\"></span>\n" +
-    "                    <a class=\"btn btn-primary add-left\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss()\" target=\"_blank\">\n" +
+    "                    <a class=\"btn btn-primary u_margin-left\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss()\" target=\"_blank\">\n" +
     "                        <span>Subscribe Now!</span>\n" +
     "                    </a>\n" +
     "                </div>\n" +
     "                <div ng-show=\"subscriptionStatus.statusCode === 'cancelled'\" class=\"subscription-status cancelled\">\n" +
     "                    <span translate=\"subscription-status.expanded-cancelled\"></span>\n" +
-    "                    <a class=\"btn btn-primary add-left\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss()\" target=\"_blank\">\n" +
+    "                    <a class=\"btn btn-primary u_margin-left\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss()\" target=\"_blank\">\n" +
     "                        <span>Subscribe Now!</span>\n" +
     "                    </a>\n" +
     "                </div>\n" +
     "                <div ng-show=\"subscriptionStatus.statusCode === 'suspended'\" class=\"subscription-status suspended\">\n" +
     "                    <span translate=\"subscription-status.expanded-suspended\"></span>\n" +
-    "                    <a class=\"btn btn-primary add-left\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss()\" target=\"_blank\">\n" +
+    "                    <a class=\"btn btn-primary u_margin-left\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss()\" target=\"_blank\">\n" +
     "                        <span>Subscribe Now!</span>\n" +
     "                    </a>\n" +
     "                </div>\n" +
@@ -915,9 +915,9 @@ app.run(["$templateCache", function($templateCache) {
     "            Send Us a Note\n" +
     "        </button>\n" +
     "\n" +
-    "        <div class=\"content-box add-top remove-bottom\">\n" +
+    "        <div class=\"content-box u_margin-md-top u_remove-bottom\">\n" +
     "          <div class=\"content-box-body\">\n" +
-    "            <p class=\"lead add-left add-right\">\n" +
+    "            <p class=\"lead u_margin-left u_margin-right\">\n" +
     "                <strong>Need help fast?</strong>\n" +
     "                Check out Priority Support and have a response in <strong>10 minutes</strong>. We are online 8-5 CST Monday through Friday.\n" +
     "            </p>\n" +
@@ -1080,7 +1080,7 @@ app.run(["$templateCache", function($templateCache) {
     "            <input type=\"checkbox\" class=\"sign-up-newsletter-checkbox\" ng-model=\"profile.mailSyncEnabled\"> Sign up for our newsletter\n" +
     "          </label>\n" +
     "        </div>\n" +
-    "        <div class=\"add-top\">\n" +
+    "        <div class=\"u_margin-md-top\">\n" +
     "          <button ng-click=\"save()\"\n" +
     "            name=\"create-account\"\n" +
     "            type=\"button\"\n" +
@@ -1213,14 +1213,14 @@ app.run(["$templateCache", function($templateCache) {
   $templateCache.put("signup-modal.html",
     "<div class=\"modal-body text-center\" stop-event=\"touchend\">\n" +
     "  <div class=\"signup-modal\">\n" +
-    "    <div class=\"logo add-bottom hidden\">\n" +
+    "    <div class=\"logo u_margin-lg-bottom hidden\">\n" +
     "      <img style=\"width:120px\" src=\"//s3.amazonaws.com/Rise-Images/UI/logo.svg\" alt=\"Rise Vision\">\n" +
     "    </div>\n" +
-    "    <h1 class=\"modal-title add-top remove-bottom\">New to Rise Vision?</h1>\n" +
+    "    <h1 class=\"modal-title u_margin-md-top u_remove-bottom\">New to Rise Vision?</h1>\n" +
     "    <p class=\"text-muted\">CREATE A FREE ACCOUNT</p>\n" +
     "\n" +
-    "    <a class=\"add-top btn btn-hg btn-google-auth\" id=\"google-registration-button\" ng-click=\"login('registrationComplete')\"><strong>Sign Up with Google</strong> <i class=\"fa fa-google fa-lg icon-right\"></i></a>\n" +
-    "    <p class=\"text-muted remove-bottom half-top\"><a href=\"https://accounts.google.com/signup\" target=\"_blank\">I don't have a Google Account</a></p>\n" +
+    "    <a class=\"u_margin-md-top btn btn-hg btn-google-auth\" id=\"google-registration-button\" ng-click=\"login('registrationComplete')\"><strong>Sign Up with Google</strong> <i class=\"fa fa-google fa-lg icon-right\"></i></a>\n" +
+    "    <p class=\"text-muted u_remove-bottom u_margin-sm-top\"><a href=\"https://accounts.google.com/signup\" target=\"_blank\">I don't have a Google Account</a></p>\n" +
     "    <p class=\"text-muted hidden\">Already a Rise Vision User? <a ng-click=\"$event.preventDefault(); login('registrationComplete');\" ng-href=\"#\">Sign In</a></p>\n" +
     "\n" +
     "    <div class=\"signup-offer\">\n" +
