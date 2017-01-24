@@ -7517,25 +7517,25 @@ module.run(["$templateCache", function($templateCache) {
     "<div ng-show=\"expandedFormat\">\n" +
     "  <div class=\"subscription-status trial\" ng-show=\"subscriptionStatus.statusCode === 'on-trial'\">\n" +
     "    <span ng-bind-html=\"'subscription-status.expanded-' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted\"></span>\n" +
-    "    <a type=\"button\" class=\"btn btn-primary add-left\" ng-href=\"{{storeUrl}}\" target=\"_blank\">\n" +
+    "    <a type=\"button\" class=\"btn btn-primary u_margin-left\" ng-href=\"{{storeUrl}}\" target=\"_blank\">\n" +
     "      <span translate=\"subscription-status.subscribe-now\"></span>\n" +
     "    </a>\n" +
     "  </div>\n" +
     "  <div class=\"subscription-status expired\" ng-show=\"subscriptionStatus.statusCode === 'trial-expired'\">\n" +
     "    <span translate=\"subscription-status.expanded-expired\"></span>\n" +
-    "    <a type=\"button\" class=\"btn btn-primary add-left\" ng-href=\"{{storeUrl}}\" target=\"_blank\">\n" +
+    "    <a type=\"button\" class=\"btn btn-primary u_margin-left\" ng-href=\"{{storeUrl}}\" target=\"_blank\">\n" +
     "      <span translate=\"subscription-status.subscribe-now\"></span>\n" +
     "    </a>\n" +
     "  </div>\n" +
     "  <div class=\"subscription-status cancelled\" ng-show=\"subscriptionStatus.statusCode === 'cancelled'\">\n" +
     "   <span translate=\"subscription-status.expanded-cancelled\"></span>\n" +
-    "    <a type=\"button\" class=\"btn btn-primary add-left\" ng-href=\"{{storeUrl}}\" target=\"_blank\">\n" +
+    "    <a type=\"button\" class=\"btn btn-primary u_margin-left\" ng-href=\"{{storeUrl}}\" target=\"_blank\">\n" +
     "      <span translate=\"subscription-status.subscribe-now\"></span>\n" +
     "    </a>\n" +
     "  </div>\n" +
     "  <div class=\"subscription-status suspended\" ng-show=\"subscriptionStatus.statusCode === 'suspended'\">\n" +
     "    <span translate=\"subscription-status.expanded-suspended\"></span>\n" +
-    "    <a type=\"button\" class=\"btn btn-primary add-left\" ng-href=\"{{storeAccountUrl}}\" target=\"_blank\">\n" +
+    "    <a type=\"button\" class=\"btn btn-primary u_margin-left\" ng-href=\"{{storeAccountUrl}}\" target=\"_blank\">\n" +
     "      <span translate=\"subscription-status.view-invoices\"></span>\n" +
     "    </a>\n" +
     "  </div>\n" +
@@ -11886,5 +11886,5 @@ angular.module("risevision.common.i18n", ["pascalprecht.translate", "risevision.
   $translateProvider
     .determinePreferredLanguage()
     .fallbackLanguage("en")
-    .useSanitizeValueStrategy("sceParameters");
+    .useSanitizeValueStrategy(null);
 }]);
