@@ -34,7 +34,6 @@
     "rv-loading": "https://github.com/Rise-Vision/rv-loading.git",
     "rv-common-app-components": "https://github.com/Rise-Vision/common-app-components.git#fix/utility-namespace",
     "rv-common-svg": "https://github.com/Rise-Vision/common-svg.git",
-    "component-subscription-status": "https://github.com/Rise-Vision/component-subscription-status.git#fix/utility-namespace",
     "rv-common-i18n": "https://github.com/Rise-Vision/common-i18n.git",
     "q": "1.0.1",
     "ng-csv": "~0.2.3",
