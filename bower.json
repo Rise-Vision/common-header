@@ -51,7 +51,6 @@
     "angular-sanitize": "~1.5.0",
     "angular-bootstrap": "~0.13.0",
     "rv-common-style": "fix/utility-namespace",
-    "rv-common-app-components": "fix/utility-namespace",
-    "component-subscription-status": "fix/utility-namespace"
+    "rv-common-app-components": "fix/utility-namespace"
   }
 }
