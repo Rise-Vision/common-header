@@ -52,6 +52,6 @@
     "angular-bootstrap": "~0.13.0",
     "rv-common-style": "fix/utility-namespace",
     "common-style": "fix/utility-namespace",
-    "rv-common-app-components": "fix/utility-namespace"
+    "rv-common-app-components": "fix/utility-namespace" 
   }
 }
