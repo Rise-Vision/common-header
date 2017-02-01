@@ -11886,5 +11886,5 @@ angular.module("risevision.common.i18n", ["pascalprecht.translate", "risevision.
   $translateProvider
     .determinePreferredLanguage()
     .fallbackLanguage("en")
-    .useSanitizeValueStrategy("sceParameters");
+    .useSanitizeValueStrategy(null);
 }]);
