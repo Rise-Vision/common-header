@@ -35,7 +35,7 @@
     "rv-common-app-components": "https://github.com/Rise-Vision/common-app-components.git",
     "rv-common-svg": "https://github.com/Rise-Vision/common-svg.git",
     "component-subscription-status": "https://github.com/Rise-Vision/component-subscription-status.git#master",
-    "rv-common-i18n": "https://github.com/Rise-Vision/common-i18n.git#fix/sanitize",
+    "rv-common-i18n": "https://github.com/Rise-Vision/common-i18n.git",
     "q": "1.0.1",
     "ng-csv": "~0.2.3",
     "angular-local-storage": "~0.1.4"
@@ -49,7 +49,6 @@
     "angular": "~1.5.0",
     "angular-mocks": "^1.5.5",
     "angular-sanitize": "~1.5.0",
-    "angular-bootstrap": "~0.13.0",
-    "rv-common-i18n": "fix/sanitize"
+    "angular-bootstrap": "~0.13.0"
   }
 }
