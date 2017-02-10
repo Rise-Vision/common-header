@@ -1,6 +1,6 @@
 {
   "name": "rise-vision-common-header",
-  "version": "1.12.4",
+  "version": "1.12.5",
   "homepage": "https://github.com/Rise-Vision/common-header",
   "authors": [
     "Xiyang Chen <settinghead@gmail.com>"
@@ -31,7 +31,7 @@
     "checklist-model": "~0.1.3",
     "lodash": "~2.4.1",
     "jquery": "~1.11.1",
-    "rv-common-style": "https://github.com/Rise-Vision/common-style.git#fix/responsive-utilities",
+    "rv-common-style": "https://github.com/Rise-Vision/common-style.git#v1.4.2",
     "rv-loading": "https://github.com/Rise-Vision/rv-loading.git",
     "rv-common-app-components": "https://github.com/Rise-Vision/common-app-components.git",
     "rv-common-svg": "https://github.com/Rise-Vision/common-svg.git",
@@ -50,7 +50,6 @@
     "angular": "~1.5.0",
     "angular-mocks": "~1.5.0",
     "angular-sanitize": "~1.5.0",
-    "angular-bootstrap": "~0.13.0",
-    "rv-common-style": "fix/responsive-utilities"
+    "angular-bootstrap": "~0.13.0"
   }
 }
