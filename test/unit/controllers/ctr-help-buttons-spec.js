@@ -21,13 +21,30 @@ describe("controller: help buttons ", function() {
       };
     });
 
-    $provide.factory("supportFactory", function () {
+    $provide.factory("supportFactory", function ($q) {
       return {
         handlePrioritySupportAction : function(){
           return;
         },
         handleSendUsANote : function(){
           return;
+        },
+        getSubscriptionStatus: function() {
+          return $q.when("subscribed");
+        }
+      };
+    });
+
+    $provide.factory("zendesk", function ($q) {
+      return {
+        showWidget : function(){
+          return $q.when();
+        },
+        ensureScript: function () {
+          return $q.when();
+        },
+        showSendNote: function () {
+          return $q.when();
         }
       };
     });
@@ -41,17 +58,17 @@ describe("controller: help buttons ", function() {
     });
 
     $translateProvider.useLoader("customLoader");
-        
+
   }));
-  var $scope, isLoggedInValue, isRiseVisionUser, handlePrioritySupportActionSpy, handleSendUsANoteSpy;
-  
+  var $scope, isLoggedInValue, isRiseVisionUser, zendeskShowWidgetSpy, handleSendUsANoteSpy;
+
   beforeEach(function() {
 
     isLoggedInValue = false;
     isRiseVisionUser = false;
-    inject(function($injector,$rootScope, $controller, userState, supportFactory){
+    inject(function($injector,$rootScope, $controller, userState, supportFactory, zendesk){
       $scope = $rootScope.$new();
-      handlePrioritySupportActionSpy = sinon.spy(supportFactory, "handlePrioritySupportAction");
+      zendeskShowWidgetSpy = sinon.spy(zendesk, "showWidget");
       handleSendUsANoteSpy = sinon.spy(supportFactory, "handleSendUsANote");
 
       $controller("HelpDropdownButtonCtrl", {
@@ -62,12 +79,11 @@ describe("controller: help buttons ", function() {
       $scope.$digest();
     });
   });
-  
+
   it("should initialize",function(){
     expect($scope).to.be.truely;
     expect($scope.isLoggedIn).to.exist;
     expect($scope.isRiseVisionUser).to.exist;
-    expect($scope.openPrioritySupport).to.exist;
     expect($scope.openSendUsANote).to.exist;
   });
 
@@ -88,8 +104,8 @@ describe("controller: help buttons ", function() {
 
   describe("handle button actions: ", function() {
     it("should call the handlePrioritySupportAction when running the open priority support", function() {
-      $scope.openPrioritySupport();
-      handlePrioritySupportActionSpy.should.have.been.called;
+      $scope.openZendeskForm();
+      zendeskShowWidgetSpy.should.have.been.called;
     });
 
     it("should call the handleSendUsANote when running the open send us a note", function() {
@@ -98,4 +114,3 @@ describe("controller: help buttons ", function() {
     });
   });
 });
-  

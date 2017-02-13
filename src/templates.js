@@ -784,11 +784,8 @@ app.run(["$templateCache", function($templateCache) {
     "\n" +
     "<ul>\n" +
     "    <li><a id=\"askCommunityButton\" href=\"https://community.risevision.com/rise_vision_inc\" target=\"_blank\">Ask the Community</a></li>\n" +
-    "    <li>\n" +
-    "      <a ng-if=\"isLoggedIn === false\" ng-controller=\"SignUpButtonCtrl\" id=\"prioritySupportButton\" href=\"\" ng-click=\"openSignUpModal()\">Priority Support <span class=\"text-green\">Fastest</span></a>\n" +
-    "      <a ng-if=\"isLoggedIn === true\" id=\"prioritySupportButton\" href=\"\" ng-click=\"openPrioritySupport()\">Priority Support <span class=\"text-green\">Fastest</span></a>\n" +
-    "  </li>\n" +
-    "    <li><a id=\"sendUsANoteButton\" href=\"\" ng-click=\"openSendUsANote()\">Send Us a Note</a></li>\n" +
+    "    <li><a ng-if=\"prioritySupport\" ng-click=\"openZendeskForm()\" href=\"\">Priority Support</a></li>\n" +
+    "    <li><a id=\"sendUsANote\" ng-click=\"openSendUsANote()\" href=\"\">Send Us a Note</a></li>\n" +
     "    <li><a id=\"signUpForWebinarsButton\" href=\"https://www.risevision.com/webinars\" target=\"_blank\">Free Webinars</a></li>\n" +
     "    <li><a id=\"documentationButton\" href=\"https://help.risevision.com/user\" target=\"_blank\">User Documentation</a></li>\n" +
     "    <li><a id=\"signUpForTrainingButton\" href=\"https://store.risevision.com/product/30/rise-training\" target=\"_blank\">Rise Training</a></li>\n" +

@@ -84,6 +84,8 @@ angular.module("risevision.common.support", [
         return deferred.promise;
       };
 
+      factory.getSubscriptionStatus = _getSubscriptionStatus;
+
       var _openSupportTrial = function (subscriptionStatus) {
         console.debug("opening support trial popup");
         $modal.open({
