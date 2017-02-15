@@ -2,20 +2,22 @@ angular.module("risevision.common.header")
 
 .controller("HelpSendUsANoteModalCtrl", [
   "$scope", "$modalInstance", "subscriptionStatus", "supportFactory",
+  "zendesk",
   "SUPPORT_PRODUCT_URL",
   function ($scope, $modalInstance, subscriptionStatus, supportFactory,
+    zendesk,
     SUPPORT_PRODUCT_URL) {
 
     $scope.subscriptionStatus = subscriptionStatus;
     $scope.supportProductUrl = SUPPORT_PRODUCT_URL;
 
     $scope.sendUsANote = function () {
-      supportFactory.openIntercomChat();
+      zendesk.showSendNote();
       $scope.dismiss();
     };
 
     $scope.prioritySupport = function () {
-      supportFactory.openIntercomChat();
+      zendesk.showWidget();
       $scope.dismiss();
     };
 

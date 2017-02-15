@@ -27,7 +27,8 @@ angular.module("risevision.common.header", [
   "risevision.common.components.stop-event",
   "risevision.common.components.analytics",
   "risevision.common.svg",
-  "risevision.common.support"
+  "risevision.common.support",
+  "risevision.common.components.zendesk",
 ])
 
 .factory("bindToScopeWithWatch", [

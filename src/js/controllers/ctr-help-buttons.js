@@ -1,7 +1,8 @@
 angular.module("risevision.common.header")
 
-.controller("HelpDropdownButtonCtrl", ["$scope", "supportFactory", "userState",
-  function ($scope, supportFactory, userState) {
+.controller("HelpDropdownButtonCtrl", ["zendesk", "$scope", "supportFactory",
+  "userState",
+  function (zendesk, $scope, supportFactory, userState) {
 
     $scope.$watch(function () {
         return userState.isLoggedIn();
@@ -9,6 +10,19 @@ angular.module("risevision.common.header")
       function (loggedIn) {
         $scope.isLoggedIn = loggedIn;
 
+        supportFactory.getSubscriptionStatus().then(function (
+          subscriptionStatus) {
+          if (subscriptionStatus && subscriptionStatus.statusCode ===
+            "subscribed") {
+            $scope.prioritySupport = true;
+          } else {
+            $scope.prioritySupport = false;
+          }
+        });
+
+        if (loggedIn) {
+          zendesk.ensureScript();
+        }
       });
 
     $scope.$watch(function () {
@@ -19,12 +33,12 @@ angular.module("risevision.common.header")
 
       });
 
-    $scope.openPrioritySupport = function () {
-      supportFactory.handlePrioritySupportAction();
-    };
-
     $scope.openSendUsANote = function () {
       supportFactory.handleSendUsANote();
+    };
+
+    $scope.openZendeskForm = function () {
+      zendesk.showWidget();
     };
   }
 ]);

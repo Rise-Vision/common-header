@@ -784,11 +784,8 @@ app.run(["$templateCache", function($templateCache) {
     "\n" +
     "<ul>\n" +
     "    <li><a id=\"askCommunityButton\" href=\"https://community.risevision.com/rise_vision_inc\" target=\"_blank\">Ask the Community</a></li>\n" +
-    "    <li>\n" +
-    "      <a ng-if=\"isLoggedIn === false\" ng-controller=\"SignUpButtonCtrl\" id=\"prioritySupportButton\" href=\"\" ng-click=\"openSignUpModal()\">Priority Support <span class=\"text-green\">Fastest</span></a>\n" +
-    "      <a ng-if=\"isLoggedIn === true\" id=\"prioritySupportButton\" href=\"\" ng-click=\"openPrioritySupport()\">Priority Support <span class=\"text-green\">Fastest</span></a>\n" +
-    "  </li>\n" +
-    "    <li><a id=\"sendUsANoteButton\" href=\"\" ng-click=\"openSendUsANote()\">Send Us a Note</a></li>\n" +
+    "    <li><a ng-if=\"prioritySupport\" ng-click=\"openZendeskForm()\" href=\"\">Priority Support</a></li>\n" +
+    "    <li><a id=\"sendUsANote\" ng-click=\"openSendUsANote()\" href=\"\">Send Us a Note</a></li>\n" +
     "    <li><a id=\"signUpForWebinarsButton\" href=\"https://www.risevision.com/webinars\" target=\"_blank\">Free Webinars</a></li>\n" +
     "    <li><a id=\"documentationButton\" href=\"https://help.risevision.com/user\" target=\"_blank\">User Documentation</a></li>\n" +
     "    <li><a id=\"signUpForTrainingButton\" href=\"https://store.risevision.com/product/30/rise-training\" target=\"_blank\">Rise Training</a></li>\n" +
@@ -1537,7 +1534,8 @@ angular.module("risevision.common.header", [
   "risevision.common.components.stop-event",
   "risevision.common.components.analytics",
   "risevision.common.svg",
-  "risevision.common.support"
+  "risevision.common.support",
+  "risevision.common.components.zendesk",
 ])
 
 .factory("bindToScopeWithWatch", [
@@ -1785,8 +1783,9 @@ angular.module("risevision.common.header")
 
 angular.module("risevision.common.header")
 
-.controller("HelpDropdownButtonCtrl", ["$scope", "supportFactory", "userState",
-  function ($scope, supportFactory, userState) {
+.controller("HelpDropdownButtonCtrl", ["zendesk", "$scope", "supportFactory",
+  "userState",
+  function (zendesk, $scope, supportFactory, userState) {
 
     $scope.$watch(function () {
         return userState.isLoggedIn();
@@ -1794,6 +1793,19 @@ angular.module("risevision.common.header")
       function (loggedIn) {
         $scope.isLoggedIn = loggedIn;
 
+        supportFactory.getSubscriptionStatus().then(function (
+          subscriptionStatus) {
+          if (subscriptionStatus && subscriptionStatus.statusCode ===
+            "subscribed") {
+            $scope.prioritySupport = true;
+          } else {
+            $scope.prioritySupport = false;
+          }
+        });
+
+        if (loggedIn) {
+          zendesk.ensureScript();
+        }
       });
 
     $scope.$watch(function () {
@@ -1804,12 +1816,12 @@ angular.module("risevision.common.header")
 
       });
 
-    $scope.openPrioritySupport = function () {
-      supportFactory.handlePrioritySupportAction();
-    };
-
     $scope.openSendUsANote = function () {
       supportFactory.handleSendUsANote();
+    };
+
+    $scope.openZendeskForm = function () {
+      zendesk.showWidget();
     };
   }
 ]);
@@ -1841,20 +1853,22 @@ angular.module("risevision.common.header")
 
 .controller("HelpSendUsANoteModalCtrl", [
   "$scope", "$modalInstance", "subscriptionStatus", "supportFactory",
+  "zendesk",
   "SUPPORT_PRODUCT_URL",
   function ($scope, $modalInstance, subscriptionStatus, supportFactory,
+    zendesk,
     SUPPORT_PRODUCT_URL) {
 
     $scope.subscriptionStatus = subscriptionStatus;
     $scope.supportProductUrl = SUPPORT_PRODUCT_URL;
 
     $scope.sendUsANote = function () {
-      supportFactory.openIntercomChat();
+      zendesk.showSendNote();
       $scope.dismiss();
     };
 
     $scope.prioritySupport = function () {
-      supportFactory.openIntercomChat();
+      zendesk.showWidget();
       $scope.dismiss();
     };
 
@@ -3978,6 +3992,8 @@ angular.module("risevision.common.support", [
         return deferred.promise;
       };
 
+      factory.getSubscriptionStatus = _getSubscriptionStatus;
+
       var _openSupportTrial = function (subscriptionStatus) {
         console.debug("opening support trial popup");
         $modal.open({
@@ -5140,6 +5156,116 @@ angular.module("risevision.common.header.directives")
     }
   ]);
 
+})(angular);
+
+/* jshint maxlen: false */
+
+(function (angular) {
+  "use strict";
+
+  angular.module("risevision.common.components.zendesk", [
+    "risevision.common.components.userstate",
+    "risevision.common.components.analytics",
+    "risevision.common.support",
+  ])
+
+  .factory("zendesk", ["supportFactory", "segmentAnalytics", "userState",
+    "$window", "$q", "$location",
+    function (supportFactory, segmentAnalytics, userState, $window, $q,
+      $location) {
+
+      var loaded = false;
+
+      function ensureScript() {
+        if (!loaded) {
+          var deferred = $q.defer();
+          var script =
+            /* jshint quotmark: single */
+            'window.zEmbed||function(e,t){var n,o,d,i,s,a=[],r=document.createElement(\"iframe\");window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,r.src=\"javascript:false\",r.title=\"\",r.role=\"presentation\",(r.frameElement||r).style.cssText=\"display: none\",d=document.getElementsByTagName(\"script\"),d=d[d.length-1],d.parentNode.insertBefore(r,d),i=r.contentWindow,s=i.document;try{o=s}catch(e){n=document.domain,r.src=\'javascript:var d=document.open();d.domain=\"\'+n+\'\";void(0);\',o=s}o.open()._l=function(){var o=this.createElement(\"script\");n&&(this.domain=n),o.id=\"js-iframe-async\",o.src=e,this.t=+new Date,this.zendeskHost=t,this.zEQueue=a,this.body.appendChild(o)},o.write(\'<body onload=\"document._l();\">\'),o.close()}(\"https://assets.zendesk.com/embeddable_framework/main.js\",\"risevision.zendesk.com\");';
+          /* jshint quotmark: double */
+
+          var scriptElem = $window.document.createElement("script");
+          scriptElem.innerText = script;
+
+          $window.document.body.appendChild(scriptElem);
+          loaded = true;
+          $window.zE(function () {
+            $window.zE.hide();
+            deferred.resolve();
+          });
+
+          return deferred.promise;
+        }
+        return $q.when();
+      }
+
+      function _identify() {
+        var deferred = $q.defer();
+
+        $window.zE(function () {
+
+          var username = userState.getUsername();
+          var profile = userState.getCopyOfProfile();
+          var properties = {
+            email: userState.getUserEmail(),
+            firstName: profile.firstName,
+            lastName: profile.lastName,
+            isPrioritySupport: false,
+          };
+
+          var orgProperties = {
+            name: userState.getUserCompanyName(),
+            companyId: userState.getUserCompanyId(),
+          };
+
+          supportFactory.getSubscriptionStatus().then(function (
+            subscriptionStatus) {
+            segmentAnalytics.identify(username, properties);
+
+            if (subscriptionStatus && subscriptionStatus.statusCode ===
+              "subscribed") {
+              orgProperties.prioritySupport = true;
+            } else {
+              orgProperties.prioritySupport = false;
+            }
+
+            segmentAnalytics.group(userState.getUserCompanyId(),
+              orgProperties);
+
+            deferred.resolve();
+          });
+
+        });
+        return deferred.promise;
+      }
+
+      function showWidget() {
+        return ensureScript()
+          .then(_identify)
+          .then(function () {
+            $window.zE.activate();
+          });
+      }
+
+      function showSendNote() {
+        return ensureScript()
+          .then(_identify)
+          .then(function () {
+            $location.search("zdJustANote", 1);
+          })
+          .then(function () {
+            $window.zE.activate();
+          });
+      }
+
+      return {
+        ensureScript: ensureScript,
+        showWidget: showWidget,
+        showSendNote: showSendNote,
+      };
+
+    }
+  ]);
 })(angular);
 
 /*
