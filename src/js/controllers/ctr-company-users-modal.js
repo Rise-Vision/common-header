@@ -27,7 +27,10 @@ angular.module("risevision.common.header")
     };
 
     $scope.search = {
-      searchString: ""
+      query: ""
+    };
+    $scope.filterConfig = {
+      placeholder: "Search Users"
     };
 
     $scope.changeSorting = function (field) {
@@ -45,7 +48,7 @@ angular.module("risevision.common.header")
       $scope.loading = true;
       getUsers({
         companyId: company.id,
-        search: $scope.search.searchString
+        search: $scope.search.query
       }).then(function (users) {
         $scope.users = users;
       }).finally(function () {

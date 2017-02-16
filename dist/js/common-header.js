@@ -712,23 +712,11 @@ app.run(["$templateCache", function($templateCache) {
     "  <h2 id=\"company-users-label\" class=\"modal-title\">Company Users</h2>\n" +
     "</div>\n" +
     "<div class=\"modal-body company-users-modal\" stop-event=\"touchend\">\n" +
-    "  <!-- CSV Button -->\n" +
-    "  <div class=\"row action-bar u_margin-lg-bottom\" ng-if=\"false\">\n" +
-    "    <button class=\"btn btn-secondary\" ng-csv=\"users\"\n" +
-    "      filename=\"users.csv\">Download to CSV</button>\n" +
-    "  </div>\n" +
     "  <!-- Search -->\n" +
-    "  <div class=\"input-group company-search u_margin-lg-bottom\">\n" +
-    "    <input id=\"csSearch\" type=\"text\" class=\"form-control\"\n" +
-    "      placeholder=\"Search Users\"\n" +
-    "      ng-model=\"search.searchString\"\n" +
-    "      ng-enter=\"doSearch()\">\n" +
-    "      <span class=\"input-group-addon primary-bg\" ng-click=\"doSearch()\">\n" +
-    "        <i class=\"fa fa-search\"></i>\n" +
-    "      </span>\n" +
-    "  </div>\n" +
+    "  <search-filter filter-config=\"filterConfig\" search=\"search\" do-search=\"doSearch\"></search-filter> \n" +
+    "\n" +
     "  <!-- List of Users -->\n" +
-    "  <div class=\"list-group scrollable-list company-users-list\"\n" +
+    "  <div class=\"panel panel-default scrollable-list company-users-list u_margin-sm-top\"\n" +
     "    rv-spinner\n" +
     "    rv-spinner-key=\"company-users-list\"\n" +
     "    rv-spinner-start-active=\"1\">\n" +
@@ -2793,7 +2781,10 @@ angular.module("risevision.common.header")
     };
 
     $scope.search = {
-      searchString: ""
+      query: ""
+    };
+    $scope.filterConfig = {
+      placeholder: "Search Users"
     };
 
     $scope.changeSorting = function (field) {
@@ -2811,7 +2802,7 @@ angular.module("risevision.common.header")
       $scope.loading = true;
       getUsers({
         companyId: company.id,
-        search: $scope.search.searchString
+        search: $scope.search.query
       }).then(function (users) {
         $scope.users = users;
       }).finally(function () {

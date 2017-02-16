@@ -6,23 +6,11 @@
   <h2 id="company-users-label" class="modal-title">Company Users</h2>
 </div>
 <div class="modal-body company-users-modal" stop-event="touchend">
-  <!-- CSV Button -->
-  <div class="row action-bar u_margin-lg-bottom" ng-if="false">
-    <button class="btn btn-secondary" ng-csv="users"
-      filename="users.csv">Download to CSV</button>
-  </div>
   <!-- Search -->
-  <div class="input-group company-search u_margin-lg-bottom">
-    <input id="csSearch" type="text" class="form-control"
-      placeholder="Search Users"
-      ng-model="search.searchString"
-      ng-enter="doSearch()">
-      <span class="input-group-addon primary-bg" ng-click="doSearch()">
-        <i class="fa fa-search"></i>
-      </span>
-  </div>
+  <search-filter filter-config="filterConfig" search="search" do-search="doSearch"></search-filter> 
+
   <!-- List of Users -->
-  <div class="list-group scrollable-list company-users-list"
+  <div class="panel panel-default scrollable-list company-users-list u_margin-sm-top"
     rv-spinner
     rv-spinner-key="company-users-list"
     rv-spinner-start-active="1">
