@@ -22,6 +22,12 @@
   browser.driver.manage().window().setSize(1280, 768);
 
   describe("Common Header ", function() {
+    beforeEach("should use correct Core URL", function() {
+      var expect = require('rv-common-e2e').expect;
+
+      expect(element(by.id("coreApiUrl")).getText()).to.eventually.contain("rvacore-test.appspot.com");
+    });
+    
     var registrationScenarios = new RegistrationScenarios();
     
     var authenticationScenarios = new AuthenticationScenarios();

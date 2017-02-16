@@ -27,6 +27,8 @@
     <h1>Store!</h1>
 
     <div>
+      
+    <div id="coreApiUrl">{{CORE_URL}}</div>
 
     <button class="btn btn-secondary ps-open-popup-login" ng-click="loginPopup()">Login Popup</button>
 
@@ -90,7 +92,7 @@
           .otherwise({redirectTo: '/shopping-cart'});
       }])
 
-      .controller("MainController", function($rootScope, $scope, $window) {
+      .controller("MainController", function($rootScope, $scope, $window, CORE_URL) {
 
         $rootScope.navOptions = [{
           title: 'Fake Store',
@@ -102,6 +104,8 @@
           target: '_blank',
           cid: true
         }];
+        
+        $scope.CORE_URL = CORE_URL;
 
         function deleteAllCookies() {
             var cookies = document.cookie.split(";");
