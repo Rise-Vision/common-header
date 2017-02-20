@@ -1,7 +1,8 @@
 angular.module("risevision.common.header")
 
-.controller("HelpDropdownButtonCtrl", ["$scope", "supportFactory", "userState",
-  function ($scope, supportFactory, userState) {
+.controller("HelpDropdownButtonCtrl", ["zendesk", "$scope", "supportFactory",
+  "userState",
+  function (zendesk, $scope, supportFactory, userState) {
 
     $scope.$watch(function () {
         return userState.isLoggedIn();
@@ -9,6 +10,9 @@ angular.module("risevision.common.header")
       function (loggedIn) {
         $scope.isLoggedIn = loggedIn;
 
+        if (loggedIn) {
+          zendesk.ensureScript();
+        }
       });
 
     $scope.$watch(function () {

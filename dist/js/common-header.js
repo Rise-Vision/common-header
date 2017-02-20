@@ -1773,8 +1773,9 @@ angular.module("risevision.common.header")
 
 angular.module("risevision.common.header")
 
-.controller("HelpDropdownButtonCtrl", ["$scope", "supportFactory", "userState",
-  function ($scope, supportFactory, userState) {
+.controller("HelpDropdownButtonCtrl", ["zendesk", "$scope", "supportFactory",
+  "userState",
+  function (zendesk, $scope, supportFactory, userState) {
 
     $scope.$watch(function () {
         return userState.isLoggedIn();
@@ -1782,6 +1783,9 @@ angular.module("risevision.common.header")
       function (loggedIn) {
         $scope.isLoggedIn = loggedIn;
 
+        if (loggedIn) {
+          zendesk.ensureScript();
+        }
       });
 
     $scope.$watch(function () {
@@ -1829,20 +1833,22 @@ angular.module("risevision.common.header")
 
 .controller("HelpSendUsANoteModalCtrl", [
   "$scope", "$modalInstance", "subscriptionStatus", "supportFactory",
+  "zendesk",
   "SUPPORT_PRODUCT_URL",
   function ($scope, $modalInstance, subscriptionStatus, supportFactory,
+    zendesk,
     SUPPORT_PRODUCT_URL) {
 
     $scope.subscriptionStatus = subscriptionStatus;
     $scope.supportProductUrl = SUPPORT_PRODUCT_URL;
 
     $scope.sendUsANote = function () {
-      supportFactory.openIntercomChat();
+      zendesk.showSendNote();
       $scope.dismiss();
     };
 
     $scope.prioritySupport = function () {
-      supportFactory.openIntercomChat();
+      zendesk.showWidget();
       $scope.dismiss();
     };
 
@@ -3888,24 +3894,28 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
 angular.module("risevision.common.support", [
   "risevision.widget.common.subscription-status"
 ])
-  .factory("supportFactory", ["$q", "subscriptionStatusService",
+  .factory("supportFactory", ["getSubscriptionStatus", "$q",
+    "subscriptionStatusService",
     "SUPPORT_PRODUCT_CODE", "STORE_SERVER_URL", "userState",
     "$modal", "$templateCache", "$http", "$window", "segmentAnalytics",
-    function ($q, subscriptionStatusService, SUPPORT_PRODUCT_CODE,
+    "zendesk",
+    function (getSubscriptionStatus, $q, subscriptionStatusService,
+      SUPPORT_PRODUCT_CODE,
       STORE_SERVER_URL, userState,
-      $modal, $templateCache, $http, $window, segmentAnalytics) {
+      $modal, $templateCache, $http, $window, segmentAnalytics,
+      zendesk) {
       var factory = {};
       var PREMIUM_PLAN = "Premium";
-      var TRIAL_PLAN = "Trial";
+      // var TRIAL_PLAN = "Trial";
       var BASIC_PLAN = "Free";
 
       factory.handlePrioritySupportAction = function () {
-        _isSubscribed().then(function (subscriptionStatus) {
-          if (subscriptionStatus.statusCode ===
-            "on-trial") {
-            _openSupportTrial(subscriptionStatus);
-          }
-          factory.openIntercomChat();
+        _isSubscribed().then(function () {
+          // if (subscriptionStatus.statusCode ===
+          //   "on-trial") {
+          //   _openSupportTrial(subscriptionStatus);
+          // }
+          factory.openZendeskForm();
         }, function (subscriptionStatus) {
           _openSupportTrial(subscriptionStatus);
         });
@@ -3913,7 +3923,7 @@ angular.module("risevision.common.support", [
 
       var _isSubscribed = function () {
         var deferred = $q.defer();
-        _getSubscriptionStatus().then(function (subscriptionStatus) {
+        getSubscriptionStatus().then(function (subscriptionStatus) {
           if (subscriptionStatus && (subscriptionStatus.statusCode ===
             "not-subscribed" || subscriptionStatus.statusCode ===
             "cancelled" || subscriptionStatus.statusCode ===
@@ -3924,11 +3934,11 @@ angular.module("risevision.common.support", [
             deferred.reject(subscriptionStatus);
           }
 
-          if (subscriptionStatus.statusCode ===
-            "on-trial") {
-            _sendUserPlanUpdateToIntercom(TRIAL_PLAN);
-            deferred.resolve(subscriptionStatus);
-          }
+          // if (subscriptionStatus.statusCode ===
+          //   "on-trial") {
+          //   _sendUserPlanUpdateToIntercom(TRIAL_PLAN);
+          //   deferred.resolve(subscriptionStatus);
+          // }
 
           if (subscriptionStatus.statusCode ===
             "subscribed") {
@@ -3944,33 +3954,14 @@ angular.module("risevision.common.support", [
         return deferred.promise;
       };
 
-      var _sendUserPlanUpdateToIntercom = function (plan) {
-        segmentAnalytics.identify(userState.getUsername(), {
-          "plan": plan
-        });
-      };
-
-      var _getSubscriptionStatus = function () {
-        var deferred = $q.defer();
-        if (SUPPORT_PRODUCT_CODE && userState.getSelectedCompanyId()) {
-          subscriptionStatusService.get(SUPPORT_PRODUCT_CODE, userState.getSelectedCompanyId())
-            .then(function (subscriptionStatus) {
-                console.debug("subscriptionStatus", subscriptionStatus);
-                deferred.resolve(subscriptionStatus);
-              },
-              function (err) {
-                console.debug("Could not retrieve a subscription status",
-                  err);
-                deferred.reject(err);
-              });
-        } else {
-          deferred.reject();
-        }
-        return deferred.promise;
+      var _sendUserPlanUpdateToIntercom = function () {
+        // segmentAnalytics.identify(userState.getUsername(), {
+        //   "plan": plan
+        // });
       };
 
       var _openSupportTrial = function (subscriptionStatus) {
-        console.debug("opening support trial popup");
+        // console.debug("opening support trial popup");
         $modal.open({
           template: $templateCache.get("help-priority-support-modal.html"),
           controller: "HelpPrioritySupportModalCtrl",
@@ -3982,9 +3973,8 @@ angular.module("risevision.common.support", [
         });
       };
 
-      factory.openIntercomChat = function () {
-        console.debug("opening intercom chat");
-        $window.Intercom("showNewMessage");
+      factory.openZendeskForm = function () {
+        zendesk.showWidget();
       };
 
       factory.initiateTrial = function () {
@@ -4014,7 +4004,7 @@ angular.module("risevision.common.support", [
       };
 
       var _openSendUsANote = function (subscriptionStatus) {
-        console.debug("opening send us a note popup");
+        // console.debug("opening send us a note popup");
         $modal.open({
           template: $templateCache.get("help-send-us-a-note-modal.html"),
           controller: "HelpSendUsANoteModalCtrl",
@@ -4029,7 +4019,133 @@ angular.module("risevision.common.support", [
 
       return factory;
     }
+  ])
+  .factory("getSubscriptionStatus", ["SUPPORT_PRODUCT_CODE", "userState", "$q",
+    "subscriptionStatusService",
+    function (SUPPORT_PRODUCT_CODE, userState, $q, subscriptionStatusService) {
+      return function getSubscriptionStatus() {
+        var deferred = $q.defer();
+        if (SUPPORT_PRODUCT_CODE && userState.getSelectedCompanyId()) {
+          subscriptionStatusService.get(SUPPORT_PRODUCT_CODE, userState.getSelectedCompanyId())
+            .then(function (subscriptionStatus) {
+                // console.debug("subscriptionStatus", subscriptionStatus);
+                deferred.resolve(subscriptionStatus);
+              },
+              function (err) {
+                console.debug("Could not retrieve a subscription status",
+                  err);
+                deferred.reject(err);
+              });
+        } else {
+          deferred.reject();
+        }
+        return deferred.promise;
+      };
+    }
   ]);
+
+/* jshint maxlen: false */
+
+(function (angular) {
+  "use strict";
+
+  angular.module("risevision.common.support")
+
+  .factory("zendesk", ["getSubscriptionStatus", "segmentAnalytics",
+    "userState",
+    "$window", "$q", "$location",
+    function (getSubscriptionStatus, segmentAnalytics, userState, $window,
+      $q,
+      $location) {
+
+      var loaded = false;
+
+      function ensureScript() {
+        if (!loaded) {
+          var deferred = $q.defer();
+          var script =
+            /* jshint quotmark: single */
+            'window.zEmbed||function(e,t){var n,o,d,i,s,a=[],r=document.createElement(\"iframe\");window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,r.src=\"javascript:false\",r.title=\"\",r.role=\"presentation\",(r.frameElement||r).style.cssText=\"display: none\",d=document.getElementsByTagName(\"script\"),d=d[d.length-1],d.parentNode.insertBefore(r,d),i=r.contentWindow,s=i.document;try{o=s}catch(e){n=document.domain,r.src=\'javascript:var d=document.open();d.domain=\"\'+n+\'\";void(0);\',o=s}o.open()._l=function(){var o=this.createElement(\"script\");n&&(this.domain=n),o.id=\"js-iframe-async\",o.src=e,this.t=+new Date,this.zendeskHost=t,this.zEQueue=a,this.body.appendChild(o)},o.write(\'<body onload=\"document._l();\">\'),o.close()}(\"https://assets.zendesk.com/embeddable_framework/main.js\",\"risevision.zendesk.com\");';
+          /* jshint quotmark: double */
+
+          var scriptElem = $window.document.createElement("script");
+          scriptElem.innerText = script;
+
+          $window.document.body.appendChild(scriptElem);
+          loaded = true;
+          $window.zE(function () {
+            $window.zE.hide();
+            deferred.resolve();
+          });
+
+          return deferred.promise;
+        }
+        return $q.when();
+      }
+
+      function _identify() {
+        var deferred = $q.defer();
+
+        $window.zE(function () {
+
+          var username = userState.getUsername();
+          var properties = {
+            email: userState.getUserEmail(),
+            "rise_vision_company_id": userState.getUserCompanyId(),
+            "rise_vision_company_name": userState.getUserCompanyName(),
+          };
+
+          getSubscriptionStatus().then(function (
+            subscriptionStatus) {
+            if (subscriptionStatus && subscriptionStatus.statusCode ===
+              "subscribed") {
+              $location.search("cHJpb3JpdHktc3VwcG9ydA", 1);
+            } else {
+              $location.search("cHJpb3JpdHktc3VwcG9ydA", null);
+            }
+            segmentAnalytics.identify(username, properties);
+
+            deferred.resolve();
+          });
+
+        });
+        return deferred.promise;
+      }
+
+      function showWidget() {
+        return ensureScript()
+          .then(_identify)
+          .then(function () {
+            // clear send-a-note flag
+            $location.search("c2VuZC11cy1hLW5vdGU", null);
+          })
+          .then(function () {
+            $window.zE.activate();
+          });
+      }
+
+      function showSendNote() {
+        return ensureScript()
+          .then(_identify)
+          .then(function () {
+            $location.search("c2VuZC11cy1hLW5vdGU", 1);
+            // clear priority support flag
+            $location.search("cHJpb3JpdHktc3VwcG9ydA", null);
+          })
+          .then(function () {
+            $window.zE.activate();
+          });
+      }
+
+      return {
+        ensureScript: ensureScript,
+        showWidget: showWidget,
+        showSendNote: showSendNote,
+      };
+
+    }
+  ]);
+})(angular);
 
 (function (angular){
 
@@ -5131,48 +5247,6 @@ angular.module("risevision.common.header.directives")
     }
   ]);
 
-})(angular);
-
-/*
- * App Configuration File
- * Put environment-specific global variables in this file.
- *
- * In general, if you put an variable here, you will want to
- * make sure to put an equivalent variable in all three places:
- * dev.js, stage.js & prod.js
- *
- */
-(function (angular) {
-  "use strict";
-
-  try {
-    angular.module("risevision.common.config");
-  } catch (err) {
-    angular.module("risevision.common.config", []);
-  }
-
-  angular.module("risevision.common.i18n.config", [])
-    .constant("LOCALES_PREFIX", "locales/translation_")
-    .constant("LOCALES_SUFIX", ".json");
-
-  angular.module("risevision.common.config")
-    .value("ENABLE_INTERCOM_MESSAGING", false)
-    .value("ENABLE_EXTERNAL_LOGGING", true)
-    .value("CORE_URL", "https://rvaserver2.appspot.com/_ah/api")
-    .value("COOKIE_CHECK_URL", "//storage-dot-rvaserver2.appspot.com")
-    .value("STORE_URL", "https://store.risevision.com")
-    .value("STORE_SERVER_URL",
-      "https://store-dot-rvaserver2.appspot.com")
-    .value("STORE_ENDPOINT_URL",
-      "https://store-dot-rvaserver2.appspot.com/_ah/api")
-    .value("STORAGE_ENDPOINT_URL",
-      "https://storage-dot-rvaserver2.appspot.com/_ah/api")
-    .value("GSFP_URL", "https://gsfp-dot-rvaserver2.appspot.com/fp")
-    .value("SUPPORT_PRODUCT_CODE", "4c8c2f1a481d0ad84c6b16a9c6e90e2fc2252944")
-    .value("SUPPORT_PRODUCT_ID", "14")
-    .value("SUPPORT_PRODUCT_URL",
-      "https://store.risevision.com/product/14/rise-priority-support")
-    .value("APPS_URL", "https://apps.risevision.com");
 })(angular);
 
 /* jshint ignore:start */
@@ -11879,3 +11953,47 @@ angular.module("risevision.common.i18n", ["pascalprecht.translate", "risevision.
     .fallbackLanguage("en")
     .useSanitizeValueStrategy(null);
 }]);
+
+/*
+ * App Configuration File
+ * Put environment-specific global variables in this file.
+ *
+ * In general, if you put an variable here, you will want to
+ * make sure to put an equivalent variable in all three places:
+ * dev.js, stage.js & prod.js
+ *
+ */
+(function (angular) {
+
+  "use strict";
+
+  try {
+    angular.module("risevision.common.config");
+  } catch (err) {
+    angular.module("risevision.common.config", []);
+  }
+
+  angular.module("risevision.common.i18n.config", [])
+    .constant("LOCALES_PREFIX",
+      "../../components/rv-common-i18n/dist/locales/translation_")
+    .constant("LOCALES_SUFIX", ".json");
+
+  angular.module("risevision.common.config")
+    .value("ENABLE_INTERCOM_MESSAGING", false)
+    .value("ENABLE_EXTERNAL_LOGGING", false)
+    .value("CORE_URL", "https://rvacore-test.appspot.com/_ah/api")
+    .value("COOKIE_CHECK_URL", "//storage-dot-rvacore-test.appspot.com")
+    .value("STORE_URL", "https://store.risevision.com")
+    .value("STORE_SERVER_URL",
+      "https://store-dot-rvacore-test.appspot.com")
+    .value("STORE_ENDPOINT_URL",
+      "https://store-dot-rvacore-test.appspot.com/_ah/api")
+    .value("STORAGE_ENDPOINT_URL",
+      "https://storage-dot-rvacore-test.appspot.com/_ah/api")
+    .value("GSFP_URL", "https://gsfp-dot-rvaserver2.appspot.com/fp")
+    .value("SUPPORT_PRODUCT_CODE", "4c8c2f1a481d0ad84c6b16a9c6e90e2fc2252944")
+    .value("SUPPORT_PRODUCT_ID", "14")
+    .value("SUPPORT_PRODUCT_URL",
+      "https://store.risevision.com/product/14/rise-priority-support")
+    .value("APPS_URL", "https://apps-stage-0.risevision.com");
+})(angular);

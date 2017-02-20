@@ -5,6 +5,8 @@
 
 describe("controller: help send us a note modal ", function() {
   beforeEach(module("risevision.common.header"));
+
+  var zendeskShowWidgetSpy, zendeskSendNoteSpy;
   beforeEach(module(function ($provide, $translateProvider) {
 
     $provide.factory("supportFactory", function ($q) {
@@ -14,8 +16,11 @@ describe("controller: help send us a note modal ", function() {
           deferred.resolve({});
           return deferred.promise;
         },
-        openIntercomChat : function() {
+        openZendeskForm : function() {
           return;
+        },
+        getSubscriptionStatus: function() {
+          return $q.when("subscribed");
         }
       };
     });
@@ -45,17 +50,25 @@ describe("controller: help send us a note modal ", function() {
       };
     });
 
+    zendeskShowWidgetSpy = sinon.stub();
+    zendeskSendNoteSpy = sinon.stub();
+    $provide.factory("zendesk", function() {
+      return {
+        showWidget: zendeskShowWidgetSpy,
+        showSendNote: zendeskSendNoteSpy,
+      };
+    });
+
     $translateProvider.useLoader("customLoader");
-        
+
   }));
-  var $scope, initiateTrialSpy, modalInstanceDismissSpy, openIntercomChatSpy;
-  
+  var $scope, initiateTrialSpy, modalInstanceDismissSpy;
+
   beforeEach(function() {
 
     inject(function($injector,$rootScope, $controller, supportFactory, $modalInstance, subscriptionStatus, SUPPORT_PRODUCT_URL){
       $scope = $rootScope.$new();
       initiateTrialSpy = sinon.spy(supportFactory, "initiateTrial");
-      openIntercomChatSpy = sinon.spy(supportFactory, "openIntercomChat");
       modalInstanceDismissSpy = sinon.spy($modalInstance, "dismiss");
 
       $controller("HelpSendUsANoteModalCtrl", {
@@ -68,7 +81,7 @@ describe("controller: help send us a note modal ", function() {
       $scope.$digest();
     });
   });
-  
+
   it("should initialize",function(){
     expect($scope).to.be.truely;
     expect($scope.startTrial).to.exist;
@@ -96,20 +109,19 @@ describe("controller: help send us a note modal ", function() {
 
   describe("send us a note: ", function() {
 
-    it("should open the intercom chat",function(){
+    it("should open the zendesk form",function(){
       $scope.sendUsANote();
-      openIntercomChatSpy.should.have.been.called;
+      zendeskSendNoteSpy.should.have.been.called;
       modalInstanceDismissSpy.should.have.been.called;
     });
   });
 
   describe("priority support: ", function() {
 
-    it("should open the intercom chat",function(){
+    it("should open the zendesk form",function(){
       $scope.prioritySupport();
-      openIntercomChatSpy.should.have.been.called;
+      zendeskShowWidgetSpy.should.have.been.called;
       modalInstanceDismissSpy.should.have.been.called;
     });
   });
 });
-  

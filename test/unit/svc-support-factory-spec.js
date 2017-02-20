@@ -3,7 +3,9 @@
 describe("Services: Support Factory", function() {
   beforeEach(module("risevision.widget.common.subscription-status"));
   beforeEach(module("risevision.common.support"));
-  var supportFactory, startTrialCallWentOkay, subscriptionStatusGetCallWentOkay, subscriptionStatus, modalObject, intercomSpy, userId, identifyObject;
+  var supportFactory, startTrialCallWentOkay, subscriptionStatusGetCallWentOkay,
+    subscriptionStatus, modalObject, intercomSpy, userId, identifyObject,
+    showZendeskFormSpy;
 
   beforeEach(module(function ($provide, $translateProvider) {
     //stub services
@@ -62,6 +64,14 @@ describe("Services: Support Factory", function() {
       };
     });
 
+    showZendeskFormSpy = sinon.stub();
+
+    $provide.factory("zendesk", function() {
+      return {
+        showWidget: showZendeskFormSpy,
+      };
+    });
+
     $provide.service("$http",function(){
       return {
         get : function(){
@@ -106,63 +116,20 @@ describe("Services: Support Factory", function() {
     expect(supportFactory).to.be.truely;
 
     expect(supportFactory.handlePrioritySupportAction).to.be.a("function");
-    expect(supportFactory.openIntercomChat).to.be.a("function");
     expect(supportFactory.initiateTrial).to.be.a("function");
     expect(supportFactory.handleSendUsANote).to.be.a("function");
   });
 
   describe("Priority Support:", function() {
-    it("should open trial support modal when is subscribed and on trial", function (done) {
-      subscriptionStatusGetCallWentOkay = true;
-      subscriptionStatus.statusCode = "on-trial";
-      supportFactory.handlePrioritySupportAction();
 
-      setTimeout(function () {
-        expect(modalObject.controller).to.be.equal("HelpPrioritySupportModalCtrl");
-
-        done();
-      }, 10);
-    });
-
-    it("should open trial support modal and the intercom chat when is subscribed and on trial", function (done) {
-      subscriptionStatusGetCallWentOkay = true;
-      subscriptionStatus.statusCode = "on-trial";
-      supportFactory.handlePrioritySupportAction();
-
-      setTimeout(function () {
-        expect(modalObject.controller).to.be.equal("HelpPrioritySupportModalCtrl");
-        intercomSpy.should.have.been.calledWith("showNewMessage");
-
-        expect(userId).to.be.equal("John");
-        expect(identifyObject.plan).to.equal("Trial");
-        done();
-      }, 10);
-    });
-
-    it("should not open trial support modal when is subscribed but not on trial", function (done) {
-      subscriptionStatusGetCallWentOkay = true;
-      subscriptionStatus.statusCode = "subscribed";
-      supportFactory.handlePrioritySupportAction();
-
-      setTimeout(function () {
-        expect(modalObject).to.be.empty;
-        intercomSpy.should.have.been.calledWith("showNewMessage");
-        expect(userId).to.be.equal("John");
-        expect(identifyObject.plan).to.equal("Premium");
-        done();
-      }, 10);
-    });
-
-    it("should open trial support modal but not the intercom chat when subscription was cancelled", function (done) {
+    it("should open trial support modal but not the zendesk form when subscription was cancelled", function (done) {
       subscriptionStatusGetCallWentOkay = true;
       subscriptionStatus.statusCode = "cancelled";
       supportFactory.handlePrioritySupportAction();
 
       setTimeout(function () {
         expect(modalObject.controller).to.be.equal("HelpPrioritySupportModalCtrl");
-        intercomSpy.should.not.have.been.calledWith("showNewMessage");
-        expect(userId).to.be.equal("John");
-        expect(identifyObject.plan).to.equal("Free");
+        showZendeskFormSpy.should.not.have.been.called;
         done();
       }, 10);
     });
@@ -174,9 +141,7 @@ describe("Services: Support Factory", function() {
 
       setTimeout(function () {
         expect(modalObject.controller).to.be.equal("HelpPrioritySupportModalCtrl");
-        intercomSpy.should.not.have.been.calledWith("showNewMessage");
-        expect(userId).to.be.equal("John");
-        expect(identifyObject.plan).to.equal("Free");
+        showZendeskFormSpy.should.not.have.been.calledWith("showNewMessage");
         done();
       }, 10);
     });
@@ -188,9 +153,7 @@ describe("Services: Support Factory", function() {
 
       setTimeout(function () {
         expect(modalObject.controller).to.be.equal("HelpPrioritySupportModalCtrl");
-        intercomSpy.should.not.have.been.calledWith("showNewMessage");
-        expect(userId).to.be.equal("John");
-        expect(identifyObject.plan).to.equal("Free");
+        showZendeskFormSpy.should.not.have.been.called;
         done();
       }, 10);
     });
@@ -202,9 +165,7 @@ describe("Services: Support Factory", function() {
 
       setTimeout(function () {
         expect(modalObject.controller).to.be.equal("HelpPrioritySupportModalCtrl");
-        intercomSpy.should.not.have.been.calledWith("showNewMessage");
-        expect(userId).to.be.equal("John");
-        expect(identifyObject.plan).to.equal("Free");
+        showZendeskFormSpy.should.not.have.been.calledWith("showNewMessage");
         done();
       }, 10);
     });
@@ -216,47 +177,19 @@ describe("Services: Support Factory", function() {
 
       setTimeout(function () {
         expect(modalObject.controller).to.be.equal("HelpPrioritySupportModalCtrl");
-        intercomSpy.should.not.have.been.calledWith("showNewMessage");
-        expect(userId).to.be.equal("John");
-        expect(identifyObject.plan).to.equal("Free");
+        showZendeskFormSpy.should.not.have.been.calledWith("showNewMessage");
         done();
       }, 10);
     });
   });
 
-  describe("Intercom Chat:", function() {
+  describe("Zendesk form:", function() {
 
     it("should open the intercom chat", function (done) {
-      supportFactory.openIntercomChat();
+      supportFactory.openZendeskForm();
 
       setTimeout(function () {
-        intercomSpy.should.have.been.calledWith("showNewMessage");
-        done();
-      }, 10);
-    });
-  });
-
-  describe("Initiate Trial:", function() {
-    it("should open priority support modal after initiating trial", function (done){
-      subscriptionStatusGetCallWentOkay = true;
-      subscriptionStatus.statusCode = "on-trial";
-      startTrialCallWentOkay = true;
-      supportFactory.initiateTrial();
-
-      setTimeout(function () {
-        expect(modalObject.controller).to.be.equal("HelpPrioritySupportModalCtrl");
-
-        done();
-      }, 10);
-    });
-
-    it("should not open priority support modal when initiating trial call fails", function (done){
-      startTrialCallWentOkay = false;
-      supportFactory.initiateTrial();
-
-      setTimeout(function () {
-        expect(modalObject).to.be.empty;
-
+        showZendeskFormSpy.should.have.been.called;
         done();
       }, 10);
     });
