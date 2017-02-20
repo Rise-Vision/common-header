@@ -834,53 +834,20 @@ app.run(["$templateCache", function($templateCache) {
     "                <img itemprop=\"image\" class=\"img-responsive\" src=\"https://s3.amazonaws.com/Store-Products/Rise-Vision/support_image.png\">\n" +
     "            </div>\n" +
     "\n" +
-    "            <div ng-show=\"['on-trial', 'trial-expired', 'cancelled', 'suspended'].indexOf(subscriptionStatus.statusCode) >= 0\">\n" +
-    "\n" +
-    "                <p class=\"lead\">\n" +
-    "                <strong>Need help fast?</strong>\n" +
-    "                Check out Priority Support and have a response in <strong>10 minutes</strong>. We are online 8-5 CST Monday through Friday.\n" +
-    "                </p>\n" +
-    "\n" +
-    "                <div ng-show=\"subscriptionStatus.statusCode === 'on-trial'\" class=\"subscription-status trial\">\n" +
-    "                    <span  ng-bind-html=\"'subscription-status.expanded-' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted\"></span>\n" +
-    "                    <a class=\"btn btn-primary u_margin-left\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss()\" target=\"_blank\">\n" +
-    "                        <span>Subscribe Now!</span>\n" +
-    "                    </a>\n" +
-    "                </div>\n" +
-    "                <div ng-show=\"subscriptionStatus.statusCode === 'trial-expired'\" class=\"subscription-status expired\">\n" +
-    "                    <span translate=\"subscription-status.expanded-expired\"></span>\n" +
-    "                    <a class=\"btn btn-primary u_margin-left\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss()\" target=\"_blank\">\n" +
-    "                        <span>Subscribe Now!</span>\n" +
-    "                    </a>\n" +
-    "                </div>\n" +
-    "                <div ng-show=\"subscriptionStatus.statusCode === 'cancelled'\" class=\"subscription-status cancelled\">\n" +
-    "                    <span translate=\"subscription-status.expanded-cancelled\"></span>\n" +
-    "                    <a class=\"btn btn-primary u_margin-left\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss()\" target=\"_blank\">\n" +
-    "                        <span>Subscribe Now!</span>\n" +
-    "                    </a>\n" +
-    "                </div>\n" +
-    "                <div ng-show=\"subscriptionStatus.statusCode === 'suspended'\" class=\"subscription-status suspended\">\n" +
-    "                    <span translate=\"subscription-status.expanded-suspended\"></span>\n" +
-    "                    <a class=\"btn btn-primary u_margin-left\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss()\" target=\"_blank\">\n" +
-    "                        <span>Subscribe Now!</span>\n" +
-    "                    </a>\n" +
-    "                </div>\n" +
-    "            </div><!--content-box-body-->\n" +
-    "\n" +
-    "            <div class=\"content-box-body\" ng-show=\"['trial-available', 'not-subscribed'].indexOf(subscriptionStatus.statusCode) >= 0\">\n" +
+    "            <div class=\"content-box-body\" ng-show=\"subscriptionStatus.statusCode != 'subscribed'\">\n" +
     "                <div class=\"product-intro\">\n" +
     "                    <h1>Priority Support</h1>\n" +
     "                    <p class=\"lead\">Get the help you need in 10 minutes or less, 8-5 CST Monday through Friday, or let us remotely connect, diagnose and correct display problems all without the need for you to intervene!</p>\n" +
     "                    <p class=\"lead\">$75 per Company per Month.</p>\n" +
-    "                    <button ng-show=\"subscriptionStatus.statusCode === 'trial-available'\" type=\"button\" class=\"btn btn-hg btn-primary\" ng-click=\"startTrial()\">Start Your Free Trial</button>\n" +
-    "                    <a ng-show=\"['not-subscribed'].indexOf(subscriptionStatus.statusCode) >= 0\" class=\"btn btn-hg btn-primary\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss()\" target=\"_blank\">\n" +
+    "                    <a class=\"btn btn-hg btn-primary\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss()\" target=\"_blank\">\n" +
     "                        <span>Subscribe Now!</span>\n" +
     "                    </a>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "        </div><!--blank-state-->\n" +
     "    </div>\n" +
-    "</div>");
+    "</div>\n" +
+    "");
 }]);
 })();
 
@@ -11964,7 +11931,6 @@ angular.module("risevision.common.i18n", ["pascalprecht.translate", "risevision.
  *
  */
 (function (angular) {
-
   "use strict";
 
   try {
@@ -11974,26 +11940,25 @@ angular.module("risevision.common.i18n", ["pascalprecht.translate", "risevision.
   }
 
   angular.module("risevision.common.i18n.config", [])
-    .constant("LOCALES_PREFIX",
-      "../../components/rv-common-i18n/dist/locales/translation_")
+    .constant("LOCALES_PREFIX", "locales/translation_")
     .constant("LOCALES_SUFIX", ".json");
 
   angular.module("risevision.common.config")
     .value("ENABLE_INTERCOM_MESSAGING", false)
-    .value("ENABLE_EXTERNAL_LOGGING", false)
-    .value("CORE_URL", "https://rvacore-test.appspot.com/_ah/api")
-    .value("COOKIE_CHECK_URL", "//storage-dot-rvacore-test.appspot.com")
+    .value("ENABLE_EXTERNAL_LOGGING", true)
+    .value("CORE_URL", "https://rvaserver2.appspot.com/_ah/api")
+    .value("COOKIE_CHECK_URL", "//storage-dot-rvaserver2.appspot.com")
     .value("STORE_URL", "https://store.risevision.com")
     .value("STORE_SERVER_URL",
-      "https://store-dot-rvacore-test.appspot.com")
+      "https://store-dot-rvaserver2.appspot.com")
     .value("STORE_ENDPOINT_URL",
-      "https://store-dot-rvacore-test.appspot.com/_ah/api")
+      "https://store-dot-rvaserver2.appspot.com/_ah/api")
     .value("STORAGE_ENDPOINT_URL",
-      "https://storage-dot-rvacore-test.appspot.com/_ah/api")
+      "https://storage-dot-rvaserver2.appspot.com/_ah/api")
     .value("GSFP_URL", "https://gsfp-dot-rvaserver2.appspot.com/fp")
     .value("SUPPORT_PRODUCT_CODE", "4c8c2f1a481d0ad84c6b16a9c6e90e2fc2252944")
     .value("SUPPORT_PRODUCT_ID", "14")
     .value("SUPPORT_PRODUCT_URL",
-      "https://store.risevision.com/product/14/rise-priority-support")
-    .value("APPS_URL", "https://apps-stage-0.risevision.com");
+      "https://store.risevision.com/products/?cat=compareSupport")
+    .value("APPS_URL", "https://apps.risevision.com");
 })(angular);

@@ -43,6 +43,6 @@
     .value("SUPPORT_PRODUCT_CODE", "4c8c2f1a481d0ad84c6b16a9c6e90e2fc2252944")
     .value("SUPPORT_PRODUCT_ID", "14")
     .value("SUPPORT_PRODUCT_URL",
-      "https://store.risevision.com/product/14/rise-priority-support")
+      "https://store.risevision.com/products/?cat=compareSupport")
     .value("APPS_URL", "https://apps-stage-0.risevision.com");
 })(angular);
