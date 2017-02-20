@@ -4064,6 +4064,7 @@ angular.module("risevision.common.support", [
 
           getSubscriptionStatus().then(function (
             subscriptionStatus) {
+
             if (subscriptionStatus && subscriptionStatus.statusCode ===
               "subscribed") {
               $location.search("cHJpb3JpdHktc3VwcG9ydA", 1);
@@ -4071,9 +4072,8 @@ angular.module("risevision.common.support", [
               $location.search("cHJpb3JpdHktc3VwcG9ydA", null);
             }
             segmentAnalytics.identify(username, properties);
-
             deferred.resolve();
-          });
+          }).catch(deferred.reject);
 
         });
         return deferred.promise;
