@@ -34,7 +34,7 @@
     .value("COOKIE_CHECK_URL", "//storage-dot-rvacore-test.appspot.com")
     .value("STORE_URL", "https://store.risevision.com")
     .value("STORE_SERVER_URL",
-      "https://store-dot-rvacore-test.appspot.com")
+      "https://store-dot-rvacore-test.appspot.com/")
     .value("STORE_ENDPOINT_URL",
       "https://store-dot-rvacore-test.appspot.com/_ah/api")
     .value("STORAGE_ENDPOINT_URL",
