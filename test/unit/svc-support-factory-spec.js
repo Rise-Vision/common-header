@@ -3,7 +3,7 @@
 describe("Services: Support Factory", function() {
   beforeEach(module("risevision.widget.common.subscription-status"));
   beforeEach(module("risevision.common.support"));
-  var supportFactory, startTrialCallWentOkay, subscriptionStatusGetCallWentOkay,
+  var supportFactory, subscriptionStatusGetCallWentOkay,
     subscriptionStatus, modalObject, intercomSpy, userId, identifyObject,
     showZendeskFormSpy;
 
@@ -72,20 +72,6 @@ describe("Services: Support Factory", function() {
       };
     });
 
-    $provide.service("$http",function(){
-      return {
-        get : function(){
-            var deferred = Q.defer();
-            if(startTrialCallWentOkay){
-              deferred.resolve({});
-            } else{
-              deferred.reject({});
-            }
-            return deferred.promise;
-        }
-      };
-    });
-
     $provide.factory("customLoader", function () {
       return function () {
         var deferred = Q.defer();
@@ -116,13 +102,12 @@ describe("Services: Support Factory", function() {
     expect(supportFactory).to.be.truely;
 
     expect(supportFactory.handlePrioritySupportAction).to.be.a("function");
-    expect(supportFactory.initiateTrial).to.be.a("function");
     expect(supportFactory.handleSendUsANote).to.be.a("function");
   });
 
   describe("Priority Support:", function() {
 
-    it("should open trial support modal but not the zendesk form when subscription was cancelled", function (done) {
+    it("should open priority support modal but not the zendesk form when subscription was cancelled", function (done) {
       subscriptionStatusGetCallWentOkay = true;
       subscriptionStatus.statusCode = "cancelled";
       supportFactory.handlePrioritySupportAction();
@@ -134,7 +119,7 @@ describe("Services: Support Factory", function() {
       }, 10);
     });
 
-    it("should open trial support modal but not the intercom chat when not subscribed", function (done) {
+    it("should open priority support modal but not the intercom chat when not subscribed", function (done) {
       subscriptionStatusGetCallWentOkay = true;
       subscriptionStatus.statusCode = "not-subscribed";
       supportFactory.handlePrioritySupportAction();
@@ -146,7 +131,7 @@ describe("Services: Support Factory", function() {
       }, 10);
     });
 
-    it("should open trial support modal but not the intercom chat when subscription was suspended", function (done) {
+    it("should open priority support modal but not the intercom chat when subscription was suspended", function (done) {
       subscriptionStatusGetCallWentOkay = true;
       subscriptionStatus.statusCode = "suspended";
       supportFactory.handlePrioritySupportAction();
@@ -158,7 +143,7 @@ describe("Services: Support Factory", function() {
       }, 10);
     });
 
-    it("should open trial support modal but not the intercom chat when trial is expired", function (done) {
+    it("should open priority support modal but not the intercom chat when trial is expired", function (done) {
       subscriptionStatusGetCallWentOkay = true;
       subscriptionStatus.statusCode = "trial-expired";
       supportFactory.handlePrioritySupportAction();
@@ -170,9 +155,10 @@ describe("Services: Support Factory", function() {
       }, 10);
     });
 
-    it("should open trial support modal but not the intercom chat when trial is available", function (done) {
+    it("should open priority support modal but not the intercom chat when trial is available", function (done) {
       subscriptionStatusGetCallWentOkay = true;
       subscriptionStatus.statusCode = "trial-available";
+
       supportFactory.handlePrioritySupportAction();
 
       setTimeout(function () {

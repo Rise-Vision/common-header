@@ -54,8 +54,10 @@
 
             if (subscriptionStatus && subscriptionStatus.statusCode ===
               "subscribed") {
+              // append priority support flag
               $location.search("cHJpb3JpdHktc3VwcG9ydA", 1);
             } else {
+              // clear priority support flag
               $location.search("cHJpb3JpdHktc3VwcG9ydA", null);
             }
             segmentAnalytics.identify(username, properties);
@@ -82,6 +84,7 @@
         return ensureScript()
           .then(_identify)
           .then(function () {
+            // append send-a-note flag
             $location.search("c2VuZC11cy1hLW5vdGU", 1);
             // clear priority support flag
             $location.search("cHJpb3JpdHktc3VwcG9ydA", null);

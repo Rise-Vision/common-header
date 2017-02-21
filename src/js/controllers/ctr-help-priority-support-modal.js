@@ -8,12 +8,6 @@ angular.module("risevision.common.header")
     $scope.subscriptionStatus = subscriptionStatus;
     $scope.supportProductUrl = SUPPORT_PRODUCT_URL;
 
-    $scope.startTrial = function () {
-      supportFactory.initiateTrial().then(function () {
-        $scope.dismiss();
-      });
-    };
-
     $scope.dismiss = function () {
       $modalInstance.dismiss();
     };

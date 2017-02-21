@@ -43,10 +43,10 @@ describe("controller: help priority support modal ", function() {
     });
 
     $translateProvider.useLoader("customLoader");
-        
+
   }));
   var $scope, initiateTrialSpy, modalInstanceDismissSpy;
-  
+
   beforeEach(function() {
 
     inject(function($injector,$rootScope, $controller, supportFactory, $modalInstance, subscriptionStatus, SUPPORT_PRODUCT_URL){
@@ -64,20 +64,10 @@ describe("controller: help priority support modal ", function() {
       $scope.$digest();
     });
   });
-  
+
   it("should initialize",function(){
     expect($scope).to.be.truely;
-    expect($scope.startTrial).to.exist;
     expect($scope.dismiss).to.exist;
-  });
-
-  describe("start trial: ", function() {
-    it("should call initiateTrial and dismiss the modal",function(){
-      $scope.startTrial();
-      $scope.$digest();
-      initiateTrialSpy.should.have.been.called;
-      modalInstanceDismissSpy.should.have.been.called;
-    });
   });
 
   describe("dismiss the modal: ", function() {
@@ -88,4 +78,3 @@ describe("controller: help priority support modal ", function() {
     });
   });
 });
-  

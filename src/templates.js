@@ -876,9 +876,6 @@ app.run(["$templateCache", function($templateCache) {
     "                <strong>Need help fast?</strong>\n" +
     "                Check out Priority Support and have a response in <strong>10 minutes</strong>. We are online 8-5 CST Monday through Friday.\n" +
     "            </p>\n" +
-    "            <button ng-if=\"subscriptionStatus.statusCode === 'trial-available'\" class=\"btn btn-primary btn-lg\" ng-click=\"startTrial()\">\n" +
-    "                Start Your Free Trial\n" +
-    "            </button>\n" +
     "\n" +
     "            <a ng-if=\"!subscriptionStatus.statusCode || ['not-subscribed', 'trial-expired', 'cancelled', 'suspended'].indexOf(subscriptionStatus.statusCode) >= 0\" class=\"btn btn-primary btn-lg\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss();\" target=\"_blank\">\n" +
     "                Subscribe Now\n" +

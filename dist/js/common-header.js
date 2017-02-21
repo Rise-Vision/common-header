@@ -876,9 +876,6 @@ app.run(["$templateCache", function($templateCache) {
     "                <strong>Need help fast?</strong>\n" +
     "                Check out Priority Support and have a response in <strong>10 minutes</strong>. We are online 8-5 CST Monday through Friday.\n" +
     "            </p>\n" +
-    "            <button ng-if=\"subscriptionStatus.statusCode === 'trial-available'\" class=\"btn btn-primary btn-lg\" ng-click=\"startTrial()\">\n" +
-    "                Start Your Free Trial\n" +
-    "            </button>\n" +
     "\n" +
     "            <a ng-if=\"!subscriptionStatus.statusCode || ['not-subscribed', 'trial-expired', 'cancelled', 'suspended'].indexOf(subscriptionStatus.statusCode) >= 0\" class=\"btn btn-primary btn-lg\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss();\" target=\"_blank\">\n" +
     "                Subscribe Now\n" +
@@ -1782,12 +1779,6 @@ angular.module("risevision.common.header")
     supportFactory, SUPPORT_PRODUCT_URL) {
     $scope.subscriptionStatus = subscriptionStatus;
     $scope.supportProductUrl = SUPPORT_PRODUCT_URL;
-
-    $scope.startTrial = function () {
-      supportFactory.initiateTrial().then(function () {
-        $scope.dismiss();
-      });
-    };
 
     $scope.dismiss = function () {
       $modalInstance.dismiss();
@@ -3864,27 +3855,21 @@ angular.module("risevision.common.support", [
   .factory("supportFactory", ["getSubscriptionStatus", "$q",
     "subscriptionStatusService",
     "SUPPORT_PRODUCT_CODE", "STORE_SERVER_URL", "userState",
-    "$modal", "$templateCache", "$http", "$window", "segmentAnalytics",
-    "zendesk",
+    "$modal", "$templateCache", "$window", "segmentAnalytics",
+    "zendesk", "$log",
     function (getSubscriptionStatus, $q, subscriptionStatusService,
       SUPPORT_PRODUCT_CODE,
       STORE_SERVER_URL, userState,
-      $modal, $templateCache, $http, $window, segmentAnalytics,
-      zendesk) {
+      $modal, $templateCache, $window, segmentAnalytics,
+      zendesk, $log) {
       var factory = {};
       var PREMIUM_PLAN = "Premium";
-      // var TRIAL_PLAN = "Trial";
       var BASIC_PLAN = "Free";
-
       factory.handlePrioritySupportAction = function () {
         _isSubscribed().then(function () {
-          // if (subscriptionStatus.statusCode ===
-          //   "on-trial") {
-          //   _openSupportTrial(subscriptionStatus);
-          // }
           factory.openZendeskForm();
         }, function (subscriptionStatus) {
-          _openSupportTrial(subscriptionStatus);
+          _openSupportModal(subscriptionStatus);
         });
       };
 
@@ -3901,12 +3886,6 @@ angular.module("risevision.common.support", [
             deferred.reject(subscriptionStatus);
           }
 
-          // if (subscriptionStatus.statusCode ===
-          //   "on-trial") {
-          //   _sendUserPlanUpdateToIntercom(TRIAL_PLAN);
-          //   deferred.resolve(subscriptionStatus);
-          // }
-
           if (subscriptionStatus.statusCode ===
             "subscribed") {
             _sendUserPlanUpdateToIntercom(PREMIUM_PLAN);
@@ -3914,21 +3893,21 @@ angular.module("risevision.common.support", [
 
           }
         }, function (err) {
-          console.debug("Could not retrieve a subscription status", err);
+          $log.debug("Could not retrieve a subscription status", err);
           deferred.reject();
         });
 
         return deferred.promise;
       };
 
-      var _sendUserPlanUpdateToIntercom = function () {
-        // segmentAnalytics.identify(userState.getUsername(), {
-        //   "plan": plan
-        // });
+      var _sendUserPlanUpdateToIntercom = function (plan) {
+        segmentAnalytics.identify(userState.getUsername(), {
+          "plan": plan
+        });
       };
 
-      var _openSupportTrial = function (subscriptionStatus) {
-        // console.debug("opening support trial popup");
+      var _openSupportModal = function (subscriptionStatus) {
+        $log.debug("opening support trial popup");
         $modal.open({
           template: $templateCache.get("help-priority-support-modal.html"),
           controller: "HelpPrioritySupportModalCtrl",
@@ -3944,24 +3923,6 @@ angular.module("risevision.common.support", [
         zendesk.showWidget();
       };
 
-      factory.initiateTrial = function () {
-        var SUBSCRIPTION_AUTH_URL = STORE_SERVER_URL +
-          "/v1/widget/auth?pc=" +
-          SUPPORT_PRODUCT_CODE + "&cid=" + userState.getSelectedCompanyId();
-        var deferred = $q.defer();
-
-        $http.get(SUBSCRIPTION_AUTH_URL).then(function () {
-          console.debug("Subscription trial star2ted");
-          factory.handlePrioritySupportAction();
-          deferred.resolve();
-        }, function (err) {
-          console.debug("Could not call the subscription start trial", err);
-          deferred.reject();
-        });
-
-        return deferred.promise;
-      };
-
       factory.handleSendUsANote = function () {
         _isSubscribed().then(function (subscriptionStatus) {
           _openSendUsANote(subscriptionStatus);
@@ -3971,7 +3932,7 @@ angular.module("risevision.common.support", [
       };
 
       var _openSendUsANote = function (subscriptionStatus) {
-        // console.debug("opening send us a note popup");
+        $log.debug("opening send us a note popup");
         $modal.open({
           template: $templateCache.get("help-send-us-a-note-modal.html"),
           controller: "HelpSendUsANoteModalCtrl",
@@ -3983,24 +3944,24 @@ angular.module("risevision.common.support", [
         });
       };
 
-
       return factory;
     }
   ])
   .factory("getSubscriptionStatus", ["SUPPORT_PRODUCT_CODE", "userState", "$q",
-    "subscriptionStatusService",
-    function (SUPPORT_PRODUCT_CODE, userState, $q, subscriptionStatusService) {
+    "subscriptionStatusService", "$log",
+    function (SUPPORT_PRODUCT_CODE, userState, $q, subscriptionStatusService,
+      $log) {
       return function getSubscriptionStatus() {
         var deferred = $q.defer();
+
         if (SUPPORT_PRODUCT_CODE && userState.getSelectedCompanyId()) {
           subscriptionStatusService.get(SUPPORT_PRODUCT_CODE, userState.getSelectedCompanyId())
             .then(function (subscriptionStatus) {
-                // console.debug("subscriptionStatus", subscriptionStatus);
+                $log.debug("subscriptionStatus", subscriptionStatus);
                 deferred.resolve(subscriptionStatus);
               },
               function (err) {
-                console.debug("Could not retrieve a subscription status",
-                  err);
+                $log.debug("Could not retrieve a subscription status", err);
                 deferred.reject(err);
               });
         } else {
@@ -4067,8 +4028,10 @@ angular.module("risevision.common.support", [
 
             if (subscriptionStatus && subscriptionStatus.statusCode ===
               "subscribed") {
+              // append priority support flag
               $location.search("cHJpb3JpdHktc3VwcG9ydA", 1);
             } else {
+              // clear priority support flag
               $location.search("cHJpb3JpdHktc3VwcG9ydA", null);
             }
             segmentAnalytics.identify(username, properties);
@@ -4095,6 +4058,7 @@ angular.module("risevision.common.support", [
         return ensureScript()
           .then(_identify)
           .then(function () {
+            // append send-a-note flag
             $location.search("c2VuZC11cy1hLW5vdGU", 1);
             // clear priority support flag
             $location.search("cHJpb3JpdHktc3VwcG9ydA", null);

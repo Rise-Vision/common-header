@@ -84,19 +84,9 @@ describe("controller: help send us a note modal ", function() {
 
   it("should initialize",function(){
     expect($scope).to.be.truely;
-    expect($scope.startTrial).to.exist;
     expect($scope.sendUsANote).to.exist;
     expect($scope.prioritySupport).to.exist;
     expect($scope.dismiss).to.exist;
-  });
-
-  describe("start trial: ", function() {
-    it("should call initiateTrial and dismiss the modal",function(){
-      $scope.startTrial();
-      $scope.$digest();
-      initiateTrialSpy.should.have.been.called;
-      modalInstanceDismissSpy.should.have.been.called;
-    });
   });
 
   describe("dismiss the modal: ", function() {

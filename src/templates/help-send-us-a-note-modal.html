@@ -17,9 +17,6 @@
                 <strong>Need help fast?</strong>
                 Check out Priority Support and have a response in <strong>10 minutes</strong>. We are online 8-5 CST Monday through Friday.
             </p>
-            <button ng-if="subscriptionStatus.statusCode === 'trial-available'" class="btn btn-primary btn-lg" ng-click="startTrial()">
-                Start Your Free Trial
-            </button>
 
             <a ng-if="!subscriptionStatus.statusCode || ['not-subscribed', 'trial-expired', 'cancelled', 'suspended'].indexOf(subscriptionStatus.statusCode) >= 0" class="btn btn-primary btn-lg" href="{{supportProductUrl}}" ng-click="dismiss();" target="_blank">
                 Subscribe Now
