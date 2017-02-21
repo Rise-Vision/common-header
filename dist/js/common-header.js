@@ -4068,12 +4068,28 @@ angular.module("risevision.common.support", [
           });
       }
 
+      function forceCloseAll() {
+        if ($window.zE && $window.zE.hide) {
+          $window.zE.hide();
+        }
+      }
+
       return {
         ensureScript: ensureScript,
         showWidget: showWidget,
         showSendNote: showSendNote,
+        forceCloseAll: forceCloseAll,
       };
 
+    }
+  ]).run(["$rootScope", "zendesk",
+    function ($rootScope, zendesk) {
+      // $rootScope.$on("$routeChangeSuccess", zendesk.forceCloseAll);
+      $rootScope.$on("$stateChangeSuccess", function (a, b) {
+        console.log(a, b);
+        zendesk.forceCloseAll();
+      });
+      // $rootScope.$on("$locationChangeSuccess", zendesk.forceCloseAll);
     }
   ]);
 })(angular);

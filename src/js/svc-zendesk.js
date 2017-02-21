@@ -94,12 +94,25 @@
           });
       }
 
+      function forceCloseAll() {
+        if ($window.zE && $window.zE.hide) {
+          $window.zE.hide();
+        }
+      }
+
       return {
         ensureScript: ensureScript,
         showWidget: showWidget,
         showSendNote: showSendNote,
+        forceCloseAll: forceCloseAll,
       };
 
+    }
+  ]).run(["$rootScope", "zendesk",
+    function ($rootScope, zendesk) {
+      $rootScope.$on("$stateChangeSuccess", function () {
+        zendesk.forceCloseAll();
+      });
     }
   ]);
 })(angular);
