@@ -4,15 +4,12 @@ angular.module("risevision.common.support", [
   "risevision.widget.common.subscription-status"
 ])
   .factory("supportFactory", ["getSubscriptionStatus", "$q",
-    "subscriptionStatusService",
     "SUPPORT_PRODUCT_CODE", "STORE_SERVER_URL", "userState",
     "$modal", "$templateCache", "$window", "segmentAnalytics",
     "zendesk", "$log",
-    function (getSubscriptionStatus, $q, subscriptionStatusService,
-      SUPPORT_PRODUCT_CODE,
-      STORE_SERVER_URL, userState,
-      $modal, $templateCache, $window, segmentAnalytics,
-      zendesk, $log) {
+    function (getSubscriptionStatus, $q, SUPPORT_PRODUCT_CODE,
+      STORE_SERVER_URL, userState, $modal, $templateCache,
+      $window, segmentAnalytics, zendesk, $log) {
       var factory = {};
       var PREMIUM_PLAN = "Premium";
       var BASIC_PLAN = "Free";
