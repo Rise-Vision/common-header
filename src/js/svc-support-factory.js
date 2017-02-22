@@ -24,21 +24,13 @@ angular.module("risevision.common.support", [
       var _isSubscribed = function () {
         var deferred = $q.defer();
         getSubscriptionStatus().then(function (subscriptionStatus) {
-          if (subscriptionStatus && (subscriptionStatus.statusCode ===
-            "not-subscribed" || subscriptionStatus.statusCode ===
-            "cancelled" || subscriptionStatus.statusCode ===
-            "suspended" || subscriptionStatus.statusCode ===
-            "trial-expired" || subscriptionStatus.statusCode ===
-            "trial-available")) {
-            _sendUserPlanUpdateToIntercom(BASIC_PLAN);
-            deferred.reject(subscriptionStatus);
-          }
-
           if (subscriptionStatus.statusCode ===
             "subscribed") {
             _sendUserPlanUpdateToIntercom(PREMIUM_PLAN);
             deferred.resolve(subscriptionStatus);
-
+          } else {
+            _sendUserPlanUpdateToIntercom(BASIC_PLAN);
+            deferred.reject(subscriptionStatus);
           }
         }, function (err) {
           $log.debug("Could not retrieve a subscription status", err);
