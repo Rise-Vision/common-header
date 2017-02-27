@@ -5,6 +5,14 @@ describe("Services: Zendesk", function() {
 
   var windowObj, zeSpy, locationSearchSpy, zeActivateSpy;
 
+  beforeEach(function() {
+    this.clock = sinon.useFakeTimers();
+  });
+
+  afterEach(function() {
+    this.clock.restore();
+  });
+
   beforeEach(module(function($provide) {
     $provide.service("$q", function() {return Q;});
     $provide.value("userState", {
@@ -14,6 +22,7 @@ describe("Services: Zendesk", function() {
       getUserEmail: function() { return "someone@hello.com"; },
       getUserCompanyId: function() { return "abcdefg"; },
       getUserCompanyName: function() { return "Rich Inc."; },
+      getSelectedCompanyId: function() { return "abcdefg"; },
     });
     $provide.service("segmentAnalytics", function() {
       return {
@@ -38,10 +47,12 @@ describe("Services: Zendesk", function() {
           zeSpy.hide = function() {};
           zeSpy.activate = zeActivateSpy;
           windowObj.zE = zeSpy;
+          windowObj.zE.identify = function() {};
         } },
         createElement: function() {
           return {};
-        }
+        },
+        $: function() {return {};}
       }
     };
 
