@@ -59,8 +59,7 @@ angular.module("risevision.common.header")
                 "To add them to this Company, they must sign in and delete themselves from their current Company by opening their User Settings and clicking on Delete button.";
             }
 
-            messageBox("User could not be added",
-              errorMessage);
+            messageBox("User could not be added", errorMessage);
           }
         ).finally(function () {
           $scope.loading = false;
