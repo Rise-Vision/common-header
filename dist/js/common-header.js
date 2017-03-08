@@ -1488,6 +1488,7 @@ angular.module("risevision.common.header", [
   "risevision.common.components.scrolling-list",
   "risevision.common.components.stop-event",
   "risevision.common.components.analytics",
+  "risevision.common.components.message-box",
   "risevision.common.svg",
   "risevision.common.support"
 ])
@@ -2821,10 +2822,11 @@ angular.module("risevision.common.header")
 angular.module("risevision.common.header")
 
 .controller("AddUserModalCtrl", ["$scope", "addUser", "$modalInstance",
-  "companyId", "userState", "userRoleMap", "humanReadableError", "$loading",
-  "segmentAnalytics",
+  "companyId", "userState", "userRoleMap", "humanReadableError", "messageBox",
+  "$loading", "segmentAnalytics",
   function ($scope, addUser, $modalInstance, companyId, userState,
-    userRoleMap, humanReadableError, $loading, segmentAnalytics) {
+    userRoleMap, humanReadableError, messageBox, $loading,
+    segmentAnalytics) {
     $scope.isAdd = true;
 
     //push roles into array
@@ -2870,7 +2872,16 @@ angular.module("risevision.common.header")
             $modalInstance.close("success");
           },
           function (error) {
-            alert("Error" + humanReadableError(error));
+            var errorMessage = "Error: " + humanReadableError(error);
+            if (error.code === 409) {
+              errorMessage = "A User with the Username '" +
+                $scope.user.username +
+                "' belongs to another Company. " +
+                "If you would like to add them to this Company, they must first Delete themselves from their current Company or Delete that Company.";
+            }
+
+            messageBox("User could not be added",
+              errorMessage, "Close");
           }
         ).finally(function () {
           $scope.loading = false;
@@ -7106,6 +7117,62 @@ angular.module("risevision.common.components.stop-event", [])
   ]);
 
 })(angular);
+
+"use strict";
+
+angular.module("risevision.common.components.message-box.services", [])
+  .factory("messageBox", ["$q", "$log", "$modal", "$templateCache",
+    function ($q, $log, $modal, $templateCache) {
+      return function (title, message, close) {
+        var modalInstance = $modal.open({
+          template: $templateCache.get("message-box/message-box.html"),
+          controller: "messageBoxInstance",
+          windowClass: "modal-custom",
+          resolve: {
+            title: function () {
+              return title;
+            },
+            message: function () {
+              return message;
+            },
+            button: function () {
+              return close || "common.close";
+            }
+          }
+        });
+      };
+    }
+  ]);
+
+"use strict";
+
+angular.module("risevision.common.components.message-box", [
+  "risevision.common.components.message-box.services"
+])
+  .controller("messageBoxInstance", ["$scope", "$modalInstance",
+    "title", "message", "button",
+    function ($scope, $modalInstance, title, message, button) {
+      $scope.title = title;
+      $scope.message = message;
+      $scope.button = button ? button : "common.close";
+
+      $scope.dismiss = function () {
+        $modalInstance.dismiss();
+      };
+    }
+  ]);
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.components.message-box');
+} catch (e) {
+  module = angular.module('risevision.common.components.message-box', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('message-box/message-box.html',
+    '<form id="messageForm"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title" translate="">{{title}}</h3></div><div class="modal-body" stop-event="touchend"><span translate="">{{message}}</span></div><div class="modal-footer"><button class="btn btn-primary" ng-click="dismiss()"><span translate="{{button}}"></span> <i class="fa fa-white fa-check icon-right"></i></button></div></form>');
+}]);
+})();
 
 (function () {
   "use strict";

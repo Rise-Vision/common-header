@@ -26,6 +26,7 @@ angular.module("risevision.common.header", [
   "risevision.common.components.scrolling-list",
   "risevision.common.components.stop-event",
   "risevision.common.components.analytics",
+  "risevision.common.components.message-box",
   "risevision.common.svg",
   "risevision.common.support"
 ])

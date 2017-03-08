@@ -1,10 +1,11 @@
 angular.module("risevision.common.header")
 
 .controller("AddUserModalCtrl", ["$scope", "addUser", "$modalInstance",
-  "companyId", "userState", "userRoleMap", "humanReadableError", "$loading",
-  "segmentAnalytics",
+  "companyId", "userState", "userRoleMap", "humanReadableError", "messageBox",
+  "$loading", "segmentAnalytics",
   function ($scope, addUser, $modalInstance, companyId, userState,
-    userRoleMap, humanReadableError, $loading, segmentAnalytics) {
+    userRoleMap, humanReadableError, messageBox, $loading,
+    segmentAnalytics) {
     $scope.isAdd = true;
 
     //push roles into array
@@ -50,7 +51,16 @@ angular.module("risevision.common.header")
             $modalInstance.close("success");
           },
           function (error) {
-            alert("Error" + humanReadableError(error));
+            var errorMessage = "Error: " + humanReadableError(error);
+            if (error.code === 409) {
+              errorMessage = "A User with the Username '" +
+                $scope.user.username +
+                "' belongs to another Company. " +
+                "If you would like to add them to this Company, they must first Delete themselves from their current Company or Delete that Company.";
+            }
+
+            messageBox("User could not be added",
+              errorMessage, "Close");
           }
         ).finally(function () {
           $scope.loading = false;
