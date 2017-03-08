@@ -55,12 +55,12 @@ angular.module("risevision.common.header")
             if (error.code === 409) {
               errorMessage = "A User with the Username '" +
                 $scope.user.username +
-                "' belongs to another Company. " +
-                "If you would like to add them to this Company, they must first Delete themselves from their current Company or Delete that Company.";
+                "' already belongs to another Company. " +
+                "To add them to this Company, they must sign in and delete themselves from their current Company by opening their User Settings and clicking on Delete button.";
             }
 
             messageBox("User could not be added",
-              errorMessage, "Close");
+              errorMessage);
           }
         ).finally(function () {
           $scope.loading = false;
