@@ -29,10 +29,10 @@ describe("controller: user add", function() {
         expect(username).to.equal("user@example.io");
         expect(newUser).to.be.ok;
         
-        if(createUser){
+        if (!createUserError){
           deferred.resolve(username);
-        }else{
-          deferred.reject("ERROR; could not create company");
+        } else {
+          deferred.reject(createUserError);
         }
         return deferred.promise;
       };
@@ -53,19 +53,22 @@ describe("controller: user add", function() {
         return deferred.promise;
       };
     });
+
+    $translateProvider.useLoader("customLoader");
     
     $provide.factory("messageBox", function() {
       return messageBoxStub;
     });
-
-    $translateProvider.useLoader("customLoader");
+    $provide.factory("$filter", function() {
+      return function() { return filterStub; };
+    });
 
   }));
-  var $scope, userState, $modalInstance, createUser,
-  trackerCalled, messageBoxStub;
+  var $scope, userState, $modalInstance, createUserError,
+  trackerCalled, messageBoxStub, filterStub;
   var isRiseAdmin = true, isUserAdmin = true, isRiseVisionUser = true;
   beforeEach(function(){
-    createUser = true;
+    createUserError = false;
     trackerCalled = undefined;
     userState = function(){
       return {
@@ -89,6 +92,7 @@ describe("controller: user add", function() {
       userState = $injector.get("userState");
       
       messageBoxStub = sinon.stub();
+      filterStub = sinon.stub();
 
       $controller("AddUserModalCtrl", {
         $scope : $scope,
@@ -96,7 +100,6 @@ describe("controller: user add", function() {
         userState : userState,
         addUser:$injector.get("addUser"),
         segmentAnalytics:$injector.get("segmentAnalytics"),
-        messageBox: $injector.get("messageBox")
       });
       $scope.$digest();
     });
@@ -156,12 +159,28 @@ describe("controller: user add", function() {
     });
 
     it("should handle failure to save user",function(done){
-      createUser = false;
+      createUserError = true;
       
       $scope.save();
       setTimeout(function(){
         expect(messageBoxStub).to.have.been.called;
+        expect(filterStub).to.have.not.been.called;
         
+        expect($scope.loading).to.be.false;
+        expect($modalInstance._closed).to.be.false;
+
+        done();
+      },10);
+    });
+    
+    it("should handle failure to save user",function(done){
+      createUserError = { code: 409 };
+      
+      $scope.save();
+      setTimeout(function(){
+        expect(messageBoxStub).to.have.been.called;
+        expect(filterStub).to.have.been.calledTwice;
+
         expect($scope.loading).to.be.false;
         expect($modalInstance._closed).to.be.false;
 
