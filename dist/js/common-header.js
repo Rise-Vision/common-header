@@ -1471,6 +1471,7 @@ angular.module("risevision.common.header", [
   "risevision.common.header.templates",
   "risevision.common.header.directives",
   "risevision.common.loading",
+  "risevision.common.i18n",
   "risevision.ui-flow",
   "risevision.common.systemmessages", "risevision.core.systemmessages",
   "risevision.core.countries",
@@ -2821,10 +2822,10 @@ angular.module("risevision.common.header")
 
 angular.module("risevision.common.header")
 
-.controller("AddUserModalCtrl", ["$scope", "addUser", "$modalInstance",
-  "companyId", "userState", "userRoleMap", "humanReadableError", "messageBox",
-  "$loading", "segmentAnalytics",
-  function ($scope, addUser, $modalInstance, companyId, userState,
+.controller("AddUserModalCtrl", ["$scope", "$filter", "addUser",
+  "$modalInstance", "companyId", "userState", "userRoleMap",
+  "humanReadableError", "messageBox", "$loading", "segmentAnalytics",
+  function ($scope, $filter, addUser, $modalInstance, companyId, userState,
     userRoleMap, humanReadableError, messageBox, $loading,
     segmentAnalytics) {
     $scope.isAdd = true;
@@ -2872,15 +2873,19 @@ angular.module("risevision.common.header")
             $modalInstance.close("success");
           },
           function (error) {
+
             var errorMessage = "Error: " + humanReadableError(error);
             if (error.code === 409) {
-              errorMessage = "A User with the Username '" +
-                $scope.user.username +
-                "' already belongs to another Company. " +
-                "To add them to this Company, they must sign in and delete themselves from their current Company by opening their User Settings and clicking on Delete button.";
+              var errorMessage1 = $filter("translate")(
+                "common-header.user.error.duplicate-user-1");
+              var errorMessage2 = $filter("translate")(
+                "common-header.user.error.duplicate-user-2");
+
+              errorMessage = errorMessage1 + $scope.user.username +
+                errorMessage2;
             }
 
-            messageBox("User could not be added", errorMessage);
+            messageBox("common-header.user.error.add-user", errorMessage);
           }
         ).finally(function () {
           $scope.loading = false;
@@ -2935,12 +2940,14 @@ angular.module("risevision.common.header")
 angular.module("risevision.common.header")
 
 .controller("UserSettingsModalCtrl", [
-  "$scope", "$modalInstance", "updateUser", "getUserProfile", "deleteUser",
-  "addUser", "username", "userRoleMap", "$log", "$loading", "userState",
-  "uiFlowManager", "humanReadableError", "$rootScope", "segmentAnalytics",
-  function ($scope, $modalInstance, updateUser, getUserProfile, deleteUser,
-    addUser, username, userRoleMap, $log, $loading, userState,
-    uiFlowManager, humanReadableError, $rootScope, segmentAnalytics) {
+  "$scope", "$filter", "$modalInstance", "updateUser", "getUserProfile",
+  "deleteUser", "username", "userRoleMap", "$log", "$loading", "userState",
+  "uiFlowManager", "humanReadableError", "messageBox", "$rootScope",
+  "segmentAnalytics",
+  function ($scope, $filter, $modalInstance, updateUser, getUserProfile,
+    deleteUser, username, userRoleMap, $log, $loading, userState,
+    uiFlowManager, humanReadableError, messageBox, $rootScope,
+    segmentAnalytics) {
     $scope.user = {};
     $scope.$watch("loading", function (loading) {
       if (loading) {
@@ -3027,7 +3034,18 @@ angular.module("risevision.common.header")
           },
           function (error) {
             $log.debug(error);
-            alert("Error: " + humanReadableError(error));
+            var errorMessage = "Error: " + humanReadableError(error);
+            if (error.code === 409) {
+              var errorMessage1 = $filter("translate")(
+                "common-header.user.error.duplicate-user-1");
+              var errorMessage2 = $filter("translate")(
+                "common-header.user.error.duplicate-user-2");
+
+              errorMessage = errorMessage1 + $scope.user.username +
+                errorMessage2;
+            }
+
+            messageBox("common-header.user.error.add-user", errorMessage);
           }
         ).finally(function () {
           $scope.loading = false;

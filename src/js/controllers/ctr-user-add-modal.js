@@ -1,9 +1,9 @@
 angular.module("risevision.common.header")
 
-.controller("AddUserModalCtrl", ["$scope", "addUser", "$modalInstance",
-  "companyId", "userState", "userRoleMap", "humanReadableError", "messageBox",
-  "$loading", "segmentAnalytics",
-  function ($scope, addUser, $modalInstance, companyId, userState,
+.controller("AddUserModalCtrl", ["$scope", "$filter", "addUser",
+  "$modalInstance", "companyId", "userState", "userRoleMap",
+  "humanReadableError", "messageBox", "$loading", "segmentAnalytics",
+  function ($scope, $filter, addUser, $modalInstance, companyId, userState,
     userRoleMap, humanReadableError, messageBox, $loading,
     segmentAnalytics) {
     $scope.isAdd = true;
@@ -51,15 +51,19 @@ angular.module("risevision.common.header")
             $modalInstance.close("success");
           },
           function (error) {
+
             var errorMessage = "Error: " + humanReadableError(error);
             if (error.code === 409) {
-              errorMessage = "A User with the Username '" +
-                $scope.user.username +
-                "' already belongs to another Company. " +
-                "To add them to this Company, they must sign in and delete themselves from their current Company by opening their User Settings and clicking on Delete button.";
+              var errorMessage1 = $filter("translate")(
+                "common-header.user.error.duplicate-user-1");
+              var errorMessage2 = $filter("translate")(
+                "common-header.user.error.duplicate-user-2");
+
+              errorMessage = errorMessage1 + $scope.user.username +
+                errorMessage2;
             }
 
-            messageBox("User could not be added", errorMessage);
+            messageBox("common-header.user.error.add-user", errorMessage);
           }
         ).finally(function () {
           $scope.loading = false;
