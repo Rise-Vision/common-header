@@ -144,7 +144,8 @@ angular.module("risevision.common.header", [
               d.type.toUpperCase() === "SEARCH" ||
               d.type.toUpperCase() === "EMAIL" ||
               d.type.toUpperCase() === "NUMBER" ||
-              d.type.toUpperCase() === "DATE")
+              d.type.toUpperCase() === "DATE" ||
+              d.type.toUpperCase() === "TEL")
           ) ||
           d.tagName.toUpperCase() === "TEXTAREA") {
           doPrevent = d.readOnly || d.disabled;
