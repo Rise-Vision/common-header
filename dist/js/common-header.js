@@ -2880,8 +2880,7 @@ angular.module("risevision.common.header")
                 "To add them to this Company, they must sign in and delete themselves from their current Company by opening their User Settings and clicking on Delete button.";
             }
 
-            messageBox("User could not be added",
-              errorMessage);
+            messageBox("User could not be added", errorMessage);
           }
         ).finally(function () {
           $scope.loading = false;
@@ -7127,7 +7126,7 @@ angular.module("risevision.common.components.message-box.services", [])
         var modalInstance = $modal.open({
           template: $templateCache.get("message-box/message-box.html"),
           controller: "messageBoxInstance",
-          windowClass: "modal-custom",
+          size: "md",
           resolve: {
             title: function () {
               return title;
@@ -7136,7 +7135,7 @@ angular.module("risevision.common.components.message-box.services", [])
               return message;
             },
             button: function () {
-              return close || "common.close";
+              return close || "common.ok";
             }
           }
         });
