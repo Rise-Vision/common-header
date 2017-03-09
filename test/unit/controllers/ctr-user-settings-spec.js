@@ -207,7 +207,7 @@ describe("controller: user settings", function() {
       
       $scope.save();
       setTimeout(function(){
-        expect(messageBoxStub).to.have.been.called;
+        expect(messageBoxStub).to.have.been.calledWith("common-header.user.error.update-user");
         expect(filterStub).to.have.not.been.called;
         
         expect($scope.loading).to.be.false;
@@ -222,8 +222,10 @@ describe("controller: user settings", function() {
       
       $scope.save();
       setTimeout(function(){
-        expect(messageBoxStub).to.have.been.called;
-        expect(filterStub).to.have.been.calledTwice;
+        expect(messageBoxStub).to.have.been.calledWith("common-header.user.error.update-user");
+        expect(filterStub).to.have.been.calledWith("common-header.user.error.duplicate-user", {
+          "username": "user@example.io"
+        });
 
         expect($scope.loading).to.be.false;
         expect($modalInstance._closed).to.be.false;

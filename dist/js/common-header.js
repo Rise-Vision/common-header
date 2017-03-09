@@ -2876,13 +2876,10 @@ angular.module("risevision.common.header")
 
             var errorMessage = "Error: " + humanReadableError(error);
             if (error.code === 409) {
-              var errorMessage1 = $filter("translate")(
-                "common-header.user.error.duplicate-user-1");
-              var errorMessage2 = $filter("translate")(
-                "common-header.user.error.duplicate-user-2");
-
-              errorMessage = errorMessage1 + $scope.user.username +
-                errorMessage2;
+              errorMessage = $filter("translate")(
+                "common-header.user.error.duplicate-user", {
+                  "username": $scope.user.username
+                });
             }
 
             messageBox("common-header.user.error.add-user", errorMessage);
@@ -3036,16 +3033,13 @@ angular.module("risevision.common.header")
             $log.debug(error);
             var errorMessage = "Error: " + humanReadableError(error);
             if (error.code === 409) {
-              var errorMessage1 = $filter("translate")(
-                "common-header.user.error.duplicate-user-1");
-              var errorMessage2 = $filter("translate")(
-                "common-header.user.error.duplicate-user-2");
-
-              errorMessage = errorMessage1 + $scope.user.username +
-                errorMessage2;
+              errorMessage = $filter("translate")(
+                "common-header.user.error.duplicate-user", {
+                  "username": $scope.user.username
+                });
             }
 
-            messageBox("common-header.user.error.add-user", errorMessage);
+            messageBox("common-header.user.error.update-user", errorMessage);
           }
         ).finally(function () {
           $scope.loading = false;
