@@ -25,7 +25,9 @@ describe("controller: user add", function() {
     $provide.service("addUser",function(){
       return function(companyId, username, newUser){
         var deferred = Q.defer();
+        expect(companyId).to.equal("1234");
         expect(username).to.equal("user@example.io");
+        expect(newUser).to.be.ok;
         
         if(createUser){
           deferred.resolve(username);
@@ -54,7 +56,7 @@ describe("controller: user add", function() {
     
     $provide.factory("messageBox", function() {
       return messageBoxStub;
-    })
+    });
 
     $translateProvider.useLoader("customLoader");
 
