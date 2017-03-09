@@ -217,7 +217,7 @@ describe("controller: user settings", function() {
       },10);
     });
     
-    it("should handle failure to save user",function(done){
+    it("should handle duplicate user error",function(done){
       createUserError = { code: 409 };
       
       $scope.save();
