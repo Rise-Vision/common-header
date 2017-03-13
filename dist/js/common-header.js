@@ -4095,39 +4095,41 @@ angular.module("risevision.common.support", [
       function _startDomMonitor() {
         // continuous monitor DOM and alter ZD widget form
         // when it's present on the web page
-        var username = userState.getUsername();
-        var companyId = userState.getSelectedCompanyId();
+        if (!cancelDomMonitor) {
+          var username = userState.getUsername();
+          var companyId = userState.getSelectedCompanyId();
 
-        cancelDomMonitor = setInterval(function () {
-          console.log("Looking for open ZD form...");
-          var iframe = $(
-            "iframe.zEWidget-ticketSubmissionForm--active");
-          if (iframe && iframe.contents) {
-            // automatically fill in rise vision username
-            var rvUsernameInput = iframe.contents().find(
-              "input[name=email]");
-            if (rvUsernameInput && rvUsernameInput.length > 0) {
-              rvUsernameInput.val(username);
-              rvUsernameInput.prop("disabled", true);
-              rvUsernameInput.parents("label").first().parent().hide();
+          cancelDomMonitor = setInterval(function () {
+            console.log("Looking for open ZD form...");
+            var iframe = $(
+              "iframe.zEWidget-ticketSubmissionForm--active");
+            if (iframe && iframe.contents) {
+              // automatically fill in rise vision username
+              var rvUsernameInput = iframe.contents().find(
+                "input[name=email]");
+              if (rvUsernameInput && rvUsernameInput.length > 0) {
+                rvUsernameInput.val(username);
+                rvUsernameInput.prop("disabled", true);
+                rvUsernameInput.parents("label").first().parent().hide();
+              }
+
+              var rvCompanyInput = iframe.contents().find(
+                "input[name=24893323]");
+              if (rvCompanyInput && rvCompanyInput.length > 0) {
+                rvCompanyInput.val(JSON.stringify({
+                  riseVisionCompanyId: companyId,
+                  riseVisionUsername: username
+                }));
+                rvCompanyInput.prop("disabled", true);
+                rvCompanyInput.parents("label").first().parent().hide();
+
+                console.log("ZD form found!");
+                clearInterval(cancelDomMonitor);
+                cancelDomMonitor = null;
+              }
             }
-
-            var rvCompanyInput = iframe.contents().find(
-              "input[name=24893323]");
-            if (rvCompanyInput && rvCompanyInput.length > 0) {
-              rvCompanyInput.val(JSON.stringify({
-                riseVisionCompanyId: companyId,
-                riseVisionUsername: username
-              }));
-              rvCompanyInput.prop("disabled", true);
-              rvCompanyInput.parents("label").first().parent().hide();
-
-              console.log("ZD form found!");
-              clearInterval(cancelDomMonitor);
-              cancelDomMonitor = null;
-            }
-          }
-        }, 1000);
+          }, 1000);
+        }
       }
 
       function forceCloseAll() {
