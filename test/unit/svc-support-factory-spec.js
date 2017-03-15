@@ -101,78 +101,28 @@ describe("Services: Support Factory", function() {
   it("should exist", function() {
     expect(supportFactory).to.be.truely;
 
-    expect(supportFactory.handlePrioritySupportAction).to.be.a("function");
-    expect(supportFactory.handleSendUsANote).to.be.a("function");
+    expect(supportFactory.handleGetSupportAction).to.be.a("function");
   });
 
   describe("Priority Support:", function() {
+    ["cancelled", "not-subscribed", "suspended"].forEach(function(statusCode) {
+      it("should open send note modal but not the zendesk form when subscription is in status" + statusCode, function (done) {
+        subscriptionStatusGetCallWentOkay = true;
+        subscriptionStatus.statusCode = statusCode;
+        supportFactory.handleGetSupportAction();
 
-    it("should open priority support modal but not the zendesk form when subscription was cancelled", function (done) {
-      subscriptionStatusGetCallWentOkay = true;
-      subscriptionStatus.statusCode = "cancelled";
-      supportFactory.handlePrioritySupportAction();
-
-      setTimeout(function () {
-        expect(modalObject.controller).to.be.equal("HelpPrioritySupportModalCtrl");
-        showZendeskFormSpy.should.not.have.been.called;
-        done();
-      }, 10);
+        setTimeout(function () {
+          expect(modalObject.controller).to.be.equal("HelpSendUsANoteModalCtrl");
+          showZendeskFormSpy.should.not.have.been.called;
+          done();
+        }, 10);
+      });
     });
 
-    it("should open priority support modal but not the intercom chat when not subscribed", function (done) {
+    it("should open zd form modal when subscribed", function (done){
       subscriptionStatusGetCallWentOkay = true;
-      subscriptionStatus.statusCode = "not-subscribed";
-      supportFactory.handlePrioritySupportAction();
-
-      setTimeout(function () {
-        expect(modalObject.controller).to.be.equal("HelpPrioritySupportModalCtrl");
-        showZendeskFormSpy.should.not.have.been.calledWith("showNewMessage");
-        done();
-      }, 10);
-    });
-
-    it("should open priority support modal but not the intercom chat when subscription was suspended", function (done) {
-      subscriptionStatusGetCallWentOkay = true;
-      subscriptionStatus.statusCode = "suspended";
-      supportFactory.handlePrioritySupportAction();
-
-      setTimeout(function () {
-        expect(modalObject.controller).to.be.equal("HelpPrioritySupportModalCtrl");
-        showZendeskFormSpy.should.not.have.been.called;
-        done();
-      }, 10);
-    });
-
-    it("should open priority support modal but not the intercom chat when trial is expired", function (done) {
-      subscriptionStatusGetCallWentOkay = true;
-      subscriptionStatus.statusCode = "trial-expired";
-      supportFactory.handlePrioritySupportAction();
-
-      setTimeout(function () {
-        expect(modalObject.controller).to.be.equal("HelpPrioritySupportModalCtrl");
-        showZendeskFormSpy.should.not.have.been.calledWith("showNewMessage");
-        done();
-      }, 10);
-    });
-
-    it("should open priority support modal but not the intercom chat when trial is available", function (done) {
-      subscriptionStatusGetCallWentOkay = true;
-      subscriptionStatus.statusCode = "trial-available";
-
-      supportFactory.handlePrioritySupportAction();
-
-      setTimeout(function () {
-        expect(modalObject.controller).to.be.equal("HelpPrioritySupportModalCtrl");
-        showZendeskFormSpy.should.not.have.been.calledWith("showNewMessage");
-        done();
-      }, 10);
-    });
-  });
-
-  describe("Zendesk form:", function() {
-
-    it("should open the intercom chat", function (done) {
-      supportFactory.openZendeskForm();
+      subscriptionStatus.statusCode = "subscribed";
+      supportFactory.handleGetSupportAction();
 
       setTimeout(function () {
         showZendeskFormSpy.should.have.been.called;
@@ -180,32 +130,4 @@ describe("Services: Support Factory", function() {
       }, 10);
     });
   });
-
-
-  describe("Send us a note:", function() {
-    it("should open send us a note modal when subscribed", function (done){
-      subscriptionStatusGetCallWentOkay = true;
-      subscriptionStatus.statusCode = "subscribed";
-      supportFactory.handleSendUsANote();
-
-      setTimeout(function () {
-        expect(modalObject.controller).to.be.equal("HelpSendUsANoteModalCtrl");
-
-        done();
-      }, 10);
-    });
-
-    it("should open send us a note modal when not subscribed", function (done){
-      subscriptionStatusGetCallWentOkay = true;
-      subscriptionStatus.statusCode = "not-subscribed";
-      supportFactory.handleSendUsANote();
-
-      setTimeout(function () {
-        expect(modalObject.controller).to.be.equal("HelpSendUsANoteModalCtrl");
-
-        done();
-      }, 10);
-    });
-  });
-
 });

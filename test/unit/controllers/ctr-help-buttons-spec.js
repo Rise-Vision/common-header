@@ -23,12 +23,9 @@ describe("controller: help buttons ", function() {
 
     $provide.factory("supportFactory", function () {
       return {
-        handlePrioritySupportAction : function(){
+        handleGetSupportAction : function(){
           return;
         },
-        handleSendUsANote : function(){
-          return;
-        }
       };
     });
 
@@ -41,18 +38,17 @@ describe("controller: help buttons ", function() {
     });
 
     $translateProvider.useLoader("customLoader");
-        
+
   }));
-  var $scope, isLoggedInValue, isRiseVisionUser, handlePrioritySupportActionSpy, handleSendUsANoteSpy;
-  
+  var $scope, isLoggedInValue, isRiseVisionUser, handleGetSupportSpy;
+
   beforeEach(function() {
 
     isLoggedInValue = false;
     isRiseVisionUser = false;
     inject(function($injector,$rootScope, $controller, userState, supportFactory){
       $scope = $rootScope.$new();
-      handlePrioritySupportActionSpy = sinon.spy(supportFactory, "handlePrioritySupportAction");
-      handleSendUsANoteSpy = sinon.spy(supportFactory, "handleSendUsANote");
+      handleGetSupportSpy = sinon.spy(supportFactory, "handleGetSupportAction");
 
       $controller("HelpDropdownButtonCtrl", {
         $scope : $scope,
@@ -62,13 +58,12 @@ describe("controller: help buttons ", function() {
       $scope.$digest();
     });
   });
-  
+
   it("should initialize",function(){
     expect($scope).to.be.truely;
     expect($scope.isLoggedIn).to.exist;
     expect($scope.isRiseVisionUser).to.exist;
-    expect($scope.openPrioritySupport).to.exist;
-    expect($scope.openSendUsANote).to.exist;
+    expect($scope.getSupport).to.exist;
   });
 
   describe("logged in user: ", function() {
@@ -88,14 +83,8 @@ describe("controller: help buttons ", function() {
 
   describe("handle button actions: ", function() {
     it("should call the handlePrioritySupportAction when running the open priority support", function() {
-      $scope.openPrioritySupport();
-      handlePrioritySupportActionSpy.should.have.been.called;
-    });
-
-    it("should call the handleSendUsANote when running the open send us a note", function() {
-      $scope.openSendUsANote();
-      handleSendUsANoteSpy.should.have.been.called;
+      $scope.getSupport();
+      handleGetSupportSpy.should.have.been.called;
     });
   });
 });
-  

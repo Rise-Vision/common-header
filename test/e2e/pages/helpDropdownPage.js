@@ -5,13 +5,9 @@
   var HelpDropdownPage = function () {
     var helpDropdownButton = element(by.id("helpDropdownButton"));
     var askCommunityButton = element(by.id("askCommunityButton"));
-    var prioritySupportButton = element(by.id("prioritySupportButton"));
-    var sendUsANoteButton = element(by.id("sendUsANoteButton"));
+    var getSupportButton = element(by.id("getSupportButton"));
     var signUpForTrainingButton = element(by.id("signUpForTrainingButton"));
     var documentationButton = element(by.id("documentationButton"));
-
-    var prioritySupportModal = element(by.id("prioritySupportModal"));
-    var prioritySupportModalCloseButton = element(by.id("prioritySupportModalCloseButton"));
 
     var intercomMessenger = element(by.id("intercom-messenger"));
 
@@ -23,12 +19,8 @@
       return askCommunityButton;
     };
 
-    this.getPrioritySupportButton = function() {
-      return prioritySupportButton;
-    };
-
-    this.getSendUsANoteButton = function() {
-      return sendUsANoteButton;
+    this.getSupportButton = function() {
+      return getSupportButton;
     };
 
     this.getSignUpForTrainingButton = function() {
@@ -37,14 +29,6 @@
 
     this.getDocumentationButton = function() {
       return documentationButton;
-    };
-
-    this.getPrioritySupportModal = function() {
-      return prioritySupportModal;
-    };
-
-    this.getPrioritySupportModalCloseButton = function() {
-      return prioritySupportModalCloseButton;
     };
 
     this.getIntercomMessenger = function() {

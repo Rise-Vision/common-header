@@ -23,12 +23,8 @@ angular.module("risevision.common.header")
 
       });
 
-    $scope.openPrioritySupport = function () {
-      supportFactory.handlePrioritySupportAction();
-    };
-
-    $scope.openSendUsANote = function () {
-      supportFactory.handleSendUsANote();
+    $scope.getSupport = function () {
+      supportFactory.handleGetSupportAction();
     };
   }
 ]);

@@ -772,11 +772,7 @@ app.run(["$templateCache", function($templateCache) {
     "\n" +
     "<ul>\n" +
     "    <li><a id=\"askCommunityButton\" href=\"https://community.risevision.com/rise_vision_inc\" target=\"_blank\">Ask the Community</a></li>\n" +
-    "    <li>\n" +
-    "      <a ng-if=\"isLoggedIn === false\" ng-controller=\"SignUpButtonCtrl\" id=\"prioritySupportButton\" href=\"\" ng-click=\"openSignUpModal()\">Priority Support <span class=\"text-green\">Fastest</span></a>\n" +
-    "      <a ng-if=\"isLoggedIn === true\" id=\"prioritySupportButton\" href=\"\" ng-click=\"openPrioritySupport()\">Priority Support <span class=\"text-green\">Fastest</span></a>\n" +
-    "  </li>\n" +
-    "    <li><a id=\"sendUsANoteButton\" href=\"\" ng-click=\"openSendUsANote()\">Send Us a Note</a></li>\n" +
+    "    <li><a id=\"getSupportButton\" ng-click=\"getSupport()\" href=\"\">Get Support</a></li>\n" +
     "    <li><a id=\"signUpForWebinarsButton\" href=\"https://www.risevision.com/webinars\" target=\"_blank\">Free Webinars</a></li>\n" +
     "    <li><a id=\"documentationButton\" href=\"https://help.risevision.com/user\" target=\"_blank\">User Documentation</a></li>\n" +
     "    <li><a id=\"signUpForTrainingButton\" href=\"https://store.risevision.com/product/30/rise-training\" target=\"_blank\">Rise Training</a></li>\n" +
@@ -865,8 +861,12 @@ app.run(["$templateCache", function($templateCache) {
     "        <h2 class=\"modal-title\"></h2>\n" +
     "    </div>\n" +
     "    <div class=\"modal-body text-center\" stop-event=\"touchend\">\n" +
-    "        <p class=\"lead\"><strong>Something else in mind?</strong> Send us a note and we will typically get back to you next business day.</p>\n" +
-    "        <button class=\"btn btn-primary btn-lg\" ng-click=\"sendUsANote()\">\n" +
+    "        <p class=\"lead\">Send us a note and we will typically get back to you next business day.</p>\n" +
+    "\n" +
+    "        <a ng-if=\"!loggedIn\" href=\"https://www.risevision.com/contact/\" target=\"_blank\" class=\"btn btn-primary btn-lg\">\n" +
+    "          Send Us a Note\n" +
+    "        </a>\n" +
+    "        <button ng-if=\"loggedIn\" class=\"btn btn-primary btn-lg\" ng-click=\"sendUsANote()\">\n" +
     "            Send Us a Note\n" +
     "        </button>\n" +
     "\n" +
@@ -877,12 +877,9 @@ app.run(["$templateCache", function($templateCache) {
     "                Check out Priority Support and have a response in <strong>10 minutes</strong>. We are online 8-5 CST Monday through Friday.\n" +
     "            </p>\n" +
     "\n" +
-    "            <a ng-if=\"!subscriptionStatus.statusCode || ['not-subscribed', 'trial-expired', 'cancelled', 'suspended'].indexOf(subscriptionStatus.statusCode) >= 0\" class=\"btn btn-primary btn-lg\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss();\" target=\"_blank\">\n" +
+    "            <a class=\"btn btn-primary btn-lg\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss();\" target=\"_blank\">\n" +
     "                Subscribe Now\n" +
     "            </a>\n" +
-    "            <button ng-if=\"['on-trial', 'subscribed'].indexOf(subscriptionStatus.statusCode) >= 0\" class=\"btn btn-primary btn-lg\" ng-click=\"prioritySupport()\">\n" +
-    "                Use Priority Support\n" +
-    "            </button>\n" +
     "      </div><!--content-box-body-->\n" +
     "    </div>\n" +
     "</div>\n" +
@@ -1763,12 +1760,8 @@ angular.module("risevision.common.header")
 
       });
 
-    $scope.openPrioritySupport = function () {
-      supportFactory.handlePrioritySupportAction();
-    };
-
-    $scope.openSendUsANote = function () {
-      supportFactory.handleSendUsANote();
+    $scope.getSupport = function () {
+      supportFactory.handleGetSupportAction();
     };
   }
 ]);
@@ -1793,14 +1786,13 @@ angular.module("risevision.common.header")
 angular.module("risevision.common.header")
 
 .controller("HelpSendUsANoteModalCtrl", [
-  "$scope", "$modalInstance", "subscriptionStatus", "supportFactory",
-  "zendesk",
+  "$scope", "$modalInstance", "supportFactory",
+  "zendesk", "userState",
   "SUPPORT_PRODUCT_URL",
-  function ($scope, $modalInstance, subscriptionStatus, supportFactory,
-    zendesk,
-    SUPPORT_PRODUCT_URL) {
+  function ($scope, $modalInstance, supportFactory,
+    zendesk, userState, SUPPORT_PRODUCT_URL) {
 
-    $scope.subscriptionStatus = subscriptionStatus;
+    $scope.loggedIn = userState.isLoggedIn();
     $scope.supportProductUrl = SUPPORT_PRODUCT_URL;
 
     $scope.sendUsANote = function () {
@@ -2447,7 +2439,7 @@ angular.module("risevision.common.header")
             false;
         },
         function (resp) {
-          alert("An error has occurred. " + humanReadableError(resp));
+          $window.alert("An error has occurred. " + humanReadableError(resp));
         }).finally(function () {
         $scope.loading = false;
       });
@@ -2475,7 +2467,7 @@ angular.module("risevision.common.header")
           })
         .catch(
           function (error) {
-            alert("Error(s): " + humanReadableError(error));
+            $window.alert("Error(s): " + humanReadableError(error));
           })
         .finally(function () {
           $scope.loading = false;
@@ -2507,7 +2499,7 @@ angular.module("risevision.common.header")
             })
           .catch(
             function (error) {
-              alert("Error(s): " + humanReadableError(error));
+              $window.alert("Error(s): " + humanReadableError(error));
             })
           .finally(function () {
             $scope.loading = false;
@@ -2522,10 +2514,10 @@ angular.module("risevision.common.header")
         regenerateCompanyField($scope.company.id, "authKey").then(
           function (resp) {
             $scope.company.authKey = resp.item;
-            alert("Successfully changed Authentication Key.");
+            $window.alert("Successfully changed Authentication Key.");
           },
           function (error) {
-            alert("Error: " + humanReadableError(error));
+            $window.alert("Error: " + humanReadableError(error));
           })
           .finally(function () {
             $loading.stop("company-settings-modal");
@@ -2540,10 +2532,10 @@ angular.module("risevision.common.header")
         regenerateCompanyField($scope.company.id, "claimId").then(
           function (resp) {
             $scope.company.claimId = resp.item;
-            alert("Successfully changed Claim ID.");
+            $window.alert("Successfully changed Claim ID.");
           },
           function (error) {
-            alert("Error: " + humanReadableError(error));
+            $window.alert("Error: " + humanReadableError(error));
           })
           .finally(function () {
             $loading.stop("company-settings-modal");
@@ -3885,11 +3877,12 @@ angular.module("risevision.common.support", [
       var factory = {};
       var PREMIUM_PLAN = "Premium";
       var BASIC_PLAN = "Free";
-      factory.handlePrioritySupportAction = function () {
-        _isSubscribed().then(function () {
+
+      factory.handleGetSupportAction = function () {
+        _isSubscribed().then(function subscribed () {
           factory.openZendeskForm();
-        }, function (subscriptionStatus) {
-          _openSupportModal(subscriptionStatus);
+        }, function notSubscribed () {
+          _openSendUsANote();
         });
       };
 
@@ -3918,41 +3911,15 @@ angular.module("risevision.common.support", [
         });
       };
 
-      var _openSupportModal = function (subscriptionStatus) {
-        $log.debug("opening support trial popup");
-        $modal.open({
-          template: $templateCache.get("help-priority-support-modal.html"),
-          controller: "HelpPrioritySupportModalCtrl",
-          resolve: {
-            subscriptionStatus: function () {
-              return subscriptionStatus;
-            }
-          }
-        });
-      };
-
       factory.openZendeskForm = function () {
         zendesk.showWidget();
       };
 
-      factory.handleSendUsANote = function () {
-        _isSubscribed().then(function (subscriptionStatus) {
-          _openSendUsANote(subscriptionStatus);
-        }, function (subscriptionStatus) {
-          _openSendUsANote(subscriptionStatus);
-        });
-      };
-
-      var _openSendUsANote = function (subscriptionStatus) {
+      var _openSendUsANote = function () {
         $log.debug("opening send us a note popup");
         $modal.open({
           template: $templateCache.get("help-send-us-a-note-modal.html"),
           controller: "HelpSendUsANoteModalCtrl",
-          resolve: {
-            subscriptionStatus: function () {
-              return subscriptionStatus;
-            }
-          }
         });
       };
 
@@ -3993,11 +3960,11 @@ angular.module("risevision.common.support", [
 
   .factory("zendesk", ["getSubscriptionStatus", "segmentAnalytics",
     "userState",
-    "$window", "$q", "$location",
+    "$window", "$q", "$location", "$log",
     function (getSubscriptionStatus, segmentAnalytics, userState,
       $window,
       $q,
-      $location) {
+      $location, $log) {
 
       var loaded = false;
       var $ = $window.$;
@@ -4090,6 +4057,12 @@ angular.module("risevision.common.support", [
         _startDomMonitor();
 
         $window.zE.activate();
+        _changeBorderStyle();
+      }
+
+      function _changeBorderStyle() {
+        $("iframe[class^=zEWidget]").contents().find(".Container")
+          .css("border", "1px solid #4ab767");
       }
 
       function _startDomMonitor() {
@@ -4100,7 +4073,6 @@ angular.module("risevision.common.support", [
           var companyId = userState.getSelectedCompanyId();
 
           cancelDomMonitor = setInterval(function () {
-            console.log("Looking for open ZD form...");
             var iframe = $(
               "iframe.zEWidget-ticketSubmissionForm--active");
             if (iframe && iframe.contents) {
@@ -4123,7 +4095,7 @@ angular.module("risevision.common.support", [
                 rvCompanyInput.prop("disabled", true);
                 rvCompanyInput.parents("label").first().parent().hide();
 
-                console.log("ZD form found!");
+                $log.debug("ZD form found!");
                 clearInterval(cancelDomMonitor);
                 cancelDomMonitor = null;
               }

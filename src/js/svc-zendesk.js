@@ -7,11 +7,11 @@
 
   .factory("zendesk", ["getSubscriptionStatus", "segmentAnalytics",
     "userState",
-    "$window", "$q", "$location",
+    "$window", "$q", "$location", "$log",
     function (getSubscriptionStatus, segmentAnalytics, userState,
       $window,
       $q,
-      $location) {
+      $location, $log) {
 
       var loaded = false;
       var $ = $window.$;
@@ -104,6 +104,12 @@
         _startDomMonitor();
 
         $window.zE.activate();
+        _changeBorderStyle();
+      }
+
+      function _changeBorderStyle() {
+        $("iframe[class^=zEWidget]").contents().find(".Container")
+          .css("border", "1px solid #4ab767");
       }
 
       function _startDomMonitor() {
@@ -114,7 +120,6 @@
           var companyId = userState.getSelectedCompanyId();
 
           cancelDomMonitor = setInterval(function () {
-            console.log("Looking for open ZD form...");
             var iframe = $(
               "iframe.zEWidget-ticketSubmissionForm--active");
             if (iframe && iframe.contents) {
@@ -137,7 +142,7 @@
                 rvCompanyInput.prop("disabled", true);
                 rvCompanyInput.parents("label").first().parent().hide();
 
-                console.log("ZD form found!");
+                $log.debug("ZD form found!");
                 clearInterval(cancelDomMonitor);
                 cancelDomMonitor = null;
               }

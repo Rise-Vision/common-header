@@ -13,11 +13,12 @@ angular.module("risevision.common.support", [
       var factory = {};
       var PREMIUM_PLAN = "Premium";
       var BASIC_PLAN = "Free";
-      factory.handlePrioritySupportAction = function () {
-        _isSubscribed().then(function () {
+
+      factory.handleGetSupportAction = function () {
+        _isSubscribed().then(function subscribed () {
           factory.openZendeskForm();
-        }, function (subscriptionStatus) {
-          _openSupportModal(subscriptionStatus);
+        }, function notSubscribed () {
+          _openSendUsANote();
         });
       };
 
@@ -46,41 +47,15 @@ angular.module("risevision.common.support", [
         });
       };
 
-      var _openSupportModal = function (subscriptionStatus) {
-        $log.debug("opening support trial popup");
-        $modal.open({
-          template: $templateCache.get("help-priority-support-modal.html"),
-          controller: "HelpPrioritySupportModalCtrl",
-          resolve: {
-            subscriptionStatus: function () {
-              return subscriptionStatus;
-            }
-          }
-        });
-      };
-
       factory.openZendeskForm = function () {
         zendesk.showWidget();
       };
 
-      factory.handleSendUsANote = function () {
-        _isSubscribed().then(function (subscriptionStatus) {
-          _openSendUsANote(subscriptionStatus);
-        }, function (subscriptionStatus) {
-          _openSendUsANote(subscriptionStatus);
-        });
-      };
-
-      var _openSendUsANote = function (subscriptionStatus) {
+      var _openSendUsANote = function () {
         $log.debug("opening send us a note popup");
         $modal.open({
           template: $templateCache.get("help-send-us-a-note-modal.html"),
           controller: "HelpSendUsANoteModalCtrl",
-          resolve: {
-            subscriptionStatus: function () {
-              return subscriptionStatus;
-            }
-          }
         });
       };
 

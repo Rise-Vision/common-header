@@ -1,14 +1,13 @@
 angular.module("risevision.common.header")
 
 .controller("HelpSendUsANoteModalCtrl", [
-  "$scope", "$modalInstance", "subscriptionStatus", "supportFactory",
-  "zendesk",
+  "$scope", "$modalInstance", "supportFactory",
+  "zendesk", "userState",
   "SUPPORT_PRODUCT_URL",
-  function ($scope, $modalInstance, subscriptionStatus, supportFactory,
-    zendesk,
-    SUPPORT_PRODUCT_URL) {
+  function ($scope, $modalInstance, supportFactory,
+    zendesk, userState, SUPPORT_PRODUCT_URL) {
 
-    $scope.subscriptionStatus = subscriptionStatus;
+    $scope.loggedIn = userState.isLoggedIn();
     $scope.supportProductUrl = SUPPORT_PRODUCT_URL;
 
     $scope.sendUsANote = function () {

@@ -15,7 +15,7 @@ describe("controller: company settings", function() {
           this._dismissed = true;
         },
         close: function(reason) {
-          expect(reason).to.equal("success");          
+          expect(reason).to.equal("success");
           this._closed = true;
         }
       };
@@ -34,9 +34,9 @@ describe("controller: company settings", function() {
       return function(companyId, newCompany){
         var deferred = Q.defer();
         expect(companyId).to.equal("RV_test_id");
-        
+
         savedCompany = newCompany;
-        
+
         if(createCompany){
           deferred.resolve(companyId);
         }else{
@@ -45,7 +45,7 @@ describe("controller: company settings", function() {
         return deferred.promise;
       };
     });
-    $provide.service("segmentAnalytics", function() { 
+    $provide.service("segmentAnalytics", function() {
       return {
         track: function(name) {
           trackerCalled = name;
@@ -118,7 +118,7 @@ describe("controller: company settings", function() {
           return "company_name";
         },
         _restoreState : function(){
-          
+
         },
         updateCompanySettings: function(company){
           userCompany = angular.copy(company);
@@ -145,11 +145,11 @@ describe("controller: company settings", function() {
       $scope.$digest();
     });
   });
-    
+
   it("should exist",function(){
     expect($scope).to.be.truely;
     expect($scope.company).to.be.truely;
-    
+
     expect($scope.company).to.have.property("id");
 
     expect($scope).to.have.property("countries");
@@ -173,17 +173,17 @@ describe("controller: company settings", function() {
       done();
     },10);
   });
-  
+
   describe("submit: ",function(){
     beforeEach(function(done){
       $scope.isRiseStoreAdmin = true;
-      
+
       setTimeout(function(){
         expect($scope.loading).to.be.false;
         done();
       },10);
     });
-    
+
     it("should save the company and close the modal",function(done){
       $scope.save();
       expect($scope.loading).to.be.true;
@@ -191,7 +191,7 @@ describe("controller: company settings", function() {
         expect($scope.loading).to.be.false;
         expect(trackerCalled).to.equal("Company Updated");
         expect($modalInstance._closed).to.be.true;
-        
+
         expect($scope.company).to.have.property("name");
         expect($scope.company).to.have.property("sellerId");
         expect($scope.company).to.have.property("isTest");
@@ -199,7 +199,7 @@ describe("controller: company settings", function() {
         done();
       },10);
     });
-    
+
     it("should remove fields if user is not Store Admin",function(done){
       $scope.isRiseStoreAdmin = false;
       $scope.save();
@@ -207,11 +207,11 @@ describe("controller: company settings", function() {
         expect(savedCompany).to.have.property("name");
         expect(savedCompany).to.not.have.property("sellerId");
         expect(savedCompany).to.not.have.property("isTest");
-        
+
         done();
       },10);
     });
-    
+
     it("should not remove fields from companyState if user is not Store Admin",function(done){
       $scope.isRiseStoreAdmin = false;
       $scope.save();
@@ -219,14 +219,14 @@ describe("controller: company settings", function() {
         expect($scope.company).to.have.property("isTest");
         expect($scope.company).to.have.property("sellerId");
         expect($scope.company.isTest).to.be.true;
-        
+
         done();
       },10);
     });
-    
+
     it("should handle failure to create company correctly",function(done){
       createCompany = false;
-      
+
       $scope.$digest();
       $scope.save();
       setTimeout(function(){
@@ -237,11 +237,10 @@ describe("controller: company settings", function() {
       },10);
     });
   });
-  
+
   it("should close modal on cancel",function(){
     $scope.closeModal();
     expect($modalInstance._dismissed).to.be.true;
   });
-    
+
 });
-  

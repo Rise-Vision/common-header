@@ -39,12 +39,8 @@
           expect(helpDropdownPage.getAskCommunityButton().getAttribute('target')).to.eventually.equal("_blank");
         });
 
-        it("should show the priority support button", function () {
-          expect(helpDropdownPage.getPrioritySupportButton().isDisplayed()).to.eventually.be.true;
-        });
-
-        it("should show the send us a note button", function () {
-          expect(helpDropdownPage.getSendUsANoteButton().isDisplayed()).to.eventually.be.true;
+        it("should show the get support button", function () {
+          expect(helpDropdownPage.getSupportButton().isDisplayed()).to.eventually.be.true;
         });
 
         it("should show the sign up for training button", function () {
@@ -71,7 +67,7 @@
               newWindowHandle = handles[1];
               browser.switchTo().window(newWindowHandle).then(function () {
                 expect(browser.driver.getCurrentUrl()).to.eventually.equal("https://community.risevision.com/rise_vision_inc");
-                
+
                 done();
               });
             });
@@ -80,40 +76,6 @@
           after(function () {
             browser.driver.close();
             browser.switchTo().window(oldWindowHandle);
-            helpDropdownPage.getHelpDropdownButton().click();
-          });
-        });
-
-        xdescribe("Given a user clicks on the Priority Support button", function () {
-          before(function () {
-            helpDropdownPage.getPrioritySupportButton().click();
-          });
-
-          it("should open the priority support modal", function () {
-            expect(helpDropdownPage.getPrioritySupportModal().isDisplayed()).to.eventually.be.true;
-          });
-
-          xit("should open the intercom messenger", function () {
-            expect(helpDropdownPage.getIntercomMessenger().isDisplayed()).to.eventually.be.true;
-          });
-
-          after(function () {
-            //helpDropdownPage.getPrioritySupportModalCloseButton().click();
-            //helpDropdownPage.getHelpDropdownButton().click();
-          });
-        });
-
-        xdescribe("Given a user clicks on the Send us a note button", function () {
-          before(function () {
-            helpDropdownPage.getSendUsANoteButton().click();
-          });
-
-          xit("should open the intercom messenger", function () {
-            expect(helpDropdownPage.getIntercomMessenger().isDisplayed()).to.eventually.be.true;
-          });
-
-          after(function () {
-            //helpDropdownPage.getPrioritySupportModalCloseButton().click();
             helpDropdownPage.getHelpDropdownButton().click();
           });
         });
@@ -130,7 +92,7 @@
               newWindowHandle = handles[1];
               browser.switchTo().window(newWindowHandle).then(function () {
                 expect(browser.driver.getCurrentUrl()).to.eventually.contain("https://store.risevision.com/product/30/rise-training");
-                
+
                 done();
               });
             });
@@ -155,7 +117,7 @@
               newWindowHandle = handles[1];
               browser.switchTo().window(newWindowHandle).then(function () {
                 expect(browser.driver.getCurrentUrl()).to.eventually.contain("https://help.risevision.com/user");
-                
+
                 done();
               });
             });

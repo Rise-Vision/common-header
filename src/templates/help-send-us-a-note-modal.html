@@ -6,8 +6,12 @@
         <h2 class="modal-title"></h2>
     </div>
     <div class="modal-body text-center" stop-event="touchend">
-        <p class="lead"><strong>Something else in mind?</strong> Send us a note and we will typically get back to you next business day.</p>
-        <button class="btn btn-primary btn-lg" ng-click="sendUsANote()">
+        <p class="lead">Send us a note and we will typically get back to you next business day.</p>
+
+        <a ng-if="!loggedIn" href="https://www.risevision.com/contact/" target="_blank" class="btn btn-primary btn-lg">
+          Send Us a Note
+        </a>
+        <button ng-if="loggedIn" class="btn btn-primary btn-lg" ng-click="sendUsANote()">
             Send Us a Note
         </button>
 
@@ -18,12 +22,9 @@
                 Check out Priority Support and have a response in <strong>10 minutes</strong>. We are online 8-5 CST Monday through Friday.
             </p>
 
-            <a ng-if="!subscriptionStatus.statusCode || ['not-subscribed', 'trial-expired', 'cancelled', 'suspended'].indexOf(subscriptionStatus.statusCode) >= 0" class="btn btn-primary btn-lg" href="{{supportProductUrl}}" ng-click="dismiss();" target="_blank">
+            <a class="btn btn-primary btn-lg" href="{{supportProductUrl}}" ng-click="dismiss();" target="_blank">
                 Subscribe Now
             </a>
-            <button ng-if="['on-trial', 'subscribed'].indexOf(subscriptionStatus.statusCode) >= 0" class="btn btn-primary btn-lg" ng-click="prioritySupport()">
-                Use Priority Support
-            </button>
       </div><!--content-box-body-->
     </div>
 </div>

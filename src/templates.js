@@ -772,11 +772,7 @@ app.run(["$templateCache", function($templateCache) {
     "\n" +
     "<ul>\n" +
     "    <li><a id=\"askCommunityButton\" href=\"https://community.risevision.com/rise_vision_inc\" target=\"_blank\">Ask the Community</a></li>\n" +
-    "    <li>\n" +
-    "      <a ng-if=\"isLoggedIn === false\" ng-controller=\"SignUpButtonCtrl\" id=\"prioritySupportButton\" href=\"\" ng-click=\"openSignUpModal()\">Priority Support <span class=\"text-green\">Fastest</span></a>\n" +
-    "      <a ng-if=\"isLoggedIn === true\" id=\"prioritySupportButton\" href=\"\" ng-click=\"openPrioritySupport()\">Priority Support <span class=\"text-green\">Fastest</span></a>\n" +
-    "  </li>\n" +
-    "    <li><a id=\"sendUsANoteButton\" href=\"\" ng-click=\"openSendUsANote()\">Send Us a Note</a></li>\n" +
+    "    <li><a id=\"getSupportButton\" ng-click=\"getSupport()\" href=\"\">Get Support</a></li>\n" +
     "    <li><a id=\"signUpForWebinarsButton\" href=\"https://www.risevision.com/webinars\" target=\"_blank\">Free Webinars</a></li>\n" +
     "    <li><a id=\"documentationButton\" href=\"https://help.risevision.com/user\" target=\"_blank\">User Documentation</a></li>\n" +
     "    <li><a id=\"signUpForTrainingButton\" href=\"https://store.risevision.com/product/30/rise-training\" target=\"_blank\">Rise Training</a></li>\n" +
@@ -865,8 +861,12 @@ app.run(["$templateCache", function($templateCache) {
     "        <h2 class=\"modal-title\"></h2>\n" +
     "    </div>\n" +
     "    <div class=\"modal-body text-center\" stop-event=\"touchend\">\n" +
-    "        <p class=\"lead\"><strong>Something else in mind?</strong> Send us a note and we will typically get back to you next business day.</p>\n" +
-    "        <button class=\"btn btn-primary btn-lg\" ng-click=\"sendUsANote()\">\n" +
+    "        <p class=\"lead\">Send us a note and we will typically get back to you next business day.</p>\n" +
+    "\n" +
+    "        <a ng-if=\"!loggedIn\" href=\"https://www.risevision.com/contact/\" target=\"_blank\" class=\"btn btn-primary btn-lg\">\n" +
+    "          Send Us a Note\n" +
+    "        </a>\n" +
+    "        <button ng-if=\"loggedIn\" class=\"btn btn-primary btn-lg\" ng-click=\"sendUsANote()\">\n" +
     "            Send Us a Note\n" +
     "        </button>\n" +
     "\n" +
@@ -877,12 +877,9 @@ app.run(["$templateCache", function($templateCache) {
     "                Check out Priority Support and have a response in <strong>10 minutes</strong>. We are online 8-5 CST Monday through Friday.\n" +
     "            </p>\n" +
     "\n" +
-    "            <a ng-if=\"!subscriptionStatus.statusCode || ['not-subscribed', 'trial-expired', 'cancelled', 'suspended'].indexOf(subscriptionStatus.statusCode) >= 0\" class=\"btn btn-primary btn-lg\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss();\" target=\"_blank\">\n" +
+    "            <a class=\"btn btn-primary btn-lg\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss();\" target=\"_blank\">\n" +
     "                Subscribe Now\n" +
     "            </a>\n" +
-    "            <button ng-if=\"['on-trial', 'subscribed'].indexOf(subscriptionStatus.statusCode) >= 0\" class=\"btn btn-primary btn-lg\" ng-click=\"prioritySupport()\">\n" +
-    "                Use Priority Support\n" +
-    "            </button>\n" +
     "      </div><!--content-box-body-->\n" +
     "    </div>\n" +
     "</div>\n" +

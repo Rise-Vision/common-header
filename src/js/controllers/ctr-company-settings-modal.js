@@ -40,7 +40,7 @@ angular.module("risevision.common.header")
             false;
         },
         function (resp) {
-          alert("An error has occurred. " + humanReadableError(resp));
+          $window.alert("An error has occurred. " + humanReadableError(resp));
         }).finally(function () {
         $scope.loading = false;
       });
@@ -68,7 +68,7 @@ angular.module("risevision.common.header")
           })
         .catch(
           function (error) {
-            alert("Error(s): " + humanReadableError(error));
+            $window.alert("Error(s): " + humanReadableError(error));
           })
         .finally(function () {
           $scope.loading = false;
@@ -100,7 +100,7 @@ angular.module("risevision.common.header")
             })
           .catch(
             function (error) {
-              alert("Error(s): " + humanReadableError(error));
+              $window.alert("Error(s): " + humanReadableError(error));
             })
           .finally(function () {
             $scope.loading = false;
@@ -115,10 +115,10 @@ angular.module("risevision.common.header")
         regenerateCompanyField($scope.company.id, "authKey").then(
           function (resp) {
             $scope.company.authKey = resp.item;
-            alert("Successfully changed Authentication Key.");
+            $window.alert("Successfully changed Authentication Key.");
           },
           function (error) {
-            alert("Error: " + humanReadableError(error));
+            $window.alert("Error: " + humanReadableError(error));
           })
           .finally(function () {
             $loading.stop("company-settings-modal");
@@ -133,10 +133,10 @@ angular.module("risevision.common.header")
         regenerateCompanyField($scope.company.id, "claimId").then(
           function (resp) {
             $scope.company.claimId = resp.item;
-            alert("Successfully changed Claim ID.");
+            $window.alert("Successfully changed Claim ID.");
           },
           function (error) {
-            alert("Error: " + humanReadableError(error));
+            $window.alert("Error: " + humanReadableError(error));
           })
           .finally(function () {
             $loading.stop("company-settings-modal");

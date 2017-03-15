@@ -52,8 +52,19 @@ describe("Services: Zendesk", function() {
         createElement: function() {
           return {};
         },
-        $: function() {return {};}
-      }
+      },
+      $: function() {return {
+        contents: function() {
+          return {
+            find: function () {
+              return {
+                css: function() {
+                }
+              };
+            }
+          };
+        }
+      };}
     };
 
     $provide.service("$window", function() {
