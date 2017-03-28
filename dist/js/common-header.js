@@ -3879,9 +3879,9 @@ angular.module("risevision.common.support", [
       var BASIC_PLAN = "Free";
 
       factory.handleGetSupportAction = function () {
-        _isSubscribed().then(function subscribed () {
+        _isSubscribed().then(function subscribed() {
           factory.openZendeskForm();
-        }, function notSubscribed () {
+        }, function notSubscribed() {
           _openSendUsANote();
         });
       };
@@ -3889,8 +3889,23 @@ angular.module("risevision.common.support", [
       var _isSubscribed = function () {
         var deferred = $q.defer();
         getSubscriptionStatus().then(function (subscriptionStatus) {
+          var subscriptionValid = false;
+
           if (subscriptionStatus.statusCode ===
             "subscribed") {
+            subscriptionValid = true;
+          } else if ((subscriptionStatus.statusCode || "").toLowerCase() ===
+            "cancelled") {
+            console.log(subscriptionStatus);
+            var expiryTime = new Date(subscriptionStatus.expiry);
+            if (expiryTime > new Date()) {
+              subscriptionValid = true;
+            } else {
+              subscriptionValid = false;
+            }
+          }
+
+          if (subscriptionValid) {
             _sendUserPlanUpdateToIntercom(PREMIUM_PLAN);
             deferred.resolve(subscriptionStatus);
           } else {

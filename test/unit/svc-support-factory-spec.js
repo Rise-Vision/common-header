@@ -109,6 +109,7 @@ describe("Services: Support Factory", function() {
       it("should open send note modal but not the zendesk form when subscription is in status" + statusCode, function (done) {
         subscriptionStatusGetCallWentOkay = true;
         subscriptionStatus.statusCode = statusCode;
+        subscriptionStatus.expiry = new Date("1980-01-01T12:12:12.027+0000"); // expired
         supportFactory.handleGetSupportAction();
 
         setTimeout(function () {
@@ -129,5 +130,19 @@ describe("Services: Support Factory", function() {
         done();
       }, 10);
     });
+  });
+
+  it("should still honor subscription if subscription is cancelled but not expired", function (done) {
+    subscriptionStatusGetCallWentOkay = true;
+    subscriptionStatus.statusCode = "cancelled";
+    var expiryD = new Date();
+    expiryD.setFullYear(expiryD.getFullYear() + 1);
+    subscriptionStatus.expiry = expiryD.toISOString();
+    supportFactory.handleGetSupportAction();
+
+    setTimeout(function () {
+      showZendeskFormSpy.should.have.been.called;
+      done();
+    }, 10);
   });
 });
