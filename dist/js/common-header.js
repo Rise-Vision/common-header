@@ -108,7 +108,7 @@ app.run(["$templateCache", function($templateCache) {
     "  </li>\n" +
     "\n" +
     "  <li ng-show=\"isRiseVisionUser\">\n" +
-    "    <a href=\"https://store.risevision.com/account\" target=\"_blank\" link-cid>\n" +
+    "    <a href=\"https://store.risevision.com/account\" target=\"_blank\" class=\"store-account-button action\" link-cid >\n" +
     "      <i class=\"fa fa-shopping-cart\"></i>\n" +
     "      <span class=\"item-name\">Store Account</span>\n" +
     "    </a>\n" +
@@ -117,7 +117,7 @@ app.run(["$templateCache", function($templateCache) {
     "  <span ng-if=\"isLoggedIn && !isRiseVisionUser\" class=\"google-account\" class=\"username\">{{username}}</span>\n" +
     "\n" +
     "  <li class=\"dropdown-footer text-right\" ng-show=\"isLoggedIn\">\n" +
-    "    <button class=\"sign-out-button btn btn-sm btn-default\" ng-controller=\"SignOutButtonCtrl\" ng-click=\"logout()\">Sign Out<i class=\"fa fa-sign-out icon-right\"></i>\n" +
+    "    <button class=\"sign-out-button btn btn-sm btn-default u_margin-sm-bottom\" ng-controller=\"SignOutButtonCtrl\" ng-click=\"logout()\">Sign Out<i class=\"fa fa-sign-out icon-right\"></i>\n" +
     "  </li>\n" +
     "</ul>\n" +
     "");
@@ -382,7 +382,7 @@ app.run(["$templateCache", function($templateCache) {
     "     <a id=\"change-subcompany-button\" href=\"\" ng-click=\"switchCompany()\" ng-show=\"isRiseVisionUser\">Change</a></p>\n" +
     "    <p><a id=\"reset-subcompany-button\" href=\"\" ng-click=\"resetCompany()\">Switch to My Company</a></p>\n" +
     "  </li>\n" +
-    "\n" +
+    "  <hr>\n" +
     "  <li ng-show=\"isUserAdmin || isRiseAdmin\">\n" +
     "    <a href=\"\" ng-click=\"addSubCompany()\" class=\"action add-subcompany-menu-button\">\n" +
     "      <i class=\"fa fa-plus\"></i>\n" +
@@ -6214,12 +6214,12 @@ angular.module("risevision.common.components.logging")
             opts.authuser = _state.userToken;
           } else {
             opts.authuser = $http.get(
-              "https://www.googleapis.com/oauth2/v1/userinfo?access_token=" +
+              'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' +
               _state.params.access_token)
               .then(function (resp) {
                 return resp.data.email;
               }, function (err) {
-                $log.debug("Error retrieving userinfo");
+                console.log('Error retrieving userinfo');
                 return opts.authuser;
               });
           }
@@ -6238,7 +6238,7 @@ angular.module("risevision.common.components.logging")
               gApi.auth.setToken(_state.params);
 
               gApi.auth.authorize(opts, function (authResult) {
-                $log.debug("authResult");
+                $log.debug("authResult", authResult);
                 if (authResult && !authResult.error) {
                   if (_state.params) {
                     // clear token so we don't deal with expiry
