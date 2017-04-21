@@ -1,6 +1,6 @@
 {
   "name": "rise-vision-common-header",
-  "version": "1.13.6",
+  "version": "1.13.7",
   "homepage": "https://github.com/Rise-Vision/common-header",
   "authors": [
     "Xiyang Chen <settinghead@gmail.com>"
@@ -34,7 +34,6 @@
     "rv-common-style": "https://github.com/Rise-Vision/common-style.git#v1.4.2",
     "rv-loading": "https://github.com/Rise-Vision/rv-loading.git",
     "rv-common-app-components": "https://github.com/Rise-Vision/common-app-components.git",
-    "rv-common-svg": "https://github.com/Rise-Vision/common-svg.git",
     "component-subscription-status": "https://github.com/Rise-Vision/component-subscription-status.git#master",
     "rv-common-i18n": "https://github.com/Rise-Vision/common-i18n.git",
     "q": "1.0.1",
