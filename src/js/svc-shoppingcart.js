@@ -75,7 +75,7 @@
               });
             } catch (e) {
               deferred.resolve();
-              $log.error(
+              console.error(
                 "[persistToStorage] - Unimplemented API method " + e.message
               );
             }

@@ -76,7 +76,7 @@
               currency.setItems(resp.items);
               deferred.resolve(currency);
             } else {
-              $log.error("currencyService error: ", resp.error);
+              console.error("currencyService error: ", resp.error);
               deferred.reject(resp.error);
             }
           });

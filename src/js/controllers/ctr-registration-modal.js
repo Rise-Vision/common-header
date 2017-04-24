@@ -93,7 +93,7 @@ angular.module("risevision.common.header")
             },
             function (err) {
               alert("Error: " + humanReadableError(err));
-              $log.error(err);
+              console.error(err);
             })
             .finally(function () {
               $scope.registering = false;
