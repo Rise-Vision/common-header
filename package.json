@@ -1,6 +1,6 @@
 {
   "name": "rise-vision-common-header",
-  "version": "1.13.8",
+  "version": "1.13.9",
   "description": "Rise Vision Common Header ==============",
   "main": "index.js",
   "dependencies": {
@@ -24,8 +24,8 @@
     "jshint-stylish": "^0.4.0",
     "jshint": "2.8.0",
     "run-sequence": "^0.3.6",
-    "widget-tester": "git://github.com/Rise-Vision/widget-tester.git#1.6.5",
-    "rv-common-e2e": "git://github.com/Rise-Vision/rv-common-e2e.git#0.0.6"
+    "widget-tester": "git://github.com/Rise-Vision/widget-tester.git#1.7.1",
+    "rv-common-e2e": "git://github.com/Rise-Vision/rv-common-e2e.git#0.1.0"
   },
   "scripts": {
     "test": "gulp test"
