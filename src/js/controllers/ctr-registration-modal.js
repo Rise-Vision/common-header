@@ -4,15 +4,17 @@ angular.module("risevision.common.header")
     "$loading", "registerAccount", "$log", "cookieStore",
     "userState", "pick", "uiFlowManager", "humanReadableError",
     "agreeToTermsAndUpdateUser", "account", "segmentAnalytics",
-    "bigQueryLogging", "analyticsEvents",
+    "bigQueryLogging", "analyticsEvents", "updateCompany", "$q",
     function ($scope, $modalInstance, $loading, registerAccount, $log,
       cookieStore, userState, pick, uiFlowManager, humanReadableError,
       agreeToTermsAndUpdateUser, account, segmentAnalytics, bigQueryLogging,
-      analyticsEvents) {
+      analyticsEvents, updateCompany, $q) {
 
-      var newUser = !account;
+      $scope.newUser = !account;
 
       var copyOfProfile = account ? account : userState.getCopyOfProfile() || {};
+
+      $scope.company = {};
 
       //remove cookie so that it will show next time user refreshes page
       cookieStore.remove("surpressRegistration");
@@ -55,6 +57,14 @@ angular.module("risevision.common.header")
           }
         });
 
+      var updateCompanyWebsite = function () {
+        if ($scope.newUser && $scope.company.website) {
+          return updateCompany(userState.getUserCompanyId(), $scope.company);
+        } else {
+          return $q.defer().resolve();
+        }
+      };
+
       $scope.save = function () {
         $scope.forms.registrationForm.accepted.$pristine = false;
         $scope.forms.registrationForm.firstName.$pristine = false;
@@ -68,7 +78,7 @@ angular.module("risevision.common.header")
 
 
           var action;
-          if (newUser) {
+          if ($scope.newUser) {
             action = registerAccount(userState.getUsername(), $scope.profile);
           } else {
             action = agreeToTermsAndUpdateUser(userState.getUsername(),
@@ -77,13 +87,14 @@ angular.module("risevision.common.header")
 
           action.then(
             function () {
-              userState.refreshProfile().then()
+              userState.refreshProfile()
+                .then(updateCompanyWebsite)
                 .finally(function () {
                   analyticsEvents.identify();
                   segmentAnalytics.track("User Registered", {
                     "companyId": userState.getUserCompanyId(),
                     "companyName": userState.getUserCompanyName(),
-                    "isNewCompany": newUser
+                    "isNewCompany": $scope.newUser
                   });
                   bigQueryLogging.logEvent("User Registered");
 

@@ -483,6 +483,12 @@ app.run(["$templateCache", function($templateCache) {
     "  </div>\n" +
     "</div>\n" +
     "<div class=\"form-group\">\n" +
+    "  <label for=\"company-settings-website\" class=\"control-label\">\n" +
+    "    Website\n" +
+    "  </label>\n" +
+    "  <input id=\"company-settings-website\" type=\"text\" class=\"form-control\" ng-model=\"company.website\"/>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\">\n" +
     "  <label for=\"company-settings-phone\" class=\"control-label\">\n" +
     "    Phone\n" +
     "  </label>\n" +
@@ -1011,6 +1017,14 @@ app.run(["$templateCache", function($templateCache) {
     "          ng-model=\"profile.email\">\n" +
     "          <p ng-show=\"forms.registrationForm.email.$invalid && !forms.registrationForm.email.$pristine\"\n" +
     "            class=\"help-block validation-error-message-email\">Enter a valid email.</p>\n" +
+    "        </div>\n" +
+    "        <!-- Website -->\n" +
+    "        <div class=\"form-group\" ng-show=\"newUser\">\n" +
+    "          <label for=\"website\">Company Website</label>\n" +
+    "          <input type=\"text\" class=\"form-control website\"\n" +
+    "          name=\"website\"\n" +
+    "          id=\"website\"\n" +
+    "          ng-model=\"company.website\">\n" +
     "        </div>\n" +
     "        <!-- Terms of Service and Privacy -->\n" +
     "        <div class=\"checkbox form-group\" ng-class=\"{ 'has-error' : forms.registrationForm.accepted.$invalid && !userForm.accepted.$pristine }\">\n" +

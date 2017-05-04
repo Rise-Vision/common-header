@@ -483,6 +483,12 @@ app.run(["$templateCache", function($templateCache) {
     "  </div>\n" +
     "</div>\n" +
     "<div class=\"form-group\">\n" +
+    "  <label for=\"company-settings-website\" class=\"control-label\">\n" +
+    "    Website\n" +
+    "  </label>\n" +
+    "  <input id=\"company-settings-website\" type=\"text\" class=\"form-control\" ng-model=\"company.website\"/>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\">\n" +
     "  <label for=\"company-settings-phone\" class=\"control-label\">\n" +
     "    Phone\n" +
     "  </label>\n" +
@@ -1011,6 +1017,14 @@ app.run(["$templateCache", function($templateCache) {
     "          ng-model=\"profile.email\">\n" +
     "          <p ng-show=\"forms.registrationForm.email.$invalid && !forms.registrationForm.email.$pristine\"\n" +
     "            class=\"help-block validation-error-message-email\">Enter a valid email.</p>\n" +
+    "        </div>\n" +
+    "        <!-- Website -->\n" +
+    "        <div class=\"form-group\" ng-show=\"newUser\">\n" +
+    "          <label for=\"website\">Company Website</label>\n" +
+    "          <input type=\"text\" class=\"form-control website\"\n" +
+    "          name=\"website\"\n" +
+    "          id=\"website\"\n" +
+    "          ng-model=\"company.website\">\n" +
     "        </div>\n" +
     "        <!-- Terms of Service and Privacy -->\n" +
     "        <div class=\"checkbox form-group\" ng-class=\"{ 'has-error' : forms.registrationForm.accepted.$invalid && !userForm.accepted.$pristine }\">\n" +
@@ -2231,15 +2245,17 @@ angular.module("risevision.common.header")
     "$loading", "registerAccount", "$log", "cookieStore",
     "userState", "pick", "uiFlowManager", "humanReadableError",
     "agreeToTermsAndUpdateUser", "account", "segmentAnalytics",
-    "bigQueryLogging", "analyticsEvents",
+    "bigQueryLogging", "analyticsEvents", "updateCompany", "$q",
     function ($scope, $modalInstance, $loading, registerAccount, $log,
       cookieStore, userState, pick, uiFlowManager, humanReadableError,
       agreeToTermsAndUpdateUser, account, segmentAnalytics, bigQueryLogging,
-      analyticsEvents) {
+      analyticsEvents, updateCompany, $q) {
 
-      var newUser = !account;
+      $scope.newUser = !account;
 
       var copyOfProfile = account ? account : userState.getCopyOfProfile() || {};
+
+      $scope.company = {};
 
       //remove cookie so that it will show next time user refreshes page
       cookieStore.remove("surpressRegistration");
@@ -2282,6 +2298,14 @@ angular.module("risevision.common.header")
           }
         });
 
+      var updateCompanyWebsite = function () {
+        if ($scope.newUser && $scope.company.website) {
+          return updateCompany(userState.getUserCompanyId(), $scope.company);
+        } else {
+          return $q.defer().resolve();
+        }
+      };
+
       $scope.save = function () {
         $scope.forms.registrationForm.accepted.$pristine = false;
         $scope.forms.registrationForm.firstName.$pristine = false;
@@ -2293,9 +2317,8 @@ angular.module("risevision.common.header")
           $scope.registering = true;
           $loading.start("registration-modal");
 
-
           var action;
-          if (newUser) {
+          if ($scope.newUser) {
             action = registerAccount(userState.getUsername(), $scope.profile);
           } else {
             action = agreeToTermsAndUpdateUser(userState.getUsername(),
@@ -2304,13 +2327,14 @@ angular.module("risevision.common.header")
 
           action.then(
             function () {
-              userState.refreshProfile().then()
+              userState.refreshProfile()
+                .then(updateCompanyWebsite)
                 .finally(function () {
                   analyticsEvents.identify();
                   segmentAnalytics.track("User Registered", {
                     "companyId": userState.getUserCompanyId(),
                     "companyName": userState.getUserCompanyName(),
-                    "isNewCompany": newUser
+                    "isNewCompany": $scope.newUser
                   });
                   bigQueryLogging.logEvent("User Registered");
 
@@ -4358,7 +4382,7 @@ angular.module("risevision.common.support", [
       "postalCode", "timeZoneOffset", "telephone", "fax", "companyStatus",
       "mailSyncEnabled", "sellerId", "isTest", "shipToUseCompanyAddress", 
       "shipToName", "shipToStreet", "shipToUnit", "shipToCity", 
-      "shipToProvince", "shipToPostalCode", "shipToCountry"
+      "shipToProvince", "shipToPostalCode", "shipToCountry", "website"
     ])
     .constant("ALERTS_WRITABLE_FIELDS", [
       "alertSettings"
