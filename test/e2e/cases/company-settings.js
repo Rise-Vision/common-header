@@ -52,10 +52,11 @@
           var authKey = companySettingsModalPage.getAuthKeyField().getText();
           
           companySettingsModalPage.getResetAuthKeyButton().click();
+
+          helper.waitForAlert("Confirm Auth Key reset");
           browser.switchTo().alert().then(function (prompt){ prompt.accept(); }); //confirm reset
           
           helper.waitForAlert("Auth Key reset");
-          
           browser.switchTo().alert().then(function (prompt){ prompt.accept(); }); //acknowledge reset message
           
           expect(companySettingsModalPage.getAuthKeyField().getText()).to.eventually.be.ok;
@@ -66,10 +67,11 @@
           var claimId = companySettingsModalPage.getClaimIdField().getText();
           
           companySettingsModalPage.getResetClaimIdButton().click();
+
+          helper.waitForAlert("Confirm Claim Id reset");
           browser.switchTo().alert().then(function (prompt){ prompt.accept(); }); //confirm reset
           
           helper.waitForAlert("Claim Id reset");
-          
           browser.switchTo().alert().then(function (prompt){ prompt.accept(); }); //acknowledge reset message
           
           expect(companySettingsModalPage.getClaimIdField().getText()).to.eventually.be.ok;

@@ -249,6 +249,8 @@
         it("Closes Add subcompany Dialog", function () {
           addSubcompanyModalPage.getCloseButton().click();
           
+          helper.waitDisappear(addSubcompanyModalPage.getAddSubcompanyModal(), "Add Sub-Company Modal");
+
           expect(addSubcompanyModalPage.getAddSubcompanyModal().isPresent()).to.eventually.be.false;
         });
 
