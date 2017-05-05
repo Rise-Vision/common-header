@@ -47,6 +47,16 @@ describe("controller: registration modal", function() {
         }
       };
     });
+
+    $provide.service("updateCompany",function(){
+      return function(companyId, company){
+        updateCompanyCalled = company.website;
+
+        var deferred = Q.defer();
+        deferred.resolve(company);
+        return deferred.promise;
+      };
+    });
     
     var registrationService = function(calledFrom){
       return function() {
@@ -115,7 +125,8 @@ describe("controller: registration modal", function() {
         
   }));
   var $scope, userProfile, userState, $modalInstance, cookieStored, newUser;
-  var registerUser, account, trackerCalled, bqCalled, identifySpy;
+  var registerUser, account, trackerCalled, bqCalled, identifySpy,
+    updateCompanyCalled;
   
   beforeEach(function() {
     registerUser = true;
@@ -140,6 +151,7 @@ describe("controller: registration modal", function() {
         $modalInstance: $modalInstance,
         cookieStore: $injector.get("cookieStore"),
         userState : userState,
+        updateCompany: $injector.get("updateCompany"),
         agreeToTermsAndUpdateUser:$injector.get("agreeToTermsAndUpdateUser"),
         registerAccount:$injector.get("registerAccount"),
         account: account
@@ -194,6 +206,30 @@ describe("controller: registration modal", function() {
         identifySpy.should.have.been.called;
         expect(trackerCalled).to.equal("User Registered");
         expect(bqCalled).to.equal("User Registered");
+        expect(updateCompanyCalled).to.be.undefined;
+        expect($scope.registering).to.be.false;
+        expect($modalInstance._closed).to.be.true;
+
+        expect(profileSpy.called).to.be.true;
+
+        done();
+      },10);
+    });
+
+    it("should register user, update company website, and close the modal",function(done){
+      $scope.forms.registrationForm.$invalid = false;
+      $scope.company.website = "test-website";
+
+      $scope.save();
+      expect($scope.registering).to.be.true;
+      
+      var profileSpy = sinon.spy(userState, "refreshProfile");
+      setTimeout(function() {
+        expect(newUser).to.be.true;
+        identifySpy.should.have.been.called;
+        expect(trackerCalled).to.equal("User Registered");
+        expect(bqCalled).to.equal("User Registered");
+        expect(updateCompanyCalled).to.equal("test-website");
         expect($scope.registering).to.be.false;
         expect($modalInstance._closed).to.be.true;
 
