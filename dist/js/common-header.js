@@ -2317,6 +2317,7 @@ angular.module("risevision.common.header")
           $scope.registering = true;
           $loading.start("registration-modal");
 
+
           var action;
           if ($scope.newUser) {
             action = registerAccount(userState.getUsername(), $scope.profile);
@@ -2328,8 +2329,9 @@ angular.module("risevision.common.header")
           action.then(
             function () {
               userState.refreshProfile()
-                .then(updateCompanyWebsite)
+                .then()
                 .finally(function () {
+                  updateCompanyWebsite();
                   analyticsEvents.identify();
                   segmentAnalytics.track("User Registered", {
                     "companyId": userState.getUserCompanyId(),

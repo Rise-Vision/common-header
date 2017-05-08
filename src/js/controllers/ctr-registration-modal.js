@@ -88,8 +88,9 @@ angular.module("risevision.common.header")
           action.then(
             function () {
               userState.refreshProfile()
-                .then(updateCompanyWebsite)
+                .then()
                 .finally(function () {
+                  updateCompanyWebsite();
                   analyticsEvents.identify();
                   segmentAnalytics.track("User Registered", {
                     "companyId": userState.getUserCompanyId(),
