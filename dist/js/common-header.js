@@ -7437,7 +7437,7 @@ angular.module("risevision.common.components.svg", [])
           companyId: "@",
           expandedFormat: "@",
           showStoreModal: "=?",
-          customStoreLink: "@"
+          customProductLink: "@"
         },
         template: $templateCache.get("subscription-status-template.html"),
         link: function($scope, elm, attrs, ctrl) {
@@ -7447,8 +7447,8 @@ angular.module("risevision.common.components.svg", [])
             $scope.storeAccountUrl = STORE_URL + ACCOUNT_PATH
                               .replace("companyId", $scope.companyId);
 
-            if($scope.customStoreLink) {
-              $scope.storeUrl = $scope.customStoreLink;
+            if($scope.customProductLink) {
+              $scope.storeUrl = $scope.customProductLink;
             }
             else {
               $scope.storeUrl = STORE_URL + IN_RVA_PATH
