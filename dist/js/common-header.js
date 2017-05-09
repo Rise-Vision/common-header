@@ -7424,9 +7424,9 @@ angular.module("risevision.common.components.svg", [])
   "use strict";
 
   angular.module("risevision.widget.common.subscription-status")
-    .directive("subscriptionStatus", ["$rootScope", "$templateCache", 
+    .directive("subscriptionStatus", ["$rootScope", "$templateCache",
     "subscriptionStatusService", "STORE_URL", "ACCOUNT_PATH", "IN_RVA_PATH",
-      function ($rootScope, $templateCache, subscriptionStatusService, 
+      function ($rootScope, $templateCache, subscriptionStatusService,
         STORE_URL, ACCOUNT_PATH, IN_RVA_PATH) {
       return {
         restrict: "AE",
@@ -7436,7 +7436,8 @@ angular.module("risevision.common.components.svg", [])
           productCode: "@",
           companyId: "@",
           expandedFormat: "@",
-          showStoreModal: "=?"
+          showStoreModal: "=?",
+          customStoreLink: "@"
         },
         template: $templateCache.get("subscription-status-template.html"),
         link: function($scope, elm, attrs, ctrl) {
@@ -7446,14 +7447,19 @@ angular.module("risevision.common.components.svg", [])
             $scope.storeAccountUrl = STORE_URL + ACCOUNT_PATH
                               .replace("companyId", $scope.companyId);
 
-            $scope.storeUrl = STORE_URL + IN_RVA_PATH
+            if($scope.customStoreLink) {
+              $scope.storeUrl = $scope.customStoreLink;
+            }
+            else {
+              $scope.storeUrl = STORE_URL + IN_RVA_PATH
                 .replace("productId", $scope.productId)
                 .replace("companyId", $scope.companyId);
+            }
           };
-          
+
           $scope.$watch("companyId", function() {
             checkSubscriptionStatus();
-            
+
             updateUrls();
           });
 
@@ -7471,7 +7477,7 @@ angular.module("risevision.common.components.svg", [])
                   if(!$scope.subscriptionStatus || $scope.subscriptionStatus.status !== subscriptionStatus.status) {
                     $rootScope.$emit("subscription-status:changed", subscriptionStatus);
                   }
-                  
+
                   $scope.subscriptionStatus = subscriptionStatus;
                 }
               },
