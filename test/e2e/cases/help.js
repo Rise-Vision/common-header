@@ -51,7 +51,7 @@
 
         it("should show the documentation button", function () {
           expect(helpDropdownPage.getDocumentationButton().isDisplayed()).to.eventually.be.true;
-          expect(helpDropdownPage.getDocumentationButton().getAttribute('href')).to.eventually.equal("https://help.risevision.com/user");
+          expect(helpDropdownPage.getDocumentationButton().getAttribute('href')).to.eventually.equal("https://help.risevision.com/");
           expect(helpDropdownPage.getDocumentationButton().getAttribute('target')).to.eventually.equal("_blank");
         });
 
@@ -116,7 +116,7 @@
               oldWindowHandle = handles[0];
               newWindowHandle = handles[1];
               browser.switchTo().window(newWindowHandle).then(function () {
-                expect(browser.driver.getCurrentUrl()).to.eventually.contain("https://help.risevision.com/user");
+                expect(browser.driver.getCurrentUrl()).to.eventually.contain("https://help.risevision.com");
 
                 done();
               });

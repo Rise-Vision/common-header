@@ -780,7 +780,7 @@ app.run(["$templateCache", function($templateCache) {
     "    <li><a id=\"askCommunityButton\" href=\"https://community.risevision.com/rise_vision_inc\" target=\"_blank\">Ask the Community</a></li>\n" +
     "    <li><a id=\"getSupportButton\" ng-click=\"getSupport()\" href=\"\">Get Support</a></li>\n" +
     "    <li><a id=\"signUpForWebinarsButton\" href=\"https://www.risevision.com/webinars\" target=\"_blank\">Free Webinars</a></li>\n" +
-    "    <li><a id=\"documentationButton\" href=\"https://help.risevision.com/user\" target=\"_blank\">User Documentation</a></li>\n" +
+    "    <li><a id=\"documentationButton\" href=\"https://help.risevision.com/\" target=\"_blank\">User Documentation</a></li>\n" +
     "    <li><a id=\"signUpForTrainingButton\" href=\"https://store.risevision.com/product/30/rise-training\" target=\"_blank\">Rise Training</a></li>\n" +
     "</ul>\n" +
     "");
