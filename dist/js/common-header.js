@@ -1189,12 +1189,12 @@ app.run(["$templateCache", function($templateCache) {
     "    <div class=\"signup-offer\">\n" +
     "      <p>Get <strong>Unlimited Access To All Features</strong> Including Our Most Popular Widgets</p>\n" +
     "      <ul class=\"list-unstyled widgets-offer\">\n" +
-    "        <li><img src=\"https://s3.amazonaws.com/Rise-Images/Experimental/web.png\"><span>Web <br>Page</span></li>\n" +
-    "        <li><img src=\"https://s3.amazonaws.com/Rise-Images/Experimental/spreadsheet.png\"><span>Google Spreadsheet</span></li>\n" +
-    "        <li><img src=\"https://s3.amazonaws.com/Rise-Images/Experimental/calendar.png\"><span>Google Calendar</span></li>\n" +
-    "        <li><img src=\"https://s3.amazonaws.com/Rise-Images/Experimental/rss.png\"><span>RSS <br>Feed</span></li>\n" +
-    "        <li><img src=\"https://s3.amazonaws.com/Rise-Images/Experimental/news.png\"><span>News <br>Headlines</span></li>\n" +
-    "        <li><img src=\"https://s3.amazonaws.com/Rise-Images/Experimental/video.png\"><span>Video <br>Folder</span></li>\n" +
+    "        <li><img src=\"https://s3.amazonaws.com/Rise-Images/Icons/web.png\"><span>Web <br>Page</span></li>\n" +
+    "        <li><img src=\"https://s3.amazonaws.com/Rise-Images/Icons/spreadsheet.png\"><span>Google Spreadsheet</span></li>\n" +
+    "        <li><img src=\"https://s3.amazonaws.com/Rise-Images/Icons/calendar.png\"><span>Google Calendar</span></li>\n" +
+    "        <li><img src=\"https://s3.amazonaws.com/Rise-Images/Icons/rss.png\"><span>RSS <br>Feed</span></li>\n" +
+    "        <li><img src=\"https://s3.amazonaws.com/Rise-Images/Icons/news.png\"><span>News <br>Headlines</span></li>\n" +
+    "        <li><img src=\"https://s3.amazonaws.com/Rise-Images/Icons/video.png\"><span>Video <br>Folder</span></li>\n" +
     "      </ul>\n" +
     "    </div>\n" +
     "  </div><!--signup-modal-->  \n" +
