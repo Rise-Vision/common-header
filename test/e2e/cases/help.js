@@ -35,7 +35,7 @@
 
         it("should show the ask the community button", function () {
           expect(helpDropdownPage.getAskCommunityButton().isDisplayed()).to.eventually.be.true;
-          expect(helpDropdownPage.getAskCommunityButton().getAttribute('href')).to.eventually.equal("https://community.risevision.com/rise_vision_inc");
+          expect(helpDropdownPage.getAskCommunityButton().getAttribute('href')).to.eventually.equal("https://community.risevision.com/");
           expect(helpDropdownPage.getAskCommunityButton().getAttribute('target')).to.eventually.equal("_blank");
         });
 
@@ -44,9 +44,9 @@
         });
 
         it("should show the sign up for training button", function () {
-          expect(helpDropdownPage.getSignUpForTrainingButton().isDisplayed()).to.eventually.be.true;
-          expect(helpDropdownPage.getSignUpForTrainingButton().getAttribute('href')).to.eventually.equal("https://store.risevision.com/product/30/rise-training");
-          expect(helpDropdownPage.getSignUpForTrainingButton().getAttribute('target')).to.eventually.equal("_blank");
+          expect(helpDropdownPage.getGetStartedButton().isDisplayed()).to.eventually.be.true;
+          expect(helpDropdownPage.getGetStartedButton().getAttribute('href')).to.eventually.equal("https://help.risevision.com/hc/en-us/articles/115002868706-Get-started-with-Rise-Vision");
+          expect(helpDropdownPage.getGetStartedButton().getAttribute('target')).to.eventually.equal("_blank");
         });
 
         it("should show the documentation button", function () {
@@ -66,7 +66,7 @@
               oldWindowHandle = handles[0];
               newWindowHandle = handles[1];
               browser.switchTo().window(newWindowHandle).then(function () {
-                expect(browser.driver.getCurrentUrl()).to.eventually.equal("https://community.risevision.com/rise_vision_inc");
+                expect(browser.driver.getCurrentUrl()).to.eventually.equal("https://community.risevision.com");
 
                 done();
               });
@@ -80,10 +80,10 @@
           });
         });
 
-        xdescribe("Given a user clicks on the Sign Up for Training button", function () {
+        xdescribe("Given a user clicks on the Get Started button", function () {
           var newWindowHandle, oldWindowHandle;
           before(function () {
-            helpDropdownPage.getSignUpForTrainingButton().click();
+            helpDropdownPage.getGetStartedButton().click();
           });
 
           it("should open the training product page on store in a new tab", function (done) {
@@ -91,7 +91,7 @@
               oldWindowHandle = handles[0];
               newWindowHandle = handles[1];
               browser.switchTo().window(newWindowHandle).then(function () {
-                expect(browser.driver.getCurrentUrl()).to.eventually.contain("https://store.risevision.com/product/30/rise-training");
+                expect(browser.driver.getCurrentUrl()).to.eventually.contain("https://help.risevision.com/hc/en-us/articles/115002868706-Get-started-with-Rise-Vision");
 
                 done();
               });

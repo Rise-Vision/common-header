@@ -777,11 +777,11 @@ app.run(["$templateCache", function($templateCache) {
   $templateCache.put("help-dropdown-menu.html",
     "\n" +
     "<ul>\n" +
-    "    <li><a id=\"askCommunityButton\" href=\"https://community.risevision.com/rise_vision_inc\" target=\"_blank\">Ask the Community</a></li>\n" +
+    "    <li><a id=\"getStartedButton\" href=\"https://help.risevision.com/hc/en-us/articles/115002868706-Get-started-with-Rise-Vision\" target=\"_blank\">Get Started</a></li>\n" +
+    "    <li><a id=\"documentationButton\" href=\"https://help.risevision.com\" target=\"_blank\">Help Center</a></li>\n" +
+    "    <li><a id=\"askCommunityButton\" href=\"https://community.risevision.com\" target=\"_blank\">Ask the Community</a></li>\n" +
     "    <li><a id=\"getSupportButton\" ng-click=\"getSupport()\" href=\"\">Get Support</a></li>\n" +
-    "    <li><a id=\"signUpForWebinarsButton\" href=\"https://www.risevision.com/webinars\" target=\"_blank\">Free Webinars</a></li>\n" +
-    "    <li><a id=\"documentationButton\" href=\"https://help.risevision.com/\" target=\"_blank\">User Documentation</a></li>\n" +
-    "    <li><a id=\"signUpForTrainingButton\" href=\"https://store.risevision.com/product/30/rise-training\" target=\"_blank\">Rise Training</a></li>\n" +
+    "    <li><a id=\"askSalesButton\" href=\"https://www.risevision.com/contact-us?popup=1\" target=\"_blank\">Ask Sales</a></li>\n" +
     "</ul>\n" +
     "");
 }]);

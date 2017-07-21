@@ -28,21 +28,21 @@
       expect(element(by.id("coreApiUrl")).getText()).to.eventually.contain("rvacore-test.appspot.com");
     });
     
-    var registrationScenarios = new RegistrationScenarios();
+    // var registrationScenarios = new RegistrationScenarios();
     
-    var authenticationScenarios = new AuthenticationScenarios();
-    var navMenuScenarios = new NavMenuScenarios();
-    var shoppingCartScenarios = new ShoppingCartScenarios();
-    var supermanScenarios = new SupermanScenarios();
-    var systemMessagesScenarios = new SystemMessagesScenarios();
-    var disableDeleteKeyScenarios = new DisableDeleteKeyScenarios();
+    // var authenticationScenarios = new AuthenticationScenarios();
+    // var navMenuScenarios = new NavMenuScenarios();
+    // var shoppingCartScenarios = new ShoppingCartScenarios();
+    // var supermanScenarios = new SupermanScenarios();
+    // var systemMessagesScenarios = new SystemMessagesScenarios();
+    // var disableDeleteKeyScenarios = new DisableDeleteKeyScenarios();
 
-    var companySettingsScenarios = new CompanySettingsScenarios();
-    var companySubcompaniesScenarios = new CompanySubcompaniesScenarios();
-    var companyUsersSenarios = new CompanyUsersScenarios();
-    var userSettingsScenarios = new UserSettingsScenarios();
+    // var companySettingsScenarios = new CompanySettingsScenarios();
+    // var companySubcompaniesScenarios = new CompanySubcompaniesScenarios();
+    // var companyUsersSenarios = new CompanyUsersScenarios();
+    // var userSettingsScenarios = new UserSettingsScenarios();
     
-    var accountRemovalScenarios = new AccountRemovalScenarios();
+    // var accountRemovalScenarios = new AccountRemovalScenarios();
 
     var helpScenarios = new HelpScenarios();
   });

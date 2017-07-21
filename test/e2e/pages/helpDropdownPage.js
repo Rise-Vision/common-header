@@ -6,7 +6,7 @@
     var helpDropdownButton = element(by.id("helpDropdownButton"));
     var askCommunityButton = element(by.id("askCommunityButton"));
     var getSupportButton = element(by.id("getSupportButton"));
-    var signUpForTrainingButton = element(by.id("signUpForTrainingButton"));
+    var getStartedButton = element(by.id("getStartedButton"));
     var documentationButton = element(by.id("documentationButton"));
 
     var intercomMessenger = element(by.id("intercom-messenger"));
@@ -23,8 +23,8 @@
       return getSupportButton;
     };
 
-    this.getSignUpForTrainingButton = function() {
-      return signUpForTrainingButton;
+    this.getGetStartedButton = function() {
+      return getStartedButton;
     };
 
     this.getDocumentationButton = function() {
