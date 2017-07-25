@@ -7695,7 +7695,7 @@ module.run(["$templateCache", function($templateCache) {
   $templateCache.put("subscription-status-template.html",
     "<div ng-show=\"!expandedFormat\">\n" +
     "  <h3 ng-disable-right-click>\n" +
-    "    <span ng-show=\"subscriptionStatus.statusCode !== 'not-subscribed'\" ng-bind-html=\"'subscription-status.' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted\"></span>\n" +
+    "    <span ng-show=\"subscriptionStatus.statusCode !== 'not-subscribed'\" ng-bind-html=\"messagesPrefix + '.' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted\"></span>\n" +
     "  </h3>\n" +
     "  \n" +
     "  <span ng-show=\"subscriptionStatus.statusCode === 'trial-available'\">\n" +
