@@ -539,13 +539,58 @@ app.run(["$templateCache", function($templateCache) {
   $templateCache.put("company-fields.html",
     "<div class=\"form-group\" ng-class=\"{'has-error': forms.companyForm.name.$invalid && !forms.companyForm.name.$pristine}\">\n" +
     "  <label for=\"company-settings-name\">\n" +
-    "    Name *\n" +
+    "    Company Name *\n" +
     "  </label>\n" +
     "  <input required id=\"company-settings-name\" type=\"text\" class=\"form-control\"\n" +
     "    ng-model=\"company.name\" name=\"name\" />\n" +
     "  <p ng-show=\"forms.companyForm.name.$invalid && !forms.companyForm.name.$pristine\"\n" +
-    "    class=\"help-block validation-error-message-name\">Company name is required.</p>\n" +
+    "    class=\"help-block validation-error-message-name\">Company Name is required.</p>\n" +
     "</div>\n" +
+    "<div class=\"row\">\n" +
+    "  <div class=\"col-md-6\">\n" +
+    "    <div class=\"form-group\">\n" +
+    "      <label for=\"company-settings-street\" class=\"control-label\">\n" +
+    "        Company Size\n" +
+    "      </label>\n" +
+    "      <select class=\"form-control\">\n" +
+    "        <option>&lt; Select Size &gt;</option>\n" +
+    "        <option>Solo</option>\n" +
+    "        <option>Fewer than 20 employees\n" +
+    "</option>\n" +
+    "        <option>21-50 employees\n" +
+    "</option>\n" +
+    "        <option>51-250 employees\n" +
+    "</option>\n" +
+    "        <option>More than 250 employees\n" +
+    "</option>\n" +
+    "      </select>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
+    "  <div class=\"col-md-6\">\n" +
+    "    <div class=\"form-group\">\n" +
+    "      <label for=\"company-settings-unit\" class=\"control-label\">\n" +
+    "        Industry\n" +
+    "      </label>\n" +
+    "      <select class=\"form-control\">\n" +
+    "       <option>Restaurant</option>\n" +
+    "<option>Retail</option>\n" +
+    "<option>Faith-based</option>\n" +
+    "<option>Primary/Secondary Education</option>\n" +
+    "<option>Higher Education</option>\n" +
+    "<option>Charity</option>\n" +
+    "<option>Arts / Libraries</option>\n" +
+    "<option>Marketing Agency</option>\n" +
+    "<option>Legal</option>\n" +
+    "<option>Wellness / Fitness</option>\n" +
+    "<option>Medical</option>\n" +
+    "<option>Financial Services</option>\n" +
+    "<option>Automotive</option>\n" +
+    "<option>Other</option>\n" +
+    "      </select>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
+    "</div>\n" +
+    "\n" +
     "<div class=\"row\">\n" +
     "  <div class=\"col-md-6\">\n" +
     "    <div class=\"form-group\">\n" +
@@ -607,17 +652,21 @@ app.run(["$templateCache", function($templateCache) {
     "    </div>\n" +
     "  </div>\n" +
     "</div>\n" +
+    "<div class=\"col-md-6\">\n" +
     "<div class=\"form-group\">\n" +
     "  <label for=\"company-settings-website\" class=\"control-label\">\n" +
     "    Website\n" +
     "  </label>\n" +
     "  <input id=\"company-settings-website\" type=\"text\" class=\"form-control\" ng-model=\"company.website\"/>\n" +
     "</div>\n" +
+    "</div>\n" +
+    "<div class=\"col-md-6\">\n" +
     "<div class=\"form-group\">\n" +
     "  <label for=\"company-settings-phone\" class=\"control-label\">\n" +
     "    Phone\n" +
     "  </label>\n" +
     "  <input id=\"company-settings-phone\" type=\"tel\" class=\"form-control\" ng-model=\"company.telephone\"/>\n" +
+    "</div>\n" +
     "</div>\n" +
     "<div class=\"form-group\">\n" +
     "  <label for=\"company-settings-timezone\" class=\"control-label\">Time Zone</label>\n" +
@@ -1515,6 +1564,30 @@ app.run(["$templateCache", function($templateCache) {
     "        <p ng-show=\"forms.userSettingsForm.lastName.$invalid && !forms.userSettingsForm.lastName.$pristine\"\n" +
     "          class=\"help-block validation-error-message-lastName\">Last Name is required.</p>\n" +
     "    </div>\n" +
+    "     <div class=\"form-group\"\n" +
+    "      ng-class=\"{ 'has-error' : forms.userSettingsForm.lastName.$invalid && !forms.userSettingsForm.lastName.$pristine }\">\n" +
+    "      <label for=\"user-settings-last-name\">\n" +
+    "        Company Role\n" +
+    "      </label>\n" +
+    "      <select id=\"company-role\" class=\"form-control selectpicker\">\n" +
+    "        <option value=\"\">Architect/Consultant</option>\n" +
+    "        <option value=\"\">IT / Network Administrator / Infrastructure</option>\n" +
+    "        <option value=\"\">Developer</option>\n" +
+    "        <option value=\"\">Reseller/Integrator\n" +
+    "</option>\n" +
+    "        <option value=\"\">Executive/Business Owner\n" +
+    "</option>\n" +
+    "<option value=\"\">Professor/Instructor/Teacher\n" +
+    "</option>\n" +
+    "        <option value=\"\">Designer</option>\n" +
+    "        <option value=\"\">Facilities</option>\n" +
+    "        <option value=\"\">Marketing\n" +
+    "</option>\n" +
+    "        <option value=\"\">Administrator/Volunteer/Intern\n" +
+    "</option>\n" +
+    "      </select>\n" +
+    "    </div>\n" +
+    "\n" +
     "    <div class=\"form-group\">\n" +
     "      <label for=\"user-settings-phone\">\n" +
     "        Phone\n" +

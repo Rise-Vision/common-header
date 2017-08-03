@@ -54,6 +54,30 @@ rv-spinner-start-active="1">
         <p ng-show="forms.userSettingsForm.lastName.$invalid && !forms.userSettingsForm.lastName.$pristine"
           class="help-block validation-error-message-lastName">Last Name is required.</p>
     </div>
+     <div class="form-group"
+      ng-class="{ 'has-error' : forms.userSettingsForm.lastName.$invalid && !forms.userSettingsForm.lastName.$pristine }">
+      <label for="user-settings-last-name">
+        Company Role
+      </label>
+      <select id="company-role" class="form-control selectpicker">
+        <option value="">Architect/Consultant</option>
+        <option value="">IT / Network Administrator / Infrastructure</option>
+        <option value="">Developer</option>
+        <option value="">Reseller/Integrator
+</option>
+        <option value="">Executive/Business Owner
+</option>
+<option value="">Professor/Instructor/Teacher
+</option>
+        <option value="">Designer</option>
+        <option value="">Facilities</option>
+        <option value="">Marketing
+</option>
+        <option value="">Administrator/Volunteer/Intern
+</option>
+      </select>
+    </div>
+
     <div class="form-group">
       <label for="user-settings-phone">
         Phone

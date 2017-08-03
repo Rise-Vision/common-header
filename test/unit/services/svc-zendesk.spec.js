@@ -51,8 +51,12 @@ describe("Services: Zendesk", function() {
       val: setUsernameValueSpy,
       prop: function() {},
       parents: function() {
-        return { parent: function() {
-          return { hide: hideRvUsernameFieldSpy } } } },
+        return { 
+          parent: function() {
+            return { hide: hideRvUsernameFieldSpy }; 
+          } 
+        }; 
+      },
       length: 1
     };
 
@@ -62,8 +66,12 @@ describe("Services: Zendesk", function() {
       val: setCompanyInputStub,
       prop: function() {},
       parents: function() {
-        return { parent: function() {
-          return { hide: hideRvCompanySpy } } } },
+        return { 
+          parent: function() {
+            return { hide: hideRvCompanySpy };
+          } 
+        };
+      },
       length: 1
     };
 

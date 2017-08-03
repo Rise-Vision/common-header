@@ -1,12 +1,57 @@
 <div class="form-group" ng-class="{'has-error': forms.companyForm.name.$invalid && !forms.companyForm.name.$pristine}">
   <label for="company-settings-name">
-    Name *
+    Company Name *
   </label>
   <input required id="company-settings-name" type="text" class="form-control"
     ng-model="company.name" name="name" />
   <p ng-show="forms.companyForm.name.$invalid && !forms.companyForm.name.$pristine"
-    class="help-block validation-error-message-name">Company name is required.</p>
+    class="help-block validation-error-message-name">Company Name is required.</p>
 </div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="company-settings-street" class="control-label">
+        Company Size
+      </label>
+      <select class="form-control">
+        <option>&lt; Select Size &gt;</option>
+        <option>Solo</option>
+        <option>Fewer than 20 employees
+</option>
+        <option>21-50 employees
+</option>
+        <option>51-250 employees
+</option>
+        <option>More than 250 employees
+</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="company-settings-unit" class="control-label">
+        Industry
+      </label>
+      <select class="form-control">
+       <option>Restaurant</option>
+<option>Retail</option>
+<option>Faith-based</option>
+<option>Primary/Secondary Education</option>
+<option>Higher Education</option>
+<option>Charity</option>
+<option>Arts / Libraries</option>
+<option>Marketing Agency</option>
+<option>Legal</option>
+<option>Wellness / Fitness</option>
+<option>Medical</option>
+<option>Financial Services</option>
+<option>Automotive</option>
+<option>Other</option>
+      </select>
+    </div>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-md-6">
     <div class="form-group">
@@ -68,17 +113,21 @@
     </div>
   </div>
 </div>
+<div class="col-md-6">
 <div class="form-group">
   <label for="company-settings-website" class="control-label">
     Website
   </label>
   <input id="company-settings-website" type="text" class="form-control" ng-model="company.website"/>
 </div>
+</div>
+<div class="col-md-6">
 <div class="form-group">
   <label for="company-settings-phone" class="control-label">
     Phone
   </label>
   <input id="company-settings-phone" type="tel" class="form-control" ng-model="company.telephone"/>
+</div>
 </div>
 <div class="form-group">
   <label for="company-settings-timezone" class="control-label">Time Zone</label>
