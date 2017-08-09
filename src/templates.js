@@ -20,7 +20,7 @@ app.run(["$templateCache", function($templateCache) {
     "                          <tbody>\n" +
     "                              <tr>\n" +
     "                                  <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;padding:0;text-align:center\" align=\"left\">\n" +
-    "                                      <img src=\"http://s3.amazonaws.com/Rise-Images/UI/logo.svg\" width=\"165\" height=\"62\" style=\"padding:15px 0 30px;text-align:left\" class=\"CToWUd\">\n" +
+    "                                      <img src=\"https://ci4.googleusercontent.com/proxy/tIn39Uu_-8P30B-NjHrQ6M6cn10CNDo8yKsbzHxTVxQDdshB0RN9KmjFHpgXqGvxfJy7jhFQFRMnvpkBo-cGxyTaPHX-YnB8cvvmC5v4FbYHFSbiRAgMRCOGqol3psI81bf9vVzerfYrewyW=s0-d-e1-ft#http://s3.amazonaws.com/Rise-Images/UI/logo.svg\" width=\"165\" height=\"62\" style=\"padding:15px 0 30px;text-align:left\" class=\"CToWUd\">\n" +
     "                                  </td>\n" +
     "                              </tr>\n" +
     "                          </tbody>\n" +
