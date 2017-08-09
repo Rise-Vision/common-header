@@ -1,10 +1,10 @@
 angular.module("risevision.common.header")
 
-.controller("AddUserModalCtrl", ["$scope", "$filter", "addUser",
+.controller("AddUserModalCtrl", ["$scope", "$filter", "addUser", "userEmail",
   "$modalInstance", "companyId", "userState", "userRoleMap",
   "humanReadableError", "messageBox", "$loading", "segmentAnalytics",
-  function ($scope, $filter, addUser, $modalInstance, companyId, userState,
-    userRoleMap, humanReadableError, messageBox, $loading,
+  function ($scope, $filter, addUser, userEmail, $modalInstance, companyId,
+    userState, userRoleMap, humanReadableError, messageBox, $loading,
     segmentAnalytics) {
     $scope.isAdd = true;
 
@@ -41,30 +41,32 @@ angular.module("risevision.common.header")
 
       if (!$scope.forms.userSettingsForm.$invalid) {
         $scope.loading = true;
-        addUser(companyId, $scope.user.username, $scope.user).then(
-          function () {
-            segmentAnalytics.track("User Created", {
-              userId: $scope.user.username,
-              companyId: companyId
-            });
+        addUser(companyId, $scope.user.username, $scope.user)
+          .then(function () {
+              segmentAnalytics.track("User Created", {
+                userId: $scope.user.username,
+                companyId: companyId
+              });
 
-            $modalInstance.close("success");
-          },
-          function (error) {
+              userEmail.send($scope.user.username, $scope.user.email);
 
-            var errorMessage = "Error: " + humanReadableError(error);
-            if (error.code === 409) {
-              errorMessage = $filter("translate")(
-                "common-header.user.error.duplicate-user", {
-                  "username": $scope.user.username
-                });
-            }
+              $modalInstance.close("success");
+            },
+            function (error) {
 
-            messageBox("common-header.user.error.add-user", errorMessage);
-          }
-        ).finally(function () {
-          $scope.loading = false;
-        });
+              var errorMessage = "Error: " + humanReadableError(error);
+              if (error.code === 409) {
+                errorMessage = $filter("translate")(
+                  "common-header.user.error.duplicate-user", {
+                    "username": $scope.user.username
+                  });
+              }
+
+              messageBox("common-header.user.error.add-user", errorMessage);
+            })
+          .finally(function () {
+            $scope.loading = false;
+          });
       }
     };
 

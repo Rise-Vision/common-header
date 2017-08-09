@@ -96,12 +96,12 @@ var env = process.env.NODE_ENV || "dev",
     "./src/js/controllers/ctr-safe-delete-modal.js",
     "./src/js/ui-components/off-canvas-nav.js",
     "./src/js/ui-components/action-sheet.js",
-    "./src/js/svc-geodata.js",
+    "./src/js/services/svc-geodata.js",
     "./components/angular-ui-flow-manager/src/js/svc-ui-flow.js",
-    "./src/js/svc-account.js",
-    "./src/js/svc-registration.js",
-    "./src/js/svc-support-factory.js",
-    "./src/js/svc-zendesk.js",
+    "./src/js/services/svc-account.js",
+    "./src/js/services/svc-registration.js",
+    "./src/js/services/svc-support-factory.js",
+    "./src/js/services/svc-zendesk.js",
     "./components/ng-core-api-client/src/js/svc-cache.js",
     "./components/ng-core-api-client/src/js/svc-core-util.js",
     "./components/ng-core-api-client/src/js/svc-user.js",
@@ -112,12 +112,14 @@ var env = process.env.NODE_ENV || "dev",
     "./components/ng-core-api-client/src/js/svc-fastpass.js",
     "./src/js/directives/dtv-fastpass.js",
     "./src/js/directives/dtv-link-cid.js",
-    "./src/js/svc-shoppingcart.js",
-    "./src/js/svc-currency.js",
+    "./src/js/services/svc-shoppingcart.js",
+    "./src/js/services/svc-currency.js",
     "./components/ng-gapi-loader/src/js/svc-gapi.js",
-    "./src/js/svc-system-messages.js",
-    "./src/js/svc-data-gadgets.js",
-    "./src/js/svc-cookie-tester.js",
+    "./src/js/services/svc-system-messages.js",
+    "./src/js/services/svc-data-gadgets.js",
+    "./src/js/services/svc-cookie-tester.js",
+    "./src/js/services/svc-email.js",
+    "./src/js/services/svc-user-email.js",
     "./components/rv-common-app-components/dist/js/userstate.js",
     "./components/rv-common-app-components/dist/js/last-modified.js",
     "./components/rv-common-app-components/dist/js/search-filter.js",
@@ -174,7 +176,7 @@ gulp.task("pretty", function() {
     });
 });
 
-gulp.task("html", ["coerce-prod-env", "html-inject", "html2js", "lint"], function () {
+gulp.task("html", ["html-inject", "html2js"], function () {
   return es.concat(
     gulp.src("test/e2e/index.html")
     .pipe(usemin({ js: [], css: [] }))
@@ -189,8 +191,9 @@ gulp.task("html", ["coerce-prod-env", "html-inject", "html2js", "lint"], functio
   );
 });
 
-
-gulp.task("build", ["html"]);
+gulp.task("build", function (cb) {
+  runSequence("coerce-prod-env", ["config", "locales", "fonts-copy"], "lint", "html", cb);
+});
 
 var localeFiles = [
   "components/rv-common-i18n/dist/locales/**/*"
@@ -213,7 +216,7 @@ gulp.task("fonts-copy", function () {
     .pipe(gulp.dest("./dist/fonts"));
 });
 
-gulp.task("lint", ["config", "locales", "fonts-copy", "pretty"], function() {
+gulp.task("lint", ["pretty"], function() {
   return gulp.src([
       "src/js/**/*.js",
       "test/**/*.js"
@@ -296,7 +299,7 @@ gulp.task("html2js-watch", function() {
 
 gulp.task("build-watch", function() {
   watch({glob: ["src/js/**/*", "src/templates/**/*"]}, function () {
-    return runSequence("html");
+    return runSequence("build");
   });
 });
 
@@ -339,7 +342,7 @@ gulp.task("test:e2e", function (cb) {
 
 gulp.task("coveralls", factory.coveralls());
 
-gulp.task("test", ["lint"], function (cb) {
+gulp.task("test", function (cb) {
   runSequence("test:unit", "test:e2e", "coveralls", cb);
 });
 

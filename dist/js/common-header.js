@@ -3,6 +3,131 @@ try { app = angular.module("risevision.common.header.templates"); }
 catch(err) { app = angular.module("risevision.common.header.templates", []); }
 app.run(["$templateCache", function($templateCache) {
   "use strict";
+  $templateCache.put("add-user-email.html",
+    "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n" +
+    "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+    "<head>\n" +
+    "  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n" +
+    "  <meta name=\"viewport\" content=\"width=device-width\"/>\n" +
+    "</head>\n" +
+    "<body>\n" +
+    "  <div style=\"background:#f9f9f9;margin:0px;padding:20px\" bgcolor=\"f9f9f9\">\n" +
+    "      <table cellspacing=\"0\" border=\"0\" cellpadding=\"0\" align=\"center\" width=\"595\" bgcolor=\"white\" style=\"border-collapse:separate;border-spacing:0;font-family:Helvetica,Arial,sans-serif;letter-spacing:0;table-layout:fixed\">\n" +
+    "          <tbody>\n" +
+    "              <tr>\n" +
+    "                  <td style=\"border:1px solid #dddddd;border-radius:2px;font-family:Helvetica,Arial,sans-serif;font-size:16px;padding:40px 60px\">\n" +
+    "                      <table width=\"100%\" style=\"border-collapse:separate;border-spacing:0;table-layout:fixed\">\n" +
+    "                          <tbody>\n" +
+    "                              <tr>\n" +
+    "                                  <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;padding:0;text-align:center\" align=\"left\">\n" +
+    "                                      <img src=\"http://s3.amazonaws.com/Rise-Images/UI/logo.svg\" width=\"165\" height=\"62\" style=\"padding:15px 0 30px;text-align:left\" class=\"CToWUd\">\n" +
+    "                                  </td>\n" +
+    "                              </tr>\n" +
+    "                          </tbody>\n" +
+    "                      </table>\n" +
+    "                      <table width=\"100%\" style=\"border-collapse:separate;border-spacing:0;table-layout:fixed\">\n" +
+    "                          <tbody>\n" +
+    "                              <tr>\n" +
+    "                                  <td style=\"color:#525252;font-family:Helvetica,Arial,sans-serif;font-size:15px;line-height:22px;padding:0\">\n" +
+    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">Hi there,</p>\n" +
+    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">You've been added to <b>{{user.companyName}}</b> with Rise Vision!</p>\n" +
+    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">If you’re new to Rise Vision, please read below on how to proceed. Your email address will need Google authentication to be fully compatible.</p>\n" +
+    "\n" +
+    "                                        <div style=\"width: 100%;\n" +
+    "                      display: inline-block;\n" +
+    "                      padding: 10px;\n" +
+    "                      background-color: #f5f5f5; text-align:center;\">\n" +
+    "                                          <p><span>The email address used for your account is:</span>\n" +
+    "                                          <p><b style=\"border: none;\n" +
+    "                      outline: none!important;\n" +
+    "                      font-size: 26px;\n" +
+    "                      line-height: 18px;\n" +
+    "                      padding: 0;\n" +
+    "                      margin: 0 18px;\">{{user.username}}</b></p>\n" +
+    "                                             </p>\n" +
+    "                                      </div>\n" +
+    "\n" +
+    "                                      <p></p>\n" +
+    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\"><b>If your email address is a Google account:</b>\n" +
+    "                                          <br>Click <a href=\"http://apps.risevision.com\" target=\"_blank\">here</a> to sign in with your Google credentials.\n" +
+    "                                          <br>\n" +
+    "                                      </p>\n" +
+    "\n" +
+    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\"></p>\n" +
+    "                                      <div style=\"margin-bottom:16px;text-align:center!important\" align=\"center\"><a href=\"http://apps.risevision.com\" style=\"background:#47b767;border:none;border-radius:3px;color:#fff;display:inline-block;font-size:14px;font-weight:bold;outline:none!important;padding:12px 35px;text-decoration:none\" target=\"_blank\">Sign In</a></div>\n" +
+    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">\n" +
+    "\n" +
+    "\n" +
+    "                                          <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">\n" +
+    "                                           <br><b>If your email  address is not a  Google account yet:</b><br>\n" +
+    "                                     You can create one for free by clicking <a href=\"https://accounts.google.com/signup\" target=\"_blank\">this link</a>. You can authenticate <b>ANY</b> email with Google. Just select \"I prefer to use my current email address\", and then set your password. Once you have a Google account, you can <a href=\"http://apps.risevision.com\" target=\"_blank\">sign in</a> to Rise Vision.\n" +
+    "                                     </p>\n" +
+    "                                    \n" +
+    "                                    <img src=\"https://help.risevision.com/hc/article_attachments/115010258046/Sign_In_page_.png\" width=\"475\" height=\"180\" style=\"padding:15px 0 30px;text-align:left\" class=\"CToWUd\">\n" +
+    "\n" +
+    "                                      <div style=\"margin-bottom:16px;text-align:center!important\" align=\"center\"><a href=\"http://apps.risevision.com\" style=\"background:#47b767;border:none;border-radius:3px;color:#fff;display:inline-block;font-size:14px;font-weight:bold;outline:none!important;padding:12px 35px;text-decoration:none\" target=\"_blank\">Go Now</a></div>\n" +
+    "                                      <br/>\n" +
+    "                                       <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">You can find more details about getting started with Rise Vision in our <a href=\"https://help.risevision.com/hc/en-us/articles/115002868706-Get-started-with-Rise-Vision\" target=\"_blank\">Help Center</a>.</p>\n" +
+    "\n" +
+    "                                       <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\"> If you have any questions at all, just reply to this email. &nbsp;We’re here to help!</p>\n" +
+    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">-Robb\n" +
+    "                                          <br>Rise Vision Community Manager</p>\n" +
+    "                                  </td>\n" +
+    "                              </tr>\n" +
+    "                              <tr>\n" +
+    "                              </tr>\n" +
+    "                          </tbody>\n" +
+    "                      </table>\n" +
+    "                      <div style=\"width: 100%;\n" +
+    "      display: inline-block;\n" +
+    "      padding: 10px;\n" +
+    "      background-color: #f5f5f5;\">\n" +
+    "                          <p style=\"text-align:center\"><a href=\"http://blog.risevision.com/\" style=\"border:none;outline:none!important\" target=\"_blank\" style=\"font-size: 14px;\n" +
+    "      line-height: 22px;\n" +
+    "      padding: 0;\n" +
+    "      color: #9C9C9C;\n" +
+    "      margin: 0 22px;\">Follow Our Blog</a>\n" +
+    "                              <span style=\"margin:6px;\">|</span>\n" +
+    "                              <a href=\"https://community.risevision.com/\" style=\"border:none;outline:none!important\" target=\"_blank\" style=\"font-size: 14px;\n" +
+    "      line-height: 22px;\n" +
+    "      padding: 0;\n" +
+    "      color: #9C9C9C;\n" +
+    "      margin: 0 22px;\">Join Our Community</a></p>\n" +
+    "                      </div>\n" +
+    "                  </td>\n" +
+    "              </tr>\n" +
+    "          </tbody>\n" +
+    "      </table>\n" +
+    "      <table width=\"100%\" align=\"middle\" style=\"border-collapse:separate;border-spacing:0;table-layout:fixed\">\n" +
+    "          <tbody>\n" +
+    "              <tr>\n" +
+    "                  <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;padding:0\">\n" +
+    "                      <table cellspacing=\"0\" border=\"0\" cellpadding=\"0\" align=\"center\" width=\"600\" bgcolor=\"transparent\" style=\"border-collapse:separate;border-spacing:0;font-family:Helvetica,Arial,sans-serif;letter-spacing:0;table-layout:fixed\">\n" +
+    "                          <tbody>\n" +
+    "                              <tr>\n" +
+    "                                  <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;padding:21px 30px 15px;text-align:center\" align=\"center\">\n" +
+    "                                      <p style=\"color:#b7b7b7;font-size:12px;font-weight:300;margin:0 0 6px;text-decoration:none\">Rise Vision 545 King Street West Toronto, Ontario Canada M5V 1M1\n" +
+    "                                      </p>\n" +
+    "                                  </td>\n" +
+    "                              </tr>\n" +
+    "                          </tbody>\n" +
+    "                      </table>\n" +
+    "                  </td>\n" +
+    "              </tr>\n" +
+    "          </tbody>\n" +
+    "      </table>\n" +
+    "  </div>\n" +
+    " </body>\n" +
+    "</html>\n" +
+    "");
+}]);
+})();
+
+(function(module) {
+try { app = angular.module("risevision.common.header.templates"); }
+catch(err) { app = angular.module("risevision.common.header.templates", []); }
+app.run(["$templateCache", function($templateCache) {
+  "use strict";
   $templateCache.put("app-nav-buttons-menu.html",
     "<ul>\n" +
     "  <li class=\"new-app\">  \n" +
@@ -867,13 +992,13 @@ app.run(["$templateCache", function($templateCache) {
     "        <h2 class=\"modal-title\"></h2>\n" +
     "    </div>\n" +
     "    <div class=\"modal-body text-center\" stop-event=\"touchend\">\n" +
-    "        <p class=\"lead\">Send us a note and we will typically get back to you next business day.</p>\n" +
+    "        <p class=\"lead\">Send us a note and we typically get back to you within 2-3 business days.</p>\n" +
     "\n" +
     "        <a ng-if=\"!loggedIn\" href=\"https://www.risevision.com/contact/\" target=\"_blank\" class=\"btn btn-primary btn-lg\">\n" +
-    "          Send Us a Note\n" +
+    "          Contact Support\n" +
     "        </a>\n" +
     "        <button ng-if=\"loggedIn\" class=\"btn btn-primary btn-lg\" ng-click=\"sendUsANote()\">\n" +
-    "            Send Us a Note\n" +
+    "          Contact Support\n" +
     "        </button>\n" +
     "\n" +
     "        <div class=\"content-box u_margin-md-top u_remove-bottom\">\n" +
@@ -1502,7 +1627,8 @@ angular.module("risevision.common.header", [
   "risevision.common.components.analytics",
   "risevision.common.components.message-box",
   "risevision.common.components.svg",
-  "risevision.common.support"
+  "risevision.common.support",
+  "risevision.common.email"
 ])
 
 .factory("bindToScopeWithWatch", [
@@ -2841,11 +2967,11 @@ angular.module("risevision.common.header")
 
 angular.module("risevision.common.header")
 
-.controller("AddUserModalCtrl", ["$scope", "$filter", "addUser",
+.controller("AddUserModalCtrl", ["$scope", "$filter", "addUser", "userEmail",
   "$modalInstance", "companyId", "userState", "userRoleMap",
   "humanReadableError", "messageBox", "$loading", "segmentAnalytics",
-  function ($scope, $filter, addUser, $modalInstance, companyId, userState,
-    userRoleMap, humanReadableError, messageBox, $loading,
+  function ($scope, $filter, addUser, userEmail, $modalInstance, companyId,
+    userState, userRoleMap, humanReadableError, messageBox, $loading,
     segmentAnalytics) {
     $scope.isAdd = true;
 
@@ -2882,30 +3008,32 @@ angular.module("risevision.common.header")
 
       if (!$scope.forms.userSettingsForm.$invalid) {
         $scope.loading = true;
-        addUser(companyId, $scope.user.username, $scope.user).then(
-          function () {
-            segmentAnalytics.track("User Created", {
-              userId: $scope.user.username,
-              companyId: companyId
-            });
+        addUser(companyId, $scope.user.username, $scope.user)
+          .then(function () {
+              segmentAnalytics.track("User Created", {
+                userId: $scope.user.username,
+                companyId: companyId
+              });
 
-            $modalInstance.close("success");
-          },
-          function (error) {
+              userEmail.send($scope.user.username, $scope.user.email);
 
-            var errorMessage = "Error: " + humanReadableError(error);
-            if (error.code === 409) {
-              errorMessage = $filter("translate")(
-                "common-header.user.error.duplicate-user", {
-                  "username": $scope.user.username
-                });
-            }
+              $modalInstance.close("success");
+            },
+            function (error) {
 
-            messageBox("common-header.user.error.add-user", errorMessage);
-          }
-        ).finally(function () {
-          $scope.loading = false;
-        });
+              var errorMessage = "Error: " + humanReadableError(error);
+              if (error.code === 409) {
+                errorMessage = $filter("translate")(
+                  "common-header.user.error.duplicate-user", {
+                    "username": $scope.user.username
+                  });
+              }
+
+              messageBox("common-header.user.error.add-user", errorMessage);
+            })
+          .finally(function () {
+            $scope.loading = false;
+          });
       }
     };
 
@@ -5534,6 +5662,82 @@ angular.module("risevision.common.cookie", ["risevision.common.config"])
       };
 
       return svc;
+    }
+  ]);
+
+"use strict";
+
+angular.module("risevision.common.email", [
+  "risevision.common.gapi"
+])
+  .constant("EMAIL_FROM", "support@risevision.com")
+  .constant("EMAIL_FROM_NAME", "Rise Vision Support")
+  .service("email", ["$q", "$log", "riseAPILoader",
+    "EMAIL_FROM", "EMAIL_FROM_NAME",
+    function ($q, $log, riseAPILoader, EMAIL_FROM, EMAIL_FROM_NAME) {
+
+      var service = {
+        send: function (recipients, subject, text) {
+          var deferred = $q.defer();
+
+          var obj = {
+            "from": EMAIL_FROM,
+            "fromName": EMAIL_FROM_NAME,
+            "recipients": recipients,
+            "subject": subject,
+            "data": {
+              "text": text
+            }
+          };
+          riseAPILoader().then(function (riseApi) {
+            return riseApi.email.send(obj);
+          })
+            .then(function (resp) {
+              $log.debug("email sent", resp);
+              deferred.resolve(resp.result);
+            })
+            .then(null, function (e) {
+              console.error("Failed to send email.", e);
+              deferred.reject(e);
+            });
+          return deferred.promise;
+        }
+      };
+
+      return service;
+    }
+  ]);
+
+"use strict";
+
+angular.module("risevision.common.email")
+  .service("userEmail", ["$templateCache", "userState", "email", "$q",
+    function ($templateCache, userState, email, $q) {
+      var factory = {};
+
+      factory.sendingEmail = false;
+
+      factory.send = function (username, emailAddress) {
+        if (!username || !emailAddress) {
+          return $q.reject("Missing required parameters");
+        }
+
+        var template = $templateCache.get("add-user-email.html");
+        template = template.replace("{{user.username}}", username);
+        template = template.replace("{{user.companyName}}",
+          userState.getSelectedCompanyName());
+
+        factory.sendingEmail = true;
+
+        return email.send(emailAddress,
+            "You've been added to a Rise Vision account!", template)
+          .finally(function () {
+            factory.sendingEmail = false;
+          });
+      };
+
+      return factory;
+
     }
   ]);
 

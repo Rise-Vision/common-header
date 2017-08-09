@@ -37,3 +37,5 @@ dist/*.html
 
 .project
 .tern-project
+
+package-lock.json
