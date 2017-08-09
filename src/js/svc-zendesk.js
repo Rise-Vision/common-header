@@ -20,33 +20,6 @@
 
       function ensureScript() {
         if (!loaded) {
-          $window.zESettings = {
-            webWidget: {
-
-              helpCenter: {
-                title: {
-                  "*": "Find you an answer"
-                },
-                messageButton: {
-                  "*": "Open Support Ticket"
-                }
-              },
-
-              chat: {
-                suppress: true
-              },
-
-              contactForm: {
-                title: {
-                  "*": "Concact Us"
-                },
-                messageButton: {
-                  "*": "Open Support Ticket"
-                }
-              }
-            }
-          };
-
           var deferred = $q.defer();
           var script =
             /* jshint quotmark: single */
@@ -162,33 +135,15 @@
               var rvCompanyInput = iframe.contents().find(
                 "input[name=24893323]");
               if (rvCompanyInput && rvCompanyInput.length > 0) {
-                getSubscriptionStatus().then(function (
-                  subscriptionStatus) {
-                  var prioritySupport = false;
-                  $log.info("Subscription status is",
-                    subscriptionStatus);
-                  if (subscriptionStatus && subscriptionStatus.statusCode ===
-                    "subscribed") {
-                    // append priority support flag
-                    prioritySupport = 1;
-                  }
-
-                  rvCompanyInput.val(JSON.stringify({
-                    riseVisionCompanyId: companyId,
-                    riseVisionUsername: username,
-                    prioritySupport: prioritySupport
-                  }));
-                }).catch(function (err) {
-                  $log.error("error: ", err);
-                });
-
+                rvCompanyInput.val(JSON.stringify({
+                  riseVisionCompanyId: companyId,
+                  riseVisionUsername: username
+                }));
                 rvCompanyInput.prop("disabled", true);
-                rvCompanyInput.parents(
-                  "label").first().parent().hide();
+                rvCompanyInput.parents("label").first().parent().hide();
 
                 $log.debug("ZD form found!");
-                clearInterval(
-                  cancelDomMonitor);
+                clearInterval(cancelDomMonitor);
                 cancelDomMonitor = null;
               }
             }
