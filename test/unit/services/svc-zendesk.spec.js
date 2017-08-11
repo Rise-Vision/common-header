@@ -3,7 +3,9 @@
 describe("Services: Zendesk", function() {
   beforeEach(module("risevision.common.support"));
 
-  var windowObj, zeSpy, locationSearchSpy, zeActivateSpy;
+  var windowObj, zeSpy, locationSearchSpy, zeActivateSpy, widgetShown,
+    hideRvUsernameFieldSpy, hideRvCompanySpy, setUsernameValueSpy,
+    setCompanyInputStub;
 
   beforeEach(function() {
     this.clock = sinon.useFakeTimers();
@@ -11,6 +13,10 @@ describe("Services: Zendesk", function() {
 
   afterEach(function() {
     this.clock.restore();
+  });
+
+  beforeEach(function() {
+    widgetShown = false;
   });
 
   beforeEach(module(function($provide) {
@@ -36,7 +42,35 @@ describe("Services: Zendesk", function() {
       };
     });
 
+
+
     zeActivateSpy = sinon.stub();
+    hideRvUsernameFieldSpy = sinon.stub();
+    setUsernameValueSpy = sinon.stub();
+    var fakeRvUsernameInput = {
+      val: setUsernameValueSpy,
+      prop: function() {},
+      parents: function() {
+        return { parent: function() {
+          return { hide: hideRvUsernameFieldSpy } } } },
+      length: 1
+    };
+
+    hideRvCompanySpy = sinon.stub();
+    setCompanyInputStub = sinon.stub();
+    var fakeRvCompanyInput = {
+      val: setCompanyInputStub,
+      prop: function() {},
+      parents: function() {
+        return { parent: function() {
+          return { hide: hideRvCompanySpy } } } },
+      length: 1
+    };
+
+    var fakeBorderContainer = {
+      css: function() {
+      }
+    };
 
     windowObj = {
       document: {
@@ -50,21 +84,32 @@ describe("Services: Zendesk", function() {
           windowObj.zE.identify = function() {};
         } },
         createElement: function() {
-          return {};
+          return {
+          };
         },
       },
-      $: function() {return {
-        contents: function() {
-          return {
-            find: function () {
-              return {
-                css: function() {
+      $: function() {
+        return {
+          contents: function() {
+            return {
+              find: function (query) {
+                if(query === ".Container") {
+                  return fakeBorderContainer;
+                } else if (widgetShown && query === "input[name=24893323]") {
+                  // only returns when the contact form widget is shown.
+                  // reasons for it not to show: Zendesk widget fails to open;
+                  // user still in knowledge base search UI
+                  return fakeRvCompanyInput;
+                } else if (widgetShown && query === "input[name=email]") {
+                  return fakeRvUsernameInput;
+                } else {
+                  return null;
                 }
-              };
-            }
-          };
-        }
-      };}
+              }
+            };
+          }
+        };
+      }
     };
 
     $provide.service("$window", function() {
@@ -113,6 +158,27 @@ describe("Services: Zendesk", function() {
         expect(zeActivateSpy).to.have.been.called;
         done();
       }, done);
+    });
+  });
+
+  it("hides inputs that auto-collect their values", function(done) {
+    var _this = this;
+    inject(function(zendesk) {
+      zendesk.showWidget().then(function() {
+        expect(hideRvUsernameFieldSpy).not.to.have.been.called;
+        expect(hideRvCompanySpy).not.to.have.been.called;
+        expect(setUsernameValueSpy).not.to.have.been.called;
+
+        widgetShown = true;
+        _this.clock.tick(2000);
+        expect(hideRvUsernameFieldSpy).to.have.been.called;
+        expect(hideRvCompanySpy).to.have.been.called;
+
+        // should set username in the field
+        expect(setUsernameValueSpy).to.have.been.calledWith("hello");
+
+        done();
+      });
     });
   });
 });

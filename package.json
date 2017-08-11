@@ -1,6 +1,6 @@
 {
   "name": "rise-vision-common-header",
-  "version": "1.13.22",
+  "version": "1.13.23",
   "description": "Rise Vision Common Header ==============",
   "main": "index.js",
   "dependencies": {
@@ -13,7 +13,7 @@
     "gulp-concat": "^2.3.4",
     "gulp-html2js": "^0.1.0",
     "gulp-inject": "^1.0.2",
-    "gulp-jshint": "^1.8.4",
+    "gulp-jshint": "^2.0.4",
     "gulp-minify-css": "^0.3.11",
     "gulp-rename": "^1.2.0",
     "gulp-jsbeautifier": "0.0.3",
@@ -21,8 +21,8 @@
     "gulp-uglify": "^1.0.1",
     "gulp-usemin": "0.3.8",
     "gulp-watch": "^0.6.9",
-    "jshint-stylish": "^0.4.0",
-    "jshint": "2.8.0",
+    "jshint-stylish": "^2.2.1",
+    "jshint": "2.9.5",
     "run-sequence": "^0.3.6",
     "widget-tester": "git://github.com/Rise-Vision/widget-tester.git",
     "rv-common-e2e": "git://github.com/Rise-Vision/rv-common-e2e.git"

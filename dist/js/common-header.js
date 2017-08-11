@@ -4107,6 +4107,36 @@ angular.module("risevision.common.support", [
 
       function ensureScript() {
         if (!loaded) {
+          $window.zESettings = {
+            webWidget: {
+
+              helpCenter: {
+                title: {
+                  "*": "Let's Find You an Answer"
+                },
+                searchPlaceholder: {
+                  "*": "Let's find you an answer"
+                },
+                messageButton: {
+                  "*": "Open a Support Ticket"
+                }
+              },
+
+              chat: {
+                suppress: true
+              },
+
+              contactForm: {
+                title: {
+                  "*": "Open a Support Ticket"
+                },
+                messageButton: {
+                  "*": "Open a Support Ticket"
+                }
+              }
+            }
+          };
+
           var deferred = $q.defer();
           var script =
             /* jshint quotmark: single */
@@ -4216,21 +4246,39 @@ angular.module("risevision.common.support", [
               if (rvUsernameInput && rvUsernameInput.length > 0) {
                 rvUsernameInput.val(username);
                 rvUsernameInput.prop("disabled", true);
-                rvUsernameInput.parents("label").first().parent().hide();
+                rvUsernameInput.parents("label").parent().hide();
               }
 
               var rvCompanyInput = iframe.contents().find(
                 "input[name=24893323]");
               if (rvCompanyInput && rvCompanyInput.length > 0) {
-                rvCompanyInput.val(JSON.stringify({
-                  riseVisionCompanyId: companyId,
-                  riseVisionUsername: username
-                }));
+                getSubscriptionStatus().then(function (
+                  subscriptionStatus) {
+                  var prioritySupport = false;
+                  $log.info("Subscription status is",
+                    subscriptionStatus);
+                  if (subscriptionStatus && subscriptionStatus.statusCode ===
+                    "subscribed") {
+                    // append priority support flag
+                    prioritySupport = 1;
+                  }
+
+                  rvCompanyInput.val(JSON.stringify({
+                    riseVisionCompanyId: companyId,
+                    riseVisionUsername: username,
+                    prioritySupport: prioritySupport
+                  }));
+                }).catch(function (err) {
+                  $log.error("error: ", err);
+                });
+
                 rvCompanyInput.prop("disabled", true);
-                rvCompanyInput.parents("label").first().parent().hide();
+                rvCompanyInput.parents(
+                  "label").parent().hide();
 
                 $log.debug("ZD form found!");
-                clearInterval(cancelDomMonitor);
+                clearInterval(
+                  cancelDomMonitor);
                 cancelDomMonitor = null;
               }
             }
