@@ -50,15 +50,16 @@ angular.module("risevision.common.header", [
 .directive("commonHeader", ["$modal", "$rootScope", "$q", "$loading",
   "$interval", "oauth2APILoader", "$log",
   "$templateCache", "userState", "$location", "bindToScopeWithWatch",
-  "$document", "cookieTester",
+  "$document", "cookieTester", "companyIcpFactory",
   function ($modal, $rootScope, $q, $loading, $interval,
     oauth2APILoader, $log, $templateCache, userState, $location,
-    bindToScopeWithWatch, $document, cookieTester) {
+    bindToScopeWithWatch, $document, cookieTester, companyIcpFactory) {
     return {
       restrict: "E",
       template: $templateCache.get("common-header.html"),
       scope: false,
       link: function ($scope, element, attr) {
+        companyIcpFactory.init();
         cookieTester.checkCookies().then(function () {
           $scope.cookieEnabled = true;
         }, function () {

@@ -549,43 +549,23 @@ app.run(["$templateCache", function($templateCache) {
     "<div class=\"row\">\n" +
     "  <div class=\"col-md-6\">\n" +
     "    <div class=\"form-group\">\n" +
-    "      <label for=\"company-settings-street\" class=\"control-label\">\n" +
+    "      <label for=\"company-size\" class=\"control-label\">\n" +
     "        Company Size\n" +
     "      </label>\n" +
-    "      <select class=\"form-control\">\n" +
-    "        <option>&lt; Select Size &gt;</option>\n" +
-    "        <option>Solo</option>\n" +
-    "        <option>Fewer than 20 employees\n" +
-    "</option>\n" +
-    "        <option>21-50 employees\n" +
-    "</option>\n" +
-    "        <option>51-250 employees\n" +
-    "</option>\n" +
-    "        <option>More than 250 employees\n" +
-    "</option>\n" +
+    "      <select id=\"company-size\" class=\"form-control\" ng-model=\"company.companySize\">\n" +
+    "        <option value=\"\" ng-show=\"false\">&lt; Select Size &gt;</option>\n" +
+    "        <option ng-repeat=\"size in COMPANY_SIZE_FIELDS\" value=\"{{size[0]}}\">{{size[1]}}</option>\n" +
     "      </select>\n" +
     "    </div>\n" +
     "  </div>\n" +
     "  <div class=\"col-md-6\">\n" +
     "    <div class=\"form-group\">\n" +
-    "      <label for=\"company-settings-unit\" class=\"control-label\">\n" +
+    "      <label for=\"company-industry\" class=\"control-label\">\n" +
     "        Industry\n" +
     "      </label>\n" +
-    "      <select class=\"form-control\">\n" +
-    "       <option>Restaurant</option>\n" +
-    "<option>Retail</option>\n" +
-    "<option>Faith-based</option>\n" +
-    "<option>Primary/Secondary Education</option>\n" +
-    "<option>Higher Education</option>\n" +
-    "<option>Charity</option>\n" +
-    "<option>Arts / Libraries</option>\n" +
-    "<option>Marketing Agency</option>\n" +
-    "<option>Legal</option>\n" +
-    "<option>Wellness / Fitness</option>\n" +
-    "<option>Medical</option>\n" +
-    "<option>Financial Services</option>\n" +
-    "<option>Automotive</option>\n" +
-    "<option>Other</option>\n" +
+    "      <select id=\"company-industry\" class=\"form-control selectpicker\" ng-model=\"company.companyIndustry\">\n" +
+    "        <option value=\"\" ng-show=\"false\">&lt; Select Industry &gt;</option>\n" +
+    "        <option ng-repeat=\"industry in COMPANY_INDUSTRY_FIELDS\" value=\"{{industry[0]}}\">{{industry[1]}}</option>\n" +
     "      </select>\n" +
     "    </div>\n" +
     "  </div>\n" +
@@ -652,21 +632,23 @@ app.run(["$templateCache", function($templateCache) {
     "    </div>\n" +
     "  </div>\n" +
     "</div>\n" +
-    "<div class=\"col-md-6\">\n" +
-    "<div class=\"form-group\">\n" +
-    "  <label for=\"company-settings-website\" class=\"control-label\">\n" +
-    "    Website\n" +
-    "  </label>\n" +
-    "  <input id=\"company-settings-website\" type=\"text\" class=\"form-control\" ng-model=\"company.website\"/>\n" +
-    "</div>\n" +
-    "</div>\n" +
-    "<div class=\"col-md-6\">\n" +
-    "<div class=\"form-group\">\n" +
-    "  <label for=\"company-settings-phone\" class=\"control-label\">\n" +
-    "    Phone\n" +
-    "  </label>\n" +
-    "  <input id=\"company-settings-phone\" type=\"tel\" class=\"form-control\" ng-model=\"company.telephone\"/>\n" +
-    "</div>\n" +
+    "<div class=\"row\">\n" +
+    "  <div class=\"col-md-6\">\n" +
+    "    <div class=\"form-group\">\n" +
+    "      <label for=\"company-settings-website\" class=\"control-label\">\n" +
+    "        Website\n" +
+    "      </label>\n" +
+    "      <input id=\"company-settings-website\" type=\"text\" class=\"form-control\" ng-model=\"company.website\"/>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
+    "  <div class=\"col-md-6\">\n" +
+    "    <div class=\"form-group\">\n" +
+    "      <label for=\"company-settings-phone\" class=\"control-label\">\n" +
+    "        Phone\n" +
+    "      </label>\n" +
+    "      <input id=\"company-settings-phone\" type=\"tel\" class=\"form-control\" ng-model=\"company.telephone\"/>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
     "</div>\n" +
     "<div class=\"form-group\">\n" +
     "  <label for=\"company-settings-timezone\" class=\"control-label\">Time Zone</label>\n" +
@@ -674,6 +656,88 @@ app.run(["$templateCache", function($templateCache) {
     "    <option ng-show=\"false\" value=\"\">&lt; Select Time Zone &gt;</option>\n" +
     "    <option value=\"{{c[1]}}\" ng-repeat=\"c in timezones\">{{c[0]}}</option>\n" +
     "  </select>\n" +
+    "</div>\n" +
+    "");
+}]);
+})();
+
+(function(module) {
+try { app = angular.module("risevision.common.header.templates"); }
+catch(err) { app = angular.module("risevision.common.header.templates", []); }
+app.run(["$templateCache", function($templateCache) {
+  "use strict";
+  $templateCache.put("company-icp-modal.html",
+    "<div id=\"companyIcpModal\">\n" +
+    "  <div class=\"modal-header\">\n" +
+    "    <button type=\"button\" class=\"close\" ng-click=\"dismiss()\" aria-hidden=\"true\">\n" +
+    "      <i class=\"fa fa-times\"></i>\n" +
+    "    </button>\n" +
+    "    <h3 id=\"icpModalTitle\" class=\"modal-title\">Customize your Rise Vision experience!</h3>\n" +
+    "  </div>\n" +
+    "  <div class=\"modal-body u_padding-lg\" stop-event=\"touchend\">    \n" +
+    "    <form id=\"companyIcpForm\" role=\"form\" name=\"forms.companyIcpForm\">\n" +
+    "      <div class=\"row\">\n" +
+    "        <div class=\"col-md-4\">\n" +
+    "          <div class=\"form-group\">\n" +
+    "            <label for=\"company-name\" class=\"control-label\">\n" +
+    "              Company Name\n" +
+    "            </label>\n" +
+    "          <input required id=\"company-name\" type=\"text\" class=\"form-control\"\n" +
+    "            ng-model=\"company.name\" name=\"name\" />\n" +
+    "          </div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <div class=\"col-md-4\">\n" +
+    "          <div class=\"form-group\">\n" +
+    "            <label for=\"company-size\" class=\"control-label\">\n" +
+    "              Company Size\n" +
+    "            </label>\n" +
+    "            <select id=\"company-size\" class=\"form-control\" ng-model=\"company.companySize\">\n" +
+    "              <option value=\"\" ng-show=\"false\">&lt; Select Size &gt;</option>\n" +
+    "              <option ng-repeat=\"size in COMPANY_SIZE_FIELDS\" value=\"{{size[0]}}\">{{size[1]}}</option>\n" +
+    "            </select>\n" +
+    "          </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"col-md-4\">\n" +
+    "          <div class=\"form-group\">\n" +
+    "            <label for=\"company-role\" class=\"control-label\">\n" +
+    "              What's your title?\n" +
+    "            </label>\n" +
+    "            <select id=\"company-role\" class=\"form-control selectpicker\" ng-model=\"user.companyRole\">\n" +
+    "              <option value=\"\" ng-show=\"false\">&lt; Select Role &gt;</option>\n" +
+    "              <option ng-repeat=\"role in COMPANY_ROLE_FIELDS\" value=\"{{role[0]}}\">{{role[1]}}</option>\n" +
+    "            </select>\n" +
+    "          </div>\n" +
+    "        </div>\n" +
+    "      </div>\n" +
+    "\n" +
+    "      <div class=\"text-center\">\n" +
+    "        <h1 class=\"u_margin-xs-top\">What's Your Industry?</h1>\n" +
+    "        <h4 class=\"u_margin-xs-top u_margin-xs-bottom\"> (Pick One) </h4>\n" +
+    "      </div>\n" +
+    "\n" +
+    "      <div class=\"scrollable-list\">\n" +
+    "        <ul id=\"\" class=\"u_margin-md-top list-unstyled pt-media-list pt-onboarding-list text-center\">\n" +
+    "          <li class=\"no-select\" ng-class=\"{'selected-border' : company.companyIndustry === industry[0]}\" ng-if=\"industry[2]\" ng-repeat=\"industry in COMPANY_INDUSTRY_FIELDS\"  ng-click=\"selectIndustry(industry[0])\"> \n" +
+    "            <img ng-class=\"{{imgClasses}}\" src=\"{{industry[2]}}\"/>\n" +
+    "            <input type=\"checkbox\" class=\"checkbox\" ng-checked=\"company.companyIndustry === industry[0]\" />\n" +
+    "            <span class=\"u_ellipsis-md ng-binding\"> <b>{{industry[1]}}</b> </span>\n" +
+    "          </li>\n" +
+    "        </ul>\n" +
+    "      </div>\n" +
+    "    </form>\n" +
+    "  </div> <!-- //Modal Body -->\n" +
+    "\n" +
+    "  <div class=\"modal-footer\"> \n" +
+    "    <button id=\"saveButton\" class=\"btn btn-primary ng-binding\" ng-click=\"save()\" ng-disabled=\"forms.companyIcpForm.$invalid\">\n" +
+    "      Apply \n" +
+    "      <i class=\"fa fa-check icon-right\"></i>\n" +
+    "    </button> \n" +
+    "\n" +
+    "    <button id=\"cancelButton\" class=\"btn btn-link pull-left\" ng-click=\"dismiss()\">Ask Me Later </button> \n" +
+    "  </div>\n" +
+    "\n" +
+    "\n" +
     "</div>\n" +
     "");
 }]);
@@ -1564,27 +1628,13 @@ app.run(["$templateCache", function($templateCache) {
     "        <p ng-show=\"forms.userSettingsForm.lastName.$invalid && !forms.userSettingsForm.lastName.$pristine\"\n" +
     "          class=\"help-block validation-error-message-lastName\">Last Name is required.</p>\n" +
     "    </div>\n" +
-    "     <div class=\"form-group\"\n" +
-    "      ng-class=\"{ 'has-error' : forms.userSettingsForm.lastName.$invalid && !forms.userSettingsForm.lastName.$pristine }\">\n" +
-    "      <label for=\"user-settings-last-name\">\n" +
+    "    <div class=\"form-group\">\n" +
+    "      <label for=\"company-role\">\n" +
     "        Company Role\n" +
     "      </label>\n" +
-    "      <select id=\"company-role\" class=\"form-control selectpicker\">\n" +
-    "        <option value=\"\">Architect/Consultant</option>\n" +
-    "        <option value=\"\">IT / Network Administrator / Infrastructure</option>\n" +
-    "        <option value=\"\">Developer</option>\n" +
-    "        <option value=\"\">Reseller/Integrator\n" +
-    "</option>\n" +
-    "        <option value=\"\">Executive/Business Owner\n" +
-    "</option>\n" +
-    "<option value=\"\">Professor/Instructor/Teacher\n" +
-    "</option>\n" +
-    "        <option value=\"\">Designer</option>\n" +
-    "        <option value=\"\">Facilities</option>\n" +
-    "        <option value=\"\">Marketing\n" +
-    "</option>\n" +
-    "        <option value=\"\">Administrator/Volunteer/Intern\n" +
-    "</option>\n" +
+    "      <select id=\"company-role\" class=\"form-control selectpicker\" ng-model=\"user.companyRole\">\n" +
+    "        <option value=\"\" ng-show=\"false\">&lt; Select Role &gt;</option>\n" +
+    "        <option ng-repeat=\"role in COMPANY_ROLE_FIELDS\" value=\"{{role[0]}}\">{{role[1]}}</option>\n" +
     "      </select>\n" +
     "    </div>\n" +
     "\n" +

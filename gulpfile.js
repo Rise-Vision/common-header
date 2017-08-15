@@ -91,6 +91,7 @@ var env = process.env.NODE_ENV || "dev",
     "./src/js/controllers/ctr-company-users-modal.js",
     "./src/js/controllers/ctr-user-add-modal.js",
     "./src/js/controllers/ctr-user-settings-modal.js",
+    "./src/js/controllers/ctr-company-icp-modal.js",
     "./src/js/controllers/ctr-signout-button.js",
     "./src/js/controllers/ctr-signout-modal.js",
     "./src/js/controllers/ctr-safe-delete-modal.js",
@@ -120,6 +121,7 @@ var env = process.env.NODE_ENV || "dev",
     "./src/js/services/svc-cookie-tester.js",
     "./src/js/services/svc-email.js",
     "./src/js/services/svc-user-email.js",
+    "./src/js/services/svc-company-icp.js",
     "./components/rv-common-app-components/dist/js/userstate.js",
     "./components/rv-common-app-components/dist/js/last-modified.js",
     "./components/rv-common-app-components/dist/js/search-filter.js",
@@ -324,7 +326,11 @@ gulp.task("test:unit", ["config"], factory.testUnitAngular({
   testFiles: unitTestFiles,
   coverageFiles: "../../src/js/**/*.js"
 }));
-gulp.task("test:unit-watch", ["config"], factory.testUnitAngular({testFiles: unitTestFiles, watch: true}));
+gulp.task("test:unit-watch", ["config"], factory.testUnitAngular({
+  testFiles: unitTestFiles, 
+  coverageFiles: "../../src/js/**/*.js",
+  watch: true
+}));
 
 gulp.task("server", ["html-inject", "html2js", "config", "fonts-copy"], factory.testServer({https: false}));
 gulp.task("server-watch", ["html-inject-watch", "html2js-watch", "config", "fonts-copy"], factory.testServer({https: false}));

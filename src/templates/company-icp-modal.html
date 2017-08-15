@@ -1,0 +1,72 @@
+<div id="companyIcpModal">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="dismiss()" aria-hidden="true">
+      <i class="fa fa-times"></i>
+    </button>
+    <h3 id="icpModalTitle" class="modal-title">Customize your Rise Vision experience!</h3>
+  </div>
+  <div class="modal-body u_padding-lg" stop-event="touchend">    
+    <form id="companyIcpForm" role="form" name="forms.companyIcpForm">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="company-name" class="control-label">
+              Company Name
+            </label>
+          <input required id="company-name" type="text" class="form-control"
+            ng-model="company.name" name="name" />
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="company-size" class="control-label">
+              Company Size
+            </label>
+            <select id="company-size" class="form-control" ng-model="company.companySize">
+              <option value="" ng-show="false">&lt; Select Size &gt;</option>
+              <option ng-repeat="size in COMPANY_SIZE_FIELDS" value="{{size[0]}}">{{size[1]}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="company-role" class="control-label">
+              What's your title?
+            </label>
+            <select id="company-role" class="form-control selectpicker" ng-model="user.companyRole">
+              <option value="" ng-show="false">&lt; Select Role &gt;</option>
+              <option ng-repeat="role in COMPANY_ROLE_FIELDS" value="{{role[0]}}">{{role[1]}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <h1 class="u_margin-xs-top">What's Your Industry?</h1>
+        <h4 class="u_margin-xs-top u_margin-xs-bottom"> (Pick One) </h4>
+      </div>
+
+      <div class="scrollable-list">
+        <ul id="" class="u_margin-md-top list-unstyled pt-media-list pt-onboarding-list text-center">
+          <li class="no-select" ng-class="{'selected-border' : company.companyIndustry === industry[0]}" ng-if="industry[2]" ng-repeat="industry in COMPANY_INDUSTRY_FIELDS"  ng-click="selectIndustry(industry[0])"> 
+            <img ng-class="{{imgClasses}}" src="{{industry[2]}}"/>
+            <input type="checkbox" class="checkbox" ng-checked="company.companyIndustry === industry[0]" />
+            <span class="u_ellipsis-md ng-binding"> <b>{{industry[1]}}</b> </span>
+          </li>
+        </ul>
+      </div>
+    </form>
+  </div> <!-- //Modal Body -->
+
+  <div class="modal-footer"> 
+    <button id="saveButton" class="btn btn-primary ng-binding" ng-click="save()" ng-disabled="forms.companyIcpForm.$invalid">
+      Apply 
+      <i class="fa fa-check icon-right"></i>
+    </button> 
+
+    <button id="cancelButton" class="btn btn-link pull-left" ng-click="dismiss()">Ask Me Later </button> 
+  </div>
+
+
+</div>

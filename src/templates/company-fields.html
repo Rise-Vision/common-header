@@ -10,43 +10,23 @@
 <div class="row">
   <div class="col-md-6">
     <div class="form-group">
-      <label for="company-settings-street" class="control-label">
+      <label for="company-size" class="control-label">
         Company Size
       </label>
-      <select class="form-control">
-        <option>&lt; Select Size &gt;</option>
-        <option>Solo</option>
-        <option>Fewer than 20 employees
-</option>
-        <option>21-50 employees
-</option>
-        <option>51-250 employees
-</option>
-        <option>More than 250 employees
-</option>
+      <select id="company-size" class="form-control" ng-model="company.companySize">
+        <option value="" ng-show="false">&lt; Select Size &gt;</option>
+        <option ng-repeat="size in COMPANY_SIZE_FIELDS" value="{{size[0]}}">{{size[1]}}</option>
       </select>
     </div>
   </div>
   <div class="col-md-6">
     <div class="form-group">
-      <label for="company-settings-unit" class="control-label">
+      <label for="company-industry" class="control-label">
         Industry
       </label>
-      <select class="form-control">
-       <option>Restaurant</option>
-<option>Retail</option>
-<option>Faith-based</option>
-<option>Primary/Secondary Education</option>
-<option>Higher Education</option>
-<option>Charity</option>
-<option>Arts / Libraries</option>
-<option>Marketing Agency</option>
-<option>Legal</option>
-<option>Wellness / Fitness</option>
-<option>Medical</option>
-<option>Financial Services</option>
-<option>Automotive</option>
-<option>Other</option>
+      <select id="company-industry" class="form-control selectpicker" ng-model="company.companyIndustry">
+        <option value="" ng-show="false">&lt; Select Industry &gt;</option>
+        <option ng-repeat="industry in COMPANY_INDUSTRY_FIELDS" value="{{industry[0]}}">{{industry[1]}}</option>
       </select>
     </div>
   </div>
@@ -113,21 +93,23 @@
     </div>
   </div>
 </div>
-<div class="col-md-6">
-<div class="form-group">
-  <label for="company-settings-website" class="control-label">
-    Website
-  </label>
-  <input id="company-settings-website" type="text" class="form-control" ng-model="company.website"/>
-</div>
-</div>
-<div class="col-md-6">
-<div class="form-group">
-  <label for="company-settings-phone" class="control-label">
-    Phone
-  </label>
-  <input id="company-settings-phone" type="tel" class="form-control" ng-model="company.telephone"/>
-</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="company-settings-website" class="control-label">
+        Website
+      </label>
+      <input id="company-settings-website" type="text" class="form-control" ng-model="company.website"/>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="company-settings-phone" class="control-label">
+        Phone
+      </label>
+      <input id="company-settings-phone" type="tel" class="form-control" ng-model="company.telephone"/>
+    </div>
+  </div>
 </div>
 <div class="form-group">
   <label for="company-settings-timezone" class="control-label">Time Zone</label>

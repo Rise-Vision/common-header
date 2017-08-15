@@ -4,11 +4,11 @@ angular.module("risevision.common.header")
   "$scope", "$filter", "$modalInstance", "updateUser", "getUserProfile",
   "deleteUser", "username", "userRoleMap", "$log", "$loading", "userState",
   "uiFlowManager", "humanReadableError", "messageBox", "$rootScope",
-  "segmentAnalytics",
+  "segmentAnalytics", "COMPANY_ROLE_FIELDS",
   function ($scope, $filter, $modalInstance, updateUser, getUserProfile,
     deleteUser, username, userRoleMap, $log, $loading, userState,
     uiFlowManager, humanReadableError, messageBox, $rootScope,
-    segmentAnalytics) {
+    segmentAnalytics, COMPANY_ROLE_FIELDS) {
     $scope.user = {};
     $scope.$watch("loading", function (loading) {
       if (loading) {
@@ -26,6 +26,7 @@ angular.module("risevision.common.header")
         name: v
       });
     });
+    $scope.COMPANY_ROLE_FIELDS = COMPANY_ROLE_FIELDS;
 
     // convert string to numbers
     $scope.$watch("user.status", function (status) {

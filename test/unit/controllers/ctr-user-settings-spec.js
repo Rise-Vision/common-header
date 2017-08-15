@@ -140,6 +140,7 @@ describe("controller: user settings", function() {
     
     expect($scope).to.have.property("isUserAdmin");
     expect($scope).to.have.property("availableRoles");
+    expect($scope).to.have.property("COMPANY_ROLE_FIELDS");
     expect($scope.loading).to.be.true;
 
     expect($scope.closeModal).to.exist;

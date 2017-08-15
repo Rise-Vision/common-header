@@ -155,6 +155,8 @@ describe("controller: company settings", function() {
     expect($scope).to.have.property("countries");
     expect($scope).to.have.property("regionsCA");
     expect($scope).to.have.property("regionsUS");
+    expect($scope).to.have.property("COMPANY_INDUSTRY_FIELDS");
+    expect($scope).to.have.property("COMPANY_SIZE_FIELDS");
     expect($scope).to.have.property("isRiseStoreAdmin");
     expect($scope.loading).to.be.true;
 

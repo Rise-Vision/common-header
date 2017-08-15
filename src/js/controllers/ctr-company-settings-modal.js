@@ -4,11 +4,13 @@ angular.module("risevision.common.header")
   "updateCompany", "companyId", "countries", "REGIONS_CA", "REGIONS_US",
   "TIMEZONES", "getCompany", "regenerateCompanyField", "$window", "$loading",
   "humanReadableError", "userState", "deleteCompany", "segmentAnalytics",
-  "$modal", "$templateCache",
+  "$modal", "$templateCache", "COMPANY_INDUSTRY_FIELDS",
+  "COMPANY_SIZE_FIELDS",
   function ($scope, $modalInstance, updateCompany, companyId,
     countries, REGIONS_CA, REGIONS_US, TIMEZONES, getCompany,
     regenerateCompanyField, $window, $loading, humanReadableError, userState,
-    deleteCompany, segmentAnalytics, $modal, $templateCache) {
+    deleteCompany, segmentAnalytics, $modal, $templateCache,
+    COMPANY_INDUSTRY_FIELDS, COMPANY_SIZE_FIELDS) {
 
     $scope.company = {
       id: companyId
@@ -17,6 +19,8 @@ angular.module("risevision.common.header")
     $scope.regionsCA = REGIONS_CA;
     $scope.regionsUS = REGIONS_US;
     $scope.timezones = TIMEZONES;
+    $scope.COMPANY_INDUSTRY_FIELDS = COMPANY_INDUSTRY_FIELDS;
+    $scope.COMPANY_SIZE_FIELDS = COMPANY_SIZE_FIELDS;
     $scope.isRiseStoreAdmin = userState.isRiseStoreAdmin();
 
     $scope.$watch("loading", function (loading) {
