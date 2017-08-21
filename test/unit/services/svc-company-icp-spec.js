@@ -204,43 +204,6 @@ describe("service: companyIcpFactory:", function() {
         }, 10);
       });
     });
-    
-    // TODO: Remove after validation
-    describe("more than 2 months ago", function() {
-      var testDate;
-      beforeEach(function() {
-        testDate = new Date();
-        testDate.setMonth(testDate.getMonth() - 3);
-      });
-      
-      it("should test dataCollectionDate", function(done) {
-        userProfile = {
-          dataCollectionDate: testDate
-        };
-        companyIcpFactory.init();
-        $rootScope.$broadcast("risevision.company.selectedCompanyChanged");
-
-        setTimeout(function() {
-          $modal.open.should.have.not.been.called;
-
-          done();
-        }, 10);
-      });
-
-      it("should test creationDate", function(done) {
-        userProfile = {
-          creationDate: testDate
-        };
-        companyIcpFactory.init();
-        $rootScope.$broadcast("risevision.company.selectedCompanyChanged");
-
-        setTimeout(function() {
-          $modal.open.should.have.not.been.called;
-
-          done();
-        }, 10);
-      });
-    });
 
     it("should not open modal if data is filled in", function(done) {
       var oneMonthAgo = new Date();

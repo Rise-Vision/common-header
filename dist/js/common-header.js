@@ -6076,8 +6076,6 @@ angular.module("risevision.common.header")
           user.creationDate);
         var twoWeeksAgo = new Date();
         twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
-        var twoMonthsAgo = new Date();
-        twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
 
         if (userState.isSubcompanySelected()) {
           return;
@@ -6085,11 +6083,6 @@ angular.module("risevision.common.header")
 
         // Last data collection was less than 2 weeks ago?
         if (lastContact.getTime() >= twoWeeksAgo.getTime()) {
-          return;
-        }
-
-        // TODO: Remove after validating
-        if (lastContact.getTime() <= twoMonthsAgo.getTime()) {
           return;
         }
 
