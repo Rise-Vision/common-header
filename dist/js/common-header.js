@@ -5972,7 +5972,8 @@ angular.module("risevision.common.header")
     ["reseller_integrator", "Reseller/Integrator"],
     ["architect_consultant", "Architect/Consultant"],
     ["administrator_volunteer_intern", "Administrator/Volunteer/Intern"],
-    ["developer", "Developer"]
+    ["developer", "Developer"],
+    ["other", "Other"]
   ])
   .value("COMPANY_INDUSTRY_FIELDS", [
     ["LIBRARIES", "Arts / Libraries",
