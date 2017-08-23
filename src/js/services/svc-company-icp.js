@@ -18,7 +18,9 @@ angular.module("risevision.common.header")
     ["LIBRARIES", "Arts / Libraries",
       "https://cdn2.hubspot.net/hubfs/2700250/Assets%20May%5B17%5D/teamwork.svg"
     ],
-    ["AUTOMOTIVE", "Automotive"],
+    ["AUTOMOTIVE", "Automotive",
+      "https://cdn2.hubspot.net/hubfs/2700250/automobile-1.svg"
+    ],
     ["PHILANTHROPY", "Charity",
       "https://cdn2.hubspot.net/hubfs/2700250/Assets%20May%5B17%5D/donation-1.svg"
     ],
