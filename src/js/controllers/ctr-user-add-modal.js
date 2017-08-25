@@ -3,10 +3,12 @@ angular.module("risevision.common.header")
 .controller("AddUserModalCtrl", ["$scope", "$filter", "addUser", "userEmail",
   "$modalInstance", "companyId", "userState", "userRoleMap",
   "humanReadableError", "messageBox", "$loading", "segmentAnalytics",
+  "COMPANY_ROLE_FIELDS",
   function ($scope, $filter, addUser, userEmail, $modalInstance, companyId,
     userState, userRoleMap, humanReadableError, messageBox, $loading,
-    segmentAnalytics) {
+    segmentAnalytics, COMPANY_ROLE_FIELDS) {
     $scope.isAdd = true;
+    $scope.COMPANY_ROLE_FIELDS = COMPANY_ROLE_FIELDS;
 
     //push roles into array
     $scope.availableRoles = [];

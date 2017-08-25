@@ -123,6 +123,7 @@ describe("controller: user add", function() {
     expect($scope.save).to.exist;
     expect($scope.editRoleAllowed).to.exist;
     expect($scope.editRoleVisible).to.exist;
+    expect($scope.COMPANY_ROLE_FIELDS).to.exist;
   });
   
   describe("save: ",function(){
