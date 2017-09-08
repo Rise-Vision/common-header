@@ -3,12 +3,12 @@ angular.module("risevision.common.header")
 .controller("UserSettingsModalCtrl", [
   "$scope", "$filter", "$modalInstance", "updateUser", "getUserProfile",
   "deleteUser", "username", "userRoleMap", "$log", "$loading", "userState",
-  "uiFlowManager", "humanReadableError", "messageBox", "$rootScope",
-  "segmentAnalytics", "COMPANY_ROLE_FIELDS",
+  "userAuthFactory", "uiFlowManager", "humanReadableError", "messageBox",
+  "$rootScope", "segmentAnalytics", "COMPANY_ROLE_FIELDS",
   function ($scope, $filter, $modalInstance, updateUser, getUserProfile,
     deleteUser, username, userRoleMap, $log, $loading, userState,
-    uiFlowManager, humanReadableError, messageBox, $rootScope,
-    segmentAnalytics, COMPANY_ROLE_FIELDS) {
+    userAuthFactory, uiFlowManager, humanReadableError, messageBox,
+    $rootScope, segmentAnalytics, COMPANY_ROLE_FIELDS) {
     $scope.user = {};
     $scope.$watch("loading", function (loading) {
       if (loading) {
@@ -62,7 +62,7 @@ angular.module("risevision.common.header")
             });
 
             if (userState.checkUsername(username)) {
-              userState.signOut().then().finally(function () {
+              userAuthFactory.signOut().then().finally(function () {
                 uiFlowManager.invalidateStatus("registrationComplete");
               });
             }

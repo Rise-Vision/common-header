@@ -110,7 +110,8 @@ describe("controller: user settings", function() {
         },
         isRiseVisionUser: function() {
           return isRiseVisionUser;
-        }
+        },
+        _state: {}
       };
     };
     inject(function($injector,$rootScope, $controller){

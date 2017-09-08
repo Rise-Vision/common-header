@@ -3,14 +3,14 @@ angular.module("risevision.common.header")
 .controller("CompanySettingsModalCtrl", ["$scope", "$modalInstance",
   "updateCompany", "companyId", "countries", "REGIONS_CA", "REGIONS_US",
   "TIMEZONES", "getCompany", "regenerateCompanyField", "$window", "$loading",
-  "humanReadableError", "userState", "deleteCompany", "segmentAnalytics",
-  "$modal", "$templateCache", "COMPANY_INDUSTRY_FIELDS",
-  "COMPANY_SIZE_FIELDS",
+  "humanReadableError", "userState", "userAuthFactory", "deleteCompany",
+  "segmentAnalytics", "$modal", "$templateCache",
+  "COMPANY_INDUSTRY_FIELDS", "COMPANY_SIZE_FIELDS",
   function ($scope, $modalInstance, updateCompany, companyId,
     countries, REGIONS_CA, REGIONS_US, TIMEZONES, getCompany,
-    regenerateCompanyField, $window, $loading, humanReadableError, userState,
-    deleteCompany, segmentAnalytics, $modal, $templateCache,
-    COMPANY_INDUSTRY_FIELDS, COMPANY_SIZE_FIELDS) {
+    regenerateCompanyField, $window, $loading, humanReadableError,
+    userState, userAuthFactory, deleteCompany, segmentAnalytics,
+    $modal, $templateCache, COMPANY_INDUSTRY_FIELDS, COMPANY_SIZE_FIELDS) {
 
     $scope.company = {
       id: companyId
@@ -95,7 +95,7 @@ angular.module("risevision.common.header")
               });
 
               if (userState.getUserCompanyId() === $scope.company.id) {
-                userState.signOut();
+                userAuthFactory.signOut();
               } else if (userState.getSelectedCompanyId() === $scope.company
                 .id) {
                 userState.resetCompany();

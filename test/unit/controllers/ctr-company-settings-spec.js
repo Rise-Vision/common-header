@@ -128,7 +128,8 @@ describe("controller: company settings", function() {
         },
         isRiseStoreAdmin: function() {
           return isStoreAdmin;
-        }
+        },
+        _state: {}
       };
     };
     inject(function($injector,$rootScope, $controller){
