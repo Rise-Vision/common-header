@@ -300,15 +300,15 @@ app.run(["$templateCache", function($templateCache) {
     "    </a>\n" +
     "</li>\n" +
     "<!-- If User NOT Authenticated -->\n" +
-    "<li ng-show=\"!undetermined && isLoggedIn === false\" ng-controller=\"SignUpButtonCtrl\">\n" +
-    "  <button type=\"button\" ng-click=\"openSignUpModal()\"\n" +
-    "  class=\"btn-primary btn u_margin-right\">\n" +
-    "   Sign Up Free</button>\n" +
+    "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
+    "  <a type=\"button\" class=\"btn-primary btn u_margin-right\" ui-sref=\"apps.launcher.createaccount\">\n" +
+    "   Sign Up Free\n" +
+    "  </a>\n" +
     "</li>\n" +
     "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
-    "  <button type=\"button\" class=\"sign-in top-auth-button\" ng-click=\"login('registrationComplete')\">\n" +
+    "  <a type=\"button\" class=\"sign-in top-auth-button\" ui-sref=\"apps.launcher.unauthorized\">\n" +
     "    Sign In\n" +
-    "  </button>\n" +
+    "  </a>\n" +
     "</li>\n" +
     "");
 }]);

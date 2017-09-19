@@ -43,13 +43,13 @@
     </a>
 </li>
 <!-- If User NOT Authenticated -->
-<li ng-show="!undetermined && isLoggedIn === false" ng-controller="SignUpButtonCtrl">
-  <button type="button" ng-click="openSignUpModal()"
-  class="btn-primary btn u_margin-right">
-   Sign Up Free</button>
+<li ng-show="!undetermined && isLoggedIn === false">
+  <a type="button" class="btn-primary btn u_margin-right" ui-sref="apps.launcher.createaccount">
+   Sign Up Free
+  </a>
 </li>
 <li ng-show="!undetermined && isLoggedIn === false">
-  <button type="button" class="sign-in top-auth-button" ng-click="login('registrationComplete')">
+  <a type="button" class="sign-in top-auth-button" ui-sref="apps.launcher.unauthorized">
     Sign In
-  </button>
+  </a>
 </li>
