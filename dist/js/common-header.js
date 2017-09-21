@@ -6405,13 +6405,19 @@ angular.module("risevision.common.header")
       })
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c0f3cad... Userstate updates for the back button
       .state("common.googleresult", {
         url: "/state=:state&access_token=:access_token&token_type=:token_type&expires_in=:expires_in",
         controller: "GoogleResultCtrl"
       })
 
+<<<<<<< HEAD
 =======
 >>>>>>> c24251d... Updated state names to common.auth.*
+=======
+>>>>>>> c0f3cad... Userstate updates for the back button
       .state("common.auth", {
         abstract: true,
         template: "<div class=\"app-launcher\" ui-view></div>"
@@ -6419,19 +6425,26 @@ angular.module("risevision.common.header")
 
       .state("common.auth.unauthorized", {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c0f3cad... Userstate updates for the back button
         controller: "UrlStateCtrl",
         template: "<div ui-view></div>"
       })
 
       .state("common.auth.unauthorized.final", {
+<<<<<<< HEAD
 =======
 >>>>>>> c24251d... Updated state names to common.auth.*
+=======
+>>>>>>> c0f3cad... Userstate updates for the back button
         templateProvider: ["$templateCache",
           function ($templateCache) {
             return $templateCache.get("userstate/login.html");
           }
         ],
         url: "/unauthorized/:state",
+<<<<<<< HEAD
         controller: "LoginCtrl",
         params: {
           passwordReset: null,
@@ -6447,6 +6460,9 @@ angular.module("risevision.common.header")
       .state("common.auth.createaccount", {
         controller: "UrlStateCtrl",
         template: "<div ui-view></div>"
+=======
+        controller: "LoginCtrl"
+>>>>>>> c0f3cad... Userstate updates for the back button
       })
 
 <<<<<<< HEAD
@@ -6456,12 +6472,21 @@ angular.module("risevision.common.header")
       .state("apps.launcher.createaccount", {
 =======
       .state("common.auth.createaccount", {
+<<<<<<< HEAD
 >>>>>>> c24251d... Updated state names to common.auth.*
+=======
+        controller: "UrlStateCtrl",
+        template: "<div ui-view></div>"
+      })
+
+      .state("common.auth.createaccount.final", {
+>>>>>>> c0f3cad... Userstate updates for the back button
         templateProvider: ["$templateCache",
           function ($templateCache) {
             return $templateCache.get("userstate/create-account.html");
           }
         ],
+        url: "/createaccount/:state",
         controller: "LoginCtrl"
       })
 
@@ -6470,6 +6495,7 @@ angular.module("risevision.common.header")
 >>>>>>> d73df7c... Updates from components repo
 =======
       .state("common.auth.unregistered", {
+<<<<<<< HEAD
 >>>>>>> c24251d... Updated state names to common.auth.*
         templateProvider: ["$templateCache",
           function ($templateCache) {
@@ -6493,16 +6519,27 @@ angular.module("risevision.common.header")
       })
 
       .state("common.auth.requestpasswordreset", {
+=======
+        controller: "UrlStateCtrl",
+        template: "<div ui-view></div>"
+      })
+
+      .state("common.auth.unregistered.final", {
+>>>>>>> c0f3cad... Userstate updates for the back button
         templateProvider: ["$templateCache",
           function ($templateCache) {
             return $templateCache.get(
               "userstate/request-password-reset.html");
           }
         ],
+<<<<<<< HEAD
         url: "/requestpasswordreset",
         controller: "RequestPasswordResetCtrl"
       })
 =======
+=======
+        url: "/unregistered/:state",
+>>>>>>> c0f3cad... Userstate updates for the back button
         controller: "SignUpCtrl"
       });
 >>>>>>> c24251d... Updated state names to common.auth.*
@@ -6534,19 +6571,18 @@ angular.module("risevision.common.header")
           urlStateService.redirectToState($stateParams.state);
 =======
       });
-
-      var returnState;
-      $rootScope.$on("$stateChangeStart", function (event, next, current) {
-        if (next && next.name.indexOf("common.auth") === -1) {
-          returnState = next;
-        }
-      });
-
+      
       $rootScope.$on("risevision.user.authorized", function () {
+<<<<<<< HEAD
         if (returnState && $state.current.name.indexOf("common.auth") !==
           -1) {
           $state.go(returnState);
 >>>>>>> c24251d... Updated state names to common.auth.*
+=======
+        if ($stateParams.state && 
+          $state.current.name.indexOf("common.auth") !== -1) {
+          urlStateService.redirectToState($stateParams.state);
+>>>>>>> c0f3cad... Userstate updates for the back button
         }
       });
     }
@@ -6577,10 +6613,17 @@ angular.module("risevision.common.components.userstate")
         })
           .then(null, function () {
             if (userState.isLoggedIn()) {
-              $state.go("common.auth.unregistered");
+              $state.go("common.auth.unregistered", null, {
+                reload: true
+              });
             } else {
-              $state.go("common.auth.unauthorized");
+              $state.go("common.auth.unauthorized", null, {
+                reload: true
+              });
             }
+
+            $location.replace();
+
             deferred.reject();
 >>>>>>> c24251d... Updated state names to common.auth.*
           });
@@ -6981,6 +7024,7 @@ angular.module("risevision.common.components.logging")
   )
     .value("GOOGLE_OAUTH2_URL", "https://accounts.google.com/o/oauth2/auth")
 <<<<<<< HEAD
+<<<<<<< HEAD
     .factory("googleAuthFactory", ["$q", "$log", "$location",
       "$interval", "$window", "$http", "$stateParams", "gapiLoader",
       "getOAuthUserInfo", "uiFlowManager", "getBaseDomain", "userState",
@@ -7008,8 +7052,15 @@ angular.module("risevision.common.components.logging")
       "CLIENT_ID", "OAUTH2_SCOPES", "GOOGLE_OAUTH2_URL",
       function ($q, $log, $location, $interval, $window, $http,
 >>>>>>> c24251d... Updated state names to common.auth.*
+=======
+    .factory("googleAuthFactory", ["$q", "$log", "$location", 
+      "$interval", "$window", "$http", "$stateParams", "gapiLoader", 
+      "getOAuthUserInfo", "uiFlowManager", "getBaseDomain", "userState",
+      "CLIENT_ID", "OAUTH2_SCOPES", "GOOGLE_OAUTH2_URL",
+      function ($q, $log, $location, $interval, $window, $http, $stateParams,
+>>>>>>> c0f3cad... Userstate updates for the back button
         gapiLoader, getOAuthUserInfo, uiFlowManager, getBaseDomain,
-        userState, urlStateService,
+        userState,
         CLIENT_ID, OAUTH2_SCOPES, GOOGLE_OAUTH2_URL) {
 
         var _accessTokenRefreshHandler = null;
@@ -7134,10 +7185,14 @@ angular.module("risevision.common.components.logging")
 
             // double encode since response gets decoded once!
 <<<<<<< HEAD
+<<<<<<< HEAD
             state = encodeURIComponent($stateParams.state);
 =======
             state = encodeURIComponent(urlStateService.get());
 >>>>>>> c24251d... Updated state names to common.auth.*
+=======
+            state = encodeURIComponent($stateParams.state);
+>>>>>>> c0f3cad... Userstate updates for the back button
 
             userState._persistState();
             uiFlowManager.persist();
@@ -7329,9 +7384,12 @@ angular.module("risevision.common.components.logging")
 
         urlStateService.get = function () {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
           // var loc;
 >>>>>>> c24251d... Updated state names to common.auth.*
+=======
+>>>>>>> c0f3cad... Userstate updates for the back button
           var path, search, state;
 
           // Redirect to the URL root and append pathname back to the URL
@@ -7382,9 +7440,8 @@ angular.module("risevision.common.components.logging")
             $location.replace();
 =======
           var state = JSON.parse(decodeURIComponent(stateString));
-          if (state.p || state.s) {
-            userState._persistState();
 
+<<<<<<< HEAD
             $window.location.replace(state.p +
               state.s +
               state.u
@@ -7394,6 +7451,23 @@ angular.module("risevision.common.components.logging")
           } else { // non HTML5 mode, set hash
             $window.location.hash = state.u;
 >>>>>>> c24251d... Updated state names to common.auth.*
+=======
+          if (state.u || !$location.$$html5) { // hash found, assume non HTML5 mode
+            if (state.p || state.s) { // requires redirect
+              userState._persistState();
+
+              $window.location.replace(state.p +
+                state.s +
+                state.u
+              );
+            } else {
+              $window.location.hash = state.u;
+            }
+          } else { // HTML5 mode
+            state.p = state.p || "/";
+            $location.url(state.p + state.s);
+            $location.replace();
+>>>>>>> c0f3cad... Userstate updates for the back button
           }
         };
 
@@ -7408,9 +7482,12 @@ angular.module("risevision.common.components.logging")
 <<<<<<< HEAD
 =======
 
+<<<<<<< HEAD
   /*jshint camelcase: false */
 >>>>>>> c24251d... Updated state names to common.auth.*
 
+=======
+>>>>>>> c0f3cad... Userstate updates for the back button
   angular.module("risevision.common.components.userstate")
     .factory("userAuthFactory", ["$q", "$log", "$location",
       "$rootScope", "$loading", "$window", "$document",
@@ -8218,6 +8295,7 @@ angular.module("risevision.common.components.logging")
 
     }
   ]);
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 })(angular);
@@ -8250,11 +8328,14 @@ angular.module("risevision.common.components.userstate")
 =======
   .value("parseParams", function (str) {
     var params = {};
+=======
 
-    if (str[0] === "/") {
-      str = str.slice(1);
-    }
+})(angular);
+>>>>>>> c0f3cad... Userstate updates for the back button
 
+"use strict";
+
+<<<<<<< HEAD
     str.split("&").forEach(function (fragment) {
       var fragmentArray = fragment.split("=");
       params[fragmentArray[0]] = fragmentArray[1];
@@ -8269,6 +8350,14 @@ angular.module("risevision.common.components.userstate")
   .controller("GoogleResultCtrl", ["$log", "$stateParams", "userState",
     "urlStateService",
     function ($log, $stateParams, userState, urlStateService) {
+=======
+/*jshint camelcase: false */
+
+angular.module("risevision.common.components.userstate")
+  .controller("GoogleResultCtrl", ["$log", "$stateParams", "userState",
+    "urlStateService", 
+    function($log, $stateParams, userState, urlStateService) {
+>>>>>>> c0f3cad... Userstate updates for the back button
       $log.debug("URL params", $stateParams);
 
       userState._restoreState();
@@ -8285,6 +8374,7 @@ angular.module("risevision.common.components.userstate")
 "use strict";
 
 angular.module("risevision.common.components.userstate")
+<<<<<<< HEAD
 <<<<<<< HEAD
   .controller("LoginCtrl", ["$scope", "$loading", "$stateParams",
     "$state", "userAuthFactory", "customAuthFactory", "uiFlowManager",
@@ -8305,6 +8395,12 @@ angular.module("risevision.common.components.userstate")
     "customAuthFactory", "uiFlowManager",
     function ($scope, $loading, userAuthFactory, customAuthFactory,
       uiFlowManager) {
+=======
+  .controller("LoginCtrl", ["$scope", "$loading", "$stateParams",
+    "userAuthFactory", "customAuthFactory", "uiFlowManager", "urlStateService",
+    function ($scope, $loading, $stateParams, userAuthFactory, 
+      customAuthFactory, uiFlowManager, urlStateService) {
+>>>>>>> c0f3cad... Userstate updates for the back button
       $scope.forms = {};
       $scope.credentials = {};
       $scope.errors = {};
@@ -8328,6 +8424,7 @@ angular.module("risevision.common.components.userstate")
           userAuthFactory.authenticate(true, $scope.credentials)
             .then(function () {
 <<<<<<< HEAD
+<<<<<<< HEAD
               urlStateService.redirectToState($stateParams.state);
 
               if (!userState.isRiseVisionUser()) {
@@ -8336,6 +8433,11 @@ angular.module("risevision.common.components.userstate")
 =======
               //
 >>>>>>> 72e3ad1... Component update & button styling fixes
+=======
+              if ($stateParams.state) {
+                urlStateService.redirectToState($stateParams.state);
+              }
+>>>>>>> c0f3cad... Userstate updates for the back button
             })
             .then(null, function () {
               $scope.errors.loginError = true;
