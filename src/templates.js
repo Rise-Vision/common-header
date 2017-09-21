@@ -301,14 +301,14 @@ app.run(["$templateCache", function($templateCache) {
     "</li>\n" +
     "<!-- If User NOT Authenticated -->\n" +
     "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
-    "  <a type=\"button\" class=\"btn-primary btn u_margin-right\" ui-sref=\"apps.launcher.createaccount\">\n" +
-    "   Sign Up Free\n" +
-    "  </a>\n" +
+    "  <button type=\"button\" class=\"btn-primary btn u_margin-right\" ui-sref=\"apps.launcher.createaccount\">\n" +
+    "    Sign Up Free\n" +
+    "  </button>\n" +
     "</li>\n" +
     "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
-    "  <a type=\"button\" class=\"sign-in top-auth-button\" ui-sref=\"apps.launcher.unauthorized\">\n" +
+    "  <button type=\"button\" class=\"sign-in top-auth-button\" ui-sref=\"apps.launcher.unauthorized\">\n" +
     "    Sign In\n" +
-    "  </a>\n" +
+    "  </button>\n" +
     "</li>\n" +
     "");
 }]);
