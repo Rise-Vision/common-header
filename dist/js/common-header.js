@@ -301,12 +301,12 @@ app.run(["$templateCache", function($templateCache) {
     "</li>\n" +
     "<!-- If User NOT Authenticated -->\n" +
     "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
-    "  <button type=\"button\" class=\"btn-primary btn u_margin-right\" ui-sref=\"apps.launcher.createaccount\">\n" +
+    "  <button type=\"button\" class=\"btn-primary btn u_margin-right\" ui-sref=\"common.auth.createaccount\">\n" +
     "    Sign Up Free\n" +
     "  </button>\n" +
     "</li>\n" +
     "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
-    "  <button type=\"button\" class=\"sign-in top-auth-button\" ui-sref=\"apps.launcher.unauthorized\">\n" +
+    "  <button type=\"button\" class=\"sign-in top-auth-button\" ui-sref=\"common.auth.unauthorized\">\n" +
     "    Sign In\n" +
     "  </button>\n" +
     "</li>\n" +
@@ -1817,11 +1817,6 @@ angular.module("risevision.common.header", [
           attr.hideShoppingCart !== "false";
         $scope.hideHelpMenu = attr.hideHelpMenu !== "0" &&
           attr.hideHelpMenu !== "false";
-
-        // used by userState; determines if the URL root is used for
-        // Authentication redirect
-        $rootScope.redirectToRoot = attr.redirectToRoot !== "0" &&
-          attr.redirectToRoot !== "false";
 
         // disable opening home page in new tab (default true)
         $rootScope.newTabHome = attr.newTabHome !== "0" &&
@@ -6168,16 +6163,16 @@ angular.module("risevision.common.header")
       $urlRouterProvider.otherwise("/");
 
       // Use $stateProvider to configure states.
-      $stateProvider.state("apps", {
+      $stateProvider.state("common", {
         template: "<div ui-view></div>"
       })
 
-      .state("apps.launcher", {
+      .state("common.auth", {
         abstract: true,
         template: "<div class=\"app-launcher\" ui-view></div>"
       })
 
-      .state("apps.launcher.unauthorized", {
+      .state("common.auth.unauthorized", {
         templateProvider: ["$templateCache",
           function ($templateCache) {
             return $templateCache.get("userstate/login.html");
@@ -6186,7 +6181,7 @@ angular.module("risevision.common.header")
         controller: "LoginCtrl"
       })
 
-      .state("apps.launcher.createaccount", {
+      .state("common.auth.createaccount", {
         templateProvider: ["$templateCache",
           function ($templateCache) {
             return $templateCache.get("userstate/create-account.html");
@@ -6195,18 +6190,13 @@ angular.module("risevision.common.header")
         controller: "LoginCtrl"
       })
 
-      .state("apps.launcher.unregistered", {
+      .state("common.auth.unregistered", {
         templateProvider: ["$templateCache",
           function ($templateCache) {
             return $templateCache.get("userstate/signup.html");
           }
         ],
         controller: "SignUpCtrl"
-      })
-
-      .state("apps.launcher.signin", {
-        url: "/signin",
-        controller: "SignInCtrl"
       });
 
     }
@@ -6216,18 +6206,18 @@ angular.module("risevision.common.header")
     function ($rootScope, $state) {
 
       $rootScope.$on("risevision.user.signedOut", function () {
-        $state.go("apps.launcher.unauthorized");
+        $state.go("common.auth.unauthorized");
       });
 
       var returnState;
       $rootScope.$on("$stateChangeStart", function (event, next, current) {
-        if (next && next.name.indexOf("apps.launcher.un") === -1) {
+        if (next && next.name.indexOf("common.auth") === -1) {
           returnState = next;
         }
       });
 
       $rootScope.$on("risevision.user.authorized", function () {
-        if (returnState && $state.current.name.indexOf("apps.launcher.un") !==
+        if (returnState && $state.current.name.indexOf("common.auth") !==
           -1) {
           $state.go(returnState);
         }
@@ -6255,9 +6245,9 @@ angular.module("risevision.common.components.userstate")
         })
           .then(null, function () {
             if (userState.isLoggedIn()) {
-              $state.go("apps.launcher.unregistered");
+              $state.go("common.auth.unregistered");
             } else {
-              $state.go("apps.launcher.unauthorized");
+              $state.go("common.auth.unauthorized");
             }
             deferred.reject();
           });
@@ -6658,42 +6648,27 @@ angular.module("risevision.common.components.logging")
     "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
   )
     .value("GOOGLE_OAUTH2_URL", "https://accounts.google.com/o/oauth2/auth")
-    .run(["$location", "$window", "userState", "$log", "stripLeadingSlash",
-      "parseParams",
-      function ($location, $window, userState, $log, stripLeadingSlash,
-        parseParams) {
+    .run(["$location", "$log", "userState", "urlStateService", "parseParams",
+      function ($location, $log, userState, urlStateService, parseParams) {
         var path = $location.path();
-        var params = parseParams(stripLeadingSlash(path));
+        var params = parseParams(path);
         $log.debug("URL params", params);
         userState._restoreState();
         if (params.access_token) {
           userState._setUserToken(params);
         }
         if (params.state) {
-          var state = JSON.parse(decodeURIComponent(params.state));
-          if (state.p || state.s) {
-            userState._persistState();
-
-            $window.location.replace(state.p +
-              state.s +
-              state.u
-            );
-          } else if ($location.$$html5) { // HTML5 mode, clear path
-            $location.path("");
-          } else { // non HTML5 mode, set hash
-            $window.location.hash = state.u;
-          }
+          urlStateService.redirectToState(params.state);
         }
-
       }
     ])
-    .factory("googleAuthFactory", ["$q", "$log", "$location", "$rootScope",
+    .factory("googleAuthFactory", ["$q", "$log", "$location",
       "$interval", "$window", "$http", "gapiLoader", "getOAuthUserInfo",
-      "uiFlowManager", "getBaseDomain", "userState",
+      "uiFlowManager", "getBaseDomain", "userState", "urlStateService",
       "CLIENT_ID", "OAUTH2_SCOPES", "GOOGLE_OAUTH2_URL",
-      function ($q, $log, $location, $rootScope, $interval, $window, $http,
+      function ($q, $log, $location, $interval, $window, $http,
         gapiLoader, getOAuthUserInfo, uiFlowManager, getBaseDomain,
-        userState,
+        userState, urlStateService,
         CLIENT_ID, OAUTH2_SCOPES, GOOGLE_OAUTH2_URL) {
 
         var _accessTokenRefreshHandler = null;
@@ -6807,34 +6782,17 @@ angular.module("risevision.common.components.logging")
           if (!forceAuth) {
             return authenticate(forceAuth);
           } else {
-            var loc, path, search, state;
+            var loc, state;
 
-            // Redirect to full URL path
-            if ($rootScope.redirectToRoot === false) {
-              loc = $window.location.href.substr(0, $window.location
-                .href
-                .indexOf("#")) || $window.location.href;
-            }
             // Redirect to the URL root and append pathname back to the URL
             // on Authentication success
             // This prevents Domain authentication errors for sub-folders
             // Warning: Root folder must have CH available for this to work,
             // otherwise no redirect is performed!
-            else {
-              loc = $window.location.origin + "/";
-              // Remove first character (/) from path since we're adding it to loc
-              path = $window.location.pathname ? $window.location
-                .pathname
-                .substring(1) : "";
-              search = $window.location.search;
-            }
+            loc = $window.location.origin + "/";
 
             // double encode since response gets decoded once!
-            state = encodeURIComponent(encodeURIComponent(JSON.stringify({
-              p: path,
-              u: $window.location.hash,
-              s: search
-            })));
+            state = encodeURIComponent(urlStateService.get());
 
             userState._persistState();
             uiFlowManager.persist();
@@ -6848,10 +6806,9 @@ angular.module("risevision.common.components.logging")
             "&prompt=select_account" +
               "&state=" + state;
 
-            var deferred = $q.defer();
             // returns a promise that never get fulfilled since we are redirecting
             // to that google oauth2 page
-            return deferred.promise;
+            return $q.resolve();
           }
         };
 
@@ -7014,6 +6971,62 @@ angular.module("risevision.common.components.logging")
 
     }
   ]);
+})(angular);
+
+(function (angular) {
+  "use strict";
+
+  angular.module("risevision.common.components.userstate")
+    .factory("urlStateService", ["$window", "$location", "userState",
+      function ($window, $location, userState) {
+
+        var urlStateService = {};
+
+        urlStateService.get = function () {
+          // var loc;
+          var path, search, state;
+
+          // Redirect to the URL root and append pathname back to the URL
+          // on Authentication success
+          // This prevents Domain authentication errors for sub-folders
+          // Warning: Root folder must have CH available for this to work,
+          // otherwise no redirect is performed!
+          // loc = $window.location.origin + "/";
+          // Remove first character (/) from path since we're adding it to loc
+          path = $window.location.pathname ? $window.location
+            .pathname
+            .substring(1) : "";
+          search = $window.location.search;
+
+          state = encodeURIComponent(JSON.stringify({
+            p: path,
+            u: $window.location.hash,
+            s: search
+          }));
+
+          return state;
+        };
+
+        urlStateService.redirectToState = function (stateString) {
+          var state = JSON.parse(decodeURIComponent(stateString));
+          if (state.p || state.s) {
+            userState._persistState();
+
+            $window.location.replace(state.p +
+              state.s +
+              state.u
+            );
+          } else if ($location.$$html5) { // HTML5 mode, clear path
+            $location.path("");
+          } else { // non HTML5 mode, set hash
+            $window.location.hash = state.u;
+          }
+        };
+
+        return urlStateService;
+      }
+    ]);
+
 })(angular);
 
 (function (angular) {
@@ -7712,15 +7725,13 @@ angular.module("risevision.common.components.logging")
     }
   ])
 
-  .value("stripLeadingSlash", function (str) {
+  .value("parseParams", function (str) {
+    var params = {};
+
     if (str[0] === "/") {
       str = str.slice(1);
     }
-    return str;
-  })
 
-  .value("parseParams", function (str) {
-    var params = {};
     str.split("&").forEach(function (fragment) {
       var fragmentArray = fragment.split("=");
       params[fragmentArray[0]] = fragmentArray[1];
@@ -7831,7 +7842,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('userstate/create-account.html',
-    '<div class="app-launcher-login"><div class="container"><div class="panel"><div class="row"><div class="col-sm-6 col-xs-12"><div class="rise-logo"><img src="https://s3.amazonaws.com/Rise-Images/Website/rise-logo.svg"></div></div><div class="col-sm-6 col-xs-12"><h1 class="u_remove-top">Get Started For Free</h1><p class="lead text-muted">No commitments or contracts</p><div class="col-xs-12 col-md-8"><button class="btn btn-google-auth btn-hg" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign up with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group"><button class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="createAccount(\'registrationComplete\')"><span translate="Sign Up"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted">Already have an account? <a id="sign-in-link" href="#" ui-sref="apps.launcher.unauthorized">Sign in</a></p></div></div></div></div></div></div>');
+    '<div class="app-launcher-login"><div class="container"><div class="panel"><div class="row"><div class="col-sm-6 col-xs-12"><div class="rise-logo"><img src="https://s3.amazonaws.com/Rise-Images/Website/rise-logo.svg"></div></div><div class="col-sm-6 col-xs-12"><h1 class="u_remove-top">Get Started For Free</h1><p class="lead text-muted">No commitments or contracts</p><div class="col-xs-12 col-md-8"><button class="btn btn-google-auth btn-hg" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign up with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group"><button class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="createAccount(\'registrationComplete\')"><span translate="Sign Up"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted">Already have an account? <a id="sign-in-link" href="#" ui-sref="common.auth.unauthorized">Sign in</a></p></div></div></div></div></div></div>');
 }]);
 })();
 
@@ -7843,7 +7854,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('userstate/login.html',
-    '<div class="app-launcher-login"><div class="container"><div class="panel"><div class="row"><div class="col-sm-6 col-xs-12"><div class="rise-logo"><img src="https://s3.amazonaws.com/Rise-Images/Website/rise-logo.svg"></div></div><div class="col-sm-6 col-xs-12"><h1 class="u_remove-top">Sign In</h1><p class="lead text-muted">to your Rise Vision account</p><div class="col-xs-12 col-md-8"><button class="btn btn-google-auth btn-hg" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign in with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group"><button class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="customLogin(\'registrationComplete\')"><span translate="Sign In"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted"><a id="sign-in-link" href="#" ui-sref="apps.launcher.protoreset">Forgot your password?</a></p><p class="text-muted">Don\'t have an account? <a id="sign-in-link" href="#" ui-sref="apps.launcher.createaccount">Sign up</a></p></div></div></div></div></div></div>');
+    '<div class="app-launcher-login"><div class="container"><div class="panel"><div class="row"><div class="col-sm-6 col-xs-12"><div class="rise-logo"><img src="https://s3.amazonaws.com/Rise-Images/Website/rise-logo.svg"></div></div><div class="col-sm-6 col-xs-12"><h1 class="u_remove-top">Sign In</h1><p class="lead text-muted">to your Rise Vision account</p><div class="col-xs-12 col-md-8"><button class="btn btn-google-auth btn-hg" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign in with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group"><button class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="customLogin(\'registrationComplete\')"><span translate="Sign In"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted"><a id="sign-in-link" href="#" ui-sref="common.auth.protoreset">Forgot your password?</a></p><p class="text-muted">Don\'t have an account? <a id="sign-in-link" href="#" ui-sref="common.auth.createaccount">Sign up</a></p></div></div></div></div></div></div>');
 }]);
 })();
 
