@@ -634,11 +634,14 @@ app.run(["$templateCache", function($templateCache) {
     "</div>\n" +
     "<div class=\"row\">\n" +
     "  <div class=\"col-md-6\">\n" +
-    "    <div class=\"form-group\">\n" +
+    "    <div class=\"form-group\" ng-class=\"{'has-error': forms.companyForm.website.$error.website && !forms.companyForm.website.$pristine}\">\n" +
     "      <label for=\"company-settings-website\" class=\"control-label\">\n" +
     "        Website\n" +
     "      </label>\n" +
-    "      <input id=\"company-settings-website\" type=\"text\" class=\"form-control\" ng-model=\"company.website\"/>\n" +
+    "      <input id=\"company-settings-website\" name=\"website\" type=\"url\" placeholder=\"http://\" class=\"form-control\" ng-model=\"company.website\" \n" +
+    "      website-validator />\n" +
+    "      <p ng-show=\"forms.companyForm.website.$error.website && !forms.companyForm.website.$pristine\"\n" +
+    "        class=\"help-block validation-error-message-website\">Please provide a valid URL.</p>\n" +
     "    </div>\n" +
     "  </div>\n" +
     "  <div class=\"col-md-6\">\n" +
@@ -803,7 +806,7 @@ app.run(["$templateCache", function($templateCache) {
     "  <h2 id=\"company-settings-label\" class=\"modal-title\">Company Settings</h2>\n" +
     "</div>\n" +
     "<div class=\"modal-body company-settings-modal\" stop-event=\"touchend\">\n" +
-    "  <form id=\"companyForm\" role=\"form\" name=\"forms.companyForm\">\n" +
+    "  <form id=\"companyForm\" role=\"form\" name=\"forms.companyForm\" novalidate>\n" +
     "    <div ng-include=\"'company-fields.html'\"></div>\n" +
     "    <div class=\"form-group\">\n" +
     "      <label>\n" +
@@ -1257,12 +1260,14 @@ app.run(["$templateCache", function($templateCache) {
     "            class=\"help-block validation-error-message-email\">Enter a valid email.</p>\n" +
     "        </div>\n" +
     "        <!-- Website -->\n" +
-    "        <div class=\"form-group\" ng-show=\"newUser\">\n" +
-    "          <label for=\"website\">Company Website</label>\n" +
-    "          <input type=\"text\" class=\"form-control website\"\n" +
+    "        <div class=\"form-group\" ng-show=\"newUser\" ng-class=\"{'has-error': forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine}\">\n" +
+    "          <label for=\"website\">Website</label>\n" +
+    "          <input type=\"url\" class=\"form-control website\" placeholder=\"http://\"\n" +
     "          name=\"website\"\n" +
     "          id=\"website\"\n" +
-    "          ng-model=\"company.website\">\n" +
+    "          ng-model=\"company.website\" website-validator>\n" +
+    "          <p ng-show=\"forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine\"\n" +
+    "            class=\"help-block validation-error-message-website\">Please provide a valid URL.</p>\n" +
     "        </div>\n" +
     "        <!-- Terms of Service and Privacy -->\n" +
     "        <div class=\"checkbox form-group\" ng-class=\"{ 'has-error' : forms.registrationForm.accepted.$invalid && !userForm.accepted.$pristine }\">\n" +
@@ -1472,7 +1477,7 @@ app.run(["$templateCache", function($templateCache) {
     "  <h2 id=\"sub-company-label\" class=\"modal-title\">Add Sub-Company</h2>\n" +
     "</div>\n" +
     "<div class=\"modal-body add-subcompany-modal\" stop-event=\"touchend\">\n" +
-    "  <form role=\"form\" name=\"forms.companyForm\">\n" +
+    "  <form role=\"form\" name=\"forms.companyForm\" novalidate>\n" +
     "    <div ng-include=\"'company-fields.html'\"></div>\n" +
     "    <div class=\"form-group\">\n" +
     "      <a href=\"\" data-dismiss=\"modal\" data-toggle=\"modal\" class=\"move-subcompany-button\"\n" +

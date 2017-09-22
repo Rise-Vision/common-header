@@ -634,11 +634,14 @@ app.run(["$templateCache", function($templateCache) {
     "</div>\n" +
     "<div class=\"row\">\n" +
     "  <div class=\"col-md-6\">\n" +
-    "    <div class=\"form-group\">\n" +
+    "    <div class=\"form-group\" ng-class=\"{'has-error': forms.companyForm.website.$error.website && !forms.companyForm.website.$pristine}\">\n" +
     "      <label for=\"company-settings-website\" class=\"control-label\">\n" +
     "        Website\n" +
     "      </label>\n" +
-    "      <input id=\"company-settings-website\" type=\"text\" class=\"form-control\" ng-model=\"company.website\"/>\n" +
+    "      <input id=\"company-settings-website\" name=\"website\" type=\"url\" placeholder=\"http://\" class=\"form-control\" ng-model=\"company.website\" \n" +
+    "      website-validator />\n" +
+    "      <p ng-show=\"forms.companyForm.website.$error.website && !forms.companyForm.website.$pristine\"\n" +
+    "        class=\"help-block validation-error-message-website\">Please provide a valid URL.</p>\n" +
     "    </div>\n" +
     "  </div>\n" +
     "  <div class=\"col-md-6\">\n" +
@@ -803,7 +806,7 @@ app.run(["$templateCache", function($templateCache) {
     "  <h2 id=\"company-settings-label\" class=\"modal-title\">Company Settings</h2>\n" +
     "</div>\n" +
     "<div class=\"modal-body company-settings-modal\" stop-event=\"touchend\">\n" +
-    "  <form id=\"companyForm\" role=\"form\" name=\"forms.companyForm\">\n" +
+    "  <form id=\"companyForm\" role=\"form\" name=\"forms.companyForm\" novalidate>\n" +
     "    <div ng-include=\"'company-fields.html'\"></div>\n" +
     "    <div class=\"form-group\">\n" +
     "      <label>\n" +
@@ -1257,12 +1260,14 @@ app.run(["$templateCache", function($templateCache) {
     "            class=\"help-block validation-error-message-email\">Enter a valid email.</p>\n" +
     "        </div>\n" +
     "        <!-- Website -->\n" +
-    "        <div class=\"form-group\" ng-show=\"newUser\">\n" +
-    "          <label for=\"website\">Company Website</label>\n" +
-    "          <input type=\"text\" class=\"form-control website\"\n" +
+    "        <div class=\"form-group\" ng-show=\"newUser\" ng-class=\"{'has-error': forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine}\">\n" +
+    "          <label for=\"website\">Website</label>\n" +
+    "          <input type=\"url\" class=\"form-control website\" placeholder=\"http://\"\n" +
     "          name=\"website\"\n" +
     "          id=\"website\"\n" +
-    "          ng-model=\"company.website\">\n" +
+    "          ng-model=\"company.website\" website-validator>\n" +
+    "          <p ng-show=\"forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine\"\n" +
+    "            class=\"help-block validation-error-message-website\">Please provide a valid URL.</p>\n" +
     "        </div>\n" +
     "        <!-- Terms of Service and Privacy -->\n" +
     "        <div class=\"checkbox form-group\" ng-class=\"{ 'has-error' : forms.registrationForm.accepted.$invalid && !userForm.accepted.$pristine }\">\n" +
@@ -1472,7 +1477,7 @@ app.run(["$templateCache", function($templateCache) {
     "  <h2 id=\"sub-company-label\" class=\"modal-title\">Add Sub-Company</h2>\n" +
     "</div>\n" +
     "<div class=\"modal-body add-subcompany-modal\" stop-event=\"touchend\">\n" +
-    "  <form role=\"form\" name=\"forms.companyForm\">\n" +
+    "  <form role=\"form\" name=\"forms.companyForm\" novalidate>\n" +
     "    <div ng-include=\"'company-fields.html'\"></div>\n" +
     "    <div class=\"form-group\">\n" +
     "      <a href=\"\" data-dismiss=\"modal\" data-toggle=\"modal\" class=\"move-subcompany-button\"\n" +
@@ -1868,7 +1873,8 @@ angular.module("risevision.common.header", [
               d.type.toUpperCase() === "EMAIL" ||
               d.type.toUpperCase() === "NUMBER" ||
               d.type.toUpperCase() === "DATE" ||
-              d.type.toUpperCase() === "TEL")
+              d.type.toUpperCase() === "TEL" ||
+              d.type.toUpperCase() === "URL")
           ) ||
           d.tagName.toUpperCase() === "TEXTAREA") {
           doPrevent = d.readOnly || d.disabled;
@@ -1973,6 +1979,38 @@ angular.module("risevision.common.header.directives")
             });
             element.remove();
           }
+        }
+      };
+    }
+  ]);
+
+"use strict";
+
+angular.module("risevision.common.header.directives")
+  .directive("websiteValidator", [
+
+    function () {
+      return {
+        require: "ngModel",
+        restrict: "A",
+        link: function (scope, elem, attr, ngModel) {
+          var WEBSITE_REGEXP =
+            /^(http[s]?:\/\/){0,1}([^\s/?\.#:"]+\.)+([^\s/?\.#:"-]{2,5})([\/?#][^\s"]*)?$/;
+          // /^(http[s]?:\/\/){0,1}([^\s/?\.#:"]+\.?)+(\/[^\s]*)?$/;
+          // /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/;
+
+          var validator = function (value) {
+            if (!value || WEBSITE_REGEXP.test(value)) {
+              ngModel.$setValidity("website", true);
+            } else {
+              ngModel.$setValidity("website", false);
+            }
+
+            return value;
+          };
+
+          ngModel.$parsers.unshift(validator);
+          ngModel.$formatters.unshift(validator);
         }
       };
     }
@@ -2840,16 +2878,20 @@ angular.module("risevision.common.header")
   .controller("SubCompanyModalCtrl", ["$scope", "$modalInstance", "$modal",
     "$templateCache", "createCompany", "countries", "REGIONS_CA",
     "REGIONS_US", "TIMEZONES", "userState", "$loading", "humanReadableError",
-    "segmentAnalytics", "bigQueryLogging",
+    "segmentAnalytics", "bigQueryLogging", "COMPANY_INDUSTRY_FIELDS",
+    "COMPANY_SIZE_FIELDS",
     function ($scope, $modalInstance, $modal, $templateCache,
       createCompany, countries, REGIONS_CA, REGIONS_US, TIMEZONES, userState,
-      $loading, humanReadableError, segmentAnalytics, bigQueryLogging) {
+      $loading, humanReadableError, segmentAnalytics, bigQueryLogging,
+      COMPANY_INDUSTRY_FIELDS, COMPANY_SIZE_FIELDS) {
 
       $scope.company = {};
       $scope.countries = countries;
       $scope.regionsCA = REGIONS_CA;
       $scope.regionsUS = REGIONS_US;
       $scope.timezones = TIMEZONES;
+      $scope.COMPANY_INDUSTRY_FIELDS = COMPANY_INDUSTRY_FIELDS;
+      $scope.COMPANY_SIZE_FIELDS = COMPANY_SIZE_FIELDS;
 
       $scope.forms = {};
 
