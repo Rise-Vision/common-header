@@ -212,7 +212,7 @@ angular.module("risevision.common.header")
     ["More than 250 employees", "250"]
   ])
   .constant("USER_ICP_WRITABLE_FIELDS", [
-    "companyRole", "dataCollectionDate"
+    "companyRole", "email", "dataCollectionDate"
   ])
   .constant("COMPANY_ICP_WRITABLE_FIELDS", [
     "name", "companySize", "companyIndustry"
@@ -271,14 +271,13 @@ angular.module("risevision.common.header")
           return;
         }
 
-        /*jshint noempty: false */
         // Last data collection was less than 2 weeks ago?
         if (lastContact.getTime() >= twoWeeksAgo.getTime()) {
-          // return;
+          return;
         }
 
         // Has all data been collected?
-        if (user.companyRole && company.name && company.companySize &&
+        if (user.companyRole && user.email && company.name && company.companySize &&
           company.companyIndustry) {
           return;
         }
