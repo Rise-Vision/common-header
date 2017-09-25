@@ -32,9 +32,21 @@ describe("directive: website validator", function() {
     $scope.$digest();
     expect(form.url.$valid).to.be.false;
   });
+  
+  it("should not allow email addresses", function() {
+    form.url.$setViewValue("email@gmail.com");
+    $scope.$digest();
+    expect(form.url.$valid).to.be.false;
+  });
 
   it("should pass with valid url", function() {
     form.url.$setViewValue("http://risevision.com");
+    $scope.$digest();
+    expect(form.url.$valid).to.be.true;
+  });
+  
+  it("should not require http", function() {
+    form.url.$setViewValue("risevision.com");
     $scope.$digest();
     expect(form.url.$valid).to.be.true;
   });

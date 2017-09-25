@@ -1995,9 +1995,7 @@ angular.module("risevision.common.header.directives")
         restrict: "A",
         link: function (scope, elem, attr, ngModel) {
           var WEBSITE_REGEXP =
-            /^(http[s]?:\/\/){0,1}([^\s/?\.#:"]+\.)+([^\s/?\.#:"-]{2,5})([\/?#][^\s"]*)?$/;
-          // /^(http[s]?:\/\/){0,1}([^\s/?\.#:"]+\.?)+(\/[^\s]*)?$/;
-          // /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/;
+            /^(http[s]?:\/\/){0,1}([^\s/?\.#:@"]+\.)+([^\s/?\.#:"@-]{2,5})([\/?#][^\s"]*)?$/;
 
           var validator = function (value) {
             if (!value || WEBSITE_REGEXP.test(value)) {
