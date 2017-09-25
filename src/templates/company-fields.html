@@ -95,13 +95,13 @@
 </div>
 <div class="row">
   <div class="col-md-6">
-    <div class="form-group" ng-class="{'has-error': forms.companyForm.website.$error.website && !forms.companyForm.website.$pristine}">
+    <div class="form-group" ng-class="{'has-error': forms.companyForm.website.$error.website}">
       <label for="company-settings-website" class="control-label">
         Website
       </label>
       <input id="company-settings-website" name="website" type="url" placeholder="http://" class="form-control" ng-model="company.website" 
       website-validator />
-      <p ng-show="forms.companyForm.website.$error.website && !forms.companyForm.website.$pristine"
+      <p ng-show="forms.companyForm.website.$error.website"
         class="help-block validation-error-message-website">Please provide a valid URL.</p>
     </div>
   </div>

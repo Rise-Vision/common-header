@@ -634,13 +634,13 @@ app.run(["$templateCache", function($templateCache) {
     "</div>\n" +
     "<div class=\"row\">\n" +
     "  <div class=\"col-md-6\">\n" +
-    "    <div class=\"form-group\" ng-class=\"{'has-error': forms.companyForm.website.$error.website && !forms.companyForm.website.$pristine}\">\n" +
+    "    <div class=\"form-group\" ng-class=\"{'has-error': forms.companyForm.website.$error.website}\">\n" +
     "      <label for=\"company-settings-website\" class=\"control-label\">\n" +
     "        Website\n" +
     "      </label>\n" +
     "      <input id=\"company-settings-website\" name=\"website\" type=\"url\" placeholder=\"http://\" class=\"form-control\" ng-model=\"company.website\" \n" +
     "      website-validator />\n" +
-    "      <p ng-show=\"forms.companyForm.website.$error.website && !forms.companyForm.website.$pristine\"\n" +
+    "      <p ng-show=\"forms.companyForm.website.$error.website\"\n" +
     "        class=\"help-block validation-error-message-website\">Please provide a valid URL.</p>\n" +
     "    </div>\n" +
     "  </div>\n" +
