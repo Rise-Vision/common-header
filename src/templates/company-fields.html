@@ -15,7 +15,7 @@
       </label>
       <select id="company-size" class="form-control" ng-model="company.companySize">
         <option value="" ng-show="false">&lt; Select Size &gt;</option>
-        <option ng-repeat="size in COMPANY_SIZE_FIELDS" value="{{size[0]}}">{{size[1]}}</option>
+        <option ng-repeat="size in COMPANY_SIZE_FIELDS" value="{{size[1]}}">{{size[0]}}</option>
       </select>
     </div>
   </div>
@@ -26,7 +26,7 @@
       </label>
       <select id="company-industry" class="form-control selectpicker" ng-model="company.companyIndustry">
         <option value="" ng-show="false">&lt; Select Industry &gt;</option>
-        <option ng-repeat="industry in COMPANY_INDUSTRY_FIELDS" value="{{industry[0]}}">{{industry[1]}}</option>
+        <option ng-repeat="industry in COMPANY_INDUSTRY_FIELDS | orderBy:industry[0]" value="{{industry[1]}}">{{industry[0]}}</option>
       </select>
     </div>
   </div>
