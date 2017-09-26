@@ -638,7 +638,7 @@ app.run(["$templateCache", function($templateCache) {
     "      <label for=\"company-settings-website\" class=\"control-label\">\n" +
     "        Website\n" +
     "      </label>\n" +
-    "      <input id=\"company-settings-website\" name=\"website\" type=\"url\" placeholder=\"http://\" class=\"form-control\" ng-model=\"company.website\" \n" +
+    "      <input id=\"company-settings-website\" name=\"website\" type=\"text\" placeholder=\"http://\" class=\"form-control\" ng-model=\"company.website\" \n" +
     "      website-validator />\n" +
     "      <p ng-show=\"forms.companyForm.website.$error.website\"\n" +
     "        class=\"help-block validation-error-message-website\">Please provide a valid URL.</p>\n" +
@@ -1262,7 +1262,7 @@ app.run(["$templateCache", function($templateCache) {
     "        <!-- Website -->\n" +
     "        <div class=\"form-group\" ng-show=\"newUser\" ng-class=\"{'has-error': forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine}\">\n" +
     "          <label for=\"website\">Website</label>\n" +
-    "          <input type=\"url\" class=\"form-control website\" placeholder=\"http://\"\n" +
+    "          <input type=\"text\" class=\"form-control website\" placeholder=\"http://\"\n" +
     "          name=\"website\"\n" +
     "          id=\"website\"\n" +
     "          ng-model=\"company.website\" website-validator>\n" +

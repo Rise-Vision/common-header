@@ -46,7 +46,7 @@ rv-spinner-start-active="1">
         <!-- Website -->
         <div class="form-group" ng-show="newUser" ng-class="{'has-error': forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine}">
           <label for="website">Website</label>
-          <input type="url" class="form-control website" placeholder="http://"
+          <input type="text" class="form-control website" placeholder="http://"
           name="website"
           id="website"
           ng-model="company.website" website-validator>
