@@ -31,9 +31,9 @@ app.run(["$templateCache", function($templateCache) {
     "                                  <td style=\"color:#525252;font-family:Helvetica,Arial,sans-serif;font-size:15px;line-height:22px;padding:0\">\n" +
     "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">Hi there,</p>\n" +
     "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">You've been added to <b>{{user.companyName}}</b> with Rise Vision!</p>\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">If you’re new to Rise Vision, please read below on how to proceed. Your email address will need Google authentication to be fully compatible.</p>\n" +
+    "                                     \n" +
     "\n" +
-    "                                        <div style=\"width: 100%;\n" +
+    "                                       <div style=\"width: 100%;\n" +
     "                      display: inline-block;\n" +
     "                      padding: 10px;\n" +
     "                      background-color: #f5f5f5; text-align:center;\">\n" +
@@ -47,31 +47,14 @@ app.run(["$templateCache", function($templateCache) {
     "                                             </p>\n" +
     "                                      </div>\n" +
     "\n" +
-    "                                      <p></p>\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\"><b>If your email address is a Google account:</b>\n" +
-    "                                          <br>Click <a href=\"http://apps.risevision.com\" target=\"_blank\">here</a> to sign in with your Google credentials.\n" +
-    "                                          <br>\n" +
-    "                                      </p>\n" +
+    "                                     <p></p>\n" +
+    "                                      <div style=\"margin-bottom:16px;text-align:center!important\" align=\"center\"><a href=\"https://apps.risevision.com/signup\" style=\"background:#47b767;border:none;border-radius:3px;color:#fff;display:inline-block;font-size:14px;font-weight:bold;outline:none!important;padding:12px 35px;text-decoration:none\" target=\"_blank\">Go Now</a></div>\n" +
+    "                                     \n" +
+    "                                    <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">You can find more details about getting started with Rise Vision in our <a href=\"https://risevision.zendesk.com/hc/en-us/articles/115004732063\" target=\"_blank\">Help Center</a>.</p>\n" +
     "\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\"></p>\n" +
-    "                                      <div style=\"margin-bottom:16px;text-align:center!important\" align=\"center\"><a href=\"http://apps.risevision.com\" style=\"background:#47b767;border:none;border-radius:3px;color:#fff;display:inline-block;font-size:14px;font-weight:bold;outline:none!important;padding:12px 35px;text-decoration:none\" target=\"_blank\">Sign In</a></div>\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">\n" +
-    "\n" +
-    "\n" +
-    "                                          <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">\n" +
-    "                                           <br><b>If your email  address is not a  Google account yet:</b><br>\n" +
-    "                                     You can create one for free by clicking <a href=\"https://accounts.google.com/signup\" target=\"_blank\">this link</a>. You can authenticate <b>ANY</b> email with Google. Just select \"I prefer to use my current email address\", and then set your password. Once you have a Google account, you can <a href=\"http://apps.risevision.com\" target=\"_blank\">sign in</a> to Rise Vision.\n" +
-    "                                     </p>\n" +
-    "                                    \n" +
-    "                                    <img src=\"https://help.risevision.com/hc/article_attachments/115010258046/Sign_In_page_.png\" width=\"475\" height=\"180\" style=\"padding:15px 0 30px;text-align:left\" class=\"CToWUd\">\n" +
-    "\n" +
-    "                                      <div style=\"margin-bottom:16px;text-align:center!important\" align=\"center\"><a href=\"http://apps.risevision.com\" style=\"background:#47b767;border:none;border-radius:3px;color:#fff;display:inline-block;font-size:14px;font-weight:bold;outline:none!important;padding:12px 35px;text-decoration:none\" target=\"_blank\">Go Now</a></div>\n" +
-    "                                      <br/>\n" +
-    "                                       <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">You can find more details about getting started with Rise Vision in our <a href=\"https://help.risevision.com/hc/en-us/articles/115002868706-Get-started-with-Rise-Vision\" target=\"_blank\">Help Center</a>.</p>\n" +
-    "\n" +
-    "                                       <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\"> If you have any questions at all, just reply to this email. &nbsp;We’re here to help!</p>\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">-Robb\n" +
-    "                                          <br>Rise Vision Community Manager</p>\n" +
+    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">If you have any questions at all, just reply to this email. &nbsp;We’re here to help!</p>\n" +
+    "                                        <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">Thank you,\n" +
+    "                                          <br>Rise Vision Support Team</p>\n" +
     "                                  </td>\n" +
     "                              </tr>\n" +
     "                              <tr>\n" +
@@ -117,9 +100,9 @@ app.run(["$templateCache", function($templateCache) {
     "          </tbody>\n" +
     "      </table>\n" +
     "  </div>\n" +
-    " </body>\n" +
-    "</html>\n" +
-    "");
+    "\n" +
+    "</body>\n" +
+    "</html>");
 }]);
 })();
 
@@ -6207,6 +6190,34 @@ angular.module("risevision.common.header")
         controller: "LoginCtrl"
       })
 
+      .state("common.auth.confirmaccount", {
+        controller: "ConfirmAccountCtrl",
+        template: "<div ui-view></div>",
+        url: "/confirmaccount/:user/:token"
+      })
+
+      .state("common.auth.requestpasswordreset", {
+        templateProvider: ["$templateCache",
+          function ($templateCache) {
+            return $templateCache.get(
+              "userstate/request-password-reset.html");
+          }
+        ],
+        url: "/requestpasswordreset",
+        controller: "RequestPasswordResetCtrl"
+      })
+
+      .state("common.auth.resetpassword", {
+        templateProvider: ["$templateCache",
+          function ($templateCache) {
+            return $templateCache.get(
+              "userstate/reset-password-confirm.html");
+          }
+        ],
+        url: "/resetpassword/:user/:token",
+        controller: "ResetPasswordConfirmCtrl"
+      })
+
       .state("common.auth.unregistered", {
         controller: "UrlStateCtrl",
         template: "<div ui-view></div>"
@@ -6231,9 +6242,9 @@ angular.module("risevision.common.header")
       $rootScope.$on("risevision.user.signedOut", function () {
         $state.go("common.auth.unauthorized");
       });
-      
+
       $rootScope.$on("risevision.user.authorized", function () {
-        if ($stateParams.state && 
+        if ($stateParams.state &&
           $state.current.name.indexOf("common.auth") !== -1) {
           urlStateService.redirectToState($stateParams.state);
         }
@@ -6672,11 +6683,12 @@ angular.module("risevision.common.components.logging")
     "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
   )
     .value("GOOGLE_OAUTH2_URL", "https://accounts.google.com/o/oauth2/auth")
-    .factory("googleAuthFactory", ["$q", "$log", "$location", 
-      "$interval", "$window", "$http", "$stateParams", "gapiLoader", 
+    .factory("googleAuthFactory", ["$q", "$log", "$location",
+      "$interval", "$window", "$http", "$stateParams", "gapiLoader",
       "getOAuthUserInfo", "uiFlowManager", "getBaseDomain", "userState",
       "CLIENT_ID", "OAUTH2_SCOPES", "GOOGLE_OAUTH2_URL",
-      function ($q, $log, $location, $interval, $window, $http, $stateParams,
+      function ($q, $log, $location, $interval, $window, $http,
+        $stateParams,
         gapiLoader, getOAuthUserInfo, uiFlowManager, getBaseDomain,
         userState,
         CLIENT_ID, OAUTH2_SCOPES, GOOGLE_OAUTH2_URL) {
@@ -7412,6 +7424,92 @@ angular.module("risevision.common.components.logging")
               });
 
             return deferred.promise;
+          },
+          confirmUserCreation: function (username, userConfirmedToken) {
+            var deferred = $q.defer();
+
+            var obj = {
+              "username": username,
+              "userConfirmedToken": userConfirmedToken
+            };
+            riseAPILoader().then(function (coreApi) {
+              return coreApi.userauth.confirmUserCreation(obj);
+            })
+              .then(function (resp) {
+                $log.debug("Confirm user creation successful", resp);
+                deferred.resolve(resp);
+              })
+              .then(null, function (e) {
+                console.error("Failed to confirm user creation.", e);
+                deferred.reject(e);
+              });
+
+            return deferred.promise;
+          },
+          requestConfirmationEmail: function (username) {
+            var deferred = $q.defer();
+
+            var obj = {
+              "username": username
+            };
+            riseAPILoader().then(function (coreApi) {
+              return coreApi.userauth.requestConfirmationEmail(obj);
+            })
+              .then(function (resp) {
+                $log.debug("Request confirmation email successful",
+                  resp);
+                deferred.resolve(resp);
+              })
+              .then(null, function (e) {
+                console.error("Failed to request confirmation email.",
+                  e);
+                deferred.reject(e);
+              });
+
+            return deferred.promise;
+          },
+          requestPasswordReset: function (username) {
+            var deferred = $q.defer();
+
+            var obj = {
+              "username": username
+            };
+            riseAPILoader().then(function (coreApi) {
+              return coreApi.userauth.requestPasswordReset(obj);
+            })
+              .then(function (resp) {
+                $log.debug("Request password reset successful", resp);
+                deferred.resolve(resp);
+              })
+              .then(null, function (e) {
+                console.error("Failed to request password reset.", e);
+                deferred.reject(e);
+              });
+
+            return deferred.promise;
+          },
+          resetPassword: function (username, passwordResetToken,
+            newPassword) {
+            var deferred = $q.defer();
+
+            var obj = {
+              "username": username,
+              "passwordResetToken": passwordResetToken,
+              "newPassword": newPassword
+            };
+            riseAPILoader().then(function (coreApi) {
+              return coreApi.userauth.resetPassword(obj);
+            })
+              .then(function (resp) {
+                $log.debug("Reset password successful", resp);
+                deferred.resolve(resp);
+              })
+              .then(null, function (e) {
+                console.error("Failed to reset password.", e);
+                deferred.reject(e);
+              });
+
+            return deferred.promise;
           }
         };
 
@@ -7741,12 +7839,34 @@ angular.module("risevision.common.components.logging")
 
 "use strict";
 
+angular.module("risevision.common.components.userstate")
+  .controller("ConfirmAccountCtrl", ["$scope", "$loading", "$log", "$state",
+    "$stateParams", "userauth",
+    function ($scope, $loading, $log, $state, $stateParams, userauth) {
+      $loading.startGlobal("auth-confirm-account");
+
+      userauth.confirmUserCreation($stateParams.user, $stateParams.token)
+        .then(function () {
+          $log.log("User confirmed");
+        })
+        .catch(function (err) {
+          $log.error(err);
+        })
+        .finally(function () {
+          $loading.stopGlobal("auth-confirm-account");
+          $state.go("common.auth.unauthorized.final");
+        });
+    }
+  ]);
+
+"use strict";
+
 /*jshint camelcase: false */
 
 angular.module("risevision.common.components.userstate")
   .controller("GoogleResultCtrl", ["$log", "$stateParams", "userState",
-    "urlStateService", 
-    function($log, $stateParams, userState, urlStateService) {
+    "urlStateService",
+    function ($log, $stateParams, userState, urlStateService) {
       $log.debug("URL params", $stateParams);
 
       userState._restoreState();
@@ -7764,8 +7884,9 @@ angular.module("risevision.common.components.userstate")
 
 angular.module("risevision.common.components.userstate")
   .controller("LoginCtrl", ["$scope", "$loading", "$stateParams",
-    "userAuthFactory", "customAuthFactory", "uiFlowManager", "urlStateService",
-    function ($scope, $loading, $stateParams, userAuthFactory, 
+    "userAuthFactory", "customAuthFactory", "uiFlowManager",
+    "urlStateService",
+    function ($scope, $loading, $stateParams, userAuthFactory,
       customAuthFactory, uiFlowManager, urlStateService) {
       $scope.forms = {};
       $scope.credentials = {};
@@ -7821,7 +7942,101 @@ angular.module("risevision.common.components.userstate")
             });
         }
       };
+    }
+  ]);
 
+"use strict";
+
+angular.module("risevision.common.components.userstate")
+  .controller("RequestPasswordResetCtrl", ["$scope", "$loading", "$log",
+    "userauth",
+    function ($scope, $loading, $log, userauth) {
+      $scope.forms = {};
+      $scope.credentials = {};
+      $scope.errors = {};
+      $scope.emailSent = false;
+
+      $scope.requestPasswordReset = function () {
+        $scope.emailSent = false;
+        $loading.startGlobal("auth-request-password-reset");
+
+        userauth.requestPasswordReset($scope.credentials.username)
+          .then(function () {
+            $log.log("Reset password request sent");
+          })
+          .catch(function (err) {
+            $log.error(err);
+          })
+          .finally(function () {
+            $loading.stopGlobal("auth-request-password-reset");
+            $scope.emailSent = true;
+          });
+      };
+    }
+  ]);
+
+"use strict";
+
+angular.module("risevision.common.components.userstate")
+  .controller("ResetPasswordConfirmCtrl", ["$scope", "$loading", "$log",
+    "$state",
+    "$stateParams", "userauth",
+    function ($scope, $loading, $log, $state, $stateParams, userauth) {
+      $scope.forms = {};
+      $scope.credentials = {};
+      $scope.errors = {};
+
+      function _resetErrorStates() {
+        $scope.emailResetSent = false;
+        $scope.invalidToken = false;
+        $scope.notMatchingPassword = false;
+      }
+
+      $scope.resetPassword = function () {
+        _resetErrorStates();
+
+        if ($scope.credentials.newPassword !== $scope.credentials.confirmPassword) {
+          $scope.notMatchingPassword = true;
+          return;
+        }
+
+        $loading.startGlobal("auth-reset-password");
+        userauth.resetPassword($stateParams.user, $stateParams.token, $scope.credentials
+          .newPassword)
+          .then(function () {
+            $log.log("Password updated");
+            $state.go("common.auth.unauthorized.final");
+          })
+          .catch(function (err) {
+            var error = err.result && err.result.error && err.result.error.message;
+
+            if (error === "Password reset token does not match") {
+              $scope.invalidToken = true;
+            } else {
+              $log.error(err);
+            }
+          })
+          .finally(function () {
+            $loading.stopGlobal("auth-reset-password");
+          });
+      };
+
+      $scope.requestPasswordReset = function () {
+        _resetErrorStates();
+
+        $loading.startGlobal("auth-request-password-reset");
+        userauth.requestPasswordReset($stateParams.user)
+          .then(function () {
+            $log.log("Email sent");
+            $scope.emailResetSent = true;
+          })
+          .catch(function (err) {
+            $log.error(err);
+          })
+          .finally(function () {
+            $loading.stopGlobal("auth-request-password-reset");
+          });
+      };
     }
   ]);
 
@@ -7867,7 +8082,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('userstate/auth-form.html',
-    '<form id="forms.loginForm" name="forms.loginForm" role="form" novalidate=""><div><div class="panel-body bg-danger u_margin-sm-top" style="display: block;" ng-show="errors.duplicateError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>This email address is already registered. You can <a href="#">sign in</a>with this address.</span></p></div><div class="panel-body bg-danger u_margin-sm-top" style="display: block;" ng-show="errors.loginError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Your email address (or password) is not found. <a href="#"></a></span></p></div><div class="panel-body bg-danger u_margin-sm-top" style="display: block;" ng-show="errors.unconfirmedError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Your email address has not been confirmed.<br><a href="#">Resend Email Confirmation</a></span></p></div><div class="panel-body bg-info u_margin-sm-top" style="display: block;" ng-show="errors.confirmationRequired"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>We\'ve sent a confirmation email to {{credentials.username}}.<br>Please check your inbox to complete your account registration.</span></p></div></div><div class="u_margin-sm-top"><div class="form-group" ng-class="{\'has-error\': (forms.loginForm.$submitted && forms.loginForm.username.$invalid)}" show-errors=""><label class="control-label">Email</label> <input type="text" class="form-control" placeholder="Enter Username" id="username" name="username" ng-model="credentials.username" required="" focus-me="true"><p class="text-danger" ng-show="forms.loginForm.$submitted && forms.loginForm.username.$invalid">Please enter an Email</p></div><div class="form-group" ng-class="{\'has-error\': (forms.loginForm.$submitted && forms.loginForm.password.$invalid)}" show-errors=""><label class="control-label">Password</label> <input type="password" class="form-control" placeholder="Enter Password" id="password" name="password" ng-model="credentials.password" required=""><p class="text-danger" ng-show="forms.loginForm.$submitted && forms.loginForm.password.$invalid">Please enter a Password</p></div></div></form>');
+    '<form id="forms.loginForm" name="forms.loginForm" role="form" novalidate=""><div><div class="panel-body bg-danger u_margin-sm-top" style="display: block;" ng-show="errors.duplicateError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>This email address is already registered. You can <a href="#">sign in</a>with this address.</span></p></div><div class="panel-body bg-danger u_margin-sm-top" style="display: block;" ng-show="errors.loginError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Your email address/password combination is incorrect.</span></p></div><div class="panel-body bg-danger u_margin-sm-top" style="display: block;" ng-show="errors.unconfirmedError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Your email address has not been confirmed.<br><a href="#">Resend Email Confirmation</a></span></p></div><div class="panel-body bg-info u_margin-sm-top" style="display: block;" ng-show="errors.confirmationRequired"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>We\'ve sent a confirmation email to {{credentials.username}}.<br>Please check your inbox to complete your account registration.</span></p></div></div><div class="u_margin-sm-top"><div class="form-group" ng-class="{\'has-error\': (forms.loginForm.$submitted && forms.loginForm.username.$invalid)}" show-errors=""><label class="control-label">Email</label> <input type="text" class="form-control" placeholder="Enter Username" id="username" name="username" ng-model="credentials.username" required="" focus-me="true"><p class="text-danger" ng-show="forms.loginForm.$submitted && forms.loginForm.username.$invalid">Please enter an Email</p></div><div class="form-group" ng-class="{\'has-error\': (forms.loginForm.$submitted && forms.loginForm.password.$invalid)}" show-errors=""><label class="control-label">Password</label> <input type="password" class="form-control" placeholder="Enter Password" id="password" name="password" ng-model="credentials.password" required=""><p class="text-danger" ng-show="forms.loginForm.$submitted && forms.loginForm.password.$invalid">Please enter a Password</p></div></div></form>');
 }]);
 })();
 
@@ -7891,7 +8106,31 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('userstate/login.html',
-    '<div class="app-launcher-login"><div class="container"><div class="panel"><div class="row"><div class="col-sm-6 col-xs-12"><div class="rise-logo"><img src="https://s3.amazonaws.com/Rise-Images/Website/rise-logo.svg"></div></div><div class="col-sm-6 col-xs-12"><h1 class="u_remove-top">Sign In</h1><p class="lead text-muted">to your Rise Vision account</p><div class="col-xs-12 col-md-8"><button class="btn btn-google-auth btn-hg" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign in with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group"><button class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="customLogin(\'registrationComplete\')"><span translate="Sign In"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted"><a id="sign-in-link" href="#" ui-sref="common.auth.protoreset">Forgot your password?</a></p><p class="text-muted">Don\'t have an account? <a id="sign-in-link" href="#" ui-sref="common.auth.createaccount">Sign up</a></p></div></div></div></div></div></div>');
+    '<div class="app-launcher-login"><div class="container"><div class="panel"><div class="row"><div class="col-sm-6 col-xs-12"><div class="rise-logo"><img src="https://s3.amazonaws.com/Rise-Images/Website/rise-logo.svg"></div></div><div class="col-sm-6 col-xs-12"><h1 class="u_remove-top">Sign In</h1><p class="lead text-muted">to your Rise Vision account</p><div class="col-xs-12 col-md-8"><button class="btn btn-google-auth btn-hg" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign in with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group"><button class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="customLogin(\'registrationComplete\')"><span translate="Sign In"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted"><a id="sign-in-link" href="#" ui-sref="common.auth.requestpasswordreset">Forgot your password?</a></p><p class="text-muted">Don\'t have an account? <a id="sign-in-link" href="#" ui-sref="common.auth.createaccount">Sign up</a></p></div></div></div></div></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.components.userstate');
+} catch (e) {
+  module = angular.module('risevision.common.components.userstate', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('userstate/request-password-reset.html',
+    '<div class="app-launcher-login"><div class="container"><div class="panel"><div class="row"><div class="col-sm-6 col-xs-12"><div class="rise-logo"><img src="https://s3.amazonaws.com/Rise-Images/Website/rise-logo.svg"></div></div><div class="col-sm-6 col-xs-12"><h1 class="u_remove-top">Password Reset</h1><div class="col-xs-12 col-md-8"><div class="panel-body bg-info u_margin-lg-top" ng-show="emailSent"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>An email with password reset instructions has been sent to your email inbox (if it exists in our system).</span></p></div></div><form id="requestResetForm" role="form" name="forms.requestResetForm" novalidate="" ng-show="!emailSent"><div class="col-md-8 col-xs-12 u_margin-md-top"><div class="form-group" ng-class="{\'has-error\': (forms.requestResetForm.$submitted && forms.requestResetForm.username.$invalid)}" show-errors=""><label class="control-label">Email</label> <input type="text" class="form-control" name="username" ng-model="credentials.username" required="" focus-me="true"><p class="text-danger" ng-show="forms.requestResetForm.$submitted && forms.requestResetForm.username.$invalid">Please enter an Email</p></div><button class="btn btn-primary btn-hg" ng-disabled="forms.requestResetForm.$invalid" ng-click="requestPasswordReset()">Reset Password</button></div></form><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted"><a id="sign-in-link" href="#" ui-sref="common.auth.unauthorized">Sign in</a> to your account instead.</p></div></div></div></div></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.components.userstate');
+} catch (e) {
+  module = angular.module('risevision.common.components.userstate', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('userstate/reset-password-confirm.html',
+    '<div class="app-launcher-login"><div class="container"><div class="panel"><div class="row"><div class="col-sm-6 col-xs-12"><div class="rise-logo"><img src="https://s3.amazonaws.com/Rise-Images/Website/rise-logo.svg"></div></div><div class="col-sm-6 col-xs-12"><h1 class="u_remove-top">Password Confirmation</h1><div><div class="panel-body bg-info u_margin-lg-top" ng-show="emailResetSent"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>An email with password reset instructions has been sent to your email inbox.</span></p></div><div class="panel-body bg-danger u_margin-lg-top" ng-show="notMatchingPassword"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>New Password and Confirm Password must match.</span></p></div><div class="panel-body bg-danger u_margin-lg-top" ng-show="invalidToken"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>The password reset token is not valid. <a href="#" ng-click="requestPasswordReset()">Request Password Reset</a></span></p></div></div><form id="resetPasswordForm" role="form" name="forms.resetPasswordForm" novalidate="" ng-show="!emailResetSent"><div class="col-md-8 col-xs-12 u_margin-md-top"><div class="form-group" ng-class="{\'has-error\': (forms.resetPasswordForm.$submitted && forms.resetPasswordForm.newPassword.$invalid)}" show-errors=""><label class="control-label">New Password</label> <input type="password" class="form-control" name="name" ng-model="credentials.newPassword" required="" focus-me="true"></div><div class="form-group" ng-class="{\'has-error\': (forms.resetPasswordForm.$submitted && forms.resetPasswordForm.confirmPassword.$invalid)}" show-errors=""><label class="control-label">Confirm Password</label> <input type="password" class="form-control" name="name" ng-model="credentials.confirmPassword" required=""></div><button id="startError" class="btn btn-primary btn-hg" ng-disabled="forms.resetPasswordForm.$invalid" ng-click="resetPassword()">Update Password</button></div></form></div></div></div></div></div>');
 }]);
 })();
 
