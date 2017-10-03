@@ -48,7 +48,7 @@ app.run(["$templateCache", function($templateCache) {
     "                                      </div>\n" +
     "\n" +
     "                                     <p></p>\n" +
-    "                                      <div style=\"margin-bottom:16px;text-align:center!important\" align=\"center\"><a href=\"http://install-versions.risevision.com/installer-win-32.exe\" style=\"background:#47b767;border:none;border-radius:3px;color:#fff;display:inline-block;font-size:14px;font-weight:bold;outline:none!important;padding:12px 35px;text-decoration:none\" target=\"_blank\">Go Now</a></div>\n" +
+    "                                      <div style=\"margin-bottom:16px;text-align:center!important\" align=\"center\"><a href=\"https://apps.risevision.com/signup\" style=\"background:#47b767;border:none;border-radius:3px;color:#fff;display:inline-block;font-size:14px;font-weight:bold;outline:none!important;padding:12px 35px;text-decoration:none\" target=\"_blank\">Go Now</a></div>\n" +
     "                                     \n" +
     "                                    <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">You can find more details about getting started with Rise Vision in our <a href=\"https://risevision.zendesk.com/hc/en-us/articles/115004732063\" target=\"_blank\">Help Center</a>.</p>\n" +
     "\n" +
