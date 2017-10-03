@@ -31,9 +31,9 @@ app.run(["$templateCache", function($templateCache) {
     "                                  <td style=\"color:#525252;font-family:Helvetica,Arial,sans-serif;font-size:15px;line-height:22px;padding:0\">\n" +
     "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">Hi there,</p>\n" +
     "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">You've been added to <b>{{user.companyName}}</b> with Rise Vision!</p>\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">If you’re new to Rise Vision, please read below on how to proceed. Your email address will need Google authentication to be fully compatible.</p>\n" +
+    "                                     \n" +
     "\n" +
-    "                                        <div style=\"width: 100%;\n" +
+    "                                       <div style=\"width: 100%;\n" +
     "                      display: inline-block;\n" +
     "                      padding: 10px;\n" +
     "                      background-color: #f5f5f5; text-align:center;\">\n" +
@@ -47,31 +47,14 @@ app.run(["$templateCache", function($templateCache) {
     "                                             </p>\n" +
     "                                      </div>\n" +
     "\n" +
-    "                                      <p></p>\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\"><b>If your email address is a Google account:</b>\n" +
-    "                                          <br>Click <a href=\"http://apps.risevision.com\" target=\"_blank\">here</a> to sign in with your Google credentials.\n" +
-    "                                          <br>\n" +
-    "                                      </p>\n" +
+    "                                     <p></p>\n" +
+    "                                      <div style=\"margin-bottom:16px;text-align:center!important\" align=\"center\"><a href=\"http://install-versions.risevision.com/installer-win-32.exe\" style=\"background:#47b767;border:none;border-radius:3px;color:#fff;display:inline-block;font-size:14px;font-weight:bold;outline:none!important;padding:12px 35px;text-decoration:none\" target=\"_blank\">Go Now</a></div>\n" +
+    "                                     \n" +
+    "                                    <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">You can find more details about getting started with Rise Vision in our <a href=\"https://risevision.zendesk.com/hc/en-us/articles/115004732063\" target=\"_blank\">Help Center</a>.</p>\n" +
     "\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\"></p>\n" +
-    "                                      <div style=\"margin-bottom:16px;text-align:center!important\" align=\"center\"><a href=\"http://apps.risevision.com\" style=\"background:#47b767;border:none;border-radius:3px;color:#fff;display:inline-block;font-size:14px;font-weight:bold;outline:none!important;padding:12px 35px;text-decoration:none\" target=\"_blank\">Sign In</a></div>\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">\n" +
-    "\n" +
-    "\n" +
-    "                                          <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">\n" +
-    "                                           <br><b>If your email  address is not a  Google account yet:</b><br>\n" +
-    "                                     You can create one for free by clicking <a href=\"https://accounts.google.com/signup\" target=\"_blank\">this link</a>. You can authenticate <b>ANY</b> email with Google. Just select \"I prefer to use my current email address\", and then set your password. Once you have a Google account, you can <a href=\"http://apps.risevision.com\" target=\"_blank\">sign in</a> to Rise Vision.\n" +
-    "                                     </p>\n" +
-    "                                    \n" +
-    "                                    <img src=\"https://help.risevision.com/hc/article_attachments/115010258046/Sign_In_page_.png\" width=\"475\" height=\"180\" style=\"padding:15px 0 30px;text-align:left\" class=\"CToWUd\">\n" +
-    "\n" +
-    "                                      <div style=\"margin-bottom:16px;text-align:center!important\" align=\"center\"><a href=\"http://apps.risevision.com\" style=\"background:#47b767;border:none;border-radius:3px;color:#fff;display:inline-block;font-size:14px;font-weight:bold;outline:none!important;padding:12px 35px;text-decoration:none\" target=\"_blank\">Go Now</a></div>\n" +
-    "                                      <br/>\n" +
-    "                                       <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">You can find more details about getting started with Rise Vision in our <a href=\"https://help.risevision.com/hc/en-us/articles/115002868706-Get-started-with-Rise-Vision\" target=\"_blank\">Help Center</a>.</p>\n" +
-    "\n" +
-    "                                       <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\"> If you have any questions at all, just reply to this email. &nbsp;We’re here to help!</p>\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">-Robb\n" +
-    "                                          <br>Rise Vision Community Manager</p>\n" +
+    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">If you have any questions at all, just reply to this email. &nbsp;We’re here to help!</p>\n" +
+    "                                        <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">Thank you,\n" +
+    "                                          <br>Rise Vision Support Team</p>\n" +
     "                                  </td>\n" +
     "                              </tr>\n" +
     "                              <tr>\n" +
@@ -117,9 +100,9 @@ app.run(["$templateCache", function($templateCache) {
     "          </tbody>\n" +
     "      </table>\n" +
     "  </div>\n" +
-    " </body>\n" +
-    "</html>\n" +
-    "");
+    "\n" +
+    "</body>\n" +
+    "</html>");
 }]);
 })();
 
