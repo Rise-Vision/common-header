@@ -1,7 +1,8 @@
 angular.module("risevision.common.header")
   .controller("SignOutModalCtrl", ["$scope", "$modalInstance", "$log",
-    "userAuthFactory",
-    function ($scope, $modalInstance, $log, userAuthFactory) {
+    "userAuthFactory", "userState",
+    function ($scope, $modalInstance, $log, userAuthFactory, userState) {
+      $scope.isRiseAuthUser = userState.isRiseAuthUser();
 
       $scope.closeModal = function () {
         $modalInstance.dismiss("cancel");

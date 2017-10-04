@@ -1367,19 +1367,22 @@ app.run(["$templateCache", function($templateCache) {
     "</div>\n" +
     "<div class=\"modal-body sign-out-modal\" stop-event=\"touchend\">\n" +
     "  <form role=\"form\">\n" +
-    "    <p>\n" +
+    "    <p ng-show=\"isRiseAuthUser\">\n" +
+    "      Do you want to sign out of your account?\n" +
+    "    </p>\n" +
+    "    <p ng-show=\"!isRiseAuthUser\">\n" +
     "      Signing out does not sign you out of your Google Account.\n" +
     "    </p>\n" +
-    "    <p>\n" +
+    "    <p ng-show=\"!isRiseAuthUser\">\n" +
     "      If you are on a shared computer you should sign out of your Google Account.\n" +
     "    </p>\n" +
     "    <p>\n" +
-    "      <button type=\"button\" class=\"btn btn-default sign-out-rv-only-button\" ng-click=\"signOut(false)\">Sign Out\n" +
-    "        <i class=\"fa fa-sign-out fa-lg icon-right\"></i>\n" +
+    "      <button type=\"button\" class=\"btn btn-default sign-out-rv-only-button\" ng-click=\"signOut(false)\">\n" +
+    "        Sign Out <i class=\"fa fa-sign-out fa-lg icon-right\"></i>\n" +
     "      </button>\n" +
     "    </p>\n" +
-    "      <button type=\"button\" class=\"btn btn-default sign-out-google-account\" ng-click=\"signOut(true)\">Sign Out of your Google Account\n" +
-    "        <i class=\"fa fa-google-plus-square fa-lg icon-right\"></i>\n" +
+    "      <button type=\"button\" class=\"btn btn-default sign-out-google-account\" ng-click=\"signOut(true)\" ng-show=\"!isRiseAuthUser\">\n" +
+    "        Sign Out of your Google Account <i class=\"fa fa-google-plus-square fa-lg icon-right\"></i>\n" +
     "      </button>\n" +
     "    <p>\n" +
     "    </p>\n" +
@@ -3400,8 +3403,9 @@ angular.module("risevision.common.header")
 
 angular.module("risevision.common.header")
   .controller("SignOutModalCtrl", ["$scope", "$modalInstance", "$log",
-    "userAuthFactory",
-    function ($scope, $modalInstance, $log, userAuthFactory) {
+    "userAuthFactory", "userState",
+    function ($scope, $modalInstance, $log, userAuthFactory, userState) {
+      $scope.isRiseAuthUser = userState.isRiseAuthUser();
 
       $scope.closeModal = function () {
         $modalInstance.dismiss("cancel");
@@ -6263,15 +6267,8 @@ angular.module("risevision.common.components.userstate")
     "userState", "userAuthFactory",
     function ($q, $state, $location, userState, userAuthFactory) {
       return function () {
-        var deferred = $q.defer();
-        userAuthFactory.authenticate(false).then(function () {
-          if (userState.isRiseVisionUser()) {
-            deferred.resolve();
-          } else {
-            return $q.reject();
-          }
-        })
-          .then(null, function () {
+        return userAuthFactory.authenticate(false)
+          .catch(function (err) {
             if (userState.isLoggedIn()) {
               $state.go("common.auth.unregistered", null, {
                 reload: true
@@ -6283,10 +6280,8 @@ angular.module("risevision.common.components.userstate")
             }
 
             $location.replace();
-
-            deferred.reject();
+            return $q.reject();
           });
-        return deferred.promise;
       };
     }
   ]);
@@ -7219,6 +7214,7 @@ angular.module("risevision.common.components.logging")
 
         var authenticate = function (forceAuth, credentials) {
           var authenticateDeferred;
+          var isRiseAuthUser = false;
 
           // Clear User state
           if (forceAuth) {
@@ -7250,6 +7246,7 @@ angular.module("risevision.common.components.logging")
 
               // Credentials or Token provided; assume authenticated
               if (credentials || _state.userToken && _state.userToken.token) {
+                isRiseAuthUser = true;
                 authenticationPromise = customAuthFactory.authenticate(
                   credentials);
               } else {
@@ -7260,6 +7257,7 @@ angular.module("risevision.common.components.logging")
               authenticationPromise
                 .then(_authorize)
                 .then(function () {
+                  userState._setIsRiseAuthUser(isRiseAuthUser);
                   authenticateDeferred.resolve();
                 })
                 .then(null, function (err) {
@@ -7298,11 +7296,13 @@ angular.module("risevision.common.components.logging")
 
         var signOut = function (signOutGoogle) {
           return gapiLoader().then(function (gApi) {
-            if (signOutGoogle) {
-              $window.logoutFrame.location =
-                "https://accounts.google.com/Logout";
+            if (!userState.isRiseAuthUser()) {
+              if (signOutGoogle) {
+                $window.logoutFrame.location =
+                  "https://accounts.google.com/Logout";
+              }
+              gApi.auth.signOut();
             }
-            gApi.auth.signOut();
 
             _authenticateDeferred = null;
 
@@ -7539,7 +7539,8 @@ angular.module("risevision.common.components.logging")
           user: {}, //Google user
           roleMap: {},
           userToken: rvTokenStore.read(),
-          inRVAFrame: angular.isDefined($location.search().inRVA)
+          inRVAFrame: angular.isDefined($location.search().inRVA),
+          isRiseAuthUser: false
         };
 
         var refreshProfile = function () {
@@ -7554,6 +7555,7 @@ angular.module("risevision.common.components.logging")
               return companyState.init();
             })
             .then(function () {
+              $rootScope.$broadcast("risevision.profile.refreshed");
               deferred.resolve();
             }, deferred.reject);
 
@@ -7636,6 +7638,9 @@ angular.module("risevision.common.components.logging")
           isPurchaser: function () {
             return hasRole("pu");
           },
+          isRiseAuthUser: function () {
+            return _state.isRiseAuthUser;
+          },
           isSeller: companyState.isSeller,
           isRiseVisionUser: isRiseVisionUser,
           isLoggedIn: isLoggedIn,
@@ -7695,7 +7700,10 @@ angular.module("risevision.common.components.logging")
             localStorageService.set("risevision.common.userState",
               _state);
           },
-          _state: _state
+          _state: _state,
+          _setIsRiseAuthUser: function(isRiseAuthUser) {
+            _state.isRiseAuthUser = isRiseAuthUser
+          }
         };
 
         return userState;
