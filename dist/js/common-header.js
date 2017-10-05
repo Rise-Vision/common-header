@@ -2472,12 +2472,13 @@ angular.module("risevision.common.header")
 
 angular.module("risevision.common.header")
   .controller("RegistrationModalCtrl", [
-    "$scope", "$modalInstance",
+    "$scope", "$rootScope", "$modalInstance",
     "$loading", "registerAccount", "$log", "cookieStore",
     "userState", "pick", "uiFlowManager", "humanReadableError",
     "agreeToTermsAndUpdateUser", "account", "segmentAnalytics",
     "bigQueryLogging", "analyticsEvents", "updateCompany", "$q",
-    function ($scope, $modalInstance, $loading, registerAccount, $log,
+    function ($scope, $rootScope, $modalInstance, $loading, registerAccount,
+      $log,
       cookieStore, userState, pick, uiFlowManager, humanReadableError,
       agreeToTermsAndUpdateUser, account, segmentAnalytics, bigQueryLogging,
       analyticsEvents, updateCompany, $q) {
@@ -2570,6 +2571,8 @@ angular.module("risevision.common.header")
                     "isNewCompany": $scope.newUser
                   });
                   bigQueryLogging.logEvent("User Registered");
+                  $rootScope.$broadcast(
+                    "risevision.user.registration.completed");
 
                   $modalInstance.close("success");
                   $loading.stop("registration-modal");
@@ -7701,8 +7704,8 @@ angular.module("risevision.common.components.logging")
               _state);
           },
           _state: _state,
-          _setIsRiseAuthUser: function(isRiseAuthUser) {
-            _state.isRiseAuthUser = isRiseAuthUser
+          _setIsRiseAuthUser: function (isRiseAuthUser) {
+            _state.isRiseAuthUser = isRiseAuthUser;
           }
         };
 
