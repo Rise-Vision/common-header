@@ -7533,7 +7533,7 @@ angular.module("risevision.common.components.logging")
   angular.module("risevision.common.components.userstate")
   // constants (you can override them in your app as needed)
   .value("DEFAULT_PROFILE_PICTURE",
-    "http://api.randomuser.me/portraits/med/men/33.jpg")
+    "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm")
     .factory("userState", [
       "$q", "$rootScope", "$window", "$log", "$location", "userInfoCache",
       "getUserProfile", "companyState", "objectHelper",
