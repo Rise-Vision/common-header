@@ -8010,8 +8010,13 @@ angular.module("risevision.common.components.logging")
 
   angular.module("risevision.common.components.userstate")
   // constants (you can override them in your app as needed)
+<<<<<<< HEAD
   .value("PROFILE_PICTURE_URL",
     "https://www.gravatar.com/avatar/{emailMD5}?d=mm")
+=======
+  .value("DEFAULT_PROFILE_PICTURE",
+    "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm")
+>>>>>>> fb74778... Use Gravatar mm image
     .factory("userState", [
       "$q", "$rootScope", "$window", "$log", "$location", "userInfoCache",
       "getUserProfile", "companyState", "objectHelper",
