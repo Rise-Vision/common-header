@@ -12,6 +12,7 @@ angular.module("risevision.common.header")
     $scope.user = {};
     $scope.userPassword = {};
     $scope.showChangePassword = false;
+    $scope.isRiseAuthUser = userState.isRiseAuthUser();
     $scope.$watch("loading", function (loading) {
       if (loading) {
         $loading.start("user-settings-modal");

@@ -73,7 +73,7 @@ describe("controller: user settings", function() {
   }));
   var $scope, userProfile, savedUser, userState, $modalInstance, createUserError,
   trackerCalled, messageBoxStub, filterStub;
-  var isRiseAdmin = true, isUserAdmin = true, isRiseVisionUser = true;
+  var isRiseAdmin = true, isUserAdmin = true, isRiseVisionUser = true, isRiseAuthUser = false;
   beforeEach(function(){
     createUserError = false;
     trackerCalled = undefined;
@@ -110,6 +110,9 @@ describe("controller: user settings", function() {
         },
         isRiseVisionUser: function() {
           return isRiseVisionUser;
+        },
+        isRiseAuthUser: function() {
+          return isRiseAuthUser;
         },
         _state: {}
       };
