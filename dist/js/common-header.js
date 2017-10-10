@@ -1603,76 +1603,85 @@ app.run(["$templateCache", function($templateCache) {
     "</div>\n" +
     "<div class=\"modal-body user-settings-modal\" stop-event=\"touchend\">\n" +
     "  <form id=\"userSettingsForm\" role=\"form\" novalidate name=\"forms.userSettingsForm\">\n" +
-    "    <div class=\"form-group\"\n" +
-    "      ng-class=\"{ 'has-error' : forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine }\"\n" +
-    "    >\n" +
-    "      <label>\n" +
-    "        Username *\n" +
-    "      </label>\n" +
-    "      <div ng-if=\"!isAdd\">\n" +
-    "        <span>{{user.username}}</span>\n" +
-    "        <span><a href=\"\" ng-click=\"toggleChangePassword()\">Change password</a></span>\n" +
+    "    <div id=\"passwordAlert\" class=\"animated\" ng-if=\"!isAdd\" ng-show=\"!isRiseAuthUser && showChangePassword\">\n" +
+    "      <div class=\"panel-body bg-info u_margin-sm-bottom\">\n" +
+    "        <p class=\"u_remove-bottom\">\n" +
+    "          <span>This account is authenticated by Google.<br/>\n" +
+    "          <a href=\"https://myaccount.google.com/security#signin\" target=\"_blank\">Change your password on your Google account.</a></span>\n" +
+    "        </p>\n" +
     "      </div>\n" +
-    "      <input id=\"user-settings-username\"\n" +
-    "        type=\"email\" required name=\"username\"\n" +
-    "        class=\"form-control\"\n" +
-    "        ng-if=\"isAdd\"\n" +
-    "        ng-model=\"user.username\"\n" +
-    "        />\n" +
-    "        <p ng-show=\"forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine\"\n" +
-    "          class=\"help-block validation-error-message-email\">User name must be a valid email address.</p>\n" +
     "    </div>\n" +
-    "    <div class=\"form-group\"\n" +
-    "    ng-if=\"!isAdd\"\n" +
-    "    ng-show=\"showChangePassword\"\n" +
-    "      ng-class=\"{ 'has-error' : (userPassword.currentPassword === '' && !forms.userSettingsForm.currentPassword.$pristine) || currentPasswordNotValid }\">\n" +
-    "      <label for=\"user-settings-current-password\">\n" +
-    "        Current Password *\n" +
-    "      </label>\n" +
-    "      <input id=\"user-settings-current-password\"\n" +
-    "        type=\"password\" name=\"currentPassword\"\n" +
-    "        class=\"form-control\"\n" +
-    "        ng-model=\"userPassword.currentPassword\"\n" +
-    "        />\n" +
-    "        <p ng-show=\"userPassword.currentPassword === '' && !forms.userSettingsForm.currentPassword.$pristine\"\n" +
-    "          class=\"help-block validation-error-message-email\">Current Password is required.</p>\n" +
-    "        <p ng-show=\"currentPasswordNotValid\"\n" +
-    "          class=\"help-block validation-error-message-mail\">Current Password is not valid.</p>\n" +
+    "    <div class=\"row\">\n" +
+    "      <div class=\"col-xs-6\">\n" +
+    "        <div class=\"form-group\"\n" +
+    "          ng-class=\"{ 'has-error' : forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine }\"\n" +
+    "        >\n" +
+    "          <label>\n" +
+    "            Username *\n" +
+    "          </label>\n" +
+    "          <div ng-if=\"!isAdd\">\n" +
+    "            <span>{{user.username}}</span>\n" +
+    "          </div>\n" +
+    "          <input id=\"user-settings-username\"\n" +
+    "            type=\"email\" required name=\"username\"\n" +
+    "            class=\"form-control\"\n" +
+    "            ng-if=\"isAdd\"\n" +
+    "            ng-model=\"user.username\"\n" +
+    "            />\n" +
+    "            <p ng-show=\"forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine\"\n" +
+    "              class=\"help-block validation-error-message-email\">User name must be a valid email address.</p>\n" +
+    "        </div>\n" +
+    "      </div>\n" +
+    "      <div class=\"col-xs-6 text-right\">\n" +
+    "        <span ng-if=\"!isAdd\">\n" +
+    "          <a href=\"\" class=\"btn btn-default btn-sm change-password\" ng-click=\"toggleChangePassword()\">Change password</a>\n" +
+    "        </span>\n" +
+    "      </div>\n" +
     "    </div>\n" +
-    "    <div class=\"form-group\"\n" +
-    "    ng-if=\"!isAdd\"\n" +
-    "    ng-show=\"showChangePassword\"\n" +
-    "      ng-class=\"{ 'has-error' : (userPassword.newPassword === '' && !forms.userSettingsForm.newPassword.$pristine) || newPasswordFormatNotValid }\">\n" +
-    "      <label for=\"user-settings-new-password\">\n" +
-    "        New Password *\n" +
-    "      </label>\n" +
-    "      <input id=\"user-settings-new-password\"\n" +
-    "        type=\"password\" name=\"newPassword\"\n" +
-    "        class=\"form-control\"\n" +
-    "        ng-model=\"userPassword.newPassword\"\n" +
-    "        />\n" +
-    "        <p ng-show=\"userPassword.newPassword === '' && !forms.userSettingsForm.newPassword.$pristine\"\n" +
-    "          class=\"help-block validation-error-message-email\">New Password is required.</p>\n" +
-    "        <p ng-show=\"newPasswordFormatNotValid\"\n" +
-    "          class=\"help-block validation-error-message-mail\">New Password must be at least four characters long.</p>\n" +
-    "    </div>\n" +
-    "    <div class=\"form-group\"\n" +
-    "    ng-if=\"!isAdd\"\n" +
-    "    ng-show=\"showChangePassword\"\n" +
-    "      ng-class=\"{ 'has-error' : (userPassword.confirmPassword === '' && !forms.userSettingsForm.confirmPassword.$pristine) || confirmPasswordDoesNotMatch }\">\n" +
-    "      <label for=\"user-settings-confirm-password\">\n" +
-    "        Confirm Password *\n" +
-    "      </label>\n" +
-    "      <input id=\"user-settings-confirm-password\"\n" +
-    "        type=\"password\" name=\"confirmPassword\"\n" +
-    "        class=\"form-control\"\n" +
-    "        ng-model=\"userPassword.confirmPassword\"\n" +
-    "        />\n" +
-    "        <p ng-show=\"userPassword.confirmPassword === '' && !forms.userSettingsForm.confirmPassword.$pristine\"\n" +
-    "          class=\"help-block validation-error-message-email\">Confirm Password is required.</p>\n" +
-    "        <p ng-show=\"confirmPasswordDoesNotMatch\"\n" +
-    "          class=\"help-block validation-error-message-mail\">Confirm Password must match New Password.</p>\n" +
-    "        <hr />\n" +
+    "    <div id=\"passwordForm\" class=\"animated\" ng-if=\"!isAdd\" ng-show=\"isRiseAuthUser && showChangePassword\">\n" +
+    "      <div class=\"form-group\"\n" +
+    "           ng-class=\"{ 'has-error' : (userPassword.currentPassword === '' && !forms.userSettingsForm.currentPassword.$pristine) || currentPasswordNotValid }\">\n" +
+    "        <label for=\"user-settings-current-password\">\n" +
+    "          Current Password *\n" +
+    "        </label>\n" +
+    "        <input id=\"user-settings-current-password\"\n" +
+    "               type=\"password\" name=\"currentPassword\"\n" +
+    "               class=\"form-control\"\n" +
+    "               ng-model=\"userPassword.currentPassword\" />\n" +
+    "          <p ng-show=\"userPassword.currentPassword === '' && !forms.userSettingsForm.currentPassword.$pristine\"\n" +
+    "             class=\"help-block validation-error-message-email\">Current Password is required.</p>\n" +
+    "          <p ng-show=\"currentPasswordNotValid\"\n" +
+    "             class=\"help-block validation-error-message-mail\">Current Password is not valid.</p>\n" +
+    "      </div>\n" +
+    "      <div class=\"form-group\"\n" +
+    "           ng-class=\"{ 'has-error' : (userPassword.newPassword === '' && !forms.userSettingsForm.newPassword.$pristine) || newPasswordFormatNotValid }\">\n" +
+    "        <label for=\"user-settings-new-password\">\n" +
+    "          New Password *\n" +
+    "        </label>\n" +
+    "        <input id=\"user-settings-new-password\"\n" +
+    "               type=\"password\" name=\"newPassword\"\n" +
+    "               class=\"form-control\"\n" +
+    "               ng-model=\"userPassword.newPassword\" />\n" +
+    "          <p ng-show=\"userPassword.newPassword === '' && !forms.userSettingsForm.newPassword.$pristine\"\n" +
+    "             class=\"help-block validation-error-message-email\">New Password is required.</p>\n" +
+    "          <p ng-show=\"newPasswordFormatNotValid\"\n" +
+    "             class=\"help-block validation-error-message-mail\">New Password must be at least four characters long.</p>\n" +
+    "      </div>\n" +
+    "      <div class=\"form-group\"\n" +
+    "           ng-class=\"{ 'has-error' : (userPassword.confirmPassword === '' && !forms.userSettingsForm.confirmPassword.$pristine) || confirmPasswordDoesNotMatch }\">\n" +
+    "        <label for=\"user-settings-confirm-password\">\n" +
+    "          Confirm Password *\n" +
+    "        </label>\n" +
+    "        <input id=\"user-settings-confirm-password\"\n" +
+    "               type=\"password\" name=\"confirmPassword\"\n" +
+    "               class=\"form-control\"\n" +
+    "               ng-model=\"userPassword.confirmPassword\" />\n" +
+    "          <p ng-show=\"userPassword.confirmPassword === '' && !forms.userSettingsForm.confirmPassword.$pristine\"\n" +
+    "             class=\"help-block validation-error-message-email\">Confirm Password is required.</p>\n" +
+    "          <p ng-show=\"confirmPasswordDoesNotMatch\"\n" +
+    "             class=\"help-block validation-error-message-mail\">Confirm Password must match New Password.</p>\n" +
+    "          <hr />\n" +
+    "      </div>\n" +
     "    </div>\n" +
     "    <div class=\"form-group\"\n" +
     "      ng-class=\"{ 'has-error' : forms.userSettingsForm.firstName.$invalid && !forms.userSettingsForm.firstName.$pristine }\">\n" +
@@ -3330,6 +3339,7 @@ angular.module("risevision.common.header")
     $scope.user = {};
     $scope.userPassword = {};
     $scope.showChangePassword = false;
+    $scope.isRiseAuthUser = userState.isRiseAuthUser();
     $scope.$watch("loading", function (loading) {
       if (loading) {
         $loading.start("user-settings-modal");
@@ -6645,6 +6655,7 @@ angular.module("risevision.common.header")
         ],
         url: "/resetpassword/:user/:token",
         controller: "ResetPasswordConfirmCtrl"
+<<<<<<< HEAD
       })
 
 >>>>>>> d8de787... Update Add User email  message
@@ -6708,6 +6719,9 @@ angular.module("risevision.common.header")
         url: "/resetpassword/:user/:token",
         controller: "ResetPasswordConfirmCtrl"
       });
+=======
+      });
+>>>>>>> 78ca69e... Use prototype styling for change password feature
     }
   ])
 
@@ -6760,6 +6774,7 @@ angular.module("risevision.common.components.userstate")
         return userAuthFactory.authenticate(false)
           .catch(function (err) {
 <<<<<<< HEAD
+<<<<<<< HEAD
             $state.go("common.auth.createaccount", null, {
               reload: true
             });
@@ -6782,6 +6797,11 @@ angular.module("risevision.common.components.userstate")
                 reload: true
               });
             }
+=======
+            $state.go("common.auth.createaccount", null, {
+              reload: true
+            });
+>>>>>>> 78ca69e... Use prototype styling for change password feature
 
             $location.replace();
 <<<<<<< HEAD
@@ -7589,6 +7609,9 @@ angular.module("risevision.common.components.logging")
 
         urlStateService.redirectToState = function (stateString) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 78ca69e... Use prototype styling for change password feature
           var state = {};
 
           try {
@@ -7596,6 +7619,7 @@ angular.module("risevision.common.components.logging")
           } catch (err) {
             // Parse failed
           }
+<<<<<<< HEAD
 
           if (state.u || !$location.$$html5) { // hash found, assume non HTML5 mode
             if (state.p || state.s) { // requires redirect
@@ -7614,6 +7638,8 @@ angular.module("risevision.common.components.logging")
             $location.replace();
 =======
           var state = JSON.parse(decodeURIComponent(stateString));
+=======
+>>>>>>> 78ca69e... Use prototype styling for change password feature
 
 <<<<<<< HEAD
             $window.location.replace(state.p +
@@ -8608,8 +8634,9 @@ angular.module("risevision.common.components.userstate")
       uiFlowManager) {
 =======
   .controller("LoginCtrl", ["$scope", "$loading", "$stateParams",
-    "userAuthFactory", "customAuthFactory", "uiFlowManager",
+    "$state", "userAuthFactory", "customAuthFactory", "uiFlowManager",
     "urlStateService", "isSignUp",
+<<<<<<< HEAD
     function ($scope, $loading, $stateParams, userAuthFactory,
 <<<<<<< HEAD
       customAuthFactory, uiFlowManager, urlStateService) {
@@ -8619,6 +8646,9 @@ angular.module("risevision.common.components.userstate")
       $scope.errors = {};
 >>>>>>> 72e3ad1... Component update & button styling fixes
 =======
+=======
+    function ($scope, $loading, $stateParams, $state, userAuthFactory,
+>>>>>>> 78ca69e... Use prototype styling for change password feature
       customAuthFactory, uiFlowManager, urlStateService, isSignUp) {
       $scope.forms = {};
       $scope.credentials = {};
@@ -8645,6 +8675,7 @@ angular.module("risevision.common.components.userstate")
             .then(function () {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
               urlStateService.redirectToState($stateParams.state);
 
               if (!userState.isRiseVisionUser()) {
@@ -8658,6 +8689,9 @@ angular.module("risevision.common.components.userstate")
                 urlStateService.redirectToState($stateParams.state);
               }
 >>>>>>> c0f3cad... Userstate updates for the back button
+=======
+              urlStateService.redirectToState($stateParams.state);
+>>>>>>> 78ca69e... Use prototype styling for change password feature
             })
             .then(null, function () {
               $scope.errors.loginError = true;
@@ -8746,6 +8780,22 @@ angular.module("risevision.common.components.userstate")
         return userAuthFactory.isPasswordValid($scope.credentials.password);
       };
 
+      $scope.showSignUp = function () {
+        var stateString = urlStateService.get();
+
+        $state.go("common.auth.createaccount.final", {
+          state: $stateParams.state
+        });
+      };
+
+      $scope.showSignIn = function () {
+        var stateString = urlStateService.get();
+
+        $state.go("common.auth.unauthorized.final", {
+          state: $stateParams.state
+        });
+      };
+
       $scope.createAccount = function (endStatus) {
         $scope.errors = {};
 
@@ -8802,9 +8852,9 @@ angular.module("risevision.common.components.userstate")
 
 angular.module("risevision.common.components.userstate")
   .controller("ResetPasswordConfirmCtrl", ["$scope", "$loading", "$log",
-    "$state",
-    "$stateParams", "userauth",
-    function ($scope, $loading, $log, $state, $stateParams, userauth) {
+    "$state", "$stateParams", "userauth", "userAuthFactory",
+    function ($scope, $loading, $log, $state, $stateParams, userauth,
+      userAuthFactory) {
       $scope.forms = {};
       $scope.credentials = {};
       $scope.errors = {};
@@ -8812,13 +8862,17 @@ angular.module("risevision.common.components.userstate")
       function _resetErrorStates() {
         $scope.emailResetSent = false;
         $scope.invalidToken = false;
+        $scope.invalidPassword = false;
         $scope.notMatchingPassword = false;
       }
 
       $scope.resetPassword = function () {
         _resetErrorStates();
 
-        if ($scope.credentials.newPassword !== $scope.credentials.confirmPassword) {
+        if (!userAuthFactory.isPasswordValid($scope.credentials.newPassword)) {
+          $scope.invalidPassword = true;
+          return;
+        } else if ($scope.credentials.newPassword !== $scope.credentials.confirmPassword) {
           $scope.notMatchingPassword = true;
           return;
         }
@@ -8866,6 +8920,7 @@ angular.module("risevision.common.components.userstate")
 "use strict";
 
 angular.module("risevision.common.components.userstate")
+<<<<<<< HEAD
   .controller("ResetPasswordConfirmCtrl", ["$scope", "$loading", "$log",
     "$state", "$stateParams", "userauth", "userAuthFactory",
     function ($scope, $loading, $log, $state, $stateParams, userauth,
@@ -8937,6 +8992,8 @@ angular.module("risevision.common.components.userstate")
 "use strict";
 
 angular.module("risevision.common.components.userstate")
+=======
+>>>>>>> 78ca69e... Use prototype styling for change password feature
   .controller("UrlStateCtrl", ["$state", "urlStateService",
     function ($state, urlStateService) {
       if ($state.current.name.indexOf(".final") === -1) {
@@ -8963,6 +9020,7 @@ module.run(['$templateCache', function($templateCache) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     '<form id="forms.loginForm" name="forms.loginForm" role="form" novalidate=""><div><div class="panel-body bg-danger u_margin-sm-top" ng-show="errors.duplicateError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>This email address is already registered. You can <a href="#" ng-click="showSignIn()">sign in</a>with this address.</span></p></div><div class="panel-body bg-danger u_margin-sm-top" ng-show="errors.loginError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Your email address/password combination is incorrect.</span></p></div><div class="panel-body bg-danger u_margin-sm-top" ng-show="errors.unconfirmedError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Your email address has not been confirmed.<br><a href="#">Resend Email Confirmation</a></span></p></div><div class="panel-body bg-info u_margin-sm-top" ng-show="errors.confirmationRequired"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>We\'ve sent a confirmation email to {{credentials.username}}.<br>Please check your inbox to complete your account registration.</span></p></div><div class="panel-body bg-info u_margin-sm-top" ng-show="messages.passwordReset"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Password successfully updated.<br>Please sign in to proceed.</span></p></div><div class="panel-body bg-info u_margin-sm-top" ng-show="messages.accountConfirmed"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Account successfully confirmed.<br>Please sign in to proceed.</span></p></div></div><div class="u_margin-sm-top" ng-show="!errors.confirmationRequired"><div class="form-group" ng-class="{\'has-error\': (forms.loginForm.$submitted && forms.loginForm.username.$invalid)}" show-errors=""><label class="control-label">Email</label> <input type="email" class="form-control" placeholder="Enter Username" id="username" name="username" ng-model="credentials.username" required="" focus-me="true"><p class="text-danger" ng-show="forms.loginForm.$submitted && forms.loginForm.username.$invalid">Please enter an Email</p></div><div class="form-group" ng-class="{\'has-error\': (forms.loginForm.$submitted && !isPasswordValid() && isSignUp), \'has-message\': isPasswordValid() && isSignUp}" show-errors=""><label class="control-label">Password</label> <input type="password" class="form-control" placeholder="Enter Password" id="password" name="password" ng-model="credentials.password" required=""><p class="text-danger" ng-show="forms.loginForm.$submitted && !isPasswordValid() && isSignUp">Please enter at least 4 characters.</p><p class="text-warning" ng-show="isPasswordValid() && isSignUp">A strong password is at least 8 characters, includes uppercase/lowercase letters, and one or more numbers.</p></div></div></form>');
 =======
     '<form id="loginForm" name="loginForm" role="form" novalidate=""><div><div class="panel-body bg-danger u_margin-sm-top" style="display: block;" ng-show="duplicateError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>This email address is already registered. You can <a href="#">sign in</a>with this address.</span></p></div><div class="panel-body bg-danger u_margin-sm-top" style="display: block;" ng-show="loginError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Your email address (or password) is not found. <a href="#"></a></span></p></div><div class="panel-body bg-danger u_margin-sm-top" style="display: block;" ng-show="unconfirmedError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Your email address has not been confirmed.<br><a href="#">Resend Email Confirmation</a></span></p></div></div><div class="u_margin-sm-top"><div class="form-group" ng-class="{\'has-error\': (!loginForm.username.$pristine && loginForm.username.$invalid) || loginError}" show-errors=""><label class="control-label">Email</label> <input type="text" class="form-control" placeholder="Enter Username" id="username" name="username" ng-model="credentials.username" required="" focus-me="true"><p class="text-danger" ng-show="!loginForm.username.$pristine && loginForm.username.$invalid">Please enter an Email</p></div><div class="form-group" ng-class="{\'has-error\': (!loginForm.password.$pristine && loginForm.password.$invalid) || loginError}" show-errors=""><label class="control-label">Password</label> <input type="password" class="form-control" placeholder="Enter Password" id="password" name="password" ng-model="credentials.password" required=""><p class="text-danger" ng-show="!loginForm.password.$pristine && loginForm.password.$invalid">Please enter a Password</p></div></div></form>');
@@ -8979,6 +9037,9 @@ module.run(['$templateCache', function($templateCache) {
 =======
     '<form id="forms.loginForm" name="forms.loginForm" role="form" novalidate=""><div><div class="panel-body bg-danger u_margin-sm-top" style="display: block;" ng-show="errors.duplicateError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>This email address is already registered. You can <a href="#">sign in</a>with this address.</span></p></div><div class="panel-body bg-danger u_margin-sm-top" style="display: block;" ng-show="errors.loginError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Your email address/password combination is incorrect.</span></p></div><div class="panel-body bg-danger u_margin-sm-top" style="display: block;" ng-show="errors.unconfirmedError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Your email address has not been confirmed.<br><a href="#">Resend Email Confirmation</a></span></p></div><div class="panel-body bg-info u_margin-sm-top" style="display: block;" ng-show="errors.confirmationRequired"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>We\'ve sent a confirmation email to {{credentials.username}}.<br>Please check your inbox to complete your account registration.</span></p></div></div><div class="u_margin-sm-top"><div class="form-group" ng-class="{\'has-error\': (forms.loginForm.$submitted && forms.loginForm.username.$invalid)}" show-errors=""><label class="control-label">Email</label> <input type="email" class="form-control" placeholder="Enter Username" id="username" name="username" ng-model="credentials.username" required="" focus-me="true"><p class="text-danger" ng-show="forms.loginForm.$submitted && forms.loginForm.username.$invalid">Please enter an Email</p></div><div class="form-group" ng-class="{\'has-error\': (forms.loginForm.$submitted && !isPasswordValid() && isSignUp), \'has-message\': isPasswordValid() && isSignUp}" show-errors=""><label class="control-label">Password</label> <input type="password" class="form-control" placeholder="Enter Password" id="password" name="password" ng-model="credentials.password" required=""><p class="text-danger" ng-show="forms.loginForm.$submitted && !isPasswordValid() && isSignUp">Please enter a valid Password</p><p class="text-warning" ng-show="isPasswordValid() && isSignUp">A strong password is at least 8 characters, includes uppercase/lowercase letters, and one or more numbers.</p></div></div></form>');
 >>>>>>> ceaf113... Fix issue with shared login/signup form
+=======
+    '<form id="forms.loginForm" name="forms.loginForm" role="form" novalidate=""><div><div class="panel-body bg-danger u_margin-sm-top" style="display: block;" ng-show="errors.duplicateError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>This email address is already registered. You can <a href="#" ng-click="showSignIn()">sign in</a>with this address.</span></p></div><div class="panel-body bg-danger u_margin-sm-top" style="display: block;" ng-show="errors.loginError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Your email address/password combination is incorrect.</span></p></div><div class="panel-body bg-danger u_margin-sm-top" style="display: block;" ng-show="errors.unconfirmedError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Your email address has not been confirmed.<br><a href="#">Resend Email Confirmation</a></span></p></div><div class="panel-body bg-info u_margin-sm-top" style="display: block;" ng-show="errors.confirmationRequired"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>We\'ve sent a confirmation email to {{credentials.username}}.<br>Please check your inbox to complete your account registration.</span></p></div></div><div class="u_margin-sm-top"><div class="form-group" ng-class="{\'has-error\': (forms.loginForm.$submitted && forms.loginForm.username.$invalid)}" show-errors=""><label class="control-label">Email</label> <input type="email" class="form-control" placeholder="Enter Username" id="username" name="username" ng-model="credentials.username" required="" focus-me="true"><p class="text-danger" ng-show="forms.loginForm.$submitted && forms.loginForm.username.$invalid">Please enter an Email</p></div><div class="form-group" ng-class="{\'has-error\': (forms.loginForm.$submitted && !isPasswordValid() && isSignUp), \'has-message\': isPasswordValid() && isSignUp}" show-errors=""><label class="control-label">Password</label> <input type="password" class="form-control" placeholder="Enter Password" id="password" name="password" ng-model="credentials.password" required=""><p class="text-danger" ng-show="forms.loginForm.$submitted && !isPasswordValid() && isSignUp">Please enter at least 4 characters.</p><p class="text-warning" ng-show="isPasswordValid() && isSignUp">A strong password is at least 8 characters, includes uppercase/lowercase letters, and one or more numbers.</p></div></div></form>');
+>>>>>>> 78ca69e... Use prototype styling for change password feature
 }]);
 })();
 
@@ -8993,6 +9054,7 @@ module.run(['$templateCache', function($templateCache) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     '<div class="app-launcher-login"><div class="container"><div class="panel"><div class="row"><div class="col-sm-6 col-xs-12"><div class="rise-logo"><img src="https://s3.amazonaws.com/Rise-Images/Website/rise-logo.svg"></div></div><div class="col-sm-6 col-xs-12"><h1 class="u_remove-top">Get Started For Free</h1><p class="lead text-muted">No commitments or contracts</p><div class="col-xs-12 col-md-8" ng-show="!errors.confirmationRequired"><button class="btn btn-google-auth btn-hg" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign up with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top" ng-show="!errors.confirmationRequired"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group" ng-show="!errors.confirmationRequired"><button class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="createAccount(\'registrationComplete\')"><span translate="Sign Up"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted">Already have an account? <a id="sign-in-link" href="#" ng-click="showSignIn()">Sign in</a></p></div></div></div></div></div></div>');
 =======
     '<div class="app-launcher-login"><div class="container"><div class="panel"><div class="row"><div class="col-sm-6 col-xs-12"><div class="rise-logo"><img src="https://s3.amazonaws.com/Rise-Images/Website/rise-logo.svg"></div></div><div class="col-sm-6 col-xs-12"><h1 class="u_remove-top">Get Started For Free</h1><p class="lead text-muted">No commitments or contracts</p><div class="col-xs-12 col-md-8"><button class="btn btn-google-auth btn-hg" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign up with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group"><button class="btn btn-primary btn-hg" ng-click="createAccount(\'registrationComplete\')"><span translate="Sign Up"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted">Already have an account? <a id="sign-in-link" href="#" ui-sref="apps.launcher.unauthorized">Sign in</a></p></div></div></div></div></div></div>');
@@ -9003,6 +9065,9 @@ module.run(['$templateCache', function($templateCache) {
 =======
     '<div class="app-launcher-login"><div class="container"><div class="panel"><div class="row"><div class="col-sm-6 col-xs-12"><div class="rise-logo"><img src="https://s3.amazonaws.com/Rise-Images/Website/rise-logo.svg"></div></div><div class="col-sm-6 col-xs-12"><h1 class="u_remove-top">Get Started For Free</h1><p class="lead text-muted">No commitments or contracts</p><div class="col-xs-12 col-md-8"><button class="btn btn-google-auth btn-hg" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign up with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group"><button class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="createAccount(\'registrationComplete\')"><span translate="Sign Up"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted">Already have an account? <a id="sign-in-link" href="#" ui-sref="common.auth.unauthorized">Sign in</a></p></div></div></div></div></div></div>');
 >>>>>>> c24251d... Updated state names to common.auth.*
+=======
+    '<div class="app-launcher-login"><div class="container"><div class="panel"><div class="row"><div class="col-sm-6 col-xs-12"><div class="rise-logo"><img src="https://s3.amazonaws.com/Rise-Images/Website/rise-logo.svg"></div></div><div class="col-sm-6 col-xs-12"><h1 class="u_remove-top">Get Started For Free</h1><p class="lead text-muted">No commitments or contracts</p><div class="col-xs-12 col-md-8"><button class="btn btn-google-auth btn-hg" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign up with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group"><button class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="createAccount(\'registrationComplete\')"><span translate="Sign Up"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted">Already have an account? <a id="sign-in-link" href="#" ng-click="showSignIn()">Sign in</a></p></div></div></div></div></div></div>');
+>>>>>>> 78ca69e... Use prototype styling for change password feature
 }]);
 })();
 
@@ -9018,10 +9083,14 @@ module.run(['$templateCache', function($templateCache) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     '<div class="app-launcher-login"><div class="container"><div class="panel"><div class="row"><div class="col-sm-6 col-xs-12"><div class="rise-logo"><img src="https://s3.amazonaws.com/Rise-Images/Website/rise-logo.svg"></div></div><div class="col-sm-6 col-xs-12"><h1 class="u_remove-top">Sign In</h1><p class="lead text-muted">to your Rise Vision account</p><div class="col-xs-12 col-md-8"><button class="btn btn-google-auth btn-hg" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign in with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group"><button class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="customLogin(\'registrationComplete\')"><span translate="Sign In"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted"><a id="sign-in-link" href="#" ui-sref="common.auth.requestpasswordreset">Forgot your password?</a></p><p class="text-muted">Don\'t have an account? <a id="sign-in-link" href="#" ng-click="showSignUp()">Sign up</a></p></div></div></div></div></div></div>');
 =======
     '<div class="app-launcher-login"><div class="container"><div class="panel"><div class="row"><div class="col-sm-6 col-xs-12"><div class="rise-logo"><img src="https://s3.amazonaws.com/Rise-Images/Website/rise-logo.svg"></div></div><div class="col-sm-6 col-xs-12"><h1 class="u_remove-top">Sign In</h1><p class="lead text-muted">to your Rise Vision account</p><div class="col-xs-12 col-md-8"><button class="btn btn-google-auth btn-hg" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign in with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group"><button class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="customLogin(\'registrationComplete\')"><span translate="Sign In"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted"><a id="sign-in-link" href="#" ui-sref="common.auth.requestpasswordreset">Forgot your password?</a></p><p class="text-muted">Don\'t have an account? <a id="sign-in-link" href="#" ui-sref="common.auth.createaccount">Sign up</a></p></div></div></div></div></div></div>');
 >>>>>>> d8de787... Update Add User email  message
+=======
+    '<div class="app-launcher-login"><div class="container"><div class="panel"><div class="row"><div class="col-sm-6 col-xs-12"><div class="rise-logo"><img src="https://s3.amazonaws.com/Rise-Images/Website/rise-logo.svg"></div></div><div class="col-sm-6 col-xs-12"><h1 class="u_remove-top">Sign In</h1><p class="lead text-muted">to your Rise Vision account</p><div class="col-xs-12 col-md-8"><button class="btn btn-google-auth btn-hg" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign in with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group"><button class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="customLogin(\'registrationComplete\')"><span translate="Sign In"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted"><a id="sign-in-link" href="#" ui-sref="common.auth.requestpasswordreset">Forgot your password?</a></p><p class="text-muted">Don\'t have an account? <a id="sign-in-link" href="#" ng-click="showSignUp()">Sign up</a></p></div></div></div></div></div></div>');
+>>>>>>> 78ca69e... Use prototype styling for change password feature
 }]);
 })();
 
@@ -9056,6 +9125,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('userstate/reset-password-confirm.html',
+<<<<<<< HEAD
     '<div class="app-launcher-login"><div class="container"><div class="panel"><div class="row"><div class="col-sm-6 col-xs-12"><div class="rise-logo"><img src="https://s3.amazonaws.com/Rise-Images/Website/rise-logo.svg"></div></div><div class="col-sm-6 col-xs-12"><h1 class="u_remove-top">Password Confirmation</h1><div><div class="panel-body bg-info u_margin-lg-top" ng-show="emailResetSent"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>An email with password reset instructions has been sent to your email inbox.</span></p></div><div class="panel-body bg-danger u_margin-lg-top" ng-show="notMatchingPassword"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>New Password and Confirm Password must match.</span></p></div><div class="panel-body bg-danger u_margin-lg-top" ng-show="invalidToken"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>The password reset token is not valid. <a href="#" ng-click="requestPasswordReset()">Request Password Reset</a></span></p></div></div><form id="resetPasswordForm" role="form" name="forms.resetPasswordForm" novalidate="" ng-show="!emailResetSent"><div class="col-md-8 col-xs-12 u_margin-md-top"><div class="form-group" ng-class="{\'has-error\': (forms.resetPasswordForm.$submitted && forms.resetPasswordForm.newPassword.$invalid)}" show-errors=""><label class="control-label">New Password</label> <input type="password" class="form-control" name="name" ng-model="credentials.newPassword" required="" focus-me="true"></div><div class="form-group" ng-class="{\'has-error\': (forms.resetPasswordForm.$submitted && forms.resetPasswordForm.confirmPassword.$invalid)}" show-errors=""><label class="control-label">Confirm Password</label> <input type="password" class="form-control" name="name" ng-model="credentials.confirmPassword" required=""></div><button id="startError" class="btn btn-primary btn-hg" ng-disabled="forms.resetPasswordForm.$invalid" ng-click="resetPassword()">Update Password</button></div></form></div></div></div></div></div>');
 >>>>>>> d8de787... Update Add User email  message
 }]);
@@ -9069,6 +9139,8 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('userstate/reset-password-confirm.html',
+=======
+>>>>>>> 78ca69e... Use prototype styling for change password feature
     '<div class="app-launcher-login"><div class="container"><div class="panel"><div class="row"><div class="col-sm-6 col-xs-12"><div class="rise-logo"><img src="https://s3.amazonaws.com/Rise-Images/Website/rise-logo.svg"></div></div><div class="col-sm-6 col-xs-12"><h1 class="u_remove-top">Password Confirmation</h1><div><div class="panel-body bg-info u_margin-lg-top" ng-show="emailResetSent"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>An email with password reset instructions has been sent to your email inbox.</span></p></div><div class="panel-body bg-danger u_margin-lg-top" ng-show="invalidPassword"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>New Password must be at least four characters long.</span></p></div><div class="panel-body bg-danger u_margin-lg-top" ng-show="notMatchingPassword"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>New Password and Confirm Password must match.</span></p></div><div class="panel-body bg-danger u_margin-lg-top" ng-show="invalidToken"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>The password reset token is not valid. <a href="#" ng-click="requestPasswordReset()">Request Password Reset</a></span></p></div></div><form id="resetPasswordForm" role="form" name="forms.resetPasswordForm" novalidate="" ng-show="!emailResetSent"><div class="col-md-8 col-xs-12 u_margin-md-top"><div class="form-group" ng-class="{\'has-error\': (forms.resetPasswordForm.$submitted && forms.resetPasswordForm.newPassword.$invalid)}" show-errors=""><label class="control-label">New Password</label> <input type="password" class="form-control" name="name" ng-model="credentials.newPassword" required="" focus-me="true"></div><div class="form-group" ng-class="{\'has-error\': (forms.resetPasswordForm.$submitted && forms.resetPasswordForm.confirmPassword.$invalid)}" show-errors=""><label class="control-label">Confirm Password</label> <input type="password" class="form-control" name="name" ng-model="credentials.confirmPassword" required=""></div><button id="startError" class="btn btn-primary btn-hg" ng-disabled="forms.resetPasswordForm.$invalid" ng-click="resetPassword()">Update Password</button></div></form></div></div></div></div></div>');
 }]);
 })();
