@@ -1609,7 +1609,10 @@ app.run(["$templateCache", function($templateCache) {
     "      <label>\n" +
     "        Username *\n" +
     "      </label>\n" +
-    "      <div ng-if=\"!isAdd\">{{user.username}}</div>\n" +
+    "      <div ng-if=\"!isAdd\">\n" +
+    "        <span>{{user.username}}</span>\n" +
+    "        <span><a href=\"\" ng-click=\"toggleChangePassword()\">Change password</a></span>\n" +
+    "      </div>\n" +
     "      <input id=\"user-settings-username\"\n" +
     "        type=\"email\" required name=\"username\"\n" +
     "        class=\"form-control\"\n" +
@@ -1618,6 +1621,58 @@ app.run(["$templateCache", function($templateCache) {
     "        />\n" +
     "        <p ng-show=\"forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine\"\n" +
     "          class=\"help-block validation-error-message-email\">User name must be a valid email address.</p>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\"\n" +
+    "    ng-if=\"!isAdd\"\n" +
+    "    ng-show=\"showChangePassword\"\n" +
+    "      ng-class=\"{ 'has-error' : (userPassword.currentPassword === '' && !forms.userSettingsForm.currentPassword.$pristine) || currentPasswordNotValid }\">\n" +
+    "      <label for=\"user-settings-current-password\">\n" +
+    "        Current Password *\n" +
+    "      </label>\n" +
+    "      <input id=\"user-settings-current-password\"\n" +
+    "        type=\"password\" name=\"currentPassword\"\n" +
+    "        class=\"form-control\"\n" +
+    "        ng-model=\"userPassword.currentPassword\"\n" +
+    "        />\n" +
+    "        <p ng-show=\"userPassword.currentPassword === '' && !forms.userSettingsForm.currentPassword.$pristine\"\n" +
+    "          class=\"help-block validation-error-message-email\">Current Password is required.</p>\n" +
+    "        <p ng-show=\"currentPasswordNotValid\"\n" +
+    "          class=\"help-block validation-error-message-mail\">Current Password is not valid.</p>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\"\n" +
+    "    ng-if=\"!isAdd\"\n" +
+    "    ng-show=\"showChangePassword\"\n" +
+    "      ng-class=\"{ 'has-error' : (userPassword.newPassword === '' && !forms.userSettingsForm.newPassword.$pristine) || newPasswordFormatNotValid }\">\n" +
+    "      <label for=\"user-settings-new-password\">\n" +
+    "        New Password *\n" +
+    "      </label>\n" +
+    "      <input id=\"user-settings-new-password\"\n" +
+    "        type=\"password\" name=\"newPassword\"\n" +
+    "        class=\"form-control\"\n" +
+    "        ng-model=\"userPassword.newPassword\"\n" +
+    "        />\n" +
+    "        <p ng-show=\"userPassword.newPassword === '' && !forms.userSettingsForm.newPassword.$pristine\"\n" +
+    "          class=\"help-block validation-error-message-email\">New Password is required.</p>\n" +
+    "        <p ng-show=\"newPasswordFormatNotValid\"\n" +
+    "          class=\"help-block validation-error-message-mail\">New Password must be at least four characters long.</p>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\"\n" +
+    "    ng-if=\"!isAdd\"\n" +
+    "    ng-show=\"showChangePassword\"\n" +
+    "      ng-class=\"{ 'has-error' : (userPassword.confirmPassword === '' && !forms.userSettingsForm.confirmPassword.$pristine) || confirmPasswordDoesNotMatch }\">\n" +
+    "      <label for=\"user-settings-confirm-password\">\n" +
+    "        Confirm Password *\n" +
+    "      </label>\n" +
+    "      <input id=\"user-settings-confirm-password\"\n" +
+    "        type=\"password\" name=\"confirmPassword\"\n" +
+    "        class=\"form-control\"\n" +
+    "        ng-model=\"userPassword.confirmPassword\"\n" +
+    "        />\n" +
+    "        <p ng-show=\"userPassword.confirmPassword === '' && !forms.userSettingsForm.confirmPassword.$pristine\"\n" +
+    "          class=\"help-block validation-error-message-email\">Confirm Password is required.</p>\n" +
+    "        <p ng-show=\"confirmPasswordDoesNotMatch\"\n" +
+    "          class=\"help-block validation-error-message-mail\">Confirm Password must match New Password.</p>\n" +
+    "        <hr />\n" +
     "    </div>\n" +
     "    <div class=\"form-group\"\n" +
     "      ng-class=\"{ 'has-error' : forms.userSettingsForm.firstName.$invalid && !forms.userSettingsForm.firstName.$pristine }\">\n" +
@@ -3267,12 +3322,14 @@ angular.module("risevision.common.header")
   "$scope", "$filter", "$modalInstance", "updateUser", "getUserProfile",
   "deleteUser", "username", "userRoleMap", "$log", "$loading", "userState",
   "userAuthFactory", "uiFlowManager", "humanReadableError", "messageBox",
-  "$rootScope", "segmentAnalytics", "COMPANY_ROLE_FIELDS",
+  "$rootScope", "segmentAnalytics", "userauth", "$q", "COMPANY_ROLE_FIELDS",
   function ($scope, $filter, $modalInstance, updateUser, getUserProfile,
     deleteUser, username, userRoleMap, $log, $loading, userState,
     userAuthFactory, uiFlowManager, humanReadableError, messageBox,
-    $rootScope, segmentAnalytics, COMPANY_ROLE_FIELDS) {
+    $rootScope, segmentAnalytics, userauth, $q, COMPANY_ROLE_FIELDS) {
     $scope.user = {};
+    $scope.userPassword = {};
+    $scope.showChangePassword = false;
     $scope.$watch("loading", function (loading) {
       if (loading) {
         $loading.start("user-settings-modal");
@@ -3337,14 +3394,71 @@ angular.module("risevision.common.header")
     };
 
     $scope.save = function () {
+      var passwordChangeValid = true;
+
       $scope.forms.userSettingsForm.email.$pristine = false;
       $scope.forms.userSettingsForm.firstName.$pristine = false;
       $scope.forms.userSettingsForm.lastName.$pristine = false;
 
-      if (!$scope.forms.userSettingsForm.$invalid) {
+      if ($scope.showChangePassword) {
+        $scope.forms.userSettingsForm.currentPassword.$pristine = false;
+        $scope.forms.userSettingsForm.newPassword.$pristine = false;
+        $scope.forms.userSettingsForm.confirmPassword.$pristine = false;
+
+        $scope.currentPasswordNotValid = false;
+        $scope.newPasswordFormatNotValid = false;
+        $scope.confirmPasswordDoesNotMatch = false;
+
+        if (!$scope.userPassword.currentPassword) {
+          passwordChangeValid = false;
+        }
+
+        if (!$scope.userPassword.newPassword) {
+          passwordChangeValid = false;
+        } else if (!userAuthFactory.isPasswordValid($scope.userPassword.newPassword)) {
+          $scope.newPasswordFormatNotValid = true;
+          passwordChangeValid = false;
+        }
+
+        if (!$scope.userPassword.confirmPassword) {
+          passwordChangeValid = false;
+        } else if ($scope.userPassword.newPassword !== $scope.userPassword.confirmPassword) {
+          $scope.confirmPasswordDoesNotMatch = true;
+          passwordChangeValid = false;
+        }
+      }
+
+      if (!$scope.forms.userSettingsForm.$invalid && passwordChangeValid) {
+        var changePasswordPromise = $q.resolve();
+
         $scope.loading = true;
-        updateUser(username, $scope.user).then(
-          function (resp) {
+
+        if ($scope.showChangePassword) {
+          changePasswordPromise = userauth.updatePassword(
+            username,
+            $scope.userPassword.currentPassword,
+            $scope.userPassword.newPassword);
+          changePasswordPromise
+            .then(function () {
+              $scope.userPassword = {};
+              $scope.showChangePassword = false;
+            })
+            .catch(function (err) {
+              var newError = err.result.error;
+
+              if (newError.code === 409) {
+                $scope.currentPasswordNotValid = true;
+                newError.changePassword = true;
+              }
+              return $q.reject(newError);
+            });
+        }
+
+        changePasswordPromise
+          .then(function () {
+            return updateUser(username, $scope.user);
+          })
+          .then(function (resp) {
             if (userState.checkUsername(username)) {
               userState.updateUserProfile(resp.item);
             }
@@ -3356,22 +3470,26 @@ angular.module("risevision.common.header")
             });
 
             $modalInstance.close("success");
-          },
-          function (error) {
+          })
+          .catch(function (error) {
+            error = (error.result && error.result.error) || error;
             $log.debug(error);
             var errorMessage = "Error: " + humanReadableError(error);
-            if (error.code === 409) {
+            if (error.code === 409 && !error.changePassword) {
               errorMessage = $filter("translate")(
                 "common-header.user.error.duplicate-user", {
                   "username": $scope.user.username
                 });
+            } else if (error.changePassword) {
+              errorMessage = error.message;
             }
 
-            messageBox("common-header.user.error.update-user", errorMessage);
-          }
-        ).finally(function () {
-          $scope.loading = false;
-        });
+            messageBox("common-header.user.error.update-user",
+              errorMessage);
+          })
+          .finally(function () {
+            $scope.loading = false;
+          });
       }
     };
 
@@ -3416,6 +3534,9 @@ angular.module("risevision.common.header")
 
     $scope.forms = {};
 
+    $scope.toggleChangePassword = function () {
+      $scope.showChangePassword = !$scope.showChangePassword;
+    };
   }
 ]);
 
@@ -7866,10 +7987,14 @@ angular.module("risevision.common.components.logging")
             };
             riseAPILoader().then(function (coreApi) {
 <<<<<<< HEAD
+<<<<<<< HEAD
               return coreApi.userauth.updatePassword(obj);
 =======
               return coreApi.userauth.update(obj);
 >>>>>>> d73df7c... Updates from components repo
+=======
+              return coreApi.userauth.updatePassword(obj);
+>>>>>>> 8942891... Add password change feature
             })
               .then(function (resp) {
                 $log.debug("update user credentials resp", resp);
@@ -8023,12 +8148,17 @@ angular.module("risevision.common.components.logging")
   angular.module("risevision.common.components.userstate")
   // constants (you can override them in your app as needed)
 <<<<<<< HEAD
+<<<<<<< HEAD
   .value("PROFILE_PICTURE_URL",
     "https://www.gravatar.com/avatar/{emailMD5}?d=mm")
 =======
   .value("DEFAULT_PROFILE_PICTURE",
     "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm")
 >>>>>>> fb74778... Use Gravatar mm image
+=======
+  .value("PROFILE_PICTURE_URL",
+    "https://www.gravatar.com/avatar/{emailMD5}?d=mm")
+>>>>>>> 8942891... Add password change feature
     .factory("userState", [
       "$q", "$rootScope", "$window", "$log", "$location", "userInfoCache",
       "getUserProfile", "companyState", "objectHelper",

@@ -1609,7 +1609,10 @@ app.run(["$templateCache", function($templateCache) {
     "      <label>\n" +
     "        Username *\n" +
     "      </label>\n" +
-    "      <div ng-if=\"!isAdd\">{{user.username}}</div>\n" +
+    "      <div ng-if=\"!isAdd\">\n" +
+    "        <span>{{user.username}}</span>\n" +
+    "        <span><a href=\"\" ng-click=\"toggleChangePassword()\">Change password</a></span>\n" +
+    "      </div>\n" +
     "      <input id=\"user-settings-username\"\n" +
     "        type=\"email\" required name=\"username\"\n" +
     "        class=\"form-control\"\n" +
@@ -1618,6 +1621,58 @@ app.run(["$templateCache", function($templateCache) {
     "        />\n" +
     "        <p ng-show=\"forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine\"\n" +
     "          class=\"help-block validation-error-message-email\">User name must be a valid email address.</p>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\"\n" +
+    "    ng-if=\"!isAdd\"\n" +
+    "    ng-show=\"showChangePassword\"\n" +
+    "      ng-class=\"{ 'has-error' : (userPassword.currentPassword === '' && !forms.userSettingsForm.currentPassword.$pristine) || currentPasswordNotValid }\">\n" +
+    "      <label for=\"user-settings-current-password\">\n" +
+    "        Current Password *\n" +
+    "      </label>\n" +
+    "      <input id=\"user-settings-current-password\"\n" +
+    "        type=\"password\" name=\"currentPassword\"\n" +
+    "        class=\"form-control\"\n" +
+    "        ng-model=\"userPassword.currentPassword\"\n" +
+    "        />\n" +
+    "        <p ng-show=\"userPassword.currentPassword === '' && !forms.userSettingsForm.currentPassword.$pristine\"\n" +
+    "          class=\"help-block validation-error-message-email\">Current Password is required.</p>\n" +
+    "        <p ng-show=\"currentPasswordNotValid\"\n" +
+    "          class=\"help-block validation-error-message-mail\">Current Password is not valid.</p>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\"\n" +
+    "    ng-if=\"!isAdd\"\n" +
+    "    ng-show=\"showChangePassword\"\n" +
+    "      ng-class=\"{ 'has-error' : (userPassword.newPassword === '' && !forms.userSettingsForm.newPassword.$pristine) || newPasswordFormatNotValid }\">\n" +
+    "      <label for=\"user-settings-new-password\">\n" +
+    "        New Password *\n" +
+    "      </label>\n" +
+    "      <input id=\"user-settings-new-password\"\n" +
+    "        type=\"password\" name=\"newPassword\"\n" +
+    "        class=\"form-control\"\n" +
+    "        ng-model=\"userPassword.newPassword\"\n" +
+    "        />\n" +
+    "        <p ng-show=\"userPassword.newPassword === '' && !forms.userSettingsForm.newPassword.$pristine\"\n" +
+    "          class=\"help-block validation-error-message-email\">New Password is required.</p>\n" +
+    "        <p ng-show=\"newPasswordFormatNotValid\"\n" +
+    "          class=\"help-block validation-error-message-mail\">New Password must be at least four characters long.</p>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\"\n" +
+    "    ng-if=\"!isAdd\"\n" +
+    "    ng-show=\"showChangePassword\"\n" +
+    "      ng-class=\"{ 'has-error' : (userPassword.confirmPassword === '' && !forms.userSettingsForm.confirmPassword.$pristine) || confirmPasswordDoesNotMatch }\">\n" +
+    "      <label for=\"user-settings-confirm-password\">\n" +
+    "        Confirm Password *\n" +
+    "      </label>\n" +
+    "      <input id=\"user-settings-confirm-password\"\n" +
+    "        type=\"password\" name=\"confirmPassword\"\n" +
+    "        class=\"form-control\"\n" +
+    "        ng-model=\"userPassword.confirmPassword\"\n" +
+    "        />\n" +
+    "        <p ng-show=\"userPassword.confirmPassword === '' && !forms.userSettingsForm.confirmPassword.$pristine\"\n" +
+    "          class=\"help-block validation-error-message-email\">Confirm Password is required.</p>\n" +
+    "        <p ng-show=\"confirmPasswordDoesNotMatch\"\n" +
+    "          class=\"help-block validation-error-message-mail\">Confirm Password must match New Password.</p>\n" +
+    "        <hr />\n" +
     "    </div>\n" +
     "    <div class=\"form-group\"\n" +
     "      ng-class=\"{ 'has-error' : forms.userSettingsForm.firstName.$invalid && !forms.userSettingsForm.firstName.$pristine }\">\n" +

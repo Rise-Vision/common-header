@@ -191,9 +191,13 @@ describe("controller: user settings", function() {
     it("should save the user and close the modal",function(done){
       var userProfileSpy = sinon.spy(userState, "updateUserProfile");
 
+      $scope.showChangePassword = false;
       $scope.save();
+      $scope.$digest();
       expect($scope.loading).to.be.true;
+
       setTimeout(function() {
+        $scope.$digest();
         expect($scope.loading).to.be.false;
         userProfileSpy.should.have.been.once;
 
@@ -208,7 +212,9 @@ describe("controller: user settings", function() {
       createUserError = true;
       
       $scope.save();
+      $scope.$digest();
       setTimeout(function(){
+        $scope.$digest();
         expect(messageBoxStub).to.have.been.calledWith("common-header.user.error.update-user");
         expect(filterStub).to.have.not.been.called;
         
@@ -223,7 +229,9 @@ describe("controller: user settings", function() {
       createUserError = { code: 409 };
       
       $scope.save();
+      $scope.$digest();
       setTimeout(function(){
+        $scope.$digest();
         expect(messageBoxStub).to.have.been.calledWith("common-header.user.error.update-user");
         expect(filterStub).to.have.been.calledWith("common-header.user.error.duplicate-user", {
           "username": "user@example.io"
