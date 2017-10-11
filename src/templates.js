@@ -1367,22 +1367,19 @@ app.run(["$templateCache", function($templateCache) {
     "</div>\n" +
     "<div class=\"modal-body sign-out-modal\" stop-event=\"touchend\">\n" +
     "  <form role=\"form\">\n" +
-    "    <p ng-show=\"isRiseAuthUser\">\n" +
-    "      Do you want to sign out of your account?\n" +
-    "    </p>\n" +
-    "    <p ng-show=\"!isRiseAuthUser\">\n" +
+    "    <p>\n" +
     "      Signing out does not sign you out of your Google Account.\n" +
     "    </p>\n" +
-    "    <p ng-show=\"!isRiseAuthUser\">\n" +
+    "    <p>\n" +
     "      If you are on a shared computer you should sign out of your Google Account.\n" +
     "    </p>\n" +
     "    <p>\n" +
-    "      <button type=\"button\" class=\"btn btn-default sign-out-rv-only-button\" ng-click=\"signOut(false)\">\n" +
-    "        Sign Out <i class=\"fa fa-sign-out fa-lg icon-right\"></i>\n" +
+    "      <button type=\"button\" class=\"btn btn-default sign-out-rv-only-button\" ng-click=\"signOut(false)\">Sign Out\n" +
+    "        <i class=\"fa fa-sign-out fa-lg icon-right\"></i>\n" +
     "      </button>\n" +
     "    </p>\n" +
-    "      <button type=\"button\" class=\"btn btn-default sign-out-google-account\" ng-click=\"signOut(true)\" ng-show=\"!isRiseAuthUser\">\n" +
-    "        Sign Out of your Google Account <i class=\"fa fa-google-plus-square fa-lg icon-right\"></i>\n" +
+    "      <button type=\"button\" class=\"btn btn-default sign-out-google-account\" ng-click=\"signOut(true)\">Sign Out of your Google Account\n" +
+    "        <i class=\"fa fa-google-plus-square fa-lg icon-right\"></i>\n" +
     "      </button>\n" +
     "    <p>\n" +
     "    </p>\n" +
