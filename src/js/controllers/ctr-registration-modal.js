@@ -23,6 +23,7 @@ angular.module("risevision.common.header")
 
       $scope.profile = pick(copyOfProfile, "email", "mailSyncEnabled",
         "firstName", "lastName");
+      $scope.profile.email = $scope.profile.email || userState.getUsername();
       $scope.registering = false;
 
       $scope.profile.accepted =
@@ -70,7 +71,6 @@ angular.module("risevision.common.header")
         $scope.forms.registrationForm.accepted.$pristine = false;
         $scope.forms.registrationForm.firstName.$pristine = false;
         $scope.forms.registrationForm.lastName.$pristine = false;
-        $scope.forms.registrationForm.email.$pristine = false;
 
         if (!$scope.forms.registrationForm.$invalid) {
           //update terms and conditions date

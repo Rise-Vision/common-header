@@ -1258,16 +1258,6 @@ app.run(["$templateCache", function($templateCache) {
     "          <p ng-show=\"forms.registrationForm.lastName.$invalid && !forms.registrationForm.lastName.$pristine\"\n" +
     "            class=\"help-block validation-error-message-last-name\">Enter Last Name.</p>\n" +
     "        </div>\n" +
-    "        <!-- Email -->\n" +
-    "        <div class=\"form-group\" ng-class=\"{ 'has-error' : forms.registrationForm.email.$invalid && !forms.registrationForm.email.$pristine }\">\n" +
-    "          <label for=\"email\">Email <span>(We'll only send you system notices and other critical information)</span></label>\n" +
-    "          <input type=\"email\" class=\"form-control email\"\n" +
-    "          name=\"email\"\n" +
-    "          id=\"email\" required\n" +
-    "          ng-model=\"profile.email\">\n" +
-    "          <p ng-show=\"forms.registrationForm.email.$invalid && !forms.registrationForm.email.$pristine\"\n" +
-    "            class=\"help-block validation-error-message-email\">Enter a valid email.</p>\n" +
-    "        </div>\n" +
     "        <!-- Website -->\n" +
     "        <div class=\"form-group\" ng-show=\"newUser\" ng-class=\"{'has-error': forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine}\">\n" +
     "          <label for=\"website\">Website</label>\n" +
