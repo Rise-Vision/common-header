@@ -1229,16 +1229,6 @@ app.run(["$templateCache", function($templateCache) {
     "          <p ng-show=\"forms.registrationForm.lastName.$invalid && !forms.registrationForm.lastName.$pristine\"\n" +
     "            class=\"help-block validation-error-message-last-name\">Enter Last Name.</p>\n" +
     "        </div>\n" +
-    "        <!-- Email -->\n" +
-    "        <div class=\"form-group\" ng-class=\"{ 'has-error' : forms.registrationForm.email.$invalid && !forms.registrationForm.email.$pristine }\">\n" +
-    "          <label for=\"email\">Email <span>(We'll only send you system notices and other critical information)</span></label>\n" +
-    "          <input type=\"email\" class=\"form-control email\"\n" +
-    "          name=\"email\"\n" +
-    "          id=\"email\" required\n" +
-    "          ng-model=\"profile.email\">\n" +
-    "          <p ng-show=\"forms.registrationForm.email.$invalid && !forms.registrationForm.email.$pristine\"\n" +
-    "            class=\"help-block validation-error-message-email\">Enter a valid email.</p>\n" +
-    "        </div>\n" +
     "        <!-- Website -->\n" +
     "        <div class=\"form-group\" ng-show=\"newUser\">\n" +
     "          <label for=\"website\">Company Website</label>\n" +
@@ -2556,6 +2546,7 @@ angular.module("risevision.common.header")
 
       $scope.profile = pick(copyOfProfile, "email", "mailSyncEnabled",
         "firstName", "lastName");
+      $scope.profile.email = $scope.profile.email || userState.getUsername();
       $scope.registering = false;
 
       $scope.profile.accepted =
@@ -2603,7 +2594,6 @@ angular.module("risevision.common.header")
         $scope.forms.registrationForm.accepted.$pristine = false;
         $scope.forms.registrationForm.firstName.$pristine = false;
         $scope.forms.registrationForm.lastName.$pristine = false;
-        $scope.forms.registrationForm.email.$pristine = false;
 
         if (!$scope.forms.registrationForm.$invalid) {
           //update terms and conditions date
@@ -6321,6 +6311,10 @@ angular.module("risevision.common.header")
         ],
         url: "/unauthorized/:state",
         controller: "LoginCtrl",
+        params: {
+          passwordReset: null,
+          accountConfirmed: null
+        },
         resolve: {
           isSignUp: function () {
             return false;
@@ -8014,7 +8008,9 @@ angular.module("risevision.common.components.userstate")
         })
         .finally(function () {
           $loading.stopGlobal("auth-confirm-account");
-          $state.go("common.auth.unauthorized.final");
+          $state.go("common.auth.unauthorized.final", {
+            accountConfirmed: true
+          });
         });
     }
   ]);
@@ -8051,8 +8047,12 @@ angular.module("risevision.common.components.userstate")
       isSignUp) {
       $scope.forms = {};
       $scope.credentials = {};
+      $scope.messages = {};
       $scope.errors = {};
       $scope.isSignUp = isSignUp;
+
+      $scope.messages.passwordReset = $stateParams.passwordReset;
+      $scope.messages.accountConfirmed = $stateParams.accountConfirmed;
 
       $scope.googleLogin = function (endStatus) {
         $loading.startGlobal("auth-buttons-login");
@@ -8193,7 +8193,9 @@ angular.module("risevision.common.components.userstate")
           .newPassword)
           .then(function () {
             $log.log("Password updated");
-            $state.go("common.auth.unauthorized.final");
+            $state.go("common.auth.unauthorized.final", {
+              passwordReset: true
+            });
           })
           .catch(function (err) {
             var error = err.result && err.result.error && err.result.error.message;
@@ -8252,7 +8254,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('userstate/auth-form.html',
-    '<form id="forms.loginForm" name="forms.loginForm" role="form" novalidate=""><div><div class="panel-body bg-danger u_margin-sm-top" style="display: block;" ng-show="errors.duplicateError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>This email address is already registered. You can <a href="#" ng-click="showSignIn()">sign in</a>with this address.</span></p></div><div class="panel-body bg-danger u_margin-sm-top" style="display: block;" ng-show="errors.loginError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Your email address/password combination is incorrect.</span></p></div><div class="panel-body bg-danger u_margin-sm-top" style="display: block;" ng-show="errors.unconfirmedError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Your email address has not been confirmed.<br><a href="#">Resend Email Confirmation</a></span></p></div><div class="panel-body bg-info u_margin-sm-top" style="display: block;" ng-show="errors.confirmationRequired"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>We\'ve sent a confirmation email to {{credentials.username}}.<br>Please check your inbox to complete your account registration.</span></p></div></div><div class="u_margin-sm-top" ng-show="!errors.confirmationRequired"><div class="form-group" ng-class="{\'has-error\': (forms.loginForm.$submitted && forms.loginForm.username.$invalid)}" show-errors=""><label class="control-label">Email</label> <input type="email" class="form-control" placeholder="Enter Username" id="username" name="username" ng-model="credentials.username" required="" focus-me="true"><p class="text-danger" ng-show="forms.loginForm.$submitted && forms.loginForm.username.$invalid">Please enter an Email</p></div><div class="form-group" ng-class="{\'has-error\': (forms.loginForm.$submitted && !isPasswordValid() && isSignUp), \'has-message\': isPasswordValid() && isSignUp}" show-errors=""><label class="control-label">Password</label> <input type="password" class="form-control" placeholder="Enter Password" id="password" name="password" ng-model="credentials.password" required=""><p class="text-danger" ng-show="forms.loginForm.$submitted && !isPasswordValid() && isSignUp">Please enter at least 4 characters.</p><p class="text-warning" ng-show="isPasswordValid() && isSignUp">A strong password is at least 8 characters, includes uppercase/lowercase letters, and one or more numbers.</p></div></div></form>');
+    '<form id="forms.loginForm" name="forms.loginForm" role="form" novalidate=""><div><div class="panel-body bg-danger u_margin-sm-top" ng-show="errors.duplicateError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>This email address is already registered. You can <a href="#" ng-click="showSignIn()">sign in</a>with this address.</span></p></div><div class="panel-body bg-danger u_margin-sm-top" ng-show="errors.loginError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Your email address/password combination is incorrect.</span></p></div><div class="panel-body bg-danger u_margin-sm-top" ng-show="errors.unconfirmedError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Your email address has not been confirmed.<br><a href="#">Resend Email Confirmation</a></span></p></div><div class="panel-body bg-info u_margin-sm-top" ng-show="errors.confirmationRequired"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>We\'ve sent a confirmation email to {{credentials.username}}.<br>Please check your inbox to complete your account registration.</span></p></div><div class="panel-body bg-info u_margin-sm-top" ng-show="messages.passwordReset"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Password successfully updated.<br>Please sign in to proceed.</span></p></div><div class="panel-body bg-info u_margin-sm-top" ng-show="messages.accountConfirmed"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Account successfully confirmed.<br>Please sign in to proceed.</span></p></div></div><div class="u_margin-sm-top" ng-show="!errors.confirmationRequired"><div class="form-group" ng-class="{\'has-error\': (forms.loginForm.$submitted && forms.loginForm.username.$invalid)}" show-errors=""><label class="control-label">Email</label> <input type="email" class="form-control" placeholder="Enter Username" id="username" name="username" ng-model="credentials.username" required="" focus-me="true"><p class="text-danger" ng-show="forms.loginForm.$submitted && forms.loginForm.username.$invalid">Please enter an Email</p></div><div class="form-group" ng-class="{\'has-error\': (forms.loginForm.$submitted && !isPasswordValid() && isSignUp), \'has-message\': isPasswordValid() && isSignUp}" show-errors=""><label class="control-label">Password</label> <input type="password" class="form-control" placeholder="Enter Password" id="password" name="password" ng-model="credentials.password" required=""><p class="text-danger" ng-show="forms.loginForm.$submitted && !isPasswordValid() && isSignUp">Please enter at least 4 characters.</p><p class="text-warning" ng-show="isPasswordValid() && isSignUp">A strong password is at least 8 characters, includes uppercase/lowercase letters, and one or more numbers.</p></div></div></form>');
 }]);
 })();
 
