@@ -537,7 +537,7 @@ app.run(["$templateCache", function($templateCache) {
     "      </label>\n" +
     "      <select id=\"company-size\" class=\"form-control\" ng-model=\"company.companySize\">\n" +
     "        <option value=\"\" ng-show=\"false\">&lt; Select Size &gt;</option>\n" +
-    "        <option ng-repeat=\"size in COMPANY_SIZE_FIELDS\" value=\"{{size[0]}}\">{{size[1]}}</option>\n" +
+    "        <option ng-repeat=\"size in COMPANY_SIZE_FIELDS\" value=\"{{size[1]}}\">{{size[0]}}</option>\n" +
     "      </select>\n" +
     "    </div>\n" +
     "  </div>\n" +
@@ -548,7 +548,7 @@ app.run(["$templateCache", function($templateCache) {
     "      </label>\n" +
     "      <select id=\"company-industry\" class=\"form-control selectpicker\" ng-model=\"company.companyIndustry\">\n" +
     "        <option value=\"\" ng-show=\"false\">&lt; Select Industry &gt;</option>\n" +
-    "        <option ng-repeat=\"industry in COMPANY_INDUSTRY_FIELDS\" value=\"{{industry[0]}}\">{{industry[1]}}</option>\n" +
+    "        <option ng-repeat=\"industry in COMPANY_INDUSTRY_FIELDS | orderBy:industry[0]\" value=\"{{industry[1]}}\">{{industry[0]}}</option>\n" +
     "      </select>\n" +
     "    </div>\n" +
     "  </div>\n" +
@@ -617,11 +617,14 @@ app.run(["$templateCache", function($templateCache) {
     "</div>\n" +
     "<div class=\"row\">\n" +
     "  <div class=\"col-md-6\">\n" +
-    "    <div class=\"form-group\">\n" +
+    "    <div class=\"form-group\" ng-class=\"{'has-error': forms.companyForm.website.$error.website}\">\n" +
     "      <label for=\"company-settings-website\" class=\"control-label\">\n" +
     "        Website\n" +
     "      </label>\n" +
-    "      <input id=\"company-settings-website\" type=\"text\" class=\"form-control\" ng-model=\"company.website\"/>\n" +
+    "      <input id=\"company-settings-website\" name=\"website\" type=\"text\" placeholder=\"http://\" class=\"form-control\" ng-model=\"company.website\" \n" +
+    "      website-validator />\n" +
+    "      <p ng-show=\"forms.companyForm.website.$error.website\"\n" +
+    "        class=\"help-block validation-error-message-website\">Please provide a valid URL.</p>\n" +
     "    </div>\n" +
     "  </div>\n" +
     "  <div class=\"col-md-6\">\n" +
@@ -660,8 +663,8 @@ app.run(["$templateCache", function($templateCache) {
     "  <div class=\"modal-body u_padding-lg\" stop-event=\"touchend\">    \n" +
     "    <form id=\"companyIcpForm\" role=\"form\" name=\"forms.companyIcpForm\">\n" +
     "      <div class=\"row\">\n" +
-    "        <div class=\"col-md-4\">\n" +
-    "          <div class=\"form-group\">\n" +
+    "        <div class=\"col-md-3\">\n" +
+    "          <div class=\"form-group\" ng-class=\"{ 'has-error' : forms.companyIcpForm.name.$invalid && !forms.companyIcpForm.name.$pristine }\">\n" +
     "            <label for=\"company-name\" class=\"control-label\">\n" +
     "              Company Name\n" +
     "            </label>\n" +
@@ -670,26 +673,32 @@ app.run(["$templateCache", function($templateCache) {
     "          </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-md-4\">\n" +
+    "        <div class=\"col-md-3\">\n" +
     "          <div class=\"form-group\">\n" +
     "            <label for=\"company-size\" class=\"control-label\">\n" +
     "              Company Size\n" +
     "            </label>\n" +
     "            <select id=\"company-size\" class=\"form-control\" ng-model=\"company.companySize\">\n" +
     "              <option value=\"\" ng-show=\"false\">&lt; Select Size &gt;</option>\n" +
-    "              <option ng-repeat=\"size in COMPANY_SIZE_FIELDS\" value=\"{{size[0]}}\">{{size[1]}}</option>\n" +
+    "              <option ng-repeat=\"size in COMPANY_SIZE_FIELDS\" value=\"{{size[1]}}\">{{size[0]}}</option>\n" +
     "            </select>\n" +
     "          </div>\n" +
     "        </div>\n" +
-    "        <div class=\"col-md-4\">\n" +
+    "        <div class=\"col-md-3\">\n" +
     "          <div class=\"form-group\">\n" +
     "            <label for=\"company-role\" class=\"control-label\">\n" +
     "              What's your title?\n" +
     "            </label>\n" +
     "            <select id=\"company-role\" class=\"form-control selectpicker\" ng-model=\"user.companyRole\">\n" +
     "              <option value=\"\" ng-show=\"false\">&lt; Select Role &gt;</option>\n" +
-    "              <option ng-repeat=\"role in COMPANY_ROLE_FIELDS\" value=\"{{role[0]}}\">{{role[1]}}</option>\n" +
+    "              <option ng-repeat=\"role in COMPANY_ROLE_FIELDS\" value=\"{{role[1]}}\">{{role[0]}}</option>\n" +
     "            </select>\n" +
+    "          </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"col-md-3\">\n" +
+    "          <div class=\"form-group\" ng-class=\"{ 'has-error' : forms.companyIcpForm.email.$invalid && !forms.companyIcpForm.email.$pristine }\">\n" +
+    "            <label for=\"email\" class=\"control-label\">Preferred Email</label>\n" +
+    "            <input type=\"email\" class=\"form-control email\" name=\"email\" id=\"email\" required ng-model=\"user.email\">\n" +
     "          </div>\n" +
     "        </div>\n" +
     "      </div>\n" +
@@ -701,12 +710,32 @@ app.run(["$templateCache", function($templateCache) {
     "\n" +
     "      <div class=\"scrollable-list\">\n" +
     "        <ul id=\"\" class=\"u_margin-md-top list-unstyled pt-media-list pt-onboarding-list text-center\">\n" +
-    "          <li class=\"no-select\" ng-class=\"{'selected-border' : company.companyIndustry === industry[0]}\" ng-if=\"industry[2]\" ng-repeat=\"industry in COMPANY_INDUSTRY_FIELDS\"  ng-click=\"selectIndustry(industry[0])\"> \n" +
-    "            <img ng-class=\"{{imgClasses}}\" src=\"{{industry[2]}}\"/>\n" +
-    "            <input type=\"checkbox\" class=\"checkbox\" ng-checked=\"company.companyIndustry === industry[0]\" />\n" +
-    "            <span class=\"u_ellipsis-md ng-binding\"> <b>{{industry[1]}}</b> </span>\n" +
+    "          <li class=\"no-select\" ng-class=\"{'selected-border' : company.companyIndustry === industry[1]}\" ng-repeat=\"industry in ICON_INDUSTRY_FIELDS\" ng-click=\"selectIndustry(industry[1]);\"> \n" +
+    "            <img ng-class=\"{{imgClasses}}\" src=\"{{industry[2]}}\" />\n" +
+    "            <input type=\"checkbox\" class=\"checkbox\" ng-checked=\"company.companyIndustry === industry[1]\" />\n" +
+    "            <span class=\"u_ellipsis-md ng-binding\"> <b>{{industry[0]}}</b> </span>\n" +
+    "          </li>\n" +
+    "          <li class=\"no-select\" ng-class=\"{'selected-border' : otherSelected }\" ng-click=\"selectOther()\"> \n" +
+    "            <img ng-class=\"{{imgClasses}}\" src=\"https://cdn2.hubspot.net/hubfs/2700250/Assets%20May%5B17%5D/tick.svg\" />\n" +
+    "            <input type=\"checkbox\" class=\"checkbox\" ng-checked=\"otherSelected\" />\n" +
+    "            <span class=\"u_ellipsis-md ng-binding\"> <b>Other</b> </span>\n" +
     "          </li>\n" +
     "        </ul>\n" +
+    "      </div>\n" +
+    "      \n" +
+    "      <div class=\"text-center\" id=\"pt-industry-selector\" ng-show=\"otherSelected\">\n" +
+    "        <div class=\"form-inline\">\n" +
+    "          <div class=\"form-group\">\n" +
+    "            <img src=\"https://s3.amazonaws.com/Rise-Images/UI/r_arrow.png\" class=\"icon-left\">\n" +
+    "            <label for=\"company-industry\" class=\"control-label\">\n" +
+    "              Please specify: \n" +
+    "            </label>\n" +
+    "            <select id=\"company-industry\" class=\"form-control selectpicker\" ng-model=\"company.companyIndustry\">\n" +
+    "              <option value=\"\" ng-show=\"false\">&lt; Select Industry &gt;</option>\n" +
+    "              <option ng-repeat=\"industry in DROPDOWN_INDUSTRY_FIELDS | orderBy:industry[0]\" value=\"{{industry[1]}}\" ng-if=\"!industry[2]\">{{industry[0]}}</option>\n" +
+    "            </select>\n" +
+    "          </div>\n" +
+    "        </div>\n" +
     "      </div>\n" +
     "    </form>\n" +
     "  </div> <!-- //Modal Body -->\n" +
@@ -786,7 +815,7 @@ app.run(["$templateCache", function($templateCache) {
     "  <h2 id=\"company-settings-label\" class=\"modal-title\">Company Settings</h2>\n" +
     "</div>\n" +
     "<div class=\"modal-body company-settings-modal\" stop-event=\"touchend\">\n" +
-    "  <form id=\"companyForm\" role=\"form\" name=\"forms.companyForm\">\n" +
+    "  <form id=\"companyForm\" role=\"form\" name=\"forms.companyForm\" novalidate>\n" +
     "    <div ng-include=\"'company-fields.html'\"></div>\n" +
     "    <div class=\"form-group\">\n" +
     "      <label>\n" +
@@ -1230,12 +1259,14 @@ app.run(["$templateCache", function($templateCache) {
     "            class=\"help-block validation-error-message-last-name\">Enter Last Name.</p>\n" +
     "        </div>\n" +
     "        <!-- Website -->\n" +
-    "        <div class=\"form-group\" ng-show=\"newUser\">\n" +
-    "          <label for=\"website\">Company Website</label>\n" +
-    "          <input type=\"text\" class=\"form-control website\"\n" +
+    "        <div class=\"form-group\" ng-show=\"newUser\" ng-class=\"{'has-error': forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine}\">\n" +
+    "          <label for=\"website\">Website</label>\n" +
+    "          <input type=\"text\" class=\"form-control website\" placeholder=\"http://\"\n" +
     "          name=\"website\"\n" +
     "          id=\"website\"\n" +
-    "          ng-model=\"company.website\">\n" +
+    "          ng-model=\"company.website\" website-validator>\n" +
+    "          <p ng-show=\"forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine\"\n" +
+    "            class=\"help-block validation-error-message-website\">Please provide a valid URL.</p>\n" +
     "        </div>\n" +
     "        <!-- Terms of Service and Privacy -->\n" +
     "        <div class=\"checkbox form-group\" ng-class=\"{ 'has-error' : forms.registrationForm.accepted.$invalid && !userForm.accepted.$pristine }\">\n" +
@@ -1445,7 +1476,7 @@ app.run(["$templateCache", function($templateCache) {
     "  <h2 id=\"sub-company-label\" class=\"modal-title\">Add Sub-Company</h2>\n" +
     "</div>\n" +
     "<div class=\"modal-body add-subcompany-modal\" stop-event=\"touchend\">\n" +
-    "  <form role=\"form\" name=\"forms.companyForm\">\n" +
+    "  <form role=\"form\" name=\"forms.companyForm\" novalidate>\n" +
     "    <div ng-include=\"'company-fields.html'\"></div>\n" +
     "    <div class=\"form-group\">\n" +
     "      <a href=\"\" data-dismiss=\"modal\" data-toggle=\"modal\" class=\"move-subcompany-button\"\n" +
@@ -1674,7 +1705,7 @@ app.run(["$templateCache", function($templateCache) {
     "      </label>\n" +
     "      <select id=\"company-role\" class=\"form-control selectpicker\" ng-model=\"user.companyRole\">\n" +
     "        <option value=\"\" ng-show=\"false\">&lt; Select Role &gt;</option>\n" +
-    "        <option ng-repeat=\"role in COMPANY_ROLE_FIELDS\" value=\"{{role[0]}}\">{{role[1]}}</option>\n" +
+    "        <option ng-repeat=\"role in COMPANY_ROLE_FIELDS\" value=\"{{role[1]}}\">{{role[0]}}</option>\n" +
     "      </select>\n" +
     "    </div>\n" +
     "\n" +

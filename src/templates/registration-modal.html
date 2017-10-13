@@ -34,12 +34,14 @@ rv-spinner-start-active="1">
             class="help-block validation-error-message-last-name">Enter Last Name.</p>
         </div>
         <!-- Website -->
-        <div class="form-group" ng-show="newUser">
-          <label for="website">Company Website</label>
-          <input type="text" class="form-control website"
+        <div class="form-group" ng-show="newUser" ng-class="{'has-error': forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine}">
+          <label for="website">Website</label>
+          <input type="text" class="form-control website" placeholder="http://"
           name="website"
           id="website"
-          ng-model="company.website">
+          ng-model="company.website" website-validator>
+          <p ng-show="forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine"
+            class="help-block validation-error-message-website">Please provide a valid URL.</p>
         </div>
         <!-- Terms of Service and Privacy -->
         <div class="checkbox form-group" ng-class="{ 'has-error' : forms.registrationForm.accepted.$invalid && !userForm.accepted.$pristine }">

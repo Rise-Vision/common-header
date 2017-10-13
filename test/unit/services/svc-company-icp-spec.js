@@ -211,7 +211,8 @@ describe("service: companyIcpFactory:", function() {
 
       userProfile = {
         creationDate: oneMonthAgo,
-        companyRole: "Test Role"
+        companyRole: "Test Role",
+        email: "testEmail"
       };
       companyProfile = {
         name: "Test Company",
@@ -270,11 +271,14 @@ describe("service: companyIcpFactory:", function() {
     
     it("should save user and company fields on close", function(done) {
       userProfile.companyRole = "Role";
+      userProfile.email = "testEmail";
+      userProfile.randomField = "random";
       companyProfile.companySize = "10";
+      companyProfile.randomField = "random";
       $modalDeferred.resolve({user: userProfile, company: companyProfile});
       
       setTimeout(function() {
-        updateUserSpy.should.have.been.calledWith("username", { dataCollectionDate: sinon.match.date, companyRole: "Role" });
+        updateUserSpy.should.have.been.calledWith("username", { dataCollectionDate: sinon.match.date, companyRole: "Role", email: "testEmail" });
         updateCompanySpy.should.have.been.calledWith("cid", { name: "Test Company", companySize: "10" });
         $log.debug.should.have.been.calledOnce;
         
