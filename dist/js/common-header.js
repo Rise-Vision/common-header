@@ -1558,6 +1558,9 @@ app.run(["$templateCache", function($templateCache) {
     "  </h2>\n" +
     "</div>\n" +
     "<div class=\"modal-body user-settings-modal\" stop-event=\"touchend\">\n" +
+    "  <div ng-if=\"isAdd\" class=\"alert alert-info\">\n" +
+    "    A Google account is no longer required by users being added to your Company. Any email address can be used!\n" +
+    "  </div>\n" +
     "  <form id=\"userSettingsForm\" role=\"form\" novalidate name=\"forms.userSettingsForm\">\n" +
     "    <div id=\"passwordAlert\" class=\"animated\" ng-if=\"!isAdd\" ng-show=\"!isRiseAuthUser && showChangePassword\">\n" +
     "      <div class=\"panel-body bg-info u_margin-sm-bottom\">\n" +
