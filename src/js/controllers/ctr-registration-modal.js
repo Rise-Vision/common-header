@@ -100,7 +100,7 @@ angular.module("risevision.common.header")
                   });
                   bigQueryLogging.logEvent("User Registered");
                   $rootScope.$broadcast(
-                    "risevision.user.registration.completed");
+                    "risevision.user.authorized");
 
                   $modalInstance.close("success");
                   $loading.stop("registration-modal");
