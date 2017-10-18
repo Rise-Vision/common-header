@@ -6606,7 +6606,9 @@ angular.module("risevision.common.header")
   ])
 
   .run(["$rootScope", "$state", "$stateParams", "urlStateService",
-    function ($rootScope, $state, $stateParams, urlStateService) {
+    "userState",
+    function ($rootScope, $state, $stateParams, urlStateService, userState) {
+      userState._restoreState();
 
       $rootScope.$on("risevision.user.signedOut", function () {
         $state.go("common.auth.unauthorized");
@@ -8290,7 +8292,6 @@ angular.module("risevision.common.components.userstate")
     function ($log, $stateParams, userState, urlStateService) {
       $log.debug("URL params", $stateParams);
 
-      userState._restoreState();
       if ($stateParams.access_token) {
         userState._setUserToken($stateParams);
       }
