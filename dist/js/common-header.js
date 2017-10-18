@@ -6660,7 +6660,7 @@ angular.module("risevision.common.components.userstate")
             var newState;
 
             if (!userState.isLoggedIn()) {
-              newState = "common.auth.unauthorized";
+              newState = "common.auth.createaccount";
             } else if ($state.get("common.auth.unregistered")) {
               newState = "common.auth.unregistered";
             }
@@ -8524,7 +8524,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('userstate/login.html',
-    '<h1 class="u_remove-top">Sign In</h1><p class="lead text-muted">to your Rise Vision account</p><div class="col-xs-12 col-md-8"><button class="btn btn-google-auth btn-hg" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign in with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group"><button class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="customLogin(\'registrationComplete\')"><span translate="Sign In"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted"><a id="sign-in-link" href="#" ui-sref="common.auth.requestpasswordreset">Forgot your password?</a></p><p class="text-muted">Don\'t have an account? <a id="sign-in-link" ui-sref="common.auth.createaccount">Sign up</a></p></div>');
+    '<h1 class="u_remove-top">Sign In</h1><p class="lead text-muted">to your Rise Vision account</p><div class="col-xs-12 col-md-8"><button class="btn btn-google-auth btn-hg" id="sign-in-google-link" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign in with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group"><button class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="customLogin(\'registrationComplete\')"><span translate="Sign In"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted"><a id="reset-password-link" ui-sref="common.auth.requestpasswordreset">Forgot your password?</a></p><p class="text-muted">Don\'t have an account? <a id="sign-up-link" ui-sref="common.auth.createaccount">Sign up</a></p></div>');
 }]);
 })();
 
