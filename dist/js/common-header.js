@@ -6614,7 +6614,7 @@ angular.module("risevision.common.header")
 
       $rootScope.$on("$stateChangeStart", function (event, toState,
         toParams, fromState, fromParams) {
-        if ((toState.name === "common.auth.unauthorized" ||
+        if (toState && (toState.name === "common.auth.unauthorized" ||
           toState.name === "common.auth.unregistered" ||
           toState.name === "common.auth.createaccount") && !toParams.state) {
           event.preventDefault();
@@ -8355,22 +8355,6 @@ angular.module("risevision.common.components.userstate")
         return userAuthFactory.isPasswordValid($scope.credentials.password);
       };
 
-      $scope.showSignUp = function () {
-        var stateString = urlStateService.get();
-
-        $state.go("common.auth.createaccount.final", {
-          state: $stateParams.state
-        });
-      };
-
-      $scope.showSignIn = function () {
-        var stateString = urlStateService.get();
-
-        $state.go("common.auth.unauthorized.final", {
-          state: $stateParams.state
-        });
-      };
-
       $scope.createAccount = function (endStatus) {
         $scope.errors = {};
 
@@ -8491,22 +8475,6 @@ angular.module("risevision.common.components.userstate")
             $loading.stopGlobal("auth-request-password-reset");
           });
       };
-    }
-  ]);
-
-"use strict";
-
-angular.module("risevision.common.components.userstate")
-  .controller("UrlStateCtrl", ["$state", "urlStateService",
-    function ($state, urlStateService) {
-      if ($state.current.name.indexOf(".final") === -1) {
-        var stateString = urlStateService.get();
-        var newState = $state.current.name + ".final";
-
-        $state.go(newState, {
-          state: stateString
-        });
-      }
     }
   ]);
 
