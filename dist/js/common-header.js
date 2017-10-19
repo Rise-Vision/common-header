@@ -8315,9 +8315,9 @@ angular.module("risevision.common.components.userstate")
 angular.module("risevision.common.components.userstate")
   .controller("LoginCtrl", ["$scope", "$loading", "$stateParams",
     "$state", "userAuthFactory", "customAuthFactory", "uiFlowManager",
-    "urlStateService", "userState", "$window", "isSignUp",
+    "urlStateService", "userState", "isSignUp",
     function ($scope, $loading, $stateParams, $state, userAuthFactory,
-      customAuthFactory, uiFlowManager, urlStateService, userState, $window,
+      customAuthFactory, uiFlowManager, urlStateService, userState,
       isSignUp) {
       $scope.forms = {};
       $scope.credentials = {};
