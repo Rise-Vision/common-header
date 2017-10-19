@@ -21,7 +21,6 @@
   "dependencies": {
     "ngstorage": "0.3.0",
     "angular": "~1.5.0",
-    "angular-route": "~1.5.0",
     "angular-sanitize": "~1.5.0",
     "angular-animate": "~1.5.0",
     "angular-bootstrap": "~0.13.0",
@@ -33,7 +32,7 @@
     "jquery": "~1.11.1",
     "rv-common-style": "https://github.com/Rise-Vision/common-style.git#v1.4.28",
     "rv-loading": "https://github.com/Rise-Vision/rv-loading.git",
-    "rv-common-app-components": "https://github.com/Rise-Vision/common-app-components.git#feature/custom-auth",
+    "rv-common-app-components": "https://github.com/Rise-Vision/common-app-components.git#fix/e2e",
     "component-subscription-status": "https://github.com/Rise-Vision/component-subscription-status.git",
     "rv-common-i18n": "https://github.com/Rise-Vision/common-i18n.git",
     "q": "1.0.1",
