@@ -50,7 +50,8 @@ describe("controller: signout button ", function() {
       return {
         isRiseAuthUser: function() {
           return false;
-        }
+        },
+        _restoreState: function() {}
       };
     });
 
