@@ -97,11 +97,6 @@ angular.module("risevision.common.header", [
         $scope.hideHelpMenu = attr.hideHelpMenu !== "0" &&
           attr.hideHelpMenu !== "false";
 
-        // used by userState; determines if the URL root is used for
-        // Authentication redirect
-        $rootScope.redirectToRoot = attr.redirectToRoot !== "0" &&
-          attr.redirectToRoot !== "false";
-
         // disable opening home page in new tab (default true)
         $rootScope.newTabHome = attr.newTabHome !== "0" &&
           attr.newTabHome !== "false";

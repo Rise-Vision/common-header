@@ -73,7 +73,7 @@ describe("controller: user settings", function() {
   }));
   var $scope, userProfile, savedUser, userState, $modalInstance, createUserError,
   trackerCalled, messageBoxStub, filterStub;
-  var isRiseAdmin = true, isUserAdmin = true, isRiseVisionUser = true;
+  var isRiseAdmin = true, isUserAdmin = true, isRiseVisionUser = true, isRiseAuthUser = false;
   beforeEach(function(){
     createUserError = false;
     trackerCalled = undefined;
@@ -110,7 +110,11 @@ describe("controller: user settings", function() {
         },
         isRiseVisionUser: function() {
           return isRiseVisionUser;
-        }
+        },
+        isRiseAuthUser: function() {
+          return isRiseAuthUser;
+        },
+        _state: {}
       };
     };
     inject(function($injector,$rootScope, $controller){
@@ -190,9 +194,13 @@ describe("controller: user settings", function() {
     it("should save the user and close the modal",function(done){
       var userProfileSpy = sinon.spy(userState, "updateUserProfile");
 
+      $scope.showChangePassword = false;
       $scope.save();
+      $scope.$digest();
       expect($scope.loading).to.be.true;
+
       setTimeout(function() {
+        $scope.$digest();
         expect($scope.loading).to.be.false;
         userProfileSpy.should.have.been.once;
 
@@ -207,7 +215,9 @@ describe("controller: user settings", function() {
       createUserError = true;
       
       $scope.save();
+      $scope.$digest();
       setTimeout(function(){
+        $scope.$digest();
         expect(messageBoxStub).to.have.been.calledWith("common-header.user.error.update-user");
         expect(filterStub).to.have.not.been.called;
         
@@ -222,7 +232,9 @@ describe("controller: user settings", function() {
       createUserError = { code: 409 };
       
       $scope.save();
+      $scope.$digest();
       setTimeout(function(){
+        $scope.$digest();
         expect(messageBoxStub).to.have.been.calledWith("common-header.user.error.update-user");
         expect(filterStub).to.have.been.calledWith("common-header.user.error.duplicate-user", {
           "username": "user@example.io"

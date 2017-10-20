@@ -39,25 +39,58 @@ describe("controller: signout button ", function() {
       };
     });
 
+    $provide.factory("$log", function(){
+      return {
+        debug: function() {},
+        error: function() {}
+      };
+    });
+
+    $provide.factory("userState", function() {
+      return {
+        isRiseAuthUser: function() {
+          return false;
+        },
+        _restoreState: function() {}
+      };
+    });
+
+    $provide.factory("userAuthFactory", function() {
+      return {
+        signOut: sinon.stub().returns(Q.resolve())
+      };
+    });
+
     $translateProvider.useLoader("customLoader");
   }));
-  var $scope, invalidatedStatus, confirmResponse;
+  var $scope, invalidatedStatus, confirmResponse, userState, userAuthFactory, sandbox;
   
   beforeEach(function() {
+    sandbox = sinon.sandbox.create();
+
     confirmResponse = true;
     invalidatedStatus = undefined;
     inject(function($injector, $rootScope, $controller){
       $scope = $rootScope.$new();
 
+      userState = $injector.get("userState");
+      userAuthFactory = $injector.get("userAuthFactory");
+
       $controller("SignOutButtonCtrl", {
         $scope : $scope,
         $modal : $injector.get("$modal"),
-        uiFlowManager: $injector.get("uiFlowManager")
+        uiFlowManager: $injector.get("uiFlowManager"),
+        userState: userState,
+        userAuthFactory: userAuthFactory
       });
       $scope.$digest();
     });
   });
-  
+
+  afterEach(function() {
+    sandbox.restore();
+  });
+
   it("should initialize",function(){
     expect($scope).to.be.truely;
     expect($scope.logout).to.exist;
@@ -68,10 +101,22 @@ describe("controller: signout button ", function() {
 
     setTimeout(function() {
       expect(invalidatedStatus).to.equal("registrationComplete");
+      expect(userAuthFactory.signOut).to.have.not.been.called;
+
+      done();
+    }, 10);
+  });
+
+  it("should sign out a Custom Auth user: ", function(done) {
+    sandbox.stub(userState, "isRiseAuthUser").returns(true);
+
+    $scope.logout();
+
+    setTimeout(function() {
+      expect(userAuthFactory.signOut).to.have.been.called;
 
       done();
     }, 10);
   });
 
 });
-  

@@ -1,11 +1,12 @@
 angular.module("risevision.common.header")
   .controller("RegistrationModalCtrl", [
-    "$scope", "$modalInstance",
+    "$scope", "$rootScope", "$modalInstance",
     "$loading", "registerAccount", "$log", "cookieStore",
     "userState", "pick", "uiFlowManager", "humanReadableError",
     "agreeToTermsAndUpdateUser", "account", "segmentAnalytics",
     "bigQueryLogging", "analyticsEvents", "updateCompany", "$q",
-    function ($scope, $modalInstance, $loading, registerAccount, $log,
+    function ($scope, $rootScope, $modalInstance, $loading, registerAccount,
+      $log,
       cookieStore, userState, pick, uiFlowManager, humanReadableError,
       agreeToTermsAndUpdateUser, account, segmentAnalytics, bigQueryLogging,
       analyticsEvents, updateCompany, $q) {
@@ -22,6 +23,7 @@ angular.module("risevision.common.header")
 
       $scope.profile = pick(copyOfProfile, "email", "mailSyncEnabled",
         "firstName", "lastName");
+      $scope.profile.email = $scope.profile.email || userState.getUsername();
       $scope.registering = false;
 
       $scope.profile.accepted =
@@ -69,7 +71,6 @@ angular.module("risevision.common.header")
         $scope.forms.registrationForm.accepted.$pristine = false;
         $scope.forms.registrationForm.firstName.$pristine = false;
         $scope.forms.registrationForm.lastName.$pristine = false;
-        $scope.forms.registrationForm.email.$pristine = false;
 
         if (!$scope.forms.registrationForm.$invalid) {
           //update terms and conditions date
@@ -98,6 +99,8 @@ angular.module("risevision.common.header")
                     "isNewCompany": $scope.newUser
                   });
                   bigQueryLogging.logEvent("User Registered");
+                  $rootScope.$broadcast(
+                    "risevision.user.authorized");
 
                   $modalInstance.close("success");
                   $loading.stop("registration-modal");

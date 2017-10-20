@@ -31,9 +31,9 @@ app.run(["$templateCache", function($templateCache) {
     "                                  <td style=\"color:#525252;font-family:Helvetica,Arial,sans-serif;font-size:15px;line-height:22px;padding:0\">\n" +
     "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">Hi there,</p>\n" +
     "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">You've been added to <b>{{user.companyName}}</b> with Rise Vision!</p>\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">If you’re new to Rise Vision, please read below on how to proceed. Your email address will need Google authentication to be fully compatible.</p>\n" +
+    "                                     \n" +
     "\n" +
-    "                                        <div style=\"width: 100%;\n" +
+    "                                       <div style=\"width: 100%;\n" +
     "                      display: inline-block;\n" +
     "                      padding: 10px;\n" +
     "                      background-color: #f5f5f5; text-align:center;\">\n" +
@@ -47,31 +47,14 @@ app.run(["$templateCache", function($templateCache) {
     "                                             </p>\n" +
     "                                      </div>\n" +
     "\n" +
-    "                                      <p></p>\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\"><b>If your email address is a Google account:</b>\n" +
-    "                                          <br>Click <a href=\"http://apps.risevision.com\" target=\"_blank\">here</a> to sign in with your Google credentials.\n" +
-    "                                          <br>\n" +
-    "                                      </p>\n" +
+    "                                     <p></p>\n" +
+    "                                      <div style=\"margin-bottom:16px;text-align:center!important\" align=\"center\"><a href=\"https://apps.risevision.com/signup\" style=\"background:#47b767;border:none;border-radius:3px;color:#fff;display:inline-block;font-size:14px;font-weight:bold;outline:none!important;padding:12px 35px;text-decoration:none\" target=\"_blank\">Go Now</a></div>\n" +
+    "                                     \n" +
+    "                                    <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">You can find more details about getting started with Rise Vision in our <a href=\"https://risevision.zendesk.com/hc/en-us/articles/115004732063\" target=\"_blank\">Help Center</a>.</p>\n" +
     "\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\"></p>\n" +
-    "                                      <div style=\"margin-bottom:16px;text-align:center!important\" align=\"center\"><a href=\"http://apps.risevision.com\" style=\"background:#47b767;border:none;border-radius:3px;color:#fff;display:inline-block;font-size:14px;font-weight:bold;outline:none!important;padding:12px 35px;text-decoration:none\" target=\"_blank\">Sign In</a></div>\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">\n" +
-    "\n" +
-    "\n" +
-    "                                          <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">\n" +
-    "                                           <br><b>If your email  address is not a  Google account yet:</b><br>\n" +
-    "                                     You can create one for free by clicking <a href=\"https://accounts.google.com/signup\" target=\"_blank\">this link</a>. You can authenticate <b>ANY</b> email with Google. Just select \"I prefer to use my current email address\", and then set your password. Once you have a Google account, you can <a href=\"http://apps.risevision.com\" target=\"_blank\">sign in</a> to Rise Vision.\n" +
-    "                                     </p>\n" +
-    "                                    \n" +
-    "                                    <img src=\"https://help.risevision.com/hc/article_attachments/115010258046/Sign_In_page_.png\" width=\"475\" height=\"180\" style=\"padding:15px 0 30px;text-align:left\" class=\"CToWUd\">\n" +
-    "\n" +
-    "                                      <div style=\"margin-bottom:16px;text-align:center!important\" align=\"center\"><a href=\"http://apps.risevision.com\" style=\"background:#47b767;border:none;border-radius:3px;color:#fff;display:inline-block;font-size:14px;font-weight:bold;outline:none!important;padding:12px 35px;text-decoration:none\" target=\"_blank\">Go Now</a></div>\n" +
-    "                                      <br/>\n" +
-    "                                       <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">You can find more details about getting started with Rise Vision in our <a href=\"https://help.risevision.com/hc/en-us/articles/115002868706-Get-started-with-Rise-Vision\" target=\"_blank\">Help Center</a>.</p>\n" +
-    "\n" +
-    "                                       <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\"> If you have any questions at all, just reply to this email. &nbsp;We’re here to help!</p>\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">-Robb\n" +
-    "                                          <br>Rise Vision Community Manager</p>\n" +
+    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">If you have any questions at all, just reply to this email. &nbsp;We’re here to help!</p>\n" +
+    "                                        <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">Thank you,\n" +
+    "                                          <br>Rise Vision Support Team</p>\n" +
     "                                  </td>\n" +
     "                              </tr>\n" +
     "                              <tr>\n" +
@@ -117,9 +100,9 @@ app.run(["$templateCache", function($templateCache) {
     "          </tbody>\n" +
     "      </table>\n" +
     "  </div>\n" +
-    " </body>\n" +
-    "</html>\n" +
-    "");
+    "\n" +
+    "</body>\n" +
+    "</html>");
 }]);
 })();
 
@@ -300,13 +283,13 @@ app.run(["$templateCache", function($templateCache) {
     "    </a>\n" +
     "</li>\n" +
     "<!-- If User NOT Authenticated -->\n" +
-    "<li ng-show=\"!undetermined && isLoggedIn === false\" ng-controller=\"SignUpButtonCtrl\">\n" +
-    "  <button type=\"button\" ng-click=\"openSignUpModal()\"\n" +
-    "  class=\"btn-primary btn u_margin-right\">\n" +
-    "   Sign Up Free</button>\n" +
+    "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
+    "  <button type=\"button\" class=\"btn-primary btn u_margin-right\" ui-sref=\"common.auth.createaccount\">\n" +
+    "    Sign Up Free\n" +
+    "  </button>\n" +
     "</li>\n" +
     "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
-    "  <button type=\"button\" class=\"sign-in top-auth-button\" ng-click=\"login('registrationComplete')\">\n" +
+    "  <button type=\"button\" class=\"sign-in top-auth-button\" ui-sref=\"common.auth.unauthorized\">\n" +
     "    Sign In\n" +
     "  </button>\n" +
     "</li>\n" +
@@ -1275,16 +1258,6 @@ app.run(["$templateCache", function($templateCache) {
     "          <p ng-show=\"forms.registrationForm.lastName.$invalid && !forms.registrationForm.lastName.$pristine\"\n" +
     "            class=\"help-block validation-error-message-last-name\">Enter Last Name.</p>\n" +
     "        </div>\n" +
-    "        <!-- Email -->\n" +
-    "        <div class=\"form-group\" ng-class=\"{ 'has-error' : forms.registrationForm.email.$invalid && !forms.registrationForm.email.$pristine }\">\n" +
-    "          <label for=\"email\">Email <span>(We'll only send you system notices and other critical information)</span></label>\n" +
-    "          <input type=\"email\" class=\"form-control email\"\n" +
-    "          name=\"email\"\n" +
-    "          id=\"email\" required\n" +
-    "          ng-model=\"profile.email\">\n" +
-    "          <p ng-show=\"forms.registrationForm.email.$invalid && !forms.registrationForm.email.$pristine\"\n" +
-    "            class=\"help-block validation-error-message-email\">Enter a valid email.</p>\n" +
-    "        </div>\n" +
     "        <!-- Website -->\n" +
     "        <div class=\"form-group\" ng-show=\"newUser\" ng-class=\"{'has-error': forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine}\">\n" +
     "          <label for=\"website\">Website</label>\n" +
@@ -1616,22 +1589,89 @@ app.run(["$templateCache", function($templateCache) {
     "  </h2>\n" +
     "</div>\n" +
     "<div class=\"modal-body user-settings-modal\" stop-event=\"touchend\">\n" +
+    "  <div ng-if=\"isAdd\" class=\"alert alert-info\">\n" +
+    "    A Google account is no longer required by users being added to your Company. Any email address can be used!\n" +
+    "  </div>\n" +
     "  <form id=\"userSettingsForm\" role=\"form\" novalidate name=\"forms.userSettingsForm\">\n" +
-    "    <div class=\"form-group\"\n" +
-    "      ng-class=\"{ 'has-error' : forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine }\"\n" +
-    "    >\n" +
-    "      <label>\n" +
-    "        Username *\n" +
-    "      </label>\n" +
-    "      <div ng-if=\"!isAdd\">{{user.username}}</div>\n" +
-    "      <input id=\"user-settings-username\"\n" +
-    "        type=\"email\" required name=\"username\"\n" +
-    "        class=\"form-control\"\n" +
-    "        ng-if=\"isAdd\"\n" +
-    "        ng-model=\"user.username\"\n" +
-    "        />\n" +
-    "        <p ng-show=\"forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine\"\n" +
-    "          class=\"help-block validation-error-message-email\">User name must be a valid email address.</p>\n" +
+    "    <div id=\"passwordAlert\" class=\"animated\" ng-if=\"editingYourself && !isAdd\" ng-show=\"!isRiseAuthUser && showChangePassword\" ng-class=\"{ 'fadeIn': showChangePassword }\">\n" +
+    "      <div class=\"panel-body bg-info u_margin-sm-bottom\">\n" +
+    "        <p class=\"u_remove-bottom\">\n" +
+    "          <span>This account is authenticated by Google.<br/>\n" +
+    "          <a href=\"https://myaccount.google.com/security#signin\" target=\"_blank\">Change your password on your Google account.</a></span>\n" +
+    "        </p>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"row\">\n" +
+    "      <div class=\"col-xs-6\">\n" +
+    "        <div class=\"form-group\"\n" +
+    "          ng-class=\"{ 'has-error' : forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine }\"\n" +
+    "        >\n" +
+    "          <label>\n" +
+    "            Username *\n" +
+    "          </label>\n" +
+    "          <div ng-if=\"!isAdd\">\n" +
+    "            <span>{{user.username}}</span>\n" +
+    "          </div>\n" +
+    "          <input id=\"user-settings-username\"\n" +
+    "            type=\"email\" required name=\"username\"\n" +
+    "            class=\"form-control\"\n" +
+    "            ng-if=\"isAdd\"\n" +
+    "            ng-model=\"user.username\"\n" +
+    "            />\n" +
+    "            <p ng-show=\"forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine\"\n" +
+    "              class=\"help-block validation-error-message-email\">User name must be a valid email address.</p>\n" +
+    "        </div>\n" +
+    "      </div>\n" +
+    "      <div class=\"col-xs-6 text-right\">\n" +
+    "        <span ng-if=\"editingYourself && !isAdd\">\n" +
+    "          <a href=\"\" class=\"btn btn-default btn-sm change-password\" ng-click=\"toggleChangePassword()\">Change password</a>\n" +
+    "        </span>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "    <div id=\"passwordForm\" class=\"animated\" ng-if=\"editingYourself && !isAdd\" ng-show=\"isRiseAuthUser && showChangePassword\" ng-class=\"{ 'fadeInUp': showChangePassword }\">\n" +
+    "      <div class=\"form-group\"\n" +
+    "           ng-class=\"{ 'has-error' : (userPassword.currentPassword === '' && !forms.userSettingsForm.currentPassword.$pristine) || currentPasswordNotValid }\">\n" +
+    "        <label for=\"user-settings-current-password\">\n" +
+    "          Current Password *\n" +
+    "        </label>\n" +
+    "        <input id=\"user-settings-current-password\"\n" +
+    "               type=\"password\" name=\"currentPassword\"\n" +
+    "               class=\"form-control\"\n" +
+    "               ng-model=\"userPassword.currentPassword\" />\n" +
+    "          <p ng-show=\"userPassword.currentPassword === '' && !forms.userSettingsForm.currentPassword.$pristine\"\n" +
+    "             class=\"help-block validation-error-message-email\">Current Password is required.</p>\n" +
+    "          <p ng-show=\"currentPasswordNotValid\"\n" +
+    "             class=\"help-block validation-error-message-mail\">Current Password is not valid.</p>\n" +
+    "      </div>\n" +
+    "      <div class=\"form-group\"\n" +
+    "           ng-class=\"{ 'has-error' : (userPassword.newPassword === '' && !forms.userSettingsForm.newPassword.$pristine) || newPasswordFormatNotValid }\">\n" +
+    "        <label for=\"user-settings-new-password\">\n" +
+    "          New Password *\n" +
+    "        </label>\n" +
+    "        <input id=\"user-settings-new-password\"\n" +
+    "               type=\"password\" name=\"newPassword\"\n" +
+    "               class=\"form-control\"\n" +
+    "               ng-model=\"userPassword.newPassword\" />\n" +
+    "          <p ng-show=\"userPassword.newPassword === '' && !forms.userSettingsForm.newPassword.$pristine\"\n" +
+    "             class=\"help-block validation-error-message-email\">New Password is required.</p>\n" +
+    "          <p ng-show=\"newPasswordFormatNotValid\"\n" +
+    "             class=\"help-block validation-error-message-mail\">New Password must be at least four characters long.</p>\n" +
+    "      </div>\n" +
+    "      <div class=\"form-group\"\n" +
+    "           ng-class=\"{ 'has-error' : (userPassword.confirmPassword === '' && !forms.userSettingsForm.confirmPassword.$pristine) || confirmPasswordDoesNotMatch }\">\n" +
+    "        <label for=\"user-settings-confirm-password\">\n" +
+    "          Confirm Password *\n" +
+    "        </label>\n" +
+    "        <input id=\"user-settings-confirm-password\"\n" +
+    "               type=\"password\" name=\"confirmPassword\"\n" +
+    "               class=\"form-control\"\n" +
+    "               ng-model=\"userPassword.confirmPassword\" />\n" +
+    "          <p ng-show=\"userPassword.confirmPassword === '' && !forms.userSettingsForm.confirmPassword.$pristine\"\n" +
+    "             class=\"help-block validation-error-message-email\">Confirm Password is required.</p>\n" +
+    "          <p ng-show=\"confirmPasswordDoesNotMatch\"\n" +
+    "             class=\"help-block validation-error-message-mail\">Confirm Password must match New Password.</p>\n" +
+    "          <hr />\n" +
+    "      </div>\n" +
     "    </div>\n" +
     "    <div class=\"form-group\"\n" +
     "      ng-class=\"{ 'has-error' : forms.userSettingsForm.firstName.$invalid && !forms.userSettingsForm.firstName.$pristine }\">\n" +
@@ -1848,11 +1888,6 @@ angular.module("risevision.common.header", [
           attr.hideShoppingCart !== "false";
         $scope.hideHelpMenu = attr.hideHelpMenu !== "0" &&
           attr.hideHelpMenu !== "false";
-
-        // used by userState; determines if the URL root is used for
-        // Authentication redirect
-        $rootScope.redirectToRoot = attr.redirectToRoot !== "0" &&
-          attr.redirectToRoot !== "false";
 
         // disable opening home page in new tab (default true)
         $rootScope.newTabHome = attr.newTabHome !== "0" &&
@@ -2146,10 +2181,10 @@ angular.module("risevision.common.header")
 
 angular.module("risevision.common.header")
   .controller("AuthButtonsCtr", ["$scope", "$modal", "$templateCache",
-    "userState", "$loading", "cookieStore",
+    "userState", "userAuthFactory", "$loading", "cookieStore",
     "$log", "uiFlowManager", "oauth2APILoader", "bindToScopeWithWatch",
     "$window", "APPS_URL",
-    function ($scope, $modal, $templateCache, userState,
+    function ($scope, $modal, $templateCache, userState, userAuthFactory,
       $loading, cookieStore, $log, uiFlowManager, oauth2APILoader,
       bindToScopeWithWatch, $window, APPS_URL) {
 
@@ -2263,7 +2298,7 @@ angular.module("risevision.common.header")
       // Login Modal
       $scope.login = function (endStatus) {
         $loading.startGlobal("auth-buttons-login");
-        userState.authenticate(true).then().finally(function () {
+        userAuthFactory.authenticate(true).then().finally(function () {
           $loading.stopGlobal("auth-buttons-login");
           uiFlowManager.invalidateStatus(endStatus);
         });
@@ -2298,7 +2333,7 @@ angular.module("risevision.common.header")
       oauth2APILoader() //force loading oauth api on startup
       //to avoid popup blocker
       .then().finally(function () {
-        userState.authenticate(false).then().finally(function () {
+        userAuthFactory.authenticate(false).then().finally(function () {
           $loading.stopGlobal("auth-buttons-silent");
           if (!uiFlowManager.isStatusUndetermined()) {
             //attempt to reach a stable registration state only
@@ -2313,14 +2348,14 @@ angular.module("risevision.common.header")
   ]);
 
 angular.module("risevision.common.header")
-  .controller("SignUpModalCtrl", ["$scope", "userState", "uiFlowManager",
+  .controller("SignUpModalCtrl", ["$scope", "userAuthFactory", "uiFlowManager",
     "$loading",
-    function ($scope, userState, uiFlowManager, $loading) {
+    function ($scope, userAuthFactory, uiFlowManager, $loading) {
 
       // Login Modal
       $scope.login = function (endStatus) {
         $loading.startGlobal("auth-buttons-login");
-        userState.authenticate(true).then().finally(function () {
+        userAuthFactory.authenticate(true).then().finally(function () {
           $loading.stopGlobal("auth-buttons-login");
           uiFlowManager.invalidateStatus(endStatus);
         });
@@ -2553,12 +2588,13 @@ angular.module("risevision.common.header")
 
 angular.module("risevision.common.header")
   .controller("RegistrationModalCtrl", [
-    "$scope", "$modalInstance",
+    "$scope", "$rootScope", "$modalInstance",
     "$loading", "registerAccount", "$log", "cookieStore",
     "userState", "pick", "uiFlowManager", "humanReadableError",
     "agreeToTermsAndUpdateUser", "account", "segmentAnalytics",
     "bigQueryLogging", "analyticsEvents", "updateCompany", "$q",
-    function ($scope, $modalInstance, $loading, registerAccount, $log,
+    function ($scope, $rootScope, $modalInstance, $loading, registerAccount,
+      $log,
       cookieStore, userState, pick, uiFlowManager, humanReadableError,
       agreeToTermsAndUpdateUser, account, segmentAnalytics, bigQueryLogging,
       analyticsEvents, updateCompany, $q) {
@@ -2575,6 +2611,7 @@ angular.module("risevision.common.header")
 
       $scope.profile = pick(copyOfProfile, "email", "mailSyncEnabled",
         "firstName", "lastName");
+      $scope.profile.email = $scope.profile.email || userState.getUsername();
       $scope.registering = false;
 
       $scope.profile.accepted =
@@ -2622,7 +2659,6 @@ angular.module("risevision.common.header")
         $scope.forms.registrationForm.accepted.$pristine = false;
         $scope.forms.registrationForm.firstName.$pristine = false;
         $scope.forms.registrationForm.lastName.$pristine = false;
-        $scope.forms.registrationForm.email.$pristine = false;
 
         if (!$scope.forms.registrationForm.$invalid) {
           //update terms and conditions date
@@ -2651,6 +2687,8 @@ angular.module("risevision.common.header")
                     "isNewCompany": $scope.newUser
                   });
                   bigQueryLogging.logEvent("User Registered");
+                  $rootScope.$broadcast(
+                    "risevision.user.authorized");
 
                   $modalInstance.close("success");
                   $loading.stop("registration-modal");
@@ -2740,14 +2778,14 @@ angular.module("risevision.common.header")
 .controller("CompanySettingsModalCtrl", ["$scope", "$modalInstance",
   "updateCompany", "companyId", "countries", "REGIONS_CA", "REGIONS_US",
   "TIMEZONES", "getCompany", "regenerateCompanyField", "$window", "$loading",
-  "humanReadableError", "userState", "deleteCompany", "segmentAnalytics",
-  "$modal", "$templateCache", "COMPANY_INDUSTRY_FIELDS",
-  "COMPANY_SIZE_FIELDS",
+  "humanReadableError", "userState", "userAuthFactory", "deleteCompany",
+  "segmentAnalytics", "$modal", "$templateCache",
+  "COMPANY_INDUSTRY_FIELDS", "COMPANY_SIZE_FIELDS",
   function ($scope, $modalInstance, updateCompany, companyId,
     countries, REGIONS_CA, REGIONS_US, TIMEZONES, getCompany,
-    regenerateCompanyField, $window, $loading, humanReadableError, userState,
-    deleteCompany, segmentAnalytics, $modal, $templateCache,
-    COMPANY_INDUSTRY_FIELDS, COMPANY_SIZE_FIELDS) {
+    regenerateCompanyField, $window, $loading, humanReadableError,
+    userState, userAuthFactory, deleteCompany, segmentAnalytics,
+    $modal, $templateCache, COMPANY_INDUSTRY_FIELDS, COMPANY_SIZE_FIELDS) {
 
     $scope.company = {
       id: companyId
@@ -2832,7 +2870,7 @@ angular.module("risevision.common.header")
               });
 
               if (userState.getUserCompanyId() === $scope.company.id) {
-                userState.signOut();
+                userAuthFactory.signOut();
               } else if (userState.getSelectedCompanyId() === $scope.company
                 .id) {
                 userState.resetCompany();
@@ -3282,13 +3320,16 @@ angular.module("risevision.common.header")
 .controller("UserSettingsModalCtrl", [
   "$scope", "$filter", "$modalInstance", "updateUser", "getUserProfile",
   "deleteUser", "username", "userRoleMap", "$log", "$loading", "userState",
-  "uiFlowManager", "humanReadableError", "messageBox", "$rootScope",
-  "segmentAnalytics", "COMPANY_ROLE_FIELDS",
+  "userAuthFactory", "uiFlowManager", "humanReadableError", "messageBox",
+  "$rootScope", "segmentAnalytics", "userauth", "$q", "COMPANY_ROLE_FIELDS",
   function ($scope, $filter, $modalInstance, updateUser, getUserProfile,
     deleteUser, username, userRoleMap, $log, $loading, userState,
-    uiFlowManager, humanReadableError, messageBox, $rootScope,
-    segmentAnalytics, COMPANY_ROLE_FIELDS) {
+    userAuthFactory, uiFlowManager, humanReadableError, messageBox,
+    $rootScope, segmentAnalytics, userauth, $q, COMPANY_ROLE_FIELDS) {
     $scope.user = {};
+    $scope.userPassword = {};
+    $scope.showChangePassword = false;
+    $scope.isRiseAuthUser = userState.isRiseAuthUser();
     $scope.$watch("loading", function (loading) {
       if (loading) {
         $loading.start("user-settings-modal");
@@ -3341,7 +3382,7 @@ angular.module("risevision.common.header")
             });
 
             if (userState.checkUsername(username)) {
-              userState.signOut().then().finally(function () {
+              userAuthFactory.signOut().then().finally(function () {
                 uiFlowManager.invalidateStatus("registrationComplete");
               });
             }
@@ -3353,14 +3394,71 @@ angular.module("risevision.common.header")
     };
 
     $scope.save = function () {
+      var passwordChangeValid = true;
+
       $scope.forms.userSettingsForm.email.$pristine = false;
       $scope.forms.userSettingsForm.firstName.$pristine = false;
       $scope.forms.userSettingsForm.lastName.$pristine = false;
 
-      if (!$scope.forms.userSettingsForm.$invalid) {
+      if ($scope.showChangePassword) {
+        $scope.forms.userSettingsForm.currentPassword.$pristine = false;
+        $scope.forms.userSettingsForm.newPassword.$pristine = false;
+        $scope.forms.userSettingsForm.confirmPassword.$pristine = false;
+
+        $scope.currentPasswordNotValid = false;
+        $scope.newPasswordFormatNotValid = false;
+        $scope.confirmPasswordDoesNotMatch = false;
+
+        if (!$scope.userPassword.currentPassword) {
+          passwordChangeValid = false;
+        }
+
+        if (!$scope.userPassword.newPassword) {
+          passwordChangeValid = false;
+        } else if (!userAuthFactory.isPasswordValid($scope.userPassword.newPassword)) {
+          $scope.newPasswordFormatNotValid = true;
+          passwordChangeValid = false;
+        }
+
+        if (!$scope.userPassword.confirmPassword) {
+          passwordChangeValid = false;
+        } else if ($scope.userPassword.newPassword !== $scope.userPassword.confirmPassword) {
+          $scope.confirmPasswordDoesNotMatch = true;
+          passwordChangeValid = false;
+        }
+      }
+
+      if (!$scope.forms.userSettingsForm.$invalid && passwordChangeValid) {
+        var changePasswordPromise = $q.resolve();
+
         $scope.loading = true;
-        updateUser(username, $scope.user).then(
-          function (resp) {
+
+        if ($scope.showChangePassword) {
+          changePasswordPromise = userauth.updatePassword(
+            username,
+            $scope.userPassword.currentPassword,
+            $scope.userPassword.newPassword);
+          changePasswordPromise
+            .then(function () {
+              $scope.userPassword = {};
+              $scope.showChangePassword = false;
+            })
+            .catch(function (err) {
+              var newError = err.result.error;
+
+              if (newError.code === 409) {
+                $scope.currentPasswordNotValid = true;
+                newError.changePassword = true;
+              }
+              return $q.reject(newError);
+            });
+        }
+
+        changePasswordPromise
+          .then(function () {
+            return updateUser(username, $scope.user);
+          })
+          .then(function (resp) {
             if (userState.checkUsername(username)) {
               userState.updateUserProfile(resp.item);
             }
@@ -3372,22 +3470,26 @@ angular.module("risevision.common.header")
             });
 
             $modalInstance.close("success");
-          },
-          function (error) {
+          })
+          .catch(function (error) {
+            error = (error.result && error.result.error) || error;
             $log.debug(error);
             var errorMessage = "Error: " + humanReadableError(error);
-            if (error.code === 409) {
+            if (error.code === 409 && !error.changePassword) {
               errorMessage = $filter("translate")(
                 "common-header.user.error.duplicate-user", {
                   "username": $scope.user.username
                 });
+            } else if (error.changePassword) {
+              errorMessage = error.message;
             }
 
-            messageBox("common-header.user.error.update-user", errorMessage);
-          }
-        ).finally(function () {
-          $scope.loading = false;
-        });
+            messageBox("common-header.user.error.update-user",
+              errorMessage);
+          })
+          .finally(function () {
+            $scope.loading = false;
+          });
       }
     };
 
@@ -3432,6 +3534,9 @@ angular.module("risevision.common.header")
 
     $scope.forms = {};
 
+    $scope.toggleChangePassword = function () {
+      $scope.showChangePassword = !$scope.showChangePassword;
+    };
   }
 ]);
 
@@ -3494,30 +3599,43 @@ angular.module("risevision.common.header")
 
 angular.module("risevision.common.header")
   .controller("SignOutButtonCtrl", ["$scope", "$modal", "$templateCache",
-    "uiFlowManager",
-    function ($scope, $modal, $templateCache, uiFlowManager) {
+    "$log", "uiFlowManager", "userAuthFactory", "userState",
+    function ($scope, $modal, $templateCache, $log, uiFlowManager,
+      userAuthFactory, userState) {
       $scope.logout = function () {
-        var modalInstance = $modal.open({
-          template: $templateCache.get("signout-modal.html"),
-          controller: "SignOutModalCtrl"
-        });
-        modalInstance.result.finally(function () {
-          uiFlowManager.invalidateStatus("registrationComplete");
-        });
+        if (userState.isRiseAuthUser()) {
+          userAuthFactory.signOut()
+            .then(function () {
+              $log.debug("Custom Auth user signed out");
+            })
+            .catch(function (err) {
+              $log.error("Custom Auth sign out failed", err);
+            });
+        } else {
+          var modalInstance = $modal.open({
+            template: $templateCache.get("signout-modal.html"),
+            controller: "SignOutModalCtrl"
+          });
+          modalInstance.result.finally(function () {
+            uiFlowManager.invalidateStatus("registrationComplete");
+          });
+        }
+
       };
     }
   ]);
 
 angular.module("risevision.common.header")
   .controller("SignOutModalCtrl", ["$scope", "$modalInstance", "$log",
-    "userState",
-    function ($scope, $modalInstance, $log, userState) {
+    "userAuthFactory", "userState",
+    function ($scope, $modalInstance, $log, userAuthFactory, userState) {
+      $scope.isRiseAuthUser = userState.isRiseAuthUser();
 
       $scope.closeModal = function () {
         $modalInstance.dismiss("cancel");
       };
       $scope.signOut = function (signOutGoogle) {
-        userState.signOut(signOutGoogle).then(function () {
+        userAuthFactory.signOut(signOutGoogle).then(function () {
           $log.debug("user signed out");
         }, function (err) {
           console.error("sign out failed", err);
@@ -4176,11 +4294,11 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
     }
   ])
 
-  .factory("signedInWithGoogle", ["$q", "getOAuthUserInfo", "userState",
-    function ($q, getOAuthUserInfo, userState) {
+  .factory("signedInWithGoogle", ["$q", "userState",
+    function ($q, userState) {
       return function () {
         var deferred = $q.defer();
-        // userState.authenticate(false).then().finally(function () {
+        // userAuthFactory.authenticate(false).then().finally(function () {
         if (userState.isLoggedIn()) {
           deferred.resolve();
         } else {
@@ -6383,6 +6501,7 @@ angular.module("risevision.common.header")
 
   angular.module("risevision.common.components.userstate", [
     "ui.router",
+    "angular-md5",
     "risevision.common.components.util",
     "risevision.common.components.rvtokenstore",
     "risevision.common.components.logging",
@@ -6394,9 +6513,182 @@ angular.module("risevision.common.header")
     "risevision.common.loading", "risevision.ui-flow"
   ])
 
+  // Set up our mappings between URLs, templates, and controllers
+  .config(["$urlRouterProvider", "$stateProvider", "$locationProvider",
+    function storeRouteConfig($urlRouterProvider, $stateProvider,
+      $locationProvider) {
+
+      $locationProvider.html5Mode(true);
+
+      $urlRouterProvider.otherwise("/");
+
+      // Use $stateProvider to configure states.
+      $stateProvider.state("common", {
+        template: "<div class=\"app-launcher\" ui-view></div>"
+      })
+
+      .state("common.googleresult", {
+        url: "/state=:state&access_token=:access_token&token_type=:token_type&expires_in=:expires_in",
+        controller: "GoogleResultCtrl"
+      })
+
+      .state("common.googleresult2", {
+        url: "/access_token=:access_token&token_type=:token_type&expires_in=:expires_in",
+        controller: "GoogleResultCtrl"
+      })
+
+      .state("common.auth", {
+        abstract: true,
+        templateProvider: ["$templateCache",
+          function ($templateCache) {
+            return $templateCache.get("userstate/auth-common.html");
+          }
+        ]
+      })
+
+      .state("common.auth.unauthorized", {
+        templateProvider: ["$templateCache",
+          function ($templateCache) {
+            return $templateCache.get("userstate/login.html");
+          }
+        ],
+        url: "/unauthorized/:state",
+        controller: "LoginCtrl",
+        params: {
+          passwordReset: null,
+          accountConfirmed: null
+        },
+        resolve: {
+          isSignUp: function () {
+            return false;
+          }
+        }
+      })
+
+      .state("common.auth.createaccount", {
+        templateProvider: ["$templateCache",
+          function ($templateCache) {
+            return $templateCache.get("userstate/create-account.html");
+          }
+        ],
+        url: "/createaccount/:state",
+        controller: "LoginCtrl",
+        resolve: {
+          isSignUp: function () {
+            return true;
+          }
+        }
+      })
+
+      .state("common.auth.confirmaccount", {
+        controller: "ConfirmAccountCtrl",
+        template: "<div ui-view></div>",
+        url: "/confirmaccount/:user/:token"
+      })
+
+      .state("common.auth.requestpasswordreset", {
+        templateProvider: ["$templateCache",
+          function ($templateCache) {
+            return $templateCache.get(
+              "userstate/request-password-reset.html");
+          }
+        ],
+        url: "/requestpasswordreset",
+        controller: "RequestPasswordResetCtrl"
+      })
+
+      .state("common.auth.resetpassword", {
+        templateProvider: ["$templateCache",
+          function ($templateCache) {
+            return $templateCache.get(
+              "userstate/reset-password-confirm.html");
+          }
+        ],
+        url: "/resetpassword/:user/:token",
+        controller: "ResetPasswordConfirmCtrl"
+      });
+    }
+  ])
+
+  .run(["$rootScope", "$state", "$stateParams", "urlStateService",
+    "userState",
+    function ($rootScope, $state, $stateParams, urlStateService, userState) {
+      userState._restoreState();
+
+      $rootScope.$on("risevision.user.signedOut", function () {
+        $state.go("common.auth.unauthorized");
+      });
+
+      $rootScope.$on("$stateChangeStart", function (event, toState,
+        toParams, fromState, fromParams) {
+        if (toState && (toState.name === "common.auth.unauthorized" ||
+          toState.name === "common.auth.unregistered" ||
+          toState.name === "common.auth.createaccount") && !toParams.state) {
+
+          if (fromParams.state) {
+            toParams.state = fromParams.state;
+
+            event.preventDefault();
+
+            $state.go(toState.name, toParams);
+          }
+        }
+      });
+
+      $rootScope.$on("risevision.user.authorized", function () {
+        if ($state.current.name.indexOf("common.auth") !== -1) {
+          urlStateService.redirectToState($stateParams.state);
+        }
+      });
+    }
+  ])
+
   .value("CLIENT_ID", "614513768474.apps.googleusercontent.com");
 
 })(angular);
+
+"use strict";
+
+angular.module("risevision.common.components.userstate")
+  .factory("canAccessApps", ["$q", "$state", "$location",
+    "userState", "userAuthFactory", "urlStateService",
+    function ($q, $state, $location, userState, userAuthFactory,
+      urlStateService) {
+      return function () {
+        var deferred = $q.defer();
+        userAuthFactory.authenticate(false)
+          .then(function () {
+            if (userState.isRiseVisionUser()) {
+              deferred.resolve();
+            } else {
+              return $q.reject();
+            }
+          })
+          .then(null, function () {
+            var newState;
+
+            if (!userState.isLoggedIn()) {
+              newState = "common.auth.createaccount";
+            } else if ($state.get("common.auth.unregistered")) {
+              newState = "common.auth.unregistered";
+            }
+
+            if (newState) {
+              $state.go(newState, {
+                state: urlStateService.get()
+              }, {
+                reload: true
+              });
+
+              $location.replace();
+            }
+
+            deferred.reject();
+          });
+        return deferred.promise;
+      };
+    }
+  ]);
 
 "use strict";
 
@@ -6572,7 +6864,89 @@ angular.module("risevision.common.components.logging")
 
 })(angular);
 
+(function (angular) {
+  "use strict";
+
+  /*jshint camelcase: false */
+
+  angular.module("risevision.common.components.userstate")
+    .factory("customAuthFactory", ["$q", "$log", "gapiLoader",
+      "userauth", "userState",
+      function ($q, $log, gapiLoader, userauth, userState) {
+        var factory = {};
+
+        factory.authenticate = function (credentials) {
+          var deferred = $q.defer();
+          var _state = userState._state;
+
+          if (credentials && credentials.username && credentials.password) {
+            $q.all([gapiLoader(), userauth.login(credentials.username,
+              credentials.password)])
+              .then(function (result) {
+                var gApi = result[0];
+                var loginInfo = result[1] && result[1].result;
+
+                if (loginInfo && loginInfo.item) {
+                  var token = {
+                    access_token: loginInfo.item,
+                    expires_in: "3600",
+                    token_type: "Bearer"
+                  };
+                  gApi.auth.setToken(token);
+
+                  deferred.resolve({
+                    email: credentials.username,
+                    token: token
+                  });
+                } else {
+                  deferred.reject();
+                }
+              })
+              .then(null, function () {
+                deferred.reject();
+              });
+          } else if (_state.userToken && _state.userToken.token) {
+            gapiLoader().then(function (gApi) {
+              gApi.auth.setToken(_state.userToken.token);
+
+              // TODO: Validate token?
+
+              deferred.resolve(_state.userToken);
+            });
+          } else {
+            deferred.reject();
+          }
+
+          return deferred.promise;
+        };
+
+        factory.addUser = function (credentials) {
+          var deferred = $q.defer();
+
+          if (credentials && credentials.username && credentials.password) {
+            userauth.add(credentials.username, credentials.password)
+              .then(function (result) {
+                deferred.resolve();
+              })
+              .then(null, function () {
+                deferred.reject();
+              });
+          } else {
+            deferred.reject();
+          }
+
+          return deferred.promise;
+        };
+
+        return factory;
+      }
+    ]);
+
+})(angular);
+
 "use strict";
+
+/*jshint camelcase: false */
 
 angular.module("risevision.common.components.logging")
   .constant("EXTERNAL_LOGGER_SERVICE_URL",
@@ -6700,22 +7074,201 @@ angular.module("risevision.common.components.logging")
 (function (angular) {
   "use strict";
 
+  /*jshint camelcase: false */
+
+  angular.module("risevision.common.components.userstate")
+  // constants (you can override them in your app as needed)
+  .value("OAUTH2_SCOPES",
+    "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+  )
+    .value("GOOGLE_OAUTH2_URL", "https://accounts.google.com/o/oauth2/auth")
+    .factory("googleAuthFactory", ["$q", "$log", "$location",
+      "$interval", "$window", "$http", "$stateParams", "gapiLoader",
+      "getOAuthUserInfo", "uiFlowManager", "getBaseDomain", "userState",
+      "CLIENT_ID", "OAUTH2_SCOPES", "GOOGLE_OAUTH2_URL",
+      function ($q, $log, $location, $interval, $window, $http,
+        $stateParams,
+        gapiLoader, getOAuthUserInfo, uiFlowManager, getBaseDomain,
+        userState,
+        CLIENT_ID, OAUTH2_SCOPES, GOOGLE_OAUTH2_URL) {
+
+        var _accessTokenRefreshHandler = null;
+
+        var _authorizeDeferred;
+
+        var _scheduleAccessTokenAutoRefresh = function () {
+          //cancel any existing $interval(s)
+          $interval.cancel(_accessTokenRefreshHandler);
+          _accessTokenRefreshHandler = $interval(function () {
+            //cancel current $interval. It will be re-sheduled if authentication succeeds
+            $interval.cancel(_accessTokenRefreshHandler);
+            //refresh Access Token
+            authenticate();
+          }, 55 * 60 * 1000); //refresh every 55 minutes
+        };
+
+        var _cancelAccessTokenAutoRefresh = function () {
+          $interval.cancel(_accessTokenRefreshHandler);
+          _accessTokenRefreshHandler = null;
+        };
+
+        var _gapiAuthorize = function (attemptImmediate) {
+          var deferred = $q.defer();
+
+          var _state = userState._state;
+          var opts = {
+            client_id: CLIENT_ID,
+            scope: OAUTH2_SCOPES,
+            cookie_policy: $location.protocol() + "://" +
+              getBaseDomain()
+          };
+
+          if (_state.userToken !== "dummy") {
+            opts.authuser = _state.userToken.email;
+          } else {
+            opts.authuser = $http.get(
+              "https://www.googleapis.com/oauth2/v1/userinfo?access_token=" +
+              _state.params.access_token)
+              .then(function (resp) {
+                return resp.data.email;
+              }, function (err) {
+                $log.debug("Error retrieving userinfo");
+                return opts.authuser;
+              });
+          }
+
+          if (attemptImmediate) {
+            opts.immediate = true;
+          } else {
+            opts.prompt = "select_account";
+          }
+
+          $q.all([gapiLoader(), opts.authuser])
+            .then(function (qAll) {
+              var gApi = qAll[0];
+              opts.authuser = qAll[1];
+              // Setting the gapi token with the chosen user token. This is a fix for the multiple account issue.
+              gApi.auth.setToken(_state.params);
+
+              return gApi.auth.authorize(opts);
+            })
+            .then(function (authResult) {
+              $log.debug("authResult");
+              if (authResult && !authResult.error) {
+                if (_state.params) {
+                  // clear token so we don't deal with expiry
+                  delete _state.params;
+                }
+
+                _scheduleAccessTokenAutoRefresh();
+
+                deferred.resolve(authResult);
+              } else {
+                deferred.reject(authResult.error ||
+                  "failed to authorize user");
+              }
+            })
+            .then(null, deferred.reject); //gapiLoader
+
+          return deferred.promise;
+        };
+
+        /*
+         * Responsible for triggering the Google OAuth process.
+         *
+         */
+        var authenticate = function (forceAuth) {
+          var deferred = $q.defer();
+
+          var authResult;
+
+          _gapiAuthorize(!forceAuth)
+            .then(function (res) {
+              authResult = res;
+
+              return getOAuthUserInfo();
+            })
+            .then(function (oauthUserInfo) {
+              deferred.resolve(oauthUserInfo);
+            })
+            .then(null, function (err) {
+              deferred.reject(err);
+            });
+
+          return deferred.promise;
+        };
+
+        var authenticateRedirect = function (forceAuth) {
+
+          if (!forceAuth) {
+            return authenticate(forceAuth);
+          } else {
+            var loc, state;
+
+            // Redirect to the URL root and append pathname back to the URL
+            // on Authentication success
+            // This prevents Domain authentication errors for sub-folders
+            // Warning: Root folder must have CH available for this to work,
+            // otherwise no redirect is performed!
+            loc = $window.location.origin + "/";
+
+            // double encode since response gets decoded once!
+            state = encodeURIComponent($stateParams.state);
+
+            userState._persistState();
+            uiFlowManager.persist();
+
+            $window.location.href = GOOGLE_OAUTH2_URL +
+              "?response_type=token" +
+              "&scope=" + encodeURIComponent(OAUTH2_SCOPES) +
+              "&client_id=" + CLIENT_ID +
+              "&redirect_uri=" + encodeURIComponent(loc) +
+            //http://stackoverflow.com/a/14393492
+            "&prompt=select_account" +
+              "&state=" + state;
+
+            // returns a promise that never get fulfilled since we are redirecting
+            // to that google oauth2 page
+            return $q.resolve();
+          }
+        };
+
+        var googleAuthFactory = {
+          authenticate: userState._state.inRVAFrame ?
+            authenticate : authenticateRedirect
+        };
+
+        return googleAuthFactory;
+      }
+    ]);
+
+})(angular);
+
+(function (angular) {
+  "use strict";
+
   angular.module("risevision.common.components.rvtokenstore")
     .service("rvTokenStore", ["$log", "$location", "cookieStore",
       "getBaseDomain",
       function ($log, $location, cookieStore, getBaseDomain) {
         var _readRvToken = function () {
-          return cookieStore.get("rv-token");
+          var token = cookieStore.get("rv-token");
+
+          try {
+            return JSON.parse(token);
+          } catch (e) {
+            return token;
+          }
         };
 
         var _writeRvToken = function (value) {
           var baseDomain = getBaseDomain();
           if (baseDomain === "localhost") {
-            cookieStore.put("rv-token", value, {
+            cookieStore.put("rv-token", JSON.stringify(value), {
               path: "/"
             });
           } else {
-            cookieStore.put("rv-token", value, {
+            cookieStore.put("rv-token", JSON.stringify(value), {
               domain: baseDomain,
               path: "/"
             });
@@ -6844,81 +7397,83 @@ angular.module("risevision.common.components.logging")
 (function (angular) {
   "use strict";
 
-  var stripLeadingSlash = function (str) {
-    if (str[0] === "/") {
-      str = str.slice(1);
-    }
-    return str;
-  };
-
-  var parseParams = function (str) {
-    var params = {};
-    str.split("&").forEach(function (fragment) {
-      var fragmentArray = fragment.split("=");
-      params[fragmentArray[0]] = fragmentArray[1];
-    });
-    return params;
-  };
-
   angular.module("risevision.common.components.userstate")
-  // constants (you can override them in your app as needed)
-  .value("DEFAULT_PROFILE_PICTURE",
-    "http://api.randomuser.me/portraits/med/men/33.jpg")
-    .value("OAUTH2_SCOPES",
-      "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
-  )
-    .value("GOOGLE_OAUTH2_URL", "https://accounts.google.com/o/oauth2/auth")
-    .run(["$location", "$window", "userState", "$log",
-      function ($location, $window, userState, $log) {
-        var path = $location.path();
-        var params = parseParams(stripLeadingSlash(path));
-        $log.debug("URL params", params);
-        userState._restoreState();
-        if (params.access_token) {
-          userState._setUserToken(params);
-        }
-        if (params.state) {
-          var state = JSON.parse(decodeURIComponent(params.state));
-          if (state.p || state.s) {
-            userState._persistState();
+    .factory("urlStateService", ["$window", "$location", "userState",
+      function ($window, $location, userState) {
 
-            $window.location.replace(state.p +
-              state.s +
-              state.u
-            );
-          } else if ($location.$$html5) { // HTML5 mode, clear path
-            $location.path("");
-          } else { // non HTML5 mode, set hash
-            $window.location.hash = state.u;
-          }
-        }
+        var urlStateService = {};
 
-      }
-    ])
-    .factory("userState", [
-      "$q", "$log", "$location", "CLIENT_ID",
-      "gapiLoader", "OAUTH2_SCOPES", "userInfoCache",
-      "getOAuthUserInfo", "getUserProfile", "companyState", "objectHelper",
-      "$rootScope", "$interval", "$loading", "$window", "GOOGLE_OAUTH2_URL",
-      "localStorageService", "$document", "uiFlowManager", "getBaseDomain",
-      "rvTokenStore", "externalLogging", "$http",
-      function ($q, $log, $location, CLIENT_ID,
-        gapiLoader, OAUTH2_SCOPES, userInfoCache,
-        getOAuthUserInfo, getUserProfile, companyState, objectHelper,
-        $rootScope, $interval, $loading, $window, GOOGLE_OAUTH2_URL,
-        localStorageService, $document, uiFlowManager, getBaseDomain,
-        rvTokenStore, externalLogging, $http) {
-        //singleton factory that represents userState throughout application
+        urlStateService.get = function () {
+          var path, search, state;
 
-        var _state = {
-          profile: {}, //Rise vision profile
-          user: {}, //Google user
-          roleMap: {},
-          userToken: rvTokenStore.read(),
-          inRVAFrame: angular.isDefined($location.search().inRVA)
+          // Redirect to the URL root and append pathname back to the URL
+          // on Authentication success
+          // This prevents Domain authentication errors for sub-folders
+          // Warning: Root folder must have CH available for this to work,
+          // otherwise no redirect is performed!
+          // loc = $window.location.origin + "/";
+          // Remove first character (/) from path since we're adding it to loc
+          path = $window.location.pathname ? $window.location
+            .pathname
+            .substring(1) : "";
+          search = $window.location.search;
+
+          state = encodeURIComponent(JSON.stringify({
+            p: path,
+            u: $window.location.hash,
+            s: search
+          }));
+
+          return state;
         };
 
-        var _accessTokenRefreshHandler = null;
+        urlStateService.redirectToState = function (stateString) {
+          var state = {};
+
+          try {
+            state = JSON.parse(decodeURIComponent(stateString));
+          } catch (err) {
+            // Parse failed
+          }
+
+          if (state.u || !$location.$$html5) { // hash found, assume non HTML5 mode
+            if (state.p || state.s) { // requires redirect
+              userState._persistState();
+
+              $window.location.replace(state.p +
+                state.s +
+                state.u
+              );
+            } else {
+              $window.location.hash = state.u;
+            }
+          } else { // HTML5 mode
+            state.p = state.p || "/";
+            $location.url(state.p + state.s);
+            $location.replace();
+          }
+        };
+
+        return urlStateService;
+      }
+    ]);
+
+})(angular);
+
+(function (angular) {
+  "use strict";
+
+  angular.module("risevision.common.components.userstate")
+    .factory("userAuthFactory", ["$q", "$log", "$location",
+      "$rootScope", "$loading", "$window", "$document",
+      "gapiLoader", "objectHelper", "rvTokenStore", "externalLogging",
+      "userState", "googleAuthFactory", "customAuthFactory",
+      function ($q, $log, $location, $rootScope, $loading, $window,
+        $document, gapiLoader, objectHelper,
+        rvTokenStore, externalLogging, userState, googleAuthFactory,
+        customAuthFactory) {
+
+        var _state = userState._state;
 
         var _authorizeDeferred, _authenticateDeferred;
 
@@ -6928,8 +7483,8 @@ angular.module("risevision.common.components.logging")
           if (_shouldLogPageLoad) {
             _shouldLogPageLoad = false;
             try {
-              var duration = new Date().getTime() - $window.performance.timing
-                .navigationStart;
+              var duration = new Date().getTime() - $window.performance
+                .timing.navigationStart;
               externalLogging.logEvent("page load time", details,
                 duration,
                 userState.getUsername(), userState.getSelectedCompanyId()
@@ -6940,14 +7495,30 @@ angular.module("risevision.common.components.logging")
           }
         };
 
+        var _setUserToken = function (userToken) {
+          _state.userToken = userToken;
+          rvTokenStore.write(_state.userToken);
+        };
+
+        var _cancelAccessTokenAutoRefresh = function () {};
+
+        var _clearUserToken = function () {
+          $log.debug("Clearing user token...");
+          _cancelAccessTokenAutoRefresh();
+          _state.userToken = null;
+          rvTokenStore.clear();
+        };
+
         var _detectUserOrAuthChange = function () {
           var token = rvTokenStore.read();
-          if (token !== _state.userToken) {
+          if (!angular.equals(token, _state.userToken)) {
             //token change indicates that user either signed in, or signed out, or changed account in other app
             $window.location.reload();
           } else if (_state.userToken) {
+            _authenticateDeferred = null;
+
             //make sure user is not signed out of Google account outside of the CH enabled apps
-            _authorize(true).finally(function () {
+            authenticate(false).finally(function () {
               if (!_state.userToken) {
                 $log.debug("Authentication failed. Reloading...");
                 $window.location.reload();
@@ -7001,239 +7572,65 @@ angular.module("risevision.common.components.logging")
 
         _addEventListenerVisibilityAPI();
 
-        var _setUserToken = function () {
-          _state.userToken = userState.getUsername();
-          rvTokenStore.write(_state.userToken);
-        };
-
-        var _clearUserToken = function () {
-          $log.debug("Clearing user token...");
-          _cancelAccessTokenAutoRefresh();
-          _state.userToken = null;
-          rvTokenStore.clear();
-        };
-
-        var _scheduleAccessTokenAutoRefresh = function () {
-          //cancel any existing $interval(s)
-          $interval.cancel(_accessTokenRefreshHandler);
-          _accessTokenRefreshHandler = $interval(function () {
-            //cancel current $interval. It will be re-sheduled if authentication succeeds
-            $interval.cancel(_accessTokenRefreshHandler);
-            //refresh Access Token
-            _authorize(true);
-          }, 55 * 60 * 1000); //refresh every 55 minutes
-        };
-
-        var _cancelAccessTokenAutoRefresh = function () {
-          $interval.cancel(_accessTokenRefreshHandler);
-          _accessTokenRefreshHandler = null;
-        };
-
-        var _resetUserState = function () {
-          _authenticateDeferred = null;
-          objectHelper.clearObj(_state.user);
-          objectHelper.clearObj(_state.profile);
-          _state.roleMap = {};
-
-          companyState.resetCompanyState();
-          $log.debug("User state has been reset.");
-        };
-
-        var refreshProfile = function () {
-          var deferred = $q.defer();
-          //populate profile if the current user is a rise vision user
-          getUserProfile(_state.user.username, true).then(
-            function (profile) {
-              userState.updateUserProfile(profile);
-
-              //populate company info
-              return companyState.init();
-            }).then(function () {
-            deferred.resolve();
-          }, deferred.reject);
-          return deferred.promise;
-        };
-
-        var _gapiAuthorize = function (attemptImmediate) {
-          var deferred = $q.defer();
-
-          var opts = {
-            client_id: CLIENT_ID,
-            scope: OAUTH2_SCOPES,
-            cookie_policy: $location.protocol() + "://" +
-              getBaseDomain()
-          };
-
-          if (_state.userToken !== "dummy") {
-            opts.authuser = _state.userToken;
-          } else {
-            opts.authuser = $http.get(
-              "https://www.googleapis.com/oauth2/v1/userinfo?access_token=" +
-              _state.params.access_token)
-              .then(function (resp) {
-                return resp.data.email;
-              }, function (err) {
-                $log.debug("Error retrieving userinfo");
-                return opts.authuser;
-              });
-          }
-
-          if (attemptImmediate) {
-            opts.immediate = true;
-          } else {
-            opts.prompt = "select_account";
-          }
-
-          $q.all([gapiLoader(), opts.authuser])
-            .then(function (qAll) {
-              var gApi = qAll[0];
-              opts.authuser = qAll[1];
-              // Setting the gapi token with the chosen user token. This is a fix for the multiple account issue.
-              gApi.auth.setToken(_state.params);
-
-              gApi.auth.authorize(opts, function (authResult) {
-                $log.debug("authResult");
-                if (authResult && !authResult.error) {
-                  if (_state.params) {
-                    // clear token so we don't deal with expiry
-                    delete _state.params;
-                  }
-
-                  _scheduleAccessTokenAutoRefresh();
-
-                  deferred.resolve(authResult);
-                } else {
-                  _clearUserToken();
-
-                  deferred.reject(authResult.error ||
-                    "failed to authorize user");
-                }
-              });
-            }).then(null, deferred.reject); //gapiLoader
-
-          return deferred.promise;
-        };
-
         /*
          * Responsible for triggering the Google OAuth process.
          *
          */
-        var _authorize = function (attemptImmediate) {
+        var _authorize = function (authenticatedUser) {
+          var attemptImmediate = false;
+
           if (_authorizeDeferred) {
             return _authorizeDeferred.promise;
           }
 
-          _authorizeDeferred = $q.defer();
+          if (authenticatedUser) {
+            if (!_state.user.username || !_state.profile.username ||
+              _state.user.username !== authenticatedUser.email) {
+              _authorizeDeferred = $q.defer();
 
-          var authResult;
+              //populate user
+              objectHelper.clearAndCopy({
+                userId: authenticatedUser.id, //TODO: ideally we should not use real user ID or email, but use hash value instead
+                username: authenticatedUser.email,
+                picture: authenticatedUser.picture
+              }, _state.user);
 
-          _gapiAuthorize(attemptImmediate)
-            .then(function (res) {
-              authResult = res;
+              _setUserToken(authenticatedUser);
 
-              return getOAuthUserInfo();
-            })
-            .then(function (oauthUserInfo) {
-              if (!_state.user.username || !_state.profile.username ||
-                _state.user.username !== oauthUserInfo.email) {
+              userState.refreshProfile()
+                .finally(function () {
+                  _authorizeDeferred.resolve();
 
-                //populate user
-                objectHelper.clearAndCopy({
-                  userId: oauthUserInfo.id, //TODO: ideally we should not use real user ID or email, but use hash value instead
-                  username: oauthUserInfo.email,
-                  picture: oauthUserInfo.picture
-                }, _state.user);
+                  $rootScope.$broadcast("risevision.user.authorized");
 
-                _setUserToken();
-
-                refreshProfile()
-                  .finally(function () {
-                    _authorizeDeferred.resolve(authResult);
+                  if (!attemptImmediate) {
                     $rootScope.$broadcast(
-                      "risevision.user.authorized");
-                    if (!attemptImmediate) {
-                      $rootScope.$broadcast(
-                        "risevision.user.userSignedIn");
-                    }
+                      "risevision.user.userSignedIn");
+                  }
 
-                    _authorizeDeferred = undefined;
-                  });
-              } else {
-                _authorizeDeferred.resolve(authResult);
+                  _authorizeDeferred = undefined;
+                });
 
-                _authorizeDeferred = undefined;
-              }
-            })
-            .then(null, function (err) {
-              objectHelper.clearObj(_state.user);
-              _authorizeDeferred.reject(err);
-
-              _authorizeDeferred = undefined;
-            });
-
-          return _authorizeDeferred.promise;
-        };
-
-        var authenticateRedirect = function (forceAuth) {
-
-          if (!forceAuth) {
-            return authenticate(forceAuth);
+              return _authorizeDeferred.promise;
+            } else {
+              return $q.resolve();
+            }
           } else {
-            var loc, path, search, state;
+            objectHelper.clearObj(_state.user);
 
-            // Redirect to full URL path
-            if ($rootScope.redirectToRoot === false) {
-              loc = $window.location.href.substr(0, $window.location.href
-                .indexOf(
-                  "#")) || $window.location.href;
-            }
-            // Redirect to the URL root and append pathname back to the URL
-            // on Authentication success
-            // This prevents Domain authentication errors for sub-folders
-            // Warning: Root folder must have CH available for this to work,
-            // otherwise no redirect is performed!
-            else {
-              loc = $window.location.origin + "/";
-              // Remove first character (/) from path since we're adding it to loc
-              path = $window.location.pathname ? $window.location.pathname
-                .substring(
-                  1) : "";
-              search = $window.location.search;
-            }
-
-            // double encode since response gets decoded once!
-            state = encodeURIComponent(encodeURIComponent(JSON.stringify({
-              p: path,
-              u: $window.location.hash,
-              s: search
-            })));
-
-            localStorageService.set("risevision.common.userState", _state);
-            uiFlowManager.persist();
-
-            $window.location.href = GOOGLE_OAUTH2_URL +
-              "?response_type=token" +
-              "&scope=" + encodeURIComponent(OAUTH2_SCOPES) +
-              "&client_id=" + CLIENT_ID +
-              "&redirect_uri=" + encodeURIComponent(loc) +
-            //http://stackoverflow.com/a/14393492
-            "&prompt=select_account" +
-              "&state=" + state;
-
-            var deferred = $q.defer();
-            // returns a promise that never get fulfilled since we are redirecting
-            // to that google oauth2 page
-            return deferred.promise;
+            return $q.reject("No user");
           }
         };
 
-        var authenticate = function (forceAuth) {
+        var authenticate = function (forceAuth, credentials) {
           var authenticateDeferred;
+          var isRiseAuthUser = false;
 
           // Clear User state
           if (forceAuth) {
-            _resetUserState();
-            userInfoCache.removeAll();
+            _authenticateDeferred = null;
+
+            userState._resetState();
           }
 
           // Return cached promise
@@ -7255,25 +7652,34 @@ angular.module("risevision.common.components.logging")
             $log.debug("userAuthed", userAuthed);
 
             if (forceAuth || userAuthed === true) {
-              _authorize(!forceAuth)
-                .then(function (authResult) {
-                  if (authResult && !authResult.error) {
-                    authenticateDeferred.resolve();
-                  } else {
-                    _clearUserToken();
-                    $log.debug("Authentication Error: " +
-                      authResult.error);
-                    authenticateDeferred.reject(
-                      "Authentication Error: " + authResult.error);
-                  }
+              var authenticationPromise;
+
+              // Credentials or Token provided; assume authenticated
+              if (credentials || _state.userToken && _state.userToken.token) {
+                isRiseAuthUser = true;
+                authenticationPromise = customAuthFactory.authenticate(
+                  credentials);
+              } else {
+                authenticationPromise = googleAuthFactory.authenticate(
+                  forceAuth);
+              }
+
+              authenticationPromise
+                .then(_authorize)
+                .then(function () {
+                  userState._setIsRiseAuthUser(isRiseAuthUser);
+                  authenticateDeferred.resolve();
                 })
                 .then(null, function (err) {
                   _clearUserToken();
+
+                  $log.debug("Authentication Error: " + err);
+
                   authenticateDeferred.reject(err);
                 })
                 .finally(function () {
-                  $loading.stopGlobal(
-                    "risevision.user.authenticate");
+                  $loading.stopGlobal("risevision.user.authenticate");
+
                   _logPageLoad("authenticated user");
                 });
             } else {
@@ -7281,8 +7687,10 @@ angular.module("risevision.common.components.logging")
               $log.debug(msg);
               //  _clearUserToken();
               authenticateDeferred.reject(msg);
+
               objectHelper.clearObj(_state.user);
               $loading.stopGlobal("risevision.user.authenticate");
+
               _logPageLoad("unauthenticated user");
             }
           };
@@ -7297,28 +7705,276 @@ angular.module("risevision.common.components.logging")
         };
 
         var signOut = function (signOutGoogle) {
-          var deferred = $q.defer();
-          userInfoCache.removeAll();
-          gapiLoader().then(function (gApi) {
-            if (signOutGoogle) {
-              $window.logoutFrame.location =
-                "https://accounts.google.com/Logout";
+          return gapiLoader().then(function (gApi) {
+            if (!userState.isRiseAuthUser()) {
+              if (signOutGoogle) {
+                $window.logoutFrame.location =
+                  "https://accounts.google.com/Logout";
+              }
+              gApi.auth.signOut();
             }
-            gApi.auth.signOut();
+
+            _authenticateDeferred = null;
+
             // The flag the indicates a user is potentially
             // authenticated already, must be destroyed.
             _clearUserToken();
-            //clear auth token
-            // The majority of state is in here
-            _resetUserState();
-            objectHelper.clearObj(_state.user);
+
+            userState._resetState();
+
             //call google api to sign out
             $rootScope.$broadcast("risevision.user.signedOut");
             $log.debug("User is signed out.");
-            deferred.resolve();
-          }, function () {
-            deferred.reject();
           });
+        };
+
+        var isPasswordValid = function (password) {
+          return (typeof password === "string") && password.trim().length >=
+            4;
+        };
+
+        var userAuthFactory = {
+          authenticate: authenticate,
+          authenticatePopup: function () {
+            return authenticate(true);
+          },
+          signOut: signOut,
+          isPasswordValid: isPasswordValid,
+          addEventListenerVisibilityAPI: _addEventListenerVisibilityAPI,
+          removeEventListenerVisibilityAPI: _removeEventListenerVisibilityAPI,
+        };
+
+        return userAuthFactory;
+      }
+    ]);
+
+})(angular);
+
+(function () {
+  "use strict";
+
+  angular.module("risevision.common.components.userstate")
+    .service("userauth", ["$q", "$log", "riseAPILoader",
+      function ($q, $log, riseAPILoader) {
+
+        var service = {
+          add: function (username, password) {
+            var deferred = $q.defer();
+
+            var obj = {
+              "username": username,
+              "password": password
+            };
+            riseAPILoader().then(function (coreApi) {
+              return coreApi.userauth.add(obj);
+            })
+              .then(function (resp) {
+                $log.debug("added user credentials", resp);
+                deferred.resolve(resp.result);
+              })
+              .then(null, function (e) {
+                console.error("Failed to add credentials.", e);
+                deferred.reject(e);
+              });
+            return deferred.promise;
+          },
+          updatePassword: function (username, oldPassword, newPassword) {
+            var deferred = $q.defer();
+
+            var obj = {
+              "username": username,
+              "oldPassword": oldPassword,
+              "newPassword": newPassword
+            };
+            riseAPILoader().then(function (coreApi) {
+              return coreApi.userauth.updatePassword(obj);
+            })
+              .then(function (resp) {
+                $log.debug("update user credentials resp", resp);
+                deferred.resolve(resp.result);
+              })
+              .then(null, function (e) {
+                console.error("Failed to update credentials.", e);
+                deferred.reject(e);
+              });
+
+            return deferred.promise;
+          },
+          login: function (username, password) {
+            var deferred = $q.defer();
+
+            var obj = {
+              "username": username,
+              "password": password
+            };
+            riseAPILoader().then(function (coreApi) {
+              return coreApi.userauth.login(obj);
+            })
+              .then(function (resp) {
+                $log.debug("login successful", resp);
+                deferred.resolve(resp);
+              })
+              .then(null, function (e) {
+                console.error("Failed to login user.", e);
+                deferred.reject(e);
+              });
+
+            return deferred.promise;
+          },
+          refreshToken: function (username, token) {
+            var deferred = $q.defer();
+
+            var obj = {
+              "username": username,
+              "token": token
+            };
+            riseAPILoader().then(function (coreApi) {
+              return coreApi.userauth.refreshToken(obj);
+            })
+              .then(function (resp) {
+                $log.debug("token refresh successful", resp);
+                deferred.resolve(resp);
+              })
+              .then(null, function (e) {
+                console.error("Failed to refresh token.", e);
+                deferred.reject(e);
+              });
+
+            return deferred.promise;
+          },
+          confirmUserCreation: function (username, userConfirmedToken) {
+            var deferred = $q.defer();
+
+            var obj = {
+              "username": username,
+              "userConfirmedToken": userConfirmedToken
+            };
+            riseAPILoader().then(function (coreApi) {
+              return coreApi.userauth.confirmUserCreation(obj);
+            })
+              .then(function (resp) {
+                $log.debug("Confirm user creation successful", resp);
+                deferred.resolve(resp);
+              })
+              .then(null, function (e) {
+                console.error("Failed to confirm user creation.", e);
+                deferred.reject(e);
+              });
+
+            return deferred.promise;
+          },
+          requestConfirmationEmail: function (username) {
+            var deferred = $q.defer();
+
+            var obj = {
+              "username": username
+            };
+            riseAPILoader().then(function (coreApi) {
+              return coreApi.userauth.requestConfirmationEmail(obj);
+            })
+              .then(function (resp) {
+                $log.debug("Request confirmation email successful",
+                  resp);
+                deferred.resolve(resp);
+              })
+              .then(null, function (e) {
+                console.error("Failed to request confirmation email.",
+                  e);
+                deferred.reject(e);
+              });
+
+            return deferred.promise;
+          },
+          requestPasswordReset: function (username) {
+            var deferred = $q.defer();
+
+            var obj = {
+              "username": username
+            };
+            riseAPILoader().then(function (coreApi) {
+              return coreApi.userauth.requestPasswordReset(obj);
+            })
+              .then(function (resp) {
+                $log.debug("Request password reset successful", resp);
+                deferred.resolve(resp);
+              })
+              .then(null, function (e) {
+                console.error("Failed to request password reset.", e);
+                deferred.reject(e);
+              });
+
+            return deferred.promise;
+          },
+          resetPassword: function (username, passwordResetToken,
+            newPassword) {
+            var deferred = $q.defer();
+
+            var obj = {
+              "username": username,
+              "passwordResetToken": passwordResetToken,
+              "newPassword": newPassword
+            };
+            riseAPILoader().then(function (coreApi) {
+              return coreApi.userauth.resetPassword(obj);
+            })
+              .then(function (resp) {
+                $log.debug("Reset password successful", resp);
+                deferred.resolve(resp);
+              })
+              .then(null, function (e) {
+                console.error("Failed to reset password.", e);
+                deferred.reject(e);
+              });
+
+            return deferred.promise;
+          }
+        };
+
+        return service;
+      }
+    ]);
+})();
+
+(function (angular) {
+  "use strict";
+
+  angular.module("risevision.common.components.userstate")
+  // constants (you can override them in your app as needed)
+  .value("PROFILE_PICTURE_URL",
+    "https://www.gravatar.com/avatar/{emailMD5}?d=mm")
+    .factory("userState", [
+      "$q", "$rootScope", "$window", "$log", "$location", "userInfoCache",
+      "getUserProfile", "companyState", "objectHelper",
+      "localStorageService", "rvTokenStore", "md5", "PROFILE_PICTURE_URL",
+      function ($q, $rootScope, $window, $log, $location, userInfoCache,
+        getUserProfile, companyState, objectHelper,
+        localStorageService, rvTokenStore, md5, PROFILE_PICTURE_URL) {
+        //singleton factory that represents userState throughout application
+
+        var _state = {
+          profile: {}, //Rise vision profile
+          user: {}, //Google user
+          roleMap: {},
+          userToken: rvTokenStore.read(),
+          inRVAFrame: angular.isDefined($location.search().inRVA),
+          isRiseAuthUser: false
+        };
+
+        var refreshProfile = function () {
+          var deferred = $q.defer();
+
+          //populate profile if the current user is a rise vision user
+          getUserProfile(_state.user.username, true)
+            .then(function (profile) {
+              userState.updateUserProfile(profile);
+
+              //populate company info
+              return companyState.init();
+            })
+            .then(function () {
+              deferred.resolve();
+            }, deferred.reject);
+
           return deferred.promise;
         };
 
@@ -7353,6 +8009,24 @@ angular.module("risevision.common.components.logging")
           }
         };
 
+        var _resetState = function () {
+          userInfoCache.removeAll();
+
+          objectHelper.clearObj(_state.user);
+          objectHelper.clearObj(_state.profile);
+          _state.roleMap = {};
+
+          companyState.resetCompanyState();
+          $log.debug("User state has been reset.");
+        };
+
+        var _getEmailMD5 = function () {
+          var emailHash = userState.getUsername() && md5.createHash(
+            userState.getUsername());
+          var gravatarId = emailHash || "0";
+          return PROFILE_PICTURE_URL.replace("{emailMD5}", gravatarId);
+        };
+
         var userState = {
           // user getters
           getUsername: function () {
@@ -7369,7 +8043,7 @@ angular.module("risevision.common.components.logging")
             }
           },
           getUserPicture: function () {
-            return _state.user.picture;
+            return _state.user.picture || _getEmailMD5();
           },
           hasRole: hasRole,
           inRVAFrame: function () {
@@ -7387,14 +8061,17 @@ angular.module("risevision.common.components.logging")
           isPurchaser: function () {
             return hasRole("pu");
           },
+          isRiseAuthUser: function () {
+            return _state.isRiseAuthUser;
+          },
           isSeller: companyState.isSeller,
           isRiseVisionUser: isRiseVisionUser,
           isLoggedIn: isLoggedIn,
           getAccessToken: getAccessToken,
           // user functions
           checkUsername: function (username) {
-            return (username || false) && (userState.getUsername() ||
-                false) &&
+            return (username || false) &&
+              (userState.getUsername() || false) &&
               username.toUpperCase() === userState.getUsername().toUpperCase();
           },
           updateUserProfile: function (user) {
@@ -7414,14 +8091,7 @@ angular.module("risevision.common.components.logging")
               $rootScope.$broadcast("risevision.user.updated");
             }
           },
-          authenticate: _state.inRVAFrame ? authenticate : authenticateRedirect,
-          authenticatePopup: function () {
-            return authenticate(true);
-          },
-          signOut: signOut,
           refreshProfile: refreshProfile,
-          addEventListenerVisibilityAPI: _addEventListenerVisibilityAPI,
-          removeEventListenerVisibilityAPI: _removeEventListenerVisibilityAPI,
           // company getters
           getUserCompanyId: companyState.getUserCompanyId,
           getUserCompanyName: companyState.getUserCompanyName,
@@ -7440,6 +8110,7 @@ angular.module("risevision.common.components.logging")
           switchCompany: companyState.switchCompany,
           // private
           _restoreState: _restoreState,
+          _resetState: _resetState,
           _setUserToken: function (params) {
             // save params in state in case of redirect
             _state.params = params;
@@ -7449,7 +8120,12 @@ angular.module("risevision.common.components.logging")
           },
           _persistState: function () {
             // persist user state
-            localStorageService.set("risevision.common.userState", _state);
+            localStorageService.set("risevision.common.userState",
+              _state);
+          },
+          _state: _state,
+          _setIsRiseAuthUser: function (isRiseAuthUser) {
+            _state.isRiseAuthUser = isRiseAuthUser;
           }
         };
 
@@ -7589,7 +8265,296 @@ angular.module("risevision.common.components.logging")
 
     }
   ]);
+
 })(angular);
+
+"use strict";
+
+angular.module("risevision.common.components.userstate")
+  .controller("ConfirmAccountCtrl", ["$scope", "$loading", "$log", "$state",
+    "$stateParams", "userauth",
+    function ($scope, $loading, $log, $state, $stateParams, userauth) {
+      $loading.startGlobal("auth-confirm-account");
+
+      userauth.confirmUserCreation($stateParams.user, $stateParams.token)
+        .then(function () {
+          $log.log("User confirmed");
+        })
+        .catch(function (err) {
+          $log.error(err);
+        })
+        .finally(function () {
+          $loading.stopGlobal("auth-confirm-account");
+          $state.go("common.auth.unauthorized", {
+            accountConfirmed: true
+          });
+        });
+    }
+  ]);
+
+"use strict";
+
+/*jshint camelcase: false */
+
+angular.module("risevision.common.components.userstate")
+  .controller("GoogleResultCtrl", ["$log", "$stateParams", "userState",
+    "urlStateService",
+    function ($log, $stateParams, userState, urlStateService) {
+      $log.debug("URL params", $stateParams);
+
+      if ($stateParams.access_token) {
+        userState._setUserToken($stateParams);
+
+        urlStateService.redirectToState($stateParams.state);
+      }
+    }
+  ]);
+
+"use strict";
+
+angular.module("risevision.common.components.userstate")
+  .controller("LoginCtrl", ["$scope", "$loading", "$stateParams",
+    "$state", "userAuthFactory", "customAuthFactory", "uiFlowManager",
+    "urlStateService", "userState", "isSignUp",
+    function ($scope, $loading, $stateParams, $state, userAuthFactory,
+      customAuthFactory, uiFlowManager, urlStateService, userState,
+      isSignUp) {
+      $scope.forms = {};
+      $scope.credentials = {};
+      $scope.messages = {};
+      $scope.errors = {};
+      $scope.isSignUp = isSignUp;
+
+      $scope.messages.passwordReset = $stateParams.passwordReset;
+      $scope.messages.accountConfirmed = $stateParams.accountConfirmed;
+
+      $scope.googleLogin = function (endStatus) {
+        $loading.startGlobal("auth-buttons-login");
+        userAuthFactory.authenticate(true)
+          .finally(function () {
+            $loading.stopGlobal("auth-buttons-login");
+            uiFlowManager.invalidateStatus(endStatus);
+          });
+      };
+
+      $scope.customLogin = function (endStatus) {
+        $scope.errors = {};
+
+        if ($scope.forms.loginForm.$valid) {
+          $loading.startGlobal("auth-buttons-login");
+
+          userAuthFactory.authenticate(true, $scope.credentials)
+            .then(function () {
+              urlStateService.redirectToState($stateParams.state);
+            })
+            .then(null, function () {
+              $scope.errors.loginError = true;
+            })
+            .finally(function () {
+              $loading.stopGlobal("auth-buttons-login");
+              uiFlowManager.invalidateStatus(endStatus);
+            });
+        }
+      };
+
+      $scope.isPasswordValid = function () {
+        return userAuthFactory.isPasswordValid($scope.credentials.password);
+      };
+
+      $scope.createAccount = function (endStatus) {
+        $scope.errors = {};
+
+        if ($scope.forms.loginForm.$valid && $scope.isPasswordValid()) {
+          $loading.startGlobal("auth-buttons-login");
+
+          customAuthFactory.addUser($scope.credentials)
+            .then(function () {
+              $scope.errors.confirmationRequired = true;
+            })
+            .then(null, function () {
+              $scope.errors.duplicateError = true;
+            })
+            .finally(function () {
+              $loading.stopGlobal("auth-buttons-login");
+              uiFlowManager.invalidateStatus(endStatus);
+            });
+        }
+      };
+    }
+  ]);
+
+"use strict";
+
+angular.module("risevision.common.components.userstate")
+  .controller("RequestPasswordResetCtrl", ["$scope", "$loading", "$log",
+    "userauth",
+    function ($scope, $loading, $log, userauth) {
+      $scope.forms = {};
+      $scope.credentials = {};
+      $scope.errors = {};
+      $scope.emailSent = false;
+
+      $scope.requestPasswordReset = function () {
+        $scope.emailSent = false;
+        $loading.startGlobal("auth-request-password-reset");
+
+        userauth.requestPasswordReset($scope.credentials.username)
+          .then(function () {
+            $log.log("Reset password request sent");
+          })
+          .catch(function (err) {
+            $log.error(err);
+          })
+          .finally(function () {
+            $loading.stopGlobal("auth-request-password-reset");
+            $scope.emailSent = true;
+          });
+      };
+    }
+  ]);
+
+"use strict";
+
+angular.module("risevision.common.components.userstate")
+  .controller("ResetPasswordConfirmCtrl", ["$scope", "$loading", "$log",
+    "$state", "$stateParams", "userauth", "userAuthFactory",
+    function ($scope, $loading, $log, $state, $stateParams, userauth,
+      userAuthFactory) {
+      $scope.forms = {};
+      $scope.credentials = {};
+      $scope.errors = {};
+
+      function _resetErrorStates() {
+        $scope.emailResetSent = false;
+        $scope.invalidToken = false;
+        $scope.invalidPassword = false;
+        $scope.notMatchingPassword = false;
+      }
+
+      $scope.resetPassword = function () {
+        _resetErrorStates();
+
+        if (!userAuthFactory.isPasswordValid($scope.credentials.newPassword)) {
+          $scope.invalidPassword = true;
+          return;
+        } else if ($scope.credentials.newPassword !== $scope.credentials.confirmPassword) {
+          $scope.notMatchingPassword = true;
+          return;
+        }
+
+        $loading.startGlobal("auth-reset-password");
+        userauth.resetPassword($stateParams.user, $stateParams.token, $scope.credentials
+          .newPassword)
+          .then(function () {
+            $log.log("Password updated");
+            $state.go("common.auth.unauthorized", {
+              passwordReset: true
+            });
+          })
+          .catch(function (err) {
+            var error = err.result && err.result.error && err.result.error.message;
+
+            if (error === "Password reset token does not match") {
+              $scope.invalidToken = true;
+            } else {
+              $log.error(err);
+            }
+          })
+          .finally(function () {
+            $loading.stopGlobal("auth-reset-password");
+          });
+      };
+
+      $scope.requestPasswordReset = function () {
+        _resetErrorStates();
+
+        $loading.startGlobal("auth-request-password-reset");
+        userauth.requestPasswordReset($stateParams.user)
+          .then(function () {
+            $log.log("Email sent");
+            $scope.emailResetSent = true;
+          })
+          .catch(function (err) {
+            $log.error(err);
+          })
+          .finally(function () {
+            $loading.stopGlobal("auth-request-password-reset");
+          });
+      };
+    }
+  ]);
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.components.userstate');
+} catch (e) {
+  module = angular.module('risevision.common.components.userstate', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('userstate/auth-common.html',
+    '<div class="app-launcher-login"><div class="container"><div class="panel"><div class="row"><div class="col-sm-6 col-xs-12"><div class="rise-logo"><img src="https://s3.amazonaws.com/Rise-Images/Website/rise-logo.svg"></div></div><div class="col-sm-6 col-xs-12"><div ui-view=""></div></div></div></div></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.components.userstate');
+} catch (e) {
+  module = angular.module('risevision.common.components.userstate', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('userstate/auth-form.html',
+    '<form id="forms.loginForm" name="forms.loginForm" role="form" novalidate=""><div><div class="panel-body bg-danger u_margin-sm-top" ng-show="errors.duplicateError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>This email address is already registered. You can <a href="#" ng-click="showSignIn()">sign in</a> with this address.</span></p></div><div class="panel-body bg-danger u_margin-sm-top" ng-show="errors.loginError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Your email address/password combination is incorrect.</span></p></div><div class="panel-body bg-danger u_margin-sm-top" ng-show="errors.unconfirmedError"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Your email address has not been confirmed.<br><a href="#">Resend Email Confirmation</a></span></p></div><div class="panel-body bg-info u_margin-sm-top" ng-show="errors.confirmationRequired"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>We\'ve sent a confirmation email to {{credentials.username}}.<br>Please check your inbox to complete your account registration.</span></p></div><div class="panel-body bg-info u_margin-sm-top" ng-show="messages.passwordReset"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Password successfully updated.<br>Please sign in to proceed.</span></p></div><div class="panel-body bg-info u_margin-sm-top" ng-show="messages.accountConfirmed"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>Account successfully confirmed.<br>Please sign in to proceed.</span></p></div></div><div class="u_margin-sm-top" ng-show="!errors.confirmationRequired"><div class="form-group" ng-class="{\'has-error\': (forms.loginForm.$submitted && forms.loginForm.username.$invalid)}" show-errors=""><label class="control-label">Email</label> <input type="email" class="form-control" placeholder="Enter Your Email Address" id="username" name="username" ng-model="credentials.username" required="" focus-me="true"><p class="text-danger" ng-show="forms.loginForm.$submitted && forms.loginForm.username.$invalid">Please enter an Email</p></div><div class="form-group" ng-class="{\'has-error\': (forms.loginForm.$submitted && !isPasswordValid() && isSignUp), \'has-message\': isPasswordValid() && isSignUp}" show-errors=""><label class="control-label">Password</label> <input type="password" class="form-control" placeholder="Enter Password" id="password" name="password" ng-model="credentials.password" required=""><p class="text-danger" ng-show="forms.loginForm.$submitted && !isPasswordValid() && isSignUp">Please enter at least 4 characters.</p><p class="text-warning" ng-show="isPasswordValid() && isSignUp">A strong password is at least 8 characters, includes uppercase/lowercase letters, and one or more numbers.</p></div></div></form>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.components.userstate');
+} catch (e) {
+  module = angular.module('risevision.common.components.userstate', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('userstate/create-account.html',
+    '<h1 class="u_remove-top">Get Started For Free</h1><p class="lead text-muted">No commitments or contracts</p><div class="col-xs-12 col-md-8" ng-show="!errors.confirmationRequired"><button class="btn btn-google-auth btn-hg" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign up with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top" ng-show="!errors.confirmationRequired"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group" ng-show="!errors.confirmationRequired"><button class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="createAccount(\'registrationComplete\')"><span translate="Sign Up"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted">Already have an account? <a id="sign-in-link" ui-sref="common.auth.unauthorized">Sign in</a></p></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.components.userstate');
+} catch (e) {
+  module = angular.module('risevision.common.components.userstate', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('userstate/login.html',
+    '<h1 class="u_remove-top">Sign In</h1><p class="lead text-muted">to your Rise Vision account</p><div class="col-xs-12 col-md-8"><button class="btn btn-google-auth btn-hg" id="sign-in-google-link" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign in with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group"><button class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="customLogin(\'registrationComplete\')"><span translate="Sign In"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted"><a id="reset-password-link" ui-sref="common.auth.requestpasswordreset">Forgot your password?</a></p><p class="text-muted">Don\'t have an account? <a id="sign-up-link" ui-sref="common.auth.createaccount">Sign up</a></p></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.components.userstate');
+} catch (e) {
+  module = angular.module('risevision.common.components.userstate', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('userstate/request-password-reset.html',
+    '<h1 class="u_remove-top">Password Reset</h1><div class="col-xs-12 col-md-8"><div class="panel-body bg-info u_margin-lg-top" ng-show="emailSent"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>An email with password reset instructions has been sent to your email inbox (if it exists in our system).</span></p></div></div><form id="requestResetForm" role="form" name="forms.requestResetForm" novalidate="" ng-show="!emailSent"><div class="col-md-8 col-xs-12 u_margin-md-top"><div class="form-group" ng-class="{\'has-error\': (forms.requestResetForm.$submitted && forms.requestResetForm.username.$invalid)}" show-errors=""><label class="control-label">Email</label> <input type="text" class="form-control" name="username" ng-model="credentials.username" required="" focus-me="true"><p class="text-danger" ng-show="forms.requestResetForm.$submitted && forms.requestResetForm.username.$invalid">Please enter an Email</p></div><button class="btn btn-primary btn-hg" ng-disabled="forms.requestResetForm.$invalid" ng-click="requestPasswordReset()">Reset Password</button></div></form><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted"><a id="sign-in-link" ui-sref="common.auth.unauthorized">Sign in</a> to your account instead.</p></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.components.userstate');
+} catch (e) {
+  module = angular.module('risevision.common.components.userstate', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('userstate/reset-password-confirm.html',
+    '<h1 class="u_remove-top">Password Confirmation</h1><div><div class="panel-body bg-info u_margin-lg-top" ng-show="emailResetSent"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>An email with password reset instructions has been sent to your email inbox.</span></p></div><div class="panel-body bg-danger u_margin-lg-top" ng-show="invalidPassword"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>New Password must be at least four characters long.</span></p></div><div class="panel-body bg-danger u_margin-lg-top" ng-show="notMatchingPassword"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>New Password and Confirm Password must match.</span></p></div><div class="panel-body bg-danger u_margin-lg-top" ng-show="invalidToken"><p class="u_remove-bottom"><i class="fa fa-warning icon-left"></i> <span>The password reset token is not valid. <a href="#" ng-click="requestPasswordReset()">Request Password Reset</a></span></p></div></div><form id="resetPasswordForm" role="form" name="forms.resetPasswordForm" novalidate="" ng-show="!emailResetSent"><div class="col-md-8 col-xs-12 u_margin-md-top"><div class="form-group" ng-class="{\'has-error\': (forms.resetPasswordForm.$submitted && forms.resetPasswordForm.newPassword.$invalid)}" show-errors=""><label class="control-label">New Password</label> <input type="password" class="form-control" name="name" ng-model="credentials.newPassword" required="" focus-me="true"></div><div class="form-group" ng-class="{\'has-error\': (forms.resetPasswordForm.$submitted && forms.resetPasswordForm.confirmPassword.$invalid)}" show-errors=""><label class="control-label">Confirm Password</label> <input type="password" class="form-control" name="name" ng-model="credentials.confirmPassword" required=""></div><button id="startError" class="btn btn-primary btn-hg" ng-disabled="forms.resetPasswordForm.$invalid" ng-click="resetPassword()">Update Password</button></div></form>');
+}]);
+})();
 
 (function () {
   "use strict";

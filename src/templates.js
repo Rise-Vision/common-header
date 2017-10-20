@@ -31,9 +31,9 @@ app.run(["$templateCache", function($templateCache) {
     "                                  <td style=\"color:#525252;font-family:Helvetica,Arial,sans-serif;font-size:15px;line-height:22px;padding:0\">\n" +
     "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">Hi there,</p>\n" +
     "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">You've been added to <b>{{user.companyName}}</b> with Rise Vision!</p>\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">If you’re new to Rise Vision, please read below on how to proceed. Your email address will need Google authentication to be fully compatible.</p>\n" +
+    "                                     \n" +
     "\n" +
-    "                                        <div style=\"width: 100%;\n" +
+    "                                       <div style=\"width: 100%;\n" +
     "                      display: inline-block;\n" +
     "                      padding: 10px;\n" +
     "                      background-color: #f5f5f5; text-align:center;\">\n" +
@@ -47,31 +47,14 @@ app.run(["$templateCache", function($templateCache) {
     "                                             </p>\n" +
     "                                      </div>\n" +
     "\n" +
-    "                                      <p></p>\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\"><b>If your email address is a Google account:</b>\n" +
-    "                                          <br>Click <a href=\"http://apps.risevision.com\" target=\"_blank\">here</a> to sign in with your Google credentials.\n" +
-    "                                          <br>\n" +
-    "                                      </p>\n" +
+    "                                     <p></p>\n" +
+    "                                      <div style=\"margin-bottom:16px;text-align:center!important\" align=\"center\"><a href=\"https://apps.risevision.com/signup\" style=\"background:#47b767;border:none;border-radius:3px;color:#fff;display:inline-block;font-size:14px;font-weight:bold;outline:none!important;padding:12px 35px;text-decoration:none\" target=\"_blank\">Go Now</a></div>\n" +
+    "                                     \n" +
+    "                                    <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">You can find more details about getting started with Rise Vision in our <a href=\"https://risevision.zendesk.com/hc/en-us/articles/115004732063\" target=\"_blank\">Help Center</a>.</p>\n" +
     "\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\"></p>\n" +
-    "                                      <div style=\"margin-bottom:16px;text-align:center!important\" align=\"center\"><a href=\"http://apps.risevision.com\" style=\"background:#47b767;border:none;border-radius:3px;color:#fff;display:inline-block;font-size:14px;font-weight:bold;outline:none!important;padding:12px 35px;text-decoration:none\" target=\"_blank\">Sign In</a></div>\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">\n" +
-    "\n" +
-    "\n" +
-    "                                          <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">\n" +
-    "                                           <br><b>If your email  address is not a  Google account yet:</b><br>\n" +
-    "                                     You can create one for free by clicking <a href=\"https://accounts.google.com/signup\" target=\"_blank\">this link</a>. You can authenticate <b>ANY</b> email with Google. Just select \"I prefer to use my current email address\", and then set your password. Once you have a Google account, you can <a href=\"http://apps.risevision.com\" target=\"_blank\">sign in</a> to Rise Vision.\n" +
-    "                                     </p>\n" +
-    "                                    \n" +
-    "                                    <img src=\"https://help.risevision.com/hc/article_attachments/115010258046/Sign_In_page_.png\" width=\"475\" height=\"180\" style=\"padding:15px 0 30px;text-align:left\" class=\"CToWUd\">\n" +
-    "\n" +
-    "                                      <div style=\"margin-bottom:16px;text-align:center!important\" align=\"center\"><a href=\"http://apps.risevision.com\" style=\"background:#47b767;border:none;border-radius:3px;color:#fff;display:inline-block;font-size:14px;font-weight:bold;outline:none!important;padding:12px 35px;text-decoration:none\" target=\"_blank\">Go Now</a></div>\n" +
-    "                                      <br/>\n" +
-    "                                       <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">You can find more details about getting started with Rise Vision in our <a href=\"https://help.risevision.com/hc/en-us/articles/115002868706-Get-started-with-Rise-Vision\" target=\"_blank\">Help Center</a>.</p>\n" +
-    "\n" +
-    "                                       <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\"> If you have any questions at all, just reply to this email. &nbsp;We’re here to help!</p>\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">-Robb\n" +
-    "                                          <br>Rise Vision Community Manager</p>\n" +
+    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">If you have any questions at all, just reply to this email. &nbsp;We’re here to help!</p>\n" +
+    "                                        <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">Thank you,\n" +
+    "                                          <br>Rise Vision Support Team</p>\n" +
     "                                  </td>\n" +
     "                              </tr>\n" +
     "                              <tr>\n" +
@@ -117,9 +100,9 @@ app.run(["$templateCache", function($templateCache) {
     "          </tbody>\n" +
     "      </table>\n" +
     "  </div>\n" +
-    " </body>\n" +
-    "</html>\n" +
-    "");
+    "\n" +
+    "</body>\n" +
+    "</html>");
 }]);
 })();
 
@@ -300,13 +283,13 @@ app.run(["$templateCache", function($templateCache) {
     "    </a>\n" +
     "</li>\n" +
     "<!-- If User NOT Authenticated -->\n" +
-    "<li ng-show=\"!undetermined && isLoggedIn === false\" ng-controller=\"SignUpButtonCtrl\">\n" +
-    "  <button type=\"button\" ng-click=\"openSignUpModal()\"\n" +
-    "  class=\"btn-primary btn u_margin-right\">\n" +
-    "   Sign Up Free</button>\n" +
+    "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
+    "  <button type=\"button\" class=\"btn-primary btn u_margin-right\" ui-sref=\"common.auth.createaccount\">\n" +
+    "    Sign Up Free\n" +
+    "  </button>\n" +
     "</li>\n" +
     "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
-    "  <button type=\"button\" class=\"sign-in top-auth-button\" ng-click=\"login('registrationComplete')\">\n" +
+    "  <button type=\"button\" class=\"sign-in top-auth-button\" ui-sref=\"common.auth.unauthorized\">\n" +
     "    Sign In\n" +
     "  </button>\n" +
     "</li>\n" +
@@ -1275,16 +1258,6 @@ app.run(["$templateCache", function($templateCache) {
     "          <p ng-show=\"forms.registrationForm.lastName.$invalid && !forms.registrationForm.lastName.$pristine\"\n" +
     "            class=\"help-block validation-error-message-last-name\">Enter Last Name.</p>\n" +
     "        </div>\n" +
-    "        <!-- Email -->\n" +
-    "        <div class=\"form-group\" ng-class=\"{ 'has-error' : forms.registrationForm.email.$invalid && !forms.registrationForm.email.$pristine }\">\n" +
-    "          <label for=\"email\">Email <span>(We'll only send you system notices and other critical information)</span></label>\n" +
-    "          <input type=\"email\" class=\"form-control email\"\n" +
-    "          name=\"email\"\n" +
-    "          id=\"email\" required\n" +
-    "          ng-model=\"profile.email\">\n" +
-    "          <p ng-show=\"forms.registrationForm.email.$invalid && !forms.registrationForm.email.$pristine\"\n" +
-    "            class=\"help-block validation-error-message-email\">Enter a valid email.</p>\n" +
-    "        </div>\n" +
     "        <!-- Website -->\n" +
     "        <div class=\"form-group\" ng-show=\"newUser\" ng-class=\"{'has-error': forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine}\">\n" +
     "          <label for=\"website\">Website</label>\n" +
@@ -1616,22 +1589,89 @@ app.run(["$templateCache", function($templateCache) {
     "  </h2>\n" +
     "</div>\n" +
     "<div class=\"modal-body user-settings-modal\" stop-event=\"touchend\">\n" +
+    "  <div ng-if=\"isAdd\" class=\"alert alert-info\">\n" +
+    "    A Google account is no longer required by users being added to your Company. Any email address can be used!\n" +
+    "  </div>\n" +
     "  <form id=\"userSettingsForm\" role=\"form\" novalidate name=\"forms.userSettingsForm\">\n" +
-    "    <div class=\"form-group\"\n" +
-    "      ng-class=\"{ 'has-error' : forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine }\"\n" +
-    "    >\n" +
-    "      <label>\n" +
-    "        Username *\n" +
-    "      </label>\n" +
-    "      <div ng-if=\"!isAdd\">{{user.username}}</div>\n" +
-    "      <input id=\"user-settings-username\"\n" +
-    "        type=\"email\" required name=\"username\"\n" +
-    "        class=\"form-control\"\n" +
-    "        ng-if=\"isAdd\"\n" +
-    "        ng-model=\"user.username\"\n" +
-    "        />\n" +
-    "        <p ng-show=\"forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine\"\n" +
-    "          class=\"help-block validation-error-message-email\">User name must be a valid email address.</p>\n" +
+    "    <div id=\"passwordAlert\" class=\"animated\" ng-if=\"editingYourself && !isAdd\" ng-show=\"!isRiseAuthUser && showChangePassword\" ng-class=\"{ 'fadeIn': showChangePassword }\">\n" +
+    "      <div class=\"panel-body bg-info u_margin-sm-bottom\">\n" +
+    "        <p class=\"u_remove-bottom\">\n" +
+    "          <span>This account is authenticated by Google.<br/>\n" +
+    "          <a href=\"https://myaccount.google.com/security#signin\" target=\"_blank\">Change your password on your Google account.</a></span>\n" +
+    "        </p>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"row\">\n" +
+    "      <div class=\"col-xs-6\">\n" +
+    "        <div class=\"form-group\"\n" +
+    "          ng-class=\"{ 'has-error' : forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine }\"\n" +
+    "        >\n" +
+    "          <label>\n" +
+    "            Username *\n" +
+    "          </label>\n" +
+    "          <div ng-if=\"!isAdd\">\n" +
+    "            <span>{{user.username}}</span>\n" +
+    "          </div>\n" +
+    "          <input id=\"user-settings-username\"\n" +
+    "            type=\"email\" required name=\"username\"\n" +
+    "            class=\"form-control\"\n" +
+    "            ng-if=\"isAdd\"\n" +
+    "            ng-model=\"user.username\"\n" +
+    "            />\n" +
+    "            <p ng-show=\"forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine\"\n" +
+    "              class=\"help-block validation-error-message-email\">User name must be a valid email address.</p>\n" +
+    "        </div>\n" +
+    "      </div>\n" +
+    "      <div class=\"col-xs-6 text-right\">\n" +
+    "        <span ng-if=\"editingYourself && !isAdd\">\n" +
+    "          <a href=\"\" class=\"btn btn-default btn-sm change-password\" ng-click=\"toggleChangePassword()\">Change password</a>\n" +
+    "        </span>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "    <div id=\"passwordForm\" class=\"animated\" ng-if=\"editingYourself && !isAdd\" ng-show=\"isRiseAuthUser && showChangePassword\" ng-class=\"{ 'fadeInUp': showChangePassword }\">\n" +
+    "      <div class=\"form-group\"\n" +
+    "           ng-class=\"{ 'has-error' : (userPassword.currentPassword === '' && !forms.userSettingsForm.currentPassword.$pristine) || currentPasswordNotValid }\">\n" +
+    "        <label for=\"user-settings-current-password\">\n" +
+    "          Current Password *\n" +
+    "        </label>\n" +
+    "        <input id=\"user-settings-current-password\"\n" +
+    "               type=\"password\" name=\"currentPassword\"\n" +
+    "               class=\"form-control\"\n" +
+    "               ng-model=\"userPassword.currentPassword\" />\n" +
+    "          <p ng-show=\"userPassword.currentPassword === '' && !forms.userSettingsForm.currentPassword.$pristine\"\n" +
+    "             class=\"help-block validation-error-message-email\">Current Password is required.</p>\n" +
+    "          <p ng-show=\"currentPasswordNotValid\"\n" +
+    "             class=\"help-block validation-error-message-mail\">Current Password is not valid.</p>\n" +
+    "      </div>\n" +
+    "      <div class=\"form-group\"\n" +
+    "           ng-class=\"{ 'has-error' : (userPassword.newPassword === '' && !forms.userSettingsForm.newPassword.$pristine) || newPasswordFormatNotValid }\">\n" +
+    "        <label for=\"user-settings-new-password\">\n" +
+    "          New Password *\n" +
+    "        </label>\n" +
+    "        <input id=\"user-settings-new-password\"\n" +
+    "               type=\"password\" name=\"newPassword\"\n" +
+    "               class=\"form-control\"\n" +
+    "               ng-model=\"userPassword.newPassword\" />\n" +
+    "          <p ng-show=\"userPassword.newPassword === '' && !forms.userSettingsForm.newPassword.$pristine\"\n" +
+    "             class=\"help-block validation-error-message-email\">New Password is required.</p>\n" +
+    "          <p ng-show=\"newPasswordFormatNotValid\"\n" +
+    "             class=\"help-block validation-error-message-mail\">New Password must be at least four characters long.</p>\n" +
+    "      </div>\n" +
+    "      <div class=\"form-group\"\n" +
+    "           ng-class=\"{ 'has-error' : (userPassword.confirmPassword === '' && !forms.userSettingsForm.confirmPassword.$pristine) || confirmPasswordDoesNotMatch }\">\n" +
+    "        <label for=\"user-settings-confirm-password\">\n" +
+    "          Confirm Password *\n" +
+    "        </label>\n" +
+    "        <input id=\"user-settings-confirm-password\"\n" +
+    "               type=\"password\" name=\"confirmPassword\"\n" +
+    "               class=\"form-control\"\n" +
+    "               ng-model=\"userPassword.confirmPassword\" />\n" +
+    "          <p ng-show=\"userPassword.confirmPassword === '' && !forms.userSettingsForm.confirmPassword.$pristine\"\n" +
+    "             class=\"help-block validation-error-message-email\">Confirm Password is required.</p>\n" +
+    "          <p ng-show=\"confirmPasswordDoesNotMatch\"\n" +
+    "             class=\"help-block validation-error-message-mail\">Confirm Password must match New Password.</p>\n" +
+    "          <hr />\n" +
+    "      </div>\n" +
     "    </div>\n" +
     "    <div class=\"form-group\"\n" +
     "      ng-class=\"{ 'has-error' : forms.userSettingsForm.firstName.$invalid && !forms.userSettingsForm.firstName.$pristine }\">\n" +

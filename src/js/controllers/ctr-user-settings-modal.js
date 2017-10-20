@@ -3,13 +3,16 @@ angular.module("risevision.common.header")
 .controller("UserSettingsModalCtrl", [
   "$scope", "$filter", "$modalInstance", "updateUser", "getUserProfile",
   "deleteUser", "username", "userRoleMap", "$log", "$loading", "userState",
-  "uiFlowManager", "humanReadableError", "messageBox", "$rootScope",
-  "segmentAnalytics", "COMPANY_ROLE_FIELDS",
+  "userAuthFactory", "uiFlowManager", "humanReadableError", "messageBox",
+  "$rootScope", "segmentAnalytics", "userauth", "$q", "COMPANY_ROLE_FIELDS",
   function ($scope, $filter, $modalInstance, updateUser, getUserProfile,
     deleteUser, username, userRoleMap, $log, $loading, userState,
-    uiFlowManager, humanReadableError, messageBox, $rootScope,
-    segmentAnalytics, COMPANY_ROLE_FIELDS) {
+    userAuthFactory, uiFlowManager, humanReadableError, messageBox,
+    $rootScope, segmentAnalytics, userauth, $q, COMPANY_ROLE_FIELDS) {
     $scope.user = {};
+    $scope.userPassword = {};
+    $scope.showChangePassword = false;
+    $scope.isRiseAuthUser = userState.isRiseAuthUser();
     $scope.$watch("loading", function (loading) {
       if (loading) {
         $loading.start("user-settings-modal");
@@ -62,7 +65,7 @@ angular.module("risevision.common.header")
             });
 
             if (userState.checkUsername(username)) {
-              userState.signOut().then().finally(function () {
+              userAuthFactory.signOut().then().finally(function () {
                 uiFlowManager.invalidateStatus("registrationComplete");
               });
             }
@@ -74,14 +77,71 @@ angular.module("risevision.common.header")
     };
 
     $scope.save = function () {
+      var passwordChangeValid = true;
+
       $scope.forms.userSettingsForm.email.$pristine = false;
       $scope.forms.userSettingsForm.firstName.$pristine = false;
       $scope.forms.userSettingsForm.lastName.$pristine = false;
 
-      if (!$scope.forms.userSettingsForm.$invalid) {
+      if ($scope.showChangePassword) {
+        $scope.forms.userSettingsForm.currentPassword.$pristine = false;
+        $scope.forms.userSettingsForm.newPassword.$pristine = false;
+        $scope.forms.userSettingsForm.confirmPassword.$pristine = false;
+
+        $scope.currentPasswordNotValid = false;
+        $scope.newPasswordFormatNotValid = false;
+        $scope.confirmPasswordDoesNotMatch = false;
+
+        if (!$scope.userPassword.currentPassword) {
+          passwordChangeValid = false;
+        }
+
+        if (!$scope.userPassword.newPassword) {
+          passwordChangeValid = false;
+        } else if (!userAuthFactory.isPasswordValid($scope.userPassword.newPassword)) {
+          $scope.newPasswordFormatNotValid = true;
+          passwordChangeValid = false;
+        }
+
+        if (!$scope.userPassword.confirmPassword) {
+          passwordChangeValid = false;
+        } else if ($scope.userPassword.newPassword !== $scope.userPassword.confirmPassword) {
+          $scope.confirmPasswordDoesNotMatch = true;
+          passwordChangeValid = false;
+        }
+      }
+
+      if (!$scope.forms.userSettingsForm.$invalid && passwordChangeValid) {
+        var changePasswordPromise = $q.resolve();
+
         $scope.loading = true;
-        updateUser(username, $scope.user).then(
-          function (resp) {
+
+        if ($scope.showChangePassword) {
+          changePasswordPromise = userauth.updatePassword(
+            username,
+            $scope.userPassword.currentPassword,
+            $scope.userPassword.newPassword);
+          changePasswordPromise
+            .then(function () {
+              $scope.userPassword = {};
+              $scope.showChangePassword = false;
+            })
+            .catch(function (err) {
+              var newError = err.result.error;
+
+              if (newError.code === 409) {
+                $scope.currentPasswordNotValid = true;
+                newError.changePassword = true;
+              }
+              return $q.reject(newError);
+            });
+        }
+
+        changePasswordPromise
+          .then(function () {
+            return updateUser(username, $scope.user);
+          })
+          .then(function (resp) {
             if (userState.checkUsername(username)) {
               userState.updateUserProfile(resp.item);
             }
@@ -93,22 +153,26 @@ angular.module("risevision.common.header")
             });
 
             $modalInstance.close("success");
-          },
-          function (error) {
+          })
+          .catch(function (error) {
+            error = (error.result && error.result.error) || error;
             $log.debug(error);
             var errorMessage = "Error: " + humanReadableError(error);
-            if (error.code === 409) {
+            if (error.code === 409 && !error.changePassword) {
               errorMessage = $filter("translate")(
                 "common-header.user.error.duplicate-user", {
                   "username": $scope.user.username
                 });
+            } else if (error.changePassword) {
+              errorMessage = error.message;
             }
 
-            messageBox("common-header.user.error.update-user", errorMessage);
-          }
-        ).finally(function () {
-          $scope.loading = false;
-        });
+            messageBox("common-header.user.error.update-user",
+              errorMessage);
+          })
+          .finally(function () {
+            $scope.loading = false;
+          });
       }
     };
 
@@ -153,5 +217,8 @@ angular.module("risevision.common.header")
 
     $scope.forms = {};
 
+    $scope.toggleChangePassword = function () {
+      $scope.showChangePassword = !$scope.showChangePassword;
+    };
   }
 ]);

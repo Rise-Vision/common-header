@@ -136,8 +136,7 @@ describe("controller: registration modal", function() {
       id : "RV_user_id",
       firstName : "first",
       lastName : "last",
-      telephone : "telephone",
-      email : "e@mail.com"
+      telephone : "telephone"
     };
     
     inject(function($injector,$rootScope, $controller){
@@ -193,6 +192,10 @@ describe("controller: registration modal", function() {
       $scope.forms.registrationForm.$invalid = true;
       $scope.save();
       expect($scope.registering).to.be.false;        
+    });
+
+    it("should use username as email",function(){
+      expect($scope.profile.email).to.be.equal("e@mail.com");
     });
     
     it("should register user and close the modal",function(done){
