@@ -1601,29 +1601,33 @@ app.run(["$templateCache", function($templateCache) {
     "        </p>\n" +
     "      </div>\n" +
     "    </div>\n" +
-    "    <div class=\"row\">\n" +
+    "    <div class=\"form-group\"\n" +
+    "      ng-class=\"{ 'has-error' : forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine }\"\n" +
+    "      ng-if=\"isAdd\">\n" +
+    "      <label>\n" +
+    "        Username *\n" +
+    "      </label>\n" +
+    "      <input id=\"user-settings-username\"\n" +
+    "        type=\"email\" required name=\"username\"\n" +
+    "        class=\"form-control\"\n" +
+    "        ng-model=\"user.username\"\n" +
+    "        />\n" +
+    "        <p ng-show=\"forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine\"\n" +
+    "          class=\"help-block validation-error-message-email\">User name must be a valid email address.</p>\n" +
+    "    </div>\n" +
+    "    <div class=\"row\" ng-if=\"!isAdd\">\n" +
     "      <div class=\"col-xs-6\">\n" +
-    "        <div class=\"form-group\"\n" +
-    "          ng-class=\"{ 'has-error' : forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine }\"\n" +
-    "        >\n" +
+    "        <div class=\"form-group\">\n" +
     "          <label>\n" +
     "            Username *\n" +
     "          </label>\n" +
-    "          <div ng-if=\"!isAdd\">\n" +
+    "          <div>\n" +
     "            <span>{{user.username}}</span>\n" +
     "          </div>\n" +
-    "          <input id=\"user-settings-username\"\n" +
-    "            type=\"email\" required name=\"username\"\n" +
-    "            class=\"form-control\"\n" +
-    "            ng-if=\"isAdd\"\n" +
-    "            ng-model=\"user.username\"\n" +
-    "            />\n" +
-    "            <p ng-show=\"forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine\"\n" +
-    "              class=\"help-block validation-error-message-email\">User name must be a valid email address.</p>\n" +
     "        </div>\n" +
     "      </div>\n" +
     "      <div class=\"col-xs-6 text-right\">\n" +
-    "        <span ng-if=\"editingYourself && !isAdd\">\n" +
+    "        <span ng-if=\"editingYourself\">\n" +
     "          <a href=\"\" class=\"btn btn-default btn-sm change-password\" ng-click=\"toggleChangePassword()\">Change password</a>\n" +
     "        </span>\n" +
     "      </div>\n" +

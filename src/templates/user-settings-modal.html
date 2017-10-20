@@ -23,29 +23,33 @@ rv-spinner-start-active="1">
         </p>
       </div>
     </div>
-    <div class="row">
+    <div class="form-group"
+      ng-class="{ 'has-error' : forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine }"
+      ng-if="isAdd">
+      <label>
+        Username *
+      </label>
+      <input id="user-settings-username"
+        type="email" required name="username"
+        class="form-control"
+        ng-model="user.username"
+        />
+        <p ng-show="forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine"
+          class="help-block validation-error-message-email">User name must be a valid email address.</p>
+    </div>
+    <div class="row" ng-if="!isAdd">
       <div class="col-xs-6">
-        <div class="form-group"
-          ng-class="{ 'has-error' : forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine }"
-        >
+        <div class="form-group">
           <label>
             Username *
           </label>
-          <div ng-if="!isAdd">
+          <div>
             <span>{{user.username}}</span>
           </div>
-          <input id="user-settings-username"
-            type="email" required name="username"
-            class="form-control"
-            ng-if="isAdd"
-            ng-model="user.username"
-            />
-            <p ng-show="forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine"
-              class="help-block validation-error-message-email">User name must be a valid email address.</p>
         </div>
       </div>
       <div class="col-xs-6 text-right">
-        <span ng-if="editingYourself && !isAdd">
+        <span ng-if="editingYourself">
           <a href="" class="btn btn-default btn-sm change-password" ng-click="toggleChangePassword()">Change password</a>
         </span>
       </div>
