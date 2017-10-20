@@ -284,43 +284,15 @@ app.run(["$templateCache", function($templateCache) {
     "</li>\n" +
     "<!-- If User NOT Authenticated -->\n" +
     "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
-    "  <button type=\"button\" class=\"btn-primary btn u_margin-right\" ui-sref=\"common.auth.createaccount\">\n" +
+    "  <button type=\"button\" class=\"btn-primary btn u_margin-right\" ng-click=\"login('registrationComplete', false)\">\n" +
     "    Sign Up Free\n" +
     "  </button>\n" +
     "</li>\n" +
     "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
-    "  <button type=\"button\" class=\"sign-in top-auth-button\" ui-sref=\"common.auth.unauthorized\">\n" +
+    "  <button type=\"button\" class=\"sign-in top-auth-button\" ng-click=\"login('registrationComplete', true)\">\n" +
     "    Sign In\n" +
     "  </button>\n" +
     "</li>\n" +
-    "");
-}]);
-})();
-
-(function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("authorization-modal.html",
-    "<div class=\"modal-header\">\n" +
-    "  <button type=\"button\" class=\"close\" ng-click=\"closeModal()\">\n" +
-    "  		<i class=\"fa fa-times\"></i>\n" +
-    "  	</button>\n" +
-    "</div>\n" +
-    "<div class=\"modal-body authorization-modal\"\n" +
-    "  stop-event=\"touchend\"\n" +
-    "  rv-spinner=\"spinnerOptions\"\n" +
-    "  rv-spinner-key=\"authenticate-button\"\n" +
-    "  rv-spinner-start-active=\"0\"\n" +
-    ">\n" +
-    "  <img src=\"//rise-vision.github.io/style-guide/img/avatar_2x.jpg\" class=\"profile-img\">\n" +
-    "  <p>Please authorize your Google Account to register with Rise Vision.</p>\n" +
-    "\n" +
-    "  <button type=\"button\" class=\"btn btn-success btn-fixed-width btn-block authorize-button\" ng-click=\"authenticate(true)\">\n" +
-    "    Authorize <i class=\"fa fa-white fa-check icon-right\"></i>\n" +
-    "  </button>\n" +
-    "</div>\n" +
     "");
 }]);
 })();
@@ -2185,10 +2157,12 @@ angular.module("risevision.common.header")
 
 angular.module("risevision.common.header")
   .controller("AuthButtonsCtr", ["$scope", "$modal", "$templateCache",
-    "userState", "userAuthFactory", "$loading", "cookieStore",
+    "userState", "userAuthFactory", "canAccessApps",
+    "$loading", "cookieStore",
     "$log", "uiFlowManager", "oauth2APILoader", "bindToScopeWithWatch",
     "$window", "APPS_URL",
     function ($scope, $modal, $templateCache, userState, userAuthFactory,
+      canAccessApps,
       $loading, cookieStore, $log, uiFlowManager, oauth2APILoader,
       bindToScopeWithWatch, $window, APPS_URL) {
 
@@ -2300,9 +2274,9 @@ angular.module("risevision.common.header")
         $scope);
 
       // Login Modal
-      $scope.login = function (endStatus) {
+      $scope.login = function (endStatus, authenticate) {
         $loading.startGlobal("auth-buttons-login");
-        userAuthFactory.authenticate(true).then().finally(function () {
+        canAccessApps(authenticate, true).finally(function () {
           $loading.stopGlobal("auth-buttons-login");
           uiFlowManager.invalidateStatus(endStatus);
         });
@@ -4287,7 +4261,6 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
   .config(["uiStatusDependencies",
     function (uiStatusDependencies) {
       uiStatusDependencies.addDependencies({
-        "registerdAsRiseVisionUser": "signedInWithGoogle",
         "registeredAsRiseVisionUser": "signedInWithGoogle",
         "registrationComplete": ["notLoggedIn",
           "registeredAsRiseVisionUser"
@@ -6654,7 +6627,7 @@ angular.module("risevision.common.components.userstate")
     "userState", "userAuthFactory", "urlStateService",
     function ($q, $state, $location, userState, userAuthFactory,
       urlStateService) {
-      return function () {
+      return function (authenticate, allowReturn) {
         var deferred = $q.defer();
         userAuthFactory.authenticate(false)
           .then(function () {
@@ -6668,7 +6641,11 @@ angular.module("risevision.common.components.userstate")
             var newState;
 
             if (!userState.isLoggedIn()) {
-              newState = "common.auth.createaccount";
+              if (authenticate) {
+                newState = "common.auth.unauthorized";
+              } else {
+                newState = "common.auth.createaccount";
+              }
             } else if ($state.get("common.auth.unregistered")) {
               newState = "common.auth.unregistered";
             }
@@ -6680,10 +6657,14 @@ angular.module("risevision.common.components.userstate")
                 reload: true
               });
 
-              $location.replace();
-            }
+              if (!allowReturn) {
+                $location.replace();
+              }
 
-            deferred.reject();
+              deferred.reject();
+            } else {
+              deferred.resolve();
+            }
           });
         return deferred.promise;
       };
