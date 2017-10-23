@@ -15,7 +15,7 @@
       <div>
         This app was built for the sole purpose of testing &amp; demoing common header.
 
-        <ng-view>Loading...</ng-view>
+        <div ui-view>Loading...</div>
       </div>
     </div>
 
@@ -76,7 +76,7 @@
     </style>
 
     <script type="text/javascript">
-      angular.module("test-app", ["ngRoute", "risevision.common.config", "risevision.common.header"])
+      angular.module("test-app", ["ui.router", "risevision.common.config", "risevision.common.header"])
       .value("STORE_URL", "/test/e2e/")
 
       .config(["uiStatusDependencies", function (uiStatusDependencies) {
@@ -85,11 +85,25 @@
         });
       }])
 
-      .config(['$routeProvider', function($routeProvider) {
-        $routeProvider
-          .when('/shopping-cart', {templateUrl: 'fake-store.html',   controller: "FakeStoreController"})
-          .when('/fake-page', {templateUrl: 'fake-page.html'})
-          .otherwise({redirectTo: '/shopping-cart'});
+      .config(["$urlRouterProvider", "$stateProvider", "$locationProvider",
+        function storeRouteConfig($urlRouterProvider, $stateProvider,
+          $locationProvider) {
+
+          $locationProvider.html5Mode(false);
+
+          $urlRouterProvider.otherwise("/shopping-cart");
+
+          // Use $stateProvider to configure states.
+          $stateProvider.state("shopping-cart", {
+            url: "/shopping-cart",
+            templateUrl: "fake-store.html",
+            controller: "FakeStoreController"
+          })
+
+          .state("fake-page", {
+            url: "/fake-page",
+            templateUrl: "fake-page.html"
+          })
       }])
 
       .controller("MainController", function($rootScope, $scope, $window, CORE_URL) {

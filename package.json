@@ -25,7 +25,7 @@
     "jshint": "2.9.5",
     "run-sequence": "^0.3.6",
     "widget-tester": "git://github.com/Rise-Vision/widget-tester.git",
-    "rv-common-e2e": "git://github.com/Rise-Vision/rv-common-e2e.git"
+    "rv-common-e2e": "git://github.com/Rise-Vision/rv-common-e2e.git#feature/custom-auth"
   },
   "scripts": {
     "test": "gulp test"

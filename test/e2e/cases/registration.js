@@ -59,19 +59,17 @@
         expect(registrationModalPage.getRegistrationModal().isPresent()).to.eventually.be.true;
       });
 
-      it("should show validation errors if i have not agreed to terms and entered an email", function () {
+      it("should show validation errors if i have not agreed to terms and entered a first and last name", function () {
         registrationModalPage.getSaveButton().click();
         
         expect(registrationModalPage.getValidationTermsAccepted().isPresent()).to.eventually.be.true;
         expect(registrationModalPage.getValidationFirstName().isPresent()).to.eventually.be.true;
         expect(registrationModalPage.getValidationLastName().isPresent()).to.eventually.be.true;
-        expect(registrationModalPage.getValidationEmail().isPresent()).to.eventually.be.true;
       });
 
       it("should complete the registration process", function () {
         registrationModalPage.getFirstNameField().sendKeys("John");
         registrationModalPage.getLastNameField().sendKeys("Doe");
-        registrationModalPage.getEmailField().sendKeys("john.doe@awesomecompany.io");
         //click authorize
         registrationModalPage.getTermsCheckbox().click();
         
