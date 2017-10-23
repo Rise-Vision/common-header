@@ -284,43 +284,15 @@ app.run(["$templateCache", function($templateCache) {
     "</li>\n" +
     "<!-- If User NOT Authenticated -->\n" +
     "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
-    "  <button type=\"button\" class=\"btn-primary btn u_margin-right\" ui-sref=\"common.auth.createaccount\">\n" +
+    "  <button type=\"button\" class=\"btn-primary btn u_margin-right\" ng-click=\"login('registrationComplete', false)\">\n" +
     "    Sign Up Free\n" +
     "  </button>\n" +
     "</li>\n" +
     "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
-    "  <button type=\"button\" class=\"sign-in top-auth-button\" ui-sref=\"common.auth.unauthorized\">\n" +
+    "  <button type=\"button\" class=\"sign-in top-auth-button\" ng-click=\"login('registrationComplete', true)\">\n" +
     "    Sign In\n" +
     "  </button>\n" +
     "</li>\n" +
-    "");
-}]);
-})();
-
-(function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("authorization-modal.html",
-    "<div class=\"modal-header\">\n" +
-    "  <button type=\"button\" class=\"close\" ng-click=\"closeModal()\">\n" +
-    "  		<i class=\"fa fa-times\"></i>\n" +
-    "  	</button>\n" +
-    "</div>\n" +
-    "<div class=\"modal-body authorization-modal\"\n" +
-    "  stop-event=\"touchend\"\n" +
-    "  rv-spinner=\"spinnerOptions\"\n" +
-    "  rv-spinner-key=\"authenticate-button\"\n" +
-    "  rv-spinner-start-active=\"0\"\n" +
-    ">\n" +
-    "  <img src=\"//rise-vision.github.io/style-guide/img/avatar_2x.jpg\" class=\"profile-img\">\n" +
-    "  <p>Please authorize your Google Account to register with Rise Vision.</p>\n" +
-    "\n" +
-    "  <button type=\"button\" class=\"btn btn-success btn-fixed-width btn-block authorize-button\" ng-click=\"authenticate(true)\">\n" +
-    "    Authorize <i class=\"fa fa-white fa-check icon-right\"></i>\n" +
-    "  </button>\n" +
-    "</div>\n" +
     "");
 }]);
 })();
@@ -1601,29 +1573,33 @@ app.run(["$templateCache", function($templateCache) {
     "        </p>\n" +
     "      </div>\n" +
     "    </div>\n" +
-    "    <div class=\"row\">\n" +
+    "    <div class=\"form-group\"\n" +
+    "      ng-class=\"{ 'has-error' : forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine }\"\n" +
+    "      ng-if=\"isAdd\">\n" +
+    "      <label>\n" +
+    "        Username *\n" +
+    "      </label>\n" +
+    "      <input id=\"user-settings-username\"\n" +
+    "        type=\"email\" required name=\"username\"\n" +
+    "        class=\"form-control\"\n" +
+    "        ng-model=\"user.username\"\n" +
+    "        />\n" +
+    "        <p ng-show=\"forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine\"\n" +
+    "          class=\"help-block validation-error-message-email\">User name must be a valid email address.</p>\n" +
+    "    </div>\n" +
+    "    <div class=\"row\" ng-if=\"!isAdd\">\n" +
     "      <div class=\"col-xs-6\">\n" +
-    "        <div class=\"form-group\"\n" +
-    "          ng-class=\"{ 'has-error' : forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine }\"\n" +
-    "        >\n" +
+    "        <div class=\"form-group\">\n" +
     "          <label>\n" +
     "            Username *\n" +
     "          </label>\n" +
-    "          <div ng-if=\"!isAdd\">\n" +
+    "          <div>\n" +
     "            <span>{{user.username}}</span>\n" +
     "          </div>\n" +
-    "          <input id=\"user-settings-username\"\n" +
-    "            type=\"email\" required name=\"username\"\n" +
-    "            class=\"form-control\"\n" +
-    "            ng-if=\"isAdd\"\n" +
-    "            ng-model=\"user.username\"\n" +
-    "            />\n" +
-    "            <p ng-show=\"forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine\"\n" +
-    "              class=\"help-block validation-error-message-email\">User name must be a valid email address.</p>\n" +
     "        </div>\n" +
     "      </div>\n" +
     "      <div class=\"col-xs-6 text-right\">\n" +
-    "        <span ng-if=\"editingYourself && !isAdd\">\n" +
+    "        <span ng-if=\"editingYourself\">\n" +
     "          <a href=\"\" class=\"btn btn-default btn-sm change-password\" ng-click=\"toggleChangePassword()\">Change password</a>\n" +
     "        </span>\n" +
     "      </div>\n" +

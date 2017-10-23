@@ -9,7 +9,6 @@
   .config(["uiStatusDependencies",
     function (uiStatusDependencies) {
       uiStatusDependencies.addDependencies({
-        "registerdAsRiseVisionUser": "signedInWithGoogle",
         "registeredAsRiseVisionUser": "signedInWithGoogle",
         "registrationComplete": ["notLoggedIn",
           "registeredAsRiseVisionUser"
