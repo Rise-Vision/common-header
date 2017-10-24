@@ -7238,11 +7238,13 @@ angular.module("risevision.common.components.logging")
   "use strict";
 
   angular.module("risevision.common.components.rvtokenstore")
+    .value("TOKEN_STORE_KEY", "rv-auth-object")
     .service("rvTokenStore", ["$log", "$location", "cookieStore",
-      "getBaseDomain",
-      function ($log, $location, cookieStore, getBaseDomain) {
+      "getBaseDomain", "TOKEN_STORE_KEY",
+      function ($log, $location, cookieStore, getBaseDomain,
+        TOKEN_STORE_KEY) {
         var _readRvToken = function () {
-          var token = cookieStore.get("rv-token");
+          var token = cookieStore.get(TOKEN_STORE_KEY);
 
           try {
             return JSON.parse(token);
@@ -7254,11 +7256,11 @@ angular.module("risevision.common.components.logging")
         var _writeRvToken = function (value) {
           var baseDomain = getBaseDomain();
           if (baseDomain === "localhost") {
-            cookieStore.put("rv-token", JSON.stringify(value), {
+            cookieStore.put(TOKEN_STORE_KEY, JSON.stringify(value), {
               path: "/"
             });
           } else {
-            cookieStore.put("rv-token", JSON.stringify(value), {
+            cookieStore.put(TOKEN_STORE_KEY, JSON.stringify(value), {
               domain: baseDomain,
               path: "/"
             });
@@ -7268,11 +7270,11 @@ angular.module("risevision.common.components.logging")
         var _clearRvToken = function () {
           var baseDomain = getBaseDomain();
           if (baseDomain === "localhost") {
-            cookieStore.remove("rv-token", {
+            cookieStore.remove(TOKEN_STORE_KEY, {
               path: "/"
             });
           } else {
-            cookieStore.remove("rv-token", {
+            cookieStore.remove(TOKEN_STORE_KEY, {
               domain: baseDomain,
               path: "/"
             });
