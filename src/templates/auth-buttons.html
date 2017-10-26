@@ -44,12 +44,12 @@
 </li>
 <!-- If User NOT Authenticated -->
 <li ng-show="!undetermined && isLoggedIn === false">
-  <button type="button" class="btn-primary btn u_margin-right" ng-click="login('registrationComplete', false)">
+  <button type="button" class="btn-primary btn u_margin-right" ng-click="login('registrationComplete', true)">
     Sign Up Free
   </button>
 </li>
 <li ng-show="!undetermined && isLoggedIn === false">
-  <button type="button" class="sign-in top-auth-button" ng-click="login('registrationComplete', true)">
+  <button type="button" class="sign-in top-auth-button" ng-click="login('registrationComplete')">
     Sign In
   </button>
 </li>

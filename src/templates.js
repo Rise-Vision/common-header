@@ -284,12 +284,12 @@ app.run(["$templateCache", function($templateCache) {
     "</li>\n" +
     "<!-- If User NOT Authenticated -->\n" +
     "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
-    "  <button type=\"button\" class=\"btn-primary btn u_margin-right\" ng-click=\"login('registrationComplete', false)\">\n" +
+    "  <button type=\"button\" class=\"btn-primary btn u_margin-right\" ng-click=\"login('registrationComplete', true)\">\n" +
     "    Sign Up Free\n" +
     "  </button>\n" +
     "</li>\n" +
     "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
-    "  <button type=\"button\" class=\"sign-in top-auth-button\" ng-click=\"login('registrationComplete', true)\">\n" +
+    "  <button type=\"button\" class=\"sign-in top-auth-button\" ng-click=\"login('registrationComplete')\">\n" +
     "    Sign In\n" +
     "  </button>\n" +
     "</li>\n" +
@@ -1378,41 +1378,6 @@ app.run(["$templateCache", function($templateCache) {
     "    </p>\n" +
     "  </form>\n" +
     "</div>\n" +
-    "");
-}]);
-})();
-
-(function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("signup-modal.html",
-    "<div class=\"modal-body text-center\" stop-event=\"touchend\">\n" +
-    "  <div class=\"signup-modal\">\n" +
-    "    <div class=\"logo u_margin-lg-bottom hidden\">\n" +
-    "      <img style=\"width:120px\" src=\"//s3.amazonaws.com/Rise-Images/UI/logo.svg\" alt=\"Rise Vision\">\n" +
-    "    </div>\n" +
-    "    <h1 class=\"modal-title u_margin-md-top u_remove-bottom\">New to Rise Vision?</h1>\n" +
-    "    <p class=\"text-muted\">CREATE A FREE ACCOUNT</p>\n" +
-    "\n" +
-    "    <a class=\"u_margin-md-top btn btn-hg btn-google-auth\" id=\"google-registration-button\" ng-click=\"login('registrationComplete')\"><strong>Sign Up with Google</strong> <i class=\"fa fa-google fa-lg icon-right\"></i></a>\n" +
-    "    <p class=\"text-muted u_remove-bottom u_margin-sm-top\"><a href=\"https://accounts.google.com/signup\" target=\"_blank\">I don't have a Google Account</a></p>\n" +
-    "    <p class=\"text-muted hidden\">Already a Rise Vision User? <a ng-click=\"$event.preventDefault(); login('registrationComplete');\" ng-href=\"#\">Sign In</a></p>\n" +
-    "\n" +
-    "    <div class=\"signup-offer\">\n" +
-    "      <p>Get <strong>Unlimited Access To All Features</strong> Including Our Most Popular Widgets</p>\n" +
-    "      <ul class=\"list-unstyled widgets-offer\">\n" +
-    "        <li><img src=\"https://s3.amazonaws.com/Rise-Images/Icons/web.png\"><span>Web <br>Page</span></li>\n" +
-    "        <li><img src=\"https://s3.amazonaws.com/Rise-Images/Icons/spreadsheet.png\"><span>Google Spreadsheet</span></li>\n" +
-    "        <li><img src=\"https://s3.amazonaws.com/Rise-Images/Icons/calendar.png\"><span>Google Calendar</span></li>\n" +
-    "        <li><img src=\"https://s3.amazonaws.com/Rise-Images/Icons/rss.png\"><span>RSS <br>Feed</span></li>\n" +
-    "        <li><img src=\"https://s3.amazonaws.com/Rise-Images/Icons/news.png\"><span>News <br>Headlines</span></li>\n" +
-    "        <li><img src=\"https://s3.amazonaws.com/Rise-Images/Icons/video.png\"><span>Video <br>Folder</span></li>\n" +
-    "      </ul>\n" +
-    "    </div>\n" +
-    "  </div><!--signup-modal-->  \n" +
-    "</div><!--modal-body-->\n" +
     "");
 }]);
 })();

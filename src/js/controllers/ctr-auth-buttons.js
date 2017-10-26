@@ -117,9 +117,9 @@ angular.module("risevision.common.header")
         $scope);
 
       // Login Modal
-      $scope.login = function (endStatus, authenticate) {
+      $scope.login = function (endStatus, signup) {
         $loading.startGlobal("auth-buttons-login");
-        canAccessApps(authenticate, true).finally(function () {
+        canAccessApps(signup, true).finally(function () {
           $loading.stopGlobal("auth-buttons-login");
           uiFlowManager.invalidateStatus(endStatus);
         });
