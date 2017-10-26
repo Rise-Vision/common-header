@@ -1628,7 +1628,7 @@ app.run(["$templateCache", function($templateCache) {
     "        </span>\n" +
     "      </div>\n" +
     "    </div>\n" +
-    "    <div id=\"passwordForm\" class=\"animated\" ng-if=\"editingYourself && !isAdd\" ng-show=\"isRiseAuthUser && showChangePassword\" ng-class=\"{ 'fadeInUp': showChangePassword }\">\n" +
+    "    <div id=\"passwordForm\" class=\"animated\" ng-if=\"editingYourself && !isAdd\" ng-show=\"isRiseAuthUser && showChangePassword\" ng-class=\"{ 'fadeIn': showChangePassword }\">\n" +
     "      <div class=\"form-group\"\n" +
     "           ng-class=\"{ 'has-error' : (userPassword.currentPassword === '' && !forms.userSettingsForm.currentPassword.$pristine) || currentPasswordNotValid }\">\n" +
     "        <label for=\"user-settings-current-password\">\n" +
