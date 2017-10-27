@@ -1530,7 +1530,7 @@ app.run(["$templateCache", function($templateCache) {
     "    A Google account is no longer required by users being added to your Company. Any email address can be used!\n" +
     "  </div>\n" +
     "  <form id=\"userSettingsForm\" role=\"form\" novalidate name=\"forms.userSettingsForm\">\n" +
-    "    <div id=\"passwordAlert\" class=\"animated\" ng-if=\"editingYourself && !isAdd\" ng-show=\"!isRiseAuthUser && showChangePassword\">\n" +
+    "    <div id=\"passwordAlert\" class=\"animated\" ng-if=\"editingYourself && !isAdd\" ng-show=\"!isRiseAuthUser && showChangePassword\" ng-class=\"{ 'fadeIn': showChangePassword }\">\n" +
     "      <div class=\"panel-body bg-info u_margin-sm-bottom\">\n" +
     "        <p class=\"u_remove-bottom\">\n" +
     "          <span>This account is authenticated by Google.<br/>\n" +
@@ -1569,7 +1569,7 @@ app.run(["$templateCache", function($templateCache) {
     "        </span>\n" +
     "      </div>\n" +
     "    </div>\n" +
-    "    <div id=\"passwordForm\" class=\"animated\" ng-if=\"editingYourself && !isAdd\" ng-show=\"isRiseAuthUser && showChangePassword\">\n" +
+    "    <div id=\"passwordForm\" class=\"animated\" ng-if=\"editingYourself && !isAdd\" ng-show=\"isRiseAuthUser && showChangePassword\" ng-class=\"{ 'fadeIn': showChangePassword }\">\n" +
     "      <div class=\"form-group\"\n" +
     "           ng-class=\"{ 'has-error' : (userPassword.currentPassword === '' && !forms.userSettingsForm.currentPassword.$pristine) || currentPasswordNotValid }\">\n" +
     "        <label for=\"user-settings-current-password\">\n" +
