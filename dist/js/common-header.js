@@ -8350,13 +8350,12 @@ angular.module("risevision.common.components.userstate")
             $scope.emailSent = true;
           })
           .catch(function (err) {
-            var error = err && err.result && err.result.error && err.result
-              .error.message;
+            var error = err && err.result && err.result.code;
 
-            if (error === "Google account") {
+            if (error === 409) {
               $log.log("Requested password reset for Google account");
               $scope.isGoogleAccount = true;
-            } else {
+            } else { // No special case for 404, for security reasons
               $log.error(err);
               $scope.emailSent = true;
             }
