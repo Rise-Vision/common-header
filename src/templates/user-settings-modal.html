@@ -15,7 +15,7 @@ rv-spinner-start-active="1">
     A Google account is no longer required by users being added to your Company. Any email address can be used!
   </div>
   <form id="userSettingsForm" role="form" novalidate name="forms.userSettingsForm">
-    <div id="passwordAlert" class="animated" ng-if="editingYourself && !isAdd" ng-show="!isRiseAuthUser && showChangePassword">
+    <div id="passwordAlert" class="animated" ng-if="editingYourself && !isAdd" ng-show="!isRiseAuthUser && showChangePassword" ng-class="{ 'fadeIn': showChangePassword }">
       <div class="panel-body bg-info u_margin-sm-bottom">
         <p class="u_remove-bottom">
           <span>This account is authenticated by Google.<br/>
@@ -54,7 +54,7 @@ rv-spinner-start-active="1">
         </span>
       </div>
     </div>
-    <div id="passwordForm" class="animated" ng-if="editingYourself && !isAdd" ng-show="isRiseAuthUser && showChangePassword">
+    <div id="passwordForm" class="animated" ng-if="editingYourself && !isAdd" ng-show="isRiseAuthUser && showChangePassword" ng-class="{ 'fadeIn': showChangePassword }">
       <div class="form-group"
            ng-class="{ 'has-error' : (userPassword.currentPassword === '' && !forms.userSettingsForm.currentPassword.$pristine) || currentPasswordNotValid }">
         <label for="user-settings-current-password">
