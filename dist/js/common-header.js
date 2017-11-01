@@ -8227,7 +8227,7 @@ angular.module("risevision.common.components.userstate")
           $log.log("User confirmed");
         })
         .catch(function (err) {
-          $log.error(err);
+          console.error(err);
         })
         .finally(function () {
           $loading.stopGlobal("auth-confirm-account");
@@ -8352,13 +8352,11 @@ angular.module("risevision.common.components.userstate")
             $scope.emailSent = true;
           })
           .catch(function (err) {
-            var error = err && err.result && err.result.code;
-
-            if (error === 409) {
+            if (err.status === 409) {
               $log.log("Requested password reset for Google account");
               $scope.isGoogleAccount = true;
             } else { // No special case for 404, for security reasons
-              $log.error(err);
+              console.error(err);
               $scope.emailSent = true;
             }
           })
@@ -8413,7 +8411,7 @@ angular.module("risevision.common.components.userstate")
             if (error === "Password reset token does not match") {
               $scope.invalidToken = true;
             } else {
-              $log.error(err);
+              console.error(err);
             }
           })
           .finally(function () {
@@ -8431,7 +8429,7 @@ angular.module("risevision.common.components.userstate")
             $scope.emailResetSent = true;
           })
           .catch(function (err) {
-            $log.error(err);
+            console.error(err);
           })
           .finally(function () {
             $loading.stopGlobal("auth-request-password-reset");
