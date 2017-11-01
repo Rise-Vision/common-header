@@ -7128,6 +7128,7 @@ angular.module("risevision.common.components.logging")
           } else {
             var loc;
             var state = $stateParams.state;
+            var redirectUrl;
 
             // Redirect to full URL path
             if ($rootScope.redirectToRoot === false) {
@@ -7139,20 +7140,25 @@ angular.module("risevision.common.components.logging")
               loc = $window.location.origin + "/";
             }
 
-            // double encode since response gets decoded once!
-            state = encodeURIComponent(state);
-
             userState._persistState();
             uiFlowManager.persist();
 
-            $window.location.href = GOOGLE_OAUTH2_URL +
+            redirectUrl = GOOGLE_OAUTH2_URL +
               "?response_type=token" +
               "&scope=" + encodeURIComponent(OAUTH2_SCOPES) +
               "&client_id=" + CLIENT_ID +
               "&redirect_uri=" + encodeURIComponent(loc) +
             //http://stackoverflow.com/a/14393492
-            "&prompt=select_account" +
-              "&state=" + state;
+            "&prompt=select_account";
+
+            if (state) {
+              // double encode since response gets decoded once!
+              state = encodeURIComponent(state);
+
+              redirectUrl += "&state=" + state;
+            }
+
+            $window.location.href = redirectUrl;
 
             // returns a promise that never get fulfilled since we are redirecting
             // to that google oauth2 page
@@ -7410,14 +7416,16 @@ angular.module("risevision.common.components.logging")
   "use strict";
 
   angular.module("risevision.common.components.userstate")
+    .value("FORCE_GOOGLE_AUTH", false)
     .factory("userAuthFactory", ["$q", "$log", "$location",
       "$rootScope", "$loading", "$window", "$document",
       "gapiLoader", "objectHelper", "rvTokenStore", "externalLogging",
       "userState", "googleAuthFactory", "customAuthFactory",
+      "FORCE_GOOGLE_AUTH",
       function ($q, $log, $location, $rootScope, $loading, $window,
         $document, gapiLoader, objectHelper,
         rvTokenStore, externalLogging, userState, googleAuthFactory,
-        customAuthFactory) {
+        customAuthFactory, FORCE_GOOGLE_AUTH) {
 
         var _state = userState._state;
 
@@ -7601,7 +7609,8 @@ angular.module("risevision.common.components.logging")
               var authenticationPromise;
 
               // Credentials or Token provided; assume authenticated
-              if (credentials || _state.userToken && _state.userToken.token) {
+              if (credentials || _state.userToken && _state.userToken.token &&
+                !FORCE_GOOGLE_AUTH) {
                 isRiseAuthUser = true;
                 authenticationPromise = customAuthFactory.authenticate(
                   credentials);
@@ -8261,15 +8270,16 @@ angular.module("risevision.common.components.userstate")
 angular.module("risevision.common.components.userstate")
   .controller("LoginCtrl", ["$scope", "$loading", "$stateParams",
     "$state", "userAuthFactory", "customAuthFactory", "uiFlowManager",
-    "urlStateService", "userState", "isSignUp",
+    "urlStateService", "userState", "isSignUp", "FORCE_GOOGLE_AUTH",
     function ($scope, $loading, $stateParams, $state, userAuthFactory,
       customAuthFactory, uiFlowManager, urlStateService, userState,
-      isSignUp) {
+      isSignUp, FORCE_GOOGLE_AUTH) {
       $scope.forms = {};
       $scope.credentials = {};
       $scope.messages = {};
       $scope.errors = {};
       $scope.isSignUp = isSignUp;
+      $scope.FORCE_GOOGLE_AUTH = FORCE_GOOGLE_AUTH;
 
       $scope.messages.passwordReset = $stateParams.passwordReset;
       $scope.messages.accountConfirmed = $stateParams.accountConfirmed;
@@ -8470,7 +8480,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('userstate/create-account.html',
-    '<h1 class="u_remove-top">Get Started For Free</h1><p class="lead text-muted">No commitments or contracts</p><div class="col-xs-12 col-md-8" ng-show="!errors.confirmationRequired"><button class="btn btn-google-auth btn-hg" id="sign-up-google-link" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign up with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top" ng-show="!errors.confirmationRequired"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group" ng-show="!errors.confirmationRequired"><button id="sign-up-button" class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="createAccount(\'registrationComplete\')"><span translate="Sign Up"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted">Already have an account? <a id="sign-in-link" ui-sref="common.auth.unauthorized">Sign in</a></p></div>');
+    '<h1 class="u_remove-top">Get Started For Free</h1><p class="lead text-muted">No commitments or contracts</p><div class="col-xs-12 col-md-8" ng-show="!errors.confirmationRequired"><button class="btn btn-google-auth btn-hg" id="sign-up-google-link" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign up with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top" ng-show="!errors.confirmationRequired" ng-if="!FORCE_GOOGLE_AUTH"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12" ng-if="!FORCE_GOOGLE_AUTH"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group" ng-show="!errors.confirmationRequired"><button id="sign-up-button" class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="createAccount(\'registrationComplete\')"><span translate="Sign Up"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted">Already have an account? <a id="sign-in-link" ui-sref="common.auth.unauthorized">Sign in</a></p></div>');
 }]);
 })();
 
@@ -8482,7 +8492,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('userstate/login.html',
-    '<h1 class="u_remove-top">Sign In</h1><p class="lead text-muted">to your Rise Vision account</p><div class="col-xs-12 col-md-8"><button class="btn btn-google-auth btn-hg" id="sign-in-google-link" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign in with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group"><button id="sign-in-button" class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="customLogin(\'registrationComplete\')"><span translate="Sign In"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted"><a id="reset-password-link" ui-sref="common.auth.requestpasswordreset">Forgot your password?</a></p><p class="text-muted">Don\'t have an account? <a id="sign-up-link" ui-sref="common.auth.createaccount">Sign up</a></p></div>');
+    '<h1 class="u_remove-top">Sign In</h1><p class="lead text-muted">to your Rise Vision account</p><div class="col-xs-12 col-md-8"><button class="btn btn-google-auth btn-hg" id="sign-in-google-link" ng-click="googleLogin(\'registrationComplete\')"><span><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign in with Google</span></button></div><div class="section-divider col-xs-12 col-md-8 u_margin-md-top" ng-if="!FORCE_GOOGLE_AUTH"><div></div><span>OR</span><div></div></div><div class="col-md-8 col-xs-12" ng-if="!FORCE_GOOGLE_AUTH"><div ng-include="\'userstate/auth-form.html\'"></div><div class="form-group"><button id="sign-in-button" class="btn btn-primary btn-hg" type="submit" form="forms.loginForm" ng-click="customLogin(\'registrationComplete\')"><span translate="Sign In"></span></button></div></div><br><div class="col-xs-12 u_margin-lg-top"><p class="text-muted" ng-if="!FORCE_GOOGLE_AUTH"><a id="reset-password-link" ui-sref="common.auth.requestpasswordreset">Forgot your password?</a></p><p class="text-muted">Don\'t have an account? <a id="sign-up-link" ui-sref="common.auth.createaccount">Sign up</a></p></div>');
 }]);
 })();
 
