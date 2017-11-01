@@ -71,7 +71,7 @@ app.run(["$templateCache", function($templateCache) {
     "      color: #9C9C9C;\n" +
     "      margin: 0 22px;\">Follow Our Blog</a>\n" +
     "                              <span style=\"margin:6px;\">|</span>\n" +
-    "                              <a href=\"https://community.risevision.com/\" style=\"border:none;outline:none!important\" target=\"_blank\" style=\"font-size: 14px;\n" +
+    "                              <a href=\"https://help.risevision.com/hc/en-us/community/topics/\" style=\"border:none;outline:none!important\" target=\"_blank\" style=\"font-size: 14px;\n" +
     "      line-height: 22px;\n" +
     "      padding: 0;\n" +
     "      color: #9C9C9C;\n" +
@@ -102,7 +102,8 @@ app.run(["$templateCache", function($templateCache) {
     "  </div>\n" +
     "\n" +
     "</body>\n" +
-    "</html>");
+    "</html>\n" +
+    "");
 }]);
 })();
 
@@ -1001,7 +1002,7 @@ app.run(["$templateCache", function($templateCache) {
     "<ul>\n" +
     "    <li><a id=\"getStartedButton\" href=\"https://help.risevision.com/hc/en-us/articles/115002868706-Get-started-with-Rise-Vision\" target=\"_blank\">Get Started</a></li>\n" +
     "    <li><a id=\"documentationButton\" href=\"https://help.risevision.com\" target=\"_blank\">Help Center</a></li>\n" +
-    "    <li><a id=\"askCommunityButton\" href=\"https://community.risevision.com\" target=\"_blank\">Ask the Community</a></li>\n" +
+    "    <li><a id=\"askCommunityButton\" href=\"https://help.risevision.com/hc/en-us/community/topics/\" target=\"_blank\">Ask the Community</a></li>\n" +
     "    <li><a id=\"getSupportButton\" ng-click=\"getSupport()\" href=\"\">Get Support</a></li>\n" +
     "    <li><a id=\"askSalesButton\" href=\"https://www.risevision.com/contact-us#sales\" target=\"_blank\">Ask Sales</a></li>\n" +
     "</ul>\n" +

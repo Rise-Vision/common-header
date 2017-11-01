@@ -35,7 +35,7 @@
 
         it("should show the ask the community button", function () {
           expect(helpDropdownPage.getAskCommunityButton().isDisplayed()).to.eventually.be.true;
-          expect(helpDropdownPage.getAskCommunityButton().getAttribute('href')).to.eventually.equal("https://community.risevision.com/");
+          expect(helpDropdownPage.getAskCommunityButton().getAttribute('href')).to.eventually.equal("https://help.risevision.com/hc/en-us/community/topics/");
           expect(helpDropdownPage.getAskCommunityButton().getAttribute('target')).to.eventually.equal("_blank");
         });
 
