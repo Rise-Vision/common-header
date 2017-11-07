@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("risevision.common.support", [
-  "risevision.widget.common.subscription-status"
+  "risevision.common.components.subscription-status"
 ])
   .factory("supportFactory", ["getSubscriptionStatus", "$q",
     "SUPPORT_PRODUCT_CODE", "STORE_SERVER_URL", "userState",
