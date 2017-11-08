@@ -59,7 +59,9 @@ var env = process.env.NODE_ENV || "dev",
     "tmp/templates.js",
     "src/js/*.js",
     "src/js/*/*.js",
-    "test/unit/**/*spec.js"
+    "test/unit/**/*spec.js",
+    "test/unit/**/mocks/*.js",
+    "test/unit/**/*.tests.js"
     ],
     commonHeaderSrcFiles = ["./tmp/templates.js", 
     "./src/js/dtv-common-header.js",
