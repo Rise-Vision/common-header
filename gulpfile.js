@@ -176,10 +176,10 @@ gulp.task("components-concat", function () { //copy angular files
       path.join("./tmp/partials/", folder, "*.js")
     ])
     .pipe(concat(folder + ".js"))
-    .pipe(gulp.dest("dist/js"))
+    .pipe(gulp.dest("dist/js/components"))
     .pipe(uglify())
     .pipe(rename(folder + ".min.js"))
-    .pipe(gulp.dest("dist/js"));
+    .pipe(gulp.dest("dist/js/components"));
   });
   return es.concat.apply(null, tasks);
 });
