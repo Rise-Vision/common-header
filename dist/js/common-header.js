@@ -1,1734 +1,348 @@
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("add-user-email.html",
-    "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n" +
-    "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
-    "<head>\n" +
-    "  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n" +
-    "  <meta name=\"viewport\" content=\"width=device-width\"/>\n" +
-    "</head>\n" +
-    "<body>\n" +
-    "  <div style=\"background:#f9f9f9;margin:0px;padding:20px\" bgcolor=\"f9f9f9\">\n" +
-    "      <table cellspacing=\"0\" border=\"0\" cellpadding=\"0\" align=\"center\" width=\"595\" bgcolor=\"white\" style=\"border-collapse:separate;border-spacing:0;font-family:Helvetica,Arial,sans-serif;letter-spacing:0;table-layout:fixed\">\n" +
-    "          <tbody>\n" +
-    "              <tr>\n" +
-    "                  <td style=\"border:1px solid #dddddd;border-radius:2px;font-family:Helvetica,Arial,sans-serif;font-size:16px;padding:40px 60px\">\n" +
-    "                      <table width=\"100%\" style=\"border-collapse:separate;border-spacing:0;table-layout:fixed\">\n" +
-    "                          <tbody>\n" +
-    "                              <tr>\n" +
-    "                                  <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;padding:0;text-align:center\" align=\"left\">\n" +
-    "                                      <img src=\"https://ci4.googleusercontent.com/proxy/tIn39Uu_-8P30B-NjHrQ6M6cn10CNDo8yKsbzHxTVxQDdshB0RN9KmjFHpgXqGvxfJy7jhFQFRMnvpkBo-cGxyTaPHX-YnB8cvvmC5v4FbYHFSbiRAgMRCOGqol3psI81bf9vVzerfYrewyW=s0-d-e1-ft#http://s3.amazonaws.com/Rise-Images/UI/logo.svg\" width=\"165\" height=\"62\" style=\"padding:15px 0 30px;text-align:left\" class=\"CToWUd\">\n" +
-    "                                  </td>\n" +
-    "                              </tr>\n" +
-    "                          </tbody>\n" +
-    "                      </table>\n" +
-    "                      <table width=\"100%\" style=\"border-collapse:separate;border-spacing:0;table-layout:fixed\">\n" +
-    "                          <tbody>\n" +
-    "                              <tr>\n" +
-    "                                  <td style=\"color:#525252;font-family:Helvetica,Arial,sans-serif;font-size:15px;line-height:22px;padding:0\">\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">Hi there,</p>\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">You've been added to <b>{{user.companyName}}</b> with Rise Vision!</p>\n" +
-    "                                     \n" +
-    "\n" +
-    "                                       <div style=\"width: 100%;\n" +
-    "                      display: inline-block;\n" +
-    "                      padding: 10px;\n" +
-    "                      background-color: #f5f5f5; text-align:center;\">\n" +
-    "                                          <p><span>The email address used for your account is:</span>\n" +
-    "                                          <p><b style=\"border: none;\n" +
-    "                      outline: none!important;\n" +
-    "                      font-size: 26px;\n" +
-    "                      line-height: 18px;\n" +
-    "                      padding: 0;\n" +
-    "                      margin: 0 18px;\">{{user.username}}</b></p>\n" +
-    "                                             </p>\n" +
-    "                                      </div>\n" +
-    "\n" +
-    "                                     <p></p>\n" +
-    "                                      <div style=\"margin-bottom:16px;text-align:center!important\" align=\"center\"><a href=\"https://apps.risevision.com/signup\" style=\"background:#47b767;border:none;border-radius:3px;color:#fff;display:inline-block;font-size:14px;font-weight:bold;outline:none!important;padding:12px 35px;text-decoration:none\" target=\"_blank\">Go Now</a></div>\n" +
-    "                                     \n" +
-    "                                    <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">You can find more details about getting started with Rise Vision in our <a href=\"https://risevision.zendesk.com/hc/en-us/articles/115004732063\" target=\"_blank\">Help Center</a>.</p>\n" +
-    "\n" +
-    "                                      <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">If you have any questions at all, just reply to this email. &nbsp;We’re here to help!</p>\n" +
-    "                                        <p style=\"line-height:1.5;margin:0 0 17px;text-align:left!important\" align=\"left\">Thank you,\n" +
-    "                                          <br>Rise Vision Support Team</p>\n" +
-    "                                  </td>\n" +
-    "                              </tr>\n" +
-    "                              <tr>\n" +
-    "                              </tr>\n" +
-    "                          </tbody>\n" +
-    "                      </table>\n" +
-    "                      <div style=\"width: 100%;\n" +
-    "      display: inline-block;\n" +
-    "      padding: 10px;\n" +
-    "      background-color: #f5f5f5;\">\n" +
-    "                          <p style=\"text-align:center\"><a href=\"http://blog.risevision.com/\" style=\"border:none;outline:none!important\" target=\"_blank\" style=\"font-size: 14px;\n" +
-    "      line-height: 22px;\n" +
-    "      padding: 0;\n" +
-    "      color: #9C9C9C;\n" +
-    "      margin: 0 22px;\">Follow Our Blog</a>\n" +
-    "                              <span style=\"margin:6px;\">|</span>\n" +
-    "                              <a href=\"https://help.risevision.com/hc/en-us/community/topics/\" style=\"border:none;outline:none!important\" target=\"_blank\" style=\"font-size: 14px;\n" +
-    "      line-height: 22px;\n" +
-    "      padding: 0;\n" +
-    "      color: #9C9C9C;\n" +
-    "      margin: 0 22px;\">Join Our Community</a></p>\n" +
-    "                      </div>\n" +
-    "                  </td>\n" +
-    "              </tr>\n" +
-    "          </tbody>\n" +
-    "      </table>\n" +
-    "      <table width=\"100%\" align=\"middle\" style=\"border-collapse:separate;border-spacing:0;table-layout:fixed\">\n" +
-    "          <tbody>\n" +
-    "              <tr>\n" +
-    "                  <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;padding:0\">\n" +
-    "                      <table cellspacing=\"0\" border=\"0\" cellpadding=\"0\" align=\"center\" width=\"600\" bgcolor=\"transparent\" style=\"border-collapse:separate;border-spacing:0;font-family:Helvetica,Arial,sans-serif;letter-spacing:0;table-layout:fixed\">\n" +
-    "                          <tbody>\n" +
-    "                              <tr>\n" +
-    "                                  <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;padding:21px 30px 15px;text-align:center\" align=\"center\">\n" +
-    "                                      <p style=\"color:#b7b7b7;font-size:12px;font-weight:300;margin:0 0 6px;text-decoration:none\">Rise Vision 545 King Street West Toronto, Ontario Canada M5V 1M1\n" +
-    "                                      </p>\n" +
-    "                                  </td>\n" +
-    "                              </tr>\n" +
-    "                          </tbody>\n" +
-    "                      </table>\n" +
-    "                  </td>\n" +
-    "              </tr>\n" +
-    "          </tbody>\n" +
-    "      </table>\n" +
-    "  </div>\n" +
-    "\n" +
-    "</body>\n" +
-    "</html>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('add-user-email.html',
+    '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"></head><body><div style="background:#f9f9f9;margin:0px;padding:20px" bgcolor="f9f9f9"><table cellspacing="0" border="0" cellpadding="0" align="center" width="595" bgcolor="white" style="border-collapse:separate;border-spacing:0;font-family:Helvetica,Arial,sans-serif;letter-spacing:0;table-layout:fixed"><tbody><tr><td style="border:1px solid #dddddd;border-radius:2px;font-family:Helvetica,Arial,sans-serif;font-size:16px;padding:40px 60px"><table width="100%" style="border-collapse:separate;border-spacing:0;table-layout:fixed"><tbody><tr><td style="font-family:Helvetica,Arial,sans-serif;font-size:16px;padding:0;text-align:center" align="left"><img src="https://ci4.googleusercontent.com/proxy/tIn39Uu_-8P30B-NjHrQ6M6cn10CNDo8yKsbzHxTVxQDdshB0RN9KmjFHpgXqGvxfJy7jhFQFRMnvpkBo-cGxyTaPHX-YnB8cvvmC5v4FbYHFSbiRAgMRCOGqol3psI81bf9vVzerfYrewyW=s0-d-e1-ft#http://s3.amazonaws.com/Rise-Images/UI/logo.svg" width="165" height="62" style="padding:15px 0 30px;text-align:left" class="CToWUd"></td></tr></tbody></table><table width="100%" style="border-collapse:separate;border-spacing:0;table-layout:fixed"><tbody><tr><td style="color:#525252;font-family:Helvetica,Arial,sans-serif;font-size:15px;line-height:22px;padding:0"><p style="line-height:1.5;margin:0 0 17px;text-align:left!important" align="left">Hi there,</p><p style="line-height:1.5;margin:0 0 17px;text-align:left!important" align="left">You\'ve been added to <b>{{user.companyName}}</b> with Rise Vision!</p><div style="width: 100%; display: inline-block; padding: 10px; background-color: #f5f5f5; text-align:center;"><p><span>The email address used for your account is:</span></p><p><b style="border: none; outline: none!important; font-size: 26px; line-height: 18px; padding: 0; margin: 0 18px;">{{user.username}}</b></p><p></p></div><p></p><div style="margin-bottom:16px;text-align:center!important" align="center"><a href="https://apps.risevision.com/signup" style="background:#47b767;border:none;border-radius:3px;color:#fff;display:inline-block;font-size:14px;font-weight:bold;outline:none!important;padding:12px 35px;text-decoration:none" target="_blank">Go Now</a></div><p style="line-height:1.5;margin:0 0 17px;text-align:left!important" align="left">You can find more details about getting started with Rise Vision in our <a href="https://risevision.zendesk.com/hc/en-us/articles/115004732063" target="_blank">Help Center</a>.</p><p style="line-height:1.5;margin:0 0 17px;text-align:left!important" align="left">If you have any questions at all, just reply to this email. &nbsp;We’re here to help!</p><p style="line-height:1.5;margin:0 0 17px;text-align:left!important" align="left">Thank you,<br>Rise Vision Support Team</p></td></tr><tr></tr></tbody></table><div style="width: 100%; display: inline-block; padding: 10px; background-color: #f5f5f5;"><p style="text-align:center"><a href="http://blog.risevision.com/" style="border:none;outline:none!important" target="_blank">Follow Our Blog</a> <span style="margin:6px;">|</span> <a href="https://help.risevision.com/hc/en-us/community/topics/" style="border:none;outline:none!important" target="_blank">Join Our Community</a></p></div></td></tr></tbody></table><table width="100%" align="middle" style="border-collapse:separate;border-spacing:0;table-layout:fixed"><tbody><tr><td style="font-family:Helvetica,Arial,sans-serif;font-size:16px;padding:0"><table cellspacing="0" border="0" cellpadding="0" align="center" width="600" bgcolor="transparent" style="border-collapse:separate;border-spacing:0;font-family:Helvetica,Arial,sans-serif;letter-spacing:0;table-layout:fixed"><tbody><tr><td style="font-family:Helvetica,Arial,sans-serif;font-size:16px;padding:21px 30px 15px;text-align:center" align="center"><p style="color:#b7b7b7;font-size:12px;font-weight:300;margin:0 0 6px;text-decoration:none">Rise Vision 545 King Street West Toronto, Ontario Canada M5V 1M1</p></td></tr></tbody></table></td></tr></tbody></table></div></body></html>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("app-nav-buttons-menu.html",
-    "<ul>\n" +
-    "  <li class=\"new-app\">  \n" +
-    "    <a href=\"https://apps.risevision.com/editor\" target=\"_blank\" link-cid>\n" +
-    "      <div class=\"image\"><img src=\"https://s3.amazonaws.com/Rise-Images/landing-page/editor-image.png\"></div>\n" +
-    "      <span>Presentations</span>\n" +
-    "    </a>\n" +
-    "  </li>\n" +
-    "\n" +
-    "  <li class=\"new-app\">\n" +
-    "      <a href=\"https://apps.risevision.com/schedules\" target=\"_blank\" link-cid>\n" +
-    "        <div class=\"image\"><img src=\"https://s3.amazonaws.com/Rise-Images/landing-page/schedule-image.png\"></div>\n" +
-    "        <span>Schedules</span>\n" +
-    "      </a>\n" +
-    "  </li>\n" +
-    "  \n" +
-    "  <li class=\"new-app\"> \n" +
-    "      <a href=\"https://apps.risevision.com/displays\" target=\"_blank\" link-cid>\n" +
-    "        <div class=\"image\"><img src=\"https://s3.amazonaws.com/Rise-Images/landing-page/displays-image.png\"></div>\n" +
-    "        <span>Displays</span>\n" +
-    "      </a>\n" +
-    "  </li>\n" +
-    "\n" +
-    "  <li>\n" +
-    "      <a href=\"https://store.risevision.com/\" target=\"_blank\" link-cid>\n" +
-    "        <div class=\"image\"><img src=\"https://s3.amazonaws.com/Rise-Images/landing-page/store-image.png\"></div>\n" +
-    "        <span>Store</span>\n" +
-    "      </a>\n" +
-    "  </li>\n" +
-    "\n" +
-    "  <li>\n" +
-    "      <a href=\"https://apps.risevision.com/storage\" target=\"_blank\" link-cid>\n" +
-    "        <div class=\"image\"><img src=\"https://s3.amazonaws.com/Rise-Images/landing-page/storage-image.png\"></div>\n" +
-    "        <span>Storage</span>\n" +
-    "      </a>\n" +
-    "  </li>\n" +
-    "\n" +
-    "   <li>\n" +
-    "      <a href=\"https://rva.risevision.com/#PRESENTATIONS\" target=\"_blank\" class=\"old-app\" link-cid>\n" +
-    "        <div class=\"image\"><img src=\"https://s3.amazonaws.com/Rise-Images/landing-page/editor-image-gray.png\"></div>\n" +
-    "        <span>Classic Editor</span>\n" +
-    "      </a>\n" +
-    "  </li>\n" +
-    "\n" +
-    " \n" +
-    "</ul>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('app-nav-buttons-menu.html',
+    '<ul><li class="new-app"><a href="https://apps.risevision.com/editor" target="_blank" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/editor-image.png"></div><span>Presentations</span></a></li><li class="new-app"><a href="https://apps.risevision.com/schedules" target="_blank" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/schedule-image.png"></div><span>Schedules</span></a></li><li class="new-app"><a href="https://apps.risevision.com/displays" target="_blank" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/displays-image.png"></div><span>Displays</span></a></li><li><a href="https://store.risevision.com/" target="_blank" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/store-image.png"></div><span>Store</span></a></li><li><a href="https://apps.risevision.com/storage" target="_blank" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/storage-image.png"></div><span>Storage</span></a></li><li><a href="https://rva.risevision.com/#PRESENTATIONS" target="_blank" class="old-app" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/editor-image-gray.png"></div><span>Classic Editor</span></a></li></ul>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("app-nav-buttons.html",
-    "<li dropdown class=\"dropdown hidden-xs\">\n" +
-    "  <button dropdown-toggle class=\"dropdown-toggle btn btn-link\"><i class=\"fa fa-lg fa-th\"></i></button>\n" +
-    "  <div class=\"dropdown-menu app-navigation\" role=\"menu\">\n" +
-    "    <ng-include \n" +
-    "      replace-include\n" +
-    "      src=\"'app-nav-buttons-menu.html'\">\n" +
-    "    </ng-include>\n" +
-    "  </div>\n" +
-    "</li>\n" +
-    "\n" +
-    "<!-- Mobile -->\n" +
-    "<li class=\"visible-xs-inline-block\" >\n" +
-    "  <a href=\"\" class=\"company-buttons-icon-mobile\"\n" +
-    "  action-sheet=\"'app-nav-buttons-menu.html'\"\n" +
-    "  action-sheet-class=\"app-navigation\">\n" +
-    "    <i class=\"fa fa-th\"></i>\n" +
-    "  </a>\n" +
-    "</li>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('app-nav-buttons.html',
+    '<li dropdown="" class="dropdown hidden-xs"><button dropdown-toggle="" class="dropdown-toggle btn btn-link"><i class="fa fa-lg fa-th"></i></button><div class="dropdown-menu app-navigation" role="menu"><ng-include replace-include="" src="\'app-nav-buttons-menu.html\'"></ng-include></div></li><li class="visible-xs-inline-block"><a href="" class="company-buttons-icon-mobile" action-sheet="\'app-nav-buttons-menu.html\'" action-sheet-class="app-navigation"><i class="fa fa-th"></i></a></li>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("auth-buttons-menu.html",
-    "<company-buttons\n" +
-    "  ng-show=\"isRiseVisionUser\"\n" +
-    "  ng-controller=\"CompanyButtonsCtrl\"\n" +
-    "></company-buttons>\n" +
-    "\n" +
-    "<ul>\n" +
-    "  <li ng-show=\"isRiseVisionUser\">\n" +
-    "    <a href=\"\" ng-click=\"alertSettings()\" class=\"alert-settings-button action\">\n" +
-    "      <i class=\"fa fa-bullhorn\"></i>\n" +
-    "      <span class=\"item-name\">Alert Settings</span>\n" +
-    "    </a>\n" +
-    "  </li>\n" +
-    "\n" +
-    "  <li ng-show=\"isRiseVisionUser\">\n" +
-    "    <a href=\"\" ng-click=\"userSettings()\" class=\"user-settings-button action\">\n" +
-    "      <i class=\"fa fa-user\"></i>\n" +
-    "      <span class=\"item-name\">User Settings</span>\n" +
-    "    </a>\n" +
-    "  </li>\n" +
-    "\n" +
-    "  <li ng-show=\"isRiseVisionUser\">\n" +
-    "    <a href=\"https://store.risevision.com/account\" target=\"_blank\" class=\"store-account-button action\" link-cid >\n" +
-    "      <i class=\"fa fa-shopping-cart\"></i>\n" +
-    "      <span class=\"item-name\">Store Account</span>\n" +
-    "    </a>\n" +
-    "  </li>\n" +
-    "\n" +
-    "  <span ng-if=\"isLoggedIn && !isRiseVisionUser\" class=\"google-account\" class=\"username\">{{username}}</span>\n" +
-    "\n" +
-    "  <li class=\"dropdown-footer text-right\" ng-show=\"isLoggedIn\">\n" +
-    "    <button class=\"sign-out-button btn btn-sm btn-default u_margin-sm-bottom\" ng-controller=\"SignOutButtonCtrl\" ng-click=\"logout()\">Sign Out<i class=\"fa fa-sign-out icon-right\"></i>\n" +
-    "  </li>\n" +
-    "</ul>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('auth-buttons-menu.html',
+    '<company-buttons ng-show="isRiseVisionUser" ng-controller="CompanyButtonsCtrl"></company-buttons><ul><li ng-show="isRiseVisionUser"><a href="" ng-click="alertSettings()" class="alert-settings-button action"><i class="fa fa-bullhorn"></i> <span class="item-name">Alert Settings</span></a></li><li ng-show="isRiseVisionUser"><a href="" ng-click="userSettings()" class="user-settings-button action"><i class="fa fa-user"></i> <span class="item-name">User Settings</span></a></li><li ng-show="isRiseVisionUser"><a href="https://store.risevision.com/account" target="_blank" class="store-account-button action" link-cid=""><i class="fa fa-shopping-cart"></i> <span class="item-name">Store Account</span></a></li><span ng-if="isLoggedIn && !isRiseVisionUser" class="google-account">{{username}}</span><li class="dropdown-footer text-right" ng-show="isLoggedIn"><button class="sign-out-button btn btn-sm btn-default u_margin-sm-bottom" ng-controller="SignOutButtonCtrl" ng-click="logout()">Sign Out<i class="fa fa-sign-out icon-right"></i></button></li></ul>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("auth-buttons.html",
-    "<!-- Desktop and tablet -->\n" +
-    "<li\n" +
-    "  ng-show=\"isLoggedIn && !isRiseVisionUser && !loading\">\n" +
-    "  <button type=\"button\" ng-controller=\"RegisterButtonCtrl\" ng-click=\"register()\"\n" +
-    "    class=\"btn btn-danger register-user-menu-button\">\n" +
-    "    Complete Registration\n" +
-    "  </button>\n" +
-    "</li>\n" +
-    "<li\n" +
-    "  dropdown\n" +
-    "  class=\"dropdown user-profile-dropdown desktop-menu-item\"\n" +
-    "  ng-class=\"{'hidden-xs': isLoggedIn}\"\n" +
-    "  ng-show=\"isLoggedIn\"\n" +
-    "  >\n" +
-    "    <a href=\"\" dropdown-toggle class=\"dropdown-toggle\">\n" +
-    "      <div class=\"user-id pull-left\">\n" +
-    "        <span ng-class=\"{'pending-registration' : isLoggedIn && !isRiseVisionUser && !loading}\" class=\"username\">{{username}}</span>\n" +
-    "        <span><strong>{{companyName}}</strong></span>\n" +
-    "      </div>\n" +
-    "      <img ng-src=\"{{userPicture}}\"\n" +
-    "        class=\"profile-pic\" width=\"30\" height=\"30\" alt=\"User\" />\n" +
-    "    </a>\n" +
-    "    <div class=\"dropdown-menu\" role=\"menu\">\n" +
-    "      <ng-include\n" +
-    "        src=\"'auth-buttons-menu.html'\"\n" +
-    "        replace-include\n" +
-    "      ></ng-include>\n" +
-    "    </div>\n" +
-    "</li>\n" +
-    "<!-- Mobile -->\n" +
-    "<li\n" +
-    "  dropdown\n" +
-    "  class=\"dropdown user-profile-dropdown mobile-menu-item\"\n" +
-    "  ng-class=\"{'visible-xs-inline-block': isLoggedIn}\"\n" +
-    "  ng-show=\"isLoggedIn\"\n" +
-    "  >\n" +
-    "    <a href=\"\" dropdown-toggle class=\"visible-xs dropdown-toggle\" action-sheet=\"'auth-buttons-menu.html'\"\n" +
-    "      action-sheet-class=\"user-profile-dropdown\">\n" +
-    "      <div class=\"user-id\">\n" +
-    "        <span>{{username}}</span>\n" +
-    "        <span><strong>{{companyName}}</strong></span>\n" +
-    "      </div>\n" +
-    "    </a>\n" +
-    "</li>\n" +
-    "<!-- If User NOT Authenticated -->\n" +
-    "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
-    "  <button type=\"button\" class=\"btn-primary btn u_margin-right\" ng-click=\"login('registrationComplete', true)\">\n" +
-    "    Sign Up Free\n" +
-    "  </button>\n" +
-    "</li>\n" +
-    "<li ng-show=\"!undetermined && isLoggedIn === false\">\n" +
-    "  <button type=\"button\" class=\"sign-in top-auth-button\" ng-click=\"login('registrationComplete')\">\n" +
-    "    Sign In\n" +
-    "  </button>\n" +
-    "</li>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('auth-buttons.html',
+    '<li ng-show="isLoggedIn && !isRiseVisionUser && !loading"><button type="button" ng-controller="RegisterButtonCtrl" ng-click="register()" class="btn btn-danger register-user-menu-button">Complete Registration</button></li><li dropdown="" class="dropdown user-profile-dropdown desktop-menu-item" ng-class="{\'hidden-xs\': isLoggedIn}" ng-show="isLoggedIn"><a href="" dropdown-toggle="" class="dropdown-toggle"><div class="user-id pull-left"><span ng-class="{\'pending-registration\' : isLoggedIn && !isRiseVisionUser && !loading}" class="username">{{username}}</span> <span><strong>{{companyName}}</strong></span></div><img ng-src="{{userPicture}}" class="profile-pic" width="30" height="30" alt="User"></a><div class="dropdown-menu" role="menu"><ng-include src="\'auth-buttons-menu.html\'" replace-include=""></ng-include></div></li><li dropdown="" class="dropdown user-profile-dropdown mobile-menu-item" ng-class="{\'visible-xs-inline-block\': isLoggedIn}" ng-show="isLoggedIn"><a href="" dropdown-toggle="" class="visible-xs dropdown-toggle" action-sheet="\'auth-buttons-menu.html\'" action-sheet-class="user-profile-dropdown"><div class="user-id"><span>{{username}}</span> <span><strong>{{companyName}}</strong></span></div></a></li><li ng-show="!undetermined && isLoggedIn === false"><button type="button" class="btn-primary btn u_margin-right" ng-click="login(\'registrationComplete\', true)">Sign Up Free</button></li><li ng-show="!undetermined && isLoggedIn === false"><button type="button" class="sign-in top-auth-button" ng-click="login(\'registrationComplete\')">Sign In</button></li>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("close-frame-button.html",
-    "<li class=\"close-frame\">\n" +
-    "  <a href=\"\" class=\"close-frame-button\" ng-click=\"closeIFrame()\">\n" +
-    "    <i class=\"fa fa-times\"></i>\n" +
-    "  </a>\n" +
-    "</li>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('close-frame-button.html',
+    '<li class="close-frame"><a href="" class="close-frame-button" ng-click="closeIFrame()"><i class="fa fa-times"></i></a></li>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("common-header.html",
-    "<!-- Common Header Navbar -->\n" +
-    "<nav class=\"navbar navbar-default navbar-static-top hidden-print\"\n" +
-    "	ng-class=\"{'active-banner': isSubcompanySelected() || isTestCompanySelected()}\" role=\"navigation\">\n" +
-    "	<div class=\"container\">\n" +
-    "		<div class=\"navbar-header\" style=\"width: 100%;\">\n" +
-    "			<a class=\"navbar-brand visible-md visible-lg\"\n" +
-    "			  href=\"http://www.risevision.com/\" target=\"{{newTabHome ? '_blank' : '_self'}}\" ng-if=\"!inRVAFrame\">\n" +
-    "				<img src=\"//s3.amazonaws.com/Rise-Images/UI/logo.svg\" class=\"img-responsive logo-small\" width=\"113\" height=\"42\" alt=\"Rise Vision\">\n" +
-    "			</a>\n" +
-    "			<a class=\"navbar-brand hidden-md hidden-lg text-center\"\n" +
-    "				href=\"\" off-canvas-toggle>\n" +
-    "				<i class=\"fa fa-bars\"></i>\n" +
-    "			</a>\n" +
-    "			<!-- If User Authenticated -->\n" +
-    "			<!-- Action Nav -->\n" +
-    "			<ul class=\"nav navbar-nav navbar-right actions-nav pull-right\">\n" +
-    "				<!-- Help Dropdown -->\n" +
-    "				<ng-include\n" +
-    "					replace-include\n" +
-    "					ng-controller=\"HelpDropdownButtonCtrl\"\n" +
-    "					src=\"'help-dropdown.html'\"\n" +
-    "				></ng-include>\n" +
-    "				<!-- END Help Dropdown -->\n" +
-    "				<!-- Notifications -->\n" +
-    "				<ng-include\n" +
-    "					replace-include\n" +
-    "					ng-if=\"!inRVAFrame\"\n" +
-    "				  ng-controller=\"SystemMessagesButtonCtrl\"\n" +
-    "					src=\"'system-messages-button.html'\"\n" +
-    "				></ng-include>\n" +
-    "				<!-- Shopping Cart -->\n" +
-    "				<ng-include\n" +
-    "					replace-include\n" +
-    "					ng-controller=\"ShoppingCartButtonCtrl\"\n" +
-    "					src=\"'shoppingcart-button.html'\"\n" +
-    "				></ng-include>\n" +
-    "				<!-- Shopping Cart -->\n" +
-    "				<ng-include\n" +
-    "					replace-include\n" +
-    "					ng-if=\"inRVAFrame\"\n" +
-    "					ng-controller=\"CloseFrameButtonCtrl\"\n" +
-    "					src=\"'close-frame-button.html'\"\n" +
-    "				></ng-include>\n" +
-    "				<!-- Current App -->\n" +
-    "				<ng-include\n" +
-    "					ng-if=\"!inRVAFrame\"\n" +
-    "					replace-include\n" +
-    "					src=\"'app-nav-buttons.html'\"\n" +
-    "				></ng-include>\n" +
-    "				<!-- END Current App -->\n" +
-    "				<!-- Auth -->\n" +
-    "				<ng-include\n" +
-    "					replace-include\n" +
-    "					ng-if=\"!inRVAFrame\"\n" +
-    "				  ng-controller=\"AuthButtonsCtr\"\n" +
-    "					src=\"'auth-buttons.html'\"\n" +
-    "				></ng-include>\n" +
-    "				<li ng-if=\"inRVAFrame\"\n" +
-    "				  ng-controller=\"AuthButtonsCtr\"></li>\n" +
-    "			</ul>\n" +
-    "			<!-- END Action Nav -->\n" +
-    "\n" +
-    "			<!-- Nav Links -->\n" +
-    "			<div class=\"navbar-collapse navbar-left hidden-xs hidden-sm\">\n" +
-    "				<ul class=\"nav navbar-nav\">\n" +
-    "					<li ng-repeat=\"opt in navOptions\">\n" +
-    "						<a ng-if=\"opt.cid\" ng-href=\"{{opt.link}}\" link-cid target=\"{{opt.target}}\" ng-class=\"{'selected': opt.states && opt.states.indexOf(navSelected) > -1}\">{{opt.title}}</a>\n" +
-    "						<a ng-if=\"!opt.cid\" ng-href=\"{{opt.link}}\" target=\"{{opt.target}}\" ng-class=\"{'selected': opt.states && opt.states.indexOf(navSelected) > -1}\">{{opt.title}}</a>\n" +
-    "					</li>\n" +
-    "					<li ng-if=\"!inRVAFrame && !hideHelpMenu\">\n" +
-    "						<a href=\"http://www.risevision.com/help/\" target=\"_blank\">\n" +
-    "							Help\n" +
-    "						</a>\n" +
-    "					</li>\n" +
-    "				</ul>\n" +
-    "			</div>\n" +
-    "			<!-- END Nav Links -->\n" +
-    "		</div>\n" +
-    "\n" +
-    "		<ng-include\n" +
-    "		replace-include\n" +
-    "		ng-controller=\"TestCompanyBannerCtrl\"\n" +
-    "		src=\"'test-company-banner.html'\"></ng-include>\n" +
-    "		\n" +
-    "		<ng-include\n" +
-    "		replace-include\n" +
-    "		ng-controller=\"SubcompanyBannerCtrl\"\n" +
-    "		src=\"'subcompany-banner.html'\"></ng-include>\n" +
-    "	</div>\n" +
-    "</nav>\n" +
-    "\n" +
-    "<div ng-show=\"cookieEnabled === false\" class=\"bg-warning text-center u_padding-sm\">\n" +
-    "    <small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small>\n" +
-    "</div>\n" +
-    "\n" +
-    "<ng-include\n" +
-    "	replace-include\n" +
-    "	ng-controller=\"GlobalAlertsCtrl\"\n" +
-    "	src=\"'global-alerts.html'\"></ng-include>\n" +
-    "\n" +
-    "<!-- END Common Header Navbar -->\n" +
-    "\n" +
-    "<!-- Off Canvas Version of the Nav -->\n" +
-    "<nav class=\"off-canvas-nav\" off-canvas-nav>\n" +
-    "  <ul class=\"nav nav-pills nav-stacked\">\n" +
-    "  	<li off-canvas-toggle>\n" +
-    "  		<i class=\"fa fa-times fa-2x pull-right\"></i>\n" +
-    "  		<img src=\"//s3.amazonaws.com/rise-common/images/logo-small.png\" class=\"img-responsive logo-small\" width=\"113\" height=\"42\" alt=\"Rise Vision\">\n" +
-    "  	</li>\n" +
-    "    <li ng-repeat=\"opt in navOptions\">\n" +
-    "			<a ng-if=\"opt.cid\" ng-href=\"{{opt.link}}\" link-cid target=\"{{opt.target}}\">{{opt.title}}</a>\n" +
-    "			<a ng-if=\"!opt.cid\" ng-href=\"{{opt.link}}\" target=\"{{opt.target}}\">{{opt.title}}</a>\n" +
-    "		</li>\n" +
-    "		<li ng-if=\"!hideHelpMenu\">\n" +
-    "			<a target=\"_blank\" href=\"http://www.risevision.com/help\">Help</a>\n" +
-    "		</li>\n" +
-    "  </ul>\n" +
-    "</nav>\n" +
-    "<iframe name=\"logoutFrame\" id=\"logoutFrame\" style='display:none'></iframe>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('common-header.html',
+    '<nav class="navbar navbar-default navbar-static-top hidden-print" ng-class="{\'active-banner\': isSubcompanySelected() || isTestCompanySelected()}" role="navigation"><div class="container"><div class="navbar-header" style="width: 100%;"><a class="navbar-brand visible-md visible-lg" href="http://www.risevision.com/" target="{{newTabHome ? \'_blank\' : \'_self\'}}" ng-if="!inRVAFrame"><img src="//s3.amazonaws.com/Rise-Images/UI/logo.svg" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></a> <a class="navbar-brand hidden-md hidden-lg text-center" href="" off-canvas-toggle=""><i class="fa fa-bars"></i></a><ul class="nav navbar-nav navbar-right actions-nav pull-right"><ng-include replace-include="" ng-controller="HelpDropdownButtonCtrl" src="\'help-dropdown.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="SystemMessagesButtonCtrl" src="\'system-messages-button.html\'"></ng-include><ng-include replace-include="" ng-controller="ShoppingCartButtonCtrl" src="\'shoppingcart-button.html\'"></ng-include><ng-include replace-include="" ng-if="inRVAFrame" ng-controller="CloseFrameButtonCtrl" src="\'close-frame-button.html\'"></ng-include><ng-include ng-if="!inRVAFrame" replace-include="" src="\'app-nav-buttons.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="AuthButtonsCtr" src="\'auth-buttons.html\'"></ng-include><li ng-if="inRVAFrame" ng-controller="AuthButtonsCtr"></li></ul><div class="navbar-collapse navbar-left hidden-xs hidden-sm"><ul class="nav navbar-nav"><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a></li><li ng-if="!inRVAFrame && !hideHelpMenu"><a href="http://www.risevision.com/help/" target="_blank">Help</a></li></ul></div></div><ng-include replace-include="" ng-controller="TestCompanyBannerCtrl" src="\'test-company-banner.html\'"></ng-include><ng-include replace-include="" ng-controller="SubcompanyBannerCtrl" src="\'subcompany-banner.html\'"></ng-include></div></nav><div ng-show="cookieEnabled === false" class="bg-warning text-center u_padding-sm"><small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small></div><ng-include replace-include="" ng-controller="GlobalAlertsCtrl" src="\'global-alerts.html\'"></ng-include><nav class="off-canvas-nav" off-canvas-nav=""><ul class="nav nav-pills nav-stacked"><li off-canvas-toggle=""><i class="fa fa-times fa-2x pull-right"></i> <img src="//s3.amazonaws.com/rise-common/images/logo-small.png" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}">{{opt.title}}</a></li><li ng-if="!hideHelpMenu"><a target="_blank" href="http://www.risevision.com/help">Help</a></li></ul></nav><iframe name="logoutFrame" id="logoutFrame" style="display:none"></iframe>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("company-buttons-menu.html",
-    "<ul>\n" +
-    "  <li class=\"dropdown-header\" ng-show=\"!isSubcompanySelected\">\n" +
-    "    <p>{{username}}</p>\n" +
-    "    <p><strong>{{selectedCompanyName}}</strong>\n" +
-    "      <span class=\"text-muted\" ng-show=\"isRiseVisionUser && !isSubcompanySelected\">|</span>\n" +
-    "      <a id=\"select-subcompany-button\" href=\"\" ng-click=\"switchCompany()\" ng-show=\"isRiseVisionUser && !isSubcompanySelected\">Select Sub-Company</a>\n" +
-    "    </p>\n" +
-    "  </li>\n" +
-    "\n" +
-    "  <li class=\"dropdown-header sub-company-header\" ng-show=\"isSubcompanySelected\">\n" +
-    "    <p>You are in Sub-Company <strong>{{selectedCompanyName}}</strong>\n" +
-    "    <span class=\"text-muted\">|</span>\n" +
-    "     <a id=\"change-subcompany-button\" href=\"\" ng-click=\"switchCompany()\" ng-show=\"isRiseVisionUser\">Change</a></p>\n" +
-    "    <p><a id=\"reset-subcompany-button\" href=\"\" ng-click=\"resetCompany()\">Switch to My Company</a></p>\n" +
-    "  </li>\n" +
-    "  <hr>\n" +
-    "  <li ng-show=\"isUserAdmin || isRiseAdmin\">\n" +
-    "    <a href=\"\" ng-click=\"addSubCompany()\" class=\"action add-subcompany-menu-button\">\n" +
-    "      <i class=\"fa fa-plus\"></i>\n" +
-    "      <span class=\"item-name\">Add Sub-Company</span>\n" +
-    "    </a>\n" +
-    "  </li>\n" +
-    "  <li ng-show=\"isUserAdmin || isRiseAdmin\">\n" +
-    "    <a href=\"\" ng-click=\"companySettings()\" class=\"action company-settings-menu-button\">\n" +
-    "      <i class=\"fa fa-building\"></i>\n" +
-    "      <span class=\"item-name\">Company Settings</span>\n" +
-    "    </a>\n" +
-    "  </li>\n" +
-    "  <li ng-show=\"isUserAdmin || isRiseAdmin\">\n" +
-    "    <a href=\"\" data-toggle=\"modal\" ng-click=\"companyUsers()\" class=\"action company-users-menu-button\">\n" +
-    "      <i class=\"fa fa-users\"></i>\n" +
-    "      <span class=\"item-name\">Company Users</span>\n" +
-    "    </a>\n" +
-    "  </li>\n" +
-    "</ul>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('company-buttons-menu.html',
+    '<ul><li class="dropdown-header" ng-show="!isSubcompanySelected"><p>{{username}}</p><p><strong>{{selectedCompanyName}}</strong> <span class="text-muted" ng-show="isRiseVisionUser && !isSubcompanySelected">|</span> <a id="select-subcompany-button" href="" ng-click="switchCompany()" ng-show="isRiseVisionUser && !isSubcompanySelected">Select Sub-Company</a></p></li><li class="dropdown-header sub-company-header" ng-show="isSubcompanySelected"><p>You are in Sub-Company <strong>{{selectedCompanyName}}</strong> <span class="text-muted">|</span> <a id="change-subcompany-button" href="" ng-click="switchCompany()" ng-show="isRiseVisionUser">Change</a></p><p><a id="reset-subcompany-button" href="" ng-click="resetCompany()">Switch to My Company</a></p></li><hr><li ng-show="isUserAdmin || isRiseAdmin"><a href="" ng-click="addSubCompany()" class="action add-subcompany-menu-button"><i class="fa fa-plus"></i> <span class="item-name">Add Sub-Company</span></a></li><li ng-show="isUserAdmin || isRiseAdmin"><a href="" ng-click="companySettings()" class="action company-settings-menu-button"><i class="fa fa-building"></i> <span class="item-name">Company Settings</span></a></li><li ng-show="isUserAdmin || isRiseAdmin"><a href="" data-toggle="modal" ng-click="companyUsers()" class="action company-users-menu-button"><i class="fa fa-users"></i> <span class="item-name">Company Users</span></a></li></ul>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("company-fields.html",
-    "<div class=\"form-group\" ng-class=\"{'has-error': forms.companyForm.name.$invalid && !forms.companyForm.name.$pristine}\">\n" +
-    "  <label for=\"company-settings-name\">\n" +
-    "    Company Name *\n" +
-    "  </label>\n" +
-    "  <input required id=\"company-settings-name\" type=\"text\" class=\"form-control\"\n" +
-    "    ng-model=\"company.name\" name=\"name\" />\n" +
-    "  <p ng-show=\"forms.companyForm.name.$invalid && !forms.companyForm.name.$pristine\"\n" +
-    "    class=\"help-block validation-error-message-name\">Company Name is required.</p>\n" +
-    "</div>\n" +
-    "<div class=\"row\">\n" +
-    "  <div class=\"col-md-6\">\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"company-size\" class=\"control-label\">\n" +
-    "        Company Size\n" +
-    "      </label>\n" +
-    "      <select id=\"company-size\" class=\"form-control\" ng-model=\"company.companySize\">\n" +
-    "        <option value=\"\" ng-show=\"false\">&lt; Select Size &gt;</option>\n" +
-    "        <option ng-repeat=\"size in COMPANY_SIZE_FIELDS\" value=\"{{size[1]}}\">{{size[0]}}</option>\n" +
-    "      </select>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "  <div class=\"col-md-6\">\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"company-industry\" class=\"control-label\">\n" +
-    "        Industry\n" +
-    "      </label>\n" +
-    "      <select id=\"company-industry\" class=\"form-control selectpicker\" ng-model=\"company.companyIndustry\">\n" +
-    "        <option value=\"\" ng-show=\"false\">&lt; Select Industry &gt;</option>\n" +
-    "        <option ng-repeat=\"industry in COMPANY_INDUSTRY_FIELDS | orderBy:industry[0]\" value=\"{{industry[1]}}\">{{industry[0]}}</option>\n" +
-    "      </select>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "</div>\n" +
-    "\n" +
-    "<div class=\"row\">\n" +
-    "  <div class=\"col-md-6\">\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"company-settings-street\" class=\"control-label\">\n" +
-    "        Street\n" +
-    "      </label>\n" +
-    "      <input id=\"company-settings-street\" type=\"text\" class=\"form-control\" ng-model=\"company.street\" />\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "  <div class=\"col-md-6\">\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"company-settings-unit\" class=\"control-label\">\n" +
-    "        Unit\n" +
-    "      </label>\n" +
-    "      <input id=\"company-settings-unit\" type=\"text\" class=\"form-control\" ng-model=\"company.unit\" />\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "</div>\n" +
-    "<div class=\"row\">\n" +
-    "  <div class=\"col-md-3\">      \n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"company-settings-city\" class=\"control-label\">\n" +
-    "        City\n" +
-    "      </label>\n" +
-    "      <input id=\"company-settings-city\" type=\"text\" class=\"form-control\" ng-model=\"company.city\" />\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "  <div class=\"col-md-3\">\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"company-settings-country\" class=\"control-label\">\n" +
-    "        Country\n" +
-    "      </label>\n" +
-    "      <select id=\"company-settings-country\" class=\"form-control selectpicker\"\n" +
-    "        ng-model=\"company.country\" ng-options=\"c.code as c.name for c in countries\" empty-select-parser>\n" +
-    "        <option ng-show=\"false\" value=\"\">&lt; Select Country &gt;</option>\n" +
-    "      </select>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "  <div class=\"col-md-3\">\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"company-settings-state\" class=\"control-label\">\n" +
-    "        State/Province/Region\n" +
-    "      </label>\n" +
-    "      <input id=\"company-settings-state\" type=\"text\" class=\"form-control\" ng-model=\"company.province\" ng-hide=\"company.country == 'US' || company.country == 'CA'\" />\n" +
-    "      <select class=\"form-control selectpicker\" ng-model=\"company.province\" ng-options=\"c[1] as c[0] for c in regionsCA\" ng-show=\"company.country == 'CA'\" empty-select-parser>\n" +
-    "        <option ng-show=\"false\" value=\"\">&lt; Select Province &gt;</option>\n" +
-    "      </select>\n" +
-    "      <select class=\"form-control selectpicker\" ng-model=\"company.province\" ng-options=\"c[1] as c[0] for c in regionsUS\" ng-show=\"company.country == 'US'\" empty-select-parser>\n" +
-    "        <option ng-show=\"false\" value=\"\">&lt; Select State &gt;</option>\n" +
-    "      </select>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "  <div class=\"col-md-3\">\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"company-settings-zip\" class=\"control-label\">\n" +
-    "        ZIP/Postal Code\n" +
-    "      </label>\n" +
-    "      <input id=\"company-settings-zip\" type=\"text\" class=\"form-control\" ng-model=\"company.postalCode\" />\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "</div>\n" +
-    "<div class=\"row\">\n" +
-    "  <div class=\"col-md-6\">\n" +
-    "    <div class=\"form-group\" ng-class=\"{'has-error': forms.companyForm.website.$error.website}\">\n" +
-    "      <label for=\"company-settings-website\" class=\"control-label\">\n" +
-    "        Website\n" +
-    "      </label>\n" +
-    "      <input id=\"company-settings-website\" name=\"website\" type=\"text\" placeholder=\"http://\" class=\"form-control\" ng-model=\"company.website\" \n" +
-    "      website-validator />\n" +
-    "      <p ng-show=\"forms.companyForm.website.$error.website\"\n" +
-    "        class=\"help-block validation-error-message-website\">Please provide a valid URL.</p>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "  <div class=\"col-md-6\">\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"company-settings-phone\" class=\"control-label\">\n" +
-    "        Phone\n" +
-    "      </label>\n" +
-    "      <input id=\"company-settings-phone\" type=\"tel\" class=\"form-control\" ng-model=\"company.telephone\"/>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "</div>\n" +
-    "<div class=\"form-group\">\n" +
-    "  <label for=\"company-settings-timezone\" class=\"control-label\">Time Zone</label>\n" +
-    "  <select class=\"form-control\" ng-model=\"company.timeZoneOffset\" integer-parser>\n" +
-    "    <option ng-show=\"false\" value=\"\">&lt; Select Time Zone &gt;</option>\n" +
-    "    <option value=\"{{c[1]}}\" ng-repeat=\"c in timezones\">{{c[0]}}</option>\n" +
-    "  </select>\n" +
-    "</div>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('company-fields.html',
+    '<div class="form-group" ng-class="{\'has-error\': forms.companyForm.name.$invalid && !forms.companyForm.name.$pristine}"><label for="company-settings-name">Company Name *</label> <input required="" id="company-settings-name" type="text" class="form-control" ng-model="company.name" name="name"><p ng-show="forms.companyForm.name.$invalid && !forms.companyForm.name.$pristine" class="help-block validation-error-message-name">Company Name is required.</p></div><div class="row"><div class="col-md-6"><div class="form-group"><label for="company-size" class="control-label">Company Size</label><select id="company-size" class="form-control" ng-model="company.companySize"><option value="" ng-show="false">&lt; Select Size &gt;</option><option ng-repeat="size in COMPANY_SIZE_FIELDS" value="{{size[1]}}">{{size[0]}}</option></select></div></div><div class="col-md-6"><div class="form-group"><label for="company-industry" class="control-label">Industry</label><select id="company-industry" class="form-control selectpicker" ng-model="company.companyIndustry"><option value="" ng-show="false">&lt; Select Industry &gt;</option><option ng-repeat="industry in COMPANY_INDUSTRY_FIELDS | orderBy:industry[0]" value="{{industry[1]}}">{{industry[0]}}</option></select></div></div></div><div class="row"><div class="col-md-6"><div class="form-group"><label for="company-settings-street" class="control-label">Street</label> <input id="company-settings-street" type="text" class="form-control" ng-model="company.street"></div></div><div class="col-md-6"><div class="form-group"><label for="company-settings-unit" class="control-label">Unit</label> <input id="company-settings-unit" type="text" class="form-control" ng-model="company.unit"></div></div></div><div class="row"><div class="col-md-3"><div class="form-group"><label for="company-settings-city" class="control-label">City</label> <input id="company-settings-city" type="text" class="form-control" ng-model="company.city"></div></div><div class="col-md-3"><div class="form-group"><label for="company-settings-country" class="control-label">Country</label><select id="company-settings-country" class="form-control selectpicker" ng-model="company.country" ng-options="c.code as c.name for c in countries" empty-select-parser=""><option ng-show="false" value="">&lt; Select Country &gt;</option></select></div></div><div class="col-md-3"><div class="form-group"><label for="company-settings-state" class="control-label">State/Province/Region</label> <input id="company-settings-state" type="text" class="form-control" ng-model="company.province" ng-hide="company.country == \'US\' || company.country == \'CA\'"><select class="form-control selectpicker" ng-model="company.province" ng-options="c[1] as c[0] for c in regionsCA" ng-show="company.country == \'CA\'" empty-select-parser=""><option ng-show="false" value="">&lt; Select Province &gt;</option></select><select class="form-control selectpicker" ng-model="company.province" ng-options="c[1] as c[0] for c in regionsUS" ng-show="company.country == \'US\'" empty-select-parser=""><option ng-show="false" value="">&lt; Select State &gt;</option></select></div></div><div class="col-md-3"><div class="form-group"><label for="company-settings-zip" class="control-label">ZIP/Postal Code</label> <input id="company-settings-zip" type="text" class="form-control" ng-model="company.postalCode"></div></div></div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{\'has-error\': forms.companyForm.website.$error.website}"><label for="company-settings-website" class="control-label">Website</label> <input id="company-settings-website" name="website" type="text" placeholder="http://" class="form-control" ng-model="company.website" website-validator=""><p ng-show="forms.companyForm.website.$error.website" class="help-block validation-error-message-website">Please provide a valid URL.</p></div></div><div class="col-md-6"><div class="form-group"><label for="company-settings-phone" class="control-label">Phone</label> <input id="company-settings-phone" type="tel" class="form-control" ng-model="company.telephone"></div></div></div><div class="form-group"><label for="company-settings-timezone" class="control-label">Time Zone</label><select class="form-control" ng-model="company.timeZoneOffset" integer-parser=""><option ng-show="false" value="">&lt; Select Time Zone &gt;</option><option value="{{c[1]}}" ng-repeat="c in timezones">{{c[0]}}</option></select></div>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("company-icp-modal.html",
-    "<div id=\"companyIcpModal\">\n" +
-    "  <div class=\"modal-header\">\n" +
-    "    <button type=\"button\" class=\"close\" ng-click=\"dismiss()\" aria-hidden=\"true\">\n" +
-    "      <i class=\"fa fa-times\"></i>\n" +
-    "    </button>\n" +
-    "    <h3 id=\"icpModalTitle\" class=\"modal-title\">Customize your Rise Vision experience!</h3>\n" +
-    "  </div>\n" +
-    "  <div class=\"modal-body u_padding-lg\" stop-event=\"touchend\">    \n" +
-    "    <form id=\"companyIcpForm\" role=\"form\" name=\"forms.companyIcpForm\">\n" +
-    "      <div class=\"row\">\n" +
-    "        <div class=\"col-md-3\">\n" +
-    "          <div class=\"form-group\" ng-class=\"{ 'has-error' : forms.companyIcpForm.name.$invalid && !forms.companyIcpForm.name.$pristine }\">\n" +
-    "            <label for=\"company-name\" class=\"control-label\">\n" +
-    "              Company Name\n" +
-    "            </label>\n" +
-    "          <input required id=\"company-name\" type=\"text\" class=\"form-control\"\n" +
-    "            ng-model=\"company.name\" name=\"name\" />\n" +
-    "          </div>\n" +
-    "        </div>\n" +
-    "\n" +
-    "        <div class=\"col-md-3\">\n" +
-    "          <div class=\"form-group\">\n" +
-    "            <label for=\"company-size\" class=\"control-label\">\n" +
-    "              Company Size\n" +
-    "            </label>\n" +
-    "            <select id=\"company-size\" class=\"form-control\" ng-model=\"company.companySize\">\n" +
-    "              <option value=\"\" ng-show=\"false\">&lt; Select Size &gt;</option>\n" +
-    "              <option ng-repeat=\"size in COMPANY_SIZE_FIELDS\" value=\"{{size[1]}}\">{{size[0]}}</option>\n" +
-    "            </select>\n" +
-    "          </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"col-md-3\">\n" +
-    "          <div class=\"form-group\">\n" +
-    "            <label for=\"company-role\" class=\"control-label\">\n" +
-    "              What's your title?\n" +
-    "            </label>\n" +
-    "            <select id=\"company-role\" class=\"form-control selectpicker\" ng-model=\"user.companyRole\">\n" +
-    "              <option value=\"\" ng-show=\"false\">&lt; Select Role &gt;</option>\n" +
-    "              <option ng-repeat=\"role in COMPANY_ROLE_FIELDS\" value=\"{{role[1]}}\">{{role[0]}}</option>\n" +
-    "            </select>\n" +
-    "          </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"col-md-3\">\n" +
-    "          <div class=\"form-group\" ng-class=\"{ 'has-error' : forms.companyIcpForm.email.$invalid && !forms.companyIcpForm.email.$pristine }\">\n" +
-    "            <label for=\"email\" class=\"control-label\">Preferred Email</label>\n" +
-    "            <input type=\"email\" class=\"form-control email\" name=\"email\" id=\"email\" required ng-model=\"user.email\">\n" +
-    "          </div>\n" +
-    "        </div>\n" +
-    "      </div>\n" +
-    "\n" +
-    "      <div class=\"text-center\">\n" +
-    "        <h1 class=\"u_margin-xs-top\">What's Your Industry?</h1>\n" +
-    "        <h4 class=\"u_margin-xs-top u_margin-xs-bottom\"> (Pick One) </h4>\n" +
-    "      </div>\n" +
-    "\n" +
-    "      <div class=\"scrollable-list\">\n" +
-    "        <ul id=\"\" class=\"u_margin-md-top list-unstyled pt-media-list pt-onboarding-list text-center\">\n" +
-    "          <li class=\"no-select\" ng-class=\"{'selected-border' : company.companyIndustry === industry[1]}\" ng-repeat=\"industry in ICON_INDUSTRY_FIELDS\" ng-click=\"selectIndustry(industry[1]);\"> \n" +
-    "            <img ng-class=\"{{imgClasses}}\" src=\"{{industry[2]}}\" />\n" +
-    "            <input type=\"checkbox\" class=\"checkbox\" ng-checked=\"company.companyIndustry === industry[1]\" />\n" +
-    "            <span class=\"u_ellipsis-md ng-binding\"> <b>{{industry[0]}}</b> </span>\n" +
-    "          </li>\n" +
-    "          <li class=\"no-select\" ng-class=\"{'selected-border' : otherSelected }\" ng-click=\"selectOther()\"> \n" +
-    "            <img ng-class=\"{{imgClasses}}\" src=\"https://cdn2.hubspot.net/hubfs/2700250/Assets%20May%5B17%5D/tick.svg\" />\n" +
-    "            <input type=\"checkbox\" class=\"checkbox\" ng-checked=\"otherSelected\" />\n" +
-    "            <span class=\"u_ellipsis-md ng-binding\"> <b>Other</b> </span>\n" +
-    "          </li>\n" +
-    "        </ul>\n" +
-    "      </div>\n" +
-    "      \n" +
-    "      <div class=\"text-center\" id=\"pt-industry-selector\" ng-show=\"otherSelected\">\n" +
-    "        <div class=\"form-inline\">\n" +
-    "          <div class=\"form-group\">\n" +
-    "            <img src=\"https://s3.amazonaws.com/Rise-Images/UI/r_arrow.png\" class=\"icon-left\">\n" +
-    "            <label for=\"company-industry\" class=\"control-label\">\n" +
-    "              Please specify: \n" +
-    "            </label>\n" +
-    "            <select id=\"company-industry\" class=\"form-control selectpicker\" ng-model=\"company.companyIndustry\">\n" +
-    "              <option value=\"\" ng-show=\"false\">&lt; Select Industry &gt;</option>\n" +
-    "              <option ng-repeat=\"industry in DROPDOWN_INDUSTRY_FIELDS | orderBy:industry[0]\" value=\"{{industry[1]}}\" ng-if=\"!industry[2]\">{{industry[0]}}</option>\n" +
-    "            </select>\n" +
-    "          </div>\n" +
-    "        </div>\n" +
-    "      </div>\n" +
-    "    </form>\n" +
-    "  </div> <!-- //Modal Body -->\n" +
-    "\n" +
-    "  <div class=\"modal-footer\"> \n" +
-    "    <button id=\"saveButton\" class=\"btn btn-primary ng-binding\" ng-click=\"save()\" ng-disabled=\"forms.companyIcpForm.$invalid\">\n" +
-    "      Apply \n" +
-    "      <i class=\"fa fa-check icon-right\"></i>\n" +
-    "    </button> \n" +
-    "\n" +
-    "    <button id=\"cancelButton\" class=\"btn btn-link pull-left\" ng-click=\"dismiss()\">Ask Me Later </button> \n" +
-    "  </div>\n" +
-    "\n" +
-    "\n" +
-    "</div>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('company-icp-modal.html',
+    '<div id="companyIcpModal"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 id="icpModalTitle" class="modal-title">Customize your Rise Vision experience!</h3></div><div class="modal-body u_padding-lg" stop-event="touchend"><form id="companyIcpForm" role="form" name="forms.companyIcpForm"><div class="row"><div class="col-md-3"><div class="form-group" ng-class="{ \'has-error\' : forms.companyIcpForm.name.$invalid && !forms.companyIcpForm.name.$pristine }"><label for="company-name" class="control-label">Company Name</label> <input required="" id="company-name" type="text" class="form-control" ng-model="company.name" name="name"></div></div><div class="col-md-3"><div class="form-group"><label for="company-size" class="control-label">Company Size</label><select id="company-size" class="form-control" ng-model="company.companySize"><option value="" ng-show="false">&lt; Select Size &gt;</option><option ng-repeat="size in COMPANY_SIZE_FIELDS" value="{{size[1]}}">{{size[0]}}</option></select></div></div><div class="col-md-3"><div class="form-group"><label for="company-role" class="control-label">What\'s your title?</label><select id="company-role" class="form-control selectpicker" ng-model="user.companyRole"><option value="" ng-show="false">&lt; Select Role &gt;</option><option ng-repeat="role in COMPANY_ROLE_FIELDS" value="{{role[1]}}">{{role[0]}}</option></select></div></div><div class="col-md-3"><div class="form-group" ng-class="{ \'has-error\' : forms.companyIcpForm.email.$invalid && !forms.companyIcpForm.email.$pristine }"><label for="email" class="control-label">Preferred Email</label> <input type="email" class="form-control email" name="email" id="email" required="" ng-model="user.email"></div></div></div><div class="text-center"><h1 class="u_margin-xs-top">What\'s Your Industry?</h1><h4 class="u_margin-xs-top u_margin-xs-bottom">(Pick One)</h4></div><div class="scrollable-list"><ul id="" class="u_margin-md-top list-unstyled pt-media-list pt-onboarding-list text-center"><li class="no-select" ng-class="{\'selected-border\' : company.companyIndustry === industry[1]}" ng-repeat="industry in ICON_INDUSTRY_FIELDS" ng-click="selectIndustry(industry[1]);"><img ng-class="{{imgClasses}}" src="{{industry[2]}}"> <input type="checkbox" class="checkbox" ng-checked="company.companyIndustry === industry[1]"> <span class="u_ellipsis-md ng-binding"><b>{{industry[0]}}</b></span></li><li class="no-select" ng-class="{\'selected-border\' : otherSelected }" ng-click="selectOther()"><img ng-class="{{imgClasses}}" src="https://cdn2.hubspot.net/hubfs/2700250/Assets%20May%5B17%5D/tick.svg"> <input type="checkbox" class="checkbox" ng-checked="otherSelected"> <span class="u_ellipsis-md ng-binding"><b>Other</b></span></li></ul></div><div class="text-center" id="pt-industry-selector" ng-show="otherSelected"><div class="form-inline"><div class="form-group"><img src="https://s3.amazonaws.com/Rise-Images/UI/r_arrow.png" class="icon-left"> <label for="company-industry" class="control-label">Please specify:</label><select id="company-industry" class="form-control selectpicker" ng-model="company.companyIndustry"><option value="" ng-show="false">&lt; Select Industry &gt;</option><option ng-repeat="industry in DROPDOWN_INDUSTRY_FIELDS | orderBy:industry[0]" value="{{industry[1]}}" ng-if="!industry[2]">{{industry[0]}}</option></select></div></div></div></form></div><div class="modal-footer"><button id="saveButton" class="btn btn-primary ng-binding" ng-click="save()" ng-disabled="forms.companyIcpForm.$invalid">Apply <i class="fa fa-check icon-right"></i></button> <button id="cancelButton" class="btn btn-link pull-left" ng-click="dismiss()">Ask Me Later</button></div></div>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("company-selector-modal.html",
-    "\n" +
-    "<form role=\"form\">\n" +
-    "	<div class=\"modal-header\">\n" +
-    "		<button type=\"button\" class=\"close\" data-dismiss=\"modal\"\n" +
-    "		  aria-hidden=\"true\" ng-click=\"closeModal()\">\n" +
-    "			<i class=\"fa fa-times\"></i>\n" +
-    "		</button>\n" +
-    "		<h2 id=\"switch-company\" class=\"modal-title\">\n" +
-    "			Select Sub-Company\n" +
-    "		</h2>\n" +
-    "	</div>\n" +
-    "	<div class=\"modal-body select-subcompany-modal\" stop-event=\"touchend\">\n" +
-    "	  <!-- Search -->\n" +
-    "		<search-filter filter-config=\"filterConfig\" search=\"search\" do-search=\"doSearch\"></search-filter> \n" +
-    "\n" +
-    "		<!-- List of Companies -->\n" +
-    "		<div class=\"panel panel-default scrollable-list u_margin-sm-top\"\n" +
-    "		  scrolling-list=\"loadCompanies()\"\n" +
-    "		  rv-spinner rv-spinner-key=\"company-selector-modal-list\"\n" +
-    "			rv-spinner-start-active=\"1\"\n" +
-    "		>\n" +
-    "			<div class=\"list-group-item\"  ng-repeat=\"company in companies.list\" ng-click=\"setCompany(company)\">\n" +
-    "				<p class=\"list-group-item-text\"><strong>{{company.name}}</strong><br/><small class=\"text-muted\">{{company | fullAddress}}</small>\n" +
-    "				</p>\n" +
-    "			</div>\n" +
-    "		</div>\n" +
-    "	</div>\n" +
-    "	<div class=\"modal-footer\">\n" +
-    "		<button type=\"button\" class=\"btn btn-default btn-fixed-width\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"closeModal()\">Cancel\n" +
-    "			<i class=\"fa fa-white fa-times icon-right\"></i>\n" +
-    "		</button>\n" +
-    "	</div>\n" +
-    "</form>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('company-selector-modal.html',
+    '<form role="form"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 id="switch-company" class="modal-title">Select Sub-Company</h2></div><div class="modal-body select-subcompany-modal" stop-event="touchend"><search-filter filter-config="filterConfig" search="search" do-search="doSearch"></search-filter><div class="panel panel-default scrollable-list u_margin-sm-top" scrolling-list="loadCompanies()" rv-spinner="" rv-spinner-key="company-selector-modal-list" rv-spinner-start-active="1"><div class="list-group-item" ng-repeat="company in companies.list" ng-click="setCompany(company)"><p class="list-group-item-text"><strong>{{company.name}}</strong><br><small class="text-muted">{{company | fullAddress}}</small></p></div></div></div><div class="modal-footer"><button type="button" class="btn btn-default btn-fixed-width" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()">Cancel <i class="fa fa-white fa-times icon-right"></i></button></div></form>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("company-settings-modal.html",
-    "<div rv-spinner\n" +
-    "  rv-spinner-key=\"company-settings-modal\"\n" +
-    "  rv-spinner-start-active=\"1\">\n" +
-    "\n" +
-    "<div class=\"modal-header\">\n" +
-    "  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"closeModal()\">\n" +
-    "    <i class=\"fa fa-times\"></i>\n" +
-    "  </button>\n" +
-    "  <h2 id=\"company-settings-label\" class=\"modal-title\">Company Settings</h2>\n" +
-    "</div>\n" +
-    "<div class=\"modal-body company-settings-modal\" stop-event=\"touchend\">\n" +
-    "  <form id=\"companyForm\" role=\"form\" name=\"forms.companyForm\" novalidate>\n" +
-    "    <div ng-include=\"'company-fields.html'\"></div>\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label>\n" +
-    "        Authentication Key\n" +
-    "      </label>\n" +
-    "      <a class=\"action-link ps-reset-auth-key\" href=\"\" ng-click=\"resetAuthKey()\">Reset</a>\n" +
-    "      <div class=\"ps-auth-key\">\n" +
-    "        {{company.authKey}}\n" +
-    "      </div>\n" +
-    "    </div>\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label>\n" +
-    "        Claim ID\n" +
-    "      </label>\n" +
-    "      <a class=\"action-link ps-reset-claim-id\" href=\"\" ng-click=\"resetClaimId()\">Reset</a>\n" +
-    "      <div class=\"ps-claim-id\">\n" +
-    "        {{company.claimId}}\n" +
-    "      </div>\n" +
-    "    </div>\n" +
-    "    <div class=\"form-group\" ng-hide=\"true\">\n" +
-    "      <label>\n" +
-    "        Sub-Company Home Page Presentation\n" +
-    "      </label>\n" +
-    "      <a class=\"action-link\" href=\"\" ng-click=\"showSelector()\">Select</a>\n" +
-    "      <a class=\"action-link\" href=\"\">Default</a>\n" +
-    "      <div id=\"presentation-name\">Rise Vision Default (ID=a6789044-ae4a-48c7-b6fd-b5d4ffea2f24)</div>\n" +
-    "      <div class=\"presentation-selector\" ng-show=\"isSelectorVisible\">\n" +
-    "        <div class=\"panel panel-default\">\n" +
-    "          <ul class=\"list-unstyled selector-header\">\n" +
-    "            <li ng-class=\"{active : selected == 'list'}\">\n" +
-    "              <a href=\"\" ng-click=\"showPresentationView($event, 'list')\">Search Presentations</a>\n" +
-    "            </li>\n" +
-    "            <li ng-class=\"{active : selected == 'search'}\">\n" +
-    "              <a href=\"\" ng-click=\"showPresentationView($event, 'search')\">Enter Presentation ID</a>\n" +
-    "            </li>\n" +
-    "            <li class=\"close-button\">\n" +
-    "              <button type=\"button\" class=\"close\" aria-hidden=\"true\" ng-click=\"closeSelector()\">\n" +
-    "                <i class=\"fa fa-times\"></i>\n" +
-    "              </button>\n" +
-    "            </li>\n" +
-    "          </ul>\n" +
-    "          <div class=\"panel-body\">\n" +
-    "            <div class=\"presentation-list\" ng-show=\"selected == 'list'\">\n" +
-    "              <div class=\"input-group search\">\n" +
-    "                <input type=\"text\" class=\"form-control\" placeholder=\"Search Presentations\">\n" +
-    "                <span class=\"input-group-btn\">\n" +
-    "                  <button class=\"btn btn-primary\" type=\"submit\">\n" +
-    "                    <i class=\"fa fa-search fa-white\"></i>\n" +
-    "                  </button>\n" +
-    "                </span>\n" +
-    "              </div>\n" +
-    "              <div class=\"list-group scrollable-list\">\n" +
-    "                <a href=\"\" class=\"list-group-item\" ng-click=\"setPresentation($event, 'Demo Presentation')\">\n" +
-    "                  Demo Presentation\n" +
-    "                </a>\n" +
-    "                <a href=\"\" class=\"list-group-item\" ng-click=\"setPresentation($event, 'My First Presentation')\">\n" +
-    "                  My First Presentation\n" +
-    "                </a>\n" +
-    "              </div>\n" +
-    "            </div>\n" +
-    "            <div class=\"presentation-search\" ng-show=\"selected == 'search'\">\n" +
-    "              <form role=\"form\">\n" +
-    "                <div class=\"form-group\">\n" +
-    "                  <input id=\"presentation-id\" type=\"text\" class=\"form-control\" placeholder=\"Enter Presentation ID\" />\n" +
-    "                </div>\n" +
-    "                <div class=\"form-group\">\n" +
-    "                  <a href=\"\" ng-click=\"setPresentation($event)\">Retrieve Presentation</a>\n" +
-    "                </div>\n" +
-    "              </div>\n" +
-    "            </div>\n" +
-    "          </div>\n" +
-    "        </div>\n" +
-    "      </div>\n" +
-    "      <div class=\"form-group\" ng-hide=\"true\">\n" +
-    "        <label for=\"company-settings-community-url\">\n" +
-    "          Sub-Company Community URL\n" +
-    "        </label>\n" +
-    "        <a class=\"action-link\" href=\"\">Default</a>\n" +
-    "        <input id=\"company-settings-community-url\" type=\"url\" class=\"form-control\" />\n" +
-    "      </div>\n" +
-    "      <div class=\"form-group\" ng-hide=\"true\">\n" +
-    "        <label for=\"company-settings-support-url\">\n" +
-    "          Sub-Company Support URL\n" +
-    "        </label>\n" +
-    "        <a class=\"action-link\" href=\"\">Default</a>\n" +
-    "        <input id=\"company-settings-support-url\" type=\"url\" class=\"form-control\" />\n" +
-    "      </div>\n" +
-    "      <div class=\"checkbox\" ng-if=\"isRiseStoreAdmin\">\n" +
-    "        <label>\n" +
-    "          <input type=\"checkbox\" ng-model=\"company.isSeller\" />\n" +
-    "          Registered Seller\n" +
-    "        </label>\n" +
-    "      </div>\n" +
-    "      <div class=\"checkbox\" ng-if=\"isRiseStoreAdmin\">\n" +
-    "        <label>\n" +
-    "          <input type=\"checkbox\" ng-model=\"company.isTest\" />\n" +
-    "          Test Company\n" +
-    "        </label>\n" +
-    "      </div>\n" +
-    "      <div class=\"form-group\" ng-hide=\"true\">\n" +
-    "        <label for=\"company-settings-status\">\n" +
-    "          Status\n" +
-    "        </label>\n" +
-    "        <select id=\"company-settings-status\" class=\"form-control selectpicker\">\n" +
-    "          <option value=\"active\">Active</option>\n" +
-    "          <option value=\"inactive\">Inactive</option>\n" +
-    "        </select>\n" +
-    "      </div>\n" +
-    "    </form>\n" +
-    "  </div>\n" +
-    "  <div class=\"modal-footer\">\n" +
-    "    <p class=\"visible-xs text-right\"><last-modified change-date=\"company.changeDate\" changed-by=\"company.changedBy\"></last-modified></p>\n" +
-    "    <button type=\"button\" id=\"delete-button\" class=\"btn btn-danger btn-fixed-width pull-left\"\n" +
-    "      ng-show=\"!isDeletingCompany\" ng-click=\"deleteCompany()\">\n" +
-    "      Delete <i class=\"fa fa-white fa-trash-o icon-right\"></i>\n" +
-    "    </button>\n" +
-    "    <button type=\"button\" class=\"btn btn-danger btn-confirm-delete\" data-dismiss=\"modal\" ng-show=\"isDeletingCompany\" ng-click=\"closeModal()\">\n" +
-    "      Confirm Deletion <i class=\"fa fa-white fa-warning icon-right\"></i>\n" +
-    "    </button>\n" +
-    "    <div class=\"pull-right\">\n" +
-    "      <span class=\"hidden-xs\"><last-modified change-date=\"company.changeDate\" changed-by=\"company.changedBy\"></last-modified></span>\n" +
-    "      <button type=\"button\" id=\"save-button\"\n" +
-    "        class=\"btn btn-primary btn-fixed-width\" ng-click=\"save()\"\n" +
-    "        ng-disabled=\"forms.companyForm.$invalid\">Save\n" +
-    "        <i class=\"fa fa-white fa-check icon-right\"></i>\n" +
-    "      </button>\n" +
-    "      <button type=\"button\" id=\"close-button\"\n" +
-    "        class=\"btn btn-default btn-fixed-width\" data-dismiss=\"modal\" ng-click=\"closeModal()\">Cancel\n" +
-    "        <i class=\"fa fa-white fa-times icon-right\"></i>\n" +
-    "      </button>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "</div>\n" +
-    "</div> <!--spinner -->\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('company-settings-modal.html',
+    '<div rv-spinner="" rv-spinner-key="company-settings-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 id="company-settings-label" class="modal-title">Company Settings</h2></div><div class="modal-body company-settings-modal" stop-event="touchend"><form id="companyForm" role="form" name="forms.companyForm" novalidate=""><div ng-include="\'company-fields.html\'"></div><div class="form-group"><label>Authentication Key</label> <a class="action-link ps-reset-auth-key" href="" ng-click="resetAuthKey()">Reset</a><div class="ps-auth-key">{{company.authKey}}</div></div><div class="form-group"><label>Claim ID</label> <a class="action-link ps-reset-claim-id" href="" ng-click="resetClaimId()">Reset</a><div class="ps-claim-id">{{company.claimId}}</div></div><div class="form-group" ng-hide="true"><label>Sub-Company Home Page Presentation</label> <a class="action-link" href="" ng-click="showSelector()">Select</a> <a class="action-link" href="">Default</a><div id="presentation-name">Rise Vision Default (ID=a6789044-ae4a-48c7-b6fd-b5d4ffea2f24)</div><div class="presentation-selector" ng-show="isSelectorVisible"><div class="panel panel-default"><ul class="list-unstyled selector-header"><li ng-class="{active : selected == \'list\'}"><a href="" ng-click="showPresentationView($event, \'list\')">Search Presentations</a></li><li ng-class="{active : selected == \'search\'}"><a href="" ng-click="showPresentationView($event, \'search\')">Enter Presentation ID</a></li><li class="close-button"><button type="button" class="close" aria-hidden="true" ng-click="closeSelector()"><i class="fa fa-times"></i></button></li></ul><div class="panel-body"><div class="presentation-list" ng-show="selected == \'list\'"><div class="input-group search"><input type="text" class="form-control" placeholder="Search Presentations"> <span class="input-group-btn"><button class="btn btn-primary" type="submit"><i class="fa fa-search fa-white"></i></button></span></div><div class="list-group scrollable-list"><a href="" class="list-group-item" ng-click="setPresentation($event, \'Demo Presentation\')">Demo Presentation</a> <a href="" class="list-group-item" ng-click="setPresentation($event, \'My First Presentation\')">My First Presentation</a></div></div><div class="presentation-search" ng-show="selected == \'search\'"><form role="form"><div class="form-group"><input id="presentation-id" type="text" class="form-control" placeholder="Enter Presentation ID"></div><div class="form-group"><a href="" ng-click="setPresentation($event)">Retrieve Presentation</a></div></form></div></div></div></div></div><div class="form-group" ng-hide="true"><label for="company-settings-community-url">Sub-Company Community URL</label> <a class="action-link" href="">Default</a> <input id="company-settings-community-url" type="url" class="form-control"></div><div class="form-group" ng-hide="true"><label for="company-settings-support-url">Sub-Company Support URL</label> <a class="action-link" href="">Default</a> <input id="company-settings-support-url" type="url" class="form-control"></div><div class="checkbox" ng-if="isRiseStoreAdmin"><label><input type="checkbox" ng-model="company.isSeller"> Registered Seller</label></div><div class="checkbox" ng-if="isRiseStoreAdmin"><label><input type="checkbox" ng-model="company.isTest"> Test Company</label></div><div class="form-group" ng-hide="true"><label for="company-settings-status">Status</label><select id="company-settings-status" class="form-control selectpicker"><option value="active">Active</option><option value="inactive">Inactive</option></select></div></form></div><div class="modal-footer"><p class="visible-xs text-right"><last-modified change-date="company.changeDate" changed-by="company.changedBy"></last-modified></p><button type="button" id="delete-button" class="btn btn-danger btn-fixed-width pull-left" ng-show="!isDeletingCompany" ng-click="deleteCompany()">Delete <i class="fa fa-white fa-trash-o icon-right"></i></button> <button type="button" class="btn btn-danger btn-confirm-delete" data-dismiss="modal" ng-show="isDeletingCompany" ng-click="closeModal()">Confirm Deletion <i class="fa fa-white fa-warning icon-right"></i></button><div class="pull-right"><span class="hidden-xs"><last-modified change-date="company.changeDate" changed-by="company.changedBy"></last-modified></span> <button type="button" id="save-button" class="btn btn-primary btn-fixed-width" ng-click="save()" ng-disabled="forms.companyForm.$invalid">Save <i class="fa fa-white fa-check icon-right"></i></button> <button type="button" id="close-button" class="btn btn-default btn-fixed-width" data-dismiss="modal" ng-click="closeModal()">Cancel <i class="fa fa-white fa-times icon-right"></i></button></div></div></div>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("company-users-modal.html",
-    "<div class=\"modal-header\">\n" +
-    "  <button type=\"button\" class=\"close\" data-dismiss=\"modal\"\n" +
-    "    aria-hidden=\"true\" ng-click=\"closeModal()\">\n" +
-    "    <i class=\"fa fa-times\"></i>\n" +
-    "  </button>\n" +
-    "  <h2 id=\"company-users-label\" class=\"modal-title\">Company Users</h2>\n" +
-    "</div>\n" +
-    "<div class=\"modal-body company-users-modal\" stop-event=\"touchend\">\n" +
-    "  <!-- Search -->\n" +
-    "  <search-filter filter-config=\"filterConfig\" search=\"search\" do-search=\"doSearch\"></search-filter> \n" +
-    "\n" +
-    "  <!-- List of Users -->\n" +
-    "  <div class=\"panel panel-default scrollable-list company-users-list u_margin-sm-top\"\n" +
-    "    rv-spinner\n" +
-    "    rv-spinner-key=\"company-users-list\"\n" +
-    "    rv-spinner-start-active=\"1\">\n" +
-    "    <div class=\"list-group-item  company-users-list-item\"\n" +
-    "      ng-repeat=\"user in users | orderBy:sort.field:sort.descending | filter:userSearchString\" ng-click=\"editUser(user.username)\">\n" +
-    "      <p class=\"list-group-item-text\"><strong>{{user.firstName}} {{user.lastName}}</strong> <small class=\"text-muted\">{{user.email}}</small></p>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "</div>\n" +
-    "<div class=\"modal-footer\">\n" +
-    "  <button type=\"button\" class=\"btn btn-success add-company-user-button\"\n" +
-    "    ng-click=\"addUser()\">Add User\n" +
-    "    <i class=\"fa fa-white fa-plus icon-right\"></i>\n" +
-    "  </button>\n" +
-    "  <button type=\"button\" class=\"btn btn-default close-company-users-button\"\n" +
-    "    data-dismiss=\"modal\" ng-click=\"closeModal()\">\n" +
-    "    Cancel <i class=\"fa fa-white fa-times icon-right\"></i>\n" +
-    "  </button>\n" +
-    "</div>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('company-users-modal.html',
+    '<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 id="company-users-label" class="modal-title">Company Users</h2></div><div class="modal-body company-users-modal" stop-event="touchend"><search-filter filter-config="filterConfig" search="search" do-search="doSearch"></search-filter><div class="panel panel-default scrollable-list company-users-list u_margin-sm-top" rv-spinner="" rv-spinner-key="company-users-list" rv-spinner-start-active="1"><div class="list-group-item company-users-list-item" ng-repeat="user in users | orderBy:sort.field:sort.descending | filter:userSearchString" ng-click="editUser(user.username)"><p class="list-group-item-text"><strong>{{user.firstName}} {{user.lastName}}</strong> <small class="text-muted">{{user.email}}</small></p></div></div></div><div class="modal-footer"><button type="button" class="btn btn-success add-company-user-button" ng-click="addUser()">Add User <i class="fa fa-white fa-plus icon-right"></i></button> <button type="button" class="btn btn-default close-company-users-button" data-dismiss="modal" ng-click="closeModal()">Cancel <i class="fa fa-white fa-times icon-right"></i></button></div>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("global-alerts.html",
-    "<div class=\"container\">\n" +
-    "  <div class=\"row\">\n" +
-    "    <div class=\"col-md-12\">\n" +
-    "      <div class=\"alert alert-danger\" role=\"alert\" ng-repeat=\"msg in errors\">\n" +
-    "        <span ng-bind-html=\"msg\"></span>\n" +
-    "        <button type=\"button\" class=\"close pull-right\"\n" +
-    "          ng-click=\"dismiss('errors', $index);\">\n" +
-    "          <i class=\"fa fa-times\"></i>\n" +
-    "        </button>\n" +
-    "      </div>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "</div>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('global-alerts.html',
+    '<div class="container"><div class="row"><div class="col-md-12"><div class="alert alert-danger" role="alert" ng-repeat="msg in errors"><span ng-bind-html="msg"></span> <button type="button" class="close pull-right" ng-click="dismiss(\'errors\', $index);"><i class="fa fa-times"></i></button></div></div></div></div>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("help-dropdown-menu.html",
-    "\n" +
-    "<ul>\n" +
-    "    <li><a id=\"getStartedButton\" href=\"https://help.risevision.com/hc/en-us/articles/115002868706-Get-started-with-Rise-Vision\" target=\"_blank\">Get Started</a></li>\n" +
-    "    <li><a id=\"documentationButton\" href=\"https://help.risevision.com\" target=\"_blank\">Help Center</a></li>\n" +
-    "    <li><a id=\"askCommunityButton\" href=\"https://help.risevision.com/hc/en-us/community/topics/\" target=\"_blank\">Ask the Community</a></li>\n" +
-    "    <li><a id=\"getSupportButton\" ng-click=\"getSupport()\" href=\"\">Get Support</a></li>\n" +
-    "    <li><a id=\"askSalesButton\" href=\"https://www.risevision.com/contact-us#sales\" target=\"_blank\">Ask Sales</a></li>\n" +
-    "</ul>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('help-dropdown-menu.html',
+    '<ul><li><a id="getStartedButton" href="https://help.risevision.com/hc/en-us/articles/115002868706-Get-started-with-Rise-Vision" target="_blank">Get Started</a></li><li><a id="documentationButton" href="https://help.risevision.com" target="_blank">Help Center</a></li><li><a id="askCommunityButton" href="https://help.risevision.com/hc/en-us/community/topics/" target="_blank">Ask the Community</a></li><li><a id="getSupportButton" ng-click="getSupport()" href="">Get Support</a></li><li><a id="askSalesButton" href="https://www.risevision.com/contact-us#sales" target="_blank">Ask Sales</a></li></ul>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("help-dropdown.html",
-    "<li ng-show=\"!isLoggedIn || (isLoggedIn && isRiseVisionUser)\" dropdown class=\"dropdown hidden-xs\">\n" +
-    "  <button id=\"helpDropdownButton\" dropdown-toggle class=\"dropdown-toggle btn btn-primary\"><span class=\"hidden-sm hidden-xs hidden-md\">Need Help</span><i class=\"fa fa-question u_icon-white\"></i></button>\n" +
-    "  <div class=\"dropdown-menu app-navigation\" role=\"menu\">\n" +
-    "      <ng-include\n" +
-    "              replace-include\n" +
-    "              src=\"'help-dropdown-menu.html'\">\n" +
-    "      </ng-include>\n" +
-    "  </div>\n" +
-    "</li>\n" +
-    "\n" +
-    "<!-- Mobile -->\n" +
-    "<li ng-show=\"!isLoggedIn || (isLoggedIn && isRiseVisionUser)\" class=\"visible-xs-inline-block\" >\n" +
-    "    <button class=\"dropdown-toggle btn btn-primary\"\n" +
-    "       action-sheet=\"'help-dropdown-menu.html'\"\n" +
-    "       action-sheet-class=\"app-navigation\">\n" +
-    "        <i class=\"fa fa-question u_icon-white\"></i>\n" +
-    "    </button>\n" +
-    "</li>\n" +
-    "\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('help-dropdown.html',
+    '<li ng-show="!isLoggedIn || (isLoggedIn && isRiseVisionUser)" dropdown="" class="dropdown hidden-xs"><button id="helpDropdownButton" dropdown-toggle="" class="dropdown-toggle btn btn-primary"><span class="hidden-sm hidden-xs hidden-md">Need Help</span><i class="fa fa-question u_icon-white"></i></button><div class="dropdown-menu app-navigation" role="menu"><ng-include replace-include="" src="\'help-dropdown-menu.html\'"></ng-include></div></li><li ng-show="!isLoggedIn || (isLoggedIn && isRiseVisionUser)" class="visible-xs-inline-block"><button class="dropdown-toggle btn btn-primary" action-sheet="\'help-dropdown-menu.html\'" action-sheet-class="app-navigation"><i class="fa fa-question u_icon-white"></i></button></li>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("help-priority-support-modal.html",
-    "<div id=\"prioritySupportModal\">\n" +
-    "    <div class=\"modal-header\">\n" +
-    "        <button id=\"prioritySupportModalCloseButton\" ng-click=\"dismiss()\" type=\"button\" class=\"close\">\n" +
-    "            <i class=\"fa fa-times\"></i>\n" +
-    "        </button>\n" +
-    "        <h2 class=\"modal-title\">Priority Support</h2>\n" +
-    "    </div>\n" +
-    "    <div class=\"modal-body\" stop-event=\"touchend\">\n" +
-    "\n" +
-    "        <div class=\"u_margin-lg-bottom blank-state\">\n" +
-    "            <div class=\"product-graphic\" ng-show=\"['trial-available', 'not-subscribed'].indexOf(subscriptionStatus.statusCode) >= 0\">\n" +
-    "                <img itemprop=\"image\" class=\"img-responsive\" src=\"https://s3.amazonaws.com/Store-Products/Rise-Vision/support_image.png\">\n" +
-    "            </div>\n" +
-    "\n" +
-    "            <div class=\"content-box-body\" ng-show=\"subscriptionStatus.statusCode != 'subscribed'\">\n" +
-    "                <div class=\"product-intro\">\n" +
-    "                    <h1>Priority Support</h1>\n" +
-    "                    <p class=\"lead\">Get the help you need in 10 minutes or less, 8-5 CST Monday through Friday, or let us remotely connect, diagnose and correct display problems all without the need for you to intervene!</p>\n" +
-    "                    <p class=\"lead\">$75 per Company per Month.</p>\n" +
-    "                    <a class=\"btn btn-hg btn-primary\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss()\" target=\"_blank\">\n" +
-    "                        <span>Subscribe Now!</span>\n" +
-    "                    </a>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "        </div><!--blank-state-->\n" +
-    "    </div>\n" +
-    "</div>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('help-priority-support-modal.html',
+    '<div id="prioritySupportModal"><div class="modal-header"><button id="prioritySupportModalCloseButton" ng-click="dismiss()" type="button" class="close"><i class="fa fa-times"></i></button><h2 class="modal-title">Priority Support</h2></div><div class="modal-body" stop-event="touchend"><div class="u_margin-lg-bottom blank-state"><div class="product-graphic" ng-show="[\'trial-available\', \'not-subscribed\'].indexOf(subscriptionStatus.statusCode) >= 0"><img itemprop="image" class="img-responsive" src="https://s3.amazonaws.com/Store-Products/Rise-Vision/support_image.png"></div><div class="content-box-body" ng-show="subscriptionStatus.statusCode != \'subscribed\'"><div class="product-intro"><h1>Priority Support</h1><p class="lead">Get the help you need in 10 minutes or less, 8-5 CST Monday through Friday, or let us remotely connect, diagnose and correct display problems all without the need for you to intervene!</p><p class="lead">$75 per Company per Month.</p><a class="btn btn-hg btn-primary" href="{{supportProductUrl}}" ng-click="dismiss()" target="_blank"><span>Subscribe Now!</span></a></div></div></div></div></div>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("help-send-us-a-note-modal.html",
-    "<div id=\"sendUsANoteModal\">\n" +
-    "    <div class=\"modal-header\">\n" +
-    "        <button id=\"sendUsANoteModalCloseButton\" ng-click=\"dismiss()\" type=\"button\" class=\"close\">\n" +
-    "            <i class=\"fa fa-times\"></i>\n" +
-    "        </button>\n" +
-    "        <h2 class=\"modal-title\"></h2>\n" +
-    "    </div>\n" +
-    "    <div class=\"modal-body text-center\" stop-event=\"touchend\">\n" +
-    "        <p class=\"lead\">Send us a note and we typically get back to you within 2-3 business days.</p>\n" +
-    "\n" +
-    "        <a ng-if=\"!loggedIn\" href=\"https://www.risevision.com/contact/\" target=\"_blank\" class=\"btn btn-primary btn-lg\">\n" +
-    "          Contact Support\n" +
-    "        </a>\n" +
-    "        <button ng-if=\"loggedIn\" class=\"btn btn-primary btn-lg\" ng-click=\"sendUsANote()\">\n" +
-    "          Contact Support\n" +
-    "        </button>\n" +
-    "\n" +
-    "        <div class=\"content-box u_margin-md-top u_remove-bottom\">\n" +
-    "          <div class=\"content-box-body\">\n" +
-    "            <p class=\"lead u_margin-left u_margin-right\">\n" +
-    "                <strong>Need help fast?</strong>\n" +
-    "                Check out Priority Support and have a response in <strong>10 minutes</strong>. We are online 8-5 CST Monday through Friday.\n" +
-    "            </p>\n" +
-    "\n" +
-    "            <a class=\"btn btn-primary btn-lg\" href=\"{{supportProductUrl}}\" ng-click=\"dismiss();\" target=\"_blank\">\n" +
-    "                Subscribe Now\n" +
-    "            </a>\n" +
-    "      </div><!--content-box-body-->\n" +
-    "    </div>\n" +
-    "</div>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('help-send-us-a-note-modal.html',
+    '<div id="sendUsANoteModal"><div class="modal-header"><button id="sendUsANoteModalCloseButton" ng-click="dismiss()" type="button" class="close"><i class="fa fa-times"></i></button><h2 class="modal-title"></h2></div><div class="modal-body text-center" stop-event="touchend"><p class="lead">Send us a note and we typically get back to you within 2-3 business days.</p><a ng-if="!loggedIn" href="https://www.risevision.com/contact/" target="_blank" class="btn btn-primary btn-lg">Contact Support</a> <button ng-if="loggedIn" class="btn btn-primary btn-lg" ng-click="sendUsANote()">Contact Support</button><div class="content-box u_margin-md-top u_remove-bottom"><div class="content-box-body"><p class="lead u_margin-left u_margin-right"><strong>Need help fast?</strong> Check out Priority Support and have a response in <strong>10 minutes</strong>. We are online 8-5 CST Monday through Friday.</p><a class="btn btn-primary btn-lg" href="{{supportProductUrl}}" ng-click="dismiss();" target="_blank">Subscribe Now</a></div></div></div></div>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("move-company-modal.html",
-    "<div rv-spinner\n" +
-    "  rv-spinner-key=\"move-company-modal\"\n" +
-    "  rv-spinner-start-active=\"1\">\n" +
-    "<div class=\"modal-header\">\n" +
-    "  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"closeModal()\">\n" +
-    "    <i class=\"fa fa-times\"></i>\n" +
-    "  </button>\n" +
-    "  <h2 id=\"move-company-label\" class=\"modal-title\">Move Company</h2>\n" +
-    "</div>\n" +
-    "<div class=\"modal-body move-company-modal\" stop-event=\"touchend\">\n" +
-    "  <form role=\"form\">\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"auth-key\">\n" +
-    "        Enter the Authentication Key of the Company that you want to move.\n" +
-    "      </label>\n" +
-    "      <div class=\"row\">\n" +
-    "        <div class=\"col-sm-6\">\n" +
-    "          <input id=\"auth-key\" type=\"text\" class=\"form-control\"\n" +
-    "          ng-model=\"company.authKey\" />\n" +
-    "        </div>\n" +
-    "        <div class=\"col-sm-6\">\n" +
-    "          <a href=\"\" class=\"btn btn-secondary retrieve-company-details-button\"\n" +
-    "          ng-disabled=\"!company.authKey\"\n" +
-    "          ng-click=\"getCompany()\">Retrieve Company Details</a>\n" +
-    "        </div>\n" +
-    "      </div>\n" +
-    "    </div>\n" +
-    "  </form>\n" +
-    "  <div ng-show=\"company.name\" class=\"company-details-info\">\n" +
-    "    <h3>Details of the Company You Want to Move</h3>\n" +
-    "    <div>\n" +
-    "      {{company.name}}<br>\n" +
-    "      {{company.address}}\n" +
-    "      {{company.city}}, {{company.province}}, {{company.country}} {{company.postalCode}}\n" +
-    "    </div>\n" +
-    "    <h3>Details of the Company You Are Moving the Above Company Under</h3>\n" +
-    "    <div class=\"to-company\">\n" +
-    "      {{selectedCompany.name}}<br>\n" +
-    "      {{selectedCompany.address}}<br>\n" +
-    "      {{selectedCompany.city}}, {{selectedCompany.province}},\n" +
-    "      {{selectedCompany.country}} {{selectedCompany.postalCode}}\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "  <div ng-show=\"errors.length > 0\">\n" +
-    "    <div class=\"alert alert-danger\" ng-repeat=\"error in errors\">\n" +
-    "      {{error}}\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "  <div ng-show=\"messages.length > 0\">\n" +
-    "    <div class=\"alert alert-success\" ng-repeat=\"message in messages\">\n" +
-    "      {{message}}\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "</div>\n" +
-    "<div class=\"modal-footer\">\n" +
-    "  <button type=\"button\"\n" +
-    "    class=\"btn btn-success move-company-button\"\n" +
-    "    ng-show=\"company.name && !moveSuccess\" ng-click=\"moveCompany()\">Move Company\n" +
-    "    <i class=\"fa fa-white fa-check icon-right\"></i>\n" +
-    "  </button>\n" +
-    "  <button type=\"button\" class=\"btn btn-default btn-fixed-width close-move-company-button\" data-dismiss=\"modal\" ng-click=\"closeModal()\">\n" +
-    "    {{dismissButtonText}} <i class=\"fa fa-white fa-times icon-right\"></i>\n" +
-    "  </button>\n" +
-    "</div>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('move-company-modal.html',
+    '<div rv-spinner="" rv-spinner-key="move-company-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 id="move-company-label" class="modal-title">Move Company</h2></div><div class="modal-body move-company-modal" stop-event="touchend"><form role="form"><div class="form-group"><label for="auth-key">Enter the Authentication Key of the Company that you want to move.</label><div class="row"><div class="col-sm-6"><input id="auth-key" type="text" class="form-control" ng-model="company.authKey"></div><div class="col-sm-6"><a href="" class="btn btn-secondary retrieve-company-details-button" ng-disabled="!company.authKey" ng-click="getCompany()">Retrieve Company Details</a></div></div></div></form><div ng-show="company.name" class="company-details-info"><h3>Details of the Company You Want to Move</h3><div>{{company.name}}<br>{{company.address}} {{company.city}}, {{company.province}}, {{company.country}} {{company.postalCode}}</div><h3>Details of the Company You Are Moving the Above Company Under</h3><div class="to-company">{{selectedCompany.name}}<br>{{selectedCompany.address}}<br>{{selectedCompany.city}}, {{selectedCompany.province}}, {{selectedCompany.country}} {{selectedCompany.postalCode}}</div></div><div ng-show="errors.length > 0"><div class="alert alert-danger" ng-repeat="error in errors">{{error}}</div></div><div ng-show="messages.length > 0"><div class="alert alert-success" ng-repeat="message in messages">{{message}}</div></div></div><div class="modal-footer"><button type="button" class="btn btn-success move-company-button" ng-show="company.name && !moveSuccess" ng-click="moveCompany()">Move Company <i class="fa fa-white fa-check icon-right"></i></button> <button type="button" class="btn btn-default btn-fixed-width close-move-company-button" data-dismiss="modal" ng-click="closeModal()">{{dismissButtonText}} <i class="fa fa-white fa-times icon-right"></i></button></div></div>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("registration-modal.html",
-    "<div rv-spinner\n" +
-    "rv-spinner-key=\"registration-modal\"\n" +
-    "rv-spinner-start-active=\"1\">\n" +
-    "<div class=\"modal-header\">\n" +
-    "  <button type=\"button\" class=\"close registration-cancel-button\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"closeModal()\">\n" +
-    "    <i class=\"fa fa-times\"></i>\n" +
-    "  </button>\n" +
-    "  <h2 class=\"modal-title\">Let's finish with your details</h2>\n" +
-    "</div>\n" +
-    "<div class=\"modal-body registration-modal\" stop-event=\"touchend\">\n" +
-    "  \n" +
-    "  <div class=\"row\">\n" +
-    "    <div class=\"col-sm-8\">\n" +
-    "\n" +
-    "      <form id=\"registrationForm\" novalidate role=\"form\" name=\"forms.registrationForm\">\n" +
-    "        <!-- First Name -->\n" +
-    "        <div class=\"form-group\" ng-class=\"{ 'has-error' : forms.registrationForm.firstName.$invalid && !forms.registrationForm.firstName.$pristine }\">\n" +
-    "          <label for=\"firstName\">First Name</label>\n" +
-    "          <input type=\"text\" class=\"form-control firstName\"\n" +
-    "          name=\"firstName\"\n" +
-    "          id=\"firstName\" required\n" +
-    "          ng-model=\"profile.firstName\">\n" +
-    "          <p ng-show=\"forms.registrationForm.firstName.$invalid && !forms.registrationForm.firstName.$pristine\"\n" +
-    "            class=\"help-block validation-error-message-first-name\">Enter First Name.</p>\n" +
-    "        </div>\n" +
-    "        <!-- Last Name -->\n" +
-    "        <div class=\"form-group\" ng-class=\"{ 'has-error' : forms.registrationForm.lastName.$invalid && !forms.registrationForm.lastName.$pristine }\">\n" +
-    "          <label for=\"lastName\">Last Name</label>\n" +
-    "          <input type=\"text\" class=\"form-control lastName\"\n" +
-    "          name=\"lastName\"\n" +
-    "          id=\"lastName\" required\n" +
-    "          ng-model=\"profile.lastName\">\n" +
-    "          <p ng-show=\"forms.registrationForm.lastName.$invalid && !forms.registrationForm.lastName.$pristine\"\n" +
-    "            class=\"help-block validation-error-message-last-name\">Enter Last Name.</p>\n" +
-    "        </div>\n" +
-    "        <!-- Website -->\n" +
-    "        <div class=\"form-group\" ng-show=\"newUser\" ng-class=\"{'has-error': forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine}\">\n" +
-    "          <label for=\"website\">Website</label>\n" +
-    "          <input type=\"text\" class=\"form-control website\" placeholder=\"http://\"\n" +
-    "          name=\"website\"\n" +
-    "          id=\"website\"\n" +
-    "          ng-model=\"company.website\" website-validator>\n" +
-    "          <p ng-show=\"forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine\"\n" +
-    "            class=\"help-block validation-error-message-website\">Please provide a valid URL.</p>\n" +
-    "        </div>\n" +
-    "        <!-- Terms of Service and Privacy -->\n" +
-    "        <div class=\"checkbox form-group\" ng-class=\"{ 'has-error' : forms.registrationForm.accepted.$invalid && !userForm.accepted.$pristine }\">\n" +
-    "          <label>\n" +
-    "          <input type=\"checkbox\" name=\"accepted\"\n" +
-    "            ng-model=\"profile.accepted\"\n" +
-    "            class=\"accept-terms-checkbox\" required />\n" +
-    "          I accept the terms of <a href=\"https://www.risevision.com/terms-of-service\" target=\"_blank\">Service and Privacy</a>\n" +
-    "          <p ng-show=\"forms.registrationForm.accepted.$invalid && !forms.registrationForm.accepted.$pristine\"\n" +
-    "            class=\"help-block validation-error-message-accepted\">You must accept terms and condtions.</p>\n" +
-    "          </label>\n" +
-    "        </div>\n" +
-    "        <!-- Newsletter -->\n" +
-    "        <div class=\"checkbox form-group\">\n" +
-    "          <label>\n" +
-    "            <input type=\"checkbox\" class=\"sign-up-newsletter-checkbox\" ng-model=\"profile.mailSyncEnabled\"> Sign up for our newsletter\n" +
-    "          </label>\n" +
-    "        </div>\n" +
-    "        <div class=\"u_margin-md-top\">\n" +
-    "          <button ng-click=\"save()\"\n" +
-    "            name=\"create-account\"\n" +
-    "            type=\"button\"\n" +
-    "            class=\"btn btn-lg btn-success btn-block registration-save-button\"\n" +
-    "            ng-disabled=\"registering\">\n" +
-    "            Create Account <i class=\"fa fa-white fa-check icon-right\"></i>\n" +
-    "          </button>\n" +
-    "          <button type=\"button\" class=\"btn hidden btn-lg btn-link btn-fixed-width\"\n" +
-    "          ng-disabled=\"registering\"\n" +
-    "          ng-click=\"closeModal()\">\n" +
-    "            Cancel\n" +
-    "          </button>\n" +
-    "        </div>\n" +
-    "      </form>\n" +
-    "\n" +
-    "    </div>\n" +
-    "    <div class=\"col-sm-4\">\n" +
-    "      <div class=\"signup-counters\">\n" +
-    "        <div class=\"counter\">\n" +
-    "          <p>129</p>\n" +
-    "          <span>New Companies Added Yesterday</span>\n" +
-    "        </div>\n" +
-    "        <div class=\"counter\">\n" +
-    "          <p>72,990</p>\n" +
-    "          <span>Total Companies</span>\n" +
-    "        </div>\n" +
-    "        <div class=\"counter\">\n" +
-    "          <p>120</p>\n" +
-    "          <span>Countries with Active Displays</span>\n" +
-    "        </div>\n" +
-    "      </div>\n" +
-    "    </div>\n" +
-    "  </div>  \n" +
-    "\n" +
-    "  \n" +
-    "</div>\n" +
-    "</div>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('registration-modal.html',
+    '<div rv-spinner="" rv-spinner-key="registration-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close registration-cancel-button" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 class="modal-title">Let\'s finish with your details</h2></div><div class="modal-body registration-modal" stop-event="touchend"><div class="row"><div class="col-sm-8"><form id="registrationForm" novalidate="" role="form" name="forms.registrationForm"><div class="form-group" ng-class="{ \'has-error\' : forms.registrationForm.firstName.$invalid && !forms.registrationForm.firstName.$pristine }"><label for="firstName">First Name</label> <input type="text" class="form-control firstName" name="firstName" id="firstName" required="" ng-model="profile.firstName"><p ng-show="forms.registrationForm.firstName.$invalid && !forms.registrationForm.firstName.$pristine" class="help-block validation-error-message-first-name">Enter First Name.</p></div><div class="form-group" ng-class="{ \'has-error\' : forms.registrationForm.lastName.$invalid && !forms.registrationForm.lastName.$pristine }"><label for="lastName">Last Name</label> <input type="text" class="form-control lastName" name="lastName" id="lastName" required="" ng-model="profile.lastName"><p ng-show="forms.registrationForm.lastName.$invalid && !forms.registrationForm.lastName.$pristine" class="help-block validation-error-message-last-name">Enter Last Name.</p></div><div class="form-group" ng-show="newUser" ng-class="{\'has-error\': forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine}"><label for="website">Website</label> <input type="text" class="form-control website" placeholder="http://" name="website" id="website" ng-model="company.website" website-validator=""><p ng-show="forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine" class="help-block validation-error-message-website">Please provide a valid URL.</p></div><div class="checkbox form-group" ng-class="{ \'has-error\' : forms.registrationForm.accepted.$invalid && !userForm.accepted.$pristine }"><label><input type="checkbox" name="accepted" ng-model="profile.accepted" class="accept-terms-checkbox" required=""> I accept the terms of <a href="https://www.risevision.com/terms-of-service" target="_blank">Service and Privacy</a><p ng-show="forms.registrationForm.accepted.$invalid && !forms.registrationForm.accepted.$pristine" class="help-block validation-error-message-accepted">You must accept terms and condtions.</p></label></div><div class="checkbox form-group"><label><input type="checkbox" class="sign-up-newsletter-checkbox" ng-model="profile.mailSyncEnabled"> Sign up for our newsletter</label></div><div class="u_margin-md-top"><button ng-click="save()" name="create-account" type="button" class="btn btn-lg btn-success btn-block registration-save-button" ng-disabled="registering">Create Account <i class="fa fa-white fa-check icon-right"></i></button> <button type="button" class="btn hidden btn-lg btn-link btn-fixed-width" ng-disabled="registering" ng-click="closeModal()">Cancel</button></div></form></div><div class="col-sm-4"><div class="signup-counters"><div class="counter"><p>129</p><span>New Companies Added Yesterday</span></div><div class="counter"><p>72,990</p><span>Total Companies</span></div><div class="counter"><p>120</p><span>Countries with Active Displays</span></div></div></div></div></div></div>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("safe-delete-modal.html",
-    "<form id=\"safeDeleteForm\">\n" +
-    "  <div class=\"modal-header\">\n" +
-    "    <button type=\"button\" class=\"close\" ng-click=\"dismiss()\" data-dismiss=\"modal\" aria-hidden=\"true\">\n" +
-    "      <i class=\"fa fa-times\"></i>\n" +
-    "    </button>\n" +
-    "    <h3 class=\"modal-title\" translate>common.safeDelete.title</h3>\n" +
-    "  </div>\n" +
-    "  <div class=\"modal-body\" stop-event=\"touchend\">\n" +
-    "    <p translate>common.safeDelete.message</p>\n" +
-    "    <input id=\"safeDeleteInput\" type=\"text\" ng-model=\"inputText\" class=\"form-control\" />\n" +
-    "  </div>\n" +
-    "  <div class=\"modal-footer\">\n" +
-    "    <button id=\"deleteForeverButton\" class=\"btn btn-primary\" ng-click=\"confirm()\" ng-disabled=\"!canConfirm\">\n" +
-    "      <span translate>common.delete-forever</span> <i class=\"fa fa-white fa-check icon-right\"></i>\n" +
-    "    </button>\n" +
-    "    <button class=\"btn btn-default btn-fixed-width\" ng-click=\"cancel()\">\n" +
-    "      <span translate>common.cancel</span> <i class=\"fa fa-white fa-times icon-right\"></i>\n" +
-    "    </button>\n" +
-    "  </div>\n" +
-    "</form>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('safe-delete-modal.html',
+    '<form id="safeDeleteForm"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title" translate="">common.safeDelete.title</h3></div><div class="modal-body" stop-event="touchend"><p translate="">common.safeDelete.message</p><input id="safeDeleteInput" type="text" ng-model="inputText" class="form-control"></div><div class="modal-footer"><button id="deleteForeverButton" class="btn btn-primary" ng-click="confirm()" ng-disabled="!canConfirm"><span translate="">common.delete-forever</span> <i class="fa fa-white fa-check icon-right"></i></button> <button class="btn btn-default btn-fixed-width" ng-click="cancel()"><span translate="">common.cancel</span> <i class="fa fa-white fa-times icon-right"></i></button></div></form>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("shoppingcart-button.html",
-    "<li class=\"shopping-cart\" ng-show=\"!hideShoppingCart && isRiseVisionUser\">\n" +
-    "<a href=\"{{shoppingCartUrl}}\" class=\"shopping-cart-button\">\n" +
-    "  <i class=\"fa fa-shopping-cart\"></i>\n" +
-    "  <span id=\"cartBadge\" class=\"label label-primary\" ng-show=\"cart.items.length\">\n" +
-    "    {{cart.items.length | surpressZero}}</span>\n" +
-    "</a>\n" +
-    "</li>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('shoppingcart-button.html',
+    '<li class="shopping-cart" ng-show="!hideShoppingCart && isRiseVisionUser"><a href="{{shoppingCartUrl}}" class="shopping-cart-button"><i class="fa fa-shopping-cart"></i> <span id="cartBadge" class="label label-primary" ng-show="cart.items.length">{{cart.items.length | surpressZero}}</span></a></li>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("signout-modal.html",
-    "<div class=\"modal-header\">\n" +
-    "  <button type=\"button\" class=\"close\" ng-click=\"closeModal()\" aria-hidden=\"true\">\n" +
-    "    <i class=\"fa fa-times\"></i>\n" +
-    "  </button>\n" +
-    "  <h2 id=\"sign-out-label\" class=\"modal-title\">Sign Out</h2>\n" +
-    "</div>\n" +
-    "<div class=\"modal-body sign-out-modal\" stop-event=\"touchend\">\n" +
-    "  <form role=\"form\">\n" +
-    "    <p>\n" +
-    "      Signing out does not sign you out of your Google Account.\n" +
-    "    </p>\n" +
-    "    <p>\n" +
-    "      If you are on a shared computer you should sign out of your Google Account.\n" +
-    "    </p>\n" +
-    "    <p>\n" +
-    "      <button type=\"button\" class=\"btn btn-default sign-out-rv-only-button\" ng-click=\"signOut(false)\">Sign Out\n" +
-    "        <i class=\"fa fa-sign-out fa-lg icon-right\"></i>\n" +
-    "      </button>\n" +
-    "    </p>\n" +
-    "      <button type=\"button\" class=\"btn btn-default sign-out-google-account\" ng-click=\"signOut(true)\">Sign Out of your Google Account\n" +
-    "        <i class=\"fa fa-google-plus-square fa-lg icon-right\"></i>\n" +
-    "      </button>\n" +
-    "    <p>\n" +
-    "    </p>\n" +
-    "  </form>\n" +
-    "</div>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('signout-modal.html',
+    '<div class="modal-header"><button type="button" class="close" ng-click="closeModal()" aria-hidden="true"><i class="fa fa-times"></i></button><h2 id="sign-out-label" class="modal-title">Sign Out</h2></div><div class="modal-body sign-out-modal" stop-event="touchend"><form role="form"><p>Signing out does not sign you out of your Google Account.</p><p>If you are on a shared computer you should sign out of your Google Account.</p><p><button type="button" class="btn btn-default sign-out-rv-only-button" ng-click="signOut(false)">Sign Out <i class="fa fa-sign-out fa-lg icon-right"></i></button></p><button type="button" class="btn btn-default sign-out-google-account" ng-click="signOut(true)">Sign Out of your Google Account <i class="fa fa-google-plus-square fa-lg icon-right"></i></button><p></p></form></div>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("subcompany-banner.html",
-    "<div ng-show=\"isSubcompanySelected && !inRVAFrame\"\n" +
-    "  class=\"common-header-alert sub-company-alert\">\n" +
-    "  You're in Sub-Company {{selectedCompanyName}}&nbsp;\n" +
-    "  <a href=\"\" ng-click=\"switchToMyCompany()\" class=\"link-button\">Switch to My Company</a>\n" +
-    "</div>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('subcompany-banner.html',
+    '<div ng-show="isSubcompanySelected && !inRVAFrame" class="common-header-alert sub-company-alert">You\'re in Sub-Company {{selectedCompanyName}}&nbsp; <a href="" ng-click="switchToMyCompany()" class="link-button">Switch to My Company</a></div>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("subcompany-modal.html",
-    "<div rv-spinner\n" +
-    "  rv-spinner-key=\"add-subcompany-modal\"\n" +
-    "  rv-spinner-start-active=\"1\">\n" +
-    "<div class=\"modal-header\">\n" +
-    "  <button type=\"button\" class=\"close\" ng-click=\"closeModal()\" aria-hidden=\"true\">\n" +
-    "    <i class=\"fa fa-times\"></i>\n" +
-    "  </button>\n" +
-    "  <h2 id=\"sub-company-label\" class=\"modal-title\">Add Sub-Company</h2>\n" +
-    "</div>\n" +
-    "<div class=\"modal-body add-subcompany-modal\" stop-event=\"touchend\">\n" +
-    "  <form role=\"form\" name=\"forms.companyForm\" novalidate>\n" +
-    "    <div ng-include=\"'company-fields.html'\"></div>\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <a href=\"\" data-dismiss=\"modal\" data-toggle=\"modal\" class=\"move-subcompany-button\"\n" +
-    "        ng-click=\"moveCompany()\">Move a Company Under Your Company</a>\n" +
-    "    </div>\n" +
-    "  </form>\n" +
-    "</div>\n" +
-    "<div class=\"modal-footer\">\n" +
-    "  <button type=\"button\"\n" +
-    "    class=\"btn btn-success btn-fixed-width add-subcompany-save-button\"\n" +
-    "    ng-click=\"save()\" ng-disabled=\"forms.companyForm.$invalid\">Save\n" +
-    "    <i class=\"fa fa-white fa-check icon-right\"></i>\n" +
-    "  </button>\n" +
-    "  <button type=\"button\" class=\"btn btn-default btn-fixed-width cancel-add-subcompany-button\" ng-click=\"closeModal()\">Cancel\n" +
-    "    <i class=\"fa fa-white fa-times icon-right\"></i>\n" +
-    "  </button>\n" +
-    "</div>\n" +
-    "</div>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('subcompany-modal.html',
+    '<div rv-spinner="" rv-spinner-key="add-subcompany-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="closeModal()" aria-hidden="true"><i class="fa fa-times"></i></button><h2 id="sub-company-label" class="modal-title">Add Sub-Company</h2></div><div class="modal-body add-subcompany-modal" stop-event="touchend"><form role="form" name="forms.companyForm" novalidate=""><div ng-include="\'company-fields.html\'"></div><div class="form-group"><a href="" data-dismiss="modal" data-toggle="modal" class="move-subcompany-button" ng-click="moveCompany()">Move a Company Under Your Company</a></div></form></div><div class="modal-footer"><button type="button" class="btn btn-success btn-fixed-width add-subcompany-save-button" ng-click="save()" ng-disabled="forms.companyForm.$invalid">Save <i class="fa fa-white fa-check icon-right"></i></button> <button type="button" class="btn btn-default btn-fixed-width cancel-add-subcompany-button" ng-click="closeModal()">Cancel <i class="fa fa-white fa-times icon-right"></i></button></div></div>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("system-messages-button-menu.html",
-    "<ul>\n" +
-    "  <li class=\"dropdown-header dropdown-title system-message\">\n" +
-    "    Notifications\n" +
-    "  </li>\n" +
-    "  <li class=\"divider\"></li>\n" +
-    "  <li class=\"system-message\"\n" +
-    "    ng-repeat=\"message in messages\"\n" +
-    "    ng-bind-html=\"renderHtml(message.text)\">\n" +
-    "  </li>\n" +
-    "</ul>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('system-messages-button-menu.html',
+    '<ul><li class="dropdown-header dropdown-title system-message">Notifications</li><li class="divider"></li><li class="system-message" ng-repeat="message in messages" ng-bind-html="renderHtml(message.text)"></li></ul>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("system-messages-button.html",
-    "<!-- Desktop and tablet -->\n" +
-    "<li dropdown class=\"dropdown system-messages hidden-xs\"\n" +
-    "ng-show=\"isRiseVisionUser && messages.length > 0\">\n" +
-    "  <a href=\"\" dropdown-toggle class=\"dropdown-toggle system-messages-button\">\n" +
-    "    <i class=\"fa fa-bell\"></i>\n" +
-    "    <span class=\"label label-danger system-messages-badge\">{{messages.length | surpressZero}}</span>\n" +
-    "  </a>\n" +
-    "  <div class=\"dropdown-menu system-messages system-message-list\" role=\"menu\">\n" +
-    "    <ng-include\n" +
-    "      src=\"'system-messages-button-menu.html'\"\n" +
-    "    ></ng-include>\n" +
-    "  </div>\n" +
-    "</li>\n" +
-    "\n" +
-    "<!-- Mobile -->\n" +
-    "<li\n" +
-    "  class=\"system-messages\"\n" +
-    "  ng-show=\"isRiseVisionUser  && messages.length > 0\"\n" +
-    "  ng-class=\"{'visible-xs-inline-block': isRiseVisionUser && messages.length > 0}\">\n" +
-    "    <a href=\"\"\n" +
-    "      class=\"system-messages-button\"\n" +
-    "      action-sheet=\"'system-messages-button-menu.html'\"\n" +
-    "      action-sheet-class=\"system-message-list\">\n" +
-    "        <i class=\"fa fa-bell\"></i>\n" +
-    "        <span class=\"label label-danger system-messages-badge\">{{messages.length}}</span>\n" +
-    "    </a>\n" +
-    "</li>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('system-messages-button.html',
+    '<li dropdown="" class="dropdown system-messages hidden-xs" ng-show="isRiseVisionUser && messages.length > 0"><a href="" dropdown-toggle="" class="dropdown-toggle system-messages-button"><i class="fa fa-bell"></i> <span class="label label-danger system-messages-badge">{{messages.length | surpressZero}}</span></a><div class="dropdown-menu system-messages system-message-list" role="menu"><ng-include src="\'system-messages-button-menu.html\'"></ng-include></div></li><li class="system-messages" ng-show="isRiseVisionUser && messages.length > 0" ng-class="{\'visible-xs-inline-block\': isRiseVisionUser && messages.length > 0}"><a href="" class="system-messages-button" action-sheet="\'system-messages-button-menu.html\'" action-sheet-class="system-message-list"><i class="fa fa-bell"></i> <span class="label label-danger system-messages-badge">{{messages.length}}</span></a></li>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("test-company-banner.html",
-    "<div ng-show=\"isTestCompanySelected\"\n" +
-    "  class=\"sub-company-alert test-company-alert\">\n" +
-    "  This is a Test Company\n" +
-    "</div>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('test-company-banner.html',
+    '<div ng-show="isTestCompanySelected" class="sub-company-alert test-company-alert">This is a Test Company</div>');
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("user-settings-modal.html",
-    "<div rv-spinner=\"spinnerOptions\"\n" +
-    "rv-spinner-key=\"user-settings-modal\"\n" +
-    "rv-spinner-start-active=\"1\">\n" +
-    "<div class=\"modal-header\">\n" +
-    "  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"closeModal()\">\n" +
-    "    <i class=\"fa fa-times\"></i>\n" +
-    "  </button>\n" +
-    "  <h2 id=\"user-settings-label\" class=\"modal-title\">\n" +
-    "  <span ng-if=\"!isAdd\">User Settings</span>\n" +
-    "  <span ng-if=\"isAdd\">Add User</span>\n" +
-    "  </h2>\n" +
-    "</div>\n" +
-    "<div class=\"modal-body user-settings-modal\" stop-event=\"touchend\">\n" +
-    "  <div ng-if=\"isAdd\" class=\"alert alert-info\">\n" +
-    "    A Google account is no longer required by users being added to your Company. Any email address can be used!\n" +
-    "  </div>\n" +
-    "  <form id=\"userSettingsForm\" role=\"form\" novalidate name=\"forms.userSettingsForm\">\n" +
-    "    <div id=\"passwordAlert\" class=\"animated\" ng-if=\"editingYourself && !isAdd\" ng-show=\"!isRiseAuthUser && showChangePassword\" ng-class=\"{ 'fadeIn': showChangePassword }\">\n" +
-    "      <div class=\"panel-body bg-info u_margin-sm-bottom\">\n" +
-    "        <p class=\"u_remove-bottom\">\n" +
-    "          <span>This account is authenticated by Google.<br/>\n" +
-    "          <a href=\"https://myaccount.google.com/security#signin\" target=\"_blank\">Change your password on your Google account.</a></span>\n" +
-    "        </p>\n" +
-    "      </div>\n" +
-    "    </div>\n" +
-    "    <div class=\"form-group\"\n" +
-    "      ng-class=\"{ 'has-error' : forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine }\"\n" +
-    "      ng-if=\"isAdd\">\n" +
-    "      <label>\n" +
-    "        Username *\n" +
-    "      </label>\n" +
-    "      <input id=\"user-settings-username\"\n" +
-    "        type=\"email\" required name=\"username\"\n" +
-    "        class=\"form-control\"\n" +
-    "        ng-model=\"user.username\"\n" +
-    "        />\n" +
-    "        <p ng-show=\"forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine\"\n" +
-    "          class=\"help-block validation-error-message-email\">User name must be a valid email address.</p>\n" +
-    "    </div>\n" +
-    "    <div class=\"row\" ng-if=\"!isAdd\">\n" +
-    "      <div class=\"col-xs-6\">\n" +
-    "        <div class=\"form-group\">\n" +
-    "          <label>\n" +
-    "            Username *\n" +
-    "          </label>\n" +
-    "          <div>\n" +
-    "            <span>{{user.username}}</span>\n" +
-    "          </div>\n" +
-    "        </div>\n" +
-    "      </div>\n" +
-    "      <div class=\"col-xs-6 text-right\">\n" +
-    "        <span ng-if=\"editingYourself\">\n" +
-    "          <a href=\"\" class=\"btn btn-default btn-sm change-password\" ng-click=\"toggleChangePassword()\">Change password</a>\n" +
-    "        </span>\n" +
-    "      </div>\n" +
-    "    </div>\n" +
-    "    <div id=\"passwordForm\" class=\"animated\" ng-if=\"editingYourself && !isAdd\" ng-show=\"isRiseAuthUser && showChangePassword\" ng-class=\"{ 'fadeIn': showChangePassword }\">\n" +
-    "      <div class=\"form-group\"\n" +
-    "           ng-class=\"{ 'has-error' : (userPassword.currentPassword === '' && !forms.userSettingsForm.currentPassword.$pristine) || currentPasswordNotValid }\">\n" +
-    "        <label for=\"user-settings-current-password\">\n" +
-    "          Current Password *\n" +
-    "        </label>\n" +
-    "        <input id=\"user-settings-current-password\"\n" +
-    "               type=\"password\" name=\"currentPassword\"\n" +
-    "               class=\"form-control\"\n" +
-    "               ng-model=\"userPassword.currentPassword\" />\n" +
-    "          <p ng-show=\"userPassword.currentPassword === '' && !forms.userSettingsForm.currentPassword.$pristine\"\n" +
-    "             class=\"help-block validation-error-message-email\">Current Password is required.</p>\n" +
-    "          <p ng-show=\"currentPasswordNotValid\"\n" +
-    "             class=\"help-block validation-error-message-mail\">Current Password is not valid.</p>\n" +
-    "      </div>\n" +
-    "      <div class=\"form-group\"\n" +
-    "           ng-class=\"{ 'has-error' : (userPassword.newPassword === '' && !forms.userSettingsForm.newPassword.$pristine) || newPasswordFormatNotValid }\">\n" +
-    "        <label for=\"user-settings-new-password\">\n" +
-    "          New Password *\n" +
-    "        </label>\n" +
-    "        <input id=\"user-settings-new-password\"\n" +
-    "               type=\"password\" name=\"newPassword\"\n" +
-    "               class=\"form-control\"\n" +
-    "               ng-model=\"userPassword.newPassword\" />\n" +
-    "          <p ng-show=\"userPassword.newPassword === '' && !forms.userSettingsForm.newPassword.$pristine\"\n" +
-    "             class=\"help-block validation-error-message-email\">New Password is required.</p>\n" +
-    "          <p ng-show=\"newPasswordFormatNotValid\"\n" +
-    "             class=\"help-block validation-error-message-mail\">New Password must be at least four characters long.</p>\n" +
-    "      </div>\n" +
-    "      <div class=\"form-group\"\n" +
-    "           ng-class=\"{ 'has-error' : (userPassword.confirmPassword === '' && !forms.userSettingsForm.confirmPassword.$pristine) || confirmPasswordDoesNotMatch }\">\n" +
-    "        <label for=\"user-settings-confirm-password\">\n" +
-    "          Confirm Password *\n" +
-    "        </label>\n" +
-    "        <input id=\"user-settings-confirm-password\"\n" +
-    "               type=\"password\" name=\"confirmPassword\"\n" +
-    "               class=\"form-control\"\n" +
-    "               ng-model=\"userPassword.confirmPassword\" />\n" +
-    "          <p ng-show=\"userPassword.confirmPassword === '' && !forms.userSettingsForm.confirmPassword.$pristine\"\n" +
-    "             class=\"help-block validation-error-message-email\">Confirm Password is required.</p>\n" +
-    "          <p ng-show=\"confirmPasswordDoesNotMatch\"\n" +
-    "             class=\"help-block validation-error-message-mail\">Confirm Password must match New Password.</p>\n" +
-    "          <hr />\n" +
-    "      </div>\n" +
-    "    </div>\n" +
-    "    <div class=\"form-group\"\n" +
-    "      ng-class=\"{ 'has-error' : forms.userSettingsForm.firstName.$invalid && !forms.userSettingsForm.firstName.$pristine }\">\n" +
-    "      <label for=\"user-settings-first-name\">\n" +
-    "        First Name *\n" +
-    "      </label>\n" +
-    "      <input id=\"user-settings-first-name\"\n" +
-    "        type=\"text\" required name=\"firstName\"\n" +
-    "        class=\"form-control\"\n" +
-    "        ng-model=\"user.firstName\"\n" +
-    "        />\n" +
-    "        <p ng-show=\"forms.userSettingsForm.firstName.$invalid && !forms.userSettingsForm.firstName.$pristine\"\n" +
-    "          class=\"help-block validation-error-message-firstName\">First Name is required.</p>\n" +
-    "    </div>\n" +
-    "    <div class=\"form-group\"\n" +
-    "      ng-class=\"{ 'has-error' : forms.userSettingsForm.lastName.$invalid && !forms.userSettingsForm.lastName.$pristine }\">\n" +
-    "      <label for=\"user-settings-last-name\">\n" +
-    "        Last Name *\n" +
-    "      </label>\n" +
-    "      <input id=\"user-settings-last-name\"\n" +
-    "        type=\"text\" required name=\"lastName\"\n" +
-    "        class=\"form-control\"\n" +
-    "        ng-model=\"user.lastName\"\n" +
-    "        />\n" +
-    "        <p ng-show=\"forms.userSettingsForm.lastName.$invalid && !forms.userSettingsForm.lastName.$pristine\"\n" +
-    "          class=\"help-block validation-error-message-lastName\">Last Name is required.</p>\n" +
-    "    </div>\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"company-role\">\n" +
-    "        Company Role\n" +
-    "      </label>\n" +
-    "      <select id=\"company-role\" class=\"form-control selectpicker\" ng-model=\"user.companyRole\">\n" +
-    "        <option value=\"\" ng-show=\"false\">&lt; Select Role &gt;</option>\n" +
-    "        <option ng-repeat=\"role in COMPANY_ROLE_FIELDS\" value=\"{{role[1]}}\">{{role[0]}}</option>\n" +
-    "      </select>\n" +
-    "    </div>\n" +
-    "\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"user-settings-phone\">\n" +
-    "        Phone\n" +
-    "      </label>\n" +
-    "      <input\n" +
-    "        id=\"user-settings-phone\"\n" +
-    "        type=\"tel\"\n" +
-    "        name=\"phone\"\n" +
-    "        class=\"form-control\"\n" +
-    "        ng-model=\"user.telephone\"\n" +
-    "         />\n" +
-    "    </div>\n" +
-    "    <div class=\"form-group\"\n" +
-    "      ng-class=\"{ 'has-error' : forms.userSettingsForm.email.$invalid && !forms.userSettingsForm.email.$pristine }\">\n" +
-    "      <label for=\"user-settings-email\">\n" +
-    "        Email *\n" +
-    "      </label>\n" +
-    "      <input\n" +
-    "        id=\"user-settings-email\"\n" +
-    "        type=\"email\" required name=\"email\"\n" +
-    "        class=\"form-control\"\n" +
-    "        ng-model=\"user.email\"\n" +
-    "        />\n" +
-    "        <p ng-show=\"forms.userSettingsForm.email.$invalid && !forms.userSettingsForm.email.$pristine\"\n" +
-    "          class=\"help-block validation-error-message-email\">A valid email address is required.</p>\n" +
-    "    </div>\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label>\n" +
-    "        Roles\n" +
-    "      </label>\n" +
-    "      <div class=\"checkbox\" ng-repeat=\"role in availableRoles\"\n" +
-    "        ng-show=\"editRoleVisible(role)\">\n" +
-    "        <label>\n" +
-    "          <input type=\"checkbox\"\n" +
-    "            id=\"user-settings-{{role.key}}\"\n" +
-    "            checklist-model=\"user.roles\"\n" +
-    "            ng-disabled=\"!editRoleAllowed(role)\"\n" +
-    "            checklist-value=\"role.key\"> {{role.name}}\n" +
-    "        </label>\n" +
-    "      </div>\n" +
-    "    </div>\n" +
-    "    <div class=\"form-group\" ng-if=\"user.lastLogin\">\n" +
-    "      <label>\n" +
-    "        Last Login\n" +
-    "      </label>\n" +
-    "      <div>{{user.lastLogin | date:'d-MMM-yyyy h:mm a'}}</div>\n" +
-    "    </div>\n" +
-    "    <div class=\"form-group\" ng-if=\"!editingYourself && !isAdd\">\n" +
-    "      <label for=\"user-settings-status\">\n" +
-    "        Status\n" +
-    "      </label>\n" +
-    "      <select id=\"user-settings-status\"\n" +
-    "        class=\"form-control selectpicker\" ng-model=\"user.status\" integer-parser>\n" +
-    "        <option value=\"1\">Active</option>\n" +
-    "        <option value=\"0\">Inactive</option>\n" +
-    "      </select>\n" +
-    "    </div>\n" +
-    "  </form>\n" +
-    "</div>\n" +
-    "<div class=\"modal-footer\">\n" +
-    "  <p class=\"text-right\"><last-modified change-date=\"user.changeDate\" changed-by=\"user.changedBy\"></last-modified></p>\n" +
-    "  <button type=\"button\" id=\"delete-button\" class=\"btn btn-danger btn-fixed-width pull-left\"\n" +
-    "    ng-if=\"!isAdd\" ng-click=\"deleteUser()\">\n" +
-    "    Delete <i class=\"fa fa-white fa-trash-o icon-right\"></i>\n" +
-    "  </button>\n" +
-    "  <div class=\"pull-right\">\n" +
-    "    <button type=\"button\"\n" +
-    "      class=\"btn btn-primary btn-fixed-width\"\n" +
-    "      data-dismiss=\"modal\"\n" +
-    "      ng-click=\"save()\" id=\"save-button\">\n" +
-    "      Save <i class=\"fa fa-white fa-check icon-right\"></i>\n" +
-    "    </button>\n" +
-    "    <button type=\"button\" class=\"btn btn-default btn-fixed-width\" ng-click=\"closeModal()\">\n" +
-    "      Cancel <i class=\"fa fa-white fa-times icon-right\"></i>\n" +
-    "    </button>\n" +
-    "  </div>\n" +
-    "</div>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('user-settings-modal.html',
+    '<div rv-spinner="spinnerOptions" rv-spinner-key="user-settings-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 id="user-settings-label" class="modal-title"><span ng-if="!isAdd">User Settings</span> <span ng-if="isAdd">Add User</span></h2></div><div class="modal-body user-settings-modal" stop-event="touchend"><div ng-if="isAdd" class="alert alert-info">A Google account is no longer required by users being added to your Company. Any email address can be used!</div><form id="userSettingsForm" role="form" novalidate="" name="forms.userSettingsForm"><div id="passwordAlert" class="animated" ng-if="editingYourself && !isAdd" ng-show="!isRiseAuthUser && showChangePassword" ng-class="{ \'fadeIn\': showChangePassword }"><div class="panel-body bg-info u_margin-sm-bottom"><p class="u_remove-bottom"><span>This account is authenticated by Google.<br><a href="https://myaccount.google.com/security#signin" target="_blank">Change your password on your Google account.</a></span></p></div></div><div class="form-group" ng-class="{ \'has-error\' : forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine }" ng-if="isAdd"><label>Username *</label> <input id="user-settings-username" type="email" required="" name="username" class="form-control" ng-model="user.username"><p ng-show="forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine" class="help-block validation-error-message-email">User name must be a valid email address.</p></div><div class="row" ng-if="!isAdd"><div class="col-xs-6"><div class="form-group"><label>Username *</label><div><span>{{user.username}}</span></div></div></div><div class="col-xs-6 text-right"><span ng-if="editingYourself"><a href="" class="btn btn-default btn-sm change-password" ng-click="toggleChangePassword()">Change password</a></span></div></div><div id="passwordForm" class="animated" ng-if="editingYourself && !isAdd" ng-show="isRiseAuthUser && showChangePassword" ng-class="{ \'fadeIn\': showChangePassword }"><div class="form-group" ng-class="{ \'has-error\' : (userPassword.currentPassword === \'\' && !forms.userSettingsForm.currentPassword.$pristine) || currentPasswordNotValid }"><label for="user-settings-current-password">Current Password *</label> <input id="user-settings-current-password" type="password" name="currentPassword" class="form-control" ng-model="userPassword.currentPassword"><p ng-show="userPassword.currentPassword === \'\' && !forms.userSettingsForm.currentPassword.$pristine" class="help-block validation-error-message-email">Current Password is required.</p><p ng-show="currentPasswordNotValid" class="help-block validation-error-message-mail">Current Password is not valid.</p></div><div class="form-group" ng-class="{ \'has-error\' : (userPassword.newPassword === \'\' && !forms.userSettingsForm.newPassword.$pristine) || newPasswordFormatNotValid }"><label for="user-settings-new-password">New Password *</label> <input id="user-settings-new-password" type="password" name="newPassword" class="form-control" ng-model="userPassword.newPassword"><p ng-show="userPassword.newPassword === \'\' && !forms.userSettingsForm.newPassword.$pristine" class="help-block validation-error-message-email">New Password is required.</p><p ng-show="newPasswordFormatNotValid" class="help-block validation-error-message-mail">New Password must be at least four characters long.</p></div><div class="form-group" ng-class="{ \'has-error\' : (userPassword.confirmPassword === \'\' && !forms.userSettingsForm.confirmPassword.$pristine) || confirmPasswordDoesNotMatch }"><label for="user-settings-confirm-password">Confirm Password *</label> <input id="user-settings-confirm-password" type="password" name="confirmPassword" class="form-control" ng-model="userPassword.confirmPassword"><p ng-show="userPassword.confirmPassword === \'\' && !forms.userSettingsForm.confirmPassword.$pristine" class="help-block validation-error-message-email">Confirm Password is required.</p><p ng-show="confirmPasswordDoesNotMatch" class="help-block validation-error-message-mail">Confirm Password must match New Password.</p><hr></div></div><div class="form-group" ng-class="{ \'has-error\' : forms.userSettingsForm.firstName.$invalid && !forms.userSettingsForm.firstName.$pristine }"><label for="user-settings-first-name">First Name *</label> <input id="user-settings-first-name" type="text" required="" name="firstName" class="form-control" ng-model="user.firstName"><p ng-show="forms.userSettingsForm.firstName.$invalid && !forms.userSettingsForm.firstName.$pristine" class="help-block validation-error-message-firstName">First Name is required.</p></div><div class="form-group" ng-class="{ \'has-error\' : forms.userSettingsForm.lastName.$invalid && !forms.userSettingsForm.lastName.$pristine }"><label for="user-settings-last-name">Last Name *</label> <input id="user-settings-last-name" type="text" required="" name="lastName" class="form-control" ng-model="user.lastName"><p ng-show="forms.userSettingsForm.lastName.$invalid && !forms.userSettingsForm.lastName.$pristine" class="help-block validation-error-message-lastName">Last Name is required.</p></div><div class="form-group"><label for="company-role">Company Role</label><select id="company-role" class="form-control selectpicker" ng-model="user.companyRole"><option value="" ng-show="false">&lt; Select Role &gt;</option><option ng-repeat="role in COMPANY_ROLE_FIELDS" value="{{role[1]}}">{{role[0]}}</option></select></div><div class="form-group"><label for="user-settings-phone">Phone</label> <input id="user-settings-phone" type="tel" name="phone" class="form-control" ng-model="user.telephone"></div><div class="form-group" ng-class="{ \'has-error\' : forms.userSettingsForm.email.$invalid && !forms.userSettingsForm.email.$pristine }"><label for="user-settings-email">Email *</label> <input id="user-settings-email" type="email" required="" name="email" class="form-control" ng-model="user.email"><p ng-show="forms.userSettingsForm.email.$invalid && !forms.userSettingsForm.email.$pristine" class="help-block validation-error-message-email">A valid email address is required.</p></div><div class="form-group"><label>Roles</label><div class="checkbox" ng-repeat="role in availableRoles" ng-show="editRoleVisible(role)"><label><input type="checkbox" id="user-settings-{{role.key}}" checklist-model="user.roles" ng-disabled="!editRoleAllowed(role)" checklist-value="role.key"> {{role.name}}</label></div></div><div class="form-group" ng-if="user.lastLogin"><label>Last Login</label><div>{{user.lastLogin | date:\'d-MMM-yyyy h:mm a\'}}</div></div><div class="form-group" ng-if="!editingYourself && !isAdd"><label for="user-settings-status">Status</label><select id="user-settings-status" class="form-control selectpicker" ng-model="user.status" integer-parser=""><option value="1">Active</option><option value="0">Inactive</option></select></div></form></div><div class="modal-footer"><p class="text-right"><last-modified change-date="user.changeDate" changed-by="user.changedBy"></last-modified></p><button type="button" id="delete-button" class="btn btn-danger btn-fixed-width pull-left" ng-if="!isAdd" ng-click="deleteUser()">Delete <i class="fa fa-white fa-trash-o icon-right"></i></button><div class="pull-right"><button type="button" class="btn btn-primary btn-fixed-width" data-dismiss="modal" ng-click="save()" id="save-button">Save <i class="fa fa-white fa-check icon-right"></i></button> <button type="button" class="btn btn-default btn-fixed-width" ng-click="closeModal()">Cancel <i class="fa fa-white fa-times icon-right"></i></button></div></div></div>');
 }]);
 })();
 
