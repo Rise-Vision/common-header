@@ -1,5 +1,5 @@
-'use strict';
-describe('service: timelineDescription ', function() {
+"use strict";
+describe("service: timelineDescription ", function() {
   beforeEach(module("risevision.common.components.timeline.services"));
   var timelineDescription, timeline;
 
@@ -7,18 +7,18 @@ describe('service: timelineDescription ', function() {
     timeline = {};
 
     inject(function($injector){
-      timelineDescription = $injector.get('timelineDescription');
+      timelineDescription = $injector.get("timelineDescription");
     });
   });
   
-  it('should exist',function(){
+  it("should exist",function(){
     expect(timelineDescription).to.be.truely;
 
-    expect(timelineDescription.updateLabel).to.be.a('function');
+    expect(timelineDescription.updateLabel).to.be.a("function");
 
   });
 
-  it('should have a label with startDate',function(){
+  it("should have a label with startDate",function(){
     var timeline = {
       startDate: "10/08/2015",
       allDay :  true
@@ -26,10 +26,10 @@ describe('service: timelineDescription ', function() {
 
     var label = timelineDescription.updateLabel(timeline);
 
-    expect(label).to.equal('08-Oct-2015 ');
+    expect(label).to.equal("08-Oct-2015 ");
   });
 
-  it('should have a label with startDate, endDate',function(){
+  it("should have a label with startDate, endDate",function(){
     var timeline = {
       startDate: "10/08/2015",
       endDate: "11/20/2015",
@@ -38,10 +38,10 @@ describe('service: timelineDescription ', function() {
 
     var label = timelineDescription.updateLabel(timeline);
 
-    expect(label).to.equal('08-Oct-2015 to 20-Nov-2015 ');
+    expect(label).to.equal("08-Oct-2015 to 20-Nov-2015 ");
   });
 
-  it('should have a label with startDate, endDate, startTime and endTime',function(){
+  it("should have a label with startDate, endDate, startTime and endTime",function(){
     var timeline = {
       startDate: "10/08/2015",
       endDate: "11/20/2015",
@@ -52,10 +52,10 @@ describe('service: timelineDescription ', function() {
 
     var label = timelineDescription.updateLabel(timeline);
 
-    expect(label).to.equal('08-Oct-2015 to 20-Nov-2015 10:55 AM to 06:24 PM ');
+    expect(label).to.equal("08-Oct-2015 to 20-Nov-2015 10:55 AM to 06:24 PM ");
   });
 
-  it('should have a label with Every Day, startTime and endTime',function(){
+  it("should have a label with Every Day, startTime and endTime",function(){
     var timeline = {
       startTime: "8/6/2015 10:55:00 AM",
       endTime: "8/6/2015 06:24:00 PM",
@@ -64,10 +64,10 @@ describe('service: timelineDescription ', function() {
 
     var label = timelineDescription.updateLabel(timeline);
 
-    expect(label).to.equal('10:55 AM to 06:24 PM ');
+    expect(label).to.equal("10:55 AM to 06:24 PM ");
   });
 
-  it('should have a label with Daily recurrence',function(){
+  it("should have a label with Daily recurrence",function(){
     var timeline = {
       allDay :  true,
       recurrenceType : "Daily",
@@ -76,10 +76,10 @@ describe('service: timelineDescription ', function() {
 
     var label = timelineDescription.updateLabel(timeline);
 
-    expect(label).to.equal('Daily Every 1 Day(s) ');
+    expect(label).to.equal("Daily Every 1 Day(s) ");
   });
 
-  it('should have a label with Weekly recurrence without days of the week',function(){
+  it("should have a label with Weekly recurrence without days of the week",function(){
     var timeline = {
       allDay :  true,
       recurrenceType : "Weekly",
@@ -88,23 +88,23 @@ describe('service: timelineDescription ', function() {
 
     var label = timelineDescription.updateLabel(timeline);
 
-    expect(label).to.equal('Weekly Every 5 Week(s) ');
+    expect(label).to.equal("Weekly Every 5 Week(s) ");
   });
 
-  it('should have a label with Weekly recurrence with days of the week',function(){
+  it("should have a label with Weekly recurrence with days of the week",function(){
     var timeline = {
       allDay :  true,
       recurrenceType : "Weekly",
       recurrenceFrequency : 5,
-      recurrenceDaysOfWeek : ['Tue', 'Sun']
+      recurrenceDaysOfWeek : ["Tue", "Sun"]
     };
 
     var label = timelineDescription.updateLabel(timeline);
 
-    expect(label).to.equal('Weekly Every 5 Week(s) Tuesday Sunday ');
+    expect(label).to.equal("Weekly Every 5 Week(s) Tuesday Sunday ");
   });
 
-  it('should have a label with Monthly recurrence absolute',function(){
+  it("should have a label with Monthly recurrence absolute",function(){
     var timeline = {
       allDay :  true,
       recurrenceType : "Monthly",
@@ -115,10 +115,10 @@ describe('service: timelineDescription ', function() {
 
     var label = timelineDescription.updateLabel(timeline);
 
-    expect(label).to.equal('Monthly Day 4 Of Every 8 Month(s) ');
+    expect(label).to.equal("Monthly Day 4 Of Every 8 Month(s) ");
   });
 
-  it('should have a label with Monthly recurrence relative',function(){
+  it("should have a label with Monthly recurrence relative",function(){
     var timeline = {
       allDay :  true,
       recurrenceType : "Monthly",
@@ -131,10 +131,10 @@ describe('service: timelineDescription ', function() {
 
     var label = timelineDescription.updateLabel(timeline);
 
-    expect(label).to.equal('Monthly Third Friday Of Every 3 Month(s) ');
+    expect(label).to.equal("Monthly Third Friday Of Every 3 Month(s) ");
   });
 
-  it('should have a label with Yearly recurrence absolute',function(){
+  it("should have a label with Yearly recurrence absolute",function(){
     var timeline = {
       allDay :  true,
       recurrenceType : "Yearly",
@@ -145,10 +145,10 @@ describe('service: timelineDescription ', function() {
 
     var label = timelineDescription.updateLabel(timeline);
 
-    expect(label).to.equal('Yearly Every July 16 ');
+    expect(label).to.equal("Yearly Every July 16 ");
   });
 
-  it('should have a label with Yearly recurrence relative',function(){
+  it("should have a label with Yearly recurrence relative",function(){
     var timeline = {
       allDay :  true,
       recurrenceType : "Yearly",
@@ -161,7 +161,7 @@ describe('service: timelineDescription ', function() {
 
     var label = timelineDescription.updateLabel(timeline);
 
-    expect(label).to.equal('Yearly Every Second Friday Of July ');
+    expect(label).to.equal("Yearly Every Second Friday Of July ");
   });
 
 });

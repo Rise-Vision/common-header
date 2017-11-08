@@ -1,5 +1,3 @@
-/*jshint expr:true */
-
 describe("Services: Core System Messages", function() {
 
   beforeEach(module("risevision.core.systemmessages"));

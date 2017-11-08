@@ -13,7 +13,7 @@ describe("app:", function() {
     });
   });
 
-  var $state, $rootScope, $templateCache, urlStateService;
+  var $state, $rootScope, urlStateService;
 
   describe("states: ", function() {
 
@@ -49,7 +49,7 @@ describe("app:", function() {
   describe("listeners: ", function() {
     it("should register", function() {
       expect($rootScope.$$listeners["risevision.user.authorized"]).to.be.ok;
-      expect($rootScope.$$listeners["$stateChangeStart"]).to.be.ok;
+      expect($rootScope.$$listeners.$stateChangeStart).to.be.ok;
     });
 
     describe("common.auth.unauthorized", function() {
@@ -133,7 +133,7 @@ describe("app:", function() {
         $state.go.should.not.have.been.called;
       });
 
-      it("should not redirect if existing state isn't there", function() {
+      it("should not redirect if existing state isnt there", function() {
         $rootScope.$broadcast("$stateChangeStart", {
           name: "common.auth.unregistered"
         }, {}, null, {});

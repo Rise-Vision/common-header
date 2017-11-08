@@ -1,10 +1,8 @@
 /*jshint expr:true */
-/*global gapi*/
+
 "use strict";
 
 describe("Services: urlStateService", function() {
-  var path = "";
-
   beforeEach(module("risevision.common.components.userstate"));
 
   beforeEach(module(function ($provide) {

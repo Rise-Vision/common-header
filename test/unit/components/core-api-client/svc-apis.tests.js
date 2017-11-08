@@ -43,11 +43,11 @@ describe("Module: risevision.common.apis", function() {
     var listApis;
     beforeEach(function(){
         inject(function($injector){
-            listApis = $injector.get('listApis');
+            listApis = $injector.get("listApis");
         });
     });
 
-    it('should exist',function(){
+    it("should exist",function(){
         expect(listApis).to.be.ok;
     });
 
@@ -63,17 +63,17 @@ describe("Module: risevision.common.apis", function() {
     var getRest;
     beforeEach(function(){
         inject(function($injector){
-            getRest = $injector.get('getRest');
+            getRest = $injector.get("getRest");
         });
     });
 
-    it('should exist',function(){
+    it("should exist",function(){
         expect(getRest).to.be.ok;
     });
 
     it("Should retrieve the description of a particular version of an api.", function(done) {
-        var api = "core"
-        var version = "v0"
+        var api = "core";
+        var version = "v0";
         getRest(api,version).then(function(result){
             expect(result).to.deep.equal(rvFixtures.api);
             done();

@@ -1,4 +1,3 @@
-/*jshint expr:true */
 "use strict";
 
 describe("filter: username", function() {

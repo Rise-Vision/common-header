@@ -39,7 +39,7 @@ describe("controller: Google Result", function() {
       urlStateService.redirectToState.should.have.been.calledWith("currentState");
     });
     
-  })
+  });
 
   describe("blank state: ", function() {
     beforeEach(function () {

@@ -1,7 +1,6 @@
 "use strict";
 describe("directive: svg-icon", function() {
-  var element,
-      $rootScope;
+  var element;
 
   beforeEach(module("risevision.common.components.svg"));
 
@@ -13,7 +12,7 @@ describe("directive: svg-icon", function() {
 
   it("should initialize icons list", function(done) {
     inject(function($injector){
-      var iconsList = $injector.get('iconsList');
+      var iconsList = $injector.get("iconsList");
       
       expect(iconsList).to.be.ok;
       expect(iconsList.icons1).to.be.ok;
@@ -24,7 +23,7 @@ describe("directive: svg-icon", function() {
       
       done();
     });
-  })
+  });
 
   it("Replaces the element with the appropriate content", function() {
     expect(element.html()).to.contain("<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\">");

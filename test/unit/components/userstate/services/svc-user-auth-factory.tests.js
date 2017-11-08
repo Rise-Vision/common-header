@@ -1,5 +1,5 @@
 /*jshint expr:true */
-/*global gapi*/
+
 "use strict";
 
 describe("Services: userAuthFactory", function() {
@@ -196,7 +196,7 @@ describe("Services: userAuthFactory", function() {
     
     describe("customAuthFactory", function() {
       it("should call factory when credentials are provided", function(done) {
-        var credentials = {username: ""}
+        var credentials = {username: ""};
         userAuthFactory.authenticate(true, credentials);
 
         setTimeout(function() {

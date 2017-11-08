@@ -44,7 +44,7 @@ describe("controller: Confirm Account", function() {
         });
 
         $scope.$digest();
-      }
+      };
     });
   });
 

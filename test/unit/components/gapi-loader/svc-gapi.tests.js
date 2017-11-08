@@ -9,7 +9,7 @@ describe("Services: gapi loader", function() {
     $provide.service("$q", function() {return Q;});
     $provide.value("CORE_URL", "");
     $provide.value("MONITORING_SERVICE_URL", "");
-    $provide.value("STORAGE_ENDPOINT_URL", "")
+    $provide.value("STORAGE_ENDPOINT_URL", "");
     window.gapiSrc = "test/unit/gapi-loader/gapi-mock.js";
   }));
   

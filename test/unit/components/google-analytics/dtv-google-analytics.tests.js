@@ -1,7 +1,7 @@
 /**
  * Created by rodrigopavezi on 11/28/14.
  */
-describe('Unit testing angular google analytics', function() {
+describe("Unit testing angular google analytics", function() {
   var $compile, $rootScope;
 
   // Load the myApp module, which contains the directive
@@ -15,12 +15,12 @@ describe('Unit testing angular google analytics', function() {
     $rootScope = _$rootScope_;
   }));
 
-  it('should create an element with analyticsAccountId set on the scope', function() {
+  it("should create an element with analyticsAccountId set on the scope", function() {
     // Compile a piece of HTML containing the directive
     var element = $compile("<analytics analytics-account-id=\"'UA-82239-1'\"></analytics>")($rootScope);
     // fire all the watches, so the scope expression will be evaluated
     $rootScope.$digest();
     // Check that the compiled element contains the analyticsAccountId content
-    assert.equal(element.isolateScope().analyticsAccountId, "UA-82239-1", 'analyticsAccountId == UA-82239-1');
+    assert.equal(element.isolateScope().analyticsAccountId, "UA-82239-1", "analyticsAccountId == UA-82239-1");
   });
 });

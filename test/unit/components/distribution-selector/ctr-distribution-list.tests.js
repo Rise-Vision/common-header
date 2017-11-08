@@ -1,31 +1,31 @@
-'use strict';
-describe('controller: Distribution List', function() {
+"use strict";
+describe("controller: Distribution List", function() {
   beforeEach(module("risevision.common.components.distribution-selector"));
   beforeEach(module("risevision.common.components.distribution-selector.services"));
   beforeEach(module(function ($provide) {
-    $provide.service('displayService',function(){
+    $provide.service("displayService",function(){
       return {
-        list : function(search, cursor){
+        list : function(){
           apiCount++;
           var deferred = Q.defer();
           if(returnPresentations){
             deferred.resolve(result);
           }else{
-            deferred.reject('ERROR; could not retrieve list');
+            deferred.reject("ERROR; could not retrieve list");
           }
           return deferred.promise;
         }
-      }
+      };
     });
-    $provide.service('$loading',function(){
+    $provide.service("$loading",function(){
       return {
-        start : function(spinnerKeys){
+        start : function(){
           return;
         },
-        stop : function(spinnerKeys){
+        stop : function(){
           return;
         }
-      }
+      };
     });
   }));
   var $scope, $broadcastSpy, returnPresentations, apiCount, result, $loading,$loadingStartSpy, $loadingStopSpy, rootScope;
@@ -33,7 +33,7 @@ describe('controller: Distribution List', function() {
 
     result = {
       items: [],
-      cursor: 'asdf'
+      cursor: "asdf"
     };
     for (var i = 1; i <= 40; i++) {
       result.items.push(i);
@@ -49,14 +49,14 @@ describe('controller: Distribution List', function() {
       $scope.parameters = {};
       $scope.parameters.distribution = [];
 
-      $broadcastSpy = sinon.spy($rootScope, '$broadcast');
-      $loading = $injector.get('$loading');
-      $loadingStartSpy = sinon.spy($loading, 'start');
-      $loadingStopSpy = sinon.spy($loading, 'stop');
-      $controller('distributionListController', {
+      $broadcastSpy = sinon.spy($rootScope, "$broadcast");
+      $loading = $injector.get("$loading");
+      $loadingStartSpy = sinon.spy($loading, "start");
+      $loadingStopSpy = sinon.spy($loading, "stop");
+      $controller("distributionListController", {
         $scope : $scope,
         $rootScope: $rootScope,
-        displayService: $injector.get('displayService'),
+        displayService: $injector.get("displayService"),
 
         $loading: $loading
       });
@@ -75,34 +75,34 @@ describe('controller: Distribution List', function() {
   });
 
 
-  it('should exist',function(){
+  it("should exist",function(){
     expect($scope).to.be.truely;
 
-    expect($scope.toggleDisplay).to.be.a('function');
-    expect($scope.isSelected).to.be.a('function');
+    expect($scope.toggleDisplay).to.be.a("function");
+    expect($scope.isSelected).to.be.a("function");
 
-    expect($scope.sortBy).to.be.a('function');
-    expect($scope.doSearch).to.be.a('function');
-    expect($scope.load).to.be.a('function');
+    expect($scope.sortBy).to.be.a("function");
+    expect($scope.doSearch).to.be.a("function");
+    expect($scope.load).to.be.a("function");
   });
 
-  it('should init the scope objects',function(){
+  it("should init the scope objects",function(){
     expect($scope.displays).to.be.truely;
-    expect($scope.displays).to.have.property('list');
-    expect($scope.displays).to.have.property('add');
-    expect($scope.displays).to.have.property('clear');
-    expect($scope.displays).to.have.property('endOfList');
+    expect($scope.displays).to.have.property("list");
+    expect($scope.displays).to.have.property("add");
+    expect($scope.displays).to.have.property("clear");
+    expect($scope.displays).to.have.property("endOfList");
 
     expect($scope.search).to.be.truely;
-    expect($scope.search).to.have.property('sortBy');
-    expect($scope.search).to.have.property('count');
-    expect($scope.search).to.have.property('reverse');
+    expect($scope.search).to.have.property("sortBy");
+    expect($scope.search).to.have.property("count");
+    expect($scope.search).to.have.property("reverse");
 
-    expect($scope.parameters.distribution).to.be.an('array');
+    expect($scope.parameters.distribution).to.be.an("array");
   });
 
 
-  it('should load the list',function(){
+  it("should load the list",function(){
     expect($scope.loadingDisplays).to.be.false;
     expect($scope.displays).to.be.truely;
     expect($scope.displays.list).to.have.length(40);
@@ -112,11 +112,11 @@ describe('controller: Distribution List', function() {
   });
 
 
-  describe('list functions: ',function(){
+  describe("list functions: ",function(){
     returnPresentations = true;
 
-    describe('load: ',function(){
-      it('should re-load if there are more items',function(done){
+    describe("load: ",function(){
+      it("should re-load if there are more items",function(done){
         result = {
           items: [21]
         };
@@ -124,7 +124,7 @@ describe('controller: Distribution List', function() {
         $scope.$digest();
 
         expect($scope.loadingDisplays).to.be.true;
-        $loadingStartSpy.should.have.been.calledWith('display-list-loader');
+        $loadingStartSpy.should.have.been.calledWith("display-list-loader");
         setTimeout(function(){
           expect($scope.loadingDisplays).to.be.false;
           expect($scope.error).to.not.be.ok;
@@ -134,12 +134,12 @@ describe('controller: Distribution List', function() {
           expect($scope.displays.cursor).to.not.be.truely;
           expect($scope.displays.endOfList).to.be.true;
           $scope.$digest();
-          $loadingStopSpy.should.have.been.calledWith('display-list-loader');
+          $loadingStopSpy.should.have.been.calledWith("display-list-loader");
           done();
         },10);
       });
 
-      it('should not re-load if there are no more items',function(done){
+      it("should not re-load if there are no more items",function(done){
         result = {
           items: [41]
         };
@@ -157,9 +157,9 @@ describe('controller: Distribution List', function() {
       });
     });
 
-    describe('sortBy: ',function(){
-      it('should reset list and reverse sort by changeDate',function(done){
-        $scope.sortBy('name');
+    describe("sortBy: ",function(){
+      it("should reset list and reverse sort by changeDate",function(done){
+        $scope.sortBy("name");
         $scope.$digest();
 
         expect($scope.loadingDisplays).to.be.true;
@@ -170,7 +170,7 @@ describe('controller: Distribution List', function() {
 
           expect($scope.displays.list).to.have.length(40);
 
-          expect($scope.search.sortBy).to.equal('name');
+          expect($scope.search.sortBy).to.equal("name");
           expect($scope.search.reverse).to.be.true;
 
           done();
@@ -178,8 +178,8 @@ describe('controller: Distribution List', function() {
 
       });
 
-      it('should reset list and sort by name',function(done){
-        $scope.sortBy('name');
+      it("should reset list and sort by name",function(done){
+        $scope.sortBy("name");
         $scope.$digest();
 
         expect($scope.loadingDisplays).to.be.true;
@@ -190,7 +190,7 @@ describe('controller: Distribution List', function() {
 
           expect($scope.displays.list).to.have.length(40);
 
-          expect($scope.search.sortBy).to.equal('name');
+          expect($scope.search.sortBy).to.equal("name");
           expect($scope.search.reverse).to.be.true;
 
           done();
@@ -198,7 +198,7 @@ describe('controller: Distribution List', function() {
       });
     });
 
-    it('should reset list and doSearch',function(done){
+    it("should reset list and doSearch",function(done){
       $scope.doSearch();
       $scope.$digest();
 
@@ -210,14 +210,14 @@ describe('controller: Distribution List', function() {
 
         expect($scope.displays.list).to.have.length(40);
 
-        expect($scope.search.sortBy).to.equal('name');
+        expect($scope.search.sortBy).to.equal("name");
         expect($scope.search.reverse).to.be.false;
 
         done();
       },10);
     });
 
-    it('should set error if list fails to load',function(done){
+    it("should set error if list fails to load",function(done){
       returnPresentations = false;
       $scope.doSearch();
       $scope.$digest();
@@ -233,32 +233,32 @@ describe('controller: Distribution List', function() {
       },10);
     });
 
-    it('should add display to distribution',function(done){
-      $scope.toggleDisplay('displayId');
+    it("should add display to distribution",function(done){
+      $scope.toggleDisplay("displayId");
       $scope.$digest();
 
       setTimeout(function(){
-        expect($scope.parameters.distribution).to.contain('displayId');
+        expect($scope.parameters.distribution).to.contain("displayId");
 
         done();
       },10);
     });
 
-    it('should remove display from distribution if it was there before',function(done){
-      $scope.toggleDisplay('displayId');
-      $scope.toggleDisplay('displayId');
+    it("should remove display from distribution if it was there before",function(done){
+      $scope.toggleDisplay("displayId");
+      $scope.toggleDisplay("displayId");
       $scope.$digest();
 
       setTimeout(function(){
-        expect($scope.parameters.distribution).to.not.contain('displayId');
+        expect($scope.parameters.distribution).to.not.contain("displayId");
 
         done();
       },10);
     });
 
-    it('should return true if a display is already on the distribution',function(done){
-      $scope.toggleDisplay('displayId');
-      var actual = $scope.isSelected('displayId');
+    it("should return true if a display is already on the distribution",function(done){
+      $scope.toggleDisplay("displayId");
+      var actual = $scope.isSelected("displayId");
       $scope.$digest();
 
       setTimeout(function(){
@@ -268,8 +268,8 @@ describe('controller: Distribution List', function() {
       },10);
     });
 
-    it('should return false if a display is not on the distribution',function(done){
-      var actual = $scope.isSelected('displayId');
+    it("should return false if a display is not on the distribution",function(done){
+      var actual = $scope.isSelected("displayId");
       $scope.$digest();
 
       setTimeout(function(){
@@ -279,16 +279,16 @@ describe('controller: Distribution List', function() {
       },10);
     });
 
-    it('should broadcast event on addDisplay()',function(){
+    it("should broadcast event on addDisplay()",function(){
       $scope.addDisplay();
 
       $broadcastSpy.should.have.been.calledWith("distributionSelector.addDisplay");
     });
 
-    it('should reload list when a new display is created',function(){
-      var spy = sinon.spy($scope,'load');
+    it("should reload list when a new display is created",function(){
+      var spy = sinon.spy($scope,"load");
 
-      rootScope.$broadcast('displayCreated');
+      rootScope.$broadcast("displayCreated");
 
       $scope.$apply();
       spy.should.have.been.called;

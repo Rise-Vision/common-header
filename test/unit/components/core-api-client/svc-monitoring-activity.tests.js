@@ -34,17 +34,17 @@ describe("Module: risevision.common.monitoring.activity", function() {
     var getActivity;
     beforeEach(function(){
         inject(function($injector){
-            getActivity = $injector.get('getActivity');
+            getActivity = $injector.get("getActivity");
         });
     });
 
-    it('should exist',function(){
+    it("should exist",function(){
         expect(getActivity).to.be.ok;
     });
 
     it("Should retrieve the activity of a particular app.", function(done) {
-        var clientId = "xxxxxxx"
-        var api = "CoreAPIv0"
+        var clientId = "xxxxxxx";
+        var api = "CoreAPIv0";
         getActivity(clientId,api).then(function(result){
             expect(result).to.deep.equal(rvFixtures.activity.result);
             done();

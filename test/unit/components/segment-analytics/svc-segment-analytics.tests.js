@@ -67,7 +67,7 @@ describe("Services: segment analytics", function() {
     analyticsEvents.identify();
     
     setTimeout(function() {
-      identifySpy.should.have.been.calledWith('username',{
+      identifySpy.should.have.been.calledWith("username",{
         company: { id: "companyId", name: "companyName" },
         companyId: "companyId",
         companyName: "companyName",
@@ -86,7 +86,7 @@ describe("Services: segment analytics", function() {
     $scope.$digest();
     
     setTimeout(function() {
-      identifySpy.should.have.been.calledWith('username',{
+      identifySpy.should.have.been.calledWith("username",{
         company: { id: "companyId", name: "companyName" },
         companyId: "companyId",
         companyName: "companyName",
@@ -107,7 +107,7 @@ describe("Services: segment analytics", function() {
     $scope.$digest();
     
     setTimeout(function() {
-      identifySpy.should.have.been.calledWith('username',{
+      identifySpy.should.have.been.calledWith("username",{
         email: undefined,
         firstName: "",
         lastName: ""

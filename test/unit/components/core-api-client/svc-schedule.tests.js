@@ -29,17 +29,17 @@ describe("Services: Schedules Core API Service", function() {
   var scheduleService;
   beforeEach(function(){
     inject(function($injector){
-      scheduleService = $injector.get('scheduleService');
+      scheduleService = $injector.get("scheduleService");
     });
   });
 
-  it('should exist',function(){
+  it("should exist",function(){
     expect(scheduleService).to.be.truely;
     expect(scheduleService.list).to.be.a.function;
   });
 
-  describe('list',function(){
-    it('should query the company\'s list of schedules',function(done){
+  describe("list",function(){
+    it("should query the company's list of schedules",function(done){
       scheduleService.list()
       .then(function(result){
         expect(result).to.be.truely;
@@ -50,4 +50,3 @@ describe("Services: Schedules Core API Service", function() {
     });
   });
 });
-

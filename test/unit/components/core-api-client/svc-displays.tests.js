@@ -29,17 +29,17 @@ describe("Services: Display Core API Service", function() {
   var displayService;
   beforeEach(function(){
     inject(function($injector){
-      displayService = $injector.get('displayService');
+      displayService = $injector.get("displayService");
     });
   });
 
-  it('should exist',function(){
+  it("should exist",function(){
     expect(displayService).to.be.truely;
     expect(displayService.list).to.be.a.function;
   });
 
-  describe('list',function(){
-    it('should query the company\'s list of displays',function(done){
+  describe("list",function(){
+    it("should query the company's list of displays",function(done){
       displayService.list()
       .then(function(result){
         expect(result).to.be.truely;
@@ -50,4 +50,3 @@ describe("Services: Display Core API Service", function() {
     });
   });
 });
-

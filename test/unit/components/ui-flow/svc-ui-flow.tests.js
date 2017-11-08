@@ -121,7 +121,7 @@ describe("Services: uiFlowManager", function() {
   });
 
   it("should restore status", function (done) {
-    inject(function (uiFlowManager, localStorageService) {
+    inject(function (uiFlowManager) {
       uiFlowManager.invalidateStatus().then(null, function () {
         expect(uiFlowManager.getStatus()).to.equal("canCook");
         done();
@@ -130,13 +130,13 @@ describe("Services: uiFlowManager", function() {
   });
 
   it("should not restore status twice", function (done) {
-    inject(function (uiFlowManager, localStorageService) {
+    inject(function (uiFlowManager) {
       uiFlowManager.invalidateStatus().then(function (){ done(); });
     });
   });
 
   it("should only serve one goal at a time", function (done) {
-    inject(function (uiFlowManager, localStorageService) {
+    inject(function (uiFlowManager) {
       uiFlowManager.invalidateStatus("worldPeace");
       uiFlowManager.invalidateStatus("happy").then(function (){
         try {

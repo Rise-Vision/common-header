@@ -8,7 +8,7 @@ describe("service: display:", function() {
         getSelectedCompanyId : function(){
           return "TEST_COMP_ID";
         }
-      }
+      };
     });
 
     $provide.service("coreAPILoader",function () {

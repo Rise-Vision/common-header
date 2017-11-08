@@ -24,7 +24,7 @@ describe("User Profile: getUserProfile", function() {
               }
             };
           },
-          add: function(obj) {
+          add: function() {
             return {
               execute: function (callback) {
                 setTimeout(function () {
@@ -89,7 +89,7 @@ describe("User Profile: getUserProfile", function() {
 
     it("should clear getUserProfile cache for the username on success",function(done){
       inject(function (addUser) {
-        addUser('companyId', 'myUsername', {}).then(function(){
+        addUser("companyId", "myUsername", {}).then(function(){
           expect(clearGetUserProfileCacheUsername).to.equal("myUsername");
           expect(clearGetUserProfileCache).to.be.true;          
           done();

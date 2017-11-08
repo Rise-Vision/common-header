@@ -82,7 +82,7 @@ describe("Module: risevision.common.app", function() {
             listApps(COMPANY_ID).then(function(result){
                 expect(result).to.deep.equal(rvFixtures.apps.items);
                 done();
-            }, function(error) {throw error});
+            }, function(error) {throw error;});
         });
     });
 
@@ -98,7 +98,7 @@ describe("Module: risevision.common.app", function() {
             getApp(APP_ID).then(function(result){
                 expect(result).to.deep.equal(rvFixtures.app.item);
                 done();
-            }, function(error) {throw error});
+            }, function(error) {throw error;});
         });
     });
 
@@ -114,7 +114,7 @@ describe("Module: risevision.common.app", function() {
             createApp(COMPANY_ID, USER_ID).then(function(result){
                 expect(result).to.deep.equal(rvFixtures.app.item);
                 done();
-            }, function(error) {throw error});
+            }, function(error) {throw error;});
         });
     });
 
@@ -130,7 +130,7 @@ describe("Module: risevision.common.app", function() {
             updateApp(APP_ID).then(function(result){
                 expect(result).to.deep.equal(rvFixtures.app.item);
                 done();
-            }, function(error) {throw error});
+            }, function(error) {throw error;});
         });
     });
 
@@ -146,7 +146,7 @@ describe("Module: risevision.common.app", function() {
             deleteApp(APP_ID).then(function(result){
                 expect(result).to.deep.equal(rvFixtures.app.item);
                 done();
-            }, function(error) {throw error});
+            }, function(error) {throw error;});
         });
     });
 

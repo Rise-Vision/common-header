@@ -16,7 +16,7 @@ describe("service: access:", function() {
             deferred.reject("not auth");
           }
           
-          return deferred.promise
+          return deferred.promise;
         }        
       };
     });
@@ -30,7 +30,7 @@ describe("service: access:", function() {
         },
         _restoreState: function(){},
         _state: {}
-      }
+      };
     });
     $provide.service("$state", function() {
       return $state = {
@@ -140,7 +140,7 @@ describe("service: access:", function() {
       done();
     })
     .then(null, function() {
-      done("error")
+      done("error");
     });  
   });
   

@@ -1,5 +1,5 @@
 /*jshint expr:true */
-/*global gapi*/
+
 "use strict";
 
 describe("Services: googleAuthFactory", function() {
@@ -35,8 +35,8 @@ describe("Services: googleAuthFactory", function() {
     });
     $provide.factory("$http", function () {
       return $http = {
-        get: sinon.spy(function(url) {
-          return Q.resolve({data:{email:'a@b.ca'}});
+        get: sinon.spy(function() {
+          return Q.resolve({data:{email:"a@b.ca"}});
         })
       };
     });
@@ -61,7 +61,7 @@ describe("Services: googleAuthFactory", function() {
       return gapiLoader = sinon.spy(function() {
         return Q.resolve({
           auth: gapiAuth = {
-            authorize: sinon.spy(function(opts) {
+            authorize: sinon.spy(function() {
               if (authorizeResponse) {
                 return Q.resolve(authorizeResponse);
               } else {

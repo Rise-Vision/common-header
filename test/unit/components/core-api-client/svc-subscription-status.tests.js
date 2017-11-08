@@ -202,7 +202,7 @@ describe("Services: subscriptionStatusService", function() {
     beforeEach( function() {
 
       inject(function(subscriptionStatusService) {
-        service = subscriptionStatusService
+        service = subscriptionStatusService;
       });
       sandbox = sinon.sandbox.create();
       clock = sinon.useFakeTimers(nowDate.getTime());
@@ -262,7 +262,7 @@ describe("Services: subscriptionStatusService", function() {
     beforeEach( function() {
 
       inject(function(subscriptionStatusService) {
-        service = subscriptionStatusService
+        service = subscriptionStatusService;
       });
       sandbox = sinon.sandbox.create();
       clock = sinon.useFakeTimers(nowDate.getTime());

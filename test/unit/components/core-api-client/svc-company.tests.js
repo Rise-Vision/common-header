@@ -1,4 +1,6 @@
 /* jshint expr:true */
+/* jshint maxlen:false */
+
 "use strict";
 
 describe("Services: Company Core API Service", function() {
@@ -8,7 +10,7 @@ describe("Services: Company Core API Service", function() {
     //stub services
     $provide.service("$q", function() {return Q;});
     
-    $provide.service('coreAPILoader',function () {
+    $provide.service("coreAPILoader",function () {
       return function(){
         var deferred = Q.defer();
                 
@@ -40,7 +42,7 @@ describe("Services: Company Core API Service", function() {
             },
             patch: function(obj) {
               expect(obj).to.be.ok;
-              expect(obj.id).to.equal('companyId');
+              expect(obj.id).to.equal("companyId");
               expect(obj.data).to.be.ok;
               
               var def = Q.defer();
@@ -76,7 +78,7 @@ describe("Services: Company Core API Service", function() {
   }));
   
   // New service format:
-  describe('company service: ', function() {
+  describe("company service: ", function() {
     var company;
     
     beforeEach(function() {
@@ -90,12 +92,12 @@ describe("Services: Company Core API Service", function() {
       expect(company.updateAlerts).be.defined;
     });
 
-    describe('updateAlerts:',function(){
+    describe("updateAlerts:",function(){
       var alertSettings;
       
       beforeEach(function() {
         alertSettings = {
-          id: 'companyId',
+          id: "companyId",
           alertSettings: {
             enabled: true
           }
@@ -103,7 +105,7 @@ describe("Services: Company Core API Service", function() {
         
       });
       
-      it('should update alerts',function(done){
+      it("should update alerts",function(done){
         company.updateAlerts(alertSettings.id, alertSettings)
         .then(function(result){
           expect(result).to.be.ok;
@@ -115,7 +117,7 @@ describe("Services: Company Core API Service", function() {
         .then(null,done);
       });
       
-      it('should remove extra properties',function(done){
+      it("should remove extra properties",function(done){
         company.updateAlerts(alertSettings.id, alertSettings)
         .then(function(result){
           expect(result).to.be.ok;
@@ -133,7 +135,7 @@ describe("Services: Company Core API Service", function() {
           done(result);
         })
         .then(null, function(error) {
-          expect(error).to.deep.equal('API Failed');
+          expect(error).to.deep.equal("API Failed");
           done();
         })
         .then(null,done);
@@ -161,7 +163,7 @@ describe("Services: Company Core API Service", function() {
       companyService.getCompanies("some_id", "s").then(function (result) {
         expect(result).to.deep.equal(rvFixtures.companiesResp);
         done();
-      })
+      });
     });
 
     it("should get companies regardless of additional Array fields", function (done) {
@@ -169,7 +171,7 @@ describe("Services: Company Core API Service", function() {
       companyService.getCompanies("some_id", "s").then(function (result) {
         expect(result).to.deep.equal(rvFixtures.companiesResp);
         done();
-      })
+      });
     });
   });
 
@@ -183,13 +185,13 @@ describe("Services: Company Core API Service", function() {
   });
 
   describe("getCompany", function() {
-    xit("should get company", function (done) {
+    xit("should get company", function () {
       throw "Write this";
     });
   });
 
   describe("deleteCompany", function() {
-    xit("should delete company", function (done) {
+    xit("should delete company", function () {
       throw "Write this";
     });
   });

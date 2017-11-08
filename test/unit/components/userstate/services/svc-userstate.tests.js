@@ -1,5 +1,5 @@
 /*jshint expr:true */
-/*global gapi*/
+
 "use strict";
 
 describe("Services: userState", function() {
@@ -17,7 +17,7 @@ describe("Services: userState", function() {
       });
 
       return companyState;
-    })
+    });
     
     $provide.factory("getUserProfile", function() {
       return function(username, refreshProfile) {
@@ -50,7 +50,7 @@ describe("Services: userState", function() {
         set: sinon.spy(),
         get: sinon.spy(),
         remove: sinon.spy()
-      }
+      };
     });
 
     $provide.factory("rvTokenStore", function () {
@@ -64,8 +64,8 @@ describe("Services: userState", function() {
     $provide.factory("userInfoCache", function() {
       return userInfoCache = {
         removeAll: sinon.spy()
-      }
-    })
+      };
+    });
   }));
   
   var userState, companyState, userMethods, companyMethods, returnResult, 
@@ -100,7 +100,7 @@ describe("Services: userState", function() {
   describe("should exist, also methods: ", function() {
     it("userState methods", function() {
       expect(userState._state).to.be.ok;
-      expect(userState._state).to.be.an('object');
+      expect(userState._state).to.be.an("object");
 
       userMethods.forEach(function (method) {
         expect(userState[method]).to.be.ok;
@@ -351,7 +351,7 @@ describe("Services: userState", function() {
   });
 
   describe("checkUsername: ", function() {
-    it("should return false if username doesn't match", function() {
+    it("should return false if username doesnt match", function() {
       expect(userState.checkUsername()).to.be.false;
       expect(userState.checkUsername("")).to.be.false;
       
