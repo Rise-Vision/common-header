@@ -5984,7 +5984,7 @@ angular.module("risevision.common.components.logging")
           if (credentials && credentials.username && credentials.password) {
             userauth.add(credentials.username, credentials.password)
               .then(function (result) {
-                deferred.resolve();
+                deferred.resolve(result);
               })
               .then(null, function () {
                 deferred.reject();
@@ -6133,6 +6133,7 @@ angular.module("risevision.common.components.logging")
   "use strict";
 
   /*jshint camelcase: false */
+  /*jshint unused: false */
 
   angular.module("risevision.common.components.userstate")
   // constants (you can override them in your app as needed)
@@ -6152,8 +6153,6 @@ angular.module("risevision.common.components.logging")
 
         var _accessTokenRefreshHandler = null;
 
-        var _authorizeDeferred;
-
         var _scheduleAccessTokenAutoRefresh = function () {
           //cancel any existing $interval(s)
           $interval.cancel(_accessTokenRefreshHandler);
@@ -6165,6 +6164,7 @@ angular.module("risevision.common.components.logging")
           }, 55 * 60 * 1000); //refresh every 55 minutes
         };
 
+        // TODO: Update
         var _cancelAccessTokenAutoRefresh = function () {
           $interval.cancel(_accessTokenRefreshHandler);
           _accessTokenRefreshHandler = null;
@@ -6188,7 +6188,7 @@ angular.module("risevision.common.components.logging")
               .then(function (resp) {
                 return resp.data.email;
               }, function (err) {
-                $log.debug("Error retrieving userinfo");
+                $log.debug("Error retrieving userinfo", err);
                 return opts.authuser;
               });
           } else if (_state.userToken) {
@@ -7986,6 +7986,7 @@ module.run(['$templateCache', function($templateCache) {
 }]);
 })();
 
+/* jshint unused: false */
 (function (angular) {
 
   "use strict";
@@ -8295,7 +8296,7 @@ angular.module("risevision.common.components.message-box.services", [])
   .factory("messageBox", ["$q", "$log", "$modal", "$templateCache",
     function ($q, $log, $modal, $templateCache) {
       return function (title, message, close) {
-        var modalInstance = $modal.open({
+        return $modal.open({
           template: $templateCache.get("message-box/message-box.html"),
           controller: "messageBoxInstance",
           size: "md",
@@ -8344,6 +8345,8 @@ module.run(['$templateCache', function($templateCache) {
     '<form id="messageForm"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title" translate="">{{title}}</h3></div><div class="modal-body" stop-event="touchend"><p translate="">{{message}}</p></div><div class="modal-footer"><button class="btn btn-primary" ng-click="dismiss()"><span translate="{{button}}"></span> <i class="fa fa-white fa-check icon-right"></i></button></div></form>');
 }]);
 })();
+
+/*jshint maxlen: false */
 
 "use strict";
 
