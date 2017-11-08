@@ -325,7 +325,7 @@ gulp.task("test:e2e", function (cb) {
 gulp.task("coveralls", factory.coveralls());
 
 gulp.task("test", function (cb) {
-  runSequence("test:unit", "test:e2e", "coveralls", cb);
+  runSequence("build", "test:unit", "test:e2e", "coveralls", cb);
 });
 
 gulp.task("watch", ["test:unit-watch"]);
