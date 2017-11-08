@@ -217,11 +217,11 @@ gulp.task("lint", ["pretty"], function() {
       "test/**/*.js"
     ])
     .pipe(jshint())
-    .pipe(jshint.reporter("jshint-stylish"));
-    // .pipe(jshint.reporter("fail"))
-    // .on("error", function () {
-    //   process.exit(1);
-    // });
+    .pipe(jshint.reporter("jshint-stylish"))
+    .pipe(jshint.reporter("fail"))
+    .on("error", function () {
+      process.exit(1);
+    });
 });
 
 gulp.task("html-dist", function () {

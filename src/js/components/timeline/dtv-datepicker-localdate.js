@@ -3,8 +3,9 @@
 (function (angular) {
   "use strict";
   angular.module("risevision.common.components.timeline")
-    .directive("datepickerLocaldate", ["$parse",
-      function ($parse) {
+    .directive("datepickerLocaldate", [
+
+      function () {
         return {
           restrict: "A",
           require: ["ngModel"],

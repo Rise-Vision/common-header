@@ -1,3 +1,5 @@
+/*jshint maxlen: false */
+
 "use strict";
 
 angular.module("risevision.common.components.svg", [])

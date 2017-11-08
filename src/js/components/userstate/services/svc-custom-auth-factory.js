@@ -60,7 +60,7 @@
           if (credentials && credentials.username && credentials.password) {
             userauth.add(credentials.username, credentials.password)
               .then(function (result) {
-                deferred.resolve();
+                deferred.resolve(result);
               })
               .then(null, function () {
                 deferred.reject();

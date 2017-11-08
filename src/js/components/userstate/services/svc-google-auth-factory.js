@@ -2,6 +2,7 @@
   "use strict";
 
   /*jshint camelcase: false */
+  /*jshint unused: false */
 
   angular.module("risevision.common.components.userstate")
   // constants (you can override them in your app as needed)
@@ -21,8 +22,6 @@
 
         var _accessTokenRefreshHandler = null;
 
-        var _authorizeDeferred;
-
         var _scheduleAccessTokenAutoRefresh = function () {
           //cancel any existing $interval(s)
           $interval.cancel(_accessTokenRefreshHandler);
@@ -34,6 +33,7 @@
           }, 55 * 60 * 1000); //refresh every 55 minutes
         };
 
+        // TODO: Update
         var _cancelAccessTokenAutoRefresh = function () {
           $interval.cancel(_accessTokenRefreshHandler);
           _accessTokenRefreshHandler = null;
@@ -57,7 +57,7 @@
               .then(function (resp) {
                 return resp.data.email;
               }, function (err) {
-                $log.debug("Error retrieving userinfo");
+                $log.debug("Error retrieving userinfo", err);
                 return opts.authuser;
               });
           } else if (_state.userToken) {

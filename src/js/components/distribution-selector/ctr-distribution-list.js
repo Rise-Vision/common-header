@@ -41,7 +41,7 @@ angular.module("risevision.common.components.distribution-selector")
               $scope.displays.add(result.items ? result.items : [],
                 result.cursor);
             })
-            .then(null, function (e) {
+            .then(null, function () {
               $scope.error =
                 "Failed to load displays. Please try again later.";
             })

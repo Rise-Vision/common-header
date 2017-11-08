@@ -1,3 +1,4 @@
+/* jshint unused: false */
 (function (angular) {
 
   "use strict";

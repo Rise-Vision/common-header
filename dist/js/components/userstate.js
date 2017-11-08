@@ -451,7 +451,7 @@ angular.module("risevision.common.components.logging")
           if (credentials && credentials.username && credentials.password) {
             userauth.add(credentials.username, credentials.password)
               .then(function (result) {
-                deferred.resolve();
+                deferred.resolve(result);
               })
               .then(null, function () {
                 deferred.reject();
@@ -600,6 +600,7 @@ angular.module("risevision.common.components.logging")
   "use strict";
 
   /*jshint camelcase: false */
+  /*jshint unused: false */
 
   angular.module("risevision.common.components.userstate")
   // constants (you can override them in your app as needed)
@@ -619,8 +620,6 @@ angular.module("risevision.common.components.logging")
 
         var _accessTokenRefreshHandler = null;
 
-        var _authorizeDeferred;
-
         var _scheduleAccessTokenAutoRefresh = function () {
           //cancel any existing $interval(s)
           $interval.cancel(_accessTokenRefreshHandler);
@@ -632,6 +631,7 @@ angular.module("risevision.common.components.logging")
           }, 55 * 60 * 1000); //refresh every 55 minutes
         };
 
+        // TODO: Update
         var _cancelAccessTokenAutoRefresh = function () {
           $interval.cancel(_accessTokenRefreshHandler);
           _accessTokenRefreshHandler = null;
@@ -655,7 +655,7 @@ angular.module("risevision.common.components.logging")
               .then(function (resp) {
                 return resp.data.email;
               }, function (err) {
-                $log.debug("Error retrieving userinfo");
+                $log.debug("Error retrieving userinfo", err);
                 return opts.authuser;
               });
           } else if (_state.userToken) {
