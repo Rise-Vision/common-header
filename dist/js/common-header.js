@@ -1742,9 +1742,7 @@ angular.module("risevision.common.header", [
   "risevision.common.cookie",
   "risevision.common.header.templates",
   "risevision.common.header.directives",
-  "risevision.common.loading",
   "risevision.common.i18n",
-  "risevision.ui-flow",
   "risevision.common.systemmessages", "risevision.core.systemmessages",
   "risevision.core.countries",
   "risevision.core.oauth2",
@@ -1757,6 +1755,7 @@ angular.module("risevision.common.header", [
   "ui.bootstrap", "ngSanitize", "ngCsv", "ngTouch",
   "risevision.common.components.userstate",
   "risevision.common.components.last-modified",
+  "risevision.common.components.loading",
   "risevision.common.components.search-filter",
   "risevision.common.components.scrolling-list",
   "risevision.common.components.stop-event",
@@ -3865,219 +3864,6 @@ angular.module("risevision.common.geodata", [])
 ]);
 
 (function (angular) {
-  "use strict";
-
-angular.module("risevision.ui-flow", ["LocalStorageModule"])
-
-.constant("uiStatusDependencies", {
-  _dependencies: {},
-  _retries: {},
-  addDependencies: function (deps) {
-    angular.extend(this._dependencies, deps);
-  },
-  setMaximumRetryCount: function (status, num) {
-    if(num < 1) {
-      throw "Retry count for " + status + " must be equal to or greater than 1.";
-    }
-    if(this._retries[status] === undefined) {
-      this._retries[status] = num;
-    }
-  }
-})
-
-.factory("uiFlowManager", ["$log", "$q", "$injector",
-"uiStatusDependencies", "$rootScope", "localStorageService",
-  function ($log, $q, $injector, uiStatusDependencies, $rootScope,
-  localStorageService) {
-
-  var _status, _goalStatus, _retriesLeft = null;
-  var _dependencyMap = uiStatusDependencies._dependencies;
-
-  //generate a status that always resolves to true
-  var genedateDummyStatus = function (){
-    return function () {
-      var deferred = $q.defer();
-      deferred.resolve(true);
-      return deferred.promise;
-    };
-  };
-
-  var _getOrCreateDummyFactory = function (status) {
-    var factory;
-    try {
-      factory = $injector.get(status);
-    }
-    catch (e) {
-      $log.debug("Generating dummy status", status);
-      factory = genedateDummyStatus();
-    }
-    return factory;
-  };
-
-  //internal method that attempt to reach a particular status
-  var _attemptStatus = function(status){
-    var lastD;
-
-    $log.debug("Attempting to reach status", status, "...");
-    var dependencies = _dependencyMap[status];
-    if(dependencies) {
-      if(!(dependencies instanceof Array)) {
-        dependencies = [dependencies];
-      }
-
-      var prevD = $q.defer(), firstD = prevD; //chain sibling dependency together
-
-      angular.forEach(dependencies, function(dep) {
-        //iterate through dependencies
-        var currentD = $q.defer();
-        prevD.promise.then(currentD.resolve, function () {
-          _attemptStatus(dep).then(function (){
-            //should come here if any of the dependencies is satisfied
-            if(_dependencyMap[dep]) {
-              $log.debug("Deps for status", dep, "satisfied.");
-            }
-            //find factory function and check for satisfaction
-
-            _getOrCreateDummyFactory(status)().then(
-              function () {
-                $log.debug("Status", status, "satisfied.");
-                currentD.resolve(true);
-              },
-              function () {
-                $log.debug("Status", status, "not satisfied.");
-                currentD.reject(status);
-              }
-            );
-          }, function (lastRej) {
-            if(_dependencyMap[dep]) {
-              $log.debug("Failed to reach status", dep,
-                " because its dependencies are not satisfied. Last rejected dep: ", lastRej);
-              currentD.reject(lastRej);
-            }
-            else {
-              currentD.reject(dep);
-            }
-
-          });
-        });
-        lastD = prevD = currentD;
-      });
-
-      //commence the avalance
-      firstD.reject();
-    }
-    else {
-      //at deep level of termination status
-      lastD = $q.defer();
-      _getOrCreateDummyFactory(status)().then(
-        function () {
-          $log.debug("Termination status", status, "satisfied.");
-          lastD.resolve(true);
-        },
-        function () {
-          $log.debug("Termination status", status, "not satisfied.");
-          lastD.reject(status);
-        }
-      );
-    }
-
-    return lastD.promise;
-  };
-
-  var deferred, final = true;
-  var _recheckStatus = function (desiredStatus) {
-    if(!desiredStatus && !_goalStatus) {
-      //no goal, no desired status. resolve to true immediately
-      var d = $q.defer(); d.resolve();
-      return d.promise;
-    }
-    if(!_goalStatus && final) {
-      _goalStatus = desiredStatus;
-      //start afresh
-      _retriesLeft = angular.copy(uiStatusDependencies._retries);
-      deferred = $q.defer();
-      final = false;
-    }
-    if(_goalStatus) {
-      deferred = $q.defer();
-      _attemptStatus(_goalStatus).then(
-        function (s) {
-          if(_goalStatus) {
-            _status = _goalStatus;
-          }
-          deferred.resolve(s);
-          _goalStatus = null;
-          final = true;
-        },
-        function (status) {
-          // if rejected at any given step,
-          // show the dialog of that relevant step
-          _status = status;
-          if(_retriesLeft[status] !== undefined) {
-            if(_retriesLeft[status] === 0) {
-              $log.debug("Maximum allowed retries for status", status, "reached. Validation will cancel.");
-              cancelValidation();
-            }
-            else {
-              _retriesLeft[status] --;
-            }
-          }
-          final = true;
-          deferred.reject(status);
-        });
-    }
-    return deferred && deferred.promise;
-  };
-
-
-  var invalidateStatus = function (desiredStatus) {
-      _status = "pendingCheck";
-      return _recheckStatus(desiredStatus);
-  };
-
-  var persist = function () {
-    localStorageService.set("risevision.ui-flow.state",
-      {goalStatus: _goalStatus, retriesLeft: _retriesLeft});
-  };
-
-  var cancelValidation = function () {
-    _status = "";
-    _goalStatus = "";
-    _retriesLeft = null;
-    final = true;
-    $rootScope.$broadcast("risevision.uiStatus.validationCancelled");
-    $log.debug("UI status validation cancelled.");
-  };
-
-  //restore
-  if(localStorageService.get("risevision.ui-flow.state")) {
-    var state = localStorageService.get("risevision.ui-flow.state");
-    if(state && state.goalStatus) {
-      _goalStatus = state.goalStatus;
-      $log.debug("uiFlowManager.goalStatus restored to", state.goalStatus, state.retriesLeft);
-      _retriesLeft = state.retriesLeft;
-      deferred = $q.defer(); final = false;
-    }
-    localStorageService.remove("risevision.ui-flow.state");
-  }
-
-  var manager = {
-    invalidateStatus: invalidateStatus,
-    cancelValidation: cancelValidation,
-    getStatus: function () { return _status; },
-    isStatusUndetermined: function () { return _status === "pendingCheck"; },
-    persist: persist
-  };
-
-  //DEBUG
-  // window.uiFlowManager = manager;
-
-  return manager;
-}]);
-
-})(angular);
-
-(function (angular) {
 
   "use strict";
   angular.module("risevision.common.account", [
@@ -4196,7 +3982,7 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
   "use strict";
 
   angular.module("risevision.common.registration", [
-    "risevision.common.components.userstate", "risevision.ui-flow",
+    "risevision.common.components.userstate",
     "risevision.core.userprofile", "risevision.common.gapi"
   ])
 
@@ -4275,7 +4061,7 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
 "use strict";
 
 angular.module("risevision.common.support", [
-  "risevision.widget.common.subscription-status"
+  "risevision.common.components.subscription-status"
 ])
   .factory("supportFactory", ["getSubscriptionStatus", "$q",
     "SUPPORT_PRODUCT_CODE", "STORE_SERVER_URL", "userState",
@@ -4603,708 +4389,6 @@ angular.module("risevision.common.support", [
     }
   ]);
 })(angular);
-
-(function (angular){
-
-  "use strict";
-
-  angular.module("risevision.core.cache", [])
-
-    .factory("userInfoCache", ["$cacheFactory", function ($cacheFactory) {
-      return $cacheFactory("user-info-cache");
-    }]);
-
-})(angular);
-
-(function (angular){
-
-  "use strict";
-
-  angular.module("risevision.core.util", [])
-
-.factory("pick", function () {
-  var ArrayProto = Array.prototype;
-  var
-    slice            = ArrayProto.slice,
-    concat           = ArrayProto.concat;
-    // Internal function that returns an efficient (for current engines) version
-  // of the passed-in callback, to be repeatedly applied in other Underscore
-  // functions.
-  var createCallback = function(func, context, argCount) {
-    if (context === void 0) { return func; }
-    switch (argCount === null ? 3 : argCount) {
-      case 1: return function(value) {
-        return func.call(context, value);
-      };
-      case 2: return function(value, other) {
-        return func.call(context, value, other);
-      };
-      case 3: return function(value, index, collection) {
-        return func.call(context, value, index, collection);
-      };
-      case 4: return function(accumulator, value, index, collection) {
-        return func.call(context, accumulator, value, index, collection);
-      };
-    }
-    return function() {
-      return func.apply(context, arguments);
-    };
-  };
-
-    return function(obj, iteratee, context) {
-      var result = {}, key;
-      if (obj === null) {return result;}
-      if (angular.isFunction(iteratee)) {
-        iteratee = createCallback(iteratee, context);
-        for (key in obj) {
-          var value = obj[key];
-          if (iteratee(value, key, obj)) { result[key] = value; }
-        }
-      } else {
-        var keys = concat.apply([], slice.call(arguments, 1));
-        obj = new Object(obj);
-        for (var i = 0, length = keys.length; i < length; i++) {
-          key = keys[i];
-          if (key in obj) { result[key] = obj[key]; }
-        }
-      }
-      return result;
-    };
-  });
-
-})(angular);
-
-(function (angular) {
-
-  "use strict";
-  angular.module("risevision.core.userprofile", [
-  "risevision.common.gapi", "risevision.core.oauth2"])
-
-  .value("userRoleMap", {
-    "ce": "Content Editor",
-    "cp": "Content Publisher",
-    "da": "Display Administrator",
-    "ua": "System Administrator",
-    "pu": "Store Purchaser",
-    "sa": "Rise System Administrator",
-    "ba": "Rise Store Administrator"
-  })
-  
-  .constant("USER_WRITABLE_FIELDS", [
-    "mailSyncEnabled", "email", "firstName", "lastName", "telephone", "roles", 
-    "status", "companyRole", "dataCollectionDate"
-  ])
-
-  .factory("getUserProfile", ["oauth2APILoader", "coreAPILoader", "$q", "$log",
-  function (oauth2APILoader, coreAPILoader, $q, $log) {
-    var _username;
-    var _cachedPromises = {};
-
-    return function (username, clearCache) {
-
-      var deferred;
-
-      if (username === _username && !clearCache &&
-        _cachedPromises[username] !== null) {
-        //avoid calling API if username didn't change
-        return _cachedPromises[username].promise;
-      }
-      else {
-        _username = username;
-        _cachedPromises[username] = deferred = $q.defer();
-      }
-
-      if(!username) {
-        deferred.reject("getUserProfile failed: username param is required.");
-        $log.debug("getUserProfile failed: username param is required.");
-      }
-      else {
-
-        var criteria = {};
-        if (username) {criteria.username = username; }
-        $log.debug("getUserProfile called", criteria);
-
-        $q.all([oauth2APILoader(), coreAPILoader()]).then(function (results){
-          var coreApi = results[1];
-          // var oauthUserInfo = results[2];
-          coreApi.user.get(criteria).execute(function (resp){
-            if (resp.error || !resp.result) {
-              deferred.reject(resp);
-            }
-            else {
-              $log.debug("getUser resp", resp);
-                //get user profile
-                deferred.resolve(resp.item);
-            }
-          });
-        }, deferred.reject);
-      }
-      return deferred.promise;
-    };
-  }])
-
-  .factory("updateUser", ["$q", "coreAPILoader", "$log",
-  "getUserProfile", "pick", "USER_WRITABLE_FIELDS",
-  function ($q, coreAPILoader, $log, getUserProfile, pick, 
-    USER_WRITABLE_FIELDS) {
-    return function (username, profile) {
-      var deferred = $q.defer();
-      profile = pick(profile, USER_WRITABLE_FIELDS);
-      $log.debug("updateUser called", username, profile);
-      coreAPILoader().then(function (coreApi) {
-        var request = coreApi.user.patch({
-          username: username, data: profile});
-        request.execute(function (resp) {
-            $log.debug("updateUser resp", resp);
-            if(resp.error) {
-              deferred.reject(resp);
-            }
-            else if (resp.result) {
-              getUserProfile(username, true).then(function() {deferred.resolve(resp);});
-            }
-            else {
-              deferred.reject("updateUser");
-            }
-        });
-      }, deferred.reject);
-      return deferred.promise;
-    };
-  }])
-
-  .factory("addUser", ["$q", "coreAPILoader", "$log", "pick", "getUserProfile",
-  function ($q, coreAPILoader, $log, pick, getUserProfile) {
-    return function (companyId, username, profile) {
-      var deferred = $q.defer();
-      coreAPILoader().then(function (coreApi) {
-        profile = pick(profile, "mailSyncEnabled",
-          "email", "firstName", "lastName", "telephone", "roles", "status");
-        var request = coreApi.user.add({
-          username: username,
-          companyId: companyId,
-          data: profile});
-        request.execute(function (resp) {
-          $log.debug("addUser resp", resp);
-          if(resp.result) {
-            getUserProfile(username, true).then(function() {deferred.resolve(resp);});
-          }
-          else {
-            deferred.reject(resp);
-          }
-        });
-      });
-      return deferred.promise;
-    };
-  }])
-
-  .factory("deleteUser", ["$q", "coreAPILoader", "$log",
-  function ($q, coreAPILoader, $log) {
-    return function (username) {
-      var deferred = $q.defer();
-      coreAPILoader().then(function (coreApi) {
-        var request = coreApi.user.delete({
-          username: username});
-        request.execute(function (resp) {
-          $log.debug("deleteUser resp", resp);
-          if(resp.result) {
-            deferred.resolve(resp);
-          }
-          else {
-            deferred.reject("deleteUser");
-          }
-        });
-      });
-      return deferred.promise;
-    };
-  }])
-
-  .factory("getUsers", ["$q", "coreAPILoader", "$log", function (
-    $q, coreAPILoader, $log) {
-    return function (criteria) {
-      $log.debug("getUsers", criteria);
-      var deferred = $q.defer();
-      coreAPILoader().then(function (coreApi) {
-        var request = coreApi.user.list(criteria);
-        request.execute(function (resp) {
-            $log.debug("getUsers resp", resp);
-            if(resp.result) {
-              deferred.resolve(resp.items);
-            }
-            else {
-              deferred.reject("getUsers");
-            }
-        });
-      }, deferred.reject);
-      return deferred.promise;
-    };
-  }]);
-
-})(angular);
-
-(function (angular){
-
-  "use strict";
-
-  angular.module("risevision.core.company",
-    [
-      "risevision.common.gapi",
-      "risevision.core.cache",
-      "risevision.core.util"
-    ])
-
-    .constant("COMPANY_WRITABLE_FIELDS", [
-      "name", "street", "unit", "city", "province", "country",
-      "postalCode", "timeZoneOffset", "telephone", "fax", "companyStatus",
-      "mailSyncEnabled", "sellerId", "isTest", "shipToUseCompanyAddress", 
-      "shipToName", "shipToStreet", "shipToUnit", "shipToCity", 
-      "shipToProvince", "shipToPostalCode", "shipToCountry", "website",
-      "companySize", "companyIndustry"
-    ])
-    .constant("ALERTS_WRITABLE_FIELDS", [
-      "alertSettings"
-    ])
-    .constant("COMPANY_SEARCH_FIELDS", [
-      "name", "id", "street", "unit", "city", "province", "country",
-      "postalCode", "telephone", "fax",
-      "shipToName", "shipToStreet", "shipToCity", "shipToPostalCode"
-    ])
-    
-    // New service format:
-    .factory("company", ["$q", "$log", "coreAPILoader", "pick",
-      "ALERTS_WRITABLE_FIELDS",
-      function ($q, $log, coreAPILoader, pick, ALERTS_WRITABLE_FIELDS) {
-        var service = {
-          updateAlerts: function (companyId, company) {
-            var deferred = $q.defer();
-            var fields = pick.apply(this, [company].concat(
-              ALERTS_WRITABLE_FIELDS));
-            var obj = {
-              "id": companyId,
-              "data": fields
-            };
-            $log.debug("updateAlerts called", companyId, fields);
-
-            coreAPILoader().then(function (coreApi) {
-                return coreApi.company.patch(obj);
-              })
-              .then(function (resp) {
-                $log.debug("update Alerts resp", resp);
-                deferred.resolve(resp.result);
-              })
-              .then(null, function (e) {
-                $log.error("Failed to update Alerts.", e);
-                deferred.reject(e);
-              });
-
-            return deferred.promise;
-          }
-        };
-          
-        return service;
-      }
-    ])
-
-    // Old services:
-    .factory("createCompany", ["$q", "coreAPILoader", "COMPANY_WRITABLE_FIELDS",
-      "pick",
-      function ($q, coreAPILoader, COMPANY_WRITABLE_FIELDS, pick) {
-      return function (parentCompanyId, company) {
-        var deferred = $q.defer();
-        coreAPILoader().then(function (coreApi) {
-          var fields = pick.apply(this, [company].concat(COMPANY_WRITABLE_FIELDS));
-          var request = coreApi.company.add({
-            parentId: parentCompanyId,
-            data: fields
-          });
-          request.execute(function (resp) {
-            if(resp.result) {
-              deferred.resolve(resp.item);
-            }
-            else {
-              deferred.reject(resp);
-            }
-          }, deferred.reject);
-        });
-        return deferred.promise;
-      };
-    }])
-
-    .factory("getCompany", ["coreAPILoader", "$q", "$log",
-    function (coreAPILoader, $q, $log) {
-      return function (id) { //get a company either by id or authKey
-        $log.debug("getCompany called", id);
-
-        var deferred = $q.defer();
-          coreAPILoader().then(function (coreApi) {
-            var criteria = {};
-            if(id) {criteria.id = id; }
-            var request = coreApi.company.get(criteria);
-            request.execute(function (resp) {
-                $log.debug("getCompany resp", resp);
-                if(resp.result) {
-                  deferred.resolve(resp.item);
-                }
-                else {
-                  deferred.reject(resp);
-                }
-            });
-          });
-        return deferred.promise;
-      };
-    }])
-
-    .factory("lookupCompany", ["coreAPILoader", "$q", "$log",
-    function (coreAPILoader, $q, $log) {
-      return function (authKey) { //get a company either by id or authKey
-        $log.debug("lookupCompany called", authKey);
-
-        var deferred = $q.defer();
-          coreAPILoader().then(function (coreApi) {
-            var request = coreApi.company.lookup({authKey: authKey});
-            request.execute(function (resp) {
-                $log.debug("lookupCompany resp", resp);
-                if(resp.result) {
-                  deferred.resolve(resp.item);
-                }
-                else {
-                  deferred.reject(resp);
-                }
-            });
-          });
-        return deferred.promise;
-      };
-    }])
-
-    .factory("moveCompany", ["coreAPILoader", "$q", "$log",
-    function (coreAPILoader, $q, $log) {
-      return function (authKey, newParentId) { //get a company either by id or authKey
-        var deferred = $q.defer();
-          coreAPILoader().then(function (coreApi) {
-            var request = coreApi.company.move({authKey: authKey, newParentId: newParentId});
-            request.execute(function (resp) {
-                $log.debug("moveCompany resp", resp);
-                if(resp.result) {
-                  deferred.resolve(resp.item);
-                }
-                else {
-                  deferred.reject(resp);
-                }
-            });
-          });
-        return deferred.promise;
-      };
-    }])
-
-    .factory("updateCompany", ["$q", "$log", "coreAPILoader", "pick",
-    "COMPANY_WRITABLE_FIELDS",
-     function ($q, $log, coreAPILoader, pick, COMPANY_WRITABLE_FIELDS){
-      return function (companyId, fields) {
-          var deferred = $q.defer();
-          fields = pick.apply(this, [fields].concat(COMPANY_WRITABLE_FIELDS));
-          $log.debug("updateCompany called", companyId, fields);
-          // fields.validate = validationRequired || false;
-          coreAPILoader().then(function (coreApi) {
-            var request = coreApi.company.patch({id: companyId, data: fields});
-            request.execute(function (resp) {
-              $log.debug("updateCompany resp", resp);
-              if(resp.result) {
-                deferred.resolve(resp);
-              }
-              else {
-                deferred.reject(resp);
-              }
-            });
-          });
-
-          return deferred.promise;
-      };
-    }])
-
-    .factory("regenerateCompanyField", ["$q", "$log", "coreAPILoader",
-     function ($q, $log, coreAPILoader){
-      return function (companyId, fieldName) {
-          var deferred = $q.defer();
-          $log.debug("regenerateField called", companyId, fieldName);
-          coreAPILoader().then(function (coreApi) {
-            var request = coreApi.company.regenerateField({"id": companyId, "fieldName": fieldName});
-            request.execute(
-              function (resp) {
-                $log.debug("regenerateField resp", resp);
-                if (!resp.error) {
-                  deferred.resolve(resp);
-                } else {
-                  deferred.reject(resp.message);
-                }
-              },
-              function (resp) {
-                deferred.reject("call failed " + resp);
-              }
-              );
-          });
-
-          return deferred.promise;
-      };
-    }])
-
-    .factory("deleteCompany", ["coreAPILoader", "$q", "$log",
-    function (coreAPILoader, $q, $log) {
-      return function (id) { //get a company either by id or authKey
-        $log.debug("deleteCompany called", id);
-
-        var deferred = $q.defer();
-          coreAPILoader().then(function (coreApi) {
-            var criteria = {};
-            if(id) {criteria.id = id; }
-            var request = coreApi.company.delete(criteria);
-            request.execute(function (resp) {
-                $log.debug("deleteCompany resp", resp);
-                if(resp.result) {
-                  deferred.resolve(resp.item);
-                }
-                else {
-                  deferred.reject(resp);
-                }
-            });
-          });
-        return deferred.promise;
-      };
-    }])
-
-    .service("companyService", ["coreAPILoader", "$q", "$log", "getCompany",
-      "COMPANY_SEARCH_FIELDS",
-      function (coreAPILoader, $q, $log, getCompany, COMPANY_SEARCH_FIELDS) {
-        
-      var createSearchQuery = function(fields, search) {
-        var query = "";
-        
-        for (var i=0; i<fields.length;i++) {
-          query += "OR " + fields[i] + ":~\'" + search + "\' ";
-        }
-        
-        query = query ? query.substring(3) : "";
-          
-        return query.trim();
-      }
-
-      this.getCompanies = function (companyId, search, cursor, count, sort) {
-        var deferred = $q.defer();
-        var query = search ? createSearchQuery(COMPANY_SEARCH_FIELDS, search) : "";
-          
-        var obj = {
-          "companyId": companyId,
-          "search": query,
-          "cursor": cursor,
-          "count": count,
-          "sort": sort
-        };
-        $log.debug("getCompanies called with", obj);
-        coreAPILoader().then(function (coreApi) {
-          var request = coreApi.company.list(obj);
-          request.execute(function (resp) {
-              $log.debug("getCompanies resp", resp);
-              deferred.resolve(resp);
-          });
-        });
-        return deferred.promise;
-      };
-
-      this.loadSelectedCompany = function (selectedCompanyId, userCompany) {
-          //this funtion assumes user and user.company are loaded
-          var deferred = $q.defer();
-          if (selectedCompanyId && selectedCompanyId !== userCompany.id) {
-              getCompany(selectedCompanyId).then(function(res) {
-                  if (res.code === 0 && res.item) {
-                      deferred.resolve(res.item);
-                  } else {
-                      deferred.resolve(userCompany);
-                  }
-              });
-          } else {
-              deferred.resolve(userCompany);
-          }
-          return deferred.promise;
-      };
-
-    }])
-
-  .filter("fullAddress", function () {
-    return function (company) {
-      var res = (company.street ? company.street + ", " : "") +
-        (company.city ? company.city + ", " : "") +
-        (company.province ? company.province + ", " : "") +
-        (company.country ? company.country + ", " : "") +
-        (company.postalCode ? company.postalCode + ", " : "");
-      if (res) {
-        res = res.substr(0, res.length - 2);
-      }
-      return res;
-    };
-  });
-
-})(angular);
-
-(function (angular) {
-
-  "use strict";
-  angular.module("risevision.core.oauth2",
-  ["risevision.common.gapi", "risevision.core.cache"]).
-  factory("getOAuthUserInfo", ["oauth2APILoader", "$q", "userInfoCache",
-  "$log",
-  function (oauth2APILoader, $q, userInfoCache, $log) {
-    return function () {
-
-      var deferred = $q.defer();
-      var resp;
-      if((resp = userInfoCache.get("oauth2UserInfo"))) {
-        if(resp.error) {
-          deferred.reject(resp.error);
-        }
-        else {
-          deferred.resolve(resp);
-        }
-      }
-      else {
-        oauth2APILoader().then(function (oauth2){
-          oauth2.userinfo.get().execute(function (resp){
-            $log.debug("getOAuthUserInfo oauth2.userinfo.get() resp", resp);
-            if(!resp) {
-              userInfoCache.remove("oauth2UserInfo");
-              deferred.reject();
-            }
-            else if(resp.hasOwnProperty("error")) {
-              userInfoCache.remove("oauth2UserInfo");
-              deferred.reject(resp.error);
-            }
-            else {
-              userInfoCache.put("oauth2UserInfo", resp);
-              deferred.resolve(resp);
-            }
-          });
-        }, deferred.reject);
-      }
-
-      return deferred.promise;
-    };
-  }]);
-
-})(angular);
-
-(function (angular) {
-
-  "use strict";
-
-  angular.module("risevision.core.systemmessages", ["risevision.common.gapi"])
-
-  .factory("getCoreSystemMessages", ["gapiLoader", "$q", "$log",
-      function (gapiLoader, $q, $log) {
-        return function (companyId) {
-          var deferred = $q.defer();
-          gapiLoader().then(function (gApi) {
-            var request = gApi.client.core.systemmessage.list(
-              { "companyId": companyId });
-            request.execute(function (resp) {
-              var items = resp;
-              if(!(items instanceof Array) && items.items) { items = items.items; }
-              $log.debug("getCoreSystemMessage resp", items);
-              deferred.resolve(items);
-            });
-          });
-          return deferred.promise;
-        };
-    }]);
-
-})(angular);
-
-(function (angular) {
-
-  "use strict";
-
-  angular.module("risevision.core.countries", ["risevision.common.gapi"])
-
-  .factory("getCoreCountries", ["coreAPILoader", "$q", "$log", "$filter",
-    function (coreAPILoader, $q, $log, $filter) {
-      var deferred;
-      return function () {
-        if (deferred) {
-          return deferred.promise;
-        }
-        else {
-          deferred = $q.defer();  
-        }
-        
-        coreAPILoader().then(function (coreApi) {
-          return coreApi.country.list();
-        })
-        .then(function (resp) {
-          var items = resp.result ? resp.result.items : [];
-          if(items instanceof Array) { 
-            items = $filter("orderBy")(items, "name");
-          }
-
-          deferred.resolve(items);
-        })
-        .then(null, function(e) {
-          $log.debug("getCoreCountries failed", e);
-          deferred.reject(e);
-          
-          deferred = null;
-        });
-        return deferred.promise;
-      };
-  }])
-  .factory("COUNTRIES", ["getCoreCountries", 
-    function (getCoreCountries) {
-      var countries = [];
-     
-      getCoreCountries().then(function(result) {
-        Array.prototype.push.apply(countries, result);
-      })
-      
-      return countries;
-  }]);
-
-})(angular);
-
-"use strict";
-
-angular.module("risevision.common.fastpass", [])
-.factory("loadFastpass", ["$q", "$http", "$document", "$timeout", "GSFP_URL", "$log",
-function ($q, $http, $document, $timeout, GSFP_URL, $log) {
-
-  var loadScript = function (src) {
-    var deferred = $q.defer();
-    var script = $document[0].createElement("script");
-    script.onload = script.onreadystatechange = function (e) {
-      deferred.resolve(e);
-    };
-    script.onerror = function (e) {
-        deferred.reject(e);
-    };
-    script.src = src;
-    $document[0].body.appendChild(script);
-    return deferred.promise;
-  };
-
-  return function (username, email) {
-    var deferred = $q.defer();
-    $log.debug("loadFastpass called", username, email);
-    var rejected = function (rej) {
-      $log.error("loadFastpass rejected", rej);
-      deferred.reject("loadFastpass rejected " + rej);
-    };
-
-    $http.get(GSFP_URL +
-      "/geturl?userEmail=" + email +
-      "&userName=" + username).then(function (res){
-        loadScript(res.data).then(function (result) {
-          $log.debug("loadFastpass result", result);
-          deferred.resolve(true);
-        },rejected).catch(rejected);
-      }, deferred.reject);
-
-      return deferred.promise;
-    };
-
-  }]);
 
 angular.module("risevision.common.header.directives")
   .directive("fastpass", ["loadFastpass", "userState",
@@ -5716,126 +4800,6 @@ angular.module("risevision.common.header.directives")
   ]);
 
 })(angular);
-
-/* jshint ignore:start */
-var gapiLoadingStatus = null;
-var handleClientJSLoad = function() {
-    gapiLoadingStatus = "loaded";
-    console.debug("ClientJS is loaded.");
-    //Ready: create a generic event
-    var evt = document.createEvent("Events");
-    //Aim: initialize it to be the event we want
-    evt.initEvent("gapi.loaded", true, true);
-    //FIRE!
-    window.dispatchEvent(evt);
-}
-/* jshint ignore:end */
-
-angular.module("risevision.common.gapi", [])
-  .factory("gapiLoader", ["$q", "$window", function ($q, $window) {
-    var deferred = $q.defer();
-
-    return function () {
-      var gapiLoaded;
-
-      if($window.gapiLoadingStatus === "loaded") {
-        deferred.resolve($window.gapi);
-      }
-
-      else if(!$window.gapiLoadingStatus) {
-        $window.gapiLoadingStatus = "loading";
-
-        var src = $window.gapiSrc || "//apis.google.com/js/client.js?onload=handleClientJSLoad";
-        var fileref = document.createElement("script");
-        fileref.setAttribute("type","text/javascript");
-        fileref.setAttribute("src", src);
-        if (typeof fileref!=="undefined") {
-          document.getElementsByTagName("body")[0].appendChild(fileref);
-        }
-
-        gapiLoaded = function () {
-          deferred.resolve($window.gapi);
-          $window.removeEventListener("gapi.loaded", gapiLoaded, false);
-        };
-        $window.addEventListener("gapi.loaded", gapiLoaded, false);
-      }
-      return deferred.promise;
-    };
-  }])
-
-  //abstract method for creading a loader factory service that loads any
-  //custom Google Client API library
-
-  .factory("gapiClientLoaderGenerator", ["$q", "gapiLoader", "$log",
-    function ($q, gapiLoader, $log) {
-    return function (libName, libVer, baseUrl) {
-      return function () {
-        var deferred = $q.defer();
-        gapiLoader().then(function (gApi) {
-          if(gApi.client[libName]){
-            //already loaded. return right away
-            deferred.resolve(gApi.client[libName]);
-          }
-          else {
-            gApi.client.load.apply(this, [libName, libVer].concat([function () {
-              if (gApi.client[libName]) {
-                $log.debug(libName + "." + libVer + " Loaded");
-                deferred.resolve(gApi.client[libName]);
-              } else {
-                var errMsg = libName + "." + libVer  + " Load Failed";
-                $log.error(errMsg);
-                deferred.reject(errMsg);
-              }
-            }, baseUrl]));
-          }
-        });
-        return deferred.promise;
-      };
-    };
-  }])
-
-  .factory("oauth2APILoader", ["gapiClientLoaderGenerator",
-    function(gapiClientLoaderGenerator) {
-      return gapiClientLoaderGenerator("oauth2", "v2");
-  }])
-
-  .factory("coreAPILoader", ["CORE_URL", "gapiClientLoaderGenerator",
-    "$location",
-    function (CORE_URL, gapiClientLoaderGenerator, $location) {
-      var baseUrl = $location.search().core_api_base_url ? $location.search().core_api_base_url + "/_ah/api": CORE_URL;
-      return gapiClientLoaderGenerator("core", "v1", baseUrl);
-  }])
-
-  .factory("riseAPILoader", ["CORE_URL", "gapiClientLoaderGenerator", "$location",
-    function (CORE_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().core_api_base_url ? $location.search().core_api_base_url + "/_ah/api": CORE_URL;
-    return gapiClientLoaderGenerator("rise", "v0", baseUrl);
-  }])
-
-  .factory("storeAPILoader", ["STORE_ENDPOINT_URL", "gapiClientLoaderGenerator", "$location",
-    function (STORE_ENDPOINT_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().store_api_base_url ? $location.search().store_api_base_url + "/_ah/api": STORE_ENDPOINT_URL;
-    return gapiClientLoaderGenerator("store", "v0.01", baseUrl);
-  }])
-
-  .factory('storageAPILoader', ['STORAGE_ENDPOINT_URL', 'gapiClientLoaderGenerator', '$location',
-    function (STORAGE_ENDPOINT_URL, gapiClientLoaderGenerator, $location) {
-      var baseUrl = $location.search().storage_api_base_url ? $location.search().storage_api_base_url + '/_ah/api' : STORAGE_ENDPOINT_URL;
-      return gapiClientLoaderGenerator('storage', 'v0.01', baseUrl);
-    }
-  ])
-  
-  .factory("discoveryAPILoader", ["CORE_URL", "gapiClientLoaderGenerator", "$location",
-    function (CORE_URL, gapiClientLoaderGenerator, $location) {
-        var baseUrl = $location.search().core_api_base_url ? $location.search().core_api_base_url + "/_ah/api": CORE_URL;
-        return gapiClientLoaderGenerator("discovery", "v1", baseUrl);
-  }])
-
-  .factory("monitoringAPILoader", ["MONITORING_SERVICE_URL", "gapiClientLoaderGenerator", "$location",
-    function (MONITORING_SERVICE_URL, gapiClientLoaderGenerator, $location) {
-      var baseUrl = $location.search().core_api_base_url ? $location.search().core_api_base_url + "/_ah/api": MONITORING_SERVICE_URL;
-      return gapiClientLoaderGenerator("monitoring", "v0", baseUrl);
-  }]);
 
 (function (angular) {
 
@@ -6397,6 +5361,1562 @@ angular.module("risevision.common.header")
     }
   ]);
 
+/*jshint camelcase: false */
+
+"use strict";
+
+/* jshint ignore:start */
+var gapiLoadingStatus = null;
+var handleClientJSLoad = function () {
+  gapiLoadingStatus = "loaded";
+  console.debug("ClientJS is loaded.");
+  //Ready: create a generic event
+  var evt = document.createEvent("Events");
+  //Aim: initialize it to be the event we want
+  evt.initEvent("gapi.loaded", true, true);
+  //FIRE!
+  window.dispatchEvent(evt);
+};
+/* jshint ignore:end */
+
+angular.module("risevision.common.gapi", [])
+  .factory("gapiLoader", ["$q", "$window",
+    function ($q, $window) {
+      var deferred = $q.defer();
+
+      return function () {
+        var gapiLoaded;
+
+        if ($window.gapiLoadingStatus === "loaded") {
+          deferred.resolve($window.gapi);
+        } else if (!$window.gapiLoadingStatus) {
+          $window.gapiLoadingStatus = "loading";
+
+          var src = $window.gapiSrc ||
+            "//apis.google.com/js/client.js?onload=handleClientJSLoad";
+          var fileref = document.createElement("script");
+          fileref.setAttribute("type", "text/javascript");
+          fileref.setAttribute("src", src);
+          if (typeof fileref !== "undefined") {
+            document.getElementsByTagName("body")[0].appendChild(fileref);
+          }
+
+          gapiLoaded = function () {
+            deferred.resolve($window.gapi);
+            $window.removeEventListener("gapi.loaded", gapiLoaded, false);
+          };
+          $window.addEventListener("gapi.loaded", gapiLoaded, false);
+        }
+        return deferred.promise;
+      };
+    }
+  ])
+
+//abstract method for creading a loader factory service that loads any
+//custom Google Client API library
+
+.factory("gapiClientLoaderGenerator", ["$q", "gapiLoader", "$log",
+  function ($q, gapiLoader, $log) {
+    return function (libName, libVer, baseUrl) {
+      return function () {
+        var deferred = $q.defer();
+        gapiLoader().then(function (gApi) {
+          if (gApi.client[libName]) {
+            //already loaded. return right away
+            deferred.resolve(gApi.client[libName]);
+          } else {
+            gApi.client.load.apply(this, [libName, libVer].concat([
+
+              function () {
+                if (gApi.client[libName]) {
+                  $log.debug(libName + "." + libVer + " Loaded");
+                  deferred.resolve(gApi.client[libName]);
+                } else {
+                  var errMsg = libName + "." + libVer +
+                    " Load Failed";
+                  $log.error(errMsg);
+                  deferred.reject(errMsg);
+                }
+              },
+              baseUrl
+            ]));
+          }
+        });
+        return deferred.promise;
+      };
+    };
+  }
+])
+
+.factory("oauth2APILoader", ["gapiClientLoaderGenerator",
+  function (gapiClientLoaderGenerator) {
+    return gapiClientLoaderGenerator("oauth2", "v2");
+  }
+])
+
+.factory("coreAPILoader", ["CORE_URL", "gapiClientLoaderGenerator",
+  "$location",
+  function (CORE_URL, gapiClientLoaderGenerator, $location) {
+    var baseUrl = $location.search().core_api_base_url ? $location.search().core_api_base_url +
+      "/_ah/api" : CORE_URL;
+    return gapiClientLoaderGenerator("core", "v1", baseUrl);
+  }
+])
+
+.factory("riseAPILoader", ["CORE_URL", "gapiClientLoaderGenerator", "$location",
+  function (CORE_URL, gapiClientLoaderGenerator, $location) {
+    var baseUrl = $location.search().core_api_base_url ? $location.search().core_api_base_url +
+      "/_ah/api" : CORE_URL;
+    return gapiClientLoaderGenerator("rise", "v0", baseUrl);
+  }
+])
+
+.factory("storeAPILoader", ["STORE_ENDPOINT_URL", "gapiClientLoaderGenerator",
+  "$location",
+  function (STORE_ENDPOINT_URL, gapiClientLoaderGenerator, $location) {
+    var baseUrl = $location.search().store_api_base_url ? $location.search().store_api_base_url +
+      "/_ah/api" : STORE_ENDPOINT_URL;
+    return gapiClientLoaderGenerator("store", "v0.01", baseUrl);
+  }
+])
+
+.factory("storageAPILoader", ["STORAGE_ENDPOINT_URL",
+  "gapiClientLoaderGenerator", "$location",
+  function (STORAGE_ENDPOINT_URL, gapiClientLoaderGenerator, $location) {
+    var baseUrl = $location.search().storage_api_base_url ? $location.search()
+      .storage_api_base_url + "/_ah/api" : STORAGE_ENDPOINT_URL;
+    return gapiClientLoaderGenerator("storage", "v0.01", baseUrl);
+  }
+])
+
+.factory("discoveryAPILoader", ["CORE_URL", "gapiClientLoaderGenerator",
+  "$location",
+  function (CORE_URL, gapiClientLoaderGenerator, $location) {
+    var baseUrl = $location.search().core_api_base_url ? $location.search().core_api_base_url +
+      "/_ah/api" : CORE_URL;
+    return gapiClientLoaderGenerator("discovery", "v1", baseUrl);
+  }
+])
+
+.factory("monitoringAPILoader", ["MONITORING_SERVICE_URL",
+  "gapiClientLoaderGenerator", "$location",
+  function (MONITORING_SERVICE_URL, gapiClientLoaderGenerator, $location) {
+    var baseUrl = $location.search().core_api_base_url ? $location.search().core_api_base_url +
+      "/_ah/api" : MONITORING_SERVICE_URL;
+    return gapiClientLoaderGenerator("monitoring", "v0", baseUrl);
+  }
+]);
+
+/**
+ * Created by rodrigopavezi on 10/16/14.
+ */
+"use strict";
+
+angular.module("risevision.common.apis", [
+  "risevision.common.gapi"
+])
+  .factory("listApis", ["$q", "discoveryAPILoader", "$log",
+    function ($q, discoveryAPILoader, $log) {
+      return function (name, preferred) {
+        $log.debug("listApis called", name, preferred);
+
+        var deferred = $q.defer();
+
+        discoveryAPILoader().then(function (discoveryAPI) {
+          var criteria = {};
+          if (name) {
+            criteria.name = name;
+          }
+          if (preferred) {
+            criteria.preferred = preferred;
+          }
+
+          var request = discoveryAPI.apis.list(criteria);
+          request.execute(function (resp) {
+            $log.debug("listApis resp", resp);
+            if (resp.result) {
+              deferred.resolve(resp.items);
+            } else {
+              deferred.reject(resp);
+            }
+          });
+
+        });
+        return deferred.promise;
+      };
+    }
+  ])
+  .factory("getRest", ["$q", "discoveryAPILoader", "$log",
+    function ($q, discoveryAPILoader, $log) {
+      return function (api, version) {
+        $log.debug("getRest called", api, version);
+
+        var deferred = $q.defer();
+        discoveryAPILoader().then(function (discoveryAPI) {
+          var criteria = {};
+          if (api) {
+            criteria.api = api;
+          }
+          if (version) {
+            criteria.version = version;
+          }
+          var request = discoveryAPI.apis.getRest(criteria);
+          request.execute(function (resp) {
+            $log.debug("getRest resp", resp);
+            if (resp.result) {
+              deferred.resolve(resp);
+            } else {
+              deferred.reject(resp);
+            }
+          });
+        });
+        return deferred.promise;
+      };
+    }
+  ]);
+
+/**
+ * Created by rodrigopavezi on 10/16/14.
+ */
+"use strict";
+
+angular.module("risevision.common.app", [
+  "risevision.common.gapi",
+  "risevision.core.util"
+
+])
+  .constant("APP_WRITABLE_FIELDS", [
+    "name", "description", "clientId", "url"
+  ])
+  .factory("listApps", ["$q", "riseAPILoader", "$log",
+    function ($q, riseAPILoader, $log) {
+      return function (companyId) {
+        $log.debug("listApps called", companyId);
+
+        var deferred = $q.defer();
+        riseAPILoader().then(function (riseApi) {
+          var criteria = {};
+          if (companyId) {
+            criteria.companyId = companyId;
+          }
+
+          var request = riseApi.app.list(criteria);
+          request.execute(function (resp) {
+            $log.debug("listApps resp", resp);
+            if (resp.result) {
+              deferred.resolve(resp.items);
+            } else {
+              deferred.reject(resp);
+            }
+          });
+
+        });
+        return deferred.promise;
+      };
+    }
+  ])
+  .factory("getApp", ["$q", "riseAPILoader", "$log",
+    function ($q, riseAPILoader, $log) {
+      return function (id) {
+        $log.debug("getApp called", id);
+
+        var deferred = $q.defer();
+        riseAPILoader().then(function (riseApi) {
+          var criteria = {};
+          if (id) {
+            criteria.id = id;
+          }
+
+          var request = riseApi.app.get(criteria);
+          request.execute(function (resp) {
+            $log.debug("getApp resp", resp);
+            if (resp.result) {
+              deferred.resolve(resp.item);
+            } else {
+              deferred.reject(resp);
+            }
+          });
+        });
+        return deferred.promise;
+      };
+    }
+  ])
+  .factory("createApp", ["$q", "riseAPILoader", "$log", "pick",
+    "APP_WRITABLE_FIELDS",
+    function ($q, riseAPILoader, $log, pick, APP_WRITABLE_FIELDS) {
+      return function (companyId, userId, app) {
+        $log.debug("createApp called", companyId, userId, app);
+
+        var deferred = $q.defer();
+        riseAPILoader().then(function (riseApi) {
+          var fields = pick.apply(this, [app].concat(APP_WRITABLE_FIELDS));
+          var request = riseApi.app.add({
+            companyId: companyId,
+            userId: userId,
+            data: JSON.stringify(fields)
+          });
+
+          request.execute(function (resp) {
+            if (resp.result) {
+              deferred.resolve(resp.item);
+            } else {
+              deferred.reject(resp);
+            }
+          }, deferred.reject);
+        });
+        return deferred.promise;
+      };
+    }
+  ])
+  .factory("updateApp", ["$q", "riseAPILoader", "$log", "pick",
+    "APP_WRITABLE_FIELDS",
+    function ($q, riseAPILoader, $log, pick, APP_WRITABLE_FIELDS) {
+      return function (id, app) {
+        $log.debug("updateApp called", id, app);
+
+        var deferred = $q.defer();
+        riseAPILoader().then(function (riseApi) {
+          var fields = pick.apply(this, [app].concat(APP_WRITABLE_FIELDS));
+          var request = riseApi.app.update({
+            id: id,
+            data: JSON.stringify(fields)
+          });
+
+          request.execute(function (resp) {
+            if (resp.result) {
+              deferred.resolve(resp.item);
+            } else {
+              deferred.reject(resp);
+            }
+          }, deferred.reject);
+        });
+        return deferred.promise;
+      };
+    }
+  ])
+  .factory("deleteApp", ["$q", "riseAPILoader", "$log",
+    function ($q, riseAPILoader, $log) {
+      return function (id) {
+        $log.debug("deleteApp called", id);
+
+        var deferred = $q.defer();
+        riseAPILoader().then(function (riseApi) {
+          var criteria = {};
+          if (id) {
+            criteria.id = id;
+          }
+          var request = riseApi.app.delete(criteria);
+          request.execute(function (resp) {
+            $log.debug("deleteApp resp", resp);
+            if (resp.result) {
+              deferred.resolve(resp.item);
+            } else {
+              deferred.reject(resp);
+            }
+          });
+        });
+        return deferred.promise;
+      };
+    }
+  ]);
+
+(function (angular) {
+  "use strict";
+
+  angular.module("risevision.core.cache", [])
+
+  .factory("userInfoCache", ["$cacheFactory",
+    function ($cacheFactory) {
+      return $cacheFactory("user-info-cache");
+    }
+  ]);
+
+})(angular);
+
+(function (angular) {
+  "use strict";
+
+  angular.module("risevision.core.company", [
+    "risevision.common.gapi",
+    "risevision.core.cache",
+    "risevision.core.util"
+  ])
+
+  .constant("COMPANY_WRITABLE_FIELDS", [
+    "name", "street", "unit", "city", "province", "country",
+    "postalCode", "timeZoneOffset", "telephone", "fax", "companyStatus",
+    "mailSyncEnabled", "sellerId", "isTest", "shipToUseCompanyAddress",
+    "shipToName", "shipToStreet", "shipToUnit", "shipToCity",
+    "shipToProvince", "shipToPostalCode", "shipToCountry", "website",
+    "companySize", "companyIndustry"
+  ])
+
+  .constant("ALERTS_WRITABLE_FIELDS", [
+    "alertSettings"
+  ])
+
+  .constant("COMPANY_SEARCH_FIELDS", [
+    "name", "id", "street", "unit", "city", "province", "country",
+    "postalCode", "telephone", "fax",
+    "shipToName", "shipToStreet", "shipToCity", "shipToPostalCode"
+  ])
+
+  // New service format:
+  .factory("company", ["$q", "$log", "coreAPILoader", "pick",
+    "ALERTS_WRITABLE_FIELDS",
+    function ($q, $log, coreAPILoader, pick, ALERTS_WRITABLE_FIELDS) {
+      var service = {
+        updateAlerts: function (companyId, company) {
+          var deferred = $q.defer();
+          var fields = pick.apply(this, [company].concat(
+            ALERTS_WRITABLE_FIELDS));
+          var obj = {
+            "id": companyId,
+            "data": fields
+          };
+          $log.debug("updateAlerts called", companyId, fields);
+
+          coreAPILoader().then(function (coreApi) {
+            return coreApi.company.patch(obj);
+          })
+            .then(function (resp) {
+              $log.debug("update Alerts resp", resp);
+              deferred.resolve(resp.result);
+            })
+            .then(null, function (e) {
+              $log.error("Failed to update Alerts.", e);
+              deferred.reject(e);
+            });
+
+          return deferred.promise;
+        }
+      };
+
+      return service;
+    }
+  ])
+
+  // Old services:
+  .factory("createCompany", ["$q", "coreAPILoader", "COMPANY_WRITABLE_FIELDS",
+    "pick",
+    function ($q, coreAPILoader, COMPANY_WRITABLE_FIELDS, pick) {
+      return function (parentCompanyId, company) {
+        var deferred = $q.defer();
+        coreAPILoader().then(function (coreApi) {
+          var fields = pick.apply(this, [company].concat(
+            COMPANY_WRITABLE_FIELDS));
+          var request = coreApi.company.add({
+            parentId: parentCompanyId,
+            data: fields
+          });
+          request.execute(function (resp) {
+            if (resp.result) {
+              deferred.resolve(resp.item);
+            } else {
+              deferred.reject(resp);
+            }
+          }, deferred.reject);
+        });
+        return deferred.promise;
+      };
+    }
+  ])
+
+  .factory("getCompany", ["coreAPILoader", "$q", "$log",
+    function (coreAPILoader, $q, $log) {
+      return function (id) { //get a company either by id or authKey
+        $log.debug("getCompany called", id);
+
+        var deferred = $q.defer();
+        coreAPILoader().then(function (coreApi) {
+          var criteria = {};
+          if (id) {
+            criteria.id = id;
+          }
+          var request = coreApi.company.get(criteria);
+          request.execute(function (resp) {
+            $log.debug("getCompany resp", resp);
+            if (resp.result) {
+              deferred.resolve(resp.item);
+            } else {
+              deferred.reject(resp);
+            }
+          });
+        });
+        return deferred.promise;
+      };
+    }
+  ])
+
+  .factory("lookupCompany", ["coreAPILoader", "$q", "$log",
+    function (coreAPILoader, $q, $log) {
+      return function (authKey) { //get a company either by id or authKey
+        $log.debug("lookupCompany called", authKey);
+
+        var deferred = $q.defer();
+        coreAPILoader().then(function (coreApi) {
+          var request = coreApi.company.lookup({
+            authKey: authKey
+          });
+          request.execute(function (resp) {
+            $log.debug("lookupCompany resp", resp);
+            if (resp.result) {
+              deferred.resolve(resp.item);
+            } else {
+              deferred.reject(resp);
+            }
+          });
+        });
+        return deferred.promise;
+      };
+    }
+  ])
+
+  .factory("moveCompany", ["coreAPILoader", "$q", "$log",
+    function (coreAPILoader, $q, $log) {
+      return function (authKey, newParentId) { //get a company either by id or authKey
+        var deferred = $q.defer();
+        coreAPILoader().then(function (coreApi) {
+          var request = coreApi.company.move({
+            authKey: authKey,
+            newParentId: newParentId
+          });
+          request.execute(function (resp) {
+            $log.debug("moveCompany resp", resp);
+            if (resp.result) {
+              deferred.resolve(resp.item);
+            } else {
+              deferred.reject(resp);
+            }
+          });
+        });
+        return deferred.promise;
+      };
+    }
+  ])
+
+  .factory("updateCompany", ["$q", "$log", "coreAPILoader", "pick",
+    "COMPANY_WRITABLE_FIELDS",
+    function ($q, $log, coreAPILoader, pick, COMPANY_WRITABLE_FIELDS) {
+      return function (companyId, fields) {
+        var deferred = $q.defer();
+        fields = pick.apply(this, [fields].concat(COMPANY_WRITABLE_FIELDS));
+        $log.debug("updateCompany called", companyId, fields);
+        // fields.validate = validationRequired || false;
+        coreAPILoader().then(function (coreApi) {
+          var request = coreApi.company.patch({
+            id: companyId,
+            data: fields
+          });
+          request.execute(function (resp) {
+            $log.debug("updateCompany resp", resp);
+            if (resp.result) {
+              deferred.resolve(resp);
+            } else {
+              deferred.reject(resp);
+            }
+          });
+        });
+
+        return deferred.promise;
+      };
+    }
+  ])
+
+  .factory("regenerateCompanyField", ["$q", "$log", "coreAPILoader",
+    function ($q, $log, coreAPILoader) {
+      return function (companyId, fieldName) {
+        var deferred = $q.defer();
+        $log.debug("regenerateField called", companyId, fieldName);
+        coreAPILoader().then(function (coreApi) {
+          var request = coreApi.company.regenerateField({
+            "id": companyId,
+            "fieldName": fieldName
+          });
+          request.execute(
+            function (resp) {
+              $log.debug("regenerateField resp", resp);
+              if (!resp.error) {
+                deferred.resolve(resp);
+              } else {
+                deferred.reject(resp.message);
+              }
+            },
+            function (resp) {
+              deferred.reject("call failed " + resp);
+            }
+          );
+        });
+
+        return deferred.promise;
+      };
+    }
+  ])
+
+  .factory("deleteCompany", ["coreAPILoader", "$q", "$log",
+    function (coreAPILoader, $q, $log) {
+      return function (id) { //get a company either by id or authKey
+        $log.debug("deleteCompany called", id);
+
+        var deferred = $q.defer();
+        coreAPILoader().then(function (coreApi) {
+          var criteria = {};
+          if (id) {
+            criteria.id = id;
+          }
+          var request = coreApi.company.delete(criteria);
+          request.execute(function (resp) {
+            $log.debug("deleteCompany resp", resp);
+            if (resp.result) {
+              deferred.resolve(resp.item);
+            } else {
+              deferred.reject(resp);
+            }
+          });
+        });
+        return deferred.promise;
+      };
+    }
+  ])
+
+  .service("companyService", ["coreAPILoader", "$q", "$log", "getCompany",
+    "COMPANY_SEARCH_FIELDS",
+    function (coreAPILoader, $q, $log, getCompany, COMPANY_SEARCH_FIELDS) {
+
+      var createSearchQuery = function (fields, search) {
+        var query = "";
+
+        for (var i = 0; i < fields.length; i++) {
+          query += "OR " + fields[i] + ":~\'" + search + "\' ";
+        }
+
+        query = query ? query.substring(3) : "";
+
+        return query.trim();
+      };
+
+      this.getCompanies = function (companyId, search, cursor, count, sort) {
+        var deferred = $q.defer();
+        var query = search ? createSearchQuery(COMPANY_SEARCH_FIELDS,
+          search) : "";
+
+        var obj = {
+          "companyId": companyId,
+          "search": query,
+          "cursor": cursor,
+          "count": count,
+          "sort": sort
+        };
+        $log.debug("getCompanies called with", obj);
+        coreAPILoader().then(function (coreApi) {
+          var request = coreApi.company.list(obj);
+          request.execute(function (resp) {
+            $log.debug("getCompanies resp", resp);
+            deferred.resolve(resp);
+          });
+        });
+        return deferred.promise;
+      };
+
+      this.loadSelectedCompany = function (selectedCompanyId, userCompany) {
+        //this funtion assumes user and user.company are loaded
+        var deferred = $q.defer();
+        if (selectedCompanyId && selectedCompanyId !== userCompany.id) {
+          getCompany(selectedCompanyId).then(function (res) {
+            if (res.code === 0 && res.item) {
+              deferred.resolve(res.item);
+            } else {
+              deferred.resolve(userCompany);
+            }
+          });
+        } else {
+          deferred.resolve(userCompany);
+        }
+        return deferred.promise;
+      };
+
+    }
+  ])
+
+  .filter("fullAddress", function () {
+    return function (company) {
+      var res = (company.street ? company.street + ", " : "") +
+        (company.city ? company.city + ", " : "") +
+        (company.province ? company.province + ", " : "") +
+        (company.country ? company.country + ", " : "") +
+        (company.postalCode ? company.postalCode + ", " : "");
+      if (res) {
+        res = res.substr(0, res.length - 2);
+      }
+      return res;
+    };
+  });
+
+})(angular);
+
+(function (angular) {
+  "use strict";
+
+  angular.module("risevision.core.util", [])
+
+  .factory("pick", function () {
+    var ArrayProto = Array.prototype;
+    var
+      slice = ArrayProto.slice,
+      concat = ArrayProto.concat;
+    // Internal function that returns an efficient (for current engines) version
+    // of the passed-in callback, to be repeatedly applied in other Underscore
+    // functions.
+    var createCallback = function (func, context, argCount) {
+      if (context === void 0) {
+        return func;
+      }
+      switch (argCount === null ? 3 : argCount) {
+      case 1:
+        return function (value) {
+          return func.call(context, value);
+        };
+      case 2:
+        return function (value, other) {
+          return func.call(context, value, other);
+        };
+      case 3:
+        return function (value, index, collection) {
+          return func.call(context, value, index, collection);
+        };
+      case 4:
+        return function (accumulator, value, index, collection) {
+          return func.call(context, accumulator, value, index,
+            collection);
+        };
+      }
+      return function () {
+        return func.apply(context, arguments);
+      };
+    };
+
+    return function (obj, iteratee, context) {
+      var result = {},
+        key;
+      if (obj === null) {
+        return result;
+      }
+      if (angular.isFunction(iteratee)) {
+        iteratee = createCallback(iteratee, context);
+        for (key in obj) {
+          var value = obj[key];
+          if (iteratee(value, key, obj)) {
+            result[key] = value;
+          }
+        }
+      } else {
+        var keys = concat.apply([], slice.call(arguments, 1));
+        obj = new Object(obj);
+        for (var i = 0, length = keys.length; i < length; i++) {
+          key = keys[i];
+          if (key in obj) {
+            result[key] = obj[key];
+          }
+        }
+      }
+      return result;
+    };
+  });
+
+})(angular);
+
+(function (angular) {
+  "use strict";
+
+  angular.module("risevision.core.countries", ["risevision.common.gapi"])
+
+  .factory("getCoreCountries", ["coreAPILoader", "$q", "$log", "$filter",
+    function (coreAPILoader, $q, $log, $filter) {
+      var deferred;
+      return function () {
+        if (deferred) {
+          return deferred.promise;
+        } else {
+          deferred = $q.defer();
+        }
+
+        coreAPILoader().then(function (coreApi) {
+          return coreApi.country.list();
+        })
+          .then(function (resp) {
+            var items = resp.result ? resp.result.items : [];
+            if (items instanceof Array) {
+              items = $filter("orderBy")(items, "name");
+            }
+
+            deferred.resolve(items);
+          })
+          .then(null, function (e) {
+            $log.debug("getCoreCountries failed", e);
+            deferred.reject(e);
+
+            deferred = null;
+          });
+        return deferred.promise;
+      };
+    }
+  ])
+    .factory("COUNTRIES", ["getCoreCountries",
+      function (getCoreCountries) {
+        var countries = [];
+
+        getCoreCountries().then(function (result) {
+          Array.prototype.push.apply(countries, result);
+        });
+
+        return countries;
+      }
+    ]);
+
+})(angular);
+
+(function (angular) {
+  "use strict";
+
+  angular.module("risevision.core.display", [
+    "risevision.common.gapi",
+    "risevision.core.cache",
+    "risevision.core.util"
+  ])
+
+  .service("displayService", ["coreAPILoader", "$q", "$log",
+    function (coreAPILoader, $q, $log) {
+      this.list = function (companyId, search, cursor, count, sort) {
+        var deferred = $q.defer();
+        var obj = {
+          "companyId": companyId,
+          "search": search,
+          "cursor": cursor,
+          "count": count,
+          "sort": sort
+        };
+        $log.debug("list displays called with", obj);
+        coreAPILoader().then(function (coreApi) {
+          var request = coreApi.display.list(obj);
+          request.execute(function (resp) {
+            $log.debug("list displays resp", resp);
+            if (resp.result) {
+              deferred.resolve(resp.items);
+            } else {
+              deferred.reject(resp);
+            }
+          });
+        });
+        return deferred.promise;
+      };
+    }
+  ]);
+})(angular);
+
+"use strict";
+
+angular.module("risevision.common.fastpass", [])
+  .factory("loadFastpass", ["$q", "$http", "$document", "$timeout", "GSFP_URL",
+    "$log",
+    function ($q, $http, $document, $timeout, GSFP_URL, $log) {
+
+      var loadScript = function (src) {
+        var deferred = $q.defer();
+        var script = $document[0].createElement("script");
+        script.onload = script.onreadystatechange = function (e) {
+          deferred.resolve(e);
+        };
+        script.onerror = function (e) {
+          deferred.reject(e);
+        };
+        script.src = src;
+        $document[0].body.appendChild(script);
+        return deferred.promise;
+      };
+
+      return function (username, email) {
+        var deferred = $q.defer();
+        $log.debug("loadFastpass called", username, email);
+        var rejected = function (rej) {
+          $log.error("loadFastpass rejected", rej);
+          deferred.reject("loadFastpass rejected " + rej);
+        };
+
+        $http.get(GSFP_URL +
+          "/geturl?userEmail=" + email +
+          "&userName=" + username).then(function (res) {
+          loadScript(res.data).then(function (result) {
+            $log.debug("loadFastpass result", result);
+            deferred.resolve(true);
+          }, rejected).catch(rejected);
+        }, deferred.reject);
+
+        return deferred.promise;
+      };
+
+    }
+  ]);
+
+/**
+ * Created by rodrigopavezi on 30/01/15.
+ */
+"use strict";
+
+angular.module("risevision.common.monitoring.activity", [
+  "risevision.common.gapi"
+])
+  .factory("getActivity", ["$q", "monitoringAPILoader", "$log",
+    function ($q, monitoringAPILoader, $log) {
+      return function (clientId, api) {
+        $log.debug("getActivity called", clientId, api);
+
+        var deferred = $q.defer();
+        monitoringAPILoader().then(function (monitoringApi) {
+          var criteria = {};
+          if (clientId) {
+            criteria.clientId = clientId;
+          }
+          if (api) {
+            criteria.api = api;
+          }
+
+          var request = monitoringApi.activity.get(criteria);
+          request.execute(function (resp) {
+            $log.debug("getActivity resp", resp);
+            if (resp.result) {
+              deferred.resolve(resp.result);
+            } else {
+              deferred.reject(resp);
+            }
+          });
+        }, function (errorResult) {
+          $log.debug("Error: " + errorResult);
+          deferred.reject(errorResult);
+        });
+        return deferred.promise;
+      };
+    }
+  ]);
+
+(function (angular) {
+  "use strict";
+
+  angular.module("risevision.core.oauth2", ["risevision.common.gapi",
+    "risevision.core.cache"
+  ]).
+  factory("getOAuthUserInfo", ["oauth2APILoader", "$q", "userInfoCache",
+    "$log",
+    function (oauth2APILoader, $q, userInfoCache, $log) {
+      return function () {
+
+        var deferred = $q.defer();
+        var resp;
+        if ((resp = userInfoCache.get("oauth2UserInfo"))) {
+          if (resp.error) {
+            deferred.reject(resp.error);
+          } else {
+            deferred.resolve(resp);
+          }
+        } else {
+          oauth2APILoader().then(function (oauth2) {
+            oauth2.userinfo.get().execute(function (resp) {
+              $log.debug(
+                "getOAuthUserInfo oauth2.userinfo.get() resp", resp);
+              if (!resp) {
+                userInfoCache.remove("oauth2UserInfo");
+                deferred.reject();
+              } else if (resp.hasOwnProperty("error")) {
+                userInfoCache.remove("oauth2UserInfo");
+                deferred.reject(resp.error);
+              } else {
+                userInfoCache.put("oauth2UserInfo", resp);
+                deferred.resolve(resp);
+              }
+            });
+          }, deferred.reject);
+        }
+
+        return deferred.promise;
+      };
+    }
+  ]);
+
+})(angular);
+
+(function (angular) {
+  "use strict";
+
+  angular.module("risevision.core.schedule", [
+    "risevision.common.gapi",
+    "risevision.core.cache",
+    "risevision.core.util"
+  ])
+
+  .service("scheduleService", ["coreAPILoader", "$q", "$log",
+    function (coreAPILoader, $q, $log) {
+      //query a given's companys list of display schedules
+      this.list = function (companyId, search, cursor, count, sort) {
+        var deferred = $q.defer();
+        var obj = {
+          "companyId": companyId,
+          "search": search,
+          "cursor": cursor,
+          "count": count,
+          "sort": sort
+        };
+        $log.debug("getSchedules called with", obj);
+        coreAPILoader().then(function (coreApi) {
+          var request = coreApi.schedule.list(obj);
+          request.execute(function (resp) {
+            $log.debug("getSchedules resp", resp);
+            if (resp.result) {
+              deferred.resolve(resp.items);
+            } else {
+              deferred.reject(resp);
+            }
+          });
+        });
+        return deferred.promise;
+      };
+    }
+  ]);
+})(angular);
+
+(function () {
+  "use strict";
+
+  angular.module("risevision.common.subscription-status", [
+    "risevision.common.gapi"
+  ])
+    .service("subscriptionStatusService", ["$http", "$q", "storeAPILoader",
+      "$log",
+      function ($http, $q, storeAPILoader, $log) {
+        var responseType = ["On Trial", "Trial Expired", "Subscribed",
+          "Suspended", "Cancelled", "Free", "Not Subscribed",
+          "Product Not Found", "Company Not Found", "Error"
+        ];
+        var responseCode = ["on-trial", "trial-expired", "subscribed",
+          "suspended", "cancelled", "free", "not-subscribed",
+          "product-not-found", "company-not-found", "error"
+        ];
+        var _MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+        // a and b are javascript Date objects
+        function dateDiffInDays(a, b) {
+          return Math.floor((b.getTime() - a.getTime()) / _MS_PER_DAY);
+        }
+
+        this.get = function (productCode, companyId) {
+          var deferred = $q.defer();
+
+          var obj = {
+            "companyId": companyId,
+            "productCodes": productCode
+          };
+
+          storeAPILoader().then(function (storeApi) {
+            var request = storeApi.product.status(obj);
+            request.execute(function (resp) {
+              $log.debug("getProductStatus resp", resp);
+              if (resp.result) {
+                var subscriptionStatus = resp.items[0];
+
+                subscriptionStatus.plural = "";
+
+                var statusIndex = responseType.indexOf(
+                  subscriptionStatus.status);
+
+                if (statusIndex >= 0) {
+                  subscriptionStatus.statusCode = responseCode[
+                    statusIndex];
+                }
+
+                if (subscriptionStatus.status === "") {
+                  subscriptionStatus.status = "N/A";
+                  subscriptionStatus.statusCode = "na";
+                  subscriptionStatus.subscribed = false;
+                } else if (subscriptionStatus.status === responseType[0] ||
+                  subscriptionStatus.status === responseType[2] ||
+                  subscriptionStatus.status === responseType[5]) {
+                  subscriptionStatus.subscribed = true;
+                } else {
+                  subscriptionStatus.subscribed = false;
+                }
+
+                if (subscriptionStatus.statusCode === "not-subscribed" &&
+                  subscriptionStatus.trialPeriod && subscriptionStatus.trialPeriod >
+                  0) {
+                  subscriptionStatus.statusCode = "trial-available";
+                  subscriptionStatus.subscribed = true;
+                }
+
+                if (subscriptionStatus.expiry && subscriptionStatus.statusCode ===
+                  "on-trial") {
+                  subscriptionStatus.expiry = new Date(
+                    subscriptionStatus.expiry);
+
+                  if (subscriptionStatus.expiry instanceof Date && !
+                    isNaN(subscriptionStatus.expiry.valueOf())) {
+                    subscriptionStatus.expiry = dateDiffInDays(new Date(),
+                      subscriptionStatus.expiry);
+                  }
+
+                  if (subscriptionStatus.expiry === 0) {
+                    subscriptionStatus.plural = "-zero";
+                  } else if (subscriptionStatus.expiry > 1) {
+                    subscriptionStatus.plural = "-many";
+                  }
+                }
+
+                deferred.resolve(subscriptionStatus);
+              } else {
+                deferred.reject(resp);
+              }
+            });
+          });
+
+          return deferred.promise;
+        };
+
+      }
+    ]);
+}());
+
+(function (angular) {
+  "use strict";
+
+  angular.module("risevision.core.systemmessages", ["risevision.common.gapi"])
+
+  .factory("getCoreSystemMessages", ["gapiLoader", "$q", "$log",
+    function (gapiLoader, $q, $log) {
+      return function (companyId) {
+        var deferred = $q.defer();
+        gapiLoader().then(function (gApi) {
+          var request = gApi.client.core.systemmessage.list({
+            "companyId": companyId
+          });
+          request.execute(function (resp) {
+            var items = resp;
+            if (!(items instanceof Array) && items.items) {
+              items = items.items;
+            }
+            $log.debug("getCoreSystemMessage resp", items);
+            deferred.resolve(items);
+          });
+        });
+        return deferred.promise;
+      };
+    }
+  ]);
+
+})(angular);
+
+(function (angular) {
+  "use strict";
+
+  angular.module("risevision.core.userprofile", [
+    "risevision.common.gapi", "risevision.core.oauth2"
+  ])
+
+  .value("userRoleMap", {
+    "ce": "Content Editor",
+    "cp": "Content Publisher",
+    "da": "Display Administrator",
+    "ua": "System Administrator",
+    "pu": "Store Purchaser",
+    "sa": "Rise System Administrator",
+    "ba": "Rise Store Administrator"
+  })
+
+  .constant("USER_WRITABLE_FIELDS", [
+    "mailSyncEnabled", "email", "firstName", "lastName", "telephone",
+    "roles",
+    "status", "companyRole", "dataCollectionDate"
+  ])
+
+  .factory("getUserProfile", ["oauth2APILoader", "coreAPILoader", "$q",
+    "$log",
+    function (oauth2APILoader, coreAPILoader, $q, $log) {
+      var _username;
+      var _cachedPromises = {};
+
+      return function (username, clearCache) {
+
+        var deferred;
+
+        if (username === _username && !clearCache &&
+          _cachedPromises[username] !== null) {
+          //avoid calling API if username didn't change
+          return _cachedPromises[username].promise;
+        } else {
+          _username = username;
+          _cachedPromises[username] = deferred = $q.defer();
+        }
+
+        if (!username) {
+          deferred.reject(
+            "getUserProfile failed: username param is required.");
+          $log.debug("getUserProfile failed: username param is required.");
+        } else {
+
+          var criteria = {};
+          if (username) {
+            criteria.username = username;
+          }
+          $log.debug("getUserProfile called", criteria);
+
+          $q.all([oauth2APILoader(), coreAPILoader()]).then(function (
+            results) {
+            var coreApi = results[1];
+            // var oauthUserInfo = results[2];
+            coreApi.user.get(criteria).execute(function (resp) {
+              if (resp.error || !resp.result) {
+                deferred.reject(resp);
+              } else {
+                $log.debug("getUser resp", resp);
+                //get user profile
+                deferred.resolve(resp.item);
+              }
+            });
+          }, deferred.reject);
+        }
+        return deferred.promise;
+      };
+    }
+  ])
+
+  .factory("updateUser", ["$q", "coreAPILoader", "$log",
+    "getUserProfile", "pick", "USER_WRITABLE_FIELDS",
+    function ($q, coreAPILoader, $log, getUserProfile, pick,
+      USER_WRITABLE_FIELDS) {
+      return function (username, profile) {
+        var deferred = $q.defer();
+        profile = pick(profile, USER_WRITABLE_FIELDS);
+        $log.debug("updateUser called", username, profile);
+        coreAPILoader().then(function (coreApi) {
+          var request = coreApi.user.patch({
+            username: username,
+            data: profile
+          });
+          request.execute(function (resp) {
+            $log.debug("updateUser resp", resp);
+            if (resp.error) {
+              deferred.reject(resp);
+            } else if (resp.result) {
+              getUserProfile(username, true).then(function () {
+                deferred.resolve(resp);
+              });
+            } else {
+              deferred.reject("updateUser");
+            }
+          });
+        }, deferred.reject);
+        return deferred.promise;
+      };
+    }
+  ])
+
+  .factory("addUser", ["$q", "coreAPILoader", "$log", "pick",
+    "getUserProfile",
+    function ($q, coreAPILoader, $log, pick, getUserProfile) {
+      return function (companyId, username, profile) {
+        var deferred = $q.defer();
+        coreAPILoader().then(function (coreApi) {
+          profile = pick(profile, "mailSyncEnabled",
+            "email", "firstName", "lastName", "telephone", "roles",
+            "status");
+          var request = coreApi.user.add({
+            username: username,
+            companyId: companyId,
+            data: profile
+          });
+          request.execute(function (resp) {
+            $log.debug("addUser resp", resp);
+            if (resp.result) {
+              getUserProfile(username, true).then(function () {
+                deferred.resolve(resp);
+              });
+            } else {
+              deferred.reject(resp);
+            }
+          });
+        });
+        return deferred.promise;
+      };
+    }
+  ])
+
+  .factory("deleteUser", ["$q", "coreAPILoader", "$log",
+    function ($q, coreAPILoader, $log) {
+      return function (username) {
+        var deferred = $q.defer();
+        coreAPILoader().then(function (coreApi) {
+          var request = coreApi.user.delete({
+            username: username
+          });
+          request.execute(function (resp) {
+            $log.debug("deleteUser resp", resp);
+            if (resp.result) {
+              deferred.resolve(resp);
+            } else {
+              deferred.reject("deleteUser");
+            }
+          });
+        });
+        return deferred.promise;
+      };
+    }
+  ])
+
+  .factory("getUsers", ["$q", "coreAPILoader", "$log",
+    function (
+      $q, coreAPILoader, $log) {
+      return function (criteria) {
+        $log.debug("getUsers", criteria);
+        var deferred = $q.defer();
+        coreAPILoader().then(function (coreApi) {
+          var request = coreApi.user.list(criteria);
+          request.execute(function (resp) {
+            $log.debug("getUsers resp", resp);
+            if (resp.result) {
+              deferred.resolve(resp.items);
+            } else {
+              deferred.reject("getUsers");
+            }
+          });
+        }, deferred.reject);
+        return deferred.promise;
+      };
+    }
+  ]);
+
+})(angular);
+
+"use strict";
+
+angular.module("risevision.common.components.ui-flow", [
+  "LocalStorageModule"
+])
+
+.constant("uiStatusDependencies", {
+  _dependencies: {},
+  _retries: {},
+  addDependencies: function (deps) {
+    angular.extend(this._dependencies, deps);
+  },
+  setMaximumRetryCount: function (status, num) {
+    if (num < 1) {
+      throw "Retry count for " + status +
+        " must be equal to or greater than 1.";
+    }
+    if (this._retries[status] === undefined) {
+      this._retries[status] = num;
+    }
+  }
+});
+
+"use strict";
+
+angular.module("risevision.common.components.ui-flow")
+  .factory("uiFlowManager", ["$log", "$q", "$injector",
+    "uiStatusDependencies", "$rootScope", "localStorageService",
+    function ($log, $q, $injector, uiStatusDependencies, $rootScope,
+      localStorageService) {
+
+      var _status, _goalStatus, _retriesLeft = null;
+      var _dependencyMap = uiStatusDependencies._dependencies;
+
+      //generate a status that always resolves to true
+      var genedateDummyStatus = function () {
+        return function () {
+          var deferred = $q.defer();
+          deferred.resolve(true);
+          return deferred.promise;
+        };
+      };
+
+      var _getOrCreateDummyFactory = function (status) {
+        var factory;
+        try {
+          factory = $injector.get(status);
+        } catch (e) {
+          $log.debug("Generating dummy status", status);
+          factory = genedateDummyStatus();
+        }
+        return factory;
+      };
+
+      //internal method that attempt to reach a particular status
+      var _attemptStatus = function (status) {
+        var lastD;
+
+        $log.debug("Attempting to reach status", status, "...");
+        var dependencies = _dependencyMap[status];
+        if (dependencies) {
+          if (!(dependencies instanceof Array)) {
+            dependencies = [dependencies];
+          }
+
+          var prevD = $q.defer(),
+            firstD = prevD; //chain sibling dependency together
+
+          angular.forEach(dependencies, function (dep) {
+            //iterate through dependencies
+            var currentD = $q.defer();
+            prevD.promise.then(currentD.resolve, function () {
+              _attemptStatus(dep).then(function () {
+                //should come here if any of the dependencies is satisfied
+                if (_dependencyMap[dep]) {
+                  $log.debug("Deps for status", dep, "satisfied.");
+                }
+                //find factory function and check for satisfaction
+
+                _getOrCreateDummyFactory(status)().then(
+                  function () {
+                    $log.debug("Status", status, "satisfied.");
+                    currentD.resolve(true);
+                  },
+                  function () {
+                    $log.debug("Status", status, "not satisfied.");
+                    currentD.reject(status);
+                  }
+                );
+              }, function (lastRej) {
+                if (_dependencyMap[dep]) {
+                  $log.debug("Failed to reach status", dep,
+                    " because its dependencies are not satisfied. Last rejected dep: ",
+                    lastRej);
+                  currentD.reject(lastRej);
+                } else {
+                  currentD.reject(dep);
+                }
+
+              });
+            });
+            lastD = prevD = currentD;
+          });
+
+          //commence the avalance
+          firstD.reject();
+        } else {
+          //at deep level of termination status
+          lastD = $q.defer();
+          _getOrCreateDummyFactory(status)().then(
+            function () {
+              $log.debug("Termination status", status, "satisfied.");
+              lastD.resolve(true);
+            },
+            function () {
+              $log.debug("Termination status", status, "not satisfied.");
+              lastD.reject(status);
+            }
+          );
+        }
+
+        return lastD.promise;
+      };
+
+      var deferred, final = true;
+      var _recheckStatus = function (desiredStatus) {
+        if (!desiredStatus && !_goalStatus) {
+          //no goal, no desired status. resolve to true immediately
+          var d = $q.defer();
+          d.resolve();
+          return d.promise;
+        }
+        if (!_goalStatus && final) {
+          _goalStatus = desiredStatus;
+          //start afresh
+          _retriesLeft = angular.copy(uiStatusDependencies._retries);
+          deferred = $q.defer();
+          final = false;
+        }
+        if (_goalStatus) {
+          deferred = $q.defer();
+          _attemptStatus(_goalStatus).then(
+            function (s) {
+              if (_goalStatus) {
+                _status = _goalStatus;
+              }
+              deferred.resolve(s);
+              _goalStatus = null;
+              final = true;
+            },
+            function (status) {
+              // if rejected at any given step,
+              // show the dialog of that relevant step
+              _status = status;
+              if (_retriesLeft[status] !== undefined) {
+                if (_retriesLeft[status] === 0) {
+                  $log.debug("Maximum allowed retries for status", status,
+                    "reached. Validation will cancel.");
+                  cancelValidation();
+                } else {
+                  _retriesLeft[status]--;
+                }
+              }
+              final = true;
+              deferred.reject(status);
+            });
+        }
+        return deferred && deferred.promise;
+      };
+
+
+      var invalidateStatus = function (desiredStatus) {
+        _status = "pendingCheck";
+        return _recheckStatus(desiredStatus);
+      };
+
+      var persist = function () {
+        localStorageService.set("risevision.ui-flow.state", {
+          goalStatus: _goalStatus,
+          retriesLeft: _retriesLeft
+        });
+      };
+
+      var cancelValidation = function () {
+        _status = "";
+        _goalStatus = "";
+        _retriesLeft = null;
+        final = true;
+        $rootScope.$broadcast("risevision.uiStatus.validationCancelled");
+        $log.debug("UI status validation cancelled.");
+      };
+
+      //restore
+      if (localStorageService.get("risevision.ui-flow.state")) {
+        var state = localStorageService.get("risevision.ui-flow.state");
+        if (state && state.goalStatus) {
+          _goalStatus = state.goalStatus;
+          $log.debug("uiFlowManager.goalStatus restored to", state.goalStatus,
+            state.retriesLeft);
+          _retriesLeft = state.retriesLeft;
+          deferred = $q.defer();
+          final = false;
+        }
+        localStorageService.remove("risevision.ui-flow.state");
+      }
+
+      var manager = {
+        invalidateStatus: invalidateStatus,
+        cancelValidation: cancelValidation,
+        getStatus: function () {
+          return _status;
+        },
+        isStatusUndetermined: function () {
+          return _status === "pendingCheck";
+        },
+        persist: persist
+      };
+
+      //DEBUG
+      // window.uiFlowManager = manager;
+
+      return manager;
+    }
+  ]);
+
 (function (angular) {
   "use strict";
 
@@ -6421,15 +6941,16 @@ angular.module("risevision.common.header")
   angular.module("risevision.common.components.userstate", [
     "ui.router",
     "angular-md5",
+    "risevision.common.components.ui-flow",
     "risevision.common.components.util",
     "risevision.common.components.rvtokenstore",
     "risevision.common.components.logging",
+    "risevision.common.components.loading",
     "risevision.common.config",
     "risevision.common.gapi", "LocalStorageModule",
     "risevision.core.cache",
     "risevision.core.oauth2", "risevision.core.company",
-    "risevision.core.util", "risevision.core.userprofile",
-    "risevision.common.loading", "risevision.ui-flow"
+    "risevision.core.util", "risevision.core.userprofile"
   ])
 
   // Set up our mappings between URLs, templates, and controllers
@@ -7951,7 +8472,8 @@ angular.module("risevision.common.components.logging")
         };
 
         var getAccessToken = function () {
-          return $window.gapi ? $window.gapi.auth.getToken() : null;
+          return $window.gapi && $window.gapi.auth ?
+            $window.gapi.auth.getToken() : null;
         };
 
         var _restoreState = function () {
@@ -8574,6 +9096,237 @@ module.run(['$templateCache', function($templateCache) {
 
 "use strict";
 
+angular.module("risevision.common.components.loading", ["angularSpinner"])
+  .value("_rvGlobalSpinnerRegistry", []);
+
+"use strict";
+
+angular.module("risevision.common.components.loading")
+  .service("$loading", ["$q", "$rootScope", "$document",
+    "_rvGlobalSpinnerRegistry",
+    function ($q, $rootScope, $document, _rvGlobalSpinnerRegistry) {
+      var self = this;
+
+      this.start = function (spinnerKeys) {
+        spinnerKeys = angular.isArray(spinnerKeys) ? spinnerKeys : [
+          spinnerKeys
+        ];
+        for (var i = 0; i < spinnerKeys.length; i++) {
+          $rootScope.$broadcast("rv-spinner:start", spinnerKeys[i]);
+        }
+      };
+
+      this.stop = function (spinnerKeys) {
+        spinnerKeys = angular.isArray(spinnerKeys) ? spinnerKeys : [
+          spinnerKeys
+        ];
+        for (var i = 0; i < spinnerKeys.length; i++) {
+          $rootScope.$broadcast("rv-spinner:stop", spinnerKeys[i]);
+        }
+      };
+
+      /* Global Spinner */
+      //append global spinner
+      angular.element($document[0].body).append(
+        "<div rv-global-spinner class=\"ng-hide\" style=\"position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 1040; \"></div>"
+      );
+
+      function _addKeyToRegistry(key) {
+        if (_rvGlobalSpinnerRegistry.indexOf(key) < 0) {
+          _rvGlobalSpinnerRegistry.push(key);
+        }
+      }
+
+      function _removeKeyFromRegistry(key) {
+        var index;
+        if ((index = _rvGlobalSpinnerRegistry.indexOf(key)) >= 0) {
+          _rvGlobalSpinnerRegistry.splice(index, 1);
+        }
+      }
+
+      this.startGlobal = function (spinnerKeys) {
+        spinnerKeys = angular.isArray(spinnerKeys) ? spinnerKeys : [
+          spinnerKeys
+        ];
+        angular.forEach(spinnerKeys, function (key) {
+          _addKeyToRegistry(key);
+        });
+      };
+
+      this.stopGlobal = function (spinnerKeys) {
+        spinnerKeys = angular.isArray(spinnerKeys) ? spinnerKeys : [
+          spinnerKeys
+        ];
+        angular.forEach(spinnerKeys, function (key) {
+          _removeKeyFromRegistry(key);
+        });
+      };
+
+      this.stopSpinnerAfterPromise = function (spinnerKeys, promises) {
+
+        spinnerKeys = angular.isArray(spinnerKeys) ? spinnerKeys : [
+          spinnerKeys
+        ];
+
+        var stop = function () {
+          for (var i = 0; i < spinnerKeys.length; i++) {
+            $rootScope.$broadcast("rv-spinner:stop", spinnerKeys[i]);
+          }
+        };
+
+        var promise = angular.isArray(promises) ? $q.all(promises) : promises;
+        promise.then(function () {
+          stop();
+        }, function () {
+          stop();
+        });
+      };
+
+      this.getDefaultSpinnerOptions = function () {
+        return self.defaultSpinnerOptions;
+      };
+
+      this.defaultSpinnerOptions = {
+        lines: 13, // The number of lines to draw
+        length: 20, // The length of each line
+        width: 10, // The line thickness
+        radius: 30, // The radius of the inner circle
+        corners: 1, // Corner roundness (0..1)
+        rotate: 0, // The rotation offset
+        direction: 1, // 1: clockwise, -1: counterclockwise
+        color: "#555", // #rgb or #rrggbb or array of colors
+        speed: 1, // Rounds per second
+        trail: 60, // Afterglow percentage
+        shadow: false, // Whether to render a shadow
+        hwaccel: false, // Whether to use hardware acceleration
+        className: "spinner", // The CSS class to assign to the spinner
+        zIndex: 2e9, // The z-index (defaults to 2000000000)
+        top: "50%", // Top position relative to parent in px
+        left: "50%" // Left position relative to parent in px
+      };
+    }
+  ]);
+
+"use strict";
+
+angular.module("risevision.common.components.loading")
+  .directive("rvGlobalSpinner", ["usSpinnerService", "$compile",
+    "_rvGlobalSpinnerRegistry",
+    "$timeout", "$rootScope",
+    function (usSpinnerService, $compile, _rvGlobalSpinnerRegistry, $timeout,
+      $rootScope) {
+      return {
+        scope: true,
+        link: function (scope, $element) {
+
+          var tpl = "<div ng-show=\"active\" class=\"spinner-backdrop fade\"" +
+            " ng-class=\"{in: active}\" us-spinner=\"rvSpinnerOptions\"" +
+            " spinner-key=\"_rv-global-spinner\" ng-focus=\"spinnerFocused()\"></div>";
+          $element.prepend($compile(tpl)(scope));
+
+          scope.rvSpinnerOptions = {
+            lines: 13, // The number of lines to draw
+            length: 20, // The length of each line
+            width: 10, // The line thickness
+            radius: 30, // The radius of the inner circle
+            corners: 1, // Corner roundness (0..1)
+            rotate: 0, // The rotation offset
+            direction: 1, // 1: clockwise, -1: counterclockwise
+            color: "#555", // #rgb or #rrggbb or array of colors
+            speed: 1, // Rounds per second
+            trail: 60, // Afterglow percentage
+            shadow: false, // Whether to render a shadow
+            hwaccel: false, // Whether to use hardware acceleration
+            className: "spinner", // The CSS class to assign to the spinner
+            zIndex: 2e9, // The z-index (defaults to 2000000000)
+            top: "50%", // Top position relative to parent in px
+            left: "50%" // Left position relative to parent in px
+          };
+
+          scope.registry = _rvGlobalSpinnerRegistry;
+
+          scope.$watchCollection("registry", function () {
+            if (scope.registry.length > 0) {
+              scope.active = true;
+            } else {
+              scope.active = false;
+            }
+          });
+
+          scope.$watch("active", function (active) {
+            if (active) {
+              $element.removeClass("ng-hide");
+            } else {
+              $element.addClass("ng-hide");
+            }
+          });
+
+          //to be used if user has closed Google authentication popup dialog
+          //without completing the registration process
+
+          scope.spinnerFocused = function () {
+            $rootScope.$broadcast("rv-spinner:global:focused");
+          };
+
+          $timeout(function () {
+            usSpinnerService.spin("_rv-global-spinner");
+          });
+          scope.active = true;
+
+        }
+      };
+    }
+  ]);
+
+"use strict";
+
+angular.module("risevision.common.components.loading")
+  .directive("rvSpinner", ["usSpinnerService", "$compile",
+    function (usSpinnerService, $compile) {
+      return {
+        scope: {
+          backdropClass: "@rvSpinnerBackdropClass",
+          rvSpinnerKey: "@rvSpinnerKey",
+          rvSpinnerStartActive: "=?rvSpinnerStartActive",
+          rvSpinnerOptions: "=rvSpinner"
+        },
+        link: function postLink(scope, $element, iAttrs) {
+          scope.active = angular.isDefined(iAttrs.rvSpinnerStartActive) &&
+            iAttrs.rvSpinnerStartActive === "1";
+          var tpl =
+            "<div ng-show=\"active\" class=\"spinner-backdrop fade {{backdropClass}}\"" +
+            " ng-class=\"{in: active}\" us-spinner=\"rvSpinnerOptions\"" +
+            " spinner-key=\"{{rvSpinnerKey}}\"";
+
+          if (iAttrs.rvSpinnerStartActive && iAttrs.rvSpinnerStartActive ===
+            "1") {
+            tpl += " spinner-start-active=\"1\"></div>";
+          } else {
+            tpl += "></div>";
+          }
+
+          $element.prepend($compile(tpl)(scope));
+
+          scope.$on("rv-spinner:start", function (event, key) {
+            if (key === scope.rvSpinnerKey) {
+              usSpinnerService.spin(key);
+              scope.active = true;
+            }
+          });
+
+          scope.$on("rv-spinner:stop", function (event, key) {
+            if (key === scope.rvSpinnerKey) {
+              usSpinnerService.stop(key);
+              scope.active = false;
+            }
+          });
+        }
+      };
+    }
+  ]);
+
+"use strict";
+
 angular.module("risevision.common.components.search-filter", [])
   .directive("searchFilter", ["$timeout",
     function ($timeout) {
@@ -9059,118 +9812,269 @@ angular.module("risevision.common.components.svg", [])
   "use strict";
 
   try {
-  	angular.module("risevision.common.config");
-  }
-  catch(err) {
-  	angular.module("risevision.common.config", []);
+    angular.module("risevision.common.config");
+  } catch (err) {
+    angular.module("risevision.common.config", []);
   }
 
   angular.module("risevision.common.config")
     .value("STORE_URL", "https://store.risevision.com/")
-    .value("STORE_SERVER_URL", "https://store-dot-rvaserver2.appspot.com/")
-  ;
+    .value("STORE_SERVER_URL", "https://store-dot-rvaserver2.appspot.com/");
 
-  angular.module("risevision.widget.common.subscription-status.config", [])
+  angular.module("risevision.common.components.subscription-status.config", [])
     .value("IN_RVA_PATH", "product/productId/?cid=companyId")
     .value("ACCOUNT_PATH", "account?cid=companyId")
     .value("PATH_URL", "v1/company/companyId/product/status?pc=")
     .value("AUTH_PATH_URL", "v1/widget/auth?cid=companyId&pc=")
-    .value("PATH_URL_BY_DISPLAY_ID", "v1/product/productCode/status?displayIds=")
-  ;
+    .value("PATH_URL_BY_DISPLAY_ID",
+      "v1/product/productCode/status?displayIds=");
 
+  angular.module("risevision.common.components.subscription-status.filters", [
+    "risevision.common.i18n"
+  ]);
+
+  angular.module(
+    "risevision.common.components.subscription-status.directives", [
+      "risevision.common.components.subscription-status.service"
+    ]);
+
+  angular.module("risevision.common.components.subscription-status", [
+    "ngSanitize",
+    "ui.bootstrap",
+    "risevision.common.config",
+    "risevision.common.components.subscription-status.config",
+    "risevision.common.components.subscription-status.directives",
+    "risevision.common.components.subscription-status.filters",
+    "risevision.common.components.subscription-status.service"
+  ]);
 }());
 
 (function () {
   "use strict";
 
-  angular.module("risevision.widget.common.subscription-status",
-    ["risevision.common.config",
-     "risevision.widget.common.subscription-status.config",
-     "risevision.widget.common.subscription-status.service",
-     "risevision.widget.common",
-     "risevision.common.i18n",
-     "ngSanitize",
-     "ui.bootstrap"]);
-  }());
+  angular.module("risevision.common.components.subscription-status.service", [
+    "risevision.common.config",
+    "risevision.common.components.subscription-status.config"
+  ])
+    .service("subscriptionStatusService", ["$http", "$q", "STORE_SERVER_URL",
+      "PATH_URL", "AUTH_PATH_URL", "PATH_URL_BY_DISPLAY_ID",
+      function ($http, $q, STORE_SERVER_URL, PATH_URL, AUTH_PATH_URL,
+        PATH_URL_BY_DISPLAY_ID) {
+        var responseType = ["On Trial", "Trial Expired", "Subscribed",
+          "Suspended", "Cancelled", "Free", "Not Subscribed",
+          "Product Not Found", "Company Not Found", "Error"
+        ];
+        var responseCode = ["on-trial", "trial-expired", "subscribed",
+          "suspended", "cancelled", "free", "not-subscribed",
+          "product-not-found", "company-not-found", "error"
+        ];
+        var _MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+        // a and b are javascript Date objects
+        function dateDiffInDays(a, b) {
+          return Math.floor((b.getTime() - a.getTime()) / _MS_PER_DAY);
+        }
+
+        var checkAuthorizedStatus = function (productCode, companyId) {
+          var deferred = $q.defer();
+
+          var url = STORE_SERVER_URL +
+            AUTH_PATH_URL.replace("companyId", companyId) +
+            productCode;
+
+          $http.get(url).then(function (response) {
+            if (response && response.data) {
+              deferred.resolve(response.data.authorized);
+            } else {
+              deferred.resolve(false);
+            }
+          });
+
+          return deferred.promise;
+        };
+
+        var checkSubscriptionStatus = function (productCode, companyId,
+          displayId) {
+          var deferred = $q.defer();
+
+          var url = STORE_SERVER_URL +
+            PATH_URL.replace("companyId", companyId) +
+            productCode;
+
+          if (displayId) {
+            url = STORE_SERVER_URL +
+              PATH_URL_BY_DISPLAY_ID.replace("productCode", productCode) +
+              displayId;
+          }
+
+          $http.get(url).then(function (response) {
+            if (response && response.data && response.data.length) {
+              var subscriptionStatus = response.data[0];
+
+              subscriptionStatus.plural = "";
+
+              var statusIndex = responseType.indexOf(subscriptionStatus
+                .status);
+
+              if (statusIndex >= 0) {
+                subscriptionStatus.statusCode = responseCode[
+                  statusIndex];
+              }
+
+              if (subscriptionStatus.status === "") {
+                subscriptionStatus.status = "N/A";
+                subscriptionStatus.statusCode = "na";
+                subscriptionStatus.subscribed = false;
+              } else if (subscriptionStatus.status === responseType[0] ||
+                subscriptionStatus.status === responseType[2] ||
+                subscriptionStatus.status === responseType[5]) {
+                subscriptionStatus.subscribed = true;
+              } else {
+                subscriptionStatus.subscribed = false;
+              }
+
+              if (subscriptionStatus.statusCode === "not-subscribed" &&
+                subscriptionStatus.trialPeriod && subscriptionStatus.trialPeriod >
+                0) {
+                subscriptionStatus.statusCode = "trial-available";
+                subscriptionStatus.subscribed = true;
+              }
+
+              if (subscriptionStatus.expiry && subscriptionStatus.statusCode ===
+                "on-trial") {
+                subscriptionStatus.expiry = new Date(subscriptionStatus
+                  .expiry);
+
+                if (subscriptionStatus.expiry instanceof Date && !isNaN(
+                  subscriptionStatus.expiry.valueOf())) {
+                  subscriptionStatus.expiry = dateDiffInDays(new Date(),
+                    subscriptionStatus.expiry);
+                }
+
+                if (subscriptionStatus.expiry === 0) {
+                  subscriptionStatus.plural = "-zero";
+                } else if (subscriptionStatus.expiry > 1) {
+                  subscriptionStatus.plural = "-many";
+                }
+              }
+              deferred.resolve(subscriptionStatus);
+            } else {
+              deferred.reject("No response");
+            }
+          });
+
+          return deferred.promise;
+        };
+
+        this.get = function (productCode, companyId, displayId) {
+          return checkSubscriptionStatus(productCode, companyId, displayId)
+            .then(function (subscriptionStatus) {
+              if (subscriptionStatus.subscribed === false) {
+                // double check store authorization in case they're authorized
+                return checkAuthorizedStatus(productCode, companyId)
+                  .then(function (authorized) {
+                    subscriptionStatus.subscribed = authorized;
+
+                    return subscriptionStatus;
+                  });
+              } else {
+                return subscriptionStatus;
+              }
+            });
+        };
+
+      }
+    ]);
+}());
 
 (function () {
   "use strict";
 
-  angular.module("risevision.widget.common.subscription-status")
-    .directive("appSubscriptionStatus", ["$templateCache", "$modal", 
-    "subscriptionStatusService",
+  angular.module(
+    "risevision.common.components.subscription-status.directives")
+    .directive("appSubscriptionStatus", ["$templateCache", "$modal",
+      "subscriptionStatusService",
       function ($templateCache, $modal, subscriptionStatusService) {
-      return {
-        restrict: "AE",
-        require: "?ngModel",
-        scope: {
-          productId: "@",
-          productCode: "@",
-          companyId: "@",
-          productPrice: "@"
-        },
-        template: $templateCache.get("app-subscription-status-template.html"),
-        link: function($scope, elm, attrs, ctrl) {
-          $scope.subscriptionStatus = {"status": "N/A", "statusCode": "na", "subscribed": false, "expiry": null};
+        return {
+          restrict: "AE",
+          require: "?ngModel",
+          scope: {
+            productId: "@",
+            productCode: "@",
+            companyId: "@",
+            productPrice: "@"
+          },
+          template: $templateCache.get(
+            "subscription-status/app-subscription-status-template.html"),
+          link: function ($scope, elm, attrs, ctrl) {
+            $scope.subscriptionStatus = {
+              "status": "N/A",
+              "statusCode": "na",
+              "subscribed": false,
+              "expiry": null
+            };
 
-          function checkSubscriptionStatus() {
-            if ($scope.productCode && $scope.productId && $scope.companyId) {
-              subscriptionStatusService.get($scope.productCode, $scope.companyId).then(function(subscriptionStatus) {
-                if (subscriptionStatus) {
-                  $scope.subscriptionStatus = subscriptionStatus;
-                }
-              },
-              function () {
-                // TODO: catch error here
+            function checkSubscriptionStatus() {
+              if ($scope.productCode && $scope.productId && $scope.companyId) {
+                subscriptionStatusService.get($scope.productCode, $scope.companyId)
+                  .then(function (subscriptionStatus) {
+                      if (subscriptionStatus) {
+                        $scope.subscriptionStatus = subscriptionStatus;
+                      }
+                    },
+                    function () {
+                      // TODO: catch error here
+                    });
+              }
+            }
+
+            $scope.$watch("companyId", function () {
+              checkSubscriptionStatus();
+            });
+
+            if (ctrl) {
+              $scope.$watch("subscriptionStatus", function (
+                subscriptionStatus) {
+                ctrl.$setViewValue(subscriptionStatus);
               });
             }
-          }
 
-          $scope.$watch("companyId", function() {
-            checkSubscriptionStatus();
-          });
+            $scope.$watch("showStoreModal", function (show) {
+              if (show) {
+                var modalInstance = $modal.open({
+                  templateUrl: "store-iframe-template.html",
+                  controller: "StoreModalController",
+                  size: "lg",
+                  resolve: {
+                    productId: function () {
+                      return $scope.productId;
+                    },
+                    companyId: function () {
+                      return $scope.companyId;
+                    }
+                  }
+                });
 
-          if (ctrl) {
-            $scope.$watch("subscriptionStatus", function(subscriptionStatus) {
-              ctrl.$setViewValue(subscriptionStatus);
+                modalInstance.result.then(function () {
+                  checkSubscriptionStatus();
+
+                }, function () {
+                  checkSubscriptionStatus();
+
+                })
+                  .finally(function () {
+                    $scope.showStoreModal = false;
+                  });
+              }
             });
           }
-
-          $scope.$watch("showStoreModal", function(show) {
-            if (show) {
-              var modalInstance = $modal.open({
-                templateUrl: "store-iframe-template.html",
-                controller: "StoreModalController",
-                size: "lg",
-                resolve: {
-                  productId: function () {
-                    return $scope.productId;
-                  },
-                  companyId: function() {
-                    return $scope.companyId;
-                  }
-                }
-              });
-
-              modalInstance.result.then(function () {
-                checkSubscriptionStatus();
-
-              }, function () {
-                checkSubscriptionStatus();
-
-              })
-              .finally(function() {
-                $scope.showStoreModal = false;
-              });
-            }
-          });
-        }
-      };
-    }])
-    .directive("ngDisableRightClick", function() {
-      return function(scope, element) {
-        element.bind("contextmenu", function(event) {
-          scope.$apply(function() {
+        };
+      }
+    ])
+    .directive("ngDisableRightClick", function () {
+      return function (scope, element) {
+        element.bind("contextmenu", function (event) {
+          scope.$apply(function () {
             event.preventDefault();
           });
         });
@@ -9181,810 +10085,178 @@ angular.module("risevision.common.components.svg", [])
 (function () {
   "use strict";
 
-  angular.module("risevision.widget.common.subscription-status")
+  angular.module(
+    "risevision.common.components.subscription-status.directives")
     .directive("subscriptionStatus", ["$rootScope", "$templateCache",
-    "subscriptionStatusService", "STORE_URL", "ACCOUNT_PATH", "IN_RVA_PATH",
+      "subscriptionStatusService", "STORE_URL", "ACCOUNT_PATH",
+      "IN_RVA_PATH",
       function ($rootScope, $templateCache, subscriptionStatusService,
         STORE_URL, ACCOUNT_PATH, IN_RVA_PATH) {
-      return {
-        restrict: "AE",
-        require: "?ngModel",
-        scope: {
-          productId: "@",
-          productCode: "@",
-          companyId: "@",
-          displayId: "@",
-          expandedFormat: "@",
-          showStoreModal: "=?",
-          customProductLink: "@",
-          customMessages: "@"
-        },
-        template: $templateCache.get("subscription-status-template.html"),
-        link: function($scope, elm, attrs, ctrl) {
-          $scope.subscriptionStatus = {"status": "N/A", "statusCode": "na", "subscribed": false, "expiry": null};
-          $scope.messagesPrefix = $scope.customMessages ? $scope.customMessages : "subscription-status";
+        return {
+          restrict: "AE",
+          require: "?ngModel",
+          scope: {
+            productId: "@",
+            productCode: "@",
+            companyId: "@",
+            displayId: "@",
+            expandedFormat: "@",
+            showStoreModal: "=?",
+            customProductLink: "@",
+            customMessages: "@"
+          },
+          template: $templateCache.get(
+            "subscription-status/subscription-status-template.html"),
+          link: function ($scope, elm, attrs, ctrl) {
+            $scope.subscriptionStatus = {
+              "status": "N/A",
+              "statusCode": "na",
+              "subscribed": false,
+              "expiry": null
+            };
+            $scope.messagesPrefix = $scope.customMessages ? $scope.customMessages :
+              "subscription-status";
 
-          var updateUrls = function() {
-            $scope.storeAccountUrl = STORE_URL + ACCOUNT_PATH
-                              .replace("companyId", $scope.companyId);
-
-            if($scope.customProductLink) {
-              $scope.storeUrl = $scope.customProductLink;
-            }
-            else {
-              $scope.storeUrl = STORE_URL + IN_RVA_PATH
-                .replace("productId", $scope.productId)
+            var updateUrls = function () {
+              $scope.storeAccountUrl = STORE_URL + ACCOUNT_PATH
                 .replace("companyId", $scope.companyId);
+
+              if ($scope.customProductLink) {
+                $scope.storeUrl = $scope.customProductLink;
+              } else {
+                $scope.storeUrl = STORE_URL + IN_RVA_PATH
+                  .replace("productId", $scope.productId)
+                  .replace("companyId", $scope.companyId);
+              }
+            };
+
+            function checkSubscriptionStatus() {
+              if ($scope.productCode && $scope.productId && ($scope.companyId ||
+                $scope.displayId)) {
+                subscriptionStatusService.get($scope.productCode, $scope.companyId,
+                  $scope.displayId).then(function (subscriptionStatus) {
+                    if (subscriptionStatus) {
+                      if (!$scope.subscriptionStatus || $scope.subscriptionStatus
+                        .status !== subscriptionStatus.status) {
+                        $rootScope.$emit("subscription-status:changed",
+                          subscriptionStatus);
+                      }
+
+                      $scope.subscriptionStatus = subscriptionStatus;
+                    }
+                  },
+                  function () {
+                    // TODO: catch error here
+                  });
+              }
             }
-          };
 
-          function checkSubscriptionStatus() {
-            if ($scope.productCode && $scope.productId && ($scope.companyId || $scope.displayId )) {
-              subscriptionStatusService.get($scope.productCode, $scope.companyId, $scope.displayId).then(function(subscriptionStatus) {
-                if (subscriptionStatus) {
-                  if(!$scope.subscriptionStatus || $scope.subscriptionStatus.status !== subscriptionStatus.status) {
-                    $rootScope.$emit("subscription-status:changed", subscriptionStatus);
-                  }
+            $scope.$watch("companyId", function () {
+              checkSubscriptionStatus();
 
-                  $scope.subscriptionStatus = subscriptionStatus;
+              updateUrls();
+            });
+
+            var subscriptionStatusListener = $rootScope.$on(
+              "refreshSubscriptionStatus", function (event, data) {
+                // Only refresh if currentStatus code matches the provided value, or value is null
+                if (data === null || $scope.subscriptionStatus.statusCode ===
+                  data) {
+                  checkSubscriptionStatus();
                 }
-              },
-              function () {
-                // TODO: catch error here
+              });
+
+            $scope.$on("$destroy", function () {
+              subscriptionStatusListener();
+            });
+
+            if (ctrl) {
+              $scope.$watch("subscriptionStatus", function (
+                subscriptionStatus) {
+                ctrl.$setViewValue(subscriptionStatus);
               });
             }
           }
-
-          $scope.$watch("companyId", function() {
-            checkSubscriptionStatus();
-
-            updateUrls();
-          });
-
-          var subscriptionStatusListener = $rootScope.$on("refreshSubscriptionStatus", function(event, data) {
-            // Only refresh if currentStatus code matches the provided value, or value is null
-            if(data === null || $scope.subscriptionStatus.statusCode === data) {
-              checkSubscriptionStatus();
-            }
-          });
-          
-          $scope.$on("$destroy", function () {
-            subscriptionStatusListener();
-          });
-
-          if (ctrl) {
-            $scope.$watch("subscriptionStatus", function(subscriptionStatus) {
-              ctrl.$setViewValue(subscriptionStatus);
-            });
-          }
-        }
-      };
-    }])
-    .filter("to_trusted", ["$sce", function($sce) {
-      return function(text) {
-        return $sce.trustAsHtml(text);
-      };
-    }]);
+        };
+      }
+    ])
+    .filter("to_trusted", ["$sce",
+      function ($sce) {
+        return function (text) {
+          return $sce.trustAsHtml(text);
+        };
+      }
+    ]);
 }());
 
 "use strict";
 
-angular.module("risevision.widget.common.subscription-status")
-  .filter("productTrialDaysToExpiry", ["$interpolate", "$translate", function($interpolate, $translate) {
-    var expiresToday = null;
-    var expiresIn = null;
+angular.module("risevision.common.components.subscription-status.filters")
+  .filter("productTrialDaysToExpiry", ["$interpolate", "$translate",
+    function ($interpolate, $translate) {
+      var expiresToday = null;
+      var expiresIn = null;
 
-    $translate(["subscription-status.expires-today", "subscription-status.expires-in"],
-        { days: "{{days}}" }).then(function(values) {
-      expiresToday = $interpolate(values["subscription-status.expires-today"]);
-      expiresIn = $interpolate(values["subscription-status.expires-in"]);
-    });
+      $translate(["subscription-status.expires-today",
+        "subscription-status.expires-in"
+      ], {
+        days: "{{days}}"
+      }).then(function (values) {
+        expiresToday = $interpolate(values[
+          "subscription-status.expires-today"]);
+        expiresIn = $interpolate(values["subscription-status.expires-in"]);
+      });
 
-    return function(subscriptionExpiry) {
-      var msg = "";
-      try {
-        var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
-        var timeInMs = new Date(subscriptionExpiry).getTime() - new Date().getTime();
-        var days = Math.floor(timeInMs/oneDay);
-        var params = { days: days };
+      return function (subscriptionExpiry) {
+        var msg = "";
+        try {
+          var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+          var timeInMs = new Date(subscriptionExpiry).getTime() - new Date()
+            .getTime();
+          var days = Math.floor(timeInMs / oneDay);
+          var params = {
+            days: days
+          };
 
-        if (days === 0) {
-          msg = expiresToday !== null ? expiresToday(params) : "";
-        }
-        else if (days > 0) {
-          msg = expiresIn !== null ? expiresIn(params) : "";
-        }
-        else {
-          msg = expiresToday !== null ? expiresToday(params) : "";
-        }
-      } catch (e) {
-        // Nothing to do
-      }
-
-      return msg;
-    };
-  }]);
-
-(function () {
-  "use strict";
-
-  angular.module("risevision.widget.common.subscription-status.service",
-    ["risevision.common.config",
-     "risevision.widget.common.subscription-status.config"])
-    .service("subscriptionStatusService", ["$http", "$q", "STORE_SERVER_URL", 
-    "PATH_URL", "AUTH_PATH_URL", "PATH_URL_BY_DISPLAY_ID",
-    function ($http, $q, STORE_SERVER_URL, PATH_URL, AUTH_PATH_URL, PATH_URL_BY_DISPLAY_ID) {
-      var responseType = ["On Trial", "Trial Expired", "Subscribed", "Suspended", "Cancelled", "Free", "Not Subscribed", "Product Not Found", "Company Not Found", "Error"];
-      var responseCode = ["on-trial", "trial-expired", "subscribed", "suspended", "cancelled", "free", "not-subscribed", "product-not-found", "company-not-found", "error"];
-      var _MS_PER_DAY = 1000 * 60 * 60 * 24;
-
-      // a and b are javascript Date objects
-      function dateDiffInDays(a, b) {
-        return Math.floor((b.getTime() - a.getTime()) / _MS_PER_DAY);
-      }
-      
-      var checkAuthorizedStatus = function(productCode, companyId) {
-        var deferred = $q.defer();
-
-        var url = STORE_SERVER_URL +
-          AUTH_PATH_URL.replace("companyId", companyId) +
-          productCode;
-
-        $http.get(url).then(function (response) {
-          if (response && response.data) {
-            deferred.resolve(response.data.authorized);
+          if (days === 0) {
+            msg = expiresToday !== null ? expiresToday(params) : "";
+          } else if (days > 0) {
+            msg = expiresIn !== null ? expiresIn(params) : "";
+          } else {
+            msg = expiresToday !== null ? expiresToday(params) : "";
           }
-          else {
-            deferred.resolve(false);
-          }
-        });
+        } catch (e) {
+          // Nothing to do
+        }
 
-        return deferred.promise;
+        return msg;
       };
-      
-      var checkSubscriptionStatus = function(productCode, companyId, displayId) {
-        var deferred = $q.defer();
-
-        var url = STORE_SERVER_URL +
-          PATH_URL.replace("companyId", companyId) +
-          productCode;
-
-        if (displayId) {
-          url = STORE_SERVER_URL +
-          PATH_URL_BY_DISPLAY_ID.replace("productCode", productCode) +
-          displayId;
-        }
-
-        $http.get(url).then(function (response) {
-          if (response && response.data && response.data.length) {
-            var subscriptionStatus = response.data[0];
-
-            subscriptionStatus.plural = "";
-
-            var statusIndex = responseType.indexOf(subscriptionStatus.status);
-            
-            if(statusIndex >= 0) {
-              subscriptionStatus.statusCode = responseCode[statusIndex];
-            }
-            
-            if (subscriptionStatus.status === "") {
-              subscriptionStatus.status = "N/A";
-              subscriptionStatus.statusCode = "na";
-              subscriptionStatus.subscribed = false;
-            }
-            else if (subscriptionStatus.status === responseType[0] ||
-              subscriptionStatus.status === responseType[2] ||
-              subscriptionStatus.status === responseType[5]) {
-              subscriptionStatus.subscribed = true;
-            }
-            else {
-              subscriptionStatus.subscribed = false;
-            }
-
-            if(subscriptionStatus.statusCode === "not-subscribed" && 
-              subscriptionStatus.trialPeriod && subscriptionStatus.trialPeriod > 0) {
-              subscriptionStatus.statusCode = "trial-available";
-              subscriptionStatus.subscribed = true;
-            }
-
-            if(subscriptionStatus.expiry && subscriptionStatus.statusCode === "on-trial") {
-              subscriptionStatus.expiry = new Date(subscriptionStatus.expiry);
-
-              if(subscriptionStatus.expiry instanceof Date && !isNaN(subscriptionStatus.expiry.valueOf())) {
-                subscriptionStatus.expiry = dateDiffInDays(new Date(), subscriptionStatus.expiry);
-              }
-
-              if(subscriptionStatus.expiry === 0) {
-                subscriptionStatus.plural = "-zero";
-              }
-              else if(subscriptionStatus.expiry > 1) {
-                subscriptionStatus.plural = "-many";
-              }
-            }
-            deferred.resolve(subscriptionStatus);
-          }
-          else {
-            deferred.reject("No response");
-          }
-        });
-        
-        return deferred.promise;
-      };
-
-      this.get = function (productCode, companyId, displayId) {
-        return checkSubscriptionStatus(productCode, companyId, displayId)
-          .then(function(subscriptionStatus) {
-            if (subscriptionStatus.subscribed === false) {
-              // double check store authorization in case they're authorized
-              return checkAuthorizedStatus(productCode, companyId)
-                .then(function(authorized) {
-                  subscriptionStatus.subscribed = authorized;
-
-                  return subscriptionStatus;
-                });
-            }
-            else {
-              return subscriptionStatus;
-            }
-        });
-      };
-
-    }]);
-}());
+    }
+  ]);
 
 (function(module) {
-try { module = angular.module("risevision.widget.common.subscription-status"); }
-catch(err) { module = angular.module("risevision.widget.common.subscription-status", []); }
-module.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("app-subscription-status-template.html",
-    "<a id=\"app-subscription-status\" href=\"\"\n" +
-    "  ng-click=\"showStoreModal = true\" class=\"store-link\">\n" +
-    "    <div class=\"rate\">\n" +
-    "      <strong>${{productPrice}}</strong>\n" +
-    "    </div>\n" +
-    "    <div class=\"subscribe\">\n" +
-    "      <strong ng-if=\"!subscriptionStatus.subscribed\"><span translate=\"subscription-status.get-subscription\"></span></strong>\n" +
-    "      <strong ng-if=\"subscriptionStatus.subscribed\"><span translate=\"subscription-status.continue-to-app\"></span></strong>\n" +
-    "    </div>\n" +
-    "</a>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.components.subscription-status');
+} catch (e) {
+  module = angular.module('risevision.common.components.subscription-status', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('subscription-status/app-subscription-status-template.html',
+    '<a id="app-subscription-status" href="" ng-click="showStoreModal = true" class="store-link"><div class="rate"><strong>${{productPrice}}</strong></div><div class="subscribe"><strong ng-if="!subscriptionStatus.subscribed"><span translate="subscription-status.get-subscription"></span></strong> <strong ng-if="subscriptionStatus.subscribed"><span translate="subscription-status.continue-to-app"></span></strong></div></a>');
 }]);
 })();
 
 (function(module) {
-try { module = angular.module("risevision.widget.common.subscription-status"); }
-catch(err) { module = angular.module("risevision.widget.common.subscription-status", []); }
-module.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("subscription-status-template.html",
-    "<div ng-show=\"!expandedFormat\">\n" +
-    "  <h3 ng-disable-right-click>\n" +
-    "    <span ng-show=\"subscriptionStatus.statusCode !== 'not-subscribed'\" ng-bind-html=\"messagesPrefix + '.' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted\"></span>\n" +
-    "  </h3>\n" +
-    "  \n" +
-    "  <span ng-show=\"subscriptionStatus.statusCode === 'trial-available'\">\n" +
-    "    <button class=\"btn btn-primary btn-xs\" ng-click=\"showStoreModal = true;\">\n" +
-    "      <span translate=\"{{messagesPrefix}}.start-trial\"></span>\n" +
-    "    </button>\n" +
-    "  </span>\n" +
-    "  <span ng-show=\"['on-trial', 'trial-expired', 'cancelled', 'not-subscribed'].indexOf(subscriptionStatus.statusCode) >= 0\">\n" +
-    "    <a class=\"btn btn-primary btn-xs\" ng-href=\"{{storeUrl}}\" target=\"_blank\">\n" +
-    "      <span translate=\"{{messagesPrefix}}.subscribe\"></span>\n" +
-    "    </a>\n" +
-    "  </span>\n" +
-    "  <span ng-show=\"['suspended'].indexOf(subscriptionStatus.statusCode) >= 0\">\n" +
-    "    <a type=\"button\" class=\"btn btn-primary btn-xs\" ng-href=\"{{storeAccountUrl}}\" target=\"_blank\">\n" +
-    "      <span translate=\"{{messagesPrefix}}.view-account\"></span>\n" +
-    "    </a>\n" +
-    "  </span>\n" +
-    "</div>\n" +
-    "\n" +
-    "<div ng-show=\"expandedFormat\">\n" +
-    "  <div class=\"subscription-status trial\" ng-show=\"subscriptionStatus.statusCode === 'on-trial'\">\n" +
-    "    <span ng-bind-html=\"messagesPrefix + '.expanded-' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted\"></span>\n" +
-    "    <a type=\"button\" class=\"btn btn-primary u_margin-left\" ng-href=\"{{storeUrl}}\" target=\"_blank\">\n" +
-    "      <span translate=\"{{messagesPrefix}}.subscribe-now\"></span>\n" +
-    "    </a>\n" +
-    "  </div>\n" +
-    "  <div class=\"subscription-status expired\" ng-show=\"subscriptionStatus.statusCode === 'trial-expired'\">\n" +
-    "    <span translate=\"{{messagesPrefix}}.expanded-expired\"></span>\n" +
-    "    <a type=\"button\" class=\"btn btn-primary u_margin-left\" ng-href=\"{{storeUrl}}\" target=\"_blank\">\n" +
-    "      <span translate=\"{{messagesPrefix}}.subscribe-now\"></span>\n" +
-    "    </a>\n" +
-    "  </div>\n" +
-    "  <div class=\"subscription-status cancelled\" ng-show=\"subscriptionStatus.statusCode === 'cancelled'\">\n" +
-    "   <span translate=\"{{messagesPrefix}}.expanded-cancelled\"></span>\n" +
-    "    <a type=\"button\" class=\"btn btn-primary u_margin-left\" ng-href=\"{{storeUrl}}\" target=\"_blank\">\n" +
-    "      <span translate=\"{{messagesPrefix}}.subscribe-now\"></span>\n" +
-    "    </a>\n" +
-    "  </div>\n" +
-    "  <div class=\"subscription-status suspended\" ng-show=\"subscriptionStatus.statusCode === 'suspended'\">\n" +
-    "    <span translate=\"{{messagesPrefix}}.expanded-suspended\"></span>\n" +
-    "    <a type=\"button\" class=\"btn btn-primary u_margin-left\" ng-href=\"{{storeAccountUrl}}\" target=\"_blank\">\n" +
-    "      <span translate=\"{{messagesPrefix}}.view-invoices\"></span>\n" +
-    "    </a>\n" +
-    "  </div>\n" +
-    "</div>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.components.subscription-status');
+} catch (e) {
+  module = angular.module('risevision.common.components.subscription-status', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('subscription-status/subscription-status-template.html',
+    '<div ng-show="!expandedFormat"><h3 ng-disable-right-click=""><span ng-show="subscriptionStatus.statusCode !== \'not-subscribed\'" ng-bind-html="messagesPrefix + \'.\' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted"></span></h3><span ng-show="subscriptionStatus.statusCode === \'trial-available\'"><button class="btn btn-primary btn-xs" ng-click="showStoreModal = true;"><span translate="{{messagesPrefix}}.start-trial"></span></button></span> <span ng-show="[\'on-trial\', \'trial-expired\', \'cancelled\', \'not-subscribed\'].indexOf(subscriptionStatus.statusCode) >= 0"><a class="btn btn-primary btn-xs" ng-href="{{storeUrl}}" target="_blank"><span translate="{{messagesPrefix}}.subscribe"></span></a></span> <span ng-show="[\'suspended\'].indexOf(subscriptionStatus.statusCode) >= 0"><a type="button" class="btn btn-primary btn-xs" ng-href="{{storeAccountUrl}}" target="_blank"><span translate="{{messagesPrefix}}.view-account"></span></a></span></div><div ng-show="expandedFormat"><div class="subscription-status trial" ng-show="subscriptionStatus.statusCode === \'on-trial\'"><span ng-bind-html="messagesPrefix + \'.expanded-\' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank"><span translate="{{messagesPrefix}}.subscribe-now"></span></a></div><div class="subscription-status expired" ng-show="subscriptionStatus.statusCode === \'trial-expired\'"><span translate="{{messagesPrefix}}.expanded-expired"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank"><span translate="{{messagesPrefix}}.subscribe-now"></span></a></div><div class="subscription-status cancelled" ng-show="subscriptionStatus.statusCode === \'cancelled\'"><span translate="{{messagesPrefix}}.expanded-cancelled"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank"><span translate="{{messagesPrefix}}.subscribe-now"></span></a></div><div class="subscription-status suspended" ng-show="subscriptionStatus.statusCode === \'suspended\'"><span translate="{{messagesPrefix}}.expanded-suspended"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeAccountUrl}}" target="_blank"><span translate="{{messagesPrefix}}.view-invoices"></span></a></div></div>');
 }]);
 })();
-
-
-angular.module("risevision.widget.common", []);
-
-angular.module("risevision.widget.common")
-  .controller("settingsController", ["$scope", "settingsSaver", "settingsGetter", "settingsCloser",
-    function ($scope, settingsSaver, settingsGetter, settingsCloser) {
-
-    $scope.settings = { params: {}, additionalParams: {}};
-    $scope.alerts = [];
-
-    $scope.getAdditionalParam = function (name, defaultVal) {
-      var val = $scope.settings.additionalParams[name];
-      if(angular.isUndefined(val)) {
-        return defaultVal;
-      }
-      else {
-        return val;
-      }
-    };
-
-    $scope.setAdditionalParam = function (name, val) {
-      $scope.settings.additionalParams[name] = val;
-    };
-
-    $scope.loadAdditionalParams = function () {
-      settingsGetter.getAdditionalParams().then(function (additionalParams) {
-        $scope.settings.additionalParams = additionalParams;
-        $scope.$broadcast("loadAdditionalParams", additionalParams);
-      },
-      function (err) {alert (err); });
-    };
-
-    $scope.setAdditionalParams = function (name, val) {
-      $scope.settings.additionalParams[name] = val;
-    };
-
-    $scope.saveSettings = function () {
-      //clear out previous alerts, if any
-      $scope.alerts = [];
-
-      $scope.$broadcast("collectAdditionalParams");
-
-      settingsSaver.saveSettings($scope.settings).then(function () {
-        //TODO: perhaps show some indicator in UI?
-      }, function (err) {
-        $scope.alerts = err.alerts;
-      });
-
-    };
-
-    $scope.closeSettings = function() {
-      settingsCloser.closeSettings().then(function () {
-        //TODO:
-      }, function (err) {
-        $scope.alerts = err.alerts;
-      });
-
-    };
-
-    $scope.settings.params = settingsGetter.getParams();
-    $scope.loadAdditionalParams();
-  }])
-
-  .directive("scrollOnAlerts", function() {
-    return {
-      restrict: "A", //restricts to attributes
-      scope: false,
-      link: function($scope, $elm) {
-        $scope.$watchCollection("alerts", function (newAlerts, oldAlerts) {
-          if(newAlerts.length > 0 && oldAlerts.length === 0) {
-            $("body").animate({scrollTop: $elm.offset().top}, "fast");
-          }
-        });
-      }
-    };
-});
-
-angular.module("risevision.widget.common")
-  .constant("STORAGE_FILE_URL_BASE", "storage.googleapis.com/risemedialibrary-")
-  .constant("STORAGE_FOLDER_URL_BASE", "googleapis.com/storage/")
-  .factory("commonSettings", ["$log", "STORAGE_FILE_URL_BASE", "STORAGE_FOLDER_URL_BASE",
-    function ($log, STORAGE_FILE_URL_BASE, STORAGE_FOLDER_URL_BASE) {
-
-    var factory = {
-      getStorageUrlData: function (url) {
-        var storage = {},
-          str, arr, params, pair;
-
-        function getStorageType(storageUrl) {
-          if (storageUrl.indexOf(STORAGE_FILE_URL_BASE) !== -1) {
-            return "file";
-          }
-
-          if (storageUrl.indexOf(STORAGE_FOLDER_URL_BASE) !== -1) {
-            return "folder";
-          }
-
-          return null;
-        }
-
-        function getCompanyId(storageUrl) {
-          var p = storageUrl.split("risemedialibrary-");
-
-          return p[1].slice(0, p[1].indexOf("/"));
-        }
-
-        if (getStorageType(url) === "file") {
-          str = url.split(STORAGE_FILE_URL_BASE)[1];
-          str = decodeURIComponent(str.slice(str.indexOf("/") + 1));
-          arr = str.split("/");
-
-          storage.companyId = getCompanyId(url);
-          storage.fileName = arr.pop();
-          storage.folder = arr.length > 0 ? arr.join("/") : "";
-
-          if (storage.folder !== "") {
-            // add ending "/" to the folder path
-            storage.folder += "/";
-          }
-        }
-        else if (getStorageType(url) === "folder") {
-          params = url.split("?");
-
-          for (var i = 0; i < params.length; i++) {
-            pair = params[i].split("=");
-
-            if (pair[0] === "prefix" && typeof pair[1] !== "undefined" && pair[1] !== "") {
-              storage.companyId = getCompanyId(url);
-              storage.folder = decodeURIComponent(pair[1]);
-              storage.fileName = "";
-              break;
-            }
-          }
-        }
-
-        return storage;
-      }
-    };
-
-    return factory;
-  }]);
-
-angular.module("risevision.widget.common")
-  .factory("gadgetsApi", ["$window", function ($window) {
-    return $window.gadgets;
-  }]);
-
-angular.module("risevision.widget.common")
-  .factory("googleFontLoader", ["$http", "angularLoad", function ($http, angularLoad) {
-
-    var factory = {},
-      allFonts = [];
-
-    factory.getGoogleFonts = function() {
-      if (allFonts.length === 0) {
-        // Get list of Google fonts sorted alphabetically.
-        return $http.get("https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyBXxVK_IOV7LNQMuVVo_l7ZvN53ejN86zY&sort=alpha", { cache: true })
-          .then(function(resp) {
-            var item = null;
-
-            if (resp.data && resp.data.items) {
-              for (var i = 0, length = resp.data.items.length; i < length; i++) {
-                item = resp.data.items[i];
-
-                // Don't return those fonts that have a subset of "khmer".
-                if (item.subsets && (item.subsets.length === 1) &&
-                  (item.subsets[0].toLowerCase() === "khmer")) {
-                    continue;
-                }
-
-                allFonts.push(item.family);
-              }
-
-              return loadFonts();
-            }
-          });
-      }
-      else {
-        return loadFonts();
-      }
-    };
-
-    /* Filter list of fonts to only return those that are Google fonts. */
-    factory.getFontsUsed = function(familyList) {
-      var fontsUsed = [];
-
-      angular.forEach(allFonts, function (family) {
-        if (familyList.indexOf(family) !== -1) {
-          fontsUsed.push(family);
-        }
-      });
-
-      return fontsUsed;
-    };
-
-    /* Load the Google fonts. */
-    function loadFonts() {
-      var family = "",
-        fonts = "",
-        url = "",
-        urls = [],
-        spaces = false,
-        fallback = ",sans-serif;",
-        fontBaseUrl = "//fonts.googleapis.com/css?family=",
-        exclude = ["Buda", "Coda Caption", "Open Sans Condensed", "UnifrakturCook", "Molle"];
-
-      for (var i = 0; i < allFonts.length; i++) {
-        family = allFonts[i];
-
-        if (exclude.indexOf(family) === -1) {
-          url = fontBaseUrl + family;
-
-          angularLoad.loadCSS(url);
-          urls.push(url);
-
-          // check for spaces in family name
-          if (/\s/.test(family)) {
-            spaces = true;
-          }
-
-          if (spaces) {
-            // wrap family name in single quotes
-            fonts += family + "='" + family + "'" + fallback;
-          }
-          else {
-            fonts += family + "=" + family + fallback;
-          }
-        }
-      }
-
-      return { fonts: fonts, urls: urls };
-    }
-
-    return factory;
-  }]);
-
-angular.module("risevision.widget.common")
-  .service("i18nLoader", ["$window", "$q", function ($window, $q) {
-    var deferred = $q.defer();
-
-    $window.i18n.init({ 
-      fallbackLng: "en",
-      resGetPath: "locales/__ns_____lng__.json"
-    }, function () {
-      deferred.resolve($window.i18n);
-    });
-
-    this.get = function () {
-      return deferred.promise;
-    };
-  }]);
-
-angular.module("risevision.widget.common")
-  .factory("imageValidator", ["$q", function ($q) {
-    var factory = {
-      // Verify that URL is a valid image file.
-      isImage: function(src) {
-        var deferred = $q.defer(),
-          image = new Image();
-
-        image.onload = function() {
-          deferred.resolve(true);
-        };
-
-        image.onerror = function() {
-          deferred.resolve(false);
-        };
-
-        image.src = src;
-
-        return deferred.promise;
-      }
-    };
-
-    return factory;
-  }]);
-
-angular.module("risevision.widget.common")
-  .service("settingsSaver", ["$q", "$log", "gadgetsApi", "settingsParser",
-  function ($q, $log, gadgetsApi, settingsParser) {
-
-    this.saveSettings = function (settings, validator) {
-      var deferred = $q.defer();
-      var alerts = [], str = "";
-
-      settings = processSettings(settings);
-
-      if (validator) {
-        alerts = validator(settings);
-      }
-
-      if(alerts.length > 0) {
-        $log.debug("Validation failed.", alerts);
-        deferred.reject({alerts: alerts});
-      }
-
-      if (settings.params.hasOwnProperty("layoutURL")) {
-        // ensure the url is the start of the string
-        str += settings.params.layoutURL + "?";
-        // delete this property so its not included below in encodeParams call
-        delete settings.params.layoutURL;
-      }
-
-      str += settingsParser.encodeParams(settings.params);
-
-      var additionalParamsStr =
-        settingsParser.encodeAdditionalParams(settings.additionalParams);
-
-      gadgetsApi.rpc.call("", "rscmd_saveSettings", function (result) {
-        $log.debug("encoded settings", JSON.stringify(result));
-        $log.debug("Settings saved. ", settings);
-
-        deferred.resolve(result);
-      }, {
-        params: str,
-        additionalParams: additionalParamsStr
-      });
-
-      return deferred.promise;
-    };
-
-    function processSettings(settings) {
-      var newSettings = angular.copy(settings);
-
-      delete newSettings.params.id;
-      delete newSettings.params.companyId;
-      delete newSettings.params.rsW;
-      delete newSettings.params.rsH;
-
-      return newSettings;
-    }
-
-  }])
-
-  .service("settingsGetter", ["$q", "gadgetsApi", "$log", "settingsParser", "$window", "defaultSettings",
-    function ($q, gadgetsApi, $log, settingsParser, $window, defaultSettings) {
-
-      this.getAdditionalParams = function () {
-        var deferred = $q.defer();
-        var defaultAdditionalParams = defaultSettings.additionalParams || {};
-
-        gadgetsApi.rpc.call("", "rscmd_getAdditionalParams", function (result) {
-          if (result) {
-            result = settingsParser.parseAdditionalParams(result);
-          }
-          else {
-            result = {};
-          }
-
-          $log.debug("getAdditionalParams returns ", result);
-          deferred.resolve($.extend(true, defaultAdditionalParams, result));
-        });
-
-        return deferred.promise;
-      };
-
-      this.getParams = function () {
-        var defaultParams = defaultSettings.params || {};
-        return angular.extend(defaultParams,
-          settingsParser.parseParams($window.location.search));
-      };
-  }])
-
-  .service("settingsParser", [function () {
-    this.parseAdditionalParams = function (additionalParamsStr) {
-      if(additionalParamsStr) {
-        return JSON.parse(additionalParamsStr);
-      }
-      else {
-        return {};
-      }
-    };
-
-    this.encodeAdditionalParams = function (additionalParams) {
-      return JSON.stringify(additionalParams);
-    };
-
-    this.encodeParams = function (params) {
-      var str = [];
-      for(var p in params) {
-        if (params.hasOwnProperty(p)) {
-          var value;
-          if (typeof params[p] === "object") {
-            value = JSON.stringify(params[p]);
-          }
-          else {
-            value = params[p];
-          }
-          str.push("up_" + encodeURIComponent(p) + "=" + encodeURIComponent(value));
-        }
-      }
-
-      return str.join("&");
-    };
-
-    function stripPrefix(name) {
-      if(name.indexOf("up_") === 0) {
-        return name.slice(3);
-      }
-      else {
-        return null;
-      }
-    }
-
-    this.parseParams = function (paramsStr) {
-      //get rid of preceeding "?"
-      if(paramsStr[0] === "?") {
-        paramsStr = paramsStr.slice(1);
-      }
-      var result = {};
-      var vars = paramsStr.split("&");
-      for (var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split("=");
-        var name = stripPrefix(decodeURIComponent(pair[0]));
-        //save settings only if it has up_ prefix. Ignore otherwise
-        if (name) {
-          try {
-            result[name] = JSON.parse(decodeURIComponent(pair[1]));
-          }
-          catch (e) {
-            result[name] = decodeURIComponent(pair[1]);
-          }
-        }
-      }
-      return result;
-    };
-
-  }])
-
-  .service("settingsCloser", ["$q", "$log", "gadgetsApi",
-  function ($q, $log, gadgetsApi) {
-
-    this.closeSettings = function () {
-      var deferred = $q.defer();
-
-      gadgetsApi.rpc.call("", "rscmd_closeSettings", function () {
-        deferred.resolve(true);
-      });
-
-      return deferred.promise;
-    };
-
-  }])
-
-  .value("defaultSettings", {});
-
-(function (angular) {
-  "use strict";
-
-  angular.module("risevision.widget.common.visualization", [])
-    .factory("visualizationApi", ["$q", "$window", function ($q, $window) {
-      var deferred = $q.defer();
-      var promise;
-
-      var factory = {
-        get: function () {
-          if (!promise) {
-            promise = deferred.promise;
-            if (!$window.google.visualization) {
-              $window.google.setOnLoadCallback(function () {
-                deferred.resolve($window.google.visualization);
-              });
-            }
-            else {
-              deferred.resolve($window.google.visualization);
-            }
-          }
-          return promise;
-        }
-      };
-      return factory;
-
-    }]);
-
-})(angular);
 
 /*!
  * angular-translate - v2.13.1 - 2016-12-06

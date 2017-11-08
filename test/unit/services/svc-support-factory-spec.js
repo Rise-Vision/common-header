@@ -1,7 +1,7 @@
 /*jshint expr:true */
 
 describe("Services: Support Factory", function() {
-  beforeEach(module("risevision.widget.common.subscription-status"));
+  beforeEach(module("risevision.common.components.subscription-status"));
   beforeEach(module("risevision.common.support"));
   var supportFactory, subscriptionStatusGetCallWentOkay,
     subscriptionStatus, modalObject, intercomSpy, userId, identifyObject,
