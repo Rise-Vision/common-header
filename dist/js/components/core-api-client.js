@@ -225,6 +225,7 @@ angular.module("risevision.common.app", [
 })(angular);
 
 /* jshint evil:true */
+/* jshint unused:false */
 
 /**
  * Created by rodrigopavezi on 10/16/14.
@@ -239,7 +240,8 @@ angular.module("risevision.common.core.endpoint", [
         $log.debug("Endpoint called", method, criteria);
 
         var deferred = $q.defer();
-        coreAPILoader().then(function () {
+        coreAPILoader().then(function (core) {
+          // Note: This assumes method contains 'core.'
           var request = eval(method)(criteria);
           request.execute(function (resp) {
             $log.debug("Endpoint resp", resp);

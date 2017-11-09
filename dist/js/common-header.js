@@ -4348,6 +4348,7 @@ angular.module("risevision.common.app", [
 })(angular);
 
 /* jshint evil:true */
+/* jshint unused:false */
 
 /**
  * Created by rodrigopavezi on 10/16/14.
@@ -4362,7 +4363,8 @@ angular.module("risevision.common.core.endpoint", [
         $log.debug("Endpoint called", method, criteria);
 
         var deferred = $q.defer();
-        coreAPILoader().then(function () {
+        coreAPILoader().then(function (core) {
+          // Note: This assumes method contains 'core.'
           var request = eval(method)(criteria);
           request.execute(function (resp) {
             $log.debug("Endpoint resp", resp);
@@ -8905,69 +8907,6 @@ module.run(['$templateCache', function($templateCache) {
     '<div ng-show="!expandedFormat"><h3 ng-disable-right-click=""><span ng-show="subscriptionStatus.statusCode !== \'not-subscribed\'" ng-bind-html="messagesPrefix + \'.\' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted"></span></h3><span ng-show="subscriptionStatus.statusCode === \'trial-available\'"><button class="btn btn-primary btn-xs" ng-click="showStoreModal = true;"><span translate="{{messagesPrefix}}.start-trial"></span></button></span> <span ng-show="[\'on-trial\', \'trial-expired\', \'cancelled\', \'not-subscribed\'].indexOf(subscriptionStatus.statusCode) >= 0"><a class="btn btn-primary btn-xs" ng-href="{{storeUrl}}" target="_blank"><span translate="{{messagesPrefix}}.subscribe"></span></a></span> <span ng-show="[\'suspended\'].indexOf(subscriptionStatus.statusCode) >= 0"><a type="button" class="btn btn-primary btn-xs" ng-href="{{storeAccountUrl}}" target="_blank"><span translate="{{messagesPrefix}}.view-account"></span></a></span></div><div ng-show="expandedFormat"><div class="subscription-status trial" ng-show="subscriptionStatus.statusCode === \'on-trial\'"><span ng-bind-html="messagesPrefix + \'.expanded-\' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank"><span translate="{{messagesPrefix}}.subscribe-now"></span></a></div><div class="subscription-status expired" ng-show="subscriptionStatus.statusCode === \'trial-expired\'"><span translate="{{messagesPrefix}}.expanded-expired"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank"><span translate="{{messagesPrefix}}.subscribe-now"></span></a></div><div class="subscription-status cancelled" ng-show="subscriptionStatus.statusCode === \'cancelled\'"><span translate="{{messagesPrefix}}.expanded-cancelled"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank"><span translate="{{messagesPrefix}}.subscribe-now"></span></a></div><div class="subscription-status suspended" ng-show="subscriptionStatus.statusCode === \'suspended\'"><span translate="{{messagesPrefix}}.expanded-suspended"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeAccountUrl}}" target="_blank"><span translate="{{messagesPrefix}}.view-invoices"></span></a></div></div>');
 }]);
 })();
-
-"use strict";
-/* global angular, window */
-
-/**
- * Reimplementation of $translateStaticFilesLoader to handle missing files and locale hierarchy (en/en_US)
- */
-angular.module("pascalprecht.translate").factory("$translateStaticFilesLoader", [
-  "$q",
-  "$http",
-  function ($q, $http) {
-    function loadTranslationFile(options, deferred) {
-      $http(angular.extend({
-        url: [
-          options.prefix,
-          options.key.toLowerCase(),
-          options.suffix
-        ].join(""),
-        method: "GET",
-        params: ""
-      }, options.$http)).then(function (response) {
-        deferred.resolve(response.data);
-      }, function () {
-        if(options.key.indexOf("_") >= 0) {
-          var key = options.key.substr(0, options.key.lastIndexOf("_"));
-          var opts = angular.extend({}, options, { key: key });
-          
-          loadTranslationFile(opts, deferred);
-        }
-        else {
-          deferred.resolve("{}");
-        }
-        
-      });
-    }
-
-    return function(options) {
-      if (!options || (!angular.isString(options.prefix) || !angular.isString(options.suffix))) {
-        throw new Error("Couldn\"t load static files, no prefix or suffix specified!");
-      }
-
-      var deferred = $q.defer();
-
-      loadTranslationFile(options, deferred);
-
-      return deferred.promise;
-    };
-  }
-]);
-
-angular.module("risevision.common.i18n", ["pascalprecht.translate", "risevision.common.i18n.config"])
-.config(["$translateProvider", "LOCALES_PREFIX", "LOCALES_SUFIX", function ($translateProvider, LOCALES_PREFIX, LOCALES_SUFIX) {
-  // Tries to determine the browsers locale
-  $translateProvider.useStaticFilesLoader({
-    prefix: LOCALES_PREFIX,
-    suffix: LOCALES_SUFIX
-  });
-  
-  $translateProvider
-    .determinePreferredLanguage()
-    .fallbackLanguage("en")
-    .useSanitizeValueStrategy(null);
-}]);
 
 /*
  * App Configuration File
