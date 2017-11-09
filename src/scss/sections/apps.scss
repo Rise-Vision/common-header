@@ -1,0 +1,267 @@
+#appLauncherContainer {
+	h3 {
+		margin-top: 0;
+		line-height: 30px;
+		display: block;
+		a {
+			color: #444;
+			&:hover {
+				color: $rise-blue;
+			}
+		}
+	}
+	.scrollable-list {
+		@extend .panel;
+		padding: 0;
+		height: auto;
+	}
+	.list {
+		height: calc(100vh - 290px);
+		margin-top: 1px;
+		&.help-active {
+			height: calc(100vh - 977px);
+		}
+		@media (max-width: $screen-sm) {
+			height: auto;
+		}
+		.list-item {
+			border-bottom: 1px solid #f2f2f2;
+			padding: 4px 12px;
+			h4 {
+				font-weight: 500;
+				font-size: 14px;
+				color: #555;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				width: 260px;
+				@media (max-width: $screen-md){
+					width: 180px;
+				}
+			}
+			&:last-child {
+				border-bottom: none;
+			}
+			&:hover {
+				h4 {
+					color: $rise-blue;
+				}
+			}
+		}
+	}
+}
+
+.launcher-background {
+	position: absolute;
+	z-index: 40;
+	top: 0;
+	left: 0;
+	background: #FFF;
+	border-bottom: 1px solid #e4e4e4;
+	height: 400px;
+	width: 100%;
+	background-size: cover;
+}
+
+.video-box {
+	border: 1px solid #e6e6e6;
+	background: #FFF;
+	padding: 16px;
+	border-radius: 4px;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.05), 0 6px 6px rgba(0,0,0,0.13);
+	& > img:first-child {
+		width: 100%;
+	}
+}
+
+.create-presentation-cta {
+	position: relative;
+	z-index: 100;
+	margin-top: 48px;
+	margin-bottom: 40px;
+	padding: 76px 40px;
+	background: #FFF;
+	border: 1px solid #e6e6e6;
+	border-radius: 4px;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.05), 0 6px 6px rgba(0,0,0,0.13);
+	h1 {
+		font-size: 42px;
+		margin-top: 0;
+	}
+	h3 {
+		font-weight: 300;
+		margin-bottom: 16px 0 32px;
+		span {
+			font-weight: 500;
+		}
+	}
+	img {
+		max-width: 700px;
+		margin: 0 auto;
+		width: 100%;
+	}
+	.btn {
+		font-size: 24px;
+		font-weight: 300;
+	}
+}
+
+.priority-trial-cta {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	z-index: 999;
+	border-radius: 4px 0 0 0;
+	background-color: lighten($rise-green, 40%);
+	color: darken($rise-green, 20%);
+	.content-box-body {
+		padding: 18px;
+	}
+	h3 {
+		margin-top: 0;
+		margin-bottom: 4px;
+		margin-left: 120px;
+	}
+	p {
+		font-size: 16px;
+		margin-bottom: 16px;
+		margin-left: 120px;
+	}
+	img {
+		width: 90px;
+		padding: 16px 10px 10px 10px;
+	}
+	.btn {
+		display: block;
+		margin-left: 120px;
+	}
+}
+
+#helpDropdownButton {
+	&.add-notice {
+		@extend .animated;
+	    -webkit-animation-iteration-count: 3;
+        animation-iteration-count: 3;
+        -webkit-animation-name: pulse;
+        animation-name: pulse;
+        -webkit-animation-delay: 1s;
+        animation-delay: 1s;
+    }
+}
+
+//TODO: IS this still in use?
+.apps-launcher {
+	text-align: center;
+	font-size: 18px;
+	.apps-launcher-tour {
+		padding: 64px 32px;
+		.panel {
+			overflow: hidden;
+			margin: 2px;
+			-webkit-box-shadow:0 1px 4px rgba(50, 50, 50, 0.1);
+			-moz-box-shadow:0 1px 4px rgba(50, 50, 50, 0.1);
+			box-shadow:0 1px 4px rgba(50, 50, 50, 0.1);
+		}
+		.headline {
+			h2 {
+				font-weight: 300;
+				font-size: 36px;
+			}
+		}
+		.image {
+			background: #E9FFED;
+			padding: 16px 48px;
+			img {
+				margin: 0 auto;
+			}
+		}
+	}
+}
+
+
+.app-launcher {
+	line-height: 1.6;
+}
+.app-launcher-header {
+	padding: 48px 0;
+	h1 {
+		margin: 0;
+	}
+}
+
+.app-launcher-block {
+	padding: 0;
+	.btn-primary {
+		width: 200px;
+	}
+	.app-launcher-block-header {
+		h2 {
+			display: inline-block;
+			margin-right: 10px;
+			margin-top: 8px;
+		}
+	}
+}
+
+.template-filters {
+	text-align: center;
+	padding: 10px 0;
+	ul {
+		>li {
+			display: inline-block;
+			span {
+				padding: 4px 10px;
+				display: block;
+				color: #666;
+				cursor: pointer;
+				border-radius: 3px;
+				text-transform: uppercase;
+				font-size: 13px;
+				&:hover {
+					color: $rise-blue;
+				}
+			}
+			&.active {
+				span {
+					font-weight: 800;
+					background: $light-gray;
+				}
+			}
+			&.more-templates {
+				span {
+					font-weight: 800;
+				}
+			}
+		}
+	}
+}
+
+.app-launcher-login {
+	padding-top: 44px;
+	background-color: #f2fcf4;
+	background-size: cover;
+	height: 100vh;
+	h1 {
+		margin-top: 0;
+	}
+	.panel {
+		padding: 32px;
+	}
+	.rise-logo {
+		text-align: center;
+		padding: 210px 0;
+		img {
+			width: 150px;
+		}
+		@media (max-width: $screen-sm){
+			border-right: none;
+			text-align: left;
+			padding:0;
+			margin-bottom: 22px;
+			img {
+				width: 100px;
+			}
+		}
+	}
+}
+

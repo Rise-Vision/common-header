@@ -1,0 +1,108 @@
+.paid-on-board {
+  @extend .jumbotron;
+  text-align: center;
+  background-color: transparent;
+
+  h1 { font-size: 64px !important; }
+
+  .store-link {
+    display: block;
+    color: $text-color;
+    width: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: -60px;
+    left: 25%;
+
+    @media (max-width: $screen-xs) {
+      width: 75%;
+      left: 12.5%;
+      font-size: 12px;
+      top: -40px;
+    }
+
+    .rate {
+      height: 60px;
+      line-height: 58px;
+      background-color: #fff;
+      border-top-right-radius: 6px;
+      border-top-left-radius: 6px;
+      border-top: 1px solid #ccc;
+      border-left: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+
+      @media (max-width: $screen-xs) { height: 40px; line-height: 40px; }
+    }
+    .subscribe {
+      height: 60px;
+      line-height: 60px;
+      background-color: $brand-success;
+      color: #fff;
+      border-bottom-right-radius: 6px;
+      border-bottom-left-radius: 6px;
+      box-shadow: inset 0 -4px 0 darken($brand-success, 5%);
+
+      @media (max-width: $screen-xs) { height: 40px; line-height: 40px; }
+    }
+  }
+
+  .about {
+    border-radius: 6px;
+    background-color: #424242;
+    margin-top: 120px;
+    position: relative;
+
+    .cover {
+      background-image: url('/images/support-ob-bg.png');
+      background-size: cover;
+      background-position: center;
+      height: 160px;
+      width: 100%;
+      border-top-right-radius: 6px;
+      border-top-left-radius: 6px;
+    }
+
+    .tab-buttons {
+      width: 50%;
+      margin: -20px auto 0 auto;
+      background-color: #fff;
+      line-height: 40px;
+      border-radius: 20px;
+      font-weight: bold;
+      color: #ccc;
+
+      @media (max-width: $screen-xs) { font-size: 12px; width: 75%; }
+
+      .tab-title {
+        display: inline-block;
+        width: 50%;
+        text-align: center;
+        cursor: pointer;
+
+        &:last-child { border-left: 1px solid #ccc; }
+        &.active { color: $text-color; }
+      }
+    }
+
+    .details {
+      padding: 40px;
+      color: #fff;
+
+      p {
+        margin-bottom: 30px;
+
+        &:last-child {
+          margin-bottom: 0px;
+        }
+      }
+
+      .more {
+        color: $brand-success;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    }
+  }
+
+}

@@ -27,7 +27,6 @@ node_modules
 bower_components
 reports
 tmp
-dist/fonts
 src/js/config/config.js
 
 dist/*.html

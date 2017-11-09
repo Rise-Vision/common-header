@@ -1,0 +1,312 @@
+/* STANDARD UTILITIES 
+All utilities have a prefix u_ added to them
+*/
+
+
+/* Line Height Utilities
+   ==========================================================================
+   To be used with forms and buttons
+*/
+
+/* For Normal Sized Buttons and Input Fields */
+.u_lh-normal { 
+  line-height: 33px;
+}
+
+
+/* Ellipsis Utilities
+   ==========================================================================
+   To be used with forms and buttons
+*/
+.u_ellipsis {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.u_ellipsis-sm {
+  @extend .u_ellipsis;
+  @media(max-width: $screen-xs-max){
+    width: 60px;
+  }
+  @media(min-width: $screen-sm){
+    max-width: 100px;
+  }
+  @media(min-width: $screen-md){
+    max-width: 140px;
+  }
+  @media(min-width: $screen-lg){
+    max-width: 160px;
+  }
+}
+
+.u_ellipsis-md {
+  @extend .u_ellipsis;
+  @media(max-width: $screen-xs-max){
+    width: 100px;
+  }
+  @media(min-width: $screen-sm){
+    max-width: 140px;
+  }
+  @media(min-width: $screen-md){
+    max-width: 180px;
+  }
+  @media(min-width: $screen-lg){
+    max-width: 240px;
+  }
+}
+
+.u_ellipsis-lg {
+  @extend .u_ellipsis;
+  @media(max-width: $screen-xs-max){
+    width: 200px;
+  }
+  @media(min-width: $screen-sm){
+    max-width: 260px;
+  }
+  @media(min-width: $screen-md){
+    max-width: 320px;
+  }
+  @media(min-width: $screen-lg){
+    max-width: 340px;
+  }
+}
+
+
+/* Styling Utilities
+   ==========================================================================
+*/
+
+.u_bordered {
+  border: 1px solid $gray-lighter;
+  border-radius: $border-radius-base;
+}
+
+.fa.u_icon-gray:before {
+    color: #BBB;
+}
+
+.fa.u_icon-red:before {
+    color: #cf371f;
+}
+
+.fa.u_icon-green:before {
+    color: $rise-green;
+}
+
+.fa.u_icon-white:before {
+    color: $white;
+}
+
+
+/* Text Utilities
+   ========================================================================== 
+*/
+
+.u_text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.u_icon-hover {
+  >i {
+    opacity: 0;
+  }
+  &:hover {
+    >i {
+      opacity: 1;
+    }
+  }
+}
+
+/* Padding Utilities
+   ========================================================================== 
+*/
+
+.u_padding-lg {
+  padding: 32px;
+}
+
+.u_padding-md {
+  padding: 16px;
+}
+
+.u_padding-sm {
+  padding: 8px;
+}
+
+.u_padding-lg-horizontal {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.u_padding-md-horizontal {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.u_padding-sm-horizontal {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.u_padding-lg-vertical {  
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+.u_padding-md-vertical {  
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.u_padding-sm-vertical {  
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+/* Margin Utilities
+   ========================================================================== 
+*/
+
+.u_margin-xs {
+    margin: 3px !important;
+}
+
+.u_margin-sm {
+    margin: 10px !important;
+}
+
+.u_margin-md {
+    margin: 20px !important;
+}
+
+.u_margin-lg {
+    margin: 40px !important;
+}
+
+.u_margin-left {
+    margin-left: 10px !important;
+}
+
+.u_margin-right {
+    margin-right: 10px !important;
+}
+
+.u_margin-xs-top {
+    margin-top: 3px !important;
+}
+
+.u_margin-sm-top {
+    margin-top: 10px !important;
+}
+
+.u_margin-md-top {
+    margin-top: 20px !important;
+}
+
+.u_margin-lg-top {
+    margin-top: 40px !important;
+}
+
+.u_margin-xs-bottom {
+    margin-bottom: 3px !important;
+}
+
+.u_margin-sm-bottom {
+    margin-bottom: 10px !important;
+}
+
+.u_margin-md-bottom {
+    margin-bottom: 20px !important;
+}
+
+.u_margin-lg-bottom {
+    margin-bottom: 40px !important;
+}
+
+
+/* Clearing Utilities
+   ========================================================================== 
+*/
+
+.u_remove-radius {
+    border-radius: 0 !important;
+}
+
+.u_remove-margin {
+    margin: 0 !important;
+}
+
+.u_remove-padding {
+    padding: 0 !important;
+}
+
+.u_remove-top {
+    margin-top: 0 !important;
+}
+
+.u_remove-bottom {
+    margin-bottom: 0 !important;
+}
+
+/* Alignment Utilities
+   ========================================================================== 
+*/
+
+%vertical-align {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+/* Misc Utilities
+   ========================================================================== 
+*/
+
+.u_nowrap {
+    white-space: nowrap;
+}
+
+.u_clickable {
+  cursor: pointer;
+}
+
+.u_link-disabled {
+    color: #AAAAAA;
+    cursor: default;
+    pointer-events: none;
+    text-decoration: none;
+}
+.u_highlighted {
+  background: #FFFFE0;
+  text-transform: uppercase;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.row.sm-gutter {
+  margin-left: -4px;
+  margin-right: -4px;
+}
+
+.row.sm-gutter [class*='col-']:not(:first-child),
+.row.sm-gutter [class*='col-']:not(:last-child) {
+  padding-right: 4px;
+  padding-left: 4px;
+}
+
+.row.no-gutter {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.row.no-gutter [class*='col-']:not(:first-child),
+.row.no-gutter [class*='col-']:not(:last-child) {
+  padding-right: 0px;
+  padding-left: 0px;
+}
