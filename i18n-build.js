@@ -1,4 +1,4 @@
-'use strict'
+"use strict"
 /* global require */
 
 var gulp = require("gulp");
@@ -7,10 +7,10 @@ var watch = require("gulp-watch");
 var rename = require("gulp-rename");
 var jsoncombine = require("gulp-jsoncombine");
 var jsonminify = require("gulp-jsonminify");
-var folders = require('gulp-folders');
+var folders = require("gulp-folders");
 var tap = require("gulp-tap");
 var _ = require("underscore");
-var endOfLine = require('os').EOL;
+var endOfLine = require("os").EOL;
 
 var paths = {
   localesPo: "./src/locales/locales_po",
@@ -175,7 +175,7 @@ gulp.task("json-to-po", folders(paths.localesJson, function (locale) {
     .pipe(gulp.dest(paths.localesPo + "/" + locale));
 }));
 
-gulp.task("build-i18n", ["json-to-po"], folders(paths.localesJson, function (
+gulp.task("i18n-build", ["json-to-po"], folders(paths.localesJson, function (
   locale) {
   return gulp.src(path.join(paths.localesJson, locale, "*.json"))
     .pipe(jsoncombine("translation_" + locale + ".json", function (
@@ -188,11 +188,11 @@ gulp.task("build-i18n", ["json-to-po"], folders(paths.localesJson, function (
 
 gulp.task("i18n-watch", function () {
   // Build locales on start once
-  gulp.run("build-i18n");
+  gulp.run("i18n-build");
 
   // Watch locale files for changes
   gulp.watch([paths.localesPo + "/**/*.po"], ["po-to-json"]);
-  gulp.watch([paths.localesJson + "/**/*.json"], ["build-i18n"]);
+  gulp.watch([paths.localesJson + "/**/*.json"], ["i18n-build"]);
   console.log("[locales] Watching for changes in locale files".yellow
     .inverse);
 });

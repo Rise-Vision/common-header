@@ -22,14 +22,14 @@ var env = process.env.NODE_ENV || "dev",
     es = require("event-stream"),
     uglify = require("gulp-uglify"),
     prettify = require("gulp-jsbeautifier"),
-    minifyCss = require("gulp-minify-css"),
     gulpInject = require("gulp-inject"),
     del = require("del"),
     path = require("path"),
     fs = require("fs"),
     ngHtml2Js = require("gulp-ng-html2js"),
     minifyHtml = require("gulp-minify-html"),
-    i18nBuild = require("./i18n-build");
+    i18nBuild = require("./i18n-build"),
+    cssBuildn = require("./css-build");
 
     var unitTestFiles = [
     "bower_components/jquery/dist/jquery.js",
@@ -198,27 +198,6 @@ gulp.task("build-components", function (cb) {
 
 // End - Components build section
 
-var localeFiles = [
-  "bower_components/rv-common-i18n/dist/locales/**/*"
-];
-
-gulp.task("locales", function() {
-  return gulp.src(localeFiles)
-    .pipe(gulp.dest("dist/locales"));
-});
-
-gulp.task("fonts-copy", function () {
-  //TODO This is a temporary solution. Dulpicate files. Not recommended
-
-  return es.concat(
-    gulp.src(["src/css/fonts/*"])
-    .pipe(gulp.dest("./dist/css/fonts")),
-    gulp.src(["src/css/fonts/*"])
-    .pipe(gulp.dest("./dist/fonts"))),
-    gulp.src(["bower_components/font-awesome/fonts/*"])
-    .pipe(gulp.dest("./dist/fonts"));
-});
-
 gulp.task("lint", ["pretty"], function() {
   return gulp.src([
       "src/js/**/*.js",
@@ -235,12 +214,12 @@ gulp.task("lint", ["pretty"], function() {
 gulp.task("html-dist", function () {
   return es.concat(
     gulp.src("test/e2e/index.html")
-    .pipe(usemin({ js: [], css: [] }))
+    .pipe(usemin({ js: [] }))
     .pipe(gulp.dest("dist/")),
     //minified
     gulp.src("test/e2e/index.html")
     .pipe(usemin({
-      js: [uglify()], css: [minifyCss()]
+      js: [uglify()]
     }))
     .pipe(rename({suffix: ".min"}))
     .pipe(gulp.dest("dist/"))
@@ -295,7 +274,7 @@ gulp.task("html-inject-watch", function () {
 });
 
 gulp.task("build", function (cb) {
-  runSequence(["coerce-prod-env", "clean", "lint"], ["config", "locales", "fonts-copy", "build-i18n"], "build-components", "html", cb);
+  runSequence(["coerce-prod-env", "clean", "lint"], ["config", "css-build", "i18n-build"], "build-components", "html", cb);
 });
 
 gulp.task("test:unit", ["config"], factory.testUnitAngular({
