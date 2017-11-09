@@ -283,11 +283,11 @@ msgstr "Invalid URL"
 msgid "properties.warnings.required"
 msgstr "Required"
 
-msgid "restore.confirm.title"
-msgstr "Restoring Presentation"
-
 msgid "restore.confirm.message"
 msgstr "Are you sure you want to Restore this Presentation to it's Published version? All changes will be lost."
+
+msgid "restore.confirm.title"
+msgstr "Restoring Presentation"
 
 msgid "selector-modal.title"
 msgstr "Select Presentation"

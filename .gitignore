@@ -28,7 +28,6 @@ bower_components
 reports
 tmp
 dist/fonts
-dist/locales
 src/js/config/config.js
 
 dist/*.html

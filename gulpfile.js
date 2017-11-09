@@ -28,7 +28,8 @@ var env = process.env.NODE_ENV || "dev",
     path = require("path"),
     fs = require("fs"),
     ngHtml2Js = require("gulp-ng-html2js"),
-    minifyHtml = require("gulp-minify-html");
+    minifyHtml = require("gulp-minify-html"),
+    i18nBuild = require("./i18n-build");
 
     var unitTestFiles = [
     "bower_components/jquery/dist/jquery.js",
@@ -295,7 +296,7 @@ gulp.task("html-inject-watch", function () {
 });
 
 gulp.task("build", function (cb) {
-  runSequence("coerce-prod-env", "clean", "lint", ["config", "locales", "fonts-copy"], "build-components", "html", cb);
+  runSequence(["coerce-prod-env", "clean", "lint"], ["config", "locales", "fonts-copy", "build-i18n"], "build-components", "html", cb);
 });
 
 gulp.task("test:unit", ["config"], factory.testUnitAngular({
