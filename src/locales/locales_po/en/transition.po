@@ -1,0 +1,57 @@
+msgid "direction.label"
+msgstr "Direction"
+
+msgid "direction.left"
+msgstr "Left"
+
+msgid "direction.up"
+msgstr "Up"
+
+msgid "duration"
+msgstr "Show Each Item for"
+
+msgid "heading"
+msgstr "Transition"
+
+msgid "pud.label"
+msgstr "PUD Failover"
+
+msgid "pud.tooltip"
+msgstr "If Play Until Done (PUD) is enabled, the amount of time to show the item(s) when all data is visible and no scrolling takes place."
+
+msgid "resume.label"
+msgstr "Resume Play"
+
+msgid "resume.tooltip"
+msgstr "If content is interacted with resume playing after this set duration."
+
+msgid "speed.fast"
+msgstr "Fast"
+
+msgid "speed.fastest"
+msgstr "Fastest"
+
+msgid "speed.label"
+msgstr "Speed"
+
+msgid "speed.medium"
+msgstr "Medium"
+
+msgid "speed.slow"
+msgstr "Slow"
+
+msgid "speed.slowest"
+msgstr "Slowest"
+
+msgid "type.fade"
+msgstr "Fade"
+
+msgid "type.none"
+msgstr "None"
+
+msgid "type.page"
+msgstr "Page"
+
+msgid "type.scroll"
+msgstr "Scroll"
+

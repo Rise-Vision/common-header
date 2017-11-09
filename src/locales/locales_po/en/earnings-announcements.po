@@ -1,0 +1,54 @@
+msgid "announcements.label"
+msgstr "Announcements"
+
+msgid "announcements.options.today"
+msgstr "Today"
+
+msgid "announcements.options.tomorrow"
+msgstr "Tomorrow"
+
+msgid "announcements.options.yesterday"
+msgstr "Yesterday"
+
+msgid "columns.error.required"
+msgstr "required"
+
+msgid "columns.label"
+msgstr "Columns"
+
+msgid "columns.options.actualEPS"
+msgstr "Actual Earnings"
+
+msgid "columns.options.actualRevenue"
+msgstr "Actual Revenue"
+
+msgid "columns.options.announcementPeriod"
+msgstr "Quarter Announced"
+
+msgid "columns.options.companyName"
+msgstr "Company Name"
+
+msgid "columns.options.consensusEPS"
+msgstr "Consensus Estimate"
+
+msgid "columns.options.consensusRevenue"
+msgstr "Consensus Revenue"
+
+msgid "columns.options.symbol"
+msgstr "Ticker Symbol"
+
+msgid "markets.label"
+msgstr "Markets"
+
+msgid "markets.options.all"
+msgstr "All (includes London)"
+
+msgid "markets.options.canada"
+msgstr "Canada"
+
+msgid "markets.options.usa"
+msgstr "USA"
+
+msgid "settings"
+msgstr "Earnings Announcements Settings"
+

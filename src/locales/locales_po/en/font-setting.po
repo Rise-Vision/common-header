@@ -1,0 +1,6 @@
+msgid "custom-font"
+msgstr "Custom Font"
+
+msgid "custom-font-size"
+msgstr "Custom Font Size"
+

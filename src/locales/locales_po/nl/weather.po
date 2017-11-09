@@ -1,0 +1,132 @@
+msgid "E"
+msgstr "O"
+
+msgid "N"
+msgstr "N"
+
+msgid "NE"
+msgstr "NO"
+
+msgid "NW"
+msgstr "NW"
+
+msgid "S"
+msgstr "Z"
+
+msgid "SE"
+msgstr "ZO"
+
+msgid "SW"
+msgstr "ZW"
+
+msgid "W"
+msgstr "W"
+
+msgid "address.address.custom"
+msgstr "Aangepast adres"
+
+msgid "address.address.custom-address"
+msgstr "Uw aangepast adres"
+
+msgid "address.address.display"
+msgstr "Display adres"
+
+msgid "address.address.error"
+msgstr "Please enter a Custom Address"
+
+msgid "address.address.geolocation"
+msgstr "Geografische locatie"
+
+msgid "address.address.label"
+msgstr "Adres"
+
+msgid "address.description.custom"
+msgstr "Aangepaste omschrijving"
+
+msgid "address.description.custom-description"
+msgstr "Uw aangepaste omschrijving"
+
+msgid "address.description.error"
+msgstr "Please enter a Custom Description"
+
+msgid "address.description.label"
+msgstr "Adres omschrijving"
+
+msgid "address.description.none"
+msgstr "Geen"
+
+msgid "address.description.service"
+msgstr "Van Service"
+
+msgid "address.font.text"
+msgstr "Adres voorbeeld tekst"
+
+msgid "at"
+msgstr "om"
+
+msgid "current-temp.font.label"
+msgstr "huidige temperatuur font"
+
+msgid "current-temp.font.text"
+msgstr "Huidige temperatuur voorbeeld tekst"
+
+msgid "errors.no-data"
+msgstr "Unable to retrieve weather data for that location."
+
+msgid "errors.no-terms"
+msgstr "You must check the Acceptance setting in order to use this Widget."
+
+msgid "forecast-day.font.label"
+msgstr "Voorspelling dag Font"
+
+msgid "forecast-day.font.text"
+msgstr "Voorspelling dag voorbeeld tekst"
+
+msgid "forecast-temp.font.label"
+msgstr "Voorspelling temperatuur Font"
+
+msgid "forecast-temp.font.text"
+msgstr "Voorspelling temperatuur voorbeeld tekst"
+
+msgid "humidity"
+msgstr "Luchtvochtigheid"
+
+msgid "humidity-wind.font.text"
+msgstr "Vochtigheid en wind voorbeeld tekst"
+
+msgid "humidity-wind.heading"
+msgstr "Vochtigheid en wind"
+
+msgid "humidity-wind.show"
+msgstr "Toon vochtigheid en wind"
+
+msgid "humidity-wind.wind-speed.label"
+msgstr "Wind snelheid"
+
+msgid "layout.current"
+msgstr "Huidig weer"
+
+msgid "layout.current-and-three-day"
+msgstr "Huidig weer en 3 daagse voorspelling"
+
+msgid "layout.three-day"
+msgstr "3 daagse voorspelling"
+
+msgid "settings"
+msgstr "Weer instellingen"
+
+msgid "terms.error"
+msgstr "Please accept the terms before saving."
+
+msgid "terms.label"
+msgstr "Ik erken dat er momenteel geen kosten voor deze Widget, maar op een datum die nog moet worden bepaald, het kost $ 2 dollar per scherm, per maand. Op dat moment zal ik 30 dagen om te beslissen of ik wil blijven gebruiken deze Widget."
+
+msgid "unit.heading"
+msgstr "Temperatuur"
+
+msgid "unit.label"
+msgstr "Eenheid"
+
+msgid "wind"
+msgstr "Wind"
+

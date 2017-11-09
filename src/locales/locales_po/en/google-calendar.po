@@ -1,0 +1,141 @@
+msgid "calendar.error.required"
+msgstr "Please enter a Calendar ID"
+
+msgid "calendar.label"
+msgstr "Calendar ID"
+
+msgid "date.font.label"
+msgstr "Font"
+
+msgid "date.font.text"
+msgstr "Date Sample Text"
+
+msgid "date.format.label"
+msgstr "Format"
+
+msgid "date.heading"
+msgstr "Date"
+
+msgid "date.range.10days"
+msgstr "10 Days"
+
+msgid "date.range.11days"
+msgstr "11 Days"
+
+msgid "date.range.12days"
+msgstr "12 Days"
+
+msgid "date.range.12months"
+msgstr "12 Months"
+
+msgid "date.range.13days"
+msgstr "13 Days"
+
+msgid "date.range.14days"
+msgstr "14 Days"
+
+msgid "date.range.15days"
+msgstr "15 Days"
+
+msgid "date.range.6months"
+msgstr "6 Months"
+
+msgid "date.range.8days"
+msgstr "8 Days"
+
+msgid "date.range.9days"
+msgstr "9 Days"
+
+msgid "date.range.day"
+msgstr "Day"
+
+msgid "date.range.label"
+msgstr "Range"
+
+msgid "date.range.month"
+msgstr "Month"
+
+msgid "date.range.week"
+msgstr "Week"
+
+msgid "date.show"
+msgstr "Show Date"
+
+msgid "description.heading"
+msgstr "Description"
+
+msgid "description.label"
+msgstr "Font"
+
+msgid "description.show"
+msgstr "Show Description"
+
+msgid "description.text"
+msgstr "Description Sample Text"
+
+msgid "location.heading"
+msgstr "Location"
+
+msgid "location.label"
+msgstr "Font"
+
+msgid "location.show"
+msgstr "Show Location"
+
+msgid "location.text"
+msgstr "Location Sample Text"
+
+msgid "settings"
+msgstr "Google Calendar Settings"
+
+msgid "time.font.label"
+msgstr "Font"
+
+msgid "time.font.text"
+msgstr "Time Sample Text"
+
+msgid "time.format.12hour"
+msgstr "12-Hour"
+
+msgid "time.format.24hour"
+msgstr "24-Hour"
+
+msgid "time.format.label"
+msgstr "Format"
+
+msgid "time.heading"
+msgstr "Time"
+
+msgid "time.show"
+msgstr "Show Time"
+
+msgid "time.show-completed"
+msgstr "Show Today's Completed Events"
+
+msgid "time.show-end.always"
+msgstr "Always"
+
+msgid "time.show-end.extended"
+msgstr "For events longer than one hour"
+
+msgid "time.show-end.hour"
+msgstr "For events one hour long"
+
+msgid "time.show-end.label"
+msgstr "Show End Times"
+
+msgid "time.show-end.never"
+msgstr "Never"
+
+msgid "title.heading"
+msgstr "Title"
+
+msgid "title.label"
+msgstr "Font"
+
+msgid "title.show"
+msgstr "Show Title"
+
+msgid "title.text"
+msgstr "Title Sample Text"
+

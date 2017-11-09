@@ -1,0 +1,84 @@
+msgid "authentication-warning.message"
+msgstr "The feed at the URL provided cannot be shown because it is protected and requires authentication"
+
+msgid "author-format.heading"
+msgstr "Author Style"
+
+msgid "author-format.text"
+msgstr "Author Style Sample Text"
+
+msgid "data-selection.heading"
+msgstr "Data Selection"
+
+msgid "data-selection.showAuthor"
+msgstr "Show Author"
+
+msgid "data-selection.showDescriptionSnippet"
+msgstr "Show Description Snippet"
+
+msgid "data-selection.showFullDescription"
+msgstr "Show Full Description"
+
+msgid "data-selection.showImage"
+msgstr "Show Image"
+
+msgid "data-selection.showTimestamp"
+msgstr "Show Timestamp"
+
+msgid "data-selection.showTitle"
+msgstr "Show Title"
+
+msgid "data-selection.snippetLength"
+msgstr "Length of Description Snippet"
+
+msgid "data-selection.snippetLengthMeasure"
+msgstr "characters"
+
+msgid "item.itemsToShow"
+msgstr "Items to Show"
+
+msgid "item.maxItemsInQueue"
+msgstr "Max Items in Queue"
+
+msgid "layout.custom"
+msgstr "Custom Layout URL"
+
+msgid "layout.heading"
+msgstr "Layout"
+
+msgid "not-a-feed-warning.message"
+msgstr "The URL provided is not an RSS feed"
+
+msgid "separator.heading"
+msgstr "Separator"
+
+msgid "separator.option"
+msgstr "Show Separator Between Stories"
+
+msgid "settings"
+msgstr "RSS Settings"
+
+msgid "story-format.heading"
+msgstr "Description Style"
+
+msgid "story-format.text"
+msgstr "Description Style Sample Text"
+
+msgid "timestamp-format.heading"
+msgstr "Timestamp Style"
+
+msgid "timestamp-format.text"
+msgstr "Timestamp Style Sample Text"
+
+msgid "title-format.heading"
+msgstr "Title Style"
+
+msgid "title-format.text"
+msgstr "Title Style Sample Text"
+
+msgid "warning.anchor"
+msgstr "here"
+
+msgid "warning.message"
+msgstr "Please note that one or more errors have been detected in the URL provided that could impact how your Content appears. You can view a summary of the errors detected"
+

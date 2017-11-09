@@ -1,0 +1,45 @@
+msgid "interactivity.heading"
+msgstr "Interactivity"
+
+msgid "interactivity.interactive"
+msgstr "Allow Interaction"
+
+msgid "interactivity.scrollbars"
+msgstr "Scrollbars Enabled"
+
+msgid "refresh.label"
+msgstr "Refresh Interval"
+
+msgid "refresh.none"
+msgstr "Never Refresh"
+
+msgid "region.heading"
+msgstr "Region"
+
+msgid "region.horizontal"
+msgstr "Horizontal Scroll"
+
+msgid "region.page"
+msgstr "Show Entire Page"
+
+msgid "region.region"
+msgstr "Show a Region"
+
+msgid "region.vertical"
+msgstr "Vertical Scroll"
+
+msgid "settings"
+msgstr "Web Page Settings"
+
+msgid "unload.label"
+msgstr "Unload Web Page when not visible in Presentation (recommended)"
+
+msgid "warning.anchor"
+msgstr "X-Frame-Options"
+
+msgid "warning.message"
+msgstr "The owner of the Web Page at the URL provided does not allow the page to be embedded within an iFrame. If possible, please contact the Web Page owner to discuss"
+
+msgid "zoom.heading"
+msgstr "Zoom"
+

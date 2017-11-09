@@ -1,0 +1,183 @@
+msgid "actions.file-picker"
+msgstr "Attach an image or file"
+
+msgid "actions.new"
+msgstr "Open Support Ticket"
+
+msgid "details.by"
+msgstr "Created By"
+
+msgid "details.close-ticket"
+msgstr "This issue is solved. Close this Ticket."
+
+msgid "details.comments.at"
+msgstr "at"
+
+msgid "details.comments.attachments"
+msgstr "Attachments"
+
+msgid "details.comments.placeholder"
+msgstr "Enter new comment"
+
+msgid "details.comments.title"
+msgstr "Comments"
+
+msgid "details.on"
+msgstr "Created On"
+
+msgid "details.reopen-ticket"
+msgstr "This issue is not solved. Reopen this Ticket."
+
+msgid "details.updated"
+msgstr "Last Updated"
+
+msgid "details.xs.by"
+msgstr "Created by"
+
+msgid "details.xs.on"
+msgstr "on"
+
+msgid "details.xs.updated"
+msgstr "Last updated on"
+
+msgid "hours.available"
+msgstr "<strong>Support hours:</strong> Monday to Friday, 8am to 5pm {{timeZone}}, holidays excluded. It is currently <strong>{{currentTime}}</strong>. Expected response time is <strong>{{expectedResponseTime}}</strong>."
+
+msgid "hours.unavailable"
+msgstr "<strong>Support hours:</strong> <span class='text-danger'>Monday to Friday, 8am to 5pm {{timeZone}}</span>, holidays excluded. It is currently <strong>{{currentTime}}</strong>. You can expect to hear from us <strong>{{nextSupportDay}}</strong> at <strong>{{nextSupportTime}}</strong>."
+
+msgid "hours.unknown"
+msgstr "currently unknown"
+
+msgid "list.empty"
+msgstr "You haven't created any tickets yet."
+
+msgid "list.filter"
+msgstr "Filter tickets by status"
+
+msgid "list.heading.id"
+msgstr "ID"
+
+msgid "list.heading.requested"
+msgstr "Requested"
+
+msgid "list.heading.requester"
+msgstr "Requester"
+
+msgid "list.heading.status"
+msgstr "Status"
+
+msgid "list.heading.subject"
+msgstr "Subject"
+
+msgid "list.title"
+msgstr "Your Tickets"
+
+msgid "on-boarding.details-1"
+msgstr "We provide Support from 8am to 5pm CST Monday through Friday, holidays excluded. It is currently <strong>{{currentTime}}</strong>."
+
+msgid "on-boarding.details-2"
+msgstr "You can expect to hear from us <strong>{{nextSupportDay}}</strong> at <strong>{{nextSupportTime}}</strong>."
+
+msgid "on-boarding.lead"
+msgstr "Subscribe to access telephone, email and remote control, diagnosis, and correction, for  Rise Vision Applications."
+
+msgid "on-boarding.title"
+msgstr "Support"
+
+msgid "submission.contact.company.name"
+msgstr "Company"
+
+msgid "submission.contact.company.placeholder"
+msgstr "Company Name"
+
+msgid "submission.contact.email.invalid"
+msgstr "Invalid Email Address."
+
+msgid "submission.contact.email.name"
+msgstr "Email"
+
+msgid "submission.contact.email.required"
+msgstr "Required"
+
+msgid "submission.contact.first-name.name"
+msgstr "First Name"
+
+msgid "submission.contact.first-name.required"
+msgstr "Required"
+
+msgid "submission.contact.info"
+msgstr "Can you review and if applicable update your contact details?"
+
+msgid "submission.contact.last-name.name"
+msgstr "Last Name"
+
+msgid "submission.contact.last-name.required"
+msgstr "Required"
+
+msgid "submission.contact.phone.name"
+msgstr "Phone Number"
+
+msgid "submission.contact.phone.required"
+msgstr "Required"
+
+msgid "submission.contact.reach.email"
+msgstr "Email"
+
+msgid "submission.contact.reach.name"
+msgstr "Best way to reach you?"
+
+msgid "submission.contact.reach.phone"
+msgstr "Phone"
+
+msgid "submission.description.name"
+msgstr "Description"
+
+msgid "submission.description.required"
+msgstr "Required"
+
+msgid "submission.display.name"
+msgstr "Display"
+
+msgid "submission.display.placeholder"
+msgstr "select a display"
+
+msgid "submission.error"
+msgstr "Failed to create ticket!"
+
+msgid "submission.schedule-info"
+msgstr "If applicable, can you select which Schedule or Display is involved with your issue?"
+
+msgid "submission.schedule.name"
+msgstr "Schedule"
+
+msgid "submission.schedule.placeholder"
+msgstr "select a schedule"
+
+msgid "submission.subcompany-selected"
+msgstr "<strong>Warning!</strong> Tickets created for a sub Company will appear under the Company you belong to."
+
+msgid "submission.subject.max-length"
+msgstr "150 Character Max Length."
+
+msgid "submission.subject.name"
+msgstr "Subject"
+
+msgid "submission.subject.required"
+msgstr "Required"
+
+msgid "submission.title"
+msgstr "Submit a New Ticket"
+
+msgid "title"
+msgstr "Support"
+
+msgid "upload.attached"
+msgstr "Attached"
+
+msgid "upload.overwrite"
+msgstr "You can only submit one attachment per comment. Do you want to overwrite the existing file?"
+
+msgid "upload.uploading"
+msgstr "Uploading"
+

@@ -1,0 +1,33 @@
+msgid "createAccount"
+msgstr "Create a Free Account"
+
+msgid "dontHaveAccount"
+msgstr "I don't have a google account."
+
+msgid "haveAccount"
+msgstr "Have an Account?"
+
+msgid "hideAnimation"
+msgstr "Hide Animation"
+
+msgid "howToShow"
+msgstr "How do I show Presentations and Web Pages?"
+
+msgid "presentationCTA.description"
+msgstr "Start with a Presentation and then Schedule it with your Display"
+
+msgid "presentationCTA.title"
+msgstr "How simple is digital signage with Rise Vision?"
+
+msgid "signUpGoogle"
+msgstr "Sign Up with Google"
+
+msgid "supportBanner.callToAction"
+msgstr "Get Priority Support"
+
+msgid "supportBanner.description"
+msgstr "Get 10 days of Priority Support for FREE!"
+
+msgid "supportBanner.title"
+msgstr "Need Help?"
+

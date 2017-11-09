@@ -1,0 +1,3 @@
+msgid "settings"
+msgstr "Text Settings"
+

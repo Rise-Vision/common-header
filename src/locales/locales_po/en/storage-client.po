@@ -1,0 +1,303 @@
+msgid "add-by-url"
+msgstr "By URL"
+
+msgid "breaking-link-warning.text1"
+msgstr "Modifying these files or folders will break all links with existing Presentations."
+
+msgid "breaking-link-warning.text2"
+msgstr "If you are using this asset in any Presentation, the link for each must be manually updated in the Editor."
+
+msgid "cancel-uploads"
+msgstr "Cancel All"
+
+msgid "delete-files-folders-plural"
+msgstr "{{count}} files and folders are about to be permanently deleted."
+
+msgid "delete-files-plural"
+msgstr "{{count}} files are about to be permanently deleted."
+
+msgid "delete-files-singular"
+msgstr "One file is about to be permanently deleted."
+
+msgid "delete-folders-plural"
+msgstr "{{count}} folders are about to be permanently deleted."
+
+msgid "delete-folders-singular"
+msgstr "One folder is about to be permanently deleted."
+
+msgid "download-status"
+msgstr "Download Status"
+
+msgid "empty-state.no-uploads"
+msgstr "You haven't uploaded any files yet!"
+
+msgid "empty-state.or"
+msgstr "or"
+
+msgid "empty-state.select"
+msgstr "Select"
+
+msgid "empty-state.select-file"
+msgstr "Or just select single Images and Videos to add and order them in your Playlist"
+
+msgid "empty-state.select-folder"
+msgstr "Select a Folder to show and update Images and Videos as you add or remove them from the Folder."
+
+msgid "error.access-denied"
+msgstr "You don't have access to that action. Please contact your Administrator to give you the access you need."
+
+msgid "error.blocked-file"
+msgstr "This file is being requested too many times and is blocked."
+
+msgid "error.delete-verify-company"
+msgstr "You cannot delete a file because your account {{username}} doesn't have access to this company. Please login with a different account and try again."
+
+msgid "error.duplicate-folder"
+msgstr "A Folder already uses that name, please choose a different one"
+
+msgid "error.folder-inactive-subscription"
+msgstr "You cannot add a folder because you don't have an active subscription. Please purchase a subscription and try again."
+
+msgid "error.folder-verify-company"
+msgstr "You cannot create a folder because your account {{username}} doesn't have access to this company. Please login with a different account and try again."
+
+msgid "error.move.both-files-or-folders"
+msgstr "Destination must be a folder."
+
+msgid "error.move.both-root-or-trash"
+msgstr "Source and destination must be both in Root or in Trash."
+
+msgid "error.move.destination-must-not-exist"
+msgstr "Destination folder already contains a file with that name."
+
+msgid "error.move.invalid-name"
+msgstr "The new name cannot have slashes."
+
+msgid "error.move.must-be-different"
+msgstr "You cannot move these files or folders into the same folder. Please select a different folder and try again."
+
+msgid "error.move.no-matches-found"
+msgstr "No matching files found."
+
+msgid "error.move.parent-must-exist"
+msgstr "Destination parent directory must exist."
+
+msgid "error.move.root-not-valid"
+msgstr "Source and destination cannot point to the root folder."
+
+msgid "error.move.subfolders-not-valid"
+msgstr "Source and destination cannot be subfolders of each other."
+
+msgid "error.move.unknown"
+msgstr "An error occured while moving. Please try again."
+
+msgid "error.not-authorized"
+msgstr "Your account {{username}} doesn't have access to this company. Please login with a different account and try again."
+
+msgid "error.restore-inactive-subscription"
+msgstr "You cannot restore the file from trash because you don't have an active subscription. Please purchase a subscription and try again."
+
+msgid "error.restore-verify-company"
+msgstr "You cannot restore the file from trash because your account {{username}} doesn't have access to this company. Please login with a different account and try again."
+
+msgid "error.server-error"
+msgstr "An error has occured."
+
+msgid "error.signed-download-uri-request-failed"
+msgstr "Download failed. Please try again."
+
+msgid "error.signed-url-verify-company"
+msgstr "The download failed because your account {{username}} does not have access to this company. Please log in with a different account and try again."
+
+msgid "error.trash-inactive-subscription"
+msgstr "You cannot move the file to trash because you don't have an active subscription. Please purchase a subscription and try again."
+
+msgid "error.trash-verify-company"
+msgstr "You cannot move the file to trash because your account {{username}} doesn't have access to this company. Please login with a different account and try again."
+
+msgid "error.upload-failed"
+msgstr "Upload failed. Please try again."
+
+msgid "error.upload-inactive-subscription"
+msgstr "You cannot upload files because you don't have an active subscription. Please purchase a subscription and try again."
+
+msgid "error.upload-uri-request-failed"
+msgstr "Upload failed. Please try again."
+
+msgid "error.upload-uri-request-failed-mail"
+msgstr "Upload failed for {{username}}. Please try again."
+
+msgid "error.upload-verify-company"
+msgstr "The upload failed because your account {{username}} does not have access to this company. Please log in with a different account and try again."
+
+msgid "folder-selector.title"
+msgstr "Select Destination"
+
+msgid "header"
+msgstr "Storage"
+
+msgid "list.toggle-grid-view"
+msgstr "Grid View"
+
+msgid "list.toggle-list-view"
+msgstr "List View"
+
+msgid "loading-files"
+msgstr "Loading..."
+
+msgid "loading-functions"
+msgstr "Loading..."
+
+msgid "new-folder"
+msgstr "Create Folder"
+
+msgid "open-in-storage-app"
+msgstr "Open in Storage App"
+
+msgid "pending-operation.delete"
+msgstr "Deleting..."
+
+msgid "pending-operation.duplicate"
+msgstr "Duplicating..."
+
+msgid "pending-operation.failed.delete"
+msgstr "Delete failed. Please try again."
+
+msgid "pending-operation.failed.duplicate"
+msgstr "Duplicate failed. Please try again."
+
+msgid "pending-operation.failed.move"
+msgstr "Move failed. Please try again."
+
+msgid "pending-operation.failed.restore"
+msgstr "Restore failed. Please try again."
+
+msgid "pending-operation.failed.trash"
+msgstr "Move to trash failed. Please try again."
+
+msgid "pending-operation.leave-page"
+msgstr "There are tasks in progress. If you close this window they won't be completed."
+
+msgid "pending-operation.move"
+msgstr "Moving..."
+
+msgid "pending-operation.restore"
+msgstr "Restoring..."
+
+msgid "pending-operation.trash"
+msgstr "Moving to trash..."
+
+msgid "rename.error.both-files-or-folders"
+msgstr "Source and destination must be both files or folders."
+
+msgid "rename.error.both-root-or-trash"
+msgstr "Source and destination must be both in Root or in Trash."
+
+msgid "rename.error.destination-must-not-exist"
+msgstr "Name is in use, please choose another."
+
+msgid "rename.error.invalid-name"
+msgstr "The new name cannot have slashes."
+
+msgid "rename.error.must-be-different"
+msgstr "The new name must be different."
+
+msgid "rename.error.no-matches-found"
+msgstr "No matching files found."
+
+msgid "rename.error.parent-must-exist"
+msgstr "Destination parent directory must exist."
+
+msgid "rename.error.root-not-valid"
+msgstr "Source and destination cannot point to the root folder."
+
+msgid "rename.error.subfolders-not-valid"
+msgstr "Source and destination cannot be subfolders of each other."
+
+msgid "rename.error.unknown"
+msgstr "An error occured while renaming. Please try again."
+
+msgid "rename.title"
+msgstr "Rename File or Folder"
+
+msgid "retry-failed-uploads"
+msgstr "Retry failed uploads"
+
+msgid "select-file"
+msgstr "Select a File"
+
+msgid "select-folder-to-update"
+msgstr "Select a Folder to show and update Images and Videos as you add or remove them from the Folder."
+
+msgid "select-multiple-file"
+msgstr "Select one or more Files"
+
+msgid "select-multiple-files-folders"
+msgstr "Select Files and Folders"
+
+msgid "select-multiple-files-folders-images"
+msgstr "Select Images and/or Folders of Images"
+
+msgid "select-multiple-files-folders-videos"
+msgstr "Select Videos and/or Folders of Videos"
+
+msgid "select-single-file"
+msgstr "Select a File"
+
+msgid "select-single-file-images"
+msgstr "Select an Image"
+
+msgid "select-single-file-videos"
+msgstr "Select a Video"
+
+msgid "select-single-folder"
+msgstr "Select a Folder"
+
+msgid "select-single-folder-images"
+msgstr "Select a Folder of Images"
+
+msgid "select-single-folder-videos"
+msgstr "Select a Folder of Videos"
+
+msgid "selected-items"
+msgstr "{{count}} Selected"
+
+msgid "start-trial.cta"
+msgstr "Start Your Free Trial"
+
+msgid "start-trial.free-30-days"
+msgstr "Free 30 days trial. No credit card required."
+
+msgid "start-trial.price"
+msgstr "$10 per Company per Month."
+
+msgid "start-trial.tagline"
+msgstr "Manage and deliver media to your digital signage displays, anywhere, anytime."
+
+msgid "title"
+msgstr "Rise Vision Storage"
+
+msgid "trash"
+msgstr "Trash"
+
+msgid "upload"
+msgstr "Upload"
+
+msgid "upload-files"
+msgstr "Upload Files"
+
+msgid "upload-folder"
+msgstr "Upload Folder"
+
+msgid "upload-status"
+msgstr "Upload Status"
+
+msgid "uploading"
+msgstr "Uploading {{filename}}"
+
+msgid "uploading-count-files"
+msgstr "Uploading {{count}} files"
+
+msgid "uploading-one-file"
+msgstr "Uploading 1 file"
+

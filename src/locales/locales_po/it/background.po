@@ -1,0 +1,6 @@
+msgid "color.label"
+msgstr "Colore"
+
+msgid "heading"
+msgstr "Sfondo"
+

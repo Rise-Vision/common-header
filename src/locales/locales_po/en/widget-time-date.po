@@ -1,0 +1,33 @@
+msgid "date.label"
+msgstr "Date"
+
+msgid "date.show"
+msgstr "Show Date"
+
+msgid "settings"
+msgstr "Time and Date Settings"
+
+msgid "system"
+msgstr "This widget will show the current time and date according to the time and date configured on the operating system it is used on."
+
+msgid "time.formats.twelve"
+msgstr "12-Hour"
+
+msgid "time.formats.twenty-four"
+msgstr "24-Hour"
+
+msgid "time.label"
+msgstr "Time"
+
+msgid "time.show"
+msgstr "Show Time"
+
+msgid "timezone.label"
+msgstr "Show the current time and date according to:"
+
+msgid "timezone.local-timezone"
+msgstr "The media player's time zone."
+
+msgid "timezone.specific-timezone"
+msgstr "Specific time zone."
+

@@ -1,0 +1,21 @@
+msgid "errors.numeric"
+msgstr "This field must be numeric"
+
+msgid "errors.required"
+msgstr "This field is required"
+
+msgid "font"
+msgstr "Font"
+
+msgid "layout.custom"
+msgstr "Custom"
+
+msgid "layout.error"
+msgstr "Please enter a Layout URL"
+
+msgid "layout.heading"
+msgstr "Layout"
+
+msgid "layout.url"
+msgstr "Layout URL"
+

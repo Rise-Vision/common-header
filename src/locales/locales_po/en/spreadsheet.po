@@ -1,0 +1,45 @@
+msgid "cells.label"
+msgstr "Include"
+
+msgid "cells.range"
+msgstr "Range"
+
+msgid "cells.sheet"
+msgstr "Entire Sheet"
+
+msgid "error.publish"
+msgstr "To use this spreadsheet, it needs to be published to the web and made public. Open your file from the link provided below. From the Google Spreadsheet menu, select File > Publish to the web, and then click the Start Publishing button. Next click Share in the top right of the Spreadsheet, select Advanced, and then set Access to Public. Once done, select your file from the Google Drive button again."
+
+msgid "error.refresh"
+msgstr "The refresh value can be no less than 5 minutes."
+
+msgid "headerRow.auto"
+msgstr "Auto"
+
+msgid "headerRow.label"
+msgstr "Header Row"
+
+msgid "headerRow.tooltip"
+msgstr "Specify how many rows are header rows. These will be excluded from the data and assigned as column labels in the data table. If set to Auto, the spreadsheet will guess how many rows are header rows. Note that if all your columns are string data, the spreadsheet might have difficulty determining which rows are header rows without this parameter set to something other than Auto."
+
+msgid "heading"
+msgstr "Spreadsheet"
+
+msgid "range.label"
+msgstr "Range"
+
+msgid "range.tooltip"
+msgstr "Range of cells in the format A1:B10"
+
+msgid "refresh.label"
+msgstr "Data Refresh Interval"
+
+msgid "refresh.tooltip"
+msgstr "How often to check the spreadsheet for new data."
+
+msgid "select"
+msgstr "Select Spreadsheet"
+
+msgid "sheet"
+msgstr "Worksheet"
+

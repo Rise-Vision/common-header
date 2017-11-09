@@ -1,0 +1,36 @@
+msgid "interactive.label"
+msgstr "Interactive"
+
+msgid "interactive.tooltip"
+msgstr "Enable to allow users to interact with webpage."
+
+msgid "refresh.label"
+msgstr "Data Refresh Interval (minutes)"
+
+msgid "refresh.none"
+msgstr "Do Not Refresh"
+
+msgid "scroll.horizontal.label"
+msgstr "Horizontal Scroll"
+
+msgid "scroll.horizontal.tooltip"
+msgstr "Enter amount you want clipped from the leftmost portion of the webpage."
+
+msgid "scroll.vertical.label"
+msgstr "Vertical Scroll"
+
+msgid "scroll.vertical.tooltip"
+msgstr "Enter amount you want clipped from the topmost portion of the webpage."
+
+msgid "scrollbars"
+msgstr "Scrollbars Enabled"
+
+msgid "settings"
+msgstr "Web Page Settings"
+
+msgid "zoom.label"
+msgstr "Zoom"
+
+msgid "zoom.tooltip"
+msgstr "This will allow you to zoom in/out of a web page. If value is higher than 100% then scrollbars will be disabled."
+

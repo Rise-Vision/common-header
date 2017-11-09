@@ -1,0 +1,654 @@
+msgid "actions.new"
+msgstr "Add Display"
+
+msgid "add.download.armv7l"
+msgstr "Download Raspbian 8.0 [ARMv7]"
+
+msgid "add.download.linux32"
+msgstr "Download Ubuntu 14.04 LTS [32-bit]"
+
+msgid "add.download.linux64"
+msgstr "Download Ubuntu 14.04 LTS [64-bit]"
+
+msgid "add.download.win32"
+msgstr "Download Windows 10 [32-bit]"
+
+msgid "add.download.win64"
+msgstr "Download Windows 10 [64-bit]"
+
+msgid "add.error"
+msgstr "Failed to create display!"
+
+msgid "add.instructions.anotherEmail"
+msgstr "Send To Another E-Mail"
+
+msgid "add.instructions.emailInfo"
+msgstr "We’ve also emailed these instructions to"
+
+msgid "add.instructions.emailPlaceholder"
+msgstr "Enter Email Address"
+
+msgid "add.instructions.step1"
+msgstr "1. Install Rise Player on your Media Player"
+
+msgid "add.instructions.step2"
+msgstr "2. When prompted, enter this Display ID to complete the installation"
+
+msgid "add.instructions.title"
+msgstr "Complete '{{displayName}}' Display by installing Rise Player"
+
+msgid "add.name.name"
+msgstr "Name Your Display"
+
+msgid "add.name.placeholder"
+msgstr "Display Name"
+
+msgid "add.next"
+msgstr "Next"
+
+msgid "add.title"
+msgstr "Add a Display"
+
+msgid "alerts.acceptTerms"
+msgstr "Please accept Terms and Conditions to enable Alerts"
+
+msgid "alerts.authenticationName"
+msgstr "Authentication Name"
+
+msgid "alerts.authenticationPassword"
+msgstr "Authentication Password"
+
+msgid "alerts.categories.cbrne"
+msgstr "Chemical, Biological, Radiological, Nuclear and Explosives"
+
+msgid "alerts.categories.env"
+msgstr "Environment"
+
+msgid "alerts.categories.fire"
+msgstr "Fire"
+
+msgid "alerts.categories.geo"
+msgstr "Geophysical"
+
+msgid "alerts.categories.health"
+msgstr "Health"
+
+msgid "alerts.categories.infra"
+msgstr "Infrastructure"
+
+msgid "alerts.categories.met"
+msgstr "Meteorological"
+
+msgid "alerts.categories.other"
+msgstr "Other"
+
+msgid "alerts.categories.rescue"
+msgstr "Rescue"
+
+msgid "alerts.categories.safety"
+msgstr "Safety"
+
+msgid "alerts.categories.security"
+msgstr "Security"
+
+msgid "alerts.categories.transport"
+msgstr "Transport"
+
+msgid "alerts.category"
+msgstr "Category"
+
+msgid "alerts.certainties.likely"
+msgstr "Likely"
+
+msgid "alerts.certainties.observed"
+msgstr "Observed"
+
+msgid "alerts.certainties.possible"
+msgstr "Possible"
+
+msgid "alerts.certainties.unknown"
+msgstr "Unknown"
+
+msgid "alerts.certainties.unlikely"
+msgstr "Unlikely"
+
+msgid "alerts.certainty"
+msgstr "Certainty"
+
+msgid "alerts.code"
+msgstr "Code"
+
+msgid "alerts.defaultExpiry"
+msgstr "Default Expiry"
+
+msgid "alerts.handling"
+msgstr "Handling"
+
+msgid "alerts.hideFilters"
+msgstr "Hide Filters"
+
+msgid "alerts.iAccept"
+msgstr "I accept the terms and conditions."
+
+msgid "alerts.minutes"
+msgstr "Minutes"
+
+msgid "alerts.presentation"
+msgstr "Presentation"
+
+msgid "alerts.reset"
+msgstr "Reset"
+
+msgid "alerts.sender"
+msgstr "Sender"
+
+msgid "alerts.severities.extreme"
+msgstr "Extreme"
+
+msgid "alerts.severities.minor"
+msgstr "Minor"
+
+msgid "alerts.severities.moderate"
+msgstr "Moderate"
+
+msgid "alerts.severities.severe"
+msgstr "Severe"
+
+msgid "alerts.severities.unknown"
+msgstr "Unknown"
+
+msgid "alerts.severity"
+msgstr "Severity"
+
+msgid "alerts.showFilters"
+msgstr "Show Filters"
+
+msgid "alerts.status"
+msgstr "Status"
+
+msgid "alerts.statuses.actual"
+msgstr "Actual"
+
+msgid "alerts.statuses.draft"
+msgstr "Draft"
+
+msgid "alerts.statuses.exercise"
+msgstr "Exercise"
+
+msgid "alerts.statuses.system"
+msgstr "System"
+
+msgid "alerts.statuses.test"
+msgstr "Test"
+
+msgid "alerts.terms"
+msgstr "The Alert Service is based upon the Common Alert Protocol version 1.2. This standard does not require authentication or a secure connection, which could result in somebody sending false Alerts by pretending to be your Alerts provider. We highly recommend that, at the very least, you have your Alerts provider connect to our service with HTTPS, not HTTP, and that you require an Authentication Name and Password for that connection. That password should be complex and changed regularly. You should test your Alerts system at least weekly. You have read and understood this disclaimer and you agree that Rise Vision cannot be responsible for the erroneous showing of Alert Messages on your Displays."
+
+msgid "alerts.textFields.description"
+msgstr "Description"
+
+msgid "alerts.textFields.headline"
+msgstr "Headline"
+
+msgid "alerts.textFields.instruction"
+msgstr "Instruction"
+
+msgid "alerts.textToShow"
+msgstr "Alert Text To Show"
+
+msgid "alerts.title"
+msgstr "Alerts"
+
+msgid "alerts.turnOff"
+msgstr "Turn Off Alerts"
+
+msgid "alerts.turnOn"
+msgstr "Turn On Alerts"
+
+msgid "alerts.turnOnShort"
+msgstr "Turn On"
+
+msgid "alerts.turnedOffWarning"
+msgstr "Alerts Are Turned Off and Won't Be Sent to Your Target Displays."
+
+msgid "alerts.urgencies.expected"
+msgstr "Expected"
+
+msgid "alerts.urgencies.future"
+msgstr "Future"
+
+msgid "alerts.urgencies.immediate"
+msgstr "Immediate"
+
+msgid "alerts.urgencies.past"
+msgstr "Past"
+
+msgid "alerts.urgencies.unknown"
+msgstr "Unknown"
+
+msgid "alerts.urgency"
+msgstr "Urgency"
+
+msgid "alerts.viewTerms"
+msgstr "View Terms and Conditions"
+
+msgid "alerts.webServiceURL"
+msgstr "Web Service URL"
+
+msgid "details.deleteTitle"
+msgstr "Deleting Display"
+
+msgid "details.deleteWarning"
+msgstr "Are you sure you want to delete this Display?"
+
+msgid "details.error"
+msgstr "Failed to update display!"
+
+msgid "details.startPlayerProTrial"
+msgstr "Start Rise Player Professional Trial"
+
+msgid "details.subscribePlayerPro"
+msgstr "Subscribe to Rise Player Professional"
+
+msgid "details.title"
+msgstr "Display Settings"
+
+msgid "details.unsavedTitle"
+msgstr "Unsaved Changes"
+
+msgid "details.unsavedWarning"
+msgstr "You have unsaved changes. Do you want to Save or Discard them?"
+
+msgid "details.whatIsPlayerPro"
+msgstr "What is Rise Player Professional?"
+
+msgid "displayDetails"
+msgstr "Display Details"
+
+msgid "download.armv7l"
+msgstr "Download Player for Raspbian 8.0 [ARMv7]"
+
+msgid "download.linux32"
+msgstr "Download Player for Ubuntu 14.04 LTS [32-bit]"
+
+msgid "download.linux64"
+msgstr "Download Player for Ubuntu 14.04 LTS [64-bit]"
+
+msgid "download.player"
+msgstr "Download Player"
+
+msgid "download.win32"
+msgstr "Download Player for Windows 10 [32-bit]"
+
+msgid "download.win64"
+msgstr "Download Player for Windows 10 [64-bit]"
+
+msgid "fields.address.city"
+msgstr "City"
+
+msgid "fields.address.country.name"
+msgstr "Country"
+
+msgid "fields.address.country.placeholder"
+msgstr "&lt; Select Country &gt;"
+
+msgid "fields.address.description"
+msgstr "Description"
+
+msgid "fields.address.postalCode"
+msgstr "Zip / Postal Code"
+
+msgid "fields.address.province.name"
+msgstr "State/Province/Region"
+
+msgid "fields.address.province.provincePlaceholder"
+msgstr "&lt; Select Province &gt;"
+
+msgid "fields.address.province.statePlaceholder"
+msgstr "&lt; Select State &gt;"
+
+msgid "fields.address.street"
+msgstr "Street"
+
+msgid "fields.address.timezone.name"
+msgstr "Time Zone"
+
+msgid "fields.address.timezone.placeholder"
+msgstr "&lt; Select Time Zone &gt;"
+
+msgid "fields.address.unit"
+msgstr "Unit"
+
+msgid "fields.address.useCompany"
+msgstr "Use Company Address"
+
+msgid "fields.controls.download"
+msgstr "Download Rise Player"
+
+msgid "fields.controls.error"
+msgstr "Error:"
+
+msgid "fields.controls.howto"
+msgstr "How do I show Presentations on my device?"
+
+msgid "fields.controls.howtoInstall"
+msgstr "How do I install Rise Player?"
+
+msgid "fields.controls.reboot.name"
+msgstr "Reboot Media Player"
+
+msgid "fields.controls.reboot.success"
+msgstr "Reboot signal sent"
+
+msgid "fields.controls.reboot.title"
+msgstr "Rebooting Display"
+
+msgid "fields.controls.reboot.warning"
+msgstr "The Rise Player on the Display's Computer will reboot and the currently Scheduled Content will be interrupted. Do you wish to proceed?"
+
+msgid "fields.controls.restart.name"
+msgstr "Restart Rise Player"
+
+msgid "fields.controls.restart.success"
+msgstr "Restart signal sent"
+
+msgid "fields.controls.restart.title"
+msgstr "Restarting Display"
+
+msgid "fields.controls.restart.warning"
+msgstr "The Rise Player on the Display's Computer will restart and the currently Scheduled Content will be interrupted. Do you wish to proceed?"
+
+msgid "fields.email.failed"
+msgstr "Failed to send e-mail"
+
+msgid "fields.email.invalid"
+msgstr "Invalid e-mail address"
+
+msgid "fields.id"
+msgstr "Display Id:"
+
+msgid "fields.monitor.name"
+msgstr "Monitor"
+
+msgid "fields.monitor.warning"
+msgstr "No Monitoring Emails have been set up for your Company. Please go to your Company Settings to configure."
+
+msgid "fields.name.name"
+msgstr "Name"
+
+msgid "fields.name.required"
+msgstr "Required"
+
+msgid "fields.player.browser.installed"
+msgstr "Browser Version:"
+
+msgid "fields.player.browser.recommended"
+msgstr "Recommended Browser:"
+
+msgid "fields.player.browser.upgrade.autoUpgrade"
+msgstr "Auto Upgrade"
+
+msgid "fields.player.browser.upgrade.name"
+msgstr "Browser Upgrade:"
+
+msgid "fields.player.browser.upgrade.userManaged"
+msgstr "User Managed"
+
+msgid "fields.player.browserVersion"
+msgstr "Browser Version"
+
+msgid "fields.player.id"
+msgstr "Display ID"
+
+msgid "fields.player.install.heading"
+msgstr "Install Rise Player"
+
+msgid "fields.player.install.id"
+msgstr "Your Display ID is"
+
+msgid "fields.player.ipAddress"
+msgstr "IP Address"
+
+msgid "fields.player.lastConnection"
+msgstr "Last Connection"
+
+msgid "fields.player.localIpAddress"
+msgstr "Local IP Address"
+
+msgid "fields.player.macAddress"
+msgstr "MAC Address"
+
+msgid "fields.player.operatingSystem"
+msgstr "Operating System"
+
+msgid "fields.player.orientation.0"
+msgstr "Landscape"
+
+msgid "fields.player.orientation.180"
+msgstr "Landscape (flipped)"
+
+msgid "fields.player.orientation.270"
+msgstr "Portrait (flipped)"
+
+msgid "fields.player.orientation.90"
+msgstr "Portrait"
+
+msgid "fields.player.orientation.name"
+msgstr "Rotation:"
+
+msgid "fields.player.playerVersion"
+msgstr "Player Version"
+
+msgid "fields.player.playerWarning"
+msgstr "A Player has not been configured for your Display. To configure your Display, select your Operating System below and install the software <b>on the device</b> that will operate your Display. When the Player starts for the first time you will be prompted to enter the Display ID (above) to link the Player with the Display that you have setup here. Further setup details can be <a href="https://help.risevision.com/hc/en-us/articles/115000860926-Displays" target="_blank">found here</a>."
+
+msgid "fields.player.resolution"
+msgstr "Resolution"
+
+msgid "fields.player.schedule.addToSchedule"
+msgstr "Add To Schedule"
+
+msgid "fields.player.schedule.label"
+msgstr "Schedule"
+
+msgid "fields.player.schedule.notScheduled"
+msgstr "This Display is not scheduled."
+
+msgid "fields.player.serialNumber"
+msgstr "Serial Number"
+
+msgid "fields.player.status"
+msgstr "Status"
+
+msgid "fields.player.version.howGetHelp"
+msgstr "How do I get help?"
+
+msgid "fields.player.version.notCurrent"
+msgstr "Player Version Not Current"
+
+msgid "fields.player.version.thirdParty"
+msgstr "(3rd Party Player)"
+
+msgid "fields.player.version.unsupported"
+msgstr "Unsupported"
+
+msgid "fields.player.version.upgrade"
+msgstr "Upgrade"
+
+msgid "fields.player.viewerVersion"
+msgstr "Viewer Version"
+
+msgid "fields.reboot"
+msgstr "Reboot:"
+
+msgid "fields.screenshot.error1"
+msgstr "There was a problem requesting the screenshot."
+
+msgid "fields.screenshot.error2"
+msgstr "Please check connectivity."
+
+msgid "fields.screenshot.learnSupportedOS1"
+msgstr "Learn more about supported"
+
+msgid "fields.screenshot.learnSupportedOS2"
+msgstr "operating systems."
+
+msgid "fields.screenshot.missing1"
+msgstr "No Screenshot to show."
+
+msgid "fields.screenshot.missing2"
+msgstr "Click 'Update' above."
+
+msgid "fields.screenshot.notAvailable"
+msgstr "Screenshot not available."
+
+msgid "fields.screenshot.notScheduled"
+msgstr "This Display is not scheduled."
+
+msgid "fields.screenshot.osNotSupported"
+msgstr "Media Player operating system not supported."
+
+msgid "fields.screenshot.playerInstall"
+msgstr "Install Rise Player"
+
+msgid "fields.screenshot.playerNotInstalled"
+msgstr "Rise Player not installed."
+
+msgid "fields.screenshot.playerOffline"
+msgstr "This Display is Offline."
+
+msgid "fields.screenshot.title"
+msgstr "Display Screenshot"
+
+msgid "fields.screenshot.updateScreenshot"
+msgstr "Update"
+
+msgid "fields.screenshot.upgradePlayer"
+msgstr "Upgrade Rise Player"
+
+msgid "fields.screenshot.upgradeRequired"
+msgstr "Rise Player software must be upgraded."
+
+msgid "fields.status.active"
+msgstr "Active"
+
+msgid "fields.status.inactive"
+msgstr "Inactive"
+
+msgid "fields.status.name"
+msgstr "Status"
+
+msgid "landing.manageDisplaysText"
+msgstr "Manage and monitor your digital signage displays, anywhere, anytime."
+
+msgid "list.empty"
+msgstr "You haven't created any Displays yet."
+
+msgid "list.filter.filters"
+msgstr "Filters"
+
+msgid "list.filter.placeholder"
+msgstr "Search for Displays"
+
+msgid "list.heading.address"
+msgstr "Address"
+
+msgid "list.heading.lastConnection"
+msgstr "Last Connection"
+
+msgid "list.heading.name"
+msgstr "Name"
+
+msgid "list.heading.playerType"
+msgstr "Player Type"
+
+msgid "list.heading.schedule"
+msgstr "Schedule"
+
+msgid "list.heading.status"
+msgstr "Status"
+
+msgid "list.no-results"
+msgstr "Your search didn't return any results"
+
+msgid "list.noDisplays"
+msgstr "No Displays"
+
+msgid "list.player.cta.checkStore"
+msgstr "Check Store Account"
+
+msgid "list.player.cta.getSupport"
+msgstr "Get Support"
+
+msgid "list.player.cta.subscribeNow"
+msgstr "Subscribe Now"
+
+msgid "list.player.cta.subscribePro"
+msgstr "Subscribe To Professional"
+
+msgid "list.player.cta.tryPro"
+msgstr "Try Professional"
+
+msgid "list.player.cta.upgrade"
+msgstr "Upgrade"
+
+msgid "list.player.type.3rdParty"
+msgstr "3rd Party Player"
+
+msgid "list.player.type.cancelled"
+msgstr "Professional (Cancelled)"
+
+msgid "list.player.type.professional"
+msgstr "Professional"
+
+msgid "list.player.type.professionalSuspended"
+msgstr "Professional (Suspended)"
+
+msgid "list.player.type.professionalTrial"
+msgstr "Professional (Trial)"
+
+msgid "list.player.type.standard"
+msgstr "Standard"
+
+msgid "list.player.type.unsupported"
+msgstr "Unsupported"
+
+msgid "list.schedule.add"
+msgstr "Add to Schedule"
+
+msgid "list.searchNotification"
+msgstr "Search results may include Displays that belong to your sub-companies."
+
+msgid "list.status.error"
+msgstr "Error"
+
+msgid "list.status.install"
+msgstr "Install Player"
+
+msgid "list.status.offline"
+msgstr "Offline"
+
+msgid "list.status.online"
+msgstr "Online"
+
+msgid "list.status.whyOffline"
+msgstr "Why is my Display offline?"
+
+msgid "list.viewAll"
+msgstr "View All Displays"
+
+msgid "playerProTrial.description"
+msgstr "Rise Player Professional is a self-contained application that eliminates having to be connected to the internet in order to start and show your content."
+
+msgid "playerProTrial.description2"
+msgstr "30 days FREE trial for all Displays in your Company. No credit card required."
+
+msgid "playerProTrial.price"
+msgstr "$9 USD/CAD Per Display Per Month"
+
+msgid "playerProTrial.title"
+msgstr "Rise Player Professional"
+
+msgid "title"
+msgstr "Displays"
+

@@ -1,0 +1,42 @@
+msgid "cancel"
+msgstr "Otkaži"
+
+msgid "friday"
+msgstr "Petak"
+
+msgid "help"
+msgstr "Pomoć"
+
+msgid "monday"
+msgstr "Ponedeljak"
+
+msgid "saturday"
+msgstr "Subota"
+
+msgid "save"
+msgstr "Sačuvaj"
+
+msgid "sunday"
+msgstr "Nedelja"
+
+msgid "thursday"
+msgstr "Četvrtak"
+
+msgid "tuesday"
+msgstr "Utorak"
+
+msgid "units.celsius"
+msgstr "Celsius"
+
+msgid "units.fahrenheit"
+msgstr "Fahrenheit"
+
+msgid "units.kph"
+msgstr "km/h"
+
+msgid "units.mph"
+msgstr "m/h"
+
+msgid "wednesday"
+msgstr "Sreda"
+

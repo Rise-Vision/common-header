@@ -1,0 +1,132 @@
+msgid "E"
+msgstr "восточный"
+
+msgid "N"
+msgstr "северный"
+
+msgid "NE"
+msgstr "северо-восточный"
+
+msgid "NW"
+msgstr "северо-западный"
+
+msgid "S"
+msgstr "южный"
+
+msgid "SE"
+msgstr "юго-восточный"
+
+msgid "SW"
+msgstr "юго-западный"
+
+msgid "W"
+msgstr "западный"
+
+msgid "address.address.custom"
+msgstr "Custom Address"
+
+msgid "address.address.custom-address"
+msgstr "Your Custom Address"
+
+msgid "address.address.display"
+msgstr "Display Address"
+
+msgid "address.address.error"
+msgstr "Please enter a Custom Address"
+
+msgid "address.address.geolocation"
+msgstr "Geolocation"
+
+msgid "address.address.label"
+msgstr "Address"
+
+msgid "address.description.custom"
+msgstr "Custom Description"
+
+msgid "address.description.custom-description"
+msgstr "Your Custom Description"
+
+msgid "address.description.error"
+msgstr "Please enter a Custom Description"
+
+msgid "address.description.label"
+msgstr "Description"
+
+msgid "address.description.none"
+msgstr "None"
+
+msgid "address.description.service"
+msgstr "From Service"
+
+msgid "address.font.text"
+msgstr "Address Sample Text"
+
+msgid "at"
+msgstr ""
+
+msgid "current-temp.font.label"
+msgstr "Current Temperature Font"
+
+msgid "current-temp.font.text"
+msgstr "Current Temperature Sample Text"
+
+msgid "errors.no-data"
+msgstr "Unable to retrieve weather data for that location."
+
+msgid "errors.no-terms"
+msgstr "You must check the Acceptance setting in order to use this Widget."
+
+msgid "forecast-day.font.label"
+msgstr "Forecast Day Font"
+
+msgid "forecast-day.font.text"
+msgstr "Forecast Day Sample Text"
+
+msgid "forecast-temp.font.label"
+msgstr "Forecast Temperature Font"
+
+msgid "forecast-temp.font.text"
+msgstr "Forecast Temperature Sample Text"
+
+msgid "humidity"
+msgstr "Влажность"
+
+msgid "humidity-wind.font.text"
+msgstr "Humidity & Wind Sample Text"
+
+msgid "humidity-wind.heading"
+msgstr "Humidity and Wind"
+
+msgid "humidity-wind.show"
+msgstr "Show Humidity and Wind"
+
+msgid "humidity-wind.wind-speed.label"
+msgstr "Wind Speed"
+
+msgid "layout.current"
+msgstr "Current Weather"
+
+msgid "layout.current-and-three-day"
+msgstr "Current Weather and 3 Day Forecast"
+
+msgid "layout.three-day"
+msgstr "3 Day Forecast"
+
+msgid "settings"
+msgstr "Weather Settings"
+
+msgid "terms.error"
+msgstr "Please accept the terms before saving."
+
+msgid "terms.label"
+msgstr "I acknowledge that there is currently no charge for this Widget, but at a date that has yet to be determined, it will cost $2 per Display, per month.  At that time I will have 30 days to decide if I wish to continue using this Widget."
+
+msgid "unit.heading"
+msgstr "Temperature"
+
+msgid "unit.label"
+msgstr "Unit"
+
+msgid "wind"
+msgstr "Ветер"
+

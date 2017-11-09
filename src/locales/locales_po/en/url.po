@@ -1,0 +1,15 @@
+msgid "errors.image"
+msgstr "Please provide the URL to a valid image. (jpg, jpeg, png, bmp, svg, gif, webp)"
+
+msgid "errors.url"
+msgstr "Please provide a valid URL."
+
+msgid "errors.video"
+msgstr "Please provide the URL to a valid HTML5 video. (webm, mp4, ogg, ogv)"
+
+msgid "label"
+msgstr "URL"
+
+msgid "validate.label"
+msgstr "Remove Validation"
+

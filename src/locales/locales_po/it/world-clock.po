@@ -1,0 +1,222 @@
+msgid "clock-type.analog.face-color"
+msgstr "Colore quadrante"
+
+msgid "clock-type.analog.font.text"
+msgstr "Esempio numeri"
+
+msgid "clock-type.analog.frame-color"
+msgstr "Colore cornice"
+
+msgid "clock-type.analog.frame-width"
+msgstr "Larghezza quadro (pixels)"
+
+msgid "clock-type.analog.hand-color"
+msgstr "Colore lancette Hora/Minuti"
+
+msgid "clock-type.analog.hand-width"
+msgstr "Larghezza lancette Hore/Minuti (pixels)"
+
+msgid "clock-type.analog.hour-tick-width"
+msgstr "Spessore segni ora (pixels)"
+
+msgid "clock-type.analog.label"
+msgstr "Analogico"
+
+msgid "clock-type.analog.minute-tick-width"
+msgstr "Spessore segni minuti (pixels) (pixels)"
+
+msgid "clock-type.analog.second-hand-color"
+msgstr "Colore lancetta secondi"
+
+msgid "clock-type.analog.second-hand-width"
+msgstr "Spessore lancetta secondi (pixels)"
+
+msgid "clock-type.analog.show-second-hand"
+msgstr "Mostra lancetta secondi"
+
+msgid "clock-type.digital.font.text"
+msgstr "Testo esempio orologio digitale"
+
+msgid "clock-type.digital.format"
+msgstr "Formato"
+
+msgid "clock-type.digital.label"
+msgstr "Digitale"
+
+msgid "clock-type.label"
+msgstr "Tipo di Orologio"
+
+msgid "settings"
+msgstr "Impostazione Orologio Mondiale"
+
+msgid "time.label"
+msgstr "Tempo"
+
+msgid "time.local-time"
+msgstr "Usa Ora Locale"
+
+msgid "time.time-zone.America/Argentina/Buenos_Aires"
+msgstr "Buenos Aires, Georgetown"
+
+msgid "time.time-zone.Asia/Almaty"
+msgstr "Astana, Almaty, Dhaka, Novosibirsk"
+
+msgid "time.time-zone.Asia/Bangkok"
+msgstr "Bangkok, Hanoi, Jakarta"
+
+msgid "time.time-zone.Asia/Calcutta"
+msgstr "Calcutta, Chennai, Mumbai, New Delhi"
+
+msgid "time.time-zone.Asia/Hong_Kong"
+msgstr "Beijing, Chongqing, Hong Kong, Urumqi"
+
+msgid "time.time-zone.Asia/Kabul"
+msgstr "Kabul"
+
+msgid "time.time-zone.Asia/Karachi"
+msgstr "Islamabad, Karachi, Tashkent"
+
+msgid "time.time-zone.Asia/Kathmandu"
+msgstr "Kathmandu"
+
+msgid "time.time-zone.Asia/Magadan"
+msgstr "Magadan, Solomon Is., New Caledonia"
+
+msgid "time.time-zone.Asia/Muscat"
+msgstr "Abu Dhabi, Muscat"
+
+msgid "time.time-zone.Asia/Rangoon"
+msgstr "Rangoon (Yangon, Burma)"
+
+msgid "time.time-zone.Asia/Tehran"
+msgstr "Tehran"
+
+msgid "time.time-zone.Asia/Tokyo"
+msgstr "Osaka, Sapporo, Tokyo"
+
+msgid "time.time-zone.Atlantic/Cape_Verde"
+msgstr "Cape Verde Is."
+
+msgid "time.time-zone.Atlantic/South_Georgia"
+msgstr "Mid-Atlantic"
+
+msgid "time.time-zone.Australia/Adelaide"
+msgstr "Adelaide, Darwin"
+
+msgid "time.time-zone.Australia/Canberra"
+msgstr "Canberra, Melbourne, Sydney, Vladivostok"
+
+msgid "time.time-zone.Canada/Atlantic"
+msgstr "Atlantic Time (Canada)"
+
+msgid "time.time-zone.Canada/Central"
+msgstr "Central Time (US & Canada)"
+
+msgid "time.time-zone.Canada/Eastern"
+msgstr "Eastern Time (US & Canada)"
+
+msgid "time.time-zone.Canada/Mountain"
+msgstr "Mountain Time (US & Canada)"
+
+msgid "time.time-zone.Canada/Newfoundland"
+msgstr "Newfoundland Time (Canada)"
+
+msgid "time.time-zone.Canada/Pacific"
+msgstr "Pacific Time (US & Canada)"
+
+msgid "time.time-zone.Etc/UTC"
+msgstr "Universal Time Coordinated, Zulu"
+
+msgid "time.time-zone.Europe/Amsterdam"
+msgstr "Amsterdam, Berlin, Bern, Rome, Paris, Stockholm, Vienna"
+
+msgid "time.time-zone.Europe/Athens"
+msgstr "Athens, Bucharest, Istanbul, Minsk"
+
+msgid "time.time-zone.Europe/London"
+msgstr "Dublin, Edinburgh, Lisbon, London"
+
+msgid "time.time-zone.Europe/Moscow"
+msgstr "Moscow, St. Petersburg, Volgograd"
+
+msgid "time.time-zone.Pacific/Auckland"
+msgstr "Auckland, Fiji, Kamchatka, Marshall Is."
+
+msgid "time.time-zone.Pacific/Samoa"
+msgstr "Midway Island, Samoa"
+
+msgid "time.time-zone.Pacific/Tongatapu"
+msgstr "Nuku'alofa"
+
+msgid "time.time-zone.US/Alaska"
+msgstr "Alaska"
+
+msgid "time.time-zone.US/Hawaii"
+msgstr "Hawaii"
+
+msgid "time.time-zone.label"
+msgstr "Zona orari"
+
+msgid "time.tooltip"
+msgstr "Mostra ora locale del Display o seleziona la zona oraria appropiata"
+
+msgid "title.font.text"
+msgstr "Testo di esempio per il Titolo"
+
+msgid "title.horizontal-align.center"
+msgstr "Centro"
+
+msgid "title.horizontal-align.label"
+msgstr "Alineamento"
+
+msgid "title.horizontal-align.left"
+msgstr "Sinistra"
+
+msgid "title.horizontal-align.right"
+msgstr "Destra"
+
+msgid "title.label"
+msgstr "Titolo"
+
+msgid "title.padding.label"
+msgstr "Padding (pixels)"
+
+msgid "title.padding.tooltip"
+msgstr "Lo spazio fra il titolo e l'orologio"
+
+msgid "title.placement.bottom"
+msgstr "Sotto"
+
+msgid "title.placement.label"
+msgstr "Posizionamento"
+
+msgid "title.placement.left"
+msgstr "Sinistra"
+
+msgid "title.placement.right"
+msgstr "Destra"
+
+msgid "title.placement.tooltip"
+msgstr "Posizione del titolo"
+
+msgid "title.placement.top"
+msgstr "Sopra"
+
+msgid "title.show"
+msgstr "Mostra titolo"
+
+msgid "title.tooltip"
+msgstr "Dai un nome al tuo orologgio"
+
+msgid "title.vertical-align.bottom"
+msgstr "Sotto"
+
+msgid "title.vertical-align.label"
+msgstr "Alineamento"
+
+msgid "title.vertical-align.middle"
+msgstr "Mezzo"
+
+msgid "title.vertical-align.top"
+msgstr "Sopra"
+

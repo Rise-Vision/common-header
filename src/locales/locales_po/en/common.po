@@ -1,0 +1,222 @@
+msgid "add"
+msgstr "Add"
+
+msgid "apply"
+msgstr "Apply"
+
+msgid "apr"
+msgstr "Apr"
+
+msgid "aug"
+msgstr "Aug"
+
+msgid "back"
+msgstr "Back"
+
+msgid "cancel"
+msgstr "Cancel"
+
+msgid "changesWillBeLost"
+msgstr "Your changes will be lost if you don’t save them."
+
+msgid "close"
+msgstr "Close"
+
+msgid "completeRegistration"
+msgstr "Complete Registration"
+
+msgid "contribute"
+msgstr "Contribute"
+
+msgid "create"
+msgstr "Create"
+
+msgid "dec"
+msgstr "Dec"
+
+msgid "delete"
+msgstr "Delete"
+
+msgid "delete-forever"
+msgstr "Delete Forever"
+
+msgid "discard"
+msgstr "Discard"
+
+msgid "dontSave"
+msgstr "Don't Save"
+
+msgid "edit"
+msgstr "Edit"
+
+msgid "feb"
+msgstr "Feb"
+
+msgid "file-date-mod"
+msgstr "Modified"
+
+msgid "file-name"
+msgstr "Name"
+
+msgid "file-size"
+msgstr "Size"
+
+msgid "file-type"
+msgstr "Type"
+
+msgid "folder"
+msgstr "Folder"
+
+msgid "font-variants.bold"
+msgstr "Bold"
+
+msgid "font-variants.italic"
+msgstr "Italic"
+
+msgid "font-variants.label"
+msgstr "Font Variants"
+
+msgid "friday"
+msgstr "Friday"
+
+msgid "help"
+msgstr "Help"
+
+msgid "jan"
+msgstr "Jan"
+
+msgid "jul"
+msgstr "Jul"
+
+msgid "jun"
+msgstr "Jun"
+
+msgid "last-modified.by"
+msgstr "by"
+
+msgid "last-modified.saved"
+msgstr "Saved"
+
+msgid "logging-in"
+msgstr "Logging in..."
+
+msgid "lremove"
+msgstr "remove"
+
+msgid "mar"
+msgstr "Mar"
+
+msgid "may"
+msgstr "May"
+
+msgid "monday"
+msgstr "Monday"
+
+msgid "need-help"
+msgstr "If you need assistance please click the <strong>"Need Help?"</strong> menu item above."
+
+msgid "nov"
+msgstr "Nov"
+
+msgid "oct"
+msgstr "Oct"
+
+msgid "ok"
+msgstr "Okay"
+
+msgid "or"
+msgstr "or"
+
+msgid "previous-folder"
+msgstr "Previous Folder"
+
+msgid "publish"
+msgstr "Publish"
+
+msgid "required-credentials"
+msgstr "Rise Vision needs access to your Google account to verify who you are"
+
+msgid "restore"
+msgstr "Restore"
+
+msgid "safeDelete.message"
+msgstr "Please type DELETE to confirm. This operation cannot be undone!"
+
+msgid "safeDelete.title"
+msgstr "Are you sure you want to delete?"
+
+msgid "saturday"
+msgstr "Saturday"
+
+msgid "save"
+msgstr "Save"
+
+msgid "saveBeforeLeave"
+msgstr "Do you want to save changes before leaving?"
+
+msgid "saving"
+msgstr "Saving"
+
+msgid "select"
+msgstr "Select"
+
+msgid "send"
+msgstr "Send"
+
+msgid "sep"
+msgstr "Sep"
+
+msgid "signIn"
+msgstr "Sign In"
+
+msgid "signInText"
+msgstr "if you already have an account."
+
+msgid "signOut"
+msgstr "Sign Out"
+
+msgid "signUp"
+msgstr "Sign Up"
+
+msgid "signUpText"
+msgstr "for free, no credit card required, or"
+
+msgid "sunday"
+msgstr "Sunday"
+
+msgid "thursday"
+msgstr "Thursday"
+
+msgid "tuesday"
+msgstr "Tuesday"
+
+msgid "units.celsius"
+msgstr "Celsius"
+
+msgid "units.fahrenheit"
+msgstr "Fahrenheit"
+
+msgid "units.kph"
+msgstr "kph"
+
+msgid "units.minutes"
+msgstr "min"
+
+msgid "units.mph"
+msgstr "mph"
+
+msgid "units.pixels"
+msgstr "px"
+
+msgid "units.seconds"
+msgstr "sec"
+
+msgid "warning.hide-warning"
+msgstr "Do not show this warning again."
+
+msgid "warning.title"
+msgstr "Warning!"
+
+msgid "wednesday"
+msgstr "Wednesday"
+

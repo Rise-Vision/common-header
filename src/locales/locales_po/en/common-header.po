@@ -1,0 +1,39 @@
+msgid "onboarding.activate-display"
+msgstr "Activate a Display"
+
+msgid "onboarding.activate-display-cta"
+msgstr "Activate"
+
+msgid "onboarding.add-display"
+msgstr "Add a Display"
+
+msgid "onboarding.add-display-cta"
+msgstr "Add"
+
+msgid "onboarding.add-presentation"
+msgstr "Create a Presentation"
+
+msgid "onboarding.add-presentation-cta"
+msgstr "Create"
+
+msgid "onboarding.sign-up"
+msgstr "Sign Up"
+
+msgid "onboarding.step-completed"
+msgstr "Completed!"
+
+msgid "onboarding.steps-remaining-plural"
+msgstr "Steps to Go!"
+
+msgid "onboarding.steps-remaining-single"
+msgstr "Step to Go!"
+
+msgid "user.error.add-user"
+msgstr "User could not be added"
+
+msgid "user.error.duplicate-user"
+msgstr "A User with the Username '{{username}}' already belongs to another Company. To add them to this Company, they must sign in and delete themselves from their current Company by opening their User Settings and clicking the Delete button."
+
+msgid "user.error.update-user"
+msgstr "User could not be updated"
+

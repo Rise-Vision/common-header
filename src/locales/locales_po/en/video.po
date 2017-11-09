@@ -1,0 +1,27 @@
+msgid "options.autoplay"
+msgstr "Auto Play Video on Startup"
+
+msgid "options.controls"
+msgstr "Show Video Controls"
+
+msgid "options.label"
+msgstr "Video Options"
+
+msgid "pause.label"
+msgstr "If video is paused resume playing after"
+
+msgid "settings"
+msgstr "Video Settings"
+
+msgid "url.file"
+msgstr "Single Video"
+
+msgid "url.folder"
+msgstr "Folder of Video(s)"
+
+msgid "url.label"
+msgstr "How do you want to show your video(s)?"
+
+msgid "volume.label"
+msgstr "Volume"
+

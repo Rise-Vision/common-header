@@ -1,0 +1,42 @@
+msgid "cancel"
+msgstr "Cancel"
+
+msgid "friday"
+msgstr "пятница"
+
+msgid "help"
+msgstr "Help"
+
+msgid "monday"
+msgstr "понедельник"
+
+msgid "saturday"
+msgstr "суббота"
+
+msgid "save"
+msgstr "Save"
+
+msgid "sunday"
+msgstr "воскресенье"
+
+msgid "thursday"
+msgstr "четверг"
+
+msgid "tuesday"
+msgstr "вторник"
+
+msgid "units.celsius"
+msgstr "Celsius"
+
+msgid "units.fahrenheit"
+msgstr "Fahrenheit"
+
+msgid "units.kph"
+msgstr "км/ч"
+
+msgid "units.mph"
+msgstr "миль/час"
+
+msgid "wednesday"
+msgstr "среда"
+

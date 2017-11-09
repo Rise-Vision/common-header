@@ -1,0 +1,132 @@
+msgid "E"
+msgstr "Ø"
+
+msgid "N"
+msgstr "N"
+
+msgid "NE"
+msgstr "NØ"
+
+msgid "NW"
+msgstr "NV"
+
+msgid "S"
+msgstr "S"
+
+msgid "SE"
+msgstr "SØ"
+
+msgid "SW"
+msgstr "SV"
+
+msgid "W"
+msgstr "V"
+
+msgid "address.address.custom"
+msgstr "Annen Adresse"
+
+msgid "address.address.custom-address"
+msgstr "Din Valgte Adresse"
+
+msgid "address.address.display"
+msgstr "Display Adresse"
+
+msgid "address.address.error"
+msgstr "Please enter a Custom Address"
+
+msgid "address.address.geolocation"
+msgstr "Geolokasjon"
+
+msgid "address.address.label"
+msgstr "Adresse"
+
+msgid "address.description.custom"
+msgstr "Egen Beskrivelse"
+
+msgid "address.description.custom-description"
+msgstr "Din Egen Beskrivelse"
+
+msgid "address.description.error"
+msgstr "Please enter a Custom Description"
+
+msgid "address.description.label"
+msgstr "Adresse Beskrivelse"
+
+msgid "address.description.none"
+msgstr "Ingen"
+
+msgid "address.description.service"
+msgstr "Fra Service"
+
+msgid "address.font.text"
+msgstr "Adresse Test Tekst"
+
+msgid "at"
+msgstr "på"
+
+msgid "current-temp.font.label"
+msgstr "Temperatur font"
+
+msgid "current-temp.font.text"
+msgstr "Temperatur Test Tekst"
+
+msgid "errors.no-data"
+msgstr "Unable to retrieve weather data for that location."
+
+msgid "errors.no-terms"
+msgstr "You must check the Acceptance setting in order to use this Widget."
+
+msgid "forecast-day.font.label"
+msgstr "Varsel Dag Font"
+
+msgid "forecast-day.font.text"
+msgstr "Varsel Day test tekst"
+
+msgid "forecast-temp.font.label"
+msgstr "Varsel Temperatur Font"
+
+msgid "forecast-temp.font.text"
+msgstr "Varsel Temperature Test Tekst"
+
+msgid "humidity"
+msgstr "Luftfuktighet"
+
+msgid "humidity-wind.font.text"
+msgstr "Luftfuktighet og Vind Test Tekst"
+
+msgid "humidity-wind.heading"
+msgstr "Luftfuktighet og Vind"
+
+msgid "humidity-wind.show"
+msgstr "Vis Luftfuktighet og Vind"
+
+msgid "humidity-wind.wind-speed.label"
+msgstr "Vindhastighet"
+
+msgid "layout.current"
+msgstr "Været nå"
+
+msgid "layout.current-and-three-day"
+msgstr "Været nå og 3 dagers varsel"
+
+msgid "layout.three-day"
+msgstr "3 dagers varsel"
+
+msgid "settings"
+msgstr "Væroppsett"
+
+msgid "terms.error"
+msgstr "Please accept the terms before saving."
+
+msgid "terms.label"
+msgstr "Jeg erkjenner at denne widgeten nå er gratis å bruke, men på en dato som har ennå ikke bestemt, vil det koste ca $ 2 per Display i  måneden. Jeg vil da ha 30 dager på å bestemme om jeg ønsker å fortsette å bruke denne widgeten."
+
+msgid "unit.heading"
+msgstr "Temperatur"
+
+msgid "unit.label"
+msgstr "Enhet"
+
+msgid "wind"
+msgstr "Vind"
+

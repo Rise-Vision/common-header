@@ -1,0 +1,132 @@
+msgid "E"
+msgstr "I"
+
+msgid "N"
+msgstr "S"
+
+msgid "NE"
+msgstr "SI"
+
+msgid "NW"
+msgstr "SZ"
+
+msgid "S"
+msgstr "J"
+
+msgid "SE"
+msgstr "JI"
+
+msgid "SW"
+msgstr "JZ"
+
+msgid "W"
+msgstr "Z"
+
+msgid "address.address.custom"
+msgstr "Custom Adresa"
+
+msgid "address.address.custom-address"
+msgstr "Tvoja Custom Adresa"
+
+msgid "address.address.display"
+msgstr "Display Adresa"
+
+msgid "address.address.error"
+msgstr "Please enter a Custom Address"
+
+msgid "address.address.geolocation"
+msgstr "Geolokacija"
+
+msgid "address.address.label"
+msgstr "Adresa"
+
+msgid "address.description.custom"
+msgstr "Custom opis"
+
+msgid "address.description.custom-description"
+msgstr "Tvoj Custom Opis"
+
+msgid "address.description.error"
+msgstr "Please enter a Custom Description"
+
+msgid "address.description.label"
+msgstr "Adresa Opis"
+
+msgid "address.description.none"
+msgstr "None"
+
+msgid "address.description.service"
+msgstr "From Service"
+
+msgid "address.font.text"
+msgstr "Adresa Sample Text"
+
+msgid "at"
+msgstr "pri brzini od"
+
+msgid "current-temp.font.label"
+msgstr "Font trenutne temperature"
+
+msgid "current-temp.font.text"
+msgstr "Sample Text trenutne temperature"
+
+msgid "errors.no-data"
+msgstr "Unable to retrieve weather data for that location."
+
+msgid "errors.no-terms"
+msgstr "You must check the Acceptance setting in order to use this Widget."
+
+msgid "forecast-day.font.label"
+msgstr "Prognoza Dan Font"
+
+msgid "forecast-day.font.text"
+msgstr "Prognoza Dan Sample Text"
+
+msgid "forecast-temp.font.label"
+msgstr "Prognoza vremena font"
+
+msgid "forecast-temp.font.text"
+msgstr "Prognoza vremena Sample Text"
+
+msgid "humidity"
+msgstr "Vlažnost vazduha"
+
+msgid "humidity-wind.font.text"
+msgstr "Vlažnost vazduha & Vetar Sample Text"
+
+msgid "humidity-wind.heading"
+msgstr "Vlažnost vazduha i vetar"
+
+msgid "humidity-wind.show"
+msgstr "Prikaži Vlažnost vazduha i vetar"
+
+msgid "humidity-wind.wind-speed.label"
+msgstr "Vetar"
+
+msgid "layout.current"
+msgstr "Trenutno Vreme"
+
+msgid "layout.current-and-three-day"
+msgstr "Trenutno vreme i progonza za 3 dana"
+
+msgid "layout.three-day"
+msgstr "Prognoza za 3 dana"
+
+msgid "settings"
+msgstr "Podešavanja vremena"
+
+msgid "terms.error"
+msgstr "Please accept the terms before saving."
+
+msgid "terms.label"
+msgstr "Prihvatam da se trenunto za ovaj Widget ne naplaćuje, ali mogući datum početka naplate još treba da se odredi, nakon čega će se za ovaj widget naplaćivati 2$ po Display-u, svaki mesec."
+
+msgid "unit.heading"
+msgstr "Temperature"
+
+msgid "unit.label"
+msgstr "Jedinica mere"
+
+msgid "wind"
+msgstr "Vetar"
+

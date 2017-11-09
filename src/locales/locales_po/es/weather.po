@@ -1,0 +1,132 @@
+msgid "E"
+msgstr "E"
+
+msgid "N"
+msgstr "N"
+
+msgid "NE"
+msgstr "NE"
+
+msgid "NW"
+msgstr "NW"
+
+msgid "S"
+msgstr "S"
+
+msgid "SE"
+msgstr "SE"
+
+msgid "SW"
+msgstr "SW"
+
+msgid "W"
+msgstr "W"
+
+msgid "address.address.custom"
+msgstr "Dirección Personalizada"
+
+msgid "address.address.custom-address"
+msgstr "Tu Dirección Personalizada"
+
+msgid "address.address.display"
+msgstr "Dirección de pantalla"
+
+msgid "address.address.error"
+msgstr "Please enter a Custom Address"
+
+msgid "address.address.geolocation"
+msgstr "Geolocalización"
+
+msgid "address.address.label"
+msgstr "Dirección"
+
+msgid "address.description.custom"
+msgstr "Descripción Personalizada"
+
+msgid "address.description.custom-description"
+msgstr "Tu Descripción Personalizada"
+
+msgid "address.description.error"
+msgstr "Please enter a Custom Description"
+
+msgid "address.description.label"
+msgstr "Dirección - Descripción"
+
+msgid "address.description.none"
+msgstr "Ninguno"
+
+msgid "address.description.service"
+msgstr "Servicio de"
+
+msgid "address.font.text"
+msgstr "Dirección - Ejemplo de Texto"
+
+msgid "at"
+msgstr "en"
+
+msgid "current-temp.font.label"
+msgstr "Temperatura Actual - Tipo de Letra"
+
+msgid "current-temp.font.text"
+msgstr "Tiempo Actual - Ejemplo de Texto"
+
+msgid "errors.no-data"
+msgstr "Unable to retrieve weather data for that location."
+
+msgid "errors.no-terms"
+msgstr "You must check the Acceptance setting in order to use this Widget."
+
+msgid "forecast-day.font.label"
+msgstr "Pronóstico del Día - Tipo de Letra"
+
+msgid "forecast-day.font.text"
+msgstr "Pronóstico del día - Ejemplo del Texto"
+
+msgid "forecast-temp.font.label"
+msgstr "Pronóstico de Temperatura - Tipo de Letra"
+
+msgid "forecast-temp.font.text"
+msgstr "Pronóstico de Temperatura - Ejemplo de Texto"
+
+msgid "humidity"
+msgstr "Humedad"
+
+msgid "humidity-wind.font.text"
+msgstr "Humedad y Viento - Ejemplo de Texto"
+
+msgid "humidity-wind.heading"
+msgstr "Humedad y Viento"
+
+msgid "humidity-wind.show"
+msgstr "Mostrar Humedad y Vient"
+
+msgid "humidity-wind.wind-speed.label"
+msgstr "Velocidad de Viento"
+
+msgid "layout.current"
+msgstr "Tiempo Actual"
+
+msgid "layout.current-and-three-day"
+msgstr "Tiempo Actual y Pronóstico de 3 Días"
+
+msgid "layout.three-day"
+msgstr "Pronóstico de 3 días"
+
+msgid "settings"
+msgstr "Configuración de Tiempo"
+
+msgid "terms.error"
+msgstr "Please accept the terms before saving."
+
+msgid "terms.label"
+msgstr "Reconozco que actualmente no hay cargo por este Widget, pero en una fecha aún no determinada, me costará $2 por pantalla, por mes. En ese momento voy a tener 30 días para decidir si quiero seguir usando este Widget."
+
+msgid "unit.heading"
+msgstr "Temperatura"
+
+msgid "unit.label"
+msgstr "Unidad"
+
+msgid "wind"
+msgstr "Viento"
+

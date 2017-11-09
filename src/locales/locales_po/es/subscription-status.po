@@ -1,0 +1,66 @@
+msgid "cancelled"
+msgstr "Suscripción Cancelada"
+
+msgid "company-not-found"
+msgstr "Compañía No Encontrada"
+
+msgid "continue-to-app"
+msgstr "Continuar a la aplicación"
+
+msgid "error"
+msgstr "Error"
+
+msgid "expires-in"
+msgstr "Expirando en {{days}} Días"
+
+msgid "expires-today"
+msgstr "Expirando Hoy"
+
+msgid "free"
+msgstr "Gratis"
+
+msgid "get-subscription"
+msgstr "Obtener una suscripción"
+
+msgid "heading"
+msgstr "Estado de la suscripción"
+
+msgid "na"
+msgstr "N/D"
+
+msgid "not-subscribed"
+msgstr "No Suscripto"
+
+msgid "on-trial"
+msgstr "<strong>{{expiry}} día</strong> de Prueba"
+
+msgid "on-trial-many"
+msgstr "<strong>{{expiry}} días</strong> de Prueba"
+
+msgid "on-trial-zero"
+msgstr "<strong>{{expiry}} días</strong> de Prueba"
+
+msgid "product-not-found"
+msgstr "Producto No Encontrado"
+
+msgid "start-trial"
+msgstr "Iniciar Prueba"
+
+msgid "subscribe"
+msgstr "Suscribir"
+
+msgid "subscribed"
+msgstr "Suscripto"
+
+msgid "suspended"
+msgstr "Suscripción Suspendida"
+
+msgid "trial-available"
+msgstr "Prueba Gratuita de {{trialPeriod}} Días Disponible"
+
+msgid "trial-expired"
+msgstr "Prueba Expirada"
+
+msgid "view-account"
+msgstr "Ver Cuenta"
+

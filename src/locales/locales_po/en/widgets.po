@@ -1,0 +1,51 @@
+msgid "alignment"
+msgstr "Alignment"
+
+msgid "auto-hide"
+msgstr "Auto Hide Navigation"
+
+msgid "background-color"
+msgstr "Background Color"
+
+msgid "errors.numeric"
+msgstr "This field must be numeric"
+
+msgid "errors.required"
+msgstr "This field is required"
+
+msgid "errors.storage-folder"
+msgstr "Please select a folder from Storage."
+
+msgid "font"
+msgstr "Font"
+
+msgid "layout.custom"
+msgstr "Custom"
+
+msgid "layout.default.label"
+msgstr "Use Default Layout"
+
+msgid "layout.error"
+msgstr "Please enter a Layout URL"
+
+msgid "layout.heading"
+msgstr "Layout"
+
+msgid "layout.url"
+msgstr "Layout URL"
+
+msgid "pause.label"
+msgstr "Pause"
+
+msgid "pause.tooltip"
+msgstr "Number of seconds before slideshow resumes after a touch"
+
+msgid "resume"
+msgstr "Resume Playing from Last Position"
+
+msgid "scale-to-fit"
+msgstr "Scale to Fit"
+
+msgid "storage.folder.url"
+msgstr "Rise Storage Folder URL"
+
