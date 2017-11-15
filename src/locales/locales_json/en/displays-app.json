@@ -5,8 +5,8 @@
   "add": {
     "download": {
       "armv7l": "Download Raspbian 8.0 [ARMv7]",
-      "linux32": "Download Ubuntu 14.04 LTS [32-bit]",
-      "linux64": "Download Ubuntu 14.04 LTS [64-bit]",
+      "linux32": "Download Ubuntu 16.04 LTS [32-bit]",
+      "linux64": "Download Ubuntu 16.04 LTS [64-bit]",
       "win32": "Download Windows 10 [32-bit]",
       "win64": "Download Windows 10 [64-bit]"
     },
@@ -116,8 +116,8 @@
   "displayDetails": "Display Details",
   "download": {
     "armv7l": "Download Player for Raspbian 8.0 [ARMv7]",
-    "linux32": "Download Player for Ubuntu 14.04 LTS [32-bit]",
-    "linux64": "Download Player for Ubuntu 14.04 LTS [64-bit]",
+    "linux32": "Download Player for Ubuntu 16.04 LTS [32-bit]",
+    "linux64": "Download Player for Ubuntu 16.04 LTS [64-bit]",
     "player": "Download Player",
     "win32": "Download Player for Windows 10 [32-bit]",
     "win64": "Download Player for Windows 10 [64-bit]"

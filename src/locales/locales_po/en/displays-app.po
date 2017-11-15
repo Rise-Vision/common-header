@@ -5,10 +5,10 @@ msgid "add.download.armv7l"
 msgstr "Download Raspbian 8.0 [ARMv7]"
 
 msgid "add.download.linux32"
-msgstr "Download Ubuntu 14.04 LTS [32-bit]"
+msgstr "Download Ubuntu 16.04 LTS [32-bit]"
 
 msgid "add.download.linux64"
-msgstr "Download Ubuntu 14.04 LTS [64-bit]"
+msgstr "Download Ubuntu 16.04 LTS [64-bit]"
 
 msgid "add.download.win32"
 msgstr "Download Windows 10 [32-bit]"
@@ -269,10 +269,10 @@ msgid "download.armv7l"
 msgstr "Download Player for Raspbian 8.0 [ARMv7]"
 
 msgid "download.linux32"
-msgstr "Download Player for Ubuntu 14.04 LTS [32-bit]"
+msgstr "Download Player for Ubuntu 16.04 LTS [32-bit]"
 
 msgid "download.linux64"
-msgstr "Download Player for Ubuntu 14.04 LTS [64-bit]"
+msgstr "Download Player for Ubuntu 16.04 LTS [64-bit]"
 
 msgid "download.player"
 msgstr "Download Player"

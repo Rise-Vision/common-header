@@ -40,3 +40,5 @@ test/e2e/index.html
 .tern-project
 
 package-lock.json
+
+.vscode/
