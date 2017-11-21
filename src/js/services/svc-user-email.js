@@ -13,9 +13,17 @@ angular.module("risevision.common.email")
         }
 
         var template = $templateCache.get("add-user-email.html");
+
         template = template.replace("{{user.username}}", username);
+
         template = template.replace("{{user.companyName}}",
           userState.getSelectedCompanyName());
+
+        template = template.replace("{{user.firstName}}",
+          userState.getCopyOfProfile().firstName);
+
+        template = template.replace("{{user.lastName}}",
+          userState.getCopyOfProfile().lastName);
 
         factory.sendingEmail = true;
 
