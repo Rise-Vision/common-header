@@ -12395,8 +12395,7 @@ ul.tree ul li:last-child:before {
 
 .grid-selector-list_storage {
   overflow-y: scroll;
-  height: 80vw;
-  max-height: 800px; }
+  max-height: calc(100vh - 340px); }
 
 .modal .grid-selector-list_storage {
   max-height: calc(100vh - 340px); }
@@ -12512,10 +12511,7 @@ ul.tree ul li:last-child:before {
    ========================================================================== */
 @media (min-width: 768px) {
   .grid-selector .grid-selector-list-item {
-    width: 16.3%; }
-  .grid-selector-list_storage {
-    height: 80vw;
-    max-height: 800px; } }
+    width: 16.3%; } }
 
 /* ==========================================================================
    Medium devices (desktops, 992px and up) 
