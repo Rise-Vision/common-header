@@ -12398,7 +12398,7 @@ ul.tree ul li:last-child:before {
   height: 80vw;
   max-height: 800px; }
 
-.modal .grid-selector-list_storage.grid-selector {
+.modal .grid-selector-list_storage {
   max-height: calc(100vh - 340px); }
 
 .grid-selector-list {
