@@ -1,5 +1,7 @@
 .storage-selector {
   overflow-y: scroll;
+  height: 80vw;
+  max-height: 800px;
 }
 
 .modal .storage-selector {
@@ -65,22 +67,19 @@
 }
 
 .storage-selector-list-item {
-  &::before {
+  &::before, &::after {
     content: '';
     display: none;
     width: 100%;
     height: 100%;
+    position:absolute;
+  }
+  &::before {
     opacity: 0.7;
     background-color: #4ab767;
-    position:absolute;
     border-radius: 2px;
   }
   &::after {
-    content: '';
-    display: none;
-    width: 100%;
-    height:100%;
-    position: absolute;
     background: url('https://cdn2.hubspot.net/hubfs/2700250/storage-selected-icon@2x.png');
     background-size:24px;
     background-repeat: no-repeat;
@@ -100,6 +99,34 @@
     }
   }
 }
+
+.storage-selector-list-item.list-item--throttled {
+  &::before { 
+    display: block;  
+    opacity: 0.5;
+    background-color: #b74a4a;
+    border-radius: 2px;
+  }
+  &::after {
+    display: block;  
+    background: url('https://s3.amazonaws.com/Rise-Images/UI/throttled-file%402x.png');
+    background-size:24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    top: 0;
+  }
+  .list-item-label {
+    background: none; 
+    color: #FFF;
+  }
+}
+
+.storage-selector-list-item.list-item--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
 
 /* ==========================================================================
    Small devices (tablets, 768px and up)

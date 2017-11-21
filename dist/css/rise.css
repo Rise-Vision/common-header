@@ -12394,7 +12394,9 @@ ul.tree ul li:last-child:before {
       background-color: #fff; }
 
 .storage-selector {
-  overflow-y: scroll; }
+  overflow-y: scroll;
+  height: 80vw;
+  max-height: 800px; }
 
 .modal .storage-selector {
   max-height: calc(100vh - 340px); }
@@ -12450,22 +12452,19 @@ ul.tree ul li:last-child:before {
   .storage-selector-list-item.list-type_image .list-item-label {
     border-radius: 0; }
 
-.storage-selector-list-item::before {
+.storage-selector-list-item::before, .storage-selector-list-item::after {
   content: '';
   display: none;
   width: 100%;
   height: 100%;
+  position: absolute; }
+
+.storage-selector-list-item::before {
   opacity: 0.7;
   background-color: #4ab767;
-  position: absolute;
   border-radius: 2px; }
 
 .storage-selector-list-item::after {
-  content: '';
-  display: none;
-  width: 100%;
-  height: 100%;
-  position: absolute;
   background: url("https://cdn2.hubspot.net/hubfs/2700250/storage-selected-icon@2x.png");
   background-size: 24px;
   background-repeat: no-repeat;
@@ -12481,6 +12480,28 @@ ul.tree ul li:last-child:before {
 .storage-selector-list-item.list-item--selected .list-item-label {
   background: #4ab767;
   color: #FFF; }
+
+.storage-selector-list-item.list-item--throttled::before {
+  display: block;
+  opacity: 0.5;
+  background-color: #b74a4a;
+  border-radius: 2px; }
+
+.storage-selector-list-item.list-item--throttled::after {
+  display: block;
+  background: url("https://s3.amazonaws.com/Rise-Images/UI/throttled-file%402x.png");
+  background-size: 24px;
+  background-repeat: no-repeat;
+  background-position: center;
+  top: 0; }
+
+.storage-selector-list-item.list-item--throttled .list-item-label {
+  background: none;
+  color: #FFF; }
+
+.storage-selector-list-item.list-item--disabled {
+  opacity: 0.5;
+  cursor: not-allowed; }
 
 /* ==========================================================================
    Small devices (tablets, 768px and up)
