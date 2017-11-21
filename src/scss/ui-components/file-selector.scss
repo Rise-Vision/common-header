@@ -1,14 +1,14 @@
-.storage-selector {
+.grid-selector-list_storage {
   overflow-y: scroll;
   height: 80vw;
   max-height: 800px;
 }
 
-.modal .storage-selector {
+.modal .grid-selector-list_storage.grid-selector {
   max-height: calc(100vh - 340px);
 }
 
-.storage-selector-list {
+.grid-selector-list {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -18,7 +18,7 @@
   padding: 4px;
 }
 
-.storage-selector-list-item {
+.grid-selector-list-item {
   border-radius: 2px;
   width: 32.5%;
   height: 120px;
@@ -33,7 +33,11 @@
   position: relative;
 }
 
-.storage-selector-list-item .list-item-label {
+.list-item-placeholder {
+  visibility: hidden;
+}
+
+.grid-selector-list-item .list-item-label {
   background: #f2f2f2;
   font-weight: 500;
   line-height: 20px;
@@ -44,16 +48,17 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   position: absolute;
-  bottom: 0; 
+  bottom: 0;
+  left: 0; 
   width: 100%;
 }
 
-.storage-selector-list-item .list-item-icon {
+.grid-selector-list-item .list-item-icon {
   width: 33%;
   margin-top: -20px;
 }
 
-.storage-selector-list-item.list-type_image {
+.grid-selector-list-item.list-type_image {
   border: 1px solid #D6DADC;
   background-color: #f2f2f2;
   img {
@@ -66,7 +71,7 @@
   }  
 }
 
-.storage-selector-list-item {
+.grid-selector-list-item {
   &::before, &::after {
     content: '';
     display: none;
@@ -100,7 +105,7 @@
   }
 }
 
-.storage-selector-list-item.list-item--throttled {
+.grid-selector-list-item.list-item--throttled {
   &::before { 
     display: block;  
     opacity: 0.5;
@@ -121,7 +126,7 @@
   }
 }
 
-.storage-selector-list-item.list-item--disabled {
+.grid-selector-list-item.list-item--disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -134,12 +139,14 @@
 
  
 @media (min-width: 768px) {
-  .storage-selector {
-    height: 80vw;
-    max-height: 800px;
-    .storage-selector-list-item {
+  .grid-selector { 
+    .grid-selector-list-item {
       width: 16.3%;
     }
+  }
+  .grid-selector-list_storage {
+    height: 80vw;
+    max-height: 800px;
   }
 }
 
@@ -148,8 +155,8 @@
    ========================================================================== */
    
 @media (min-width: 992px) {
-  .storage-selector {
-    .storage-selector-list-item {
+  .grid-selector {
+    .grid-selector-list-item {
       width: 12.2%;
     }
   }

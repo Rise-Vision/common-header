@@ -12393,15 +12393,15 @@ ul.tree ul li:last-child:before {
       color: #d20606;
       background-color: #fff; }
 
-.storage-selector {
+.grid-selector-list_storage {
   overflow-y: scroll;
   height: 80vw;
   max-height: 800px; }
 
-.modal .storage-selector {
+.modal .grid-selector-list_storage.grid-selector {
   max-height: calc(100vh - 340px); }
 
-.storage-selector-list {
+.grid-selector-list {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -12410,7 +12410,7 @@ ul.tree ul li:last-child:before {
   justify-content: space-between;
   padding: 4px; }
 
-.storage-selector-list-item {
+.grid-selector-list-item {
   border-radius: 2px;
   width: 32.5%;
   height: 120px;
@@ -12424,7 +12424,10 @@ ul.tree ul li:last-child:before {
   overflow: hidden;
   position: relative; }
 
-.storage-selector-list-item .list-item-label {
+.list-item-placeholder {
+  visibility: hidden; }
+
+.grid-selector-list-item .list-item-label {
   background: #f2f2f2;
   font-weight: 500;
   line-height: 20px;
@@ -12436,58 +12439,59 @@ ul.tree ul li:last-child:before {
   white-space: nowrap;
   position: absolute;
   bottom: 0;
+  left: 0;
   width: 100%; }
 
-.storage-selector-list-item .list-item-icon {
+.grid-selector-list-item .list-item-icon {
   width: 33%;
   margin-top: -20px; }
 
-.storage-selector-list-item.list-type_image {
+.grid-selector-list-item.list-type_image {
   border: 1px solid #D6DADC;
   background-color: #f2f2f2; }
-  .storage-selector-list-item.list-type_image img {
+  .grid-selector-list-item.list-type_image img {
     max-width: 100%;
     max-height: 120px;
     vertical-align: middle; }
-  .storage-selector-list-item.list-type_image .list-item-label {
+  .grid-selector-list-item.list-type_image .list-item-label {
     border-radius: 0; }
 
-.storage-selector-list-item::before, .storage-selector-list-item::after {
+.grid-selector-list-item::before, .grid-selector-list-item::after {
   content: '';
   display: none;
   width: 100%;
   height: 100%;
   position: absolute; }
 
-.storage-selector-list-item::before {
+.grid-selector-list-item::before {
   opacity: 0.7;
   background-color: #4ab767;
   border-radius: 2px; }
 
-.storage-selector-list-item::after {
+.grid-selector-list-item::after {
   background: url("https://cdn2.hubspot.net/hubfs/2700250/storage-selected-icon@2x.png");
   background-size: 24px;
   background-repeat: no-repeat;
   background-position: center;
   top: 0; }
 
-.storage-selector-list-item:hover {
+.grid-selector-list-item:hover {
   box-shadow: 0px 0px 0px 1px #4ab767; }
 
-.storage-selector-list-item.list-item--selected::before, .storage-selector-list-item.list-item--selected::after {
+.grid-selector-list-item.list-item--selected::before, .grid-selector-list-item.list-item--selected::after {
   display: block; }
 
-.storage-selector-list-item.list-item--selected .list-item-label {
+.grid-selector-list-item.list-item--selected .list-item-label {
   background: #4ab767;
   color: #FFF; }
 
-.storage-selector-list-item.list-item--throttled::before {
+.grid-selector-list-item.list-item--throttled::before {
   display: block;
   opacity: 0.5;
   background-color: #b74a4a;
   border-radius: 2px; }
 
-.storage-selector-list-item.list-item--throttled::after {
+.grid-selector-list-item.list-item--throttled::after {
   display: block;
   background: url("https://s3.amazonaws.com/Rise-Images/UI/throttled-file%402x.png");
   background-size: 24px;
@@ -12495,11 +12499,11 @@ ul.tree ul li:last-child:before {
   background-position: center;
   top: 0; }
 
-.storage-selector-list-item.list-item--throttled .list-item-label {
+.grid-selector-list-item.list-item--throttled .list-item-label {
   background: none;
   color: #FFF; }
 
-.storage-selector-list-item.list-item--disabled {
+.grid-selector-list-item.list-item--disabled {
   opacity: 0.5;
   cursor: not-allowed; }
 
@@ -12507,17 +12511,17 @@ ul.tree ul li:last-child:before {
    Small devices (tablets, 768px and up)
    ========================================================================== */
 @media (min-width: 768px) {
-  .storage-selector {
+  .grid-selector .grid-selector-list-item {
+    width: 16.3%; }
+  .grid-selector-list_storage {
     height: 80vw;
-    max-height: 800px; }
-    .storage-selector .storage-selector-list-item {
-      width: 16.3%; } }
+    max-height: 800px; } }
 
 /* ==========================================================================
    Medium devices (desktops, 992px and up) 
    ========================================================================== */
 @media (min-width: 992px) {
-  .storage-selector .storage-selector-list-item {
+  .grid-selector .grid-selector-list-item {
     width: 12.2%; } }
 
 .google-drive-picker {
