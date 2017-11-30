@@ -82,7 +82,12 @@
         $rootScope.$on("$viewContentLoaded", function () {
           if (service.location !== $location.path()) {
             service.location = $location.path();
-            service.pageview(service.location);
+            var properties = {};
+            properties.url = $location.path();
+            if ($location.search().nooverride) {
+              properties.referrer = "";
+            }
+            service.page(properties);
           }
         });
       }
