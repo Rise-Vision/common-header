@@ -7,6 +7,17 @@ angular.module("risevision.common.email")
 
       factory.sendingEmail = false;
 
+      var _getCurrentUserName = function() {
+        var profile = userState.getCopyOfProfile();
+        var name;
+
+        name = profile.firstName ? (profile.firstName + " ") : "";
+        name += profile.lastName ? profile.lastName : "";
+        name = name ? name : profile.email;
+
+        return name.trim();
+      }
+
       factory.send = function (username, emailAddress) {
         if (!username || !emailAddress) {
           return $q.reject("Missing required parameters");
@@ -14,16 +25,11 @@ angular.module("risevision.common.email")
 
         var template = $templateCache.get("add-user-email.html");
 
-        template = template.replace("{{user.username}}", username);
-
-        template = template.replace("{{user.companyName}}",
+        template = template.replace("{{newUser.username}}", username);
+        template = template.replace("{{newUser.companyName}}",
           userState.getSelectedCompanyName());
 
-        template = template.replace("{{user.firstName}}",
-          userState.getCopyOfProfile().firstName);
-
-        template = template.replace("{{user.lastName}}",
-          userState.getCopyOfProfile().lastName);
+        template = template.replace("{{user.name}}", _getCurrentUserName());
 
         factory.sendingEmail = true;
 
