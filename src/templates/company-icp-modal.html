@@ -71,6 +71,12 @@
 
           <div class="grid-selector-list-item list-item-placeholder"></div>
           <div class="grid-selector-list-item list-item-placeholder"></div>
+          <div class="grid-selector-list-item list-item-placeholder"></div>
+          <div class="grid-selector-list-item list-item-placeholder"></div>
+          <div class="grid-selector-list-item list-item-placeholder"></div>
+          <div class="grid-selector-list-item list-item-placeholder"></div>
+          <div class="grid-selector-list-item list-item-placeholder"></div>
+          <div class="grid-selector-list-item list-item-placeholder"></div>
 
         </div>
       </div>
@@ -82,7 +88,7 @@
             <label for="company-industry" class="control-label">
               Please specify: 
             </label>
-            <select id="company-industry" class="form-control selectpicker" ng-model="company.companyIndustry">
+            <select id="company-industry" class="form-control selectpicker u_margin-left" ng-model="company.companyIndustry">
               <option value="" ng-show="false">&lt; Select Industry &gt;</option>
               <option ng-repeat="industry in DROPDOWN_INDUSTRY_FIELDS | orderBy:industry[0]" value="{{industry[1]}}" ng-if="!industry[2]">{{industry[0]}}</option>
             </select>

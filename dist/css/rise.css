@@ -12424,7 +12424,13 @@ ul.tree ul li:last-child:before {
   position: relative; }
 
 .list-item-placeholder {
-  visibility: hidden; }
+  visibility: hidden;
+  height: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  border: 0 !important; }
 
 .grid-selector-list-item .list-item-label {
   background: #f2f2f2;
