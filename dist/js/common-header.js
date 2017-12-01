@@ -2803,7 +2803,7 @@ angular.module("risevision.common.header")
         var lastContact = new Date(user.dataCollectionDate ||
           user.creationDate);
         var twoWeeksAgo = new Date();
-        // twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+        twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
 
         if (userState.isSubcompanySelected()) {
           return;
