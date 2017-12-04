@@ -7,7 +7,7 @@ describe("service: userEmail:", function() {
   beforeEach(module(function ($provide) {
     $provide.service("email", function() {
       return {
-        send: function(a1, a2, a3) {
+        send: function() {
           return Q.resolve();
         }
       };

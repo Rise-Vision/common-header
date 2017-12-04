@@ -7,7 +7,7 @@ angular.module("risevision.common.email")
 
       factory.sendingEmail = false;
 
-      var _getCurrentUserName = function() {
+      var _getCurrentUserName = function () {
         var profile = userState.getCopyOfProfile();
         var name;
 
@@ -16,7 +16,7 @@ angular.module("risevision.common.email")
         name = name ? name : profile.email;
 
         return name.trim();
-      }
+      };
 
       factory.send = function (username, emailAddress) {
         if (!username || !emailAddress) {

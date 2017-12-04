@@ -128,7 +128,7 @@ describe("Services: segment analytics", function() {
     $scope.$digest();
     
     setTimeout(function() {
-      pageSpy.should.have.been.calledWith({url:"/somepath", referrer:""});
+      pageSpy.should.have.been.calledWith({url:"/somepath", path:"/somepath", referrer:""});
       expect(segmentAnalytics.location).to.equal("/somepath");
       
       done();
