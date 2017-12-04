@@ -197,14 +197,15 @@ rv-spinner-start-active="1">
 <div class="modal-footer">
   <p class="text-right"><last-modified change-date="user.changeDate" changed-by="user.changedBy"></last-modified></p>
   <button type="button" id="delete-button" class="btn btn-danger btn-fixed-width pull-left"
-    ng-if="!isAdd" ng-click="deleteUser()">
+    ng-if="!isAdd" ng-click="deleteUser()" require-role="ua">
     Delete <i class="fa fa-white fa-trash-o icon-right"></i>
   </button>
   <div class="pull-right">
     <button type="button"
       class="btn btn-primary btn-fixed-width"
       data-dismiss="modal"
-      ng-click="save()" id="save-button">
+      ng-click="save()" id="save-button"
+      require-role="ua">
       Save <i class="fa fa-white fa-check icon-right"></i>
     </button>
     <button type="button" class="btn btn-default btn-fixed-width" ng-click="closeModal()">
