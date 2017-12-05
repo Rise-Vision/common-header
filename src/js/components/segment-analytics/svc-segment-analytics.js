@@ -16,8 +16,13 @@
       analytics.SNIPPET_VERSION = "4.0.0";
 
       analytics.ready(function () {
-        ga('require', 'linker');
-        ga('linker:autoLink', ['community.risevision.com','store.risevision.com','help.risevision.com','apps.risevision.com','risevision.com','preview.risevision.com','rva.risevision.com']);
+        var ga = $window.ga;
+        ga("require", "linker");
+        ga("linker:autoLink", ["community.risevision.com",
+          "store.risevision.com", "help.risevision.com",
+          "apps.risevision.com", "risevision.com",
+          "preview.risevision.com", "rva.risevision.com"
+        ]);
       });
 
       analytics.factory = function (t) {
