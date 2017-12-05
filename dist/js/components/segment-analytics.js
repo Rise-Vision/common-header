@@ -15,16 +15,6 @@
       var analytics = $window.analytics;
       analytics.SNIPPET_VERSION = "4.0.0";
 
-      analytics.ready(function () {
-        var ga = $window.ga;
-        ga("require", "linker");
-        ga("linker:autoLink", ["community.risevision.com",
-          "store.risevision.com", "help.risevision.com",
-          "apps.risevision.com", "risevision.com",
-          "preview.risevision.com", "rva.risevision.com"
-        ]);
-      });
-
       analytics.factory = function (t) {
         function addUrl(methodName, args) {
           if ("track" === t && args && args.length > 1 && args[1] &&
@@ -53,6 +43,16 @@
         var method = analytics.methods[i];
         service[method] = analytics.factory(method);
       }
+
+      service.ready(function () {
+        var ga = $window.ga;
+        ga("require", "linker");
+        ga("linker:autoLink", ["community.risevision.com",
+          "store.risevision.com", "help.risevision.com",
+          "apps.risevision.com", "risevision.com",
+          "preview.risevision.com", "rva.risevision.com"
+        ]);
+      });
 
       /**
        * @description
