@@ -49,7 +49,7 @@ rv-spinner-start-active="1">
           </div>
         </div>
         <div class="col-xs-6 text-right">
-          <span ng-if="editingYourself">
+          <span ng-if="editingYourself && isUserAdmin">
             <a href="" class="btn btn-default btn-sm change-password" ng-click="toggleChangePassword()">Change password</a>
           </span>
         </div>
