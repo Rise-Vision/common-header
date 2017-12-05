@@ -8,6 +8,7 @@ angular.module("risevision.common.header", [
   "risevision.common.cookie",
   "risevision.common.header.templates",
   "risevision.common.header.directives",
+  "risevision.common.header.filters",
   "risevision.common.i18n",
   "risevision.common.systemmessages", "risevision.core.systemmessages",
   "risevision.core.countries",
@@ -177,3 +178,4 @@ angular.module("risevision.common.header", [
 });
 
 angular.module("risevision.common.header.directives", []);
+angular.module("risevision.common.header.filters", []);

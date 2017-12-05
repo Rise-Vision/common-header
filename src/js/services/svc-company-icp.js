@@ -267,6 +267,10 @@ angular.module("risevision.common.header")
         var twoWeeksAgo = new Date();
         twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
 
+        if (!userState.isUserAdmin()) {
+          return;
+        }
+
         if (userState.isSubcompanySelected()) {
           return;
         }
