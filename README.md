@@ -1,4 +1,4 @@
-Rise Vision Common Header [![Circle CI](https://circleci.com/gh/Rise-Vision/common-header.svg?style=svg)](https://circleci.com/gh/Rise-Vision/common-header)  [![Coverage Status](https://coveralls.io/repos/Rise-Vision/common-header/badge.svg?branch=&service=github)](https://coveralls.io/github/Rise-Vision/common-header?branch=)
+Common Header [![Circle CI](https://circleci.com/gh/Rise-Vision/common-header.svg?style=svg)](https://circleci.com/gh/Rise-Vision/common-header)  [![Coverage Status](https://coveralls.io/repos/Rise-Vision/common-header/badge.svg?branch=&service=github)](https://coveralls.io/github/Rise-Vision/common-header?branch=)
 ==============
 ![](screenshots/header.png)
 
@@ -6,74 +6,34 @@ Rise Vision Common Header [![Circle CI](https://circleci.com/gh/Rise-Vision/comm
 
 A responsive AngularJS-based common header implementation to be used across Rise Vision web applications and pages.
 
-<!-- Include a description of Project Name and what it's purpose is.
-This does this to achieve this for you.
-Do not use acronyms.
-If applicable include screenshots and other images,
-links to demonstration examples,
-user documentation and any other applicable reference materials.
--->
-
-Rise Vision Common Header works in conjunction with [Rise Vision](http://www.risevision.com), the [digital signage management application](http://rva.risevision.com/) that runs on [Google Cloud](https://cloud.google.com).
+Rise Vision Common Header works in conjunction with [Rise Vision](https://www.risevision.com), the [digital signage management application](https://apps.risevision.com/) that runs on [Google Cloud](https://cloud.google.com).
 
 At this time Chrome is the only browser that this project and Rise Vision supports.
 
 ## Built With
 <!-- example list follows, replace with actual tools used -->
 
-- [ng-gapi-loader](https://github.com/Rise-Vision/ng-gapi-loader.git)
-- [ng-core-api-client](https://github.com/Rise-Vision/ng-core-api-client.git)
-- [angular-ui-flow-manager](https://github.com/Rise-Vision/angular-ui-flow-manager.git)
 - [NPM (node package manager)](https://www.npmjs.org/)
 - [Bower](http://bower.io/)
 - [AngularJS](https://https://angularjs.org/)
 - [Gulp](http://gulpjs.com/)
 - [Karma](https://github.com/karma-runner/karma) and [Protractor](https://github.com/angular/protractor) for testing
-- [Rise Vision Gulp Factory](https://github.com/Rise-Vision/widget-tester.git)
+- [widget-helper](https://github.com/Rise-Vision/widget-tester.git)
+- [rv-common-e2e](https://github.com/Rise-Vision/rv-common-e2e.git)
 
-## Development
-- [Development FAQ](https://developer.risevision.com/documentation/common-header/development-faq)
-- [Developer's Guide](https://developer.risevision.com/documentation/common-header/common-header)
+## Usage
 
-### Prerequisites
-- [NPM (node package manager)](https://www.npmjs.org/)
-- [Bower](http://bower.io/)
-- (Optional) [Karma](https://github.com/karma-runner/karma) and [Protractor](https://github.com/angular/protractor) for running tests
-
-
-### Local Development Environment Setup and Installation
-<!--provide exact details on how to setup the local environment for at least Windows, and if doable, Linux and Mac-->
-
-``` bash
-npm run dev
-```
-
-### Run Local
-<!--include how to run the application locally if applicable-->
-
-``` bash
-gulp server-watch
-```
-
-And navigate to http://localhost:8099/test/e2e/index.html
-
-#### bower.json
+### bower.json
 ``` js
 "dependencies": {
-  "rise-vision-common-header": "https://github.com/Rise-Vision/common-header.git"
+  "common-header": "https://github.com/Rise-Vision/common-header.git"
 }
 ```
 
-#### html
-Be sure to load angular first.  Then....
+### html
 ``` html
-    <!-- build:js script/common-header.min.js -->
-    <script src="components/common-header/dist/common-header.js"></script>
-    <!-- endbuild -->
-
-    <!-- build:jsdev nothing-->
-    <script src="components/common-header/src/common-header.js"></script>
-    <!-- endbuild -->
+<script src="components/common-header/dist/dependencies.js"></script>
+<script src="components/common-header/dist/common-header.js"></script>
 ```
 
 #### gulpfile.js
@@ -87,6 +47,37 @@ target is included and the jsdev target is ignored so that it gets removed from 
 })
 .pipe(gulp.dest("dist/");
 ```
+
+## Development
+- [Development FAQ](https://developer.risevision.com/documentation/common-header/development-faq)
+- [Developer's Guide](https://developer.risevision.com/documentation/common-header/common-header)
+
+### Prerequisites
+- [NPM (node package manager)](https://www.npmjs.org/)
+- [Bower](http://bower.io/)
+- (Optional) [Karma](https://github.com/karma-runner/karma) and [Protractor](https://github.com/angular/protractor) for running tests
+
+### Local Development Environment Setup and Installation
+
+``` bash
+npm install
+bower install
+```
+
+### Build
+
+``` bash
+gulp build
+```
+
+### Run Local
+
+``` bash
+gulp server
+```
+
+And navigate to http://localhost:8099/test/e2e/index.html
+
 
 ### Testing
 
@@ -105,7 +96,26 @@ gulp test:unit
 A mock Google API server is included for End-to-End testing. To run tests, do
 
 ``` bash
-gulp test:e2e
+E2E_USER2=... E2E_PASS2=... gulp test:e2e
+```
+
+### Watchers
+
+Basic watch for all components
+``` bash
+gulp watch
+```
+
+#### Individual watchers
+``` bash
+gulp test:unit-watch
+```
+
+``` bash
+gulp js-watch
+gulp components-watch
+gulp i18n-watch
+gulp css-watch
 ```
 
 ## Submitting Issues

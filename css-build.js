@@ -53,7 +53,7 @@ gulp.task("css-build", ["css-build-alignment", "fonts-copy"], function() {
     .pipe(gulp.dest(paths.distFonts));
 });
 
-gulp.task("css-dev", ["css-build"], function() {
+gulp.task("css-watch", ["css-build"], function() {
   // Watch Less files for changes
   gulp.watch(paths.sass, ["css-build"]);
   console.log("[SASS] Watching for changes in SASS files".yellow.inverse);
