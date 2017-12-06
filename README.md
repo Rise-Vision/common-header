@@ -87,6 +87,11 @@ E2E_USER2=... E2E_PASS2=... npm run test
 gulp test:unit
 ```
 
+Watch files & re-run unit tests
+``` bash
+gulp dev
+```
+
 #### Protractor End-to-End Testing
 ``` bash
 E2E_USER2=... E2E_PASS2=... gulp test:e2e
@@ -100,10 +105,6 @@ gulp watch
 ```
 
 #### Individual watchers
-``` bash
-gulp test:unit-watch
-```
-
 ``` bash
 gulp js-watch
 gulp components-watch

@@ -314,6 +314,10 @@ gulp.task("js-watch", function() {
   });
 });
 
+gulp.task("dev", function(cb) {
+  runSequence(["test:unit-watch"], cb);
+});
+
 gulp.task("watch", function (cb) {
   runSequence(["js-watch", "components-watch", "i18n-watch", "css-watch"], cb);
 });
@@ -329,12 +333,12 @@ gulp.task("default", [], function () {
   console.log("* gulp test              *");
   console.log("* gulp build             *");
   console.log("* gulp watch             *");
+  console.log("* gulp dev               *");
   console.log("**************************");
   console.log("* Testing:               *");
   console.log("**************************");
   console.log("* gulp server            *");
   console.log("* gulp test:unit         *");
-  console.log("* gulp test:unit-watch   *");
   console.log("* gulp test:e2e          *");
   console.log("**************************");
   console.log("* Watchers:              *");
