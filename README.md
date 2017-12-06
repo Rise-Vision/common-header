@@ -18,7 +18,7 @@ At this time Chrome is the only browser that this project and Rise Vision suppor
 - [AngularJS](https://https://angularjs.org/)
 - [Gulp](http://gulpjs.com/)
 - [Karma](https://github.com/karma-runner/karma) and [Protractor](https://github.com/angular/protractor) for testing
-- [widget-helper](https://github.com/Rise-Vision/widget-tester.git)
+- [widget-tester](https://github.com/Rise-Vision/widget-tester.git)
 - [rv-common-e2e](https://github.com/Rise-Vision/rv-common-e2e.git)
 
 ## Usage
@@ -58,33 +58,28 @@ target is included and the jsdev target is ignored so that it gets removed from 
 - (Optional) [Karma](https://github.com/karma-runner/karma) and [Protractor](https://github.com/angular/protractor) for running tests
 
 ### Local Development Environment Setup and Installation
-
 ``` bash
 npm install
 bower install
 ```
 
 ### Build
-
 ``` bash
 gulp build
 ```
 
 ### Run Local
-
 ``` bash
 gulp server
 ```
 
 And navigate to http://localhost:8099/test/e2e/index.html
 
-
 ### Testing
 
 To run all tests at once, do
-
 ``` bash
-npm run test
+E2E_USER2=... E2E_PASS2=... npm run test
 ```
 
 #### Unit Testing
@@ -93,8 +88,6 @@ gulp test:unit
 ```
 
 #### Protractor End-to-End Testing
-A mock Google API server is included for End-to-End testing. To run tests, do
-
 ``` bash
 E2E_USER2=... E2E_PASS2=... gulp test:e2e
 ```
@@ -138,32 +131,19 @@ What actually happened. (screenshots / video captures always help)
 ## Contributing
 All contributions are greatly appreciated and welcome! If you would first like to sound out your contribution ideas please post your thoughts to our [community](https://help.risevision.com/hc/en-us/community/topics/), otherwise submit a pull request and we will do our best to incorporate it
 
-### Languages
-<!--*If this Project supports Internationalization include this section:*
 
+### Languages
 If you would like translate the user interface for this product to another language please complete the following:
 - Download the english translation file from this repository.
 - Download and install POEdit. This is software that you can use to write translations into another language.
 - Open the translation file in the [POEdit](http://www.poedit.net/) program and set the language for which you are writing a translation.
 - In the Source text window, you will see the English word or phrase to be translated. You can provide a translation for it in the Translation window.
-- When the translation is complete, save it with a .po extension and email the file to support@risevision.com. Please be sure to indicate the Widget or app the translation file is for, as well as the language that it has been translated into, and we will integrate it after the translation has been verified.
+- When the translation is complete, you can create a pull request with your changes. Please be sure to indicate the Widget or app the translation file is for, as well as the language that it has been translated into, and we will integrate it after the translation has been verified.
 
-*if the Project does not support Internationalization include this section and include this need in our suggested contributions*-->
-
-In order to support languages i18n needs to be added to this repository.  Please refer to our Suggested Contributions.
-
-### Suggested Contributions
-- Add more broadcast events as needed
-- I18n support
 
 ## Resources
 If you have any questions or problems please don't hesitate to join our lively and responsive community at https://help.risevision.com/hc/en-us/community/topics/.
 
-If you are looking for user documentation on Rise Vision please see http://www.risevision.com/help/users/
+If you are looking for user documentation on Rise Vision please see http://help.risevision.com/
 
-If you would like more information on developing applications for Rise Vision please visit http://www.risevision.com/help/developers/.
-
-**Facilitator**
-
-* [Xiyang Chen](https://github.com/settinghead "Xiyang Chen")
-* [Varun Vachhar](https://github.com/winkervsbecks "Varun Vachhar")
+If you would like more information on developing applications for Rise Vision please visit http://developer.risevision.com/.
