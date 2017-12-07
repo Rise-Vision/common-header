@@ -66,6 +66,13 @@ describe("Services: segment analytics", function() {
     expect($window.analytics.SNIPPET_VERSION).to.equal("4.0.0");
   });
 
+  it("should register ready callback", function() {
+    expect($window.analytics).to.be.an("array");
+
+    expect($window.analytics).to.have.length.greaterThan(1);
+    expect($window.analytics[0][0]).to.equal("ready");
+  });
+
   it("should identify user", function(done) {
     var identifySpy = sinon.spy(segmentAnalytics, "identify");    
 
