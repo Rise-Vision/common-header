@@ -12393,11 +12393,8 @@ ul.tree ul li:last-child:before {
       color: #d20606;
       background-color: #fff; }
 
-.grid-selector-list_storage {
+.grid-selector {
   overflow-y: scroll;
-  max-height: calc(100vh - 340px); }
-
-.modal .grid-selector-list_storage {
   max-height: calc(100vh - 340px); }
 
 .grid-selector-list {
