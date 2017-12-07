@@ -44,6 +44,16 @@
         service[method] = analytics.factory(method);
       }
 
+      service.ready(function () {
+        var ga = $window.ga;
+        ga("require", "linker");
+        ga("linker:autoLink", ["community.risevision.com",
+          "store.risevision.com", "help.risevision.com",
+          "apps.risevision.com", "risevision.com",
+          "preview.risevision.com", "rva.risevision.com"
+        ]);
+      });
+
       /**
        * @description
        * Load Segment.io analytics script
@@ -82,7 +92,13 @@
         $rootScope.$on("$viewContentLoaded", function () {
           if (service.location !== $location.path()) {
             service.location = $location.path();
-            service.pageview(service.location);
+            var properties = {};
+            properties.url = $location.path();
+            properties.path = $location.path();
+            if ($location.search().nooverride) {
+              properties.referrer = "";
+            }
+            service.page(properties);
           }
         });
       }

@@ -186,12 +186,8 @@ gulp.task("i18n-build", ["json-to-po"], folders(paths.localesJson, function (
     .pipe(gulp.dest(paths.distLocales));
 }));
 
-gulp.task("i18n-watch", function () {
-  // Build locales on start once
-  gulp.run("i18n-build");
-
+gulp.task("i18n-watch", ["i18n-build"], function () {
   // Watch locale files for changes
-  gulp.watch([paths.localesPo + "/**/*.po"], ["po-to-json"]);
   gulp.watch([paths.localesJson + "/**/*.json"], ["i18n-build"]);
   console.log("[locales] Watching for changes in locale files".yellow
     .inverse);

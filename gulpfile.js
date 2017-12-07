@@ -4,7 +4,7 @@
 /* global concat: true */
 
 // ************************
-// * Rise Vision Storage UI *
+// * Common Header        *
 // * build script         *
 // ************************
 
@@ -18,7 +18,6 @@ var env = process.env.NODE_ENV || "dev",
     runSequence = require("run-sequence"),
     concat = require("gulp-concat"),
     rename = require("gulp-rename"),
-    usemin = require("gulp-usemin"),
     es = require("event-stream"),
     uglify = require("gulp-uglify"),
     prettify = require("gulp-jsbeautifier"),
@@ -55,7 +54,7 @@ var env = process.env.NODE_ENV || "dev",
     "src/js/components/**/dtv-*.js",
     "src/js/components/**/ctr-*.js",
     "src/js/components/**/ftr-*.js",
-    "tmp/templates.js",
+    "tmp/partials/templates.js",
     "src/js/*.js",
     "src/js/*/*.js",
     "node_modules/widget-tester/mocks/translate-mock.js",
@@ -63,9 +62,10 @@ var env = process.env.NODE_ENV || "dev",
     "test/unit/**/mocks/*.js",
     "test/unit/**/*.tests.js"
     ],
-    commonHeaderSrcFiles = ["./tmp/templates.js", 
+    commonHeaderSrcFiles = ["./tmp/partials/templates.js", 
     "./src/js/dtv-common-header.js",
     "./src/js/directives/*.js",
+    "./src/js/filters/*.js",
     "./src/js/controllers/*.js",
     "./src/js/components/*.js",
     "./src/js/services/*.js",
@@ -82,8 +82,7 @@ var env = process.env.NODE_ENV || "dev",
     "./dist/js/components/segment-analytics.js",
     "./dist/js/components/message-box.js",
     "./dist/js/components/svg-icon.js",
-    "./dist/js/components/subscription-status.js",
-    "./src/js/config/config.js"
+    "./dist/js/components/subscription-status.js"
     ],
     dependencySrcFiles = ["./bower_components/jquery/dist/jquery.js",
     "./bower_components/angular/angular.js",
@@ -103,8 +102,9 @@ var env = process.env.NODE_ENV || "dev",
     "./bower_components/ng-csv/build/ng-csv.js",
     "./bower_components/angular-md5/angular-md5.min.js",
     "./bower_components/angular-local-storage/dist/angular-local-storage.js"],
-    gapiMockSrcFiles = [
-    "./node_modules/widget-tester/mocks/segment-analytics-mock.js"
+    mockSrcFiles = [
+    "./node_modules/widget-tester/mocks/segment-analytics-mock.js",
+    "./src/js/config/config.js"
     ],
     injectorGenerator = function (srcFiles, id) {
       return gulpInject(
@@ -113,17 +113,26 @@ var env = process.env.NODE_ENV || "dev",
           {starttag: "<!-- inject:" + id + ":{{ext}} -->", relative: true});
       };
 
-gulp.task("coerce-prod-env", function () {
-  env = "prod";
-});
-
-/*---- tooling ---*/
+// Tooling
 gulp.task("pretty", function() {
   return gulp.src("./src/js/**/*.js")
     .pipe(prettify({config: ".jsbeautifyrc", mode: "VERIFY_AND_WRITE"}))
     .pipe(gulp.dest("./src/js"))
     .on("error", function (error) {
       console.error(String(error));
+    });
+});
+
+gulp.task("lint", ["pretty"], function() {
+  return gulp.src([
+      "src/js/**/*.js",
+      "test/**/*.js"
+    ])
+    .pipe(jshint())
+    .pipe(jshint.reporter("jshint-stylish"))
+    .pipe(jshint.reporter("fail"))
+    .on("error", function () {
+      process.exit(1);
     });
 });
 
@@ -148,7 +157,10 @@ gulp.task("clean", function () {
   return del(["./tmp/**", "./dist/**"]);
 });
 
-// Start - Components build section
+// End - Tooling
+
+
+// Components build
 var componentsPath = "./src/js/components/";
 
 var folders = fs.readdirSync(componentsPath)
@@ -173,7 +185,7 @@ gulp.task("components-html2js", function() {
     .pipe(gulp.dest("./tmp/partials/"));
 });
 
-gulp.task("components-concat", function () { //copy angular files
+gulp.task("components-dist", function () { //copy angular files
   var tasks = folders.map(function(folder) {
     return gulp.src([
       path.join(componentsPath, folder, "**/app.js"),
@@ -192,49 +204,23 @@ gulp.task("components-concat", function () { //copy angular files
   return es.concat.apply(null, tasks);
 });
 
+gulp.task("components-watch", function(cb) {
+  watch({glob: "src/templates/components/**/*.html"}, function() {
+    return runSequence("components-html2js");
+  });
+  watch({glob: ["src/js/components/**/*", "tmp/partials/*/*"]}, function () {
+    return runSequence("components-dist");
+  });
+});
+
 gulp.task("build-components", function (cb) {
-  runSequence("components-html2js", "components-concat", cb);
+  runSequence("components-html2js", "components-dist", cb);
 });
 
-// End - Components build section
+// End - Components build
 
-gulp.task("lint", ["pretty"], function() {
-  return gulp.src([
-      "src/js/**/*.js",
-      "test/**/*.js"
-    ])
-    .pipe(jshint())
-    .pipe(jshint.reporter("jshint-stylish"))
-    .pipe(jshint.reporter("fail"))
-    .on("error", function () {
-      process.exit(1);
-    });
-});
 
-gulp.task("html-dist", function () {
-  return es.concat(
-    gulp.src("test/e2e/index.html")
-    .pipe(usemin({ js: [] }))
-    .pipe(gulp.dest("dist/")),
-    //minified
-    gulp.src("test/e2e/index.html")
-    .pipe(usemin({
-      js: [uglify()]
-    }))
-    .pipe(rename({suffix: ".min"}))
-    .pipe(gulp.dest("dist/"))
-  );
-});
-
-gulp.task("html-inject", function () {
-  return gulp.src("test/e2e/index_raw.html")
-  .pipe(injectorGenerator(commonHeaderSrcFiles, "ch"))
-  .pipe(injectorGenerator(dependencySrcFiles, "deps"))
-  .pipe(injectorGenerator(gapiMockSrcFiles, "gapimock"))
-  .pipe(rename("index.html"))
-  .pipe(gulp.dest("test/e2e"));
-});
-
+// Dist build
 gulp.task("html2js", function() {
   return gulp.src("src/templates/*.html")
     .pipe(minifyHtml({
@@ -248,47 +234,56 @@ gulp.task("html2js", function() {
       base: "src/templates"
     }))
     .pipe(concat("templates.js"))
-    .pipe(gulp.dest("./tmp/"));
+    .pipe(gulp.dest("./tmp/partials/"));
 });
 
-gulp.task("html", function (cb) {
-  runSequence("html2js", "html-inject", "html-dist", cb);
+gulp.task("dependencies-dist", function () { //copy angular files
+  return gulp.src(dependencySrcFiles)
+    .pipe(concat("dependencies.js"))
+    .pipe(gulp.dest("dist/js"))
+    .pipe(uglify())
+    .pipe(rename("dependencies.min.js"))
+    .pipe(gulp.dest("dist/js"));
 });
 
-gulp.task("build-watch", function() {
-  watch({glob: ["src/js/**/*", "src/templates/**/*"]}, function () {
-    return runSequence("build");
-  });
+gulp.task("common-header-dist", function () { //copy angular files
+  return gulp.src(commonHeaderSrcFiles.concat(["./src/js/config/prod.js"]))
+    .pipe(concat("common-header.js"))
+    .pipe(gulp.dest("dist/js"))
+    .pipe(uglify())
+    .pipe(rename("common-header.min.js"))
+    .pipe(gulp.dest("dist/js"));
 });
 
-gulp.task("html2js-watch", function() {
-  watch({glob: "src/templates/**/*.html"}, function() {
-    return runSequence("html2js");
-  });
+gulp.task("build-dist", function (cb) {
+  runSequence(["dependencies-dist", "common-header-dist"], cb);
 });
 
-gulp.task("html-inject-watch", function () {
-  watch({glob: "src/**/*"}, function () {
-    return runSequence("html-inject");
-  });
-});
+// End - Dist build
 
-gulp.task("build", function (cb) {
-  runSequence(["coerce-prod-env", "clean", "lint"], ["config", "css-build", "i18n-build"], "build-components", "html", cb);
-});
 
+// Testing
 gulp.task("test:unit", ["config"], factory.testUnitAngular({
   testFiles: unitTestFiles,
   coverageFiles: "../../src/js/**/*.js"
 }));
+
 gulp.task("test:unit-watch", ["config"], factory.testUnitAngular({
   testFiles: unitTestFiles, 
   coverageFiles: "../../src/js/**/*.js",
   watch: true
 }));
 
+gulp.task("html-inject", function () {
+  return gulp.src("test/e2e/index_raw.html")
+  .pipe(injectorGenerator(commonHeaderSrcFiles, "ch"))
+  .pipe(injectorGenerator(dependencySrcFiles, "deps"))
+  .pipe(injectorGenerator(mockSrcFiles, "gapimock"))
+  .pipe(rename("index.html"))
+  .pipe(gulp.dest("test/e2e"));
+});
+
 gulp.task("server", ["html-inject", "html2js", "config", "fonts-copy"], factory.testServer({https: false}));
-gulp.task("server-watch", ["html-inject-watch", "html2js-watch", "config", "fonts-copy"], factory.testServer({https: false}));
 gulp.task("server-close", factory.testServerClose());
 gulp.task("test:webdrive_update", factory.webdriveUpdate());
 gulp.task("test:e2e:core", ["test:webdrive_update"], factory.testE2EAngular({
@@ -307,15 +302,51 @@ gulp.task("test", function (cb) {
   runSequence("html2js", "test:unit", "test:e2e", "coveralls", cb);
 });
 
-gulp.task("watch", ["test:unit-watch"]);
+// End - Testing
+
+// Watchers & Build
+gulp.task("js-watch", function() {
+  watch({glob: "src/templates/*.html"}, function() {
+    return runSequence("html2js");
+  });
+  watch({glob: ["src/js/**/*", "tmp/partials/*"]}, function () {
+    return runSequence("build-dist");
+  });
+});
+
+gulp.task("dev", function(cb) {
+  runSequence(["test:unit-watch"], cb);
+});
+
+gulp.task("watch", function (cb) {
+  runSequence(["js-watch", "components-watch", "i18n-watch", "css-watch"], cb);
+});
+
+gulp.task("build", function (cb) {
+  runSequence(["clean", "lint"], ["css-build", "i18n-build", "html2js", "build-components"], "build-dist", cb);
+});
 
 gulp.task("default", [], function () {
-  console.log("\n***********************");
-  console.log("* Tell me what to do: *");
-  console.log("***********************");
-  console.log("* gulp test           *");
-  console.log("* gulp build          *");
-  console.log("* gulp watch          *");
-  console.log("***********************\n");
+  console.log("\n**************************");
+  console.log("* Basics:                *");
+  console.log("**************************");
+  console.log("* gulp test              *");
+  console.log("* gulp build             *");
+  console.log("* gulp watch             *");
+  console.log("* gulp dev               *");
+  console.log("**************************");
+  console.log("* Testing:               *");
+  console.log("**************************");
+  console.log("* gulp server            *");
+  console.log("* gulp test:unit         *");
+  console.log("* gulp test:e2e          *");
+  console.log("**************************");
+  console.log("* Watchers:              *");
+  console.log("**************************");
+  console.log("* gulp js-watch          *");
+  console.log("* gulp components-watch  *");
+  console.log("* gulp i18n-watch        *");
+  console.log("* gulp css-watch         *");
+  console.log("**************************\n");
   return true;
 });

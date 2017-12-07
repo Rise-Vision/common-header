@@ -7,8 +7,7 @@ describe("service: userEmail:", function() {
   beforeEach(module(function ($provide) {
     $provide.service("email", function() {
       return {
-        send: function(a1, a2, a3) {
-          console.log(a1, a2, a3);
+        send: function() {
           return Q.resolve();
         }
       };
@@ -18,7 +17,7 @@ describe("service: userEmail:", function() {
         get: function(url){
           expect(url).to.be.ok;
 
-          return "email template w/ {{user.username}} & {{user.companyName}}";
+          return "email template w/ {{newUser.username}} & {{newUser.companyName}} & {{user.name}}";
         },
         put: function() {}
       };
@@ -28,14 +27,22 @@ describe("service: userEmail:", function() {
         getSelectedCompanyName: function() {
           return "companyName";
         },
+        getCopyOfProfile: function() {
+          return profile;
+        },
         _restoreState: function() {}
       };
     });
 
   }));
   
-  var userEmail, sendSpy;
+  var userEmail, sendSpy, profile;
   beforeEach(function(){
+    profile = {
+      firstName: "Test",
+      lastName: "User",
+      email: "test.user@gmail.com"
+    };
     inject(function($injector){
       userEmail = $injector.get("userEmail");
       var emailService = $injector.get("email");
@@ -54,12 +61,22 @@ describe("service: userEmail:", function() {
     expect(userEmail.sendingEmail).to.be.true;
     sendSpy.should.have.been.calledWith("user@gmail.com",
       "You've been added to a Rise Vision account!",
-      "email template w/ username & companyName");
+      "email template w/ username & companyName & Test User");
 
     setTimeout(function() {
       expect(userEmail.sendingEmail).to.be.false;
       done();
     }, 10);
+  });
+  
+  it("should use current user email if name is blank",function(){
+    delete profile.firstName;
+    delete profile.lastName;
+
+    userEmail.send("username", "user@gmail.com");
+    sendSpy.should.have.been.calledWith("user@gmail.com",
+      "You've been added to a Rise Vision account!",
+      "email template w/ username & companyName & test.user@gmail.com");
   });
 
   it("should not call w/ missing parameters",function(){

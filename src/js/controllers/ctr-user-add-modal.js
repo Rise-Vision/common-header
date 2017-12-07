@@ -9,6 +9,7 @@ angular.module("risevision.common.header")
     segmentAnalytics, COMPANY_ROLE_FIELDS) {
     $scope.isAdd = true;
     $scope.COMPANY_ROLE_FIELDS = COMPANY_ROLE_FIELDS;
+    $scope.isUserAdmin = userState.isUserAdmin();
 
     //push roles into array
     $scope.availableRoles = [];

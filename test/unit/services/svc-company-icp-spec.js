@@ -36,6 +36,9 @@ describe("service: companyIcpFactory:", function() {
         isSubcompanySelected: function() {
           return isSubcompanySelected;
         },
+        isUserAdmin: function() {
+          return isUserAdmin;
+        },
         _restoreState: function() {}
       };
     });
@@ -67,13 +70,14 @@ describe("service: companyIcpFactory:", function() {
   }));
   
   var companyIcpFactory, $rootScope, $modal, $modalDeferred, $log, userProfile, companyProfile,
-    updateUserSpy, updateCompanySpy, isSubcompanySelected;
+    updateUserSpy, updateCompanySpy, isSubcompanySelected, isUserAdmin;
   
   beforeEach(function(){
     $modalDeferred = Q.defer();
     userProfile = {};
     companyProfile = {};
     isSubcompanySelected = false;
+    isUserAdmin = true;
 
     inject(function($injector){
       $rootScope = $injector.get("$rootScope");
@@ -168,7 +172,25 @@ describe("service: companyIcpFactory:", function() {
         done();
       }, 10);
     });
-    
+
+    it("should not show if missing User Admin role", function(done) {
+      var testDate = new Date();
+      testDate.setMonth(testDate.getMonth() - 1);
+      isUserAdmin = false;
+
+      userProfile = {
+        dataCollectionDate: testDate
+      };
+      companyIcpFactory.init();
+      $rootScope.$broadcast("risevision.company.selectedCompanyChanged");
+
+      setTimeout(function() {
+        $modal.open.should.have.not.been.called;
+
+        done();
+      }, 10);
+    });
+
     describe("less than 2 weeks ago", function() {
       var testDate;
       beforeEach(function() {

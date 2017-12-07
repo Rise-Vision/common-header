@@ -124,6 +124,8 @@ describe("controller: user add", function() {
     expect($scope.editRoleAllowed).to.exist;
     expect($scope.editRoleVisible).to.exist;
     expect($scope.COMPANY_ROLE_FIELDS).to.exist;
+
+    expect($scope.isUserAdmin).to.be.true;
   });
   
   describe("save: ",function(){

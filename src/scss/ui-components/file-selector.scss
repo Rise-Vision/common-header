@@ -1,240 +1,167 @@
-.file-selector {
-    .subscription-status {
-        text-align: left;
-        &.trial,
-        &.cancelled,
-        &.expired,
-        &.suspended {
-            border: none;
-        }
-    }
-    .clear-selection {
-        span {
-            position: absolute;
-            top: 8px;
-            right: 13px;
-            z-index: 3;
-            cursor: pointer;
-            width: 17px;
-            text-align: center;
-            display: block;
-            height: 17px;
-        }
-    }
+.grid-selector-list_storage {
+  overflow-y: scroll;
+  max-height: calc(100vh - 340px);
 }
 
-.pt-media-list li {
-    height: 107px;
-    width: 107px;
-    display: inline-block;
-    text-align: center;
-    overflow: hidden;
-    position: relative;
-    margin-left: 4px;
-    border: 1px solid #ddd;
-    -o-transition: border .2s ease-out;
-    -ms-transition: border .2s ease-out;
-    -moz-transition: border .2s ease-out;
-    -webkit-transition: border .2s ease-out;
-    transition: border .2s ease-out;
+.modal .grid-selector-list_storage {
+  max-height: calc(100vh - 340px);
 }
 
-.selected-border {
-    border: 5px solid #4ab767 !important;
+.grid-selector-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  justify-content: space-between;
+  padding: 4px;
 }
 
-// Add to Utility Classes later - currently used in Grid View
-.no-select {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -ms-user-select: none;
+.grid-selector-list-item {
+  border-radius: 2px;
+  width: 32.5%;
+  height: 120px;
+  line-height: 120px;
+  margin-bottom: 5px;
+  color: #555;
+  align-self: center;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
 }
 
-.pt-media-list img {
+.list-item-placeholder {
+  visibility: hidden;
+  height:         0 !important;
+  margin-top:     0 !important;
+  margin-bottom:  0 !important;
+  padding-top:    0 !important;
+  padding-bottom: 0 !important;
+  border:         0 !important;
+}
+
+.grid-selector-list-item .list-item-label {
+  background: #f2f2f2;
+  font-weight: 500;
+  line-height: 20px;
+  padding: 2px 5px;
+  overflow: hidden;
+  border-radius: 5px;
+  font-size: calc(10px + 0.15vw);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: absolute;
+  bottom: 0;
+  left: 0; 
+  width: 100%;
+}
+
+.grid-selector-list-item .list-item-icon {
+  width: 33%;
+  margin-top: -20px;
+}
+
+.grid-selector-list-item.list-type_image {
+  border: 1px solid #D6DADC;
+  background-color: #f2f2f2;
+  img {
+    max-width: 100%;
+    max-height: 120px;
+    vertical-align: middle;
+  }
+  .list-item-label {
+    border-radius: 0;
+  }  
+}
+
+.grid-selector-list-item {
+  &::before, &::after {
+    content: '';
+    display: none;
     width: 100%;
     height: 100%;
-}
-
-.pt-media-list img.disabled {
-    opacity: .4;
-    -webkit-filter: grayscale(1);
-    filter: grayscale(1);
-    cursor: not-allowed;
-}
-
-.pt-media-list li:hover {
-    border-color: #4ab767;
-}
-
-.pt-media-list li .checkbox {
-    position: absolute;
-    top: 6px;
-    left: 10px;
-    margin-right: 10px;
-    color: #d4d4d4;
-    font-size: 16px;
-    width: 16px;
-    vertical-align: middle;
-    text-align: center;
-    font-family: FontAwesome;
-    cursor: pointer;
-}
-
-.pt-media-list li span {
-    position: absolute;
-    bottom: 6px;
-    left: 50%;
-}
-
-.pt-media-list li.folder,
-.pt-media-list li.placeholder-item {
-    background-color: #fff;
-}
-
-.pt-media-list li.folder {
-    cursor: pointer;
-}
-
-.pt-media-list li.folder-extended {
-    width: 329px;
-    span.image-folder-info {
-        top: 21px !important;
+    position:absolute;
+  }
+  &::before {
+    opacity: 0.7;
+    background-color: #4ab767;
+    border-radius: 2px;
+  }
+  &::after {
+    background: url('https://cdn2.hubspot.net/hubfs/2700250/storage-selected-icon@2x.png');
+    background-size:24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    top: 0;
+  }
+  &:hover {
+    box-shadow: 0px 0px 0px 1px #4ab767;
+  }
+  &.list-item--selected {
+    &::before, &::after {
+      display: block;
     }
-}
-
-.pt-media-list li.folder img {
-    width: 98px;
-    height: 98px;
-    float: left;
-}
-
-.pt-media-list li.folder span,
-.pt-media-list li.disabled-item span,
-.pt-media-list li.single-item span,
-.pt-media-list li.placeholder-item span {
-    position: absolute;
-    bottom: 8px;
-    left: 0;
-    width: 91px;
-    text-align: center;
-    line-height: 15px;
-    font-size: 14px;
-    &:first-child {
-        white-space: pre-wrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        height: 33px;
-        border: 1px solid red;
+    .list-item-label {
+      background: #4ab767; 
+      color: #FFF;
     }
-    &.u_ellipsis-md {
-        width: 87%;
-        margin-left: 7px;
-        font-size: 11px;
+  }
+}
+
+.grid-selector-list-item.list-item--throttled {
+  &::before { 
+    display: block;  
+    opacity: 0.5;
+    background-color: #b74a4a;
+    border-radius: 2px;
+  }
+  &::after {
+    display: block;  
+    background: url('https://s3.amazonaws.com/Rise-Images/UI/throttled-file%402x.png');
+    background-size:24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    top: 0;
+  }
+  .list-item-label {
+    background: none; 
+    color: #FFF;
+  }
+}
+
+.grid-selector-list-item.list-item--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+
+/* ==========================================================================
+   Small devices (tablets, 768px and up)
+   ========================================================================== */
+
+ 
+@media (min-width: 768px) {
+  .grid-selector { 
+    .grid-selector-list-item {
+      width: 16.3%;
     }
+  }
+  .grid-selector-list_storage {
+   
+  }
 }
 
-.pt-media-list li.folder span.u_ellipsis-md {
-    font-size: 11px;
-}
-
-.pt-media-list li.folder-extended span.u_ellipsis-md {
-    width: 29%;
-}
-
-.pt-media-list li.folder span.image-folder-info {
-    position: absolute;
-    left: 105px;
-    top: 25px;
-    line-height: 13px;
-    font-size: 11px;
-    width: 170px;
-}
-
-.pt-media-list li.placeholder-item svg {
-    width: 38px;
-    height: 38px;
-    margin-top: 19px;
-    position: relative;
-    top: 6px;
-    & path {
-        fill: #4ab767;
+/* ==========================================================================
+   Medium devices (desktops, 992px and up) 
+   ========================================================================== */
+   
+@media (min-width: 992px) {
+  .grid-selector {
+    .grid-selector-list-item {
+      width: 12.2%;
     }
-}
-
-.pt-media-list li.disabled-item {
-    cursor: not-allowed;
-    svg {
-        width: 38px;
-        height: 38px;
-        margin-top: 19px;
-        position: relative;
-        top: 6px;
-    }
-    & path {
-        fill: #ddd;
-    }
-}
-
-.pt-media-list li.folder svg {
-    width: 38px;
-    height: 38px;
-    margin-top: 19px;
-    position: relative;
-    top: 6px;
-    & path {
-        fill: #4ab767;
-    }
-}
-
-.pt-media-list li.folder-extended svg {
-    float: left;
-    margin-left: 30px;
-    top: 3px;
-}
-
-// ONBOARDING INPUT FORM
-.pt-onboarding-list li {
-      height: 137px;
-      width: 137px;
-          span {
-            position: absolute;
-            bottom: 6px;
-            left: 0;
-            width: 100%;
-            padding: 0 12px;
-            word-wrap: normal;
-            white-space: pre-line;
-            line-height: 15px;
-          }
-          img {
-            width: 40%;
-            height: 40%;
-            margin-top: 29px;
-            margin-left: 0px;
-        }
-}
-
-// REPLACE ABOVE WITH SCROLLING THUMBS IMGS
-.btn-upload {
-    background: #f2f2f2;
-    color: #555;
-}
-
-.btn-upload span {
-    display: block;
-    font-weight: 500;
-    font-size: 16px;
-}
-
-.btn-upload i {
-    margin-top: 20px;
-    font-size: 28px;
-}
-
-#storageSelectorModal,
-.storage-app {
-    .btn-group {
-        display: inline;
-    }
+  }
 }
