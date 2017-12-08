@@ -168,6 +168,16 @@ angular.module("risevision.common.header")
         });
       };
 
+      // PROTOTYPE
+      $scope.downgradePlanFunc = function () {
+        // var modalInstance =
+        $modal.open({
+          template: $templateCache.get("plans-downgrade-modal.html"),
+          controller: "UserSettingsModalCtrl",
+          size: "sm"
+        });
+      };
+
       $loading.startGlobal("auth-buttons-silent");
       oauth2APILoader() //force loading oauth api on startup
       //to avoid popup blocker
