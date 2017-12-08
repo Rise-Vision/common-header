@@ -6,13 +6,49 @@
     Complete Registration
   </button>
 </li>
+
+<!-- Plan Info - PROTOTYPE -->
+<li
+  dropdown
+  class="dropdown user-profile-dropdown desktop-menu-item"
+  ng-class="{'hidden-xs': isLoggedIn}"
+  ng-show="isLoggedIn" ng-click="plansPopup()"
+  >
+    <a href="" dropdown-toggle class="dropdown-toggle" >
+      <div class="user-id pull-left plan-state">
+        <span ng-class="{'pending-registration' : isLoggedIn && !isRiseVisionUser && !loading}" class="username">Get more out of Rise Vision!</span>
+        <span><strong>See Our Plans</strong></span>
+      </div>
+      <div class="user-id pull-left plan-state" style="display:none">
+        <span ng-class="{'pending-registration' : isLoggedIn && !isRiseVisionUser && !loading}" class="username">Basic Plan</span>
+        <span><strong>Manage</strong></span>
+      </div>
+      <div class="user-id pull-left plan-state plan-suspended" style="display:none">
+        <span ng-class="{'pending-registration' : isLoggedIn && !isRiseVisionUser && !loading}" class="username">Advanced Plan</span>
+        <span><strong>Manage</strong></span>
+      </div>
+      <div class="user-id pull-left plan-state plan-expired" style="display:none">
+        <span ng-class="{'pending-registration' : isLoggedIn && !isRiseVisionUser && !loading}" class="username"><i class="fa fa-exclamation-circle" aria-hidden="true" style="color:red"></i>
+Basic Plan (suspended)</span>
+        <span><strong>Manage</strong></span>
+      </div> 
+      <!-- <a href="https://store.risevision.com/account?" target="_blank"></a> -->
+      <div class="user-id pull-left plan-state " style="display:none">
+        <span ng-class="{'pending-registration' : isLoggedIn && !isRiseVisionUser && !loading}" class="username"><i class="fa fa-exclamation-circle" aria-hidden="true" style="color:red"></i>
+Get more out of Rise Vision!</span>
+        <span><strong>See Our Plans</strong></span>
+      </div> 
+    </a>
+   
+</li>
+<!-- User Profile -->
 <li
   dropdown
   class="dropdown user-profile-dropdown desktop-menu-item"
   ng-class="{'hidden-xs': isLoggedIn}"
   ng-show="isLoggedIn"
   >
-    <a href="" dropdown-toggle class="dropdown-toggle">
+    <a href="" dropdown-toggle class="dropdown-toggle" style="border-left: 1px solid #ddd;">
       <div class="user-id pull-left">
         <span ng-class="{'pending-registration' : isLoggedIn && !isRiseVisionUser && !loading}" class="username">{{username}}</span>
         <span><strong>{{companyName}}</strong></span>
@@ -53,3 +89,32 @@
     Sign In
   </button>
 </li>
+
+<script>
+  //SETUP
+$(document).ready(function() { 
+ // alert('rr');
+});
+
+//CYCLE
+$(document).on("click", "#notificationsButton", function() {
+   // alert('dd');
+   $('.bg-warning').hide();
+   var target = $(".plan-state:visible");
+
+   if ( $(target).hasClass('plan-suspended') ) {
+    $('#bannerSuspended').show();
+   }
+   if ( $(target).hasClass('plan-expired') ) {
+    $('#bannerExpired').show();
+   }
+   // $(target).css('border', '1px solid red');
+   $(target).hide().siblings("div").hide();
+   $(target).next("div").show();
+
+  
+  
+});
+
+  </script>
+

@@ -10612,7 +10612,7 @@ a[data-wysihtml5-command=underline].active {
     line-height: 16px; }
   .navbar-default li.user-profile-dropdown .profile-pic {
     margin-left: 8px;
-    margin-top: 4px;
+    margin-top: 1px;
     border-radius: 4px; }
     .navbar-default li.user-profile-dropdown .profile-pic img {
       height: 100%; }

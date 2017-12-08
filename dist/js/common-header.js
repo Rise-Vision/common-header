@@ -54,7 +54,33 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('auth-buttons.html',
-    '<li ng-show="isLoggedIn && !isRiseVisionUser && !loading"><button type="button" ng-controller="RegisterButtonCtrl" ng-click="register()" class="btn btn-danger register-user-menu-button">Complete Registration</button></li><li dropdown="" class="dropdown user-profile-dropdown desktop-menu-item" ng-class="{\'hidden-xs\': isLoggedIn}" ng-show="isLoggedIn"><a href="" dropdown-toggle="" class="dropdown-toggle"><div class="user-id pull-left"><span ng-class="{\'pending-registration\' : isLoggedIn && !isRiseVisionUser && !loading}" class="username">{{username}}</span> <span><strong>{{companyName}}</strong></span></div><img ng-src="{{userPicture}}" class="profile-pic" width="30" height="30" alt="User"></a><div class="dropdown-menu" role="menu"><ng-include src="\'auth-buttons-menu.html\'" replace-include=""></ng-include></div></li><li dropdown="" class="dropdown user-profile-dropdown mobile-menu-item" ng-class="{\'visible-xs-inline-block\': isLoggedIn}" ng-show="isLoggedIn"><a href="" dropdown-toggle="" class="visible-xs dropdown-toggle" action-sheet="\'auth-buttons-menu.html\'" action-sheet-class="user-profile-dropdown"><div class="user-id"><span>{{username}}</span> <span><strong>{{companyName}}</strong></span></div></a></li><li ng-show="!undetermined && isLoggedIn === false"><button type="button" class="btn-primary btn u_margin-right" ng-click="login(\'registrationComplete\', true)">Sign Up Free</button></li><li ng-show="!undetermined && isLoggedIn === false"><button type="button" class="sign-in top-auth-button" ng-click="login(\'registrationComplete\')">Sign In</button></li>');
+    '<li ng-show="isLoggedIn && !isRiseVisionUser && !loading"><button type="button" ng-controller="RegisterButtonCtrl" ng-click="register()" class="btn btn-danger register-user-menu-button">Complete Registration</button></li><li dropdown="" class="dropdown user-profile-dropdown desktop-menu-item" ng-class="{\'hidden-xs\': isLoggedIn}" ng-show="isLoggedIn" ng-click="plansPopup()"><a href="" dropdown-toggle="" class="dropdown-toggle"><div class="user-id pull-left plan-state"><span ng-class="{\'pending-registration\' : isLoggedIn && !isRiseVisionUser && !loading}" class="username">Get more out of Rise Vision!</span> <span><strong>See Our Plans</strong></span></div><div class="user-id pull-left plan-state" style="display:none"><span ng-class="{\'pending-registration\' : isLoggedIn && !isRiseVisionUser && !loading}" class="username">Basic Plan</span> <span><strong>Manage</strong></span></div><div class="user-id pull-left plan-state plan-suspended" style="display:none"><span ng-class="{\'pending-registration\' : isLoggedIn && !isRiseVisionUser && !loading}" class="username">Advanced Plan</span> <span><strong>Manage</strong></span></div><div class="user-id pull-left plan-state plan-expired" style="display:none"><span ng-class="{\'pending-registration\' : isLoggedIn && !isRiseVisionUser && !loading}" class="username"><i class="fa fa-exclamation-circle" aria-hidden="true" style="color:red"></i> Basic Plan (suspended)</span> <span><strong>Manage</strong></span></div><div class="user-id pull-left plan-state" style="display:none"><span ng-class="{\'pending-registration\' : isLoggedIn && !isRiseVisionUser && !loading}" class="username"><i class="fa fa-exclamation-circle" aria-hidden="true" style="color:red"></i> Get more out of Rise Vision!</span> <span><strong>See Our Plans</strong></span></div></a></li><li dropdown="" class="dropdown user-profile-dropdown desktop-menu-item" ng-class="{\'hidden-xs\': isLoggedIn}" ng-show="isLoggedIn"><a href="" dropdown-toggle="" class="dropdown-toggle" style="border-left: 1px solid #ddd;"><div class="user-id pull-left"><span ng-class="{\'pending-registration\' : isLoggedIn && !isRiseVisionUser && !loading}" class="username">{{username}}</span> <span><strong>{{companyName}}</strong></span></div><img ng-src="{{userPicture}}" class="profile-pic" width="30" height="30" alt="User"></a><div class="dropdown-menu" role="menu"><ng-include src="\'auth-buttons-menu.html\'" replace-include=""></ng-include></div></li><li dropdown="" class="dropdown user-profile-dropdown mobile-menu-item" ng-class="{\'visible-xs-inline-block\': isLoggedIn}" ng-show="isLoggedIn"><a href="" dropdown-toggle="" class="visible-xs dropdown-toggle" action-sheet="\'auth-buttons-menu.html\'" action-sheet-class="user-profile-dropdown"><div class="user-id"><span>{{username}}</span> <span><strong>{{companyName}}</strong></span></div></a></li><li ng-show="!undetermined && isLoggedIn === false"><button type="button" class="btn-primary btn u_margin-right" ng-click="login(\'registrationComplete\', true)">Sign Up Free</button></li><li ng-show="!undetermined && isLoggedIn === false"><button type="button" class="sign-in top-auth-button" ng-click="login(\'registrationComplete\')">Sign In</button></li><script>\n' +
+    '  //SETUP\n' +
+    '$(document).ready(function() { \n' +
+    ' // alert(\'rr\');\n' +
+    '});\n' +
+    '\n' +
+    '//CYCLE\n' +
+    '$(document).on("click", "#notificationsButton", function() {\n' +
+    '   // alert(\'dd\');\n' +
+    '   $(\'.bg-warning\').hide();\n' +
+    '   var target = $(".plan-state:visible");\n' +
+    '\n' +
+    '   if ( $(target).hasClass(\'plan-suspended\') ) {\n' +
+    '    $(\'#bannerSuspended\').show();\n' +
+    '   }\n' +
+    '   if ( $(target).hasClass(\'plan-expired\') ) {\n' +
+    '    $(\'#bannerExpired\').show();\n' +
+    '   }\n' +
+    '   // $(target).css(\'border\', \'1px solid red\');\n' +
+    '   $(target).hide().siblings("div").hide();\n' +
+    '   $(target).next("div").show();\n' +
+    '\n' +
+    '  \n' +
+    '  \n' +
+    '});\n' +
+    '\n' +
+    '  </script>');
 }]);
 })();
 
@@ -78,7 +104,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('common-header.html',
-    '<nav class="navbar navbar-default navbar-static-top hidden-print" ng-class="{\'active-banner\': isSubcompanySelected() || isTestCompanySelected()}" role="navigation"><div class="container"><div class="navbar-header" style="width: 100%;"><a class="navbar-brand visible-md visible-lg" href="http://www.risevision.com/" target="{{newTabHome ? \'_blank\' : \'_self\'}}" ng-if="!inRVAFrame"><img src="//s3.amazonaws.com/Rise-Images/UI/logo.svg" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></a> <a class="navbar-brand hidden-md hidden-lg text-center" href="" off-canvas-toggle=""><i class="fa fa-bars"></i></a><ul class="nav navbar-nav navbar-right actions-nav pull-right"><ng-include replace-include="" ng-controller="HelpDropdownButtonCtrl" src="\'help-dropdown.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="SystemMessagesButtonCtrl" src="\'system-messages-button.html\'"></ng-include><ng-include replace-include="" ng-controller="ShoppingCartButtonCtrl" src="\'shoppingcart-button.html\'"></ng-include><ng-include replace-include="" ng-if="inRVAFrame" ng-controller="CloseFrameButtonCtrl" src="\'close-frame-button.html\'"></ng-include><ng-include ng-if="!inRVAFrame" replace-include="" src="\'app-nav-buttons.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="AuthButtonsCtr" src="\'auth-buttons.html\'"></ng-include><li ng-if="inRVAFrame" ng-controller="AuthButtonsCtr"></li></ul><div class="navbar-collapse navbar-left hidden-xs hidden-sm"><ul class="nav navbar-nav"><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a></li><li ng-if="!inRVAFrame && !hideHelpMenu"><a href="http://www.risevision.com/help/" target="_blank">Help</a></li></ul></div></div><ng-include replace-include="" ng-controller="TestCompanyBannerCtrl" src="\'test-company-banner.html\'"></ng-include><ng-include replace-include="" ng-controller="SubcompanyBannerCtrl" src="\'subcompany-banner.html\'"></ng-include></div></nav><div ng-show="cookieEnabled === false" class="bg-warning text-center u_padding-sm"><small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small></div><ng-include replace-include="" ng-controller="GlobalAlertsCtrl" src="\'global-alerts.html\'"></ng-include><nav class="off-canvas-nav" off-canvas-nav=""><ul class="nav nav-pills nav-stacked"><li off-canvas-toggle=""><i class="fa fa-times fa-2x pull-right"></i> <img src="//s3.amazonaws.com/rise-common/images/logo-small.png" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}">{{opt.title}}</a></li><li ng-if="!hideHelpMenu"><a target="_blank" href="http://www.risevision.com/help">Help</a></li></ul></nav><iframe name="logoutFrame" id="logoutFrame" style="display:none"></iframe>');
+    '<nav class="navbar navbar-default navbar-static-top hidden-print" ng-class="{\'active-banner\': isSubcompanySelected() || isTestCompanySelected()}" role="navigation"><div class="container"><div class="navbar-header" style="width: 100%;"><a class="navbar-brand visible-md visible-lg" href="http://www.risevision.com/" target="{{newTabHome ? \'_blank\' : \'_self\'}}" ng-if="!inRVAFrame"><img src="//s3.amazonaws.com/Rise-Images/UI/logo.svg" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></a> <a class="navbar-brand hidden-md hidden-lg text-center" href="" off-canvas-toggle=""><i class="fa fa-bars"></i></a><ul class="nav navbar-nav navbar-right actions-nav pull-right"><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="SystemMessagesButtonCtrl" src="\'system-messages-button.html\'"></ng-include><ng-include replace-include="" ng-controller="ShoppingCartButtonCtrl" src="\'shoppingcart-button.html\'"></ng-include><ng-include replace-include="" ng-if="inRVAFrame" ng-controller="CloseFrameButtonCtrl" src="\'close-frame-button.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="AuthButtonsCtr" src="\'auth-buttons.html\'"></ng-include><ng-include replace-include="" ng-controller="HelpDropdownButtonCtrl" src="\'help-dropdown.html\'"></ng-include><li dropdown="" class="dropdown hidden-xs"><button id="notificationsButton" dropdown-toggle="" class="dropdown-toggle btn btn-white"><i class="fa fa-bell"></i></button></li><li ng-if="inRVAFrame" ng-controller="AuthButtonsCtr"></li></ul><div class="navbar-collapse navbar-left hidden-xs hidden-sm"><ul class="nav navbar-nav"><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a></li><li ng-if="!inRVAFrame && !hideHelpMenu"><a href="http://www.risevision.com/help/" target="_blank">Help</a></li></ul></div></div><ng-include replace-include="" ng-controller="TestCompanyBannerCtrl" src="\'test-company-banner.html\'"></ng-include><ng-include replace-include="" ng-controller="SubcompanyBannerCtrl" src="\'subcompany-banner.html\'"></ng-include></div></nav><div ng-show="cookieEnabled === false" class="bg-warning text-center u_padding-sm"><small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small></div><div id="bannerExpired" style="display:none" class="bg-warning text-center u_padding-sm"><small><strong>14 days left in your Rise Vision trial!</strong> <a href="#">Subscribe Now</a></small></div><div id="bannerSuspended" style="display:none" class="bg-warning text-center u_padding-sm"><small><strong>Your Basic Plan has expired.</strong> <a href="#">Subscribe Now</a></small></div><ng-include replace-include="" ng-controller="GlobalAlertsCtrl" src="\'global-alerts.html\'"></ng-include><nav class="off-canvas-nav" off-canvas-nav=""><ul class="nav nav-pills nav-stacked"><li off-canvas-toggle=""><i class="fa fa-times fa-2x pull-right"></i> <img src="//s3.amazonaws.com/rise-common/images/logo-small.png" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}">{{opt.title}}</a></li><li ng-if="!hideHelpMenu"><a target="_blank" href="http://www.risevision.com/help">Help</a></li></ul></nav><iframe name="logoutFrame" id="logoutFrame" style="display:none"></iframe>');
 }]);
 })();
 
@@ -186,7 +212,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('help-dropdown.html',
-    '<li ng-show="!isLoggedIn || (isLoggedIn && isRiseVisionUser)" dropdown="" class="dropdown hidden-xs"><button id="helpDropdownButton" dropdown-toggle="" class="dropdown-toggle btn btn-primary"><span class="hidden-sm hidden-xs hidden-md">Need Help</span><i class="fa fa-question u_icon-white"></i></button><div class="dropdown-menu app-navigation" role="menu"><ng-include replace-include="" src="\'help-dropdown-menu.html\'"></ng-include></div></li><li ng-show="!isLoggedIn || (isLoggedIn && isRiseVisionUser)" class="visible-xs-inline-block"><button class="dropdown-toggle btn btn-primary" action-sheet="\'help-dropdown-menu.html\'" action-sheet-class="app-navigation"><i class="fa fa-question u_icon-white"></i></button></li>');
+    '<li ng-show="!isLoggedIn || (isLoggedIn && isRiseVisionUser)" dropdown="" class="dropdown hidden-xs"><button id="helpDropdownButton" dropdown-toggle="" class="dropdown-toggle btn btn-primary"><i class="fa fa-question u_icon-white"></i></button><div class="dropdown-menu app-navigation" role="menu"><ng-include replace-include="" src="\'help-dropdown-menu.html\'"></ng-include></div></li><li ng-show="!isLoggedIn || (isLoggedIn && isRiseVisionUser)" class="visible-xs-inline-block"><button class="dropdown-toggle btn btn-primary" action-sheet="\'help-dropdown-menu.html\'" action-sheet-class="app-navigation"><i class="fa fa-question u_icon-white"></i></button></li>');
 }]);
 })();
 
@@ -223,6 +249,355 @@ try {
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('move-company-modal.html',
     '<div rv-spinner="" rv-spinner-key="move-company-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 id="move-company-label" class="modal-title">Move Company</h2></div><div class="modal-body move-company-modal" stop-event="touchend"><form role="form"><div class="form-group"><label for="auth-key">Enter the Authentication Key of the Company that you want to move.</label><div class="row"><div class="col-sm-6"><input id="auth-key" type="text" class="form-control" ng-model="company.authKey"></div><div class="col-sm-6"><a href="" class="btn btn-secondary retrieve-company-details-button" ng-disabled="!company.authKey" ng-click="getCompany()">Retrieve Company Details</a></div></div></div></form><div ng-show="company.name" class="company-details-info"><h3>Details of the Company You Want to Move</h3><div>{{company.name}}<br>{{company.address}} {{company.city}}, {{company.province}}, {{company.country}} {{company.postalCode}}</div><h3>Details of the Company You Are Moving the Above Company Under</h3><div class="to-company">{{selectedCompany.name}}<br>{{selectedCompany.address}}<br>{{selectedCompany.city}}, {{selectedCompany.province}}, {{selectedCompany.country}} {{selectedCompany.postalCode}}</div></div><div ng-show="errors.length > 0"><div class="alert alert-danger" ng-repeat="error in errors">{{error}}</div></div><div ng-show="messages.length > 0"><div class="alert alert-success" ng-repeat="message in messages">{{message}}</div></div></div><div class="modal-footer"><button type="button" class="btn btn-success move-company-button" ng-show="company.name && !moveSuccess" ng-click="moveCompany()">Move Company <i class="fa fa-white fa-check icon-right"></i></button> <button type="button" class="btn btn-default btn-fixed-width close-move-company-button" data-dismiss="modal" ng-click="closeModal()">{{dismissButtonText}} <i class="fa fa-white fa-times icon-right"></i></button></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('plans-modal.html',
+    '<style>\n' +
+    '\n' +
+    'h2 {\n' +
+    '    margin: 0 !important;\n' +
+    '}\n' +
+    '\n' +
+    'h3 {\n' +
+    '  margin: 0;\n' +
+    '}\n' +
+    '\n' +
+    '.btn-secondary {\n' +
+    '  color: #292b2c;\n' +
+    '  background-color: #fff;\n' +
+    '  border-color: #ccc;\n' +
+    '}\n' +
+    '\n' +
+    '.btn-secondary:hover {\n' +
+    '  color: #292b2c;\n' +
+    '  background-color: #e6e6e6;\n' +
+    '  border-color: #adadad;\n' +
+    '}\n' +
+    '\n' +
+    '.btn-secondary:focus, .btn-secondary.focus {\n' +
+    '  -webkit-box-shadow: 0 0 0 2px rgba(204, 204, 204, 0.5);\n' +
+    '          box-shadow: 0 0 0 2px rgba(204, 204, 204, 0.5);\n' +
+    '}\n' +
+    '\n' +
+    '.btn-secondary.disabled, .btn-secondary:disabled {\n' +
+    '  background-color: #fff;\n' +
+    '  border-color: #ccc;\n' +
+    '}\n' +
+    '\n' +
+    '.btn-secondary:active, .btn-secondary.active,\n' +
+    '.show > .btn-secondary.dropdown-toggle {\n' +
+    '  color: #292b2c;\n' +
+    '  background-color: #e6e6e6;\n' +
+    '  background-image: none;\n' +
+    '  border-color: #adadad;\n' +
+    '} \n' +
+    '/* Colors */\n' +
+    '.bg-primary {\n' +
+    '  background-color: #4ab667 !important;\n' +
+    '}\n' +
+    '.bg-primary-light {\n' +
+    '  background-color: #f2fcf4;\n' +
+    '}\n' +
+    '.text-primary {\n' +
+    '  color: #4ab667 !important;\n' +
+    '}\n' +
+    '\n' +
+    '/* ==========================================================================\n' +
+    '   2.Hero section\n' +
+    '   ========================================================================== */ \n' +
+    '   \n' +
+    '.hero-section {\n' +
+    '  background-size: cover;\n' +
+    '  padding: 0 0 4.5em;\n' +
+    '  position: relative;\n' +
+    '}\n' +
+    '\n' +
+    '.hero-section.cover {\n' +
+    '  background-color: #333;\n' +
+    '  background-position: center;\n' +
+    '}\n' +
+    '\n' +
+    '.hero-section.cover.cover-top {\n' +
+    '  background-position: 0 -100px;\n' +
+    '}\n' +
+    '\n' +
+    '.hero-section.cover::before {\n' +
+    '  content: \'\';\n' +
+    '  position: absolute;\n' +
+    '  width: 100%;\n' +
+    '  height: 100%;\n' +
+    '  top: 0;\n' +
+    '  left: 0;\n' +
+    '  right: 0;\n' +
+    '}\n' +
+    '\n' +
+    '.hero-section.cover::before {\n' +
+    '  background: rgba(50, 50, 50, 0.8); \n' +
+    '}\n' +
+    '\n' +
+    '.hero-section .btn-lg {\n' +
+    '  padding: 1.2rem 2.5rem;\n' +
+    '  font-size: 1.5rem;\n' +
+    '  border-radius: .25rem;\n' +
+    '  display: block;\n' +
+    '}\n' +
+    '\n' +
+    '.welcome-message { \n' +
+    '  padding-top: 2.5em; \n' +
+    '}\n' +
+    '\n' +
+    '.welcome-message h1 {\n' +
+    '  font-size: 36px;\n' +
+    '  font-weight: 400;\n' +
+    '  margin: 0 0 0.5em 0;\n' +
+    '}\n' +
+    '\n' +
+    '.welcome-message h2 {\n' +
+    '  font-size: 18px;\n' +
+    '  font-weight: 300;\n' +
+    '  line-height: 1.6;\n' +
+    '}\n' +
+    '\n' +
+    '.home-hero .welcome-message h1 {\n' +
+    '  font-weight: 800;\n' +
+    '}\n' +
+    '\n' +
+    '.home-hero .welcome-message h2 {\n' +
+    '  font-weight: 400;\n' +
+    '}\n' +
+    '\n' +
+    '.welcome-message-carousel .carousel-inner {\n' +
+    '  border: 5px solid #000;\n' +
+    '  background-color: #444;\n' +
+    '}\n' +
+    '\n' +
+    '.welcome-message-carousel::after {\n' +
+    '  display: block;\n' +
+    '  content: \'\';\n' +
+    '  background-image: url(\'https://cdn2.hubspot.net/hubfs/2700250/Risevision%20March2017%20Theme/Images/people-1.png\');\n' +
+    '  width: 100%;\n' +
+    '  height: 100px;\n' +
+    '  background-size: 100%;\n' +
+    '  background-repeat: no-repeat;\n' +
+    '  margin-top: -2em;\n' +
+    '  position: relative;\n' +
+    '}\n' +
+    '\n' +
+    '.welcome-message-carousel img {\n' +
+    '  max-height: 240px;\n' +
+    '  width: 100%;\n' +
+    '}\n' +
+    '\n' +
+    '.section-spacing { padding: 4.5em 0; }\n' +
+    '\n' +
+    '\n' +
+    '/* Pricing*/\n' +
+    '\n' +
+    '.pricing-plans-section {\n' +
+    '}\n' +
+    '\n' +
+    '.pricing-plans-section h2 {\n' +
+    '  margin-top: .8em;\n' +
+    '}\n' +
+    '\n' +
+    '.pricing-plan-column-top {\n' +
+    '  padding: 1em;\n' +
+    '}\n' +
+    '\n' +
+    '.pricing-plan-column-top.sticky {\n' +
+    '  background-color: red;\n' +
+    '}\n' +
+    '\n' +
+    '.pricing-plans-section h3 {\n' +
+    '  font-size: 24px;\n' +
+    '  font-weight: 500;\n' +
+    '  margin-bottom: .4em;\n' +
+    '}\n' +
+    '\n' +
+    '.pricing-plans-section h3 span {\n' +
+    '  font-size: 14px;\n' +
+    '  color: #555;\n' +
+    '}\n' +
+    '\n' +
+    '.pricing-plan-column {\n' +
+    '  border: 1px solid #d4d4d4;\n' +
+    '  border-radius: 4px;\n' +
+    '  margin: .5em;\n' +
+    '  position: relative;\n' +
+    '}\n' +
+    '\n' +
+    '.pricing-plan-column-description {\n' +
+    '  padding: 0 .8em .8em .8em;\n' +
+    '}\n' +
+    '\n' +
+    '.pricing-plan-column-item {\n' +
+    '  padding: 0.8em;\n' +
+    '  border-bottom: 1px solid #d4d4d4;\n' +
+    '  font-size: 14px;\n' +
+    '}\n' +
+    '\n' +
+    '.pricing-plan-column-item:last-child {\n' +
+    '  border-bottom: none;\n' +
+    '}\n' +
+    '\n' +
+    '.pricing-plan-column-item-header h4 {\n' +
+    '  display: inline-block;\n' +
+    '}\n' +
+    '\n' +
+    '.btn-tip {\n' +
+    '  display: inline-block;\n' +
+    '  vertical-align: baseline;\n' +
+    '  border-radius: 50%;\n' +
+    '  padding: 0px 5px;\n' +
+    '  color: #4ab667;\n' +
+    '}\n' +
+    '\n' +
+    '.pricing-plan-column-item.included {\n' +
+    '  background-color: #e5ffeb;\n' +
+    '}\n' +
+    '\n' +
+    '.pricing-plan-column-item h4 {\n' +
+    '  font-size: 18px;\n' +
+    '  margin: 0;\n' +
+    '}\n' +
+    '\n' +
+    '.pricing-plan-column-item p {\n' +
+    '  margin-bottom: 0;\n' +
+    '  color: #555;\n' +
+    '}\n' +
+    '\n' +
+    '.pricing-plan-column-top-incentive {\n' +
+    '  margin-top: .5em;\n' +
+    '}\n' +
+    '\n' +
+    '.pricing-plan-column.advanced {\n' +
+    '  position: relative;\n' +
+    '  z-index: 100;\n' +
+    '  -webkit-box-shadow: 0px 0px 0px 4px #4ab667;\n' +
+    '  -moz-box-shadow:  0px 0px 0px 4px #4ab667;\n' +
+    '  box-shadow:  0px 0px 0px 4px #4ab667;\n' +
+    '  border-radius: 4px;\n' +
+    '}\n' +
+    '\n' +
+    '.pricing-plan-column.advanced::before {\n' +
+    '  content: \'Recommended\';\n' +
+    '  background: #4ab667;\n' +
+    '  color: #FFF;\n' +
+    '  display: block;\n' +
+    '  width: 100%;\n' +
+    '  position: absolute;\n' +
+    '  top:0;\n' +
+    '  left: 0;\n' +
+    '  z-index: 100;\n' +
+    '  -webkit-box-shadow: 0px 0px 0px 1px #4ab667;\n' +
+    '  -moz-box-shadow:  0px 0px 0px 1px #4ab667;\n' +
+    '  box-shadow:  0px 0px 0px 1px #4ab667;\n' +
+    '}\n' +
+    '\n' +
+    '.pricing-period .active span::before {\n' +
+    '  content: \'✓\';\n' +
+    '  margin-right: 5px;\n' +
+    '}\n' +
+    '\n' +
+    '.pricing-plan-column-item-header-link {\n' +
+    '  font-size: 15px;\n' +
+    '}\n' +
+    '\n' +
+    '\n' +
+    '/* ==========================================================================\n' +
+    '   19.Small devices (tablets, 768px and up)\n' +
+    '   ========================================================================== */\n' +
+    '   \n' +
+    '@media (min-width: 768px) {\n' +
+    '  .hero-section {\n' +
+    '    padding: 0 0 7.5em;\n' +
+    '  }\n' +
+    '\n' +
+    '  .welcome-message h1 {\n' +
+    '    font-size: 40px;\n' +
+    '  }\n' +
+    '\n' +
+    '  .welcome-message h2 {\n' +
+    '    font-size: 24px;\n' +
+    '  }\n' +
+    '\n' +
+    '  .welcome-message-carousel::after {\n' +
+    '    height: 100px;\n' +
+    '  }\n' +
+    '  .welcome-message-carousel img {\n' +
+    '    max-height: 240px;\n' +
+    '  }\n' +
+    '  .pricing-plans-section {\n' +
+    '  }\n' +
+    '  .section-spacing { padding: 4.5em 0; }\n' +
+    '\n' +
+    '}\n' +
+    '\n' +
+    '/* ==========================================================================\n' +
+    '   20.Medium devices (desktops, 992px and up) \n' +
+    '   ========================================================================== */\n' +
+    '   \n' +
+    '@media (min-width: 992px) {\n' +
+    '\n' +
+    '  .hero-section {\n' +
+    '    padding: 3em 0 6em;\n' +
+    '  }\n' +
+    '\n' +
+    '  .welcome-message h1 { font-size: 52px; }\n' +
+    '\n' +
+    '  .welcome-message h2 { font-size: 24px; }\n' +
+    '\n' +
+    '  .welcome-message-carousel::after {\n' +
+    '    height: 150px;\n' +
+    '  }\n' +
+    '  .welcome-message-carousel img {\n' +
+    '    max-height: 300px;\n' +
+    '  }\n' +
+    '  .pricing-plans-section {\n' +
+    '    border: 1px solid #d4d4d4;\n' +
+    '    border-radius: 4px;\n' +
+    '  }\n' +
+    '  .pricing-plan-column-top {\n' +
+    '    padding: 1em;\n' +
+    '        padding-top: 22px;\n' +
+    '  }\n' +
+    '  .pricing-plan-column {\n' +
+    '    border: none;\n' +
+    '    border-left: 1px solid #d4d4d4;\n' +
+    '    border-radius: 0;\n' +
+    '    margin: 0;\n' +
+    '  }\n' +
+    '  .pricing-plan-column-wrapper:first-child .pricing-plan-column {\n' +
+    '    border-left: none;\n' +
+    '  }\n' +
+    '  .pricing-plan-column-description {\n' +
+    '  }\n' +
+    '  .pricing-plan-column-item-header {\n' +
+    '    position: relative;\n' +
+    '  }\n' +
+    '  .pricing-plan-column.basic .pricing-plan-column-item-header .btn-sm, .pricing-plan-column.advanced .pricing-plan-column-item-header .btn-sm, .pricing-plan-column.enterprise .pricing-plan-column-item-header .btn-sm {\n' +
+    '    display: none;\n' +
+    '  }\n' +
+    ' \n' +
+    '  .hero-section .btn-lg {\n' +
+    '    display: inline-block;\n' +
+    '  }\n' +
+    '  .section-spacing { padding: 5em 0; }\n' +
+    '\n' +
+    '}\n' +
+    '\n' +
+    '\n' +
+    '\n' +
+    '\n' +
+    '</style><div id="companyIcpModal"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 id="icpModalTitle" class="modal-title">Choose Your Plan</h3></div><div class="modal-body u_padding-lg" style="padding-top: 0" stop-event="touchend"><div class="container-fluid"><section class="hero-section section-spacing text-center" style="padding: 1em"><div class="btn-group pricing-period"><a id="pricing-toggle-monthly" class="btn btn-secondary active" href="?pricing_plan=monthly"><span>Monthly</span></a> <a id="pricing-toggle-yearly" class="btn btn-secondary" href="?pricing_plan=yearly"><span>Yearly</span></a></div></section><section class="pricing-plans-section text-center"><div class="row no-gutters"><div class="col-sm-6 col-lg-3 pricing-plan-column-wrapper"><div class="pricing-plan-column free"><div class="pricing-plan-column-top" style="height: 193px;"><h2>Free</h2><h3>$0 <span>per Company</span></h3><span id="hs_cos_wrapper_free_cta" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_cta" style="" data-hs-cos-general-type="widget" data-hs-cos-type="cta"><span class="hs-cta-wrapper" id="hs-cta-wrapper-8ba9f946-447e-41de-ad39-e730e8e46c00"><span class="hs-cta-node hs-cta-8ba9f946-447e-41de-ad39-e730e8e46c00" id="hs-cta-8ba9f946-447e-41de-ad39-e730e8e46c00" style="visibility: visible;" data-hs-drop="true"><a id="cta_button_2700250_c281de0f-53a1-428e-8a26-349cf7e9a332" class="cta_button btn btn-primary btn-lg pricing-get-started free-plan signup-button" href="#" target="_blank" style="" cta_dest_link="https://apps.risevision.com/signup" title="Get Started">Get Started</a></span><script charset="utf-8" src="https://js.hscta.net/cta/current.js"></script><script type="text/javascript"> hbspt.cta.load(2700250, \'8ba9f946-447e-41de-ad39-e730e8e46c00\', {}); </script></span></span><div class="text-primary pricing-plan-column-top-incentive"></div></div><div class="pricing-plan-column-item included"><p class="text-primary">Unlimited Displays, Companies and Users</p></div><div class="pricing-plan-column-item"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/24/rise-storage">Storage</a></h4><button id="storage_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="Our convenient storage solution for your media assets <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115001797643&quot;>Learn More</a>">?</button></div>$10 per Company</div><div class="pricing-plan-column-item"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/300">Template Library</a></h4><button id="template_library_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="A collection of professionally designed Presentations that get your digital signage project started within minutes, and more importantly, provide you with new designs every month to keep your content fresh <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115003649566&quot;>Learn More</a>">?</button></div>$15 per Company</div><div class="pricing-plan-column-item"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/288/embedded-presentations">Embedded Presentations</a></h4><button id="embedded_presentations_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="Embed one Presentation into another to simplify content management across your network <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115002292383&quot;>Learn More</a>">?</button></div>$10 per Company</div><div class="pricing-plan-column-item"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/14/rise-priority-support">Priority Support</a></h4><button id="support_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="Help in 10 minutes or less during regular business hours <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115000745666&quot;>Learn More</a>">?</button></div>$75 per Company</div><div class="pricing-plan-column-item player-professional" style="height: 90px;"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/2048/rise-player-professional">Player Professional</a></h4><button id="player_professional_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="Our enhanced digital signage player ensures your content starts and runs consistently without an internet connection <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115003626863&quot;>Learn More</a>">?</button></div><p>$9 per Display</p></div></div></div><div class="col-sm-6 col-lg-3 pricing-plan-column-wrapper"><div class="pricing-plan-column basic"><div class="pricing-plan-column-top" style="height: 193px;"><h2>Basic</h2><h3>$19 <span>per Company</span></h3><span id="hs_cos_wrapper_basic_cta" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_cta" style="" data-hs-cos-general-type="widget" data-hs-cos-type="cta"><span class="hs-cta-wrapper" id="hs-cta-wrapper-18de12c8-a193-486b-8c82-da579f10a8d3"><span class="hs-cta-node hs-cta-18de12c8-a193-486b-8c82-da579f10a8d3" id="hs-cta-18de12c8-a193-486b-8c82-da579f10a8d3" style="visibility: visible;" data-hs-drop="true"><a id="cta_button_2700250_bd74fc98-e7da-4ec9-bf13-8a4994582915" class="cta_button btn btn-primary btn-lg pricing-get-started basic-plan signup-button" href="https://store.risevision.com/product/289/basic-plan?" target="_blank" style="" cta_dest_link="https://apps.risevision.com/signup?show_product=289" title="Get Started">Subscribe</a></span><script charset="utf-8" src="https://js.hscta.net/cta/current.js"></script><script type="text/javascript"> hbspt.cta.load(2700250, \'18de12c8-a193-486b-8c82-da579f10a8d3\', {}); </script></span></span><div class="text-primary pricing-plan-column-top-incentive"></div></div><div class="pricing-plan-column-item included"><p class="text-primary">Unlimited Displays, Companies and Users</p></div><div class="pricing-plan-column-item included"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/24/rise-storage">Storage</a></h4><button id="storage_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="Our convenient storage solution for your media assets <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115001797643&quot;>Learn More</a>">?</button></div>Included</div><div class="pricing-plan-column-item included"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/300">Template Library</a></h4><button id="template_library_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="A collection of professionally designed Presentations that get your digital signage project started within minutes, and more importantly, provide you with new designs every month to keep your content fresh <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115003649566&quot;>Learn More</a>">?</button></div>Included</div><div class="pricing-plan-column-item included"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/288/embedded-presentations">Embedded Presentations</a></h4><button id="embedded_presentations_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="Embed one Presentation into another to simplify content management across your network <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115002292383&quot;>Learn More</a>">?</button></div>Included</div><div class="pricing-plan-column-item"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/14/rise-priority-support">Priority Support</a></h4><button id="support_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="Help in 10 minutes or less during regular business hours <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115000745666&quot;>Learn More</a>">?</button></div>$75 per Company</div><div class="pricing-plan-column-item player-professional" style="height: 90px;"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/2048/rise-player-professional">Player Professional</a></h4><button id="player_professional_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="Our enhanced digital signage player ensures your content starts and runs consistently without an internet connection <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115003626863&quot;>Learn More</a>">?</button></div><p>$9 per Display</p></div></div></div><div class="col-sm-6 col-lg-3 pricing-plan-column-wrapper"><div class="pricing-plan-column advanced"><div class="pricing-plan-column-top" style="height: 193px;"><h2>Advanced</h2><h3>$85 <span>per Company</span></h3><span id="hs_cos_wrapper_advanced_cta" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_cta" style="" data-hs-cos-general-type="widget" data-hs-cos-type="cta"><span class="hs-cta-wrapper" id="hs-cta-wrapper-2b7d9e38-1fc7-48bf-8e09-a0e8e5a435bc"><span class="hs-cta-node hs-cta-2b7d9e38-1fc7-48bf-8e09-a0e8e5a435bc" id="hs-cta-2b7d9e38-1fc7-48bf-8e09-a0e8e5a435bc" style="visibility: visible;" data-hs-drop="true"><a id="cta_button_2700250_730cc3ef-cfc3-49c4-9d07-5efe2fc74720" class="cta_button btn btn-primary btn-lg pricing-get-started advanced-plan signup-button" href="https://store.risevision.com/product/290/advanced-plan" target="_blank" style="" cta_dest_link="https://apps.risevision.com/signup?show_product=290" title="Get Started">Subscribe</a></span><script charset="utf-8" src="https://js.hscta.net/cta/current.js"></script><script type="text/javascript"> hbspt.cta.load(2700250, \'2b7d9e38-1fc7-48bf-8e09-a0e8e5a435bc\', {}); </script></span></span><div class="text-primary pricing-plan-column-top-incentive">Save 23%</div></div><div class="pricing-plan-column-item included"><p class="text-primary">Unlimited Displays, Companies and Users</p></div><div class="pricing-plan-column-item included"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/24/rise-storage">Storage</a></h4><button id="storage_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="Our convenient storage solution for your media assets <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115001797643&quot;>Learn More</a>">?</button></div>Included</div><div class="pricing-plan-column-item included"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/300">Template Library</a></h4><button id="template_library_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="A collection of professionally designed Presentations that get your digital signage project started within minutes, and more importantly, provide you with new designs every month to keep your content fresh <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115003649566&quot;>Learn More</a>">?</button></div>Included</div><div class="pricing-plan-column-item included"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/288/embedded-presentations">Embedded Presentations</a></h4><button id="embedded_presentations_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="Embed one Presentation into another to simplify content management across your network <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115002292383&quot;>Learn More</a>">?</button></div>Included</div><div class="pricing-plan-column-item included"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/14/rise-priority-support">Priority Support</a></h4><button id="support_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="Help in 10 minutes or less during regular business hours <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115000745666&quot;>Learn More</a>">?</button></div>Included</div><div class="pricing-plan-column-item player-professional" style="height: 90px;"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/2048/rise-player-professional">Player Professional</a></h4><button id="player_professional_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="Our enhanced digital signage player ensures your content starts and runs consistently without an internet connection <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115003626863&quot;>Learn More</a>">?</button></div><p>$9 per Display</p></div></div></div><div class="col-sm-6 col-lg-3 pricing-plan-column-wrapper"><div class="pricing-plan-column enterprise"><div class="pricing-plan-column-top" style="height: 193px;"><h2>Enterprise</h2><h3>$489 <span>for ALL Companies</span></h3><span id="hs_cos_wrapper_enterprise_cta" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_cta" style="" data-hs-cos-general-type="widget" data-hs-cos-type="cta"><span class="hs-cta-wrapper" id="hs-cta-wrapper-b752f17d-dc4c-4fea-b0bc-4b65d8be276a"><span class="hs-cta-node hs-cta-b752f17d-dc4c-4fea-b0bc-4b65d8be276a" id="hs-cta-b752f17d-dc4c-4fea-b0bc-4b65d8be276a" style="visibility: visible;" data-hs-drop="true"><a id="cta_button_2700250_c9399e63-3057-4e7f-a1d3-939616259ea7" class="cta_button btn btn-primary btn-lg pricing-contact-us" href="https://cta-service-cms2.hubspot.com/ctas/v2/public/cs/c/?cta_guid=c9399e63-3057-4e7f-a1d3-939616259ea7&amp;placement_guid=b752f17d-dc4c-4fea-b0bc-4b65d8be276a&amp;portal_id=2700250&amp;redirect_url=APefjpEx6iNaf64CWmoRWFD5guJANdtECYhKNK79wDESLftglq-lHzMcexgITE5xt4xyMoN2Ybowo4OyoJUAf4QkC2mh9yIFNANq8Ao3HBQuiPrvWCini9wDaAp1J9C5Pol02yYvbC4QWioAhLujjM0EGbDkXjowL5L5Q8aEwstMCxTQHHzv7tc9sBJX79xIQEqRupHy3DCelrdkzhr5tj84wnVHSL3w7lMk56bIJqildQgnkpB8Nlk0C62hxI9YdJ3OCl6QiYV0CiXtfI1oAE-7qO1cMFsM6Q&amp;hsutk=f2ee3fea1a082566ba7c09b86e9bf21a&amp;canon=https%3A%2F%2Fwww.risevision.com%2Fpricing&amp;click=849c2a43-93c5-4e5b-ba95-01b60bf63d35&amp;pageId=5224654251&amp;__hstc=93793666.f2ee3fea1a082566ba7c09b86e9bf21a.1487881787328.1512698202646.1512735974588.100&amp;__hssc=93793666.1.1512735974588&amp;__hsfp=3896197438" target="_blank" style="" cta_dest_link="https://www.risevision.com/contact-us?contact_form=enterprise" title="Contact Us">Contact Us</a></span><script charset="utf-8" src="https://js.hscta.net/cta/current.js"></script><script type="text/javascript"> hbspt.cta.load(2700250, \'b752f17d-dc4c-4fea-b0bc-4b65d8be276a\', {}); </script></span></span><div class="text-primary pricing-plan-column-top-incentive">Save at least 51% if you have 5 or more Sub-Companies <button id="sub-company-callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="Create Sub-companies, and Sub-companies of Sub-companies, to manage locations, departments and any other hierarchy structure that helps you organize your Display network <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115003739746-About-Sub-Companies&quot;>Learn More</a>">?</button></div></div><div class="pricing-plan-column-item included"><p class="text-primary">Unlimited Displays, Companies and Users</p></div><div class="pricing-plan-column-item included"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/24/rise-storage">Storage</a></h4><button id="storage_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="Our convenient storage solution for your media assets <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115001797643&quot;>Learn More</a>">?</button></div>Included</div><div class="pricing-plan-column-item included"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/300">Template Library</a></h4><button id="template_library_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="A collection of professionally designed Presentations that get your digital signage project started within minutes, and more importantly, provide you with new designs every month to keep your content fresh <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115003649566&quot;>Learn More</a>">?</button></div>Included</div><div class="pricing-plan-column-item included"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/288/embedded-presentations">Embedded Presentations</a></h4><button id="embedded_presentations_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="Embed one Presentation into another to simplify content management across your network <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115002292383&quot;>Learn More</a>">?</button></div>Included</div><div class="pricing-plan-column-item included"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/14/rise-priority-support">Priority Support</a></h4><button id="support_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="Help in 10 minutes or less during regular business hours <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115000745666&quot;>Learn More</a>">?</button></div>Included</div><div class="pricing-plan-column-item player-professional included" style="height: 90px;"><div class="pricing-plan-column-item-header"><h4><a class="pricing-plan-column-item-header-link" target="_blank" href="https://store.risevision.com/product/2048/rise-player-professional">Player Professional</a></h4><button id="player_professional_callout" type="button" class="btn btn-secondary btn-sm btn-tip help-callout" data-toggle="tooltip" data-html="true" title="" data-original-title="Our enhanced digital signage player ensures your content starts and runs consistently without an internet connection <a target=&quot;_blank&quot; href=&quot;https://help.risevision.com/hc/en-us/articles/115003626863&quot;>Learn More</a>">?</button></div><p>Included for 50 Displays</p><p>$9 per add\'l Display</p></div></div></div></div></section></div></div><div class="modal-footer"></div></div>');
 }]);
 })();
 
@@ -831,6 +1206,24 @@ angular.module("risevision.common.header")
           template: $templateCache.get("user-settings-modal.html"),
           controller: "UserSettingsModalCtrl",
           size: size,
+          resolve: {
+            username: function () {
+              return userState.getUsername();
+            },
+            add: function () {
+              return false;
+            }
+          }
+        });
+      };
+
+      // Show User Plans Modal PROTOTYPE
+      $scope.plansPopup = function () {
+        // var modalInstance =
+        $modal.open({
+          template: $templateCache.get("plans-modal.html"),
+          controller: "UserSettingsModalCtrl",
+          size: "lg",
           resolve: {
             username: function () {
               return userState.getUsername();
