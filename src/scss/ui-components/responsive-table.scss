@@ -83,6 +83,13 @@
     //end .table-body
     &.table--hover {
         @extend .table-hover;
+        .table-body {
+            .table-body__row {
+                & > .table-body__cell {
+                    cursor: pointer;
+                }
+            }
+        }
     }
     //end .table--hover
     &.table--sortable {
