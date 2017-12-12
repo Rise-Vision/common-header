@@ -4,9 +4,6 @@
 .table {
     width: 100%;
     margin-bottom: 0;
-    &.table--hover {
-        @extend .table-hover;
-    }
     .table-header {
         .table-header__row > .table-header__cell {
             padding: 8px;
@@ -39,7 +36,6 @@
     .table-body {
         .table-body__row {
             &:hover {
-                cursor: pointer;
                 a {
                     color: $rise-blue;
                 }
@@ -48,7 +44,6 @@
                 vertical-align: middle;
                 padding: 12px 8px;
                 -webkit-touch-callout: none;
-                cursor: pointer;
                 &:first-child {
                     input {
                         display: inline-block;
@@ -86,6 +81,17 @@
         }
     }
     //end .table-body
+    &.table--hover {
+        @extend .table-hover;
+        .table-body {
+            .table-body__row {
+                & > .table-body__cell {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    //end .table--hover
     &.table--sortable {
         .table-body {
             .table-body__row > .table-body__cell {
@@ -96,6 +102,7 @@
             }
         }
     }
+    //end .table--sortable
     &.table--selector {
         .table-body {
             .table-body__row {
@@ -169,11 +176,12 @@
                         .callout {
                             top: 45px;
                             left: 0;
+                            }
                         }
                     }
                 }
             }
-        }
+            //end .table-body
         &.table--back-btn {
             .table-body__cell {
                 &:first-child:before {
@@ -220,8 +228,18 @@
                     }
                 }
             }
-        }
+        } //end table--multiple-selector
+
+    } //end .table--selector
+    &.table--data-list { 
+         tbody > tr > td {
+                border: none;
+                }
+         .table-body .table-body__row > .table-body__cell {
+                padding: 2px 8px;
+                }
     }
+
 } // end .table
 
 /* Presentation Selector */
