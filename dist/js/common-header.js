@@ -8341,7 +8341,7 @@ angular.module("risevision.common.components.stop-event", [])
           "store.risevision.com", "help.risevision.com",
           "apps.risevision.com", "risevision.com",
           "preview.risevision.com", "rva.risevision.com"
-        ]);
+        ], true);
       });
 
       /**
