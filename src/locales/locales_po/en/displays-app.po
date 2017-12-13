@@ -401,7 +401,7 @@ msgid "fields.player.displayControl.configure"
 msgstr "Configure"
 
 msgid "fields.player.displayControl.configureModal.disclaimer"
-msgstr "<b>DISCLAIMER:</b> Display Control is currently provided as beta, and is only supported on Player Version RisePlayerElectron {{playerVersion}} and higher. <br/>Once out of beta, it will only be available to a Display subscribed to Rise Player Professional."
+msgstr "<b>DISCLAIMER:</b> Display Control is currently in beta release and is only compatible on Displays running Rise Player version RisePlayerElectron {{playerVersion}} or higher."
 
 msgid "fields.player.displayControl.configureModal.help"
 msgstr "Need help configuring Display Control?"
