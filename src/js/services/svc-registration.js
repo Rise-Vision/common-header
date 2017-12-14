@@ -63,11 +63,15 @@
             deferred.reject("registeredAsRiseVisionUser");
           }
         }, function (err) {
-          if (cookieStore.get("surpressRegistration")) {
-            deferred.resolve({});
+          if (err && err.code === 403) {
+            if (cookieStore.get("surpressRegistration")) {
+              deferred.resolve({});
+            } else {
+              $log.debug("registeredAsRiseVisionUser rejected", err);
+              deferred.reject("registeredAsRiseVisionUser");
+            }
           } else {
-            $log.debug("registeredAsRiseVisionUser rejected", err);
-            deferred.reject("registeredAsRiseVisionUser");
+            deferred.reject();
           }
         });
 
