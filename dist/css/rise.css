@@ -11723,10 +11723,6 @@ li.dropdown-header {
     .grid-list .panel .product-pricing span, .grid-list .select-subcompany-modal .list-group .product-pricing span, .select-subcompany-modal .grid-list .list-group .product-pricing span, .grid-list .panel-editable .product-pricing span, .grid-list .card .product-pricing span, .grid-list #appLauncherContainer .scrollable-list .product-pricing span, #appLauncherContainer .grid-list .scrollable-list .product-pricing span {
       color: #3C7BDA;
       font-weight: bold; }
-    .grid-list .panel .product-pricing h1, .grid-list .select-subcompany-modal .list-group .product-pricing h1, .select-subcompany-modal .grid-list .list-group .product-pricing h1, .grid-list .panel-editable .product-pricing h1, .grid-list .card .product-pricing h1, .grid-list #appLauncherContainer .scrollable-list .product-pricing h1, #appLauncherContainer .grid-list .scrollable-list .product-pricing h1 {
-      color: #4ab767;
-      font-size: 44px;
-      margin-bottom: 0; }
   .grid-list .panel .info, .grid-list .select-subcompany-modal .list-group .info, .select-subcompany-modal .grid-list .list-group .info, .grid-list .panel-editable .info, .grid-list .card .info, .grid-list #appLauncherContainer .scrollable-list .info, #appLauncherContainer .grid-list .scrollable-list .info {
     position: absolute;
     top: 0;
