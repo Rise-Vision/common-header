@@ -7207,14 +7207,26 @@ button.close {
 .input-group > .input-group-btn > label {
   height: 34px; }
 
-.alert-premium {
+.alert.alert-premium, .support-app .alert-premium.support-time {
   background-color: #dbf0e0;
   border-color: #4ab767;
   color: #333; }
-  .alert-premium hr {
+  .alert.alert-premium hr, .support-app .alert-premium.support-time hr {
     border-top-color: #42a65c; }
-  .alert-premium .alert-link {
+  .alert.alert-premium .alert-link, .support-app .alert-premium.support-time .alert-link {
     color: #1a1a1a; }
+
+.alert.alert-plan, .support-app .alert-plan.support-time {
+  font-size: 13px;
+  margin: 0 !important;
+  padding: 8px;
+  color: #020621; }
+  .alert.alert-plan.plan-active, .support-app .alert-plan.plan-active.support-time {
+    border-color: #d6e9c6;
+    background-color: #dff0d8; }
+  .alert.alert-plan.plan-suspended, .support-app .alert-plan.plan-suspended.support-time {
+    background-color: #fcf8e3;
+    border-color: #faebcc; }
 
 .label {
   font-size: 12px; }
@@ -11711,6 +11723,10 @@ li.dropdown-header {
     .grid-list .panel .product-pricing span, .grid-list .select-subcompany-modal .list-group .product-pricing span, .select-subcompany-modal .grid-list .list-group .product-pricing span, .grid-list .panel-editable .product-pricing span, .grid-list .card .product-pricing span, .grid-list #appLauncherContainer .scrollable-list .product-pricing span, #appLauncherContainer .grid-list .scrollable-list .product-pricing span {
       color: #3C7BDA;
       font-weight: bold; }
+    .grid-list .panel .product-pricing h1, .grid-list .select-subcompany-modal .list-group .product-pricing h1, .select-subcompany-modal .grid-list .list-group .product-pricing h1, .grid-list .panel-editable .product-pricing h1, .grid-list .card .product-pricing h1, .grid-list #appLauncherContainer .scrollable-list .product-pricing h1, #appLauncherContainer .grid-list .scrollable-list .product-pricing h1 {
+      color: #4ab767;
+      font-size: 44px;
+      margin-bottom: 0; }
   .grid-list .panel .info, .grid-list .select-subcompany-modal .list-group .info, .select-subcompany-modal .grid-list .list-group .info, .grid-list .panel-editable .info, .grid-list .card .info, .grid-list #appLauncherContainer .scrollable-list .info, #appLauncherContainer .grid-list .scrollable-list .info {
     position: absolute;
     top: 0;

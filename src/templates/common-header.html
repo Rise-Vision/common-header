@@ -1,3 +1,22 @@
+<div>
+	<!-- PROTOTYPE Plan Status: Free -->
+	<div class="alert alert-plan plan-active text-right">
+	    <div class="container">Plan Tier: <strong>Free</strong>  <a href="#" ng-click="plansPopup()" class="u_margin-left">Change Plan</a></div>
+	</div>
+	<!-- PROTOTYPE Plan Status: Basic -->
+	<div class="alert alert-plan plan-active text-right" style="display:none">
+	    <div class="container">Plan Tier: <strong>Basic</strong>  <a href="#" ng-click="plansPopup()" class="u_margin-left">Change Plan</a></div>
+	</div>
+	<!-- PROTOTYPE Plan Status: Advanced -->
+	<div class="alert alert-plan plan-active text-right" style="display:none">
+	    <div class="container">Plan Tier: <strong>Advanced</strong>  <a href="#" ng-click="plansPopup()" class="u_margin-left">Change Plan</a></div>
+	</div>
+	<!-- PROTOTYPE Plan Status: Suspended (Basic) -->
+	<div class="alert alert-plan plan-suspended text-center" style="display:none">
+	    <div class="container">There was an issue with your Plan. Please update your account information. (Your Displays are not affected) <a href="https://store.risevision.com/account/" target="_blank" class="u_margin-left">Update Billing</a></div>
+	</div>
+</div>
+
 <!-- Common Header Navbar -->
 <nav class="navbar navbar-default navbar-static-top hidden-print"
 	ng-class="{'active-banner': isSubcompanySelected() || isTestCompanySelected()}" role="navigation">
@@ -14,6 +33,12 @@
 			<!-- If User Authenticated -->
 			<!-- Action Nav -->
 			<ul class="nav navbar-nav navbar-right actions-nav pull-right">
+				<!-- Help Dropdown -->
+				<ng-include
+					replace-include
+					ng-controller="HelpDropdownButtonCtrl"
+					src="'help-dropdown.html'"
+				></ng-include>
 				<!-- END Help Dropdown -->
 				<!-- Notifications -->
 				<ng-include
@@ -36,11 +61,11 @@
 					src="'close-frame-button.html'"
 				></ng-include>
 				<!-- Current App -->
-				<!-- <ng-include
+				<ng-include
 					ng-if="!inRVAFrame"
 					replace-include
 					src="'app-nav-buttons.html'"
-				></ng-include> -->
+				></ng-include>
 				<!-- END Current App -->
 				<!-- Auth -->
 				<ng-include
@@ -49,16 +74,6 @@
 				  ng-controller="AuthButtonsCtr"
 					src="'auth-buttons.html'"
 				></ng-include>
-				<!-- Help Dropdown -->
-				<ng-include
-					replace-include
-					ng-controller="HelpDropdownButtonCtrl"
-					src="'help-dropdown.html'"
-				></ng-include>
-				<!-- Notifications -->
-				<li dropdown class="dropdown hidden-xs">
-				  <button id="notificationsButton" dropdown-toggle class="dropdown-toggle btn btn-white"><i class="fa fa-bell"></i></button>
-				</li>
 				<li ng-if="inRVAFrame"
 				  ng-controller="AuthButtonsCtr"></li>
 			</ul>
@@ -95,14 +110,6 @@
 
 <div ng-show="cookieEnabled === false" class="bg-warning text-center u_padding-sm">
     <small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small>
-</div>
-
-<div id="bannerExpired" style="display:none" class="bg-warning text-center u_padding-sm">
-    <small><strong>14 days left in your Rise Vision trial! </strong> <a href="#">Subscribe Now</a></small>
-</div>
-
-<div id="bannerSuspended" style="display:none" class="bg-warning text-center u_padding-sm">
-    <small><strong>Your Basic Plan has expired.</strong> <a href="#">Subscribe Now</a></small>
 </div>
 
 <ng-include

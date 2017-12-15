@@ -26,5 +26,6 @@ angular.module("risevision.common.header")
     $scope.getSupport = function () {
       supportFactory.handleGetSupportAction();
     };
+
   }
 ]);

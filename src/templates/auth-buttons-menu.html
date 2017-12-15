@@ -4,6 +4,13 @@
 ></company-buttons>
 
 <ul>
+  <!-- PROTOTYPE -->
+  <li ng-show="isRiseVisionUser">
+    <a href="" ng-click="alertSettings()" class="alert-settings-button action">
+      <i class="fa fa-dashboard"></i>
+      <span class="item-name">Change Plan</span>
+    </a>
+  </li>
   <li ng-show="isRiseVisionUser">
     <a href="" ng-click="alertSettings()" class="alert-settings-button action">
       <i class="fa fa-bullhorn"></i>

@@ -150,34 +150,6 @@ angular.module("risevision.common.header")
         });
       };
 
-      // Show User Plans Modal PROTOTYPE
-      $scope.plansPopup = function () {
-        // var modalInstance =
-        $modal.open({
-          template: $templateCache.get("plans-modal.html"),
-          controller: "UserSettingsModalCtrl",
-          size: "lg",
-          resolve: {
-            username: function () {
-              return userState.getUsername();
-            },
-            add: function () {
-              return false;
-            }
-          }
-        });
-      };
-
-      // PROTOTYPE
-      $scope.downgradePlanFunc = function () {
-        // var modalInstance =
-        $modal.open({
-          template: $templateCache.get("plans-downgrade-modal.html"),
-          controller: "UserSettingsModalCtrl",
-          size: "sm"
-        });
-      };
-
       $loading.startGlobal("auth-buttons-silent");
       oauth2APILoader() //force loading oauth api on startup
       //to avoid popup blocker
