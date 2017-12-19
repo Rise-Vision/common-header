@@ -12,6 +12,5 @@ angular.module("risevision.common.header")
       $modalInstance.dismiss();
     };
 
-
   }
 ]);

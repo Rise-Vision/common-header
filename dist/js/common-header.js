@@ -1800,7 +1800,6 @@ angular.module("risevision.common.header")
     $scope.getSupport = function () {
       supportFactory.handleGetSupportAction();
     };
-
   }
 ]);
 
@@ -1817,7 +1816,6 @@ angular.module("risevision.common.header")
     $scope.dismiss = function () {
       $modalInstance.dismiss();
     };
-
 
   }
 ]);
