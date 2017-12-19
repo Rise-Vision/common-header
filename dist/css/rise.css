@@ -14060,8 +14060,8 @@ tr.blocked-file {
       position: relative;
       z-index: 80;
       top: 133px;
-      height: calc(100vh - 225px);
-      width: 100%; }
+      width: 100%;
+      height: calc(100vh - 225px); }
       .workspace .workspace-sidebar .scrollable-list {
         max-height: calc(100vh - 420px); } }
   .workspace .workspace-sidebar .workspace-sidebar-content {
@@ -14181,6 +14181,17 @@ tr.blocked-file {
     max-height: calc(100vh - 490px); }
   .workspace.active-banner-mode.active-banner-mode-double .workspace-sidebar .ph-list .editor-playlist {
     max-height: calc(100vh - 290px); }
+
+.workspace.active-banner-mode.active-onboard-mode .workspace-board {
+  height: calc(100vh - 260px); }
+
+.workspace.active-banner-mode.active-onboard-mode .workspace-sidebar {
+  height: calc(100vh - 305px); }
+  .workspace.active-banner-mode.active-onboard-mode .workspace-sidebar .ph-list .editor-playlist {
+    height: calc(100vh - 210px);
+    max-height: calc(100vh - 360px); }
+  .workspace.active-banner-mode.active-onboard-mode .workspace-sidebar .ph-properties .scrollable-list {
+    max-height: calc(100vh - 480px); }
 
 /* Deprecate Below
  +   ========================================================================== 

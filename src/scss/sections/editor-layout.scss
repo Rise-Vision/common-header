@@ -25,8 +25,9 @@
             position: relative;
             z-index: 80;
             top: 133px;
-            height: calc(100vh - 225px);
+
             width: 100%;
+            height: calc(100vh - 225px);
             .scrollable-list
             {
                 max-height: calc(100vh - 420px);
@@ -56,7 +57,7 @@
             {
                 height: calc(100vh - 210px);
                 max-height: calc(100vh - 240px);
-                 @media (max-width: $screen-md)
+                @media (max-width: $screen-md)
                 {
                     max-height: calc(100vh - 265px);
                     margin-right: 0;
@@ -91,14 +92,14 @@
             {
                 max-height: calc(100vh - 240px);
             }
-             @media (max-width: $screen-md)
+            @media (max-width: $screen-md)
             {
                 .scrollable-list
                 {
                     max-height: calc(100vh - 380px);
                 }
             }
-             @media (max-width: $screen-sm)
+            @media (max-width: $screen-sm)
             {
                 .scrollable-list
                 {
@@ -148,16 +149,19 @@
 // END Workspace
 
 // START PH Playlist
-  .ph-playlist {
-   margin-top: 10px;
-   .editor-playlist {
-     height: calc(100vh - 360px);
-     max-height: calc(100vh - 250px);
-     .editor-playlist-item {
-       padding: 3px !important;
-     }
-   }
- }
+.ph-playlist
+{
+    margin-top: 10px;
+    .editor-playlist
+    {
+        height: calc(100vh - 360px);
+        max-height: calc(100vh - 250px);
+        .editor-playlist-item
+        {
+            padding: 3px !important;
+        }
+    }
+}
 // END PH Playlist
 
 
@@ -170,14 +174,14 @@
     {
         height: calc(100vh - 240px);
     }
-     @media (max-width: $screen-md)
-        {
-            height: calc(100vh - 255px);
-        }
-     @media (max-width: $screen-sm)
-        {
-            height: calc(100vh - 225px);
-        }
+    @media (max-width: $screen-md)
+    {
+        height: calc(100vh - 255px);
+    }
+    @media (max-width: $screen-sm)
+    {
+        height: calc(100vh - 225px);
+    }
 
 
     .workspace-sidebar
@@ -194,16 +198,17 @@
                 max-height: calc(100vh - 470px);
             }
         }
-         .ph-list
+        .ph-list
         {
             .editor-playlist
             {
                 height: calc(100vh - 210px);
-                max-height: calc(100vh - 340px); 
+                max-height: calc(100vh - 340px);
 
-                 @media (max-width: $screen-md) {
+                @media (max-width: $screen-md)
+                {
                     max-height: calc(100vh - 355px);
-                 }
+                }
             }
         }
     }
@@ -216,27 +221,27 @@
     {
         height: calc(100vh - 160px);
     }
-    .workspace-sidebar {
-
+    .workspace-sidebar
+    {
         .ph-list
         {
             .editor-playlist
             {
                 height: calc(100vh - 210px);
-                max-height: calc(100vh - 260px); 
+                max-height: calc(100vh - 260px);
 
                 @media (max-width: $screen-sm)
-                    {
-                        max-height: calc(100vh - 360px);
-                    }
+                {
+                    max-height: calc(100vh - 360px);
+                }
             }
         }
-         @media (max-width: $screen-sm)
+        @media (max-width: $screen-sm)
         {
             height: calc(100vh - 245px);
         }
 
-         .ph-properties
+        .ph-properties
         {
             .scrollable-list
             {
@@ -247,15 +252,15 @@
 }
 
 // ACTIVE DOUBLE BANNER
-.workspace {
-&.active-banner-mode.active-banner-mode-double
+.workspace.active-banner-mode.active-banner-mode-double
+{
+    .workspace-board
     {
-        .workspace-board
-        {
-            height: calc(100vh - 180px);
-        }
-    
-    & .workspace-sidebar {
+        height: calc(100vh - 180px);
+    }
+
+    & .workspace-sidebar
+    {
         height: calc(100vh - 190px);
         .ph-properties
         {
@@ -265,16 +270,41 @@
             }
         }
 
-         .ph-list
+        .ph-list
         {
             .editor-playlist
             {
-                max-height: calc(100vh - 290px); }
+                max-height: calc(100vh - 290px);
+            }
         }
     }
 }
-}
 
+
+// ACTIVE ONBOARDING && BANNER
+.workspace.active-banner-mode.active-onboard-mode
+{
+    & .workspace-board
+    {
+        height: calc(100vh - 260px);
+    }
+
+    & .workspace-sidebar
+    {
+        height: calc(100vh - 305px);
+
+        .ph-list .editor-playlist
+        {
+            height: calc(100vh - 210px);
+            max-height: calc(100vh - 360px);
+        }
+
+        .ph-properties .scrollable-list
+        {
+            max-height: calc(100vh - 480px);
+        }
+    }
+}
 
 
 // END States
