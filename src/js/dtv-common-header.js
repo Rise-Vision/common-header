@@ -119,7 +119,7 @@ angular.module("risevision.common.header", [
         $scope.plansPopup = function () {
           // var modalInstance =
           $modal.open({
-            template: $templateCache.get("plans-modal-2.html"),
+            template: $templateCache.get("plans-modal.html"),
             controller: "UserSettingsModalCtrl",
             size: "lg",
             resolve: {
