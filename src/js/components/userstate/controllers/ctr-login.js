@@ -28,6 +28,7 @@ angular.module("risevision.common.components.userstate")
 
       $scope.customLogin = function (endStatus) {
         $scope.errors = {};
+        $scope.messages = {};
 
         if ($scope.forms.loginForm.$valid) {
           $loading.startGlobal("auth-buttons-login");
@@ -36,8 +37,13 @@ angular.module("risevision.common.components.userstate")
             .then(function () {
               urlStateService.redirectToState($stateParams.state);
             })
-            .then(null, function () {
-              $scope.errors.loginError = true;
+            .catch(function (err) {
+              if (err.status === 400) {
+                $scope.messages.isGoogleAccount = true;
+              } else { // No special case for 404, for security reasons
+                console.error(err);
+                $scope.errors.loginError = true;
+              }
             })
             .finally(function () {
               $loading.stopGlobal("auth-buttons-login");
@@ -52,6 +58,7 @@ angular.module("risevision.common.components.userstate")
 
       $scope.createAccount = function (endStatus) {
         $scope.errors = {};
+        $scope.messages = {};
 
         if ($scope.forms.loginForm.$valid && $scope.isPasswordValid()) {
           $loading.startGlobal("auth-buttons-login");
