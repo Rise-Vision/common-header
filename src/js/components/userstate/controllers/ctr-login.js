@@ -32,12 +32,11 @@ angular.module("risevision.common.components.userstate")
 
         if ($scope.forms.loginForm.$valid) {
           $loading.startGlobal("auth-buttons-login");
-
           userAuthFactory.authenticate(true, $scope.credentials)
             .then(function () {
               urlStateService.redirectToState($stateParams.state);
             })
-            .then(null, function (err) {
+            .catch(function (err) {
               if (err.status === 400) {
                 $scope.messages.isGoogleAccount = true;
               } else { // No special case for 404, for security reasons
