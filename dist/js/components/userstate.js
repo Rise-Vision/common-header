@@ -1915,7 +1915,7 @@ angular.module("risevision.common.components.userstate")
             .then(function () {
               urlStateService.redirectToState($stateParams.state);
             })
-            .catch(function (err) {
+            .then(null, function (err) {
               if (err.status === 400) {
                 $scope.messages.isGoogleAccount = true;
               } else { // No special case for 404, for security reasons
