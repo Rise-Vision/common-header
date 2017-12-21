@@ -7586,6 +7586,8 @@ angular.module("risevision.common.components.userstate")
             .catch(function (err) {
               if (err.status === 400) {
                 $scope.messages.isGoogleAccount = true;
+              } else if (err.status === 409) {
+                $scope.errors.unconfirmedError = true;
               } else { // No special case for 404, for security reasons
                 console.error(err);
                 $scope.errors.loginError = true;
