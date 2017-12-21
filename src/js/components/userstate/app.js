@@ -107,6 +107,17 @@
         url: "/confirmaccount/:user/:token"
       })
 
+      .state("common.auth.requestconfirmationemail", {
+        templateProvider: ["$templateCache",
+          function ($templateCache) {
+            return $templateCache.get(
+              "userstate/request-confirmation-email.html");
+          }
+        ],
+        url: "/requestconfirmationemail",
+        controller: "RequestConfirmationEmailCtrl"
+      })
+
       .state("common.auth.requestpasswordreset", {
         templateProvider: ["$templateCache",
           function ($templateCache) {

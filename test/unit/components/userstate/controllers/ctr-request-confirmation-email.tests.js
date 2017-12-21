@@ -1,5 +1,5 @@
 "use strict";
-describe("controller: Request Password Reset", function() {
+describe("controller: Request Confirmation Email", function() {
   beforeEach(module("risevision.common.components.userstate"));
   beforeEach(module(function ($provide) {
     $provide.service("$loading",function() {
@@ -28,7 +28,7 @@ describe("controller: Request Password Reset", function() {
       $log = $injector.get("$log");
       userauth = $injector.get("userauth");
 
-      $controller("RequestPasswordResetCtrl", {
+      $controller("RequestConfirmationEmailCtrl", {
         $scope: $scope,
         $log: $log,
         userauth: userauth
@@ -47,15 +47,16 @@ describe("controller: Request Password Reset", function() {
     expect($scope).to.be.ok;
   });
 
-  describe("requestPasswordReset: ", function() {
+  describe("requestConfirmationEmail: ", function() {
     it("should show email sent message on success", function(done) {
-      sandbox.stub(userauth, "requestPasswordReset").returns(Q.resolve());
-      $scope.requestPasswordReset();
+      sandbox.stub(userauth, "requestConfirmationEmail").returns(Q.resolve());
+      $scope.requestConfirmationEmail();
 
       setTimeout(function() {
-        expect(userauth.requestPasswordReset).to.have.been.calledWith("username");
+        expect(userauth.requestConfirmationEmail).to.have.been.calledWith("username");
         expect($scope.emailSent).to.be.true;
         expect($scope.isGoogleAccount).to.be.false;
+        expect($scope.emailAlreadyConfirmed).to.be.false;
         expect($loading.startGlobal).to.have.been.called;
         expect($loading.stopGlobal).to.have.been.called;
         expect($log.log).to.have.been.called;
@@ -64,13 +65,14 @@ describe("controller: Request Password Reset", function() {
     });
 
     it("should show email sent message on user not found", function(done) {
-      sandbox.stub(userauth, "requestPasswordReset").returns(Q.reject({ status: 404 }));
-      $scope.requestPasswordReset();
+      sandbox.stub(userauth, "requestConfirmationEmail").returns(Q.reject({ status: 404 }));
+      $scope.requestConfirmationEmail();
 
       setTimeout(function() {
-        expect(userauth.requestPasswordReset).to.have.been.calledWith("username");
+        expect(userauth.requestConfirmationEmail).to.have.been.calledWith("username");
         expect($scope.emailSent).to.be.true;
         expect($scope.isGoogleAccount).to.be.false;
+        expect($scope.emailAlreadyConfirmed).to.be.false;
         expect($loading.startGlobal).to.have.been.called;
         expect($loading.stopGlobal).to.have.been.called;
         expect($log.log).to.not.have.been.called;
@@ -79,13 +81,14 @@ describe("controller: Request Password Reset", function() {
     });
 
     it("should show email sent message on error", function(done) {
-      sandbox.stub(userauth, "requestPasswordReset").returns(Q.reject({ status: 500 }));
-      $scope.requestPasswordReset();
+      sandbox.stub(userauth, "requestConfirmationEmail").returns(Q.reject({ status: 500 }));
+      $scope.requestConfirmationEmail();
 
       setTimeout(function() {
-        expect(userauth.requestPasswordReset).to.have.been.calledWith("username");
+        expect(userauth.requestConfirmationEmail).to.have.been.calledWith("username");
         expect($scope.emailSent).to.be.true;
         expect($scope.isGoogleAccount).to.be.false;
+        expect($scope.emailAlreadyConfirmed).to.be.false;
         expect($loading.startGlobal).to.have.been.called;
         expect($loading.stopGlobal).to.have.been.called;
         expect($log.log).to.not.have.been.called;
@@ -94,13 +97,30 @@ describe("controller: Request Password Reset", function() {
     });
 
     it("should not show email sent message when Google Account", function(done) {
-      sandbox.stub(userauth, "requestPasswordReset").returns(Q.reject({ status: 400 }));
-      $scope.requestPasswordReset();
+      sandbox.stub(userauth, "requestConfirmationEmail").returns(Q.reject({ status: 400 }));
+      $scope.requestConfirmationEmail();
 
       setTimeout(function() {
-        expect(userauth.requestPasswordReset).to.have.been.calledWith("username");
+        expect(userauth.requestConfirmationEmail).to.have.been.calledWith("username");
         expect($scope.emailSent).to.be.false;
         expect($scope.isGoogleAccount).to.be.true;
+        expect($scope.emailAlreadyConfirmed).to.be.false;
+        expect($loading.startGlobal).to.have.been.called;
+        expect($loading.stopGlobal).to.have.been.called;
+        expect($log.log).to.have.been.called;
+        done();
+      }, 0);
+    });
+
+    it("should not show email sent message when already confirmed", function(done) {
+      sandbox.stub(userauth, "requestConfirmationEmail").returns(Q.reject({ status: 409 }));
+      $scope.requestConfirmationEmail();
+
+      setTimeout(function() {
+        expect(userauth.requestConfirmationEmail).to.have.been.calledWith("username");
+        expect($scope.emailSent).to.be.false;
+        expect($scope.isGoogleAccount).to.be.false;
+        expect($scope.emailAlreadyConfirmed).to.be.true;
         expect($loading.startGlobal).to.have.been.called;
         expect($loading.stopGlobal).to.have.been.called;
         expect($log.log).to.have.been.called;
