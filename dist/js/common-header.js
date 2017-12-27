@@ -7646,7 +7646,6 @@ angular.module("risevision.common.components.userstate")
     function ($scope, $loading, $log, userauth) {
       $scope.forms = {};
       $scope.credentials = {};
-      $scope.errors = {};
       $scope.emailSent = false;
       $scope.isGoogleAccount = false;
       $scope.emailAlreadyConfirmed = false;
