@@ -7804,17 +7804,17 @@ ul.social {
       background-image: url("http://s3.amazonaws.com/Rise-Images/Icons/widget-icon-storage-2x.png");
       -webkit-background-size: 30px 30px; } }
 
-/*BETA TESTER*/
-.beta-tester {
+/*ENV NAME*/
+.env-name {
   text-align: center;
   font-weight: 500; }
 
-.beta-tester-label {
+.env-name-label {
   background-color: #222;
   padding: 5px;
   color: #FFF; }
 
-.beta-tester-nav-item .beta-tester-label {
+.env-name-nav-item .env-name-label {
   border-radius: 5px;
   display: block;
   padding: 5px 10px;
