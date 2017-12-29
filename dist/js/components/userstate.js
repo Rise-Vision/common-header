@@ -1031,7 +1031,7 @@ angular.module("risevision.common.components.logging")
 
         var _state = userState._state;
 
-        var _authorizeDeferred, _authenticateDeferred;
+        var _authenticateDeferred;
 
         var _shouldLogPageLoad = true;
 
@@ -1073,8 +1073,6 @@ angular.module("risevision.common.components.logging")
             //token change indicates that user either signed in, or signed out, or changed account in other app
             $window.location.reload();
           } else if (_state.userToken) {
-            _authenticateDeferred = null;
-
             //make sure user is not signed out of Google account outside of the CH enabled apps
             authenticate(false).finally(function () {
               if (!_state.userToken) {
@@ -1137,14 +1135,10 @@ angular.module("risevision.common.components.logging")
         var _authorize = function (authenticatedUser) {
           var attemptImmediate = false;
 
-          if (_authorizeDeferred) {
-            return _authorizeDeferred.promise;
-          }
-
           if (authenticatedUser) {
             if (!_state.user.username || !_state.profile.username ||
               _state.user.username !== authenticatedUser.email) {
-              _authorizeDeferred = $q.defer();
+              var deferred = $q.defer();
 
               //populate user
               objectHelper.clearAndCopy({
@@ -1158,15 +1152,13 @@ angular.module("risevision.common.components.logging")
               userState.refreshProfile()
                 .then(null, function (err) {
                   if (err && err.code !== 403) {
-                    _authorizeDeferred.reject("Refresh Profile Error");
-
-                    _authorizeDeferred = undefined;
+                    deferred.reject("Refresh Profile Error");
 
                     return $q.reject();
                   }
                 })
                 .then(function () {
-                  _authorizeDeferred.resolve();
+                  deferred.resolve();
 
                   $rootScope.$broadcast("risevision.user.authorized");
 
@@ -1174,11 +1166,9 @@ angular.module("risevision.common.components.logging")
                     $rootScope.$broadcast(
                       "risevision.user.userSignedIn");
                   }
-
-                  _authorizeDeferred = undefined;
                 });
 
-              return _authorizeDeferred.promise;
+              return deferred.promise;
             } else {
               return $q.resolve();
             }
@@ -1244,6 +1234,8 @@ angular.module("risevision.common.components.logging")
                   authenticateDeferred.reject(err);
                 })
                 .finally(function () {
+                  _authenticateDeferred = null;
+
                   $loading.stopGlobal("risevision.user.authenticate");
 
                   _logPageLoad("authenticated user");
@@ -1255,6 +1247,8 @@ angular.module("risevision.common.components.logging")
               _resetUserState();
 
               authenticateDeferred.reject(msg);
+
+              _authenticateDeferred = null;
 
               $loading.stopGlobal("risevision.user.authenticate");
 
