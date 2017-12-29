@@ -7804,6 +7804,32 @@ ul.social {
       background-image: url("http://s3.amazonaws.com/Rise-Images/Icons/widget-icon-storage-2x.png");
       -webkit-background-size: 30px 30px; } }
 
+/*BETA TESTER*/
+.beta-tester {
+  text-align: center;
+  font-weight: 500; }
+
+.beta-tester-label {
+  background-color: #222;
+  padding: 5px;
+  color: #FFF; }
+  .beta-tester-label a {
+    margin-left: 5px; }
+
+/* ==========================================================================
+   Small devices (tablets, 768px and up)
+   ========================================================================== */
+@media (min-width: 768px) {
+  .beta-tester {
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    margin-left: -110px;
+    z-index: 400; }
+  .beta-tester-label {
+    border-radius: 0 0 5px 5px;
+    width: 220px; } }
+
 /* STANDARD UTILITIES 
 All utilities have a prefix u_ added to them
 */
@@ -10598,24 +10624,26 @@ a[data-wysihtml5-command=underline].active {
 .navbar .navbar-brand .fa {
   padding: 8px; }
 
-.navbar-default li.user-profile-dropdown {
-  padding: 0;
-  text-align: right; }
-  .navbar-default li.user-profile-dropdown > a {
-    padding: 8px;
-    margin-top: 0; }
-  .navbar-default li.user-profile-dropdown .user-id span {
-    display: block;
-    font-size: 13px;
-    line-height: 18px; }
-  .navbar-default li.user-profile-dropdown .user-id .username {
-    line-height: 16px; }
-  .navbar-default li.user-profile-dropdown .profile-pic {
-    margin-left: 8px;
-    margin-top: 4px;
-    border-radius: 4px; }
-    .navbar-default li.user-profile-dropdown .profile-pic img {
-      height: 100%; }
+.navbar-default {
+  height: 55px; }
+  .navbar-default li.user-profile-dropdown {
+    padding: 0;
+    text-align: right; }
+    .navbar-default li.user-profile-dropdown > a {
+      padding: 8px;
+      margin-top: 0; }
+    .navbar-default li.user-profile-dropdown .user-id span {
+      display: block;
+      font-size: 13px;
+      line-height: 18px; }
+    .navbar-default li.user-profile-dropdown .user-id .username {
+      line-height: 16px; }
+    .navbar-default li.user-profile-dropdown .profile-pic {
+      margin-left: 8px;
+      margin-top: 4px;
+      border-radius: 4px; }
+      .navbar-default li.user-profile-dropdown .profile-pic img {
+        height: 100%; }
 
 .app-navigation ul > li > a {
   display: block; }
@@ -15926,7 +15954,7 @@ a.mfp-iframe:hover:after {
       font-weight: 800; }
 
 .app-launcher-login {
-  padding-top: 44px;
+  padding-top: 55px;
   background-color: #f2fcf4;
   background-size: cover;
   height: 100vh; }
