@@ -140,7 +140,7 @@ describe("Services: googleAuthFactory", function() {
       setTimeout(function() {
         gapiAuth.authorize.should.have.been.calledWith({
           "client_id":"614513768474.apps.googleusercontent.com",
-          "scope":"https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+          "scope":"https://www.googleapis.com/auth/userinfo.email",
           "cookie_policy":"protocol://domain",
           "authuser":"username@test.com",
           "immediate":true
@@ -157,7 +157,7 @@ describe("Services: googleAuthFactory", function() {
       setTimeout(function() {
         gapiAuth.authorize.should.have.been.calledWith({
           "client_id":"614513768474.apps.googleusercontent.com",
-          "scope":"https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+          "scope":"https://www.googleapis.com/auth/userinfo.email",
           "cookie_policy":"protocol://domain",
           "authuser": undefined,
           "immediate":true
@@ -173,7 +173,7 @@ describe("Services: googleAuthFactory", function() {
       setTimeout(function() {
         gapiAuth.authorize.should.have.been.calledWith({
           "client_id":"614513768474.apps.googleusercontent.com",
-          "scope":"https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+          "scope":"https://www.googleapis.com/auth/userinfo.email",
           "cookie_policy":"protocol://domain",
           "authuser":"username@test.com",
           "prompt":"select_account"
@@ -192,7 +192,7 @@ describe("Services: googleAuthFactory", function() {
       setTimeout(function() {
         gapiAuth.authorize.should.have.been.calledWith({
           "client_id":"614513768474.apps.googleusercontent.com",
-          "scope":"https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+          "scope":"https://www.googleapis.com/auth/userinfo.email",
           "cookie_policy":"protocol://domain",
           "authuser":"username@test.com",
           "prompt":"select_account"
@@ -211,7 +211,7 @@ describe("Services: googleAuthFactory", function() {
 
         gapiAuth.authorize.should.have.been.calledWith({
           "client_id":"614513768474.apps.googleusercontent.com",
-          "scope":"https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+          "scope":"https://www.googleapis.com/auth/userinfo.email",
           "cookie_policy":"protocol://domain",
           "authuser":"a@b.ca",
           "immediate":true
@@ -281,7 +281,7 @@ describe("Services: googleAuthFactory", function() {
       setTimeout(function() {
         expect($window.location.href).to.equal("https://accounts.google.com/o/oauth2/auth" +
           "?response_type=token" +
-          "&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile" +
+          "&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email" +
           "&client_id=614513768474.apps.googleusercontent.com" +
           "&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2F" + 
           "&prompt=select_account" +
@@ -300,7 +300,7 @@ describe("Services: googleAuthFactory", function() {
       setTimeout(function() {
         expect($window.location.href).to.equal("https://accounts.google.com/o/oauth2/auth" +
           "?response_type=token" +
-          "&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile" +
+          "&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email" +
           "&client_id=614513768474.apps.googleusercontent.com" +
           "&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Feditor%2Flist%3Fcid%3DcompanyId" + 
           "&prompt=select_account" +

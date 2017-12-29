@@ -7,7 +7,7 @@
   angular.module("risevision.common.components.userstate")
   // constants (you can override them in your app as needed)
   .value("OAUTH2_SCOPES",
-    "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+    "https://www.googleapis.com/auth/userinfo.email"
   )
     .value("GOOGLE_OAUTH2_URL", "https://accounts.google.com/o/oauth2/auth")
     .factory("googleAuthFactory", ["$rootScope", "$q", "$log", "$location",
