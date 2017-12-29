@@ -3278,7 +3278,7 @@ tbody.collapse.in {
     .nav > li > a {
       position: relative;
       display: block;
-      padding: 10px 15px; }
+      padding: 5px 8px; }
       .nav > li > a:hover, .nav > li > a:focus {
         text-decoration: none;
         background-color: #d5d5d5; }
@@ -7813,23 +7813,17 @@ ul.social {
   background-color: #222;
   padding: 5px;
   color: #FFF; }
-  .beta-tester-label a {
-    margin-left: 5px; }
+
+.beta-tester-nav-item .beta-tester-label {
+  border-radius: 5px;
+  display: block;
+  padding: 5px 10px;
+  margin-top: 10px;
+  margin-right: 5px; }
 
 /* ==========================================================================
    Small devices (tablets, 768px and up)
    ========================================================================== */
-@media (min-width: 768px) {
-  .beta-tester {
-    position: absolute;
-    top: 55px;
-    left: 50%;
-    margin-left: -110px;
-    z-index: 400; }
-  .beta-tester-label {
-    border-radius: 0 0 5px 5px;
-    width: 220px; } }
-
 /* STANDARD UTILITIES 
 All utilities have a prefix u_ added to them
 */
@@ -10611,9 +10605,12 @@ a[data-wysihtml5-command=underline].active {
 .underline, a[data-wysihtml5-command=underline].btn {
   text-decoration: underline; }
 
-.navbar .navbar-nav > li > a.btn, .navbar .navbar-nav > li > a.company-buttons-icon-mobile {
-  margin-top: 8px;
-  margin-bottom: 0; }
+.navbar .navbar-nav > li > a {
+  padding: 5px 10px;
+  margin-top: 10px; }
+  .navbar .navbar-nav > li > a.btn, .navbar .navbar-nav > li > a.company-buttons-icon-mobile {
+    margin-top: 8px;
+    margin-bottom: 0; }
 
 .navbar .navbar-nav > li > a.btn-link:hover, .navbar .navbar-nav > li > a.btn-link:focus, .navbar .navbar-nav > li > a.btn-link:active,
 .navbar .navbar-nav > li > button.btn-link:hover,
@@ -10624,26 +10621,24 @@ a[data-wysihtml5-command=underline].active {
 .navbar .navbar-brand .fa {
   padding: 8px; }
 
-.navbar-default {
-  height: 55px; }
-  .navbar-default li.user-profile-dropdown {
-    padding: 0;
-    text-align: right; }
-    .navbar-default li.user-profile-dropdown > a {
-      padding: 8px;
-      margin-top: 0; }
-    .navbar-default li.user-profile-dropdown .user-id span {
-      display: block;
-      font-size: 13px;
-      line-height: 18px; }
-    .navbar-default li.user-profile-dropdown .user-id .username {
-      line-height: 16px; }
-    .navbar-default li.user-profile-dropdown .profile-pic {
-      margin-left: 8px;
-      margin-top: 4px;
-      border-radius: 4px; }
-      .navbar-default li.user-profile-dropdown .profile-pic img {
-        height: 100%; }
+.navbar-default li.user-profile-dropdown {
+  padding: 0;
+  text-align: right; }
+  .navbar-default li.user-profile-dropdown > a {
+    padding: 8px;
+    margin-top: 0; }
+  .navbar-default li.user-profile-dropdown .user-id span {
+    display: block;
+    font-size: 13px;
+    line-height: 18px; }
+  .navbar-default li.user-profile-dropdown .user-id .username {
+    line-height: 16px; }
+  .navbar-default li.user-profile-dropdown .profile-pic {
+    margin-left: 8px;
+    margin-top: 4px;
+    border-radius: 4px; }
+    .navbar-default li.user-profile-dropdown .profile-pic img {
+      height: 100%; }
 
 .app-navigation ul > li > a {
   display: block; }
