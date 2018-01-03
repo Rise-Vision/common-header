@@ -1,3 +1,14 @@
+/*doc
+---
+title: Alerts
+name: alert
+category: Base CSS
+---
+```html_example
+    <div class='alert alert-success'>Hello</div>
+```
+*/
+
 .alert-premium {
   @include alert-variant($alert-premium-bg, $alert-premium-border, $alert-premium-text);
 }
