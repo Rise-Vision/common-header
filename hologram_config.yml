@@ -10,18 +10,19 @@ documentation_assets: bower_components/hologram-github-theme
 # Category that will be used as the index.html (optional)
 index: styleguide
 
-# A list of relative paths to folders containing any dependencies to copy
+# A list of relative paths to folders containing any dependencies to copy ie. assets, icons
 dependencies:
-  - './dist'
+  - './dist/fonts'
+  - './dist/css'
 
-# The CSS files to be included in the styleguide
+# The CSS file links to be included in the styleguide
 css_include:
-  - 'dist/css/rise.min.css'
-  - 'dist/css/alignment.min.css'
+  - 'css/rise.min.css'
+  - 'css/alignment.min.css'
 
 # The JavaScript files to included in the styleguide
 js_include:
-  - 'dist/js/common-header.min.js'
+  # - 'dist/js/common-header.min.js'
 
 # The global title that is displayed at the top of the pages
 global_title: Rise Vision Style Guide
