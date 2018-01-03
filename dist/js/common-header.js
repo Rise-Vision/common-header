@@ -78,7 +78,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('common-header.html',
-    '<nav class="navbar navbar-default navbar-static-top hidden-print" ng-class="{\'active-banner\': isSubcompanySelected() || isTestCompanySelected()}" role="navigation"><div class="container"><div class="navbar-header" style="width: 100%;"><a class="navbar-brand visible-md visible-lg" href="http://www.risevision.com/" target="{{newTabHome ? \'_blank\' : \'_self\'}}" ng-if="!inRVAFrame"><img src="//s3.amazonaws.com/Rise-Images/UI/logo.svg" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></a> <a class="navbar-brand hidden-md hidden-lg text-center" href="" off-canvas-toggle=""><i class="fa fa-bars"></i></a><ul class="nav navbar-nav navbar-right actions-nav pull-right"><ng-include replace-include="" ng-controller="HelpDropdownButtonCtrl" src="\'help-dropdown.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="SystemMessagesButtonCtrl" src="\'system-messages-button.html\'"></ng-include><ng-include replace-include="" ng-controller="ShoppingCartButtonCtrl" src="\'shoppingcart-button.html\'"></ng-include><ng-include replace-include="" ng-if="inRVAFrame" ng-controller="CloseFrameButtonCtrl" src="\'close-frame-button.html\'"></ng-include><ng-include ng-if="!inRVAFrame" replace-include="" src="\'app-nav-buttons.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="AuthButtonsCtr" src="\'auth-buttons.html\'"></ng-include><li ng-if="inRVAFrame" ng-controller="AuthButtonsCtr"></li></ul><div class="navbar-collapse navbar-left hidden-xs hidden-sm"><ul class="nav navbar-nav"><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a></li><li ng-if="!inRVAFrame && !hideHelpMenu"><a href="http://www.risevision.com/help/" target="_blank">Help</a></li></ul></div></div><ng-include replace-include="" ng-controller="TestCompanyBannerCtrl" src="\'test-company-banner.html\'"></ng-include><ng-include replace-include="" ng-controller="SubcompanyBannerCtrl" src="\'subcompany-banner.html\'"></ng-include></div></nav><div ng-show="cookieEnabled === false" class="bg-warning text-center u_padding-sm"><small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small></div><ng-include replace-include="" ng-controller="GlobalAlertsCtrl" src="\'global-alerts.html\'"></ng-include><nav class="off-canvas-nav" off-canvas-nav=""><ul class="nav nav-pills nav-stacked"><li off-canvas-toggle=""><i class="fa fa-times fa-2x pull-right"></i> <img src="//s3.amazonaws.com/rise-common/images/logo-small.png" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}">{{opt.title}}</a></li><li ng-if="!hideHelpMenu"><a target="_blank" href="http://www.risevision.com/help">Help</a></li></ul></nav><iframe name="logoutFrame" id="logoutFrame" style="display:none"></iframe>');
+    '<nav class="navbar navbar-default navbar-static-top hidden-print" ng-class="{\'active-banner\': isSubcompanySelected() || isTestCompanySelected()}" role="navigation"><div class="container-fluid"><div class="navbar-header" style="width: 100%;"><a class="navbar-brand visible-md visible-lg" href="http://www.risevision.com/" target="{{newTabHome ? \'_blank\' : \'_self\'}}" ng-if="!inRVAFrame"><img src="//s3.amazonaws.com/Rise-Images/UI/logo.svg" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></a> <a class="navbar-brand hidden-md hidden-lg text-center" href="" off-canvas-toggle=""><i class="fa fa-bars"></i></a><ul class="nav navbar-nav navbar-right actions-nav pull-right"><ng-include replace-include="" ng-controller="HelpDropdownButtonCtrl" src="\'help-dropdown.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="SystemMessagesButtonCtrl" src="\'system-messages-button.html\'"></ng-include><ng-include replace-include="" ng-controller="ShoppingCartButtonCtrl" src="\'shoppingcart-button.html\'"></ng-include><ng-include replace-include="" ng-if="inRVAFrame" ng-controller="CloseFrameButtonCtrl" src="\'close-frame-button.html\'"></ng-include><ng-include ng-if="!inRVAFrame" replace-include="" src="\'app-nav-buttons.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="AuthButtonsCtr" src="\'auth-buttons.html\'"></ng-include><li ng-if="inRVAFrame" ng-controller="AuthButtonsCtr"></li></ul><div class="navbar-collapse navbar-left hidden-xs hidden-sm"><ul class="nav navbar-nav"><li class="env-name-nav-item visible-md visible-lg" ng-if="ENV_NAME"><span class="env-name-label">{{ENV_NAME}}</span></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a></li><li ng-if="!inRVAFrame && !hideHelpMenu"><a href="http://www.risevision.com/help/" target="_blank">Help</a></li></ul></div><div class="navbar-left visible-xs visible-sm" ng-if="ENV_NAME"><ul class="nav navbar-nav"><li class="env-name-nav-item"><span class="env-name-label">{{ENV_NAME}}</span></li></ul></div></div><ng-include replace-include="" ng-controller="TestCompanyBannerCtrl" src="\'test-company-banner.html\'"></ng-include><ng-include replace-include="" ng-controller="SubcompanyBannerCtrl" src="\'subcompany-banner.html\'"></ng-include></div></nav><div ng-show="cookieEnabled === false" class="bg-warning text-center u_padding-sm"><small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small></div><ng-include replace-include="" ng-controller="GlobalAlertsCtrl" src="\'global-alerts.html\'"></ng-include><nav class="off-canvas-nav" off-canvas-nav=""><ul class="nav nav-pills nav-stacked"><li off-canvas-toggle=""><i class="fa fa-times fa-2x pull-right"></i> <img src="//s3.amazonaws.com/rise-common/images/logo-small.png" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}">{{opt.title}}</a></li><li ng-if="!hideHelpMenu"><a target="_blank" href="http://www.risevision.com/help">Help</a></li></ul></nav><iframe name="logoutFrame" id="logoutFrame" style="display:none"></iframe>');
 }]);
 })();
 
@@ -395,13 +395,16 @@ angular.module("risevision.common.header", [
   }
 ])
 
+.value("ENV_NAME", "")
+
 .directive("commonHeader", ["$modal", "$rootScope", "$q", "$loading",
   "$interval", "oauth2APILoader", "$log",
   "$templateCache", "userState", "$location", "bindToScopeWithWatch",
-  "$document", "cookieTester", "companyIcpFactory",
+  "$document", "cookieTester", "companyIcpFactory", "ENV_NAME",
   function ($modal, $rootScope, $q, $loading, $interval,
     oauth2APILoader, $log, $templateCache, userState, $location,
-    bindToScopeWithWatch, $document, cookieTester, companyIcpFactory) {
+    bindToScopeWithWatch, $document, cookieTester, companyIcpFactory,
+    ENV_NAME) {
     return {
       restrict: "E",
       template: $templateCache.get("common-header.html"),
@@ -417,6 +420,7 @@ angular.module("risevision.common.header", [
         $scope.inRVAFrame = userState.inRVAFrame();
         $scope.isSubcompanySelected = userState.isSubcompanySelected;
         $scope.isTestCompanySelected = userState.isTestCompanySelected;
+        $scope.ENV_NAME = ENV_NAME;
 
         // If nav options not provided use defaults
         if (!$scope[attr.navOptions]) {
@@ -3248,11 +3252,15 @@ angular.module("risevision.common.geodata", [])
             deferred.reject("registeredAsRiseVisionUser");
           }
         }, function (err) {
-          if (cookieStore.get("surpressRegistration")) {
-            deferred.resolve({});
+          if (err && err.code === 403) {
+            if (cookieStore.get("surpressRegistration")) {
+              deferred.resolve({});
+            } else {
+              $log.debug("registeredAsRiseVisionUser rejected", err);
+              deferred.reject("registeredAsRiseVisionUser");
+            }
           } else {
-            $log.debug("registeredAsRiseVisionUser rejected", err);
-            deferred.reject("registeredAsRiseVisionUser");
+            deferred.reject();
           }
         });
 
@@ -6721,11 +6729,13 @@ angular.module("risevision.common.components.logging")
 
         var _cancelAccessTokenAutoRefresh = function () {};
 
-        var _clearUserToken = function () {
+        var _resetUserState = function () {
           $log.debug("Clearing user token...");
           _cancelAccessTokenAutoRefresh();
-          _state.userToken = null;
+          objectHelper.clearObj(_state.userToken);
           rvTokenStore.clear();
+
+          userState._resetState();
         };
 
         var _detectUserOrAuthChange = function () {
@@ -6817,7 +6827,16 @@ angular.module("risevision.common.components.logging")
               _setUserToken(authenticatedUser);
 
               userState.refreshProfile()
-                .finally(function () {
+                .then(null, function (err) {
+                  if (err && err.code !== 403) {
+                    _authorizeDeferred.reject("Refresh Profile Error");
+
+                    _authorizeDeferred = undefined;
+
+                    return $q.reject();
+                  }
+                })
+                .then(function () {
                   _authorizeDeferred.resolve();
 
                   $rootScope.$broadcast("risevision.user.authorized");
@@ -6835,8 +6854,6 @@ angular.module("risevision.common.components.logging")
               return $q.resolve();
             }
           } else {
-            objectHelper.clearObj(_state.user);
-
             return $q.reject("No user");
           }
         };
@@ -6849,7 +6866,7 @@ angular.module("risevision.common.components.logging")
           if (forceAuth) {
             _authenticateDeferred = null;
 
-            userState._resetState();
+            _resetUserState();
           }
 
           // Return cached promise
@@ -6891,7 +6908,7 @@ angular.module("risevision.common.components.logging")
                   authenticateDeferred.resolve();
                 })
                 .then(null, function (err) {
-                  _clearUserToken();
+                  _resetUserState();
 
                   $log.debug("Authentication Error: " + err);
 
@@ -6905,10 +6922,11 @@ angular.module("risevision.common.components.logging")
             } else {
               var msg = "user is not authenticated";
               $log.debug(msg);
-              //  _clearUserToken();
+
+              _resetUserState();
+
               authenticateDeferred.reject(msg);
 
-              objectHelper.clearObj(_state.user);
               $loading.stopGlobal("risevision.user.authenticate");
 
               _logPageLoad("unauthenticated user");
@@ -6938,9 +6956,7 @@ angular.module("risevision.common.components.logging")
 
             // The flag the indicates a user is potentially
             // authenticated already, must be destroyed.
-            _clearUserToken();
-
-            userState._resetState();
+            _resetUserState();
 
             //call google api to sign out
             $rootScope.$broadcast("risevision.user.signedOut");

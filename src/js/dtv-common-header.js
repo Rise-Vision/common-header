@@ -47,13 +47,16 @@ angular.module("risevision.common.header", [
   }
 ])
 
+.value("ENV_NAME", "")
+
 .directive("commonHeader", ["$modal", "$rootScope", "$q", "$loading",
   "$interval", "oauth2APILoader", "$log",
   "$templateCache", "userState", "$location", "bindToScopeWithWatch",
-  "$document", "cookieTester", "companyIcpFactory",
+  "$document", "cookieTester", "companyIcpFactory", "ENV_NAME",
   function ($modal, $rootScope, $q, $loading, $interval,
     oauth2APILoader, $log, $templateCache, userState, $location,
-    bindToScopeWithWatch, $document, cookieTester, companyIcpFactory) {
+    bindToScopeWithWatch, $document, cookieTester, companyIcpFactory,
+    ENV_NAME) {
     return {
       restrict: "E",
       template: $templateCache.get("common-header.html"),
@@ -69,6 +72,7 @@ angular.module("risevision.common.header", [
         $scope.inRVAFrame = userState.inRVAFrame();
         $scope.isSubcompanySelected = userState.isSubcompanySelected;
         $scope.isTestCompanySelected = userState.isTestCompanySelected;
+        $scope.ENV_NAME = ENV_NAME;
 
         // If nav options not provided use defaults
         if (!$scope[attr.navOptions]) {

@@ -3278,7 +3278,7 @@ tbody.collapse.in {
     .nav > li > a {
       position: relative;
       display: block;
-      padding: 10px 15px; }
+      padding: 5px 8px; }
       .nav > li > a:hover, .nav > li > a:focus {
         text-decoration: none;
         background-color: #d5d5d5; }
@@ -7804,6 +7804,26 @@ ul.social {
       background-image: url("http://s3.amazonaws.com/Rise-Images/Icons/widget-icon-storage-2x.png");
       -webkit-background-size: 30px 30px; } }
 
+/*ENV NAME*/
+.env-name {
+  text-align: center;
+  font-weight: 500; }
+
+.env-name-label {
+  background-color: #222;
+  padding: 5px;
+  color: #FFF; }
+
+.env-name-nav-item .env-name-label {
+  border-radius: 5px;
+  display: block;
+  padding: 5px 10px;
+  margin-top: 10px;
+  margin-right: 5px; }
+
+/* ==========================================================================
+   Small devices (tablets, 768px and up)
+   ========================================================================== */
 /* STANDARD UTILITIES 
 All utilities have a prefix u_ added to them
 */
@@ -10585,9 +10605,12 @@ a[data-wysihtml5-command=underline].active {
 .underline, a[data-wysihtml5-command=underline].btn {
   text-decoration: underline; }
 
-.navbar .navbar-nav > li > a.btn, .navbar .navbar-nav > li > a.company-buttons-icon-mobile {
-  margin-top: 8px;
-  margin-bottom: 0; }
+.navbar .navbar-nav > li > a {
+  padding: 5px 10px;
+  margin-top: 10px; }
+  .navbar .navbar-nav > li > a.btn, .navbar .navbar-nav > li > a.company-buttons-icon-mobile {
+    margin-top: 8px;
+    margin-bottom: 0; }
 
 .navbar .navbar-nav > li > a.btn-link:hover, .navbar .navbar-nav > li > a.btn-link:focus, .navbar .navbar-nav > li > a.btn-link:active,
 .navbar .navbar-nav > li > button.btn-link:hover,
@@ -15926,7 +15949,7 @@ a.mfp-iframe:hover:after {
       font-weight: 800; }
 
 .app-launcher-login {
-  padding-top: 44px;
+  padding-top: 55px;
   background-color: #f2fcf4;
   background-size: cover;
   height: 100vh; }

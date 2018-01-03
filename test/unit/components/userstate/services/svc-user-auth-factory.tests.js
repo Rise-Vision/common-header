@@ -155,7 +155,7 @@ describe("Services: userAuthFactory", function() {
       userAuthFactory.authenticate().then(done, function(msg) {
         expect(msg).to.equal("user is not authenticated");
 
-        expect(userState._state.user).to.deep.equal({});
+        userState._resetState.should.have.been.calledOnce;
 
         $loading.stopGlobal.should.have.been.calledWith("risevision.user.authenticate");
         $broadcastSpy.should.not.have.been.calledWith("risevision.user.authorized");
@@ -237,8 +237,10 @@ describe("Services: userAuthFactory", function() {
           expect(msg).to.equal("Authentication Failure");
 
           // _clearUserToken
-          expect(userState._state.userToken).to.be.null;
+          expect(userState._state.userToken).to.deep.equal({});
           rvTokenStore.clear.should.have.been.called;
+          // Reset also happens before the authenticate process on forceAuth=true
+          userState._resetState.should.have.been.calledTwice;
 
           $broadcastSpy.should.not.have.been.calledWith("risevision.user.authorized");
 
@@ -281,11 +283,11 @@ describe("Services: userAuthFactory", function() {
         userAuthFactory.authenticate(true).then(done, function(msg) {
           expect(msg).to.equal("No user");
 
-          expect(userState._state.user).to.deep.equal({});
-
           // _clearUserToken
-          expect(userState._state.userToken).to.be.null;
+          expect(userState._state.userToken).to.be.undefined;
           rvTokenStore.clear.should.have.been.called;
+          // Reset also happens before the authenticate process on forceAuth=true
+          userState._resetState.should.have.been.calledTwice;
 
           $broadcastSpy.should.not.have.been.calledWith("risevision.user.authorized");
 
@@ -356,7 +358,7 @@ describe("Services: userAuthFactory", function() {
         gapiAuth.signOut.should.not.have.been.called;
 
         // _clearUserToken
-        expect(userState._state.userToken).to.be.null;
+        expect(userState._state.userToken).to.be.undefined;
         rvTokenStore.clear.should.have.been.called;
 
         userState._resetState.should.have.been.called;
@@ -374,7 +376,7 @@ describe("Services: userAuthFactory", function() {
         gapiAuth.signOut.should.have.been.called;
 
         // _clearUserToken
-        expect(userState._state.userToken).to.be.null;
+        expect(userState._state.userToken).to.be.undefined;
         rvTokenStore.clear.should.have.been.called;
 
         userState._resetState.should.have.been.called;

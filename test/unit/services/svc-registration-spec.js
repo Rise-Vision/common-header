@@ -116,7 +116,7 @@ describe("Services: Registration", function() {
             deferred.resolve(registered ? profile : {});
           }
           else {
-            deferred.reject({});
+            deferred.reject(error);
           }
           
           return deferred.promise;
@@ -178,13 +178,26 @@ describe("Services: Registration", function() {
       .then(null,done);
     });
 
-    it("profile not found should fail", function(done) {
-      error = true;
+    it("profile not found should fail on 403 error", function(done) {
+      error = {code: 403};
       
       registeredAsRiseVisionUser().then(function() {
         done("failed");
       }, function(result) {
         expect(result).to.equal("registeredAsRiseVisionUser");
+
+        done();
+      })
+      .then(null,done);
+    });
+
+    it("should fail on other errors but not return the registeredAsRiseVisionUser status", function(done) {
+      error = true;
+      
+      registeredAsRiseVisionUser().then(function() {
+        done("failed");
+      }, function(result) {
+        expect(result).to.not.be.ok;
 
         done();
       })
