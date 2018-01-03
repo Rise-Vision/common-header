@@ -30,7 +30,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('app-nav-buttons.html',
-    '<li dropdown="" class="dropdown hidden-xs"><button dropdown-toggle="" class="dropdown-toggle btn btn-link"><i class="fa fa-lg fa-th"></i></button><div class="dropdown-menu app-navigation" role="menu"><ng-include replace-include="" src="\'app-nav-buttons-menu.html\'"></ng-include></div></li><li class="visible-xs-inline-block"><a href="" class="company-buttons-icon-mobile" action-sheet="\'app-nav-buttons-menu.html\'" action-sheet-class="app-navigation"><i class="fa fa-th"></i></a></li>');
+    '<li class="hidden-xs"><button id="notificationsButton" class="btn btn-link"><i class="fa fa-lg fa-th"></i></button><div class="dropdown-menu app-navigation" role="menu"><ng-include replace-include="" src="\'app-nav-buttons-menu.html\'"></ng-include></div></li><li class="visible-xs-inline-block"><a href="" class="company-buttons-icon-mobile" action-sheet="\'app-nav-buttons-menu.html\'" action-sheet-class="app-navigation"><i class="fa fa-th"></i></a></li>');
 }]);
 })();
 
@@ -42,7 +42,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('auth-buttons-menu.html',
-    '<company-buttons ng-show="isRiseVisionUser" ng-controller="CompanyButtonsCtrl"></company-buttons><ul><li ng-show="isRiseVisionUser"><a href="" ng-click="alertSettings()" class="alert-settings-button action"><i class="fa fa-bullhorn"></i> <span class="item-name">Alert Settings</span></a></li><li ng-show="isRiseVisionUser"><a href="" ng-click="userSettings()" class="user-settings-button action"><i class="fa fa-user"></i> <span class="item-name">User Settings</span></a></li><li ng-show="isRiseVisionUser"><a href="https://store.risevision.com/account" target="_blank" class="store-account-button action" link-cid=""><i class="fa fa-shopping-cart"></i> <span class="item-name">Store Account</span></a></li><span ng-if="isLoggedIn && !isRiseVisionUser" class="google-account">{{username}}</span><li class="dropdown-footer text-right" ng-show="isLoggedIn"><button class="sign-out-button btn btn-sm btn-default u_margin-sm-bottom" ng-controller="SignOutButtonCtrl" ng-click="logout()">Sign Out<i class="fa fa-sign-out icon-right"></i></button></li></ul>');
+    '<company-buttons ng-show="isRiseVisionUser" ng-controller="CompanyButtonsCtrl"></company-buttons><ul><li ng-show="isRiseVisionUser"><a href="" ng-click="alertSettings()" class="alert-settings-button action"><i class="fa fa-dashboard"></i> <span class="item-name">Change Plan</span></a></li><li ng-show="isRiseVisionUser"><a href="" ng-click="alertSettings()" class="alert-settings-button action"><i class="fa fa-bullhorn"></i> <span class="item-name">Alert Settings</span></a></li><li ng-show="isRiseVisionUser"><a href="" ng-click="userSettings()" class="user-settings-button action"><i class="fa fa-user"></i> <span class="item-name">User Settings</span></a></li><li ng-show="isRiseVisionUser"><a href="https://store.risevision.com/account" target="_blank" class="store-account-button action" link-cid=""><i class="fa fa-shopping-cart"></i> <span class="item-name">Store Account</span></a></li><span ng-if="isLoggedIn && !isRiseVisionUser" class="google-account">{{username}}</span><li class="dropdown-footer text-right" ng-show="isLoggedIn"><button class="sign-out-button btn btn-sm btn-default u_margin-sm-bottom" ng-controller="SignOutButtonCtrl" ng-click="logout()">Sign Out<i class="fa fa-sign-out icon-right"></i></button></li></ul>');
 }]);
 })();
 
@@ -54,7 +54,53 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('auth-buttons.html',
-    '<li ng-show="isLoggedIn && !isRiseVisionUser && !loading"><button type="button" ng-controller="RegisterButtonCtrl" ng-click="register()" class="btn btn-danger register-user-menu-button">Complete Registration</button></li><li dropdown="" class="dropdown user-profile-dropdown desktop-menu-item" ng-class="{\'hidden-xs\': isLoggedIn}" ng-show="isLoggedIn"><a href="" dropdown-toggle="" class="dropdown-toggle"><div class="user-id pull-left"><span ng-class="{\'pending-registration\' : isLoggedIn && !isRiseVisionUser && !loading}" class="username">{{username}}</span> <span><strong>{{companyName}}</strong></span></div><img ng-src="{{userPicture}}" class="profile-pic" width="30" height="30" alt="User"></a><div class="dropdown-menu" role="menu"><ng-include src="\'auth-buttons-menu.html\'" replace-include=""></ng-include></div></li><li dropdown="" class="dropdown user-profile-dropdown mobile-menu-item" ng-class="{\'visible-xs-inline-block\': isLoggedIn}" ng-show="isLoggedIn"><a href="" dropdown-toggle="" class="visible-xs dropdown-toggle" action-sheet="\'auth-buttons-menu.html\'" action-sheet-class="user-profile-dropdown"><div class="user-id"><span>{{username}}</span> <span><strong>{{companyName}}</strong></span></div></a></li><li ng-show="!undetermined && isLoggedIn === false"><button type="button" class="btn-primary btn u_margin-right" ng-click="login(\'registrationComplete\', true)">Sign Up Free</button></li><li ng-show="!undetermined && isLoggedIn === false"><button type="button" class="sign-in top-auth-button" ng-click="login(\'registrationComplete\')">Sign In</button></li>');
+    '<li ng-show="isLoggedIn && !isRiseVisionUser && !loading"><button type="button" ng-controller="RegisterButtonCtrl" ng-click="register()" class="btn btn-danger register-user-menu-button">Complete Registration</button></li><li dropdown="" class="dropdown user-profile-dropdown desktop-menu-item" ng-class="{\'hidden-xs\': isLoggedIn}" ng-show="isLoggedIn"><a href="" dropdown-toggle="" class="dropdown-toggle"><div class="user-id pull-left"><span ng-class="{\'pending-registration\' : isLoggedIn && !isRiseVisionUser && !loading}" class="username">{{username}}</span> <span><strong>{{companyName}}</strong></span></div><img ng-src="{{userPicture}}" class="profile-pic" width="30" height="30" alt="User"></a><div class="dropdown-menu" role="menu"><ng-include src="\'auth-buttons-menu.html\'" replace-include=""></ng-include></div></li><li dropdown="" class="dropdown user-profile-dropdown mobile-menu-item" ng-class="{\'visible-xs-inline-block\': isLoggedIn}" ng-show="isLoggedIn"><a href="" dropdown-toggle="" class="visible-xs dropdown-toggle" action-sheet="\'auth-buttons-menu.html\'" action-sheet-class="user-profile-dropdown"><div class="user-id"><span>{{username}}</span> <span><strong>{{companyName}}</strong></span></div></a></li><li ng-show="!undetermined && isLoggedIn === false"><button type="button" class="btn-primary btn u_margin-right" ng-click="login(\'registrationComplete\', true)">Sign Up Free</button></li><li ng-show="!undetermined && isLoggedIn === false"><button type="button" class="sign-in top-auth-button" ng-click="login(\'registrationComplete\')">Sign In</button></li><script>\n' +
+    '  //SETUP\n' +
+    '$(document).ready(function() { \n' +
+    ' // alert(\'rr\');\n' +
+    '});\n' +
+    '\n' +
+    '//CYCLE\n' +
+    '$(document).on("click", "#notificationsButton", function() {\n' +
+    '   // alert(\'dd\');\n' +
+    '   // $(\'.bg-warning\').hide();\n' +
+    '   var target = $(".alert-plan:visible");\n' +
+    '\n' +
+    '   // if ( $(target).hasClass(\'plan-suspended\') ) {\n' +
+    '   //  $(\'#bannerSuspended\').show();\n' +
+    '   // }\n' +
+    '   // if ( $(target).hasClass(\'plan-expired\') ) {\n' +
+    '   //  $(\'#bannerExpired\').show();\n' +
+    '   // }\n' +
+    '   // $(target).css(\'border\', \'1px solid red\');\n' +
+    '   $(target).hide().siblings("div").hide();\n' +
+    '   $(target).next("div").show();\n' +
+    '});\n' +
+    '\n' +
+    '//STYLE\n' +
+    '$(document).ready(function() { \n' +
+    '  // alert(\'dd\');\n' +
+    '  $("#plansDowngradeModal").css(\'display\' , \'none\');\n' +
+    '  $("#plansDowngradeModal").css(\'position\' , \'fixed\');\n' +
+    '  $("#plansDowngradeModal").css(\'top\' , \'20px\');\n' +
+    '  $("#plansDowngradeModal").css(\'left\' , \'40%\');\n' +
+    '  $("#plansDowngradeModal").css(\'border\' , \'1px solid #636262\');\n' +
+    '  $("#plansDowngradeModal").css(\'z-index\' , \'999999\');\n' +
+    '  $("#plansDowngradeModal").css(\'border-radius\' , \'4px\');\n' +
+    '  $("#plansDowngradeModal").css(\'background-color\' , \'white\');\n' +
+    '  $("#plansDowngradeModal").css(\'width\' , \'500px\');\n' +
+    '});\n' +
+    '\n' +
+    '//SHOW DOWNGRADE MODAL\n' +
+    '$(document).on("click", "#showDowngradeModal", function() {\n' +
+    '  $("#plansDowngradeModal").css(\'display\' , \'block\' );\n' +
+    '});\n' +
+    '\n' +
+    '//SHOW DOWNGRADE MODAL\n' +
+    '$(document).on("click", "#hideDowngradeModal", function() {\n' +
+    '  $("#plansDowngradeModal").css(\'display\' , \'none\' );\n' +
+    '});\n' +
+    '  </script>');
 }]);
 })();
 
@@ -78,7 +124,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('common-header.html',
-    '<nav class="navbar navbar-default navbar-static-top hidden-print" ng-class="{\'active-banner\': isSubcompanySelected() || isTestCompanySelected()}" role="navigation"><div class="container"><div class="navbar-header" style="width: 100%;"><a class="navbar-brand visible-md visible-lg" href="http://www.risevision.com/" target="{{newTabHome ? \'_blank\' : \'_self\'}}" ng-if="!inRVAFrame"><img src="//s3.amazonaws.com/Rise-Images/UI/logo.svg" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></a> <a class="navbar-brand hidden-md hidden-lg text-center" href="" off-canvas-toggle=""><i class="fa fa-bars"></i></a><ul class="nav navbar-nav navbar-right actions-nav pull-right"><ng-include replace-include="" ng-controller="HelpDropdownButtonCtrl" src="\'help-dropdown.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="SystemMessagesButtonCtrl" src="\'system-messages-button.html\'"></ng-include><ng-include replace-include="" ng-controller="ShoppingCartButtonCtrl" src="\'shoppingcart-button.html\'"></ng-include><ng-include replace-include="" ng-if="inRVAFrame" ng-controller="CloseFrameButtonCtrl" src="\'close-frame-button.html\'"></ng-include><ng-include ng-if="!inRVAFrame" replace-include="" src="\'app-nav-buttons.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="AuthButtonsCtr" src="\'auth-buttons.html\'"></ng-include><li ng-if="inRVAFrame" ng-controller="AuthButtonsCtr"></li></ul><div class="navbar-collapse navbar-left hidden-xs hidden-sm"><ul class="nav navbar-nav"><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a></li><li ng-if="!inRVAFrame && !hideHelpMenu"><a href="http://www.risevision.com/help/" target="_blank">Help</a></li></ul></div></div><ng-include replace-include="" ng-controller="TestCompanyBannerCtrl" src="\'test-company-banner.html\'"></ng-include><ng-include replace-include="" ng-controller="SubcompanyBannerCtrl" src="\'subcompany-banner.html\'"></ng-include></div></nav><div ng-show="cookieEnabled === false" class="bg-warning text-center u_padding-sm"><small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small></div><ng-include replace-include="" ng-controller="GlobalAlertsCtrl" src="\'global-alerts.html\'"></ng-include><nav class="off-canvas-nav" off-canvas-nav=""><ul class="nav nav-pills nav-stacked"><li off-canvas-toggle=""><i class="fa fa-times fa-2x pull-right"></i> <img src="//s3.amazonaws.com/rise-common/images/logo-small.png" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}">{{opt.title}}</a></li><li ng-if="!hideHelpMenu"><a target="_blank" href="http://www.risevision.com/help">Help</a></li></ul></nav><iframe name="logoutFrame" id="logoutFrame" style="display:none"></iframe>');
+    '<div><div class="alert alert-plan plan-active text-right"><div class="container"><strong>Get more out of Rise Vision!</strong> <a href="#" ng-click="plansPopup()" class="u_margin-left">See Our Plans</a></div></div><div class="alert alert-plan plan-active text-right" style="display:none"><div class="container"><strong>Basic Plan</strong> <a href="#" ng-click="plansPopup()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" style="display:none"><div class="container"><strong>Advanced Plan</strong> <a href="#" ng-click="plansPopup()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-suspended text-center" style="display:none"><div class="container">There was an issue processing your payment. Please update your billing information. Your Displays may be affected. <a href="https://store.risevision.com/account?" target="_blank" class="u_margin-left">Update Billing</a></div></div></div><nav class="navbar navbar-default navbar-static-top hidden-print" ng-class="{\'active-banner\': isSubcompanySelected() || isTestCompanySelected()}" role="navigation"><div class="container"><div class="navbar-header" style="width: 100%;"><a class="navbar-brand visible-md visible-lg" href="http://www.risevision.com/" target="{{newTabHome ? \'_blank\' : \'_self\'}}" ng-if="!inRVAFrame"><img src="//s3.amazonaws.com/Rise-Images/UI/logo.svg" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></a> <a class="navbar-brand hidden-md hidden-lg text-center" href="" off-canvas-toggle=""><i class="fa fa-bars"></i></a><ul class="nav navbar-nav navbar-right actions-nav pull-right"><ng-include replace-include="" ng-controller="HelpDropdownButtonCtrl" src="\'help-dropdown.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="SystemMessagesButtonCtrl" src="\'system-messages-button.html\'"></ng-include><ng-include replace-include="" ng-controller="ShoppingCartButtonCtrl" src="\'shoppingcart-button.html\'"></ng-include><ng-include replace-include="" ng-if="inRVAFrame" ng-controller="CloseFrameButtonCtrl" src="\'close-frame-button.html\'"></ng-include><ng-include ng-if="!inRVAFrame" replace-include="" src="\'app-nav-buttons.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="AuthButtonsCtr" src="\'auth-buttons.html\'"></ng-include><li ng-if="inRVAFrame" ng-controller="AuthButtonsCtr"></li></ul><div class="navbar-collapse navbar-left hidden-xs hidden-sm"><ul class="nav navbar-nav"><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a></li><li ng-if="!inRVAFrame && !hideHelpMenu"><a href="http://www.risevision.com/help/" target="_blank">Help</a></li></ul></div></div><ng-include replace-include="" ng-controller="TestCompanyBannerCtrl" src="\'test-company-banner.html\'"></ng-include><ng-include replace-include="" ng-controller="SubcompanyBannerCtrl" src="\'subcompany-banner.html\'"></ng-include></div></nav><div ng-show="cookieEnabled === false" class="bg-warning text-center u_padding-sm"><small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small></div><ng-include replace-include="" ng-controller="GlobalAlertsCtrl" src="\'global-alerts.html\'"></ng-include><nav class="off-canvas-nav" off-canvas-nav=""><ul class="nav nav-pills nav-stacked"><li off-canvas-toggle=""><i class="fa fa-times fa-2x pull-right"></i> <img src="//s3.amazonaws.com/rise-common/images/logo-small.png" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}">{{opt.title}}</a></li><li ng-if="!hideHelpMenu"><a target="_blank" href="http://www.risevision.com/help">Help</a></li></ul></nav><iframe name="logoutFrame" id="logoutFrame" style="display:none"></iframe>');
 }]);
 })();
 
@@ -223,6 +269,18 @@ try {
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('move-company-modal.html',
     '<div rv-spinner="" rv-spinner-key="move-company-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 id="move-company-label" class="modal-title">Move Company</h2></div><div class="modal-body move-company-modal" stop-event="touchend"><form role="form"><div class="form-group"><label for="auth-key">Enter the Authentication Key of the Company that you want to move.</label><div class="row"><div class="col-sm-6"><input id="auth-key" type="text" class="form-control" ng-model="company.authKey"></div><div class="col-sm-6"><a href="" class="btn btn-secondary retrieve-company-details-button" ng-disabled="!company.authKey" ng-click="getCompany()">Retrieve Company Details</a></div></div></div></form><div ng-show="company.name" class="company-details-info"><h3>Details of the Company You Want to Move</h3><div>{{company.name}}<br>{{company.address}} {{company.city}}, {{company.province}}, {{company.country}} {{company.postalCode}}</div><h3>Details of the Company You Are Moving the Above Company Under</h3><div class="to-company">{{selectedCompany.name}}<br>{{selectedCompany.address}}<br>{{selectedCompany.city}}, {{selectedCompany.province}}, {{selectedCompany.country}} {{selectedCompany.postalCode}}</div></div><div ng-show="errors.length > 0"><div class="alert alert-danger" ng-repeat="error in errors">{{error}}</div></div><div ng-show="messages.length > 0"><div class="alert alert-success" ng-repeat="message in messages">{{message}}</div></div></div><div class="modal-footer"><button type="button" class="btn btn-success move-company-button" ng-show="company.name && !moveSuccess" ng-click="moveCompany()">Move Company <i class="fa fa-white fa-check icon-right"></i></button> <button type="button" class="btn btn-default btn-fixed-width close-move-company-button" data-dismiss="modal" ng-click="closeModal()">{{dismissButtonText}} <i class="fa fa-white fa-times icon-right"></i></button></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('plans-modal.html',
+    '<div id="plansPopupContent"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 id="" class="modal-title">Choose Your Plan</h3></div><div class="modal-body u_padding-lg" stop-event="touchend"><div id="" class="grid-list row"><div class="col-xs-12 col-sm-6 col-md-3 ng-scope"><div class="panel panel-default"><div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><div class="grid-list-text text-center"><h4 id="productName">Free</h4><p class="product-description">Get Rise Storage, Embedded Presentations, and Template Library for one great price.</p><div><h1>$0</h1>&nbsp;per Company per Month</div><a class="cta_button btn btn-default u_margin-lg" id="showDowngradeModal">Downgrade</a></div></div></div></div><div class="col-xs-12 col-sm-6 col-md-3 ng-scope"><div class="panel panel-default"><div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><div class="grid-list-text text-center"><h4 id="productName">Basic Plan</h4><p class="product-description">Get Rise Storage, Embedded Presentations, and Template Library for one great price.</p><div><h1>$19</h1>&nbsp;per Company per Month</div><a target="_blank" class="cta_button btn btn-white u_margin-lg" title="">Current Plan</a></div></div></div></div><div class="col-xs-12 col-sm-6 col-md-3 ng-scope"><div class="panel panel-default"><div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><div class="grid-list-text text-center"><h4 id="productName">Advanced Plan</h4><p class="product-description">Get Rise Storage, Embedded Presentations, and Template Library for one great price.</p><div><h1>$85</h1>&nbsp;per Company per Month</div><a target="_blank" href="https://store.risevision.com/product/290/advanced-plan" class="cta_button btn btn-primary u_margin-lg" title="">Subscribe</a></div></div></div></div><div class="col-xs-12 col-sm-6 col-md-3 ng-scope"><div class="panel panel-default"><div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><div class="grid-list-text text-center"><h4 id="productName">Enterprise Plan</h4><p class="product-description">Get Rise Storage, Embedded Presentations, and Template Library for one great price.</p><div><h1>$489</h1>&nbsp;per Company per Month</div><a target="_blank" href="https://www.risevision.com/contact-us" class="cta_button btn btn-primary u_margin-lg" title="">Contact Us</a></div></div></div></div></div><div id="plansDowngradeModal" style="display:none; position: fixed; top: 80px; left: 28%; border: 1px solid #636262; z-index: 999999979; border-radius: 4px; background-color: white; width: 500px;"><div class="modal-header"><button type="button" class="close" id="hideDowngradeModal" aria-hidden="true"><i class="fa fa-times"></i></button><h3 id="icpModalTitle" class="modal-title">Downgrade</h3></div><div class="modal-body u_padding-lg" stop-event="touchend"><div class="container-fluid text-center u_padding-lg">Downgrading an account needs to be processed through our Support team. Please reach out and we\'ll help!<br><a class="btn btn-primary btn-lg u_margin-lg-top" href="https://www.risevision.com/contact-us?contact_form=enterprise" target="_blank">Contact Us</a></div></div><div class="modal-footer"></div></div><div class="text-center u_margin-md-top"><a class="btn btn-white btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/pricing">Learn More About Our Plan Pricing</a></div></div><div class="modal-footer"></div></div>');
 }]);
 })();
 
@@ -462,6 +520,25 @@ angular.module("risevision.common.header", [
             $location.search("inRVA", $scope.inRVAFrame);
           }
         });
+
+        // Show User Plans Modal PROTOTYPE
+        $scope.plansPopup = function () {
+          // var modalInstance =
+          $modal.open({
+            template: $templateCache.get("plans-modal.html"),
+            controller: "UserSettingsModalCtrl",
+            size: "lg",
+            resolve: {
+              username: function () {
+                return userState.getUsername();
+              },
+              add: function () {
+                return false;
+              }
+            }
+          });
+        };
+
 
         //insert meta tag to page to prevent zooming in in mobile mode
         var viewPortTag = $document[0].createElement("meta");

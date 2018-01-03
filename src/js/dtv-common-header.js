@@ -115,6 +115,25 @@ angular.module("risevision.common.header", [
           }
         });
 
+        // Show User Plans Modal PROTOTYPE
+        $scope.plansPopup = function () {
+          // var modalInstance =
+          $modal.open({
+            template: $templateCache.get("plans-modal.html"),
+            controller: "UserSettingsModalCtrl",
+            size: "lg",
+            resolve: {
+              username: function () {
+                return userState.getUsername();
+              },
+              add: function () {
+                return false;
+              }
+            }
+          });
+        };
+
+
         //insert meta tag to page to prevent zooming in in mobile mode
         var viewPortTag = $document[0].createElement("meta");
         viewPortTag.id = "viewport";

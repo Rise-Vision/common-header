@@ -53,3 +53,54 @@
     Sign In
   </button>
 </li>
+
+
+<!-- PROTOTYPE INTERACTIONS -->
+<script>
+  //SETUP
+$(document).ready(function() { 
+ // alert('rr');
+});
+
+//CYCLE
+$(document).on("click", "#notificationsButton", function() {
+   // alert('dd');
+   // $('.bg-warning').hide();
+   var target = $(".alert-plan:visible");
+
+   // if ( $(target).hasClass('plan-suspended') ) {
+   //  $('#bannerSuspended').show();
+   // }
+   // if ( $(target).hasClass('plan-expired') ) {
+   //  $('#bannerExpired').show();
+   // }
+   // $(target).css('border', '1px solid red');
+   $(target).hide().siblings("div").hide();
+   $(target).next("div").show();
+});
+
+//STYLE
+$(document).ready(function() { 
+  // alert('dd');
+  $("#plansDowngradeModal").css('display' , 'none');
+  $("#plansDowngradeModal").css('position' , 'fixed');
+  $("#plansDowngradeModal").css('top' , '20px');
+  $("#plansDowngradeModal").css('left' , '40%');
+  $("#plansDowngradeModal").css('border' , '1px solid #636262');
+  $("#plansDowngradeModal").css('z-index' , '999999');
+  $("#plansDowngradeModal").css('border-radius' , '4px');
+  $("#plansDowngradeModal").css('background-color' , 'white');
+  $("#plansDowngradeModal").css('width' , '500px');
+});
+
+//SHOW DOWNGRADE MODAL
+$(document).on("click", "#showDowngradeModal", function() {
+  $("#plansDowngradeModal").css('display' , 'block' );
+});
+
+//SHOW DOWNGRADE MODAL
+$(document).on("click", "#hideDowngradeModal", function() {
+  $("#plansDowngradeModal").css('display' , 'none' );
+});
+  </script>
+
