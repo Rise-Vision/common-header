@@ -403,8 +403,6 @@ angular.module("risevision.common.components.logging")
 (function (angular) {
   "use strict";
 
-  /*jshint camelcase: false */
-
   angular.module("risevision.common.components.userstate")
     .factory("customAuthFactory", ["$q", "$log", "gapiLoader",
       "userauth", "userState",
@@ -1141,8 +1139,6 @@ angular.module("risevision.common.components.logging")
             _visibilityListener);
         };
 
-        _addEventListenerVisibilityAPI();
-
         /*
          * Responsible for triggering the Google OAuth process.
          *
@@ -1257,6 +1253,8 @@ angular.module("risevision.common.components.logging")
                   authenticateDeferred.reject(err);
                 })
                 .finally(function () {
+                  _addEventListenerVisibilityAPI();
+
                   $loading.stopGlobal("risevision.user.authenticate");
 
                   _logPageLoad("authenticated user");
@@ -1268,6 +1266,8 @@ angular.module("risevision.common.components.logging")
               _resetUserState();
 
               authenticateDeferred.reject(msg);
+
+              _addEventListenerVisibilityAPI();
 
               $loading.stopGlobal("risevision.user.authenticate");
 

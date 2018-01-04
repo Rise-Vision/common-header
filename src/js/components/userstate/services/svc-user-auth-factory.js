@@ -112,8 +112,6 @@
             _visibilityListener);
         };
 
-        _addEventListenerVisibilityAPI();
-
         /*
          * Responsible for triggering the Google OAuth process.
          *
@@ -228,6 +226,8 @@
                   authenticateDeferred.reject(err);
                 })
                 .finally(function () {
+                  _addEventListenerVisibilityAPI();
+
                   $loading.stopGlobal("risevision.user.authenticate");
 
                   _logPageLoad("authenticated user");
@@ -239,6 +239,8 @@
               _resetUserState();
 
               authenticateDeferred.reject(msg);
+
+              _addEventListenerVisibilityAPI();
 
               $loading.stopGlobal("risevision.user.authenticate");
 
