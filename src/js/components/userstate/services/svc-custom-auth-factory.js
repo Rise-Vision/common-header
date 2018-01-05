@@ -1,8 +1,6 @@
 (function (angular) {
   "use strict";
 
-  /*jshint camelcase: false */
-
   angular.module("risevision.common.components.userstate")
     .factory("customAuthFactory", ["$q", "$log", "gapiLoader",
       "userauth", "userState",
@@ -33,11 +31,13 @@
                     token: token
                   });
                 } else {
-                  deferred.reject();
+                  deferred.reject({
+                    error: "Invalid token"
+                  });
                 }
               })
-              .then(null, function () {
-                deferred.reject();
+              .then(null, function (err) {
+                deferred.reject(err);
               });
           } else if (_state.userToken && _state.userToken.token) {
             gapiLoader().then(function (gApi) {

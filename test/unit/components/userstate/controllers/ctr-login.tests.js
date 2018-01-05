@@ -17,7 +17,7 @@ describe("controller: Log In", function() {
           if (loginSuccess) {
             deferred.resolve();
           } else {
-            deferred.reject();
+            deferred.reject({});
           }
 
           return deferred.promise;
@@ -187,12 +187,50 @@ describe("controller: Log In", function() {
         uiFlowManager.invalidateStatus.should.have.been.calledWith("endStatus");
 
         expect($scope.errors.loginError).to.be.true;
+        expect($scope.messages.isGoogleAccount).to.be.falsey;
+        expect($scope.errors.unconfirmedError).to.be.falsey;
+
+        done();
+      },10);
+    });
+
+    it("should reject login of Google accounts", function(done) {
+      sinon.stub(userAuthFactory, "authenticate").returns(Q.reject({ status: 400 }));
+      $scope.customLogin("endStatus");
+
+      $loading.startGlobal.should.have.been.calledWith("auth-buttons-login");
+
+      setTimeout(function(){
+        $loading.stopGlobal.should.have.been.calledWith("auth-buttons-login");
+        uiFlowManager.invalidateStatus.should.have.been.calledWith("endStatus");
+
+        expect($scope.errors.loginError).to.be.falsey;
+        expect($scope.messages.isGoogleAccount).to.be.true;
+        expect($scope.errors.unconfirmedError).to.be.falsey;
+
+        done();
+      },10);
+    });
+
+    it("should reject login of unconfirmed accounts", function(done) {
+      sinon.stub(userAuthFactory, "authenticate").returns(Q.reject({ status: 409 }));
+      $scope.customLogin("endStatus");
+
+      $loading.startGlobal.should.have.been.calledWith("auth-buttons-login");
+
+      setTimeout(function(){
+        $loading.stopGlobal.should.have.been.calledWith("auth-buttons-login");
+        uiFlowManager.invalidateStatus.should.have.been.calledWith("endStatus");
+
+        expect($scope.errors.loginError).to.be.falsey;
+        expect($scope.messages.isGoogleAccount).to.be.falsey;
+        expect($scope.errors.unconfirmedError).to.be.true;
 
         done();
       },10);
     });
   });
-  
+
   describe("createAccount: ", function() {
     it("should clear previous errors", function() {
       $scope.errors = {
