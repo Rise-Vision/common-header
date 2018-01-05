@@ -13,10 +13,6 @@
           "Suspended", "Cancelled", "Free", "Not Subscribed",
           "Product Not Found", "Company Not Found", "Error"
         ];
-        var responseCode = ["on-trial", "trial-expired", "subscribed",
-          "suspended", "cancelled", "free", "not-subscribed",
-          "product-not-found", "company-not-found", "error"
-        ];
         var _MS_PER_DAY = 1000 * 60 * 60 * 24;
 
         // a and b are javascript Date objects
@@ -61,14 +57,8 @@
               var subscriptionStatus = response.data[0];
 
               subscriptionStatus.plural = "";
-
-              var statusIndex = responseType.indexOf(subscriptionStatus
-                .status);
-
-              if (statusIndex >= 0) {
-                subscriptionStatus.statusCode = responseCode[
-                  statusIndex];
-              }
+              subscriptionStatus.statusCode = subscriptionStatus.status
+                .toLowerCase().replace(" ", "-");
 
               if (subscriptionStatus.status === "") {
                 subscriptionStatus.status = "N/A";
