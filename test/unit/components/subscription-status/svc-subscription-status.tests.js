@@ -1,7 +1,7 @@
 /*jshint expr:true */
 "use strict";
 
-describe.only("Services: subscriptionStatusService", function() {
+describe("Services: subscriptionStatusService", function() {
 
   beforeEach(module("risevision.common.components.subscription-status.service"));
 
@@ -62,6 +62,20 @@ describe.only("Services: subscriptionStatusService", function() {
         expect(data.status).be.equal("Cancelled");
         expect(data.statusCode).be.equal("cancelled");
         expect(data.subscribed).be.equal(true);
+
+        done();
+      });
+    });
+  });
+
+  it("should return a list of products", function(done) {
+    inject(function(subscriptionStatusService) {
+      subscriptionStatusService.list(["1", "2", "3"], "12345").then(function(data){
+        expect(data).be.defined;
+        expect(data.length).be.equal(3);
+        expect(data[0].status).be.equal("Free");
+        expect(data[1].status).be.equal("Trial Expired");
+        expect(data[2].status).be.equal("Cancelled");
 
         done();
       });

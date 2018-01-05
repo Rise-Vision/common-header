@@ -21,15 +21,21 @@
           if (url.indexOf("/company/invalid/") !== -1) {
             response.data[0].status = "";
           }
+          else if (url.indexOf("pc=1,2,3") !== -1) {
+            response.data = [
+              { pc: 1, status: "Free" },
+              { pc: 2, status: "Trial Expired" },
+              { pc: 3, status: "Cancelled" }];
+          }
+          else if (url.indexOf("pc=1") !== -1) {
+            response.data[0].status = "Free";
+          }      
           else if (url.indexOf("pc=2") !== -1) {
             response.data[0].status = "Trial Expired";
           }
           else if (url.indexOf("pc=3") !== -1) {
             response.data[0].status = "Cancelled";
           }    
-          else {
-            response.data[0].status = "Free";
-          }      
         }
         else if (url && url.indexOf("widget/auth?") !== -1) {
           response = {
