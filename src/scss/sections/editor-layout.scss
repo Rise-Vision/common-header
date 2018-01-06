@@ -1,0 +1,310 @@
+.workspace
+{
+    .workspace-sidebar
+    {
+        position: absolute;
+        top: 49px;
+
+        width: $panel-width;
+        height: calc(100vh - 140px);
+        .scrollable-list
+        {
+            min-height: 45px;
+            max-height: calc(100vh - 150px);
+        }
+        #listWithHandle.scrollable-list
+        {
+            max-height: calc(100vh - 290px);
+        }
+        @media (max-width: $screen-md)
+        {
+            height: calc(100vh - 185px);
+        }
+        @media (max-width: $screen-sm)
+        {
+            position: relative;
+            z-index: 80;
+            top: 133px;
+
+            width: 100%;
+            height: calc(100vh - 225px);
+            .scrollable-list
+            {
+                max-height: calc(100vh - 420px);
+            }
+        }
+        .workspace-sidebar-content
+        {
+            width: calc((#{$panel-width} * 2));
+            /* Total width of panels */
+            @media (max-width: $screen-sm)
+            {
+                width: 100%;
+            }
+        }
+        .ph-list,
+        .ph-properties
+        {
+            width: $panel-width;
+            @media (max-width: $screen-sm)
+            {
+                width: 100vw;
+            }
+        }
+        .ph-list
+        {
+            .editor-playlist
+            {
+                height: calc(100vh - 210px);
+                max-height: calc(100vh - 240px);
+                @media (max-width: $screen-md)
+                {
+                    max-height: calc(100vh - 265px);
+                    margin-right: 0;
+                }
+                @media (max-width: $screen-sm)
+                {
+                    max-height: calc(100vh - 345px);
+                    margin-right: 0;
+                }
+                .editor-playlist-item
+                {
+                    & div:nth-child(2)
+                    {
+                        display: flex;
+                    }
+                }
+            }
+        }
+        .ph-settings
+        {
+            @media (max-width: $screen-sm)
+            {
+                .scrollable-list
+                {
+                    max-height: calc(100vh - 350px) !important;
+                }
+            }
+        }
+        .ph-properties
+        {
+            .scrollable-list
+            {
+                max-height: calc(100vh - 240px);
+            }
+            @media (max-width: $screen-md)
+            {
+                .scrollable-list
+                {
+                    max-height: calc(100vh - 380px);
+                }
+            }
+            @media (max-width: $screen-sm)
+            {
+                .scrollable-list
+                {
+                    max-height: calc(100vh - 470px);
+                }
+            }
+        }
+    }
+    //END Workspace Sidebar
+
+    //START Workspace Board
+    .workspace-board
+    {
+        height: calc(100vh - 140px);
+        @media (max-width: $screen-md)
+        {
+            height: calc(100vh - 155px);
+        }
+        @media (max-width: $screen-sm)
+        {
+            position: absolute;
+            top: 55px;
+            left: 0;
+
+            width: 100%;
+        }
+    }
+    //END Workspace Board
+
+    &.hide-sidebar
+    {
+        .workspace-toolbar
+        {
+            left: 0;
+
+            width: calc(100% - 11px);
+        }
+        @media (max-width: $screen-sm)
+        {
+            .workspace-toolbar
+            {
+                width: 100%;
+            }
+        }
+    }
+}
+// END Workspace
+
+// START PH Playlist
+.ph-playlist
+{
+    margin-top: 10px;
+    .editor-playlist
+    {
+        height: calc(100vh - 360px);
+        max-height: calc(100vh - 250px);
+        .editor-playlist-item
+        {
+            padding: 3px !important;
+        }
+    }
+}
+// END PH Playlist
+
+
+// START States
+// ACTIVE ONBOARD
+
+.workspace.active-onboard-mode
+{
+    .workspace-board
+    {
+        height: calc(100vh - 240px);
+    }
+    @media (max-width: $screen-md)
+    {
+        height: calc(100vh - 255px);
+    }
+    @media (max-width: $screen-sm)
+    {
+        height: calc(100vh - 225px);
+    }
+
+
+    .workspace-sidebar
+    {
+        height: calc(100vh - 225px);
+        .ph-properties .scrollable-list
+        {
+            max-height: calc(100vh - 470px);
+        }
+        @media (max-width: $screen-sm)
+        {
+            .ph-properties .scrollable-list
+            {
+                max-height: calc(100vh - 470px);
+            }
+        }
+        .ph-list
+        {
+            .editor-playlist
+            {
+                height: calc(100vh - 210px);
+                max-height: calc(100vh - 340px);
+
+                @media (max-width: $screen-md)
+                {
+                    max-height: calc(100vh - 355px);
+                }
+            }
+        }
+    }
+}
+
+// ACTIVE BANNER
+.workspace.active-banner-mode
+{
+    .workspace-board
+    {
+        height: calc(100vh - 160px);
+    }
+    .workspace-sidebar
+    {
+        .ph-list
+        {
+            .editor-playlist
+            {
+                height: calc(100vh - 210px);
+                max-height: calc(100vh - 260px);
+
+                @media (max-width: $screen-sm)
+                {
+                    max-height: calc(100vh - 360px);
+                }
+            }
+        }
+        @media (max-width: $screen-sm)
+        {
+            height: calc(100vh - 245px);
+        }
+
+        .ph-properties
+        {
+            .scrollable-list
+            {
+                max-height: calc(100vh - 390px);
+            }
+        }
+    }
+}
+
+// ACTIVE DOUBLE BANNER
+.workspace.active-banner-mode.active-banner-mode-double
+{
+    .workspace-board
+    {
+        height: calc(100vh - 180px);
+    }
+
+    & .workspace-sidebar
+    {
+        height: calc(100vh - 190px);
+        .ph-properties
+        {
+            .scrollable-list
+            {
+                max-height: calc(100vh - 490px);
+            }
+        }
+
+        .ph-list
+        {
+            .editor-playlist
+            {
+                max-height: calc(100vh - 290px);
+            }
+        }
+    }
+}
+
+
+// ACTIVE ONBOARDING && BANNER
+.workspace.active-banner-mode.active-onboard-mode
+{
+    & .workspace-board
+    {
+        height: calc(100vh - 260px);
+    }
+
+    & .workspace-sidebar
+    {
+        height: calc(100vh - 305px);
+
+        .ph-list .editor-playlist
+        {
+            height: calc(100vh - 210px);
+            max-height: calc(100vh - 360px);
+        }
+
+        .ph-properties .scrollable-list
+        {
+            max-height: calc(100vh - 480px);
+        }
+    }
+}
+
+
+// END States
