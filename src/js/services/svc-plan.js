@@ -5,26 +5,32 @@
     "risevision.common.gapi"
   ])
     .value("FREE_PLAN_ID", "000")
-    .value("FREE_PLAN_DESCRIPTION", "Free Plan")
+    .value("FREE_PLAN_DESCRIPTION",
+      "Get Rise Storage, Embedded Presentations, and Template Library for one great price.")
     .value("BASIC_PLAN_ID", "289")
     .value("ADVANCED_PLAN_ID", "290")
     .value("ENTERPRISE_PLAN_ID", "301")
-    .factory("planFactory", ["$q", "$log", "riseAPILoader", "subscriptionStatusService", "FREE_PLAN_ID",
+    .factory("planFactory", ["$q", "$log", "storeAPILoader", "subscriptionStatusService", "FREE_PLAN_ID",
       "BASIC_PLAN_ID", "ADVANCED_PLAN_ID", "ENTERPRISE_PLAN_ID", "FREE_PLAN_DESCRIPTION",
-      function ($q, $log, riseAPILoader, subscriptionStatusService, FREE_PLAN_ID, BASIC_PLAN_ID, ADVANCED_PLAN_ID,
+      function ($q, $log, storeAPILoader, subscriptionStatusService, FREE_PLAN_ID, BASIC_PLAN_ID, ADVANCED_PLAN_ID,
         ENTERPRISE_PLAN_ID, FREE_PLAN_DESCRIPTION) {
         var _factory = {};
         var _plansList = [BASIC_PLAN_ID, ADVANCED_PLAN_ID, ENTERPRISE_PLAN_ID];
+        var _planTypeMap = {};
+
+        _planTypeMap[FREE_PLAN_ID] = "free";
+        _planTypeMap[BASIC_PLAN_ID] = "basic";
+        _planTypeMap[ADVANCED_PLAN_ID] = "advanced";
+        _planTypeMap[ENTERPRISE_PLAN_ID] = "enterprise";
 
         _factory.getPlans = function (params) { // companyId, search
           $log.debug("getPlans called.");
           var deferred = $q.defer();
-          riseAPILoader().then(function (riseApi) {
-            var request = riseApi.product.list(params);
-            request.execute(function (resp) {
+          storeAPILoader().then(function (riseApi) {
+            riseApi.product.list(params).execute(function (resp) {
               $log.debug("getPlans response", resp);
               if (!resp.error) {
-                deferred.resolve();
+                deferred.resolve(resp);
               } else {
                 deferred.reject(resp.error);
               }
@@ -36,7 +42,7 @@
         _factory.getPlansDescriptions = function () {
           $log.debug("getPlansDescriptions called.");
           var deferred = $q.defer();
-          var search = "(productTag%3APlans)";
+          var search = "(productTag=Plans)";
 
           _factory.getPlans({
             search: search
@@ -86,7 +92,8 @@
                 }
               });
 
-              console.log(subscribedPlan);
+              subscribedPlan.type = _planTypeMap[subscribedPlan.pc];
+
               deferred.resolve(subscribedPlan);
             })
             .catch(function (err) {

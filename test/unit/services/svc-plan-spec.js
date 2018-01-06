@@ -2,20 +2,20 @@
 "use strict";
 
 describe("Services: plan", function() {
-  var riseApiFailure;
+  var storeApiFailure;
 
   beforeEach(module("risevision.common.plan"));
   beforeEach(module(function ($provide) {
-    riseApiFailure = false;
+    storeApiFailure = false;
 
     $provide.service("$q", function() {return Q;});
-    $provide.service("riseAPILoader", function () {
+    $provide.service("storeAPILoader", function () {
       return function() {
         var deferred = Q.defer();
         var riseApiResponse = function() {
           return {
             execute: function(callback) {
-              if (riseApiFailure) {
+              if (storeApiFailure) {
                 callback({
                   error: "some error"
                 });
@@ -76,7 +76,7 @@ describe("Services: plan", function() {
     });
 
     it("should fail", function(done) {
-      riseApiFailure = true;
+      storeApiFailure = true;
       planFactory.getPlans()
       .catch(function() {
         done();
@@ -142,6 +142,7 @@ describe("Services: plan", function() {
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
         expect(plan.pc).to.equal("000");
+        expect(plan.type).to.equal("free");
         expect(plan.status).to.equal("Subscribed");
         done();
       });
@@ -158,6 +159,7 @@ describe("Services: plan", function() {
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
         expect(plan.pc).to.equal("289");
+        expect(plan.type).to.equal("basic");
         expect(plan.status).to.equal("Subscribed");
         done();
       });
@@ -174,6 +176,7 @@ describe("Services: plan", function() {
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
         expect(plan.pc).to.equal("290");
+        expect(plan.type).to.equal("advanced");
         expect(plan.status).to.equal("Subscribed");
         done();
       });
@@ -190,6 +193,7 @@ describe("Services: plan", function() {
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
         expect(plan.pc).to.equal("301");
+        expect(plan.type).to.equal("enterprise");
         expect(plan.status).to.equal("Subscribed");
         done();
       });
@@ -206,6 +210,7 @@ describe("Services: plan", function() {
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
         expect(plan.pc).to.equal("000");
+        expect(plan.type).to.equal("free");
         expect(plan.status).to.equal("Subscribed");
         done();
       });
@@ -222,6 +227,7 @@ describe("Services: plan", function() {
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
         expect(plan.pc).to.equal("290");
+        expect(plan.type).to.equal("advanced");
         expect(plan.status).to.equal("Suspended");
         done();
       });
@@ -238,6 +244,7 @@ describe("Services: plan", function() {
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
         expect(plan.pc).to.equal("301");
+        expect(plan.type).to.equal("enterprise");
         expect(plan.status).to.equal("Suspended");
         done();
       });
