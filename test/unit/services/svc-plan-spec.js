@@ -48,6 +48,8 @@ describe("Services: plan", function() {
   }));
 
   var sandbox, planFactory, subscriptionStatusService;
+  var FREE_PLAN_ID, FREE_PLAN_CODE, BASIC_PLAN_CODE, BASIC_PLAN_ID;
+  var ADVANCED_PLAN_CODE, ADVANCED_PLAN_ID, ENTERPRISE_PLAN_CODE, ENTERPRISE_PLAN_ID;
 
   beforeEach(function() {
     sandbox = sinon.sandbox.create();
@@ -55,6 +57,14 @@ describe("Services: plan", function() {
     inject(function($injector){
       planFactory = $injector.get("planFactory");
       subscriptionStatusService = $injector.get("subscriptionStatusService");
+      FREE_PLAN_ID = $injector.get("FREE_PLAN_ID");
+      FREE_PLAN_CODE = $injector.get("FREE_PLAN_CODE");
+      BASIC_PLAN_CODE = $injector.get("BASIC_PLAN_CODE");
+      BASIC_PLAN_ID = $injector.get("BASIC_PLAN_ID");
+      ADVANCED_PLAN_CODE = $injector.get("ADVANCED_PLAN_CODE");
+      ADVANCED_PLAN_ID = $injector.get("ADVANCED_PLAN_ID");
+      ENTERPRISE_PLAN_CODE = $injector.get("ENTERPRISE_PLAN_CODE");
+      ENTERPRISE_PLAN_ID = $injector.get("ENTERPRISE_PLAN_ID");
     });
   });
 
@@ -93,7 +103,7 @@ describe("Services: plan", function() {
     it("should return existing plans", function(done) {
       sandbox.stub(planFactory, "getPlans").returns(Q.resolve({
         items: [{
-          productId: "298",
+          productId: BASIC_PLAN_CODE,
           descriptionShort: "Basic Plan"
         }]
       }));
@@ -101,10 +111,10 @@ describe("Services: plan", function() {
       planFactory.getPlansDescriptions()
       .then(function(resp) {
         expect(planFactory.getPlans).to.have.been.called;
-        expect(resp["000"]).to.be.ok;
-        expect(resp["000"].descriptionShort).to.be.ok;
-        expect(resp["298"]).to.be.ok;
-        expect(resp["298"].descriptionShort).to.be.ok;
+        expect(resp[FREE_PLAN_ID]).to.be.ok;
+        expect(resp[FREE_PLAN_ID].descriptionShort).to.be.ok;
+        expect(resp[BASIC_PLAN_CODE]).to.be.ok;
+        expect(resp[BASIC_PLAN_CODE].descriptionShort).to.be.ok;
         done();
       });
     });
@@ -133,15 +143,15 @@ describe("Services: plan", function() {
 
     it("should return Free Plan for a non subscribed company", function(done) {
       sandbox.stub(subscriptionStatusService, "list").returns(Q.resolve([
-        { pc: "289", subscribed: false },
-        { pc: "290", subscribed: false },
-        { pc: "301", subscribed: false }
+        { pc: BASIC_PLAN_CODE, subscribed: false },
+        { pc: ADVANCED_PLAN_CODE, subscribed: false },
+        { pc: ENTERPRISE_PLAN_CODE, subscribed: false }
       ]));
 
       planFactory.getCompanyPlan(companyId)
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
-        expect(plan.pc).to.equal("000");
+        expect(plan.pc).to.equal(FREE_PLAN_CODE);
         expect(plan.type).to.equal("free");
         expect(plan.status).to.equal("Subscribed");
         done();
@@ -150,15 +160,15 @@ describe("Services: plan", function() {
 
     it("should return Basic Plan for a subscribed company", function(done) {
       sandbox.stub(subscriptionStatusService, "list").returns(Q.resolve([
-        { pc: "289", subscribed: true, status: "Subscribed" },
-        { pc: "290", subscribed: false },
-        { pc: "301", subscribed: false }
+        { pc: BASIC_PLAN_CODE, subscribed: true, status: "Subscribed" },
+        { pc: ADVANCED_PLAN_CODE, subscribed: false },
+        { pc: ENTERPRISE_PLAN_CODE, subscribed: false }
       ]));
 
       planFactory.getCompanyPlan(companyId)
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
-        expect(plan.pc).to.equal("289");
+        expect(plan.pc).to.equal(BASIC_PLAN_CODE);
         expect(plan.type).to.equal("basic");
         expect(plan.status).to.equal("Subscribed");
         done();
@@ -167,15 +177,15 @@ describe("Services: plan", function() {
 
     it("should return Advanced Plan for a subscribed company", function(done) {
       sandbox.stub(subscriptionStatusService, "list").returns(Q.resolve([
-        { pc: "289", subscribed: false },
-        { pc: "290", subscribed: true, status: "Subscribed" },
-        { pc: "301", subscribed: false }
+        { pc: BASIC_PLAN_CODE, subscribed: false },
+        { pc: ADVANCED_PLAN_CODE, subscribed: true, status: "Subscribed" },
+        { pc: ENTERPRISE_PLAN_CODE, subscribed: false }
       ]));
 
       planFactory.getCompanyPlan(companyId)
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
-        expect(plan.pc).to.equal("290");
+        expect(plan.pc).to.equal(ADVANCED_PLAN_CODE);
         expect(plan.type).to.equal("advanced");
         expect(plan.status).to.equal("Subscribed");
         done();
@@ -184,15 +194,15 @@ describe("Services: plan", function() {
 
     it("should return Enterprise Plan for a subscribed company", function(done) {
       sandbox.stub(subscriptionStatusService, "list").returns(Q.resolve([
-        { pc: "289", subscribed: false },
-        { pc: "290", subscribed: false },
-        { pc: "301", subscribed: true, status: "Subscribed" }
+        { pc: BASIC_PLAN_CODE, subscribed: false },
+        { pc: ADVANCED_PLAN_CODE, subscribed: false },
+        { pc: ENTERPRISE_PLAN_CODE, subscribed: true, status: "Subscribed" }
       ]));
 
       planFactory.getCompanyPlan(companyId)
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
-        expect(plan.pc).to.equal("301");
+        expect(plan.pc).to.equal(ENTERPRISE_PLAN_CODE);
         expect(plan.type).to.equal("enterprise");
         expect(plan.status).to.equal("Subscribed");
         done();
@@ -201,15 +211,15 @@ describe("Services: plan", function() {
 
     it("should return Free Plan for a cancelled company", function(done) {
       sandbox.stub(subscriptionStatusService, "list").returns(Q.resolve([
-        { pc: "289", subscribed: false },
-        { pc: "290", subscribed: false, status: "Cancelled" },
-        { pc: "301", subscribed: false }
+        { pc: BASIC_PLAN_CODE, subscribed: false },
+        { pc: ADVANCED_PLAN_CODE, subscribed: false, status: "Cancelled" },
+        { pc: ENTERPRISE_PLAN_CODE, subscribed: false }
       ]));
 
       planFactory.getCompanyPlan(companyId)
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
-        expect(plan.pc).to.equal("000");
+        expect(plan.pc).to.equal(FREE_PLAN_CODE);
         expect(plan.type).to.equal("free");
         expect(plan.status).to.equal("Subscribed");
         done();
@@ -218,15 +228,15 @@ describe("Services: plan", function() {
 
     it("should return Advanced Plan for a suspended company", function(done) {
       sandbox.stub(subscriptionStatusService, "list").returns(Q.resolve([
-        { pc: "289", subscribed: false },
-        { pc: "290", subscribed: false, status: "Suspended" },
-        { pc: "301", subscribed: false }
+        { pc: BASIC_PLAN_CODE, subscribed: false },
+        { pc: ADVANCED_PLAN_CODE, subscribed: false, status: "Suspended" },
+        { pc: ENTERPRISE_PLAN_CODE, subscribed: false }
       ]));
 
       planFactory.getCompanyPlan(companyId)
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
-        expect(plan.pc).to.equal("290");
+        expect(plan.pc).to.equal(ADVANCED_PLAN_CODE);
         expect(plan.type).to.equal("advanced");
         expect(plan.status).to.equal("Suspended");
         done();
@@ -235,15 +245,15 @@ describe("Services: plan", function() {
 
     it("should stay in Suspended plan even if they are Subscribed to a lower plan", function(done) {
       sandbox.stub(subscriptionStatusService, "list").returns(Q.resolve([
-        { pc: "289", subscribed: true, status: "Subscribed" },
-        { pc: "290", subscribed: false },
-        { pc: "301", subscribed: false, status: "Suspended" }
+        { pc: BASIC_PLAN_CODE, subscribed: true, status: "Subscribed" },
+        { pc: ADVANCED_PLAN_CODE, subscribed: false },
+        { pc: ENTERPRISE_PLAN_CODE, subscribed: false, status: "Suspended" }
       ]));
 
       planFactory.getCompanyPlan(companyId)
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
-        expect(plan.pc).to.equal("301");
+        expect(plan.pc).to.equal(ENTERPRISE_PLAN_CODE);
         expect(plan.type).to.equal("enterprise");
         expect(plan.status).to.equal("Suspended");
         done();

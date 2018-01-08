@@ -8,14 +8,16 @@ angular.module("risevision.common.header")
       });
 
       $scope.loadCompanyPlan = function () {
-        planFactory.getCompanyPlan(userState.getSelectedCompanyId())
-          .then(function (plan) {
-            $log.debug("Current plan", plan);
-            $scope.plan = plan;
-          })
-          .catch(function (err) {
-            $log.debug("Failed to load company's plan", err);
-          });
+        if (userState.getSelectedCompanyId()) {
+          planFactory.getCompanyPlan(userState.getSelectedCompanyId())
+            .then(function (plan) {
+              $log.debug("Current plan", plan);
+              $scope.plan = plan;
+            })
+            .catch(function (err) {
+              $log.debug("Failed to load company's plan", err);
+            });
+        }
       };
 
       $scope.showPlans = function () {

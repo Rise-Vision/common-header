@@ -5,23 +5,27 @@
     "risevision.common.gapi"
   ])
     .value("FREE_PLAN_ID", "000")
+    .value("FREE_PLAN_CODE", "000")
     .value("FREE_PLAN_DESCRIPTION",
       "Get Rise Storage, Embedded Presentations, and Template Library for one great price.")
     .value("BASIC_PLAN_ID", "289")
+    .value("BASIC_PLAN_CODE", "40c092161f547f8f72c9f173cd8eebcb9ca5dd25")
     .value("ADVANCED_PLAN_ID", "290")
+    .value("ADVANCED_PLAN_CODE", "93b5595f0d7e4c04a3baba1102ffaecb17607bf4")
     .value("ENTERPRISE_PLAN_ID", "301")
+    .value("ENTERPRISE_PLAN_CODE", "b1844725d63fde197f5125b58b6cba6260ee7a57")
     .factory("planFactory", ["$q", "$log", "storeAPILoader", "subscriptionStatusService", "FREE_PLAN_ID",
-      "BASIC_PLAN_ID", "ADVANCED_PLAN_ID", "ENTERPRISE_PLAN_ID", "FREE_PLAN_DESCRIPTION",
-      function ($q, $log, storeAPILoader, subscriptionStatusService, FREE_PLAN_ID, BASIC_PLAN_ID, ADVANCED_PLAN_ID,
-        ENTERPRISE_PLAN_ID, FREE_PLAN_DESCRIPTION) {
+      "FREE_PLAN_CODE", "FREE_PLAN_DESCRIPTION", "BASIC_PLAN_CODE", "ADVANCED_PLAN_CODE", "ENTERPRISE_PLAN_CODE",
+      function ($q, $log, storeAPILoader, subscriptionStatusService, FREE_PLAN_ID, FREE_PLAN_CODE,
+        FREE_PLAN_DESCRIPTION, BASIC_PLAN_CODE, ADVANCED_PLAN_CODE, ENTERPRISE_PLAN_CODE) {
         var _factory = {};
-        var _plansList = [BASIC_PLAN_ID, ADVANCED_PLAN_ID, ENTERPRISE_PLAN_ID];
+        var _plansCodesList = [BASIC_PLAN_CODE, ADVANCED_PLAN_CODE, ENTERPRISE_PLAN_CODE];
         var _planTypeMap = {};
 
-        _planTypeMap[FREE_PLAN_ID] = "free";
-        _planTypeMap[BASIC_PLAN_ID] = "basic";
-        _planTypeMap[ADVANCED_PLAN_ID] = "advanced";
-        _planTypeMap[ENTERPRISE_PLAN_ID] = "enterprise";
+        _planTypeMap[FREE_PLAN_CODE] = "free";
+        _planTypeMap[BASIC_PLAN_CODE] = "basic";
+        _planTypeMap[ADVANCED_PLAN_CODE] = "advanced";
+        _planTypeMap[ENTERPRISE_PLAN_CODE] = "enterprise";
 
         _factory.getPlans = function (params) { // companyId, search
           $log.debug("getPlans called.");
@@ -72,7 +76,7 @@
           $log.debug("getCompanyPlan called.");
           var deferred = $q.defer();
 
-          subscriptionStatusService.list(_plansList, companyId)
+          subscriptionStatusService.list(_plansCodesList, companyId)
             .then(function (resp) {
               $log.debug("getCompanyPlan response.");
 
@@ -81,12 +85,12 @@
                 return accum;
               }, {});
               var subscribedPlan = {
-                pc: "000",
+                pc: FREE_PLAN_CODE,
                 subscribed: true,
                 status: "Subscribed"
               };
 
-              _plansList.forEach(function (planId) {
+              _plansCodesList.forEach(function (planId) {
                 if (itemMap[planId] && (itemMap[planId].subscribed || itemMap[planId].status === "Suspended")) {
                   subscribedPlan = itemMap[planId];
                 }
