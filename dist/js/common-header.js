@@ -246,7 +246,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plans-modal.html',
-    '<div rv-spinner="" rv-spinner-key="plans-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 id="" class="modal-title">Choose Your Plan</h3></div><div class="modal-body u_padding-lg" stop-event="touchend"><div id="" class="grid-list row"><div class="col-xs-12 col-sm-6 col-md-3"><div class="panel panel-default"><div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><div class="grid-list-text text-center"><h4 id="productName">Free</h4><p class="product-description">{{descriptions.free}}</p><div><h1>$0</h1>&nbsp;per Company per Month</div><a class="cta_button btn btn-default u_margin-lg" id="showDowngradeModal">Downgrade</a></div></div></div></div><div class="col-xs-12 col-sm-6 col-md-3"><div class="panel panel-default"><div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><div class="grid-list-text text-center"><h4 id="productName">Basic Plan</h4><p class="product-description">{{descriptions.basic}}</p><div><h1>$19</h1>&nbsp;per Company per Month</div><a target="_blank" class="cta_button btn btn-white u_margin-lg" title="">Current Plan</a></div></div></div></div><div class="col-xs-12 col-sm-6 col-md-3"><div class="panel panel-default"><div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><div class="grid-list-text text-center"><h4 id="productName">Advanced Plan</h4><p class="product-description">{{descriptions.advanced}}</p><div><h1>$85</h1>&nbsp;per Company per Month</div><a target="_blank" href="https://store.risevision.com/product/290/advanced-plan" class="cta_button btn btn-primary u_margin-lg" title="">Subscribe</a></div></div></div></div><div class="col-xs-12 col-sm-6 col-md-3"><div class="panel panel-default"><div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><div class="grid-list-text text-center"><h4 id="productName">Enterprise Plan</h4><p class="product-description">{{descriptions.enterprise}}</p><div><h1>$489</h1>&nbsp;per Company per Month</div><a target="_blank" href="https://www.risevision.com/contact-us" class="cta_button btn btn-primary u_margin-lg" title="">Contact Us</a></div></div></div></div></div><div id="plansDowngradeModal" style="display:none; position: fixed; top: 80px; left: 28%; border: 1px solid #636262; z-index: 999999979; border-radius: 4px; background-color: white; width: 500px;"><div class="modal-header"><button type="button" class="close" id="hideDowngradeModal" aria-hidden="true"><i class="fa fa-times"></i></button><h3 id="icpModalTitle" class="modal-title">Downgrade</h3></div><div class="modal-body u_padding-lg" stop-event="touchend"><div class="container-fluid text-center u_padding-lg">Downgrading an account needs to be processed through our Support team. Please reach out and we\'ll help!<br><a class="btn btn-primary btn-lg u_margin-lg-top" href="https://www.risevision.com/contact-us?contact_form=enterprise" target="_blank">Contact Us</a></div></div><div class="modal-footer"></div></div><div class="text-center u_margin-md-top"><a class="btn btn-white btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/pricing">Learn More About Our Plan Pricing</a></div></div><div class="modal-footer"></div></div>');
+    '<div rv-spinner="" rv-spinner-key="plans-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 id="" class="modal-title">Choose Your Plan</h3></div><div class="modal-body u_padding-lg" stop-event="touchend"><div id="" class="grid-list row"><div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="plan in plans"><div class="panel panel-default"><div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><div class="grid-list-text text-center"><h4 id="productName">{{plan.name}}</h4><p class="product-description">{{plan.descriptionShort}}</p><div><h1>${{plan.priceMonth}}</h1>&nbsp;per Company per Month</div><a class="cta_button btn btn-default u_margin-lg" id="showDowngradeModal">Downgrade</a></div></div></div></div></div><div id="plansDowngradeModal" style="display:none; position: fixed; top: 80px; left: 28%; border: 1px solid #636262; z-index: 999999979; border-radius: 4px; background-color: white; width: 500px;"><div class="modal-header"><button type="button" class="close" id="hideDowngradeModal" aria-hidden="true"><i class="fa fa-times"></i></button><h3 id="icpModalTitle" class="modal-title">Downgrade</h3></div><div class="modal-body u_padding-lg" stop-event="touchend"><div class="container-fluid text-center u_padding-lg">Downgrading an account needs to be processed through our Support team. Please reach out and we\'ll help!<br><a class="btn btn-primary btn-lg u_margin-lg-top" href="https://www.risevision.com/contact-us?contact_form=enterprise" target="_blank">Contact Us</a></div></div><div class="modal-footer"></div></div><div class="text-center u_margin-md-top"><a class="btn btn-white btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/pricing">Learn More About Our Plan Pricing</a></div></div><div class="modal-footer"></div></div>');
 }]);
 })();
 
@@ -1546,24 +1546,19 @@ angular.module("risevision.common.header")
 angular.module("risevision.common.header")
 
 .controller("PlansModalCtrl", [
-  "$scope", "$modalInstance", "$log", "planFactory", "$loading", "userState",
-  "FREE_PLAN_ID", "BASIC_PLAN_ID", "ADVANCED_PLAN_ID", "ENTERPRISE_PLAN_ID",
-  function ($scope, $modalInstance, $log, planFactory, $loading, userState,
-    FREE_PLAN_ID, BASIC_PLAN_ID, ADVANCED_PLAN_ID, ENTERPRISE_PLAN_ID) {
+  "$scope", "$modalInstance", "$log", "planFactory", "$loading",
+  function ($scope, $modalInstance, $log, planFactory, $loading) {
     $scope.descriptions = {};
 
-    $scope.getPlansDescriptions = function () {
+    $scope.getPlansDetails = function () {
       $loading.start("plans-modal");
 
-      planFactory.getPlansDescriptions()
+      planFactory.getPlansDetails()
         .then(function (plans) {
-          $scope.descriptions.free = plans[FREE_PLAN_ID].descriptionShort;
-          $scope.descriptions.basic = plans[BASIC_PLAN_ID].descriptionShort;
-          $scope.descriptions.advanced = plans[ADVANCED_PLAN_ID].descriptionShort;
-          $scope.descriptions.enterprise = plans[ENTERPRISE_PLAN_ID].descriptionShort;
+          $scope.plans = plans;
         })
         .catch(function (err) {
-          $log.debug("Failed to load descriptions", err);
+          $log.debug("Failed to load detauls", err);
         })
         .finally(function () {
           $loading.stop("plans-modal");
@@ -1574,7 +1569,7 @@ angular.module("risevision.common.header")
       $modalInstance.dismiss("cancel");
     };
 
-    $scope.getPlansDescriptions();
+    $scope.getPlansDetails();
   }
 ]);
 
@@ -3289,11 +3284,12 @@ angular.module("risevision.common.geodata", [])
     "risevision.common.gapi"
   ])
     .value("PLANS_LIST", [{
+      name: "Free",
       type: "free",
       productId: "000",
       pc: "000",
       status: "Subscribed",
-      price: "0",
+      priceMonth: 0,
       descriptionShort: "Get Rise Storage, Embedded Presentations, and Template Library for one great price."
     }, {
       type: "basic",
@@ -3331,8 +3327,8 @@ angular.module("risevision.common.geodata", [])
           return deferred.promise;
         };
 
-        _factory.getPlansDescriptions = function () {
-          $log.debug("getPlansDescriptions called.");
+        _factory.getPlansDetails = function () {
+          $log.debug("getPlansDetails called.");
           var deferred = $q.defer();
           var search = "(productTag=Plans)";
 
@@ -3340,13 +3336,19 @@ angular.module("risevision.common.geodata", [])
             search: search
           })
             .then(function (resp) {
-              $log.debug("getPlansDescriptions response.", resp);
-              var itemMap = _.keyBy(resp.items, "productId");
+              $log.debug("getPlansDetails response.", resp);
+              resp.items.forEach(function (plan) {
+                var monthKey = "per Company per Month";
+                var priceMap = _.keyBy(plan.pricing, "unit");
+
+                plan.type = plan.name.toLowerCase().replace(" plan", "");
+                plan.priceMonth = priceMap[monthKey] && priceMap[monthKey].priceUSD;
+              });
+
+              var planMap = _.keyBy(resp.items, "type");
 
               // Add free plan, since it's not returned by the service
-              itemMap[_plansByType.free.productId] = _plansByType.free;
-
-              deferred.resolve(itemMap);
+              deferred.resolve([_plansByType.free, planMap.basic, planMap.advanced, planMap.enterprise]);
             })
             .catch(function (err) {
               deferred.reject(err);

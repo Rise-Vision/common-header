@@ -1,24 +1,19 @@
 angular.module("risevision.common.header")
 
 .controller("PlansModalCtrl", [
-  "$scope", "$modalInstance", "$log", "planFactory", "$loading", "userState",
-  "FREE_PLAN_ID", "BASIC_PLAN_ID", "ADVANCED_PLAN_ID", "ENTERPRISE_PLAN_ID",
-  function ($scope, $modalInstance, $log, planFactory, $loading, userState,
-    FREE_PLAN_ID, BASIC_PLAN_ID, ADVANCED_PLAN_ID, ENTERPRISE_PLAN_ID) {
+  "$scope", "$modalInstance", "$log", "planFactory", "$loading",
+  function ($scope, $modalInstance, $log, planFactory, $loading) {
     $scope.descriptions = {};
 
-    $scope.getPlansDescriptions = function () {
+    $scope.getPlansDetails = function () {
       $loading.start("plans-modal");
 
-      planFactory.getPlansDescriptions()
+      planFactory.getPlansDetails()
         .then(function (plans) {
-          $scope.descriptions.free = plans[FREE_PLAN_ID].descriptionShort;
-          $scope.descriptions.basic = plans[BASIC_PLAN_ID].descriptionShort;
-          $scope.descriptions.advanced = plans[ADVANCED_PLAN_ID].descriptionShort;
-          $scope.descriptions.enterprise = plans[ENTERPRISE_PLAN_ID].descriptionShort;
+          $scope.plans = plans;
         })
         .catch(function (err) {
-          $log.debug("Failed to load descriptions", err);
+          $log.debug("Failed to load detauls", err);
         })
         .finally(function () {
           $loading.stop("plans-modal");
@@ -29,6 +24,6 @@ angular.module("risevision.common.header")
       $modalInstance.dismiss("cancel");
     };
 
-    $scope.getPlansDescriptions();
+    $scope.getPlansDetails();
   }
 ]);

@@ -97,27 +97,37 @@ describe("Services: plan", function() {
     });
   });
 
-  describe("getPlansDescriptions: ", function() {
+  describe("getPlansDetails: ", function() {
     it("should exist", function() {
-      expect(planFactory.getPlansDescriptions).to.be.ok;
-      expect(planFactory.getPlansDescriptions).to.be.a("function");
+      expect(planFactory.getPlansDetails).to.be.ok;
+      expect(planFactory.getPlansDetails).to.be.a("function");
     });
 
     it("should return existing plans", function(done) {
       sandbox.stub(planFactory, "getPlans").returns(Q.resolve({
         items: [{
+          name: "Basic Plan",
           productId: BASIC_PLAN_ID,
-          descriptionShort: "Basic Plan"
+          descriptionShort: "Basic Plan Description",
+          pricing: [{
+            "unit": "per Company per Month",
+            "priceUSD": 20.0,
+            "priceCAD": 25.0,
+          }]
         }]
       }));
 
-      planFactory.getPlansDescriptions()
+      planFactory.getPlansDetails()
       .then(function(resp) {
+        console.log("RESP", resp);
         expect(planFactory.getPlans).to.have.been.called;
-        expect(resp[FREE_PLAN_ID]).to.be.ok;
-        expect(resp[FREE_PLAN_ID].descriptionShort).to.be.ok;
-        expect(resp[BASIC_PLAN_ID]).to.be.ok;
-        expect(resp[BASIC_PLAN_ID].descriptionShort).to.be.ok;
+        expect(resp.length).to.equal(4);
+        expect(resp[0].productId).to.equal("000");
+        expect(resp[0].descriptionShort).to.be.ok;
+        expect(resp[0].priceMonth).to.equal(0);
+        expect(resp[1].productId).to.equal("289");
+        expect(resp[1].descriptionShort).to.be.ok;
+        expect(resp[1].priceMonth).to.equal(20);
         done();
       });
     });
@@ -127,7 +137,7 @@ describe("Services: plan", function() {
         error: "Error"
       }));
 
-      planFactory.getPlansDescriptions()
+      planFactory.getPlansDetails()
       .catch(function(err) {
         expect(planFactory.getPlans).to.have.been.called;
         expect(err.error).to.be.ok;

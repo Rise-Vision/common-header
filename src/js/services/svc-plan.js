@@ -5,11 +5,12 @@
     "risevision.common.gapi"
   ])
     .value("PLANS_LIST", [{
+      name: "Free",
       type: "free",
       productId: "000",
       pc: "000",
       status: "Subscribed",
-      price: "0",
+      priceMonth: 0,
       descriptionShort: "Get Rise Storage, Embedded Presentations, and Template Library for one great price."
     }, {
       type: "basic",
@@ -47,8 +48,8 @@
           return deferred.promise;
         };
 
-        _factory.getPlansDescriptions = function () {
-          $log.debug("getPlansDescriptions called.");
+        _factory.getPlansDetails = function () {
+          $log.debug("getPlansDetails called.");
           var deferred = $q.defer();
           var search = "(productTag=Plans)";
 
@@ -56,13 +57,19 @@
             search: search
           })
             .then(function (resp) {
-              $log.debug("getPlansDescriptions response.", resp);
-              var itemMap = _.keyBy(resp.items, "productId");
+              $log.debug("getPlansDetails response.", resp);
+              resp.items.forEach(function (plan) {
+                var monthKey = "per Company per Month";
+                var priceMap = _.keyBy(plan.pricing, "unit");
+
+                plan.type = plan.name.toLowerCase().replace(" plan", "");
+                plan.priceMonth = priceMap[monthKey] && priceMap[monthKey].priceUSD;
+              });
+
+              var planMap = _.keyBy(resp.items, "type");
 
               // Add free plan, since it's not returned by the service
-              itemMap[_plansByType.free.productId] = _plansByType.free;
-
-              deferred.resolve(itemMap);
+              deferred.resolve([_plansByType.free, planMap.basic, planMap.advanced, planMap.enterprise]);
             })
             .catch(function (err) {
               deferred.reject(err);

@@ -7,14 +7,14 @@
   </div>
   <div class="modal-body u_padding-lg" stop-event="touchend">
     <div id="" class="grid-list row">
-      <div class="col-xs-12 col-sm-6 col-md-3">
+      <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="plan in plans">
         <div class="panel panel-default">
           <div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
             <div class="grid-list-text text-center">
-              <h4 id="productName">Free </h4>
-              <p class="product-description">{{descriptions.free}}</p>
+              <h4 id="productName">{{plan.name}}</h4>
+              <p class="product-description">{{plan.descriptionShort}}</p>
               <div>
-                  <h1>$0</h1>
+                  <h1>${{plan.priceMonth}}</h1>
                   &nbsp;per Company per Month
               </div>
               <a class="cta_button btn btn-default u_margin-lg" id="showDowngradeModal">Downgrade</a>
@@ -22,6 +22,8 @@
           </div>
         </div>        
       </div><!-- end products plan -->
+
+      <!--
       <div class="col-xs-12 col-sm-6 col-md-3">
         <div class="panel panel-default">
           <div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
@@ -36,7 +38,7 @@
             </div>
           </div>
         </div>        
-      </div><!-- end products plan -->
+      </div><!-- end products plan --
       <div class="col-xs-12 col-sm-6 col-md-3">
         <div class="panel panel-default">
           <div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
@@ -51,7 +53,7 @@
             </div>
           </div>
         </div>        
-      </div><!-- end products plan -->
+      </div><!-- end products plan --
       <div class="col-xs-12 col-sm-6 col-md-3">
         <div class="panel panel-default">
           <div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
