@@ -234,7 +234,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plan-banner.html',
-    '<div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'free\'"><div class="container"><strong>Get more out of Rise Vision!</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">See Our Plans</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'basic\' && plan.subscribed"><div class="container"><strong>Basic Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'advanced\' && plan.subscribed"><div class="container"><strong>Advanced Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'enterprise\' && plan.subscribed"><div class="container"><strong>Enterprise Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="plan.status === \'Suspended\'"><div class="container">There was an issue processing your payment. Please update your billing information. Your Displays may be affected. <a href="https://store.risevision.com/account?" target="_blank" class="u_margin-left">Update Billing</a></div></div></div>');
+    '<div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'free\'"><div class="container"><strong>Get more out of Rise Vision!</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">See Our Plans</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'basic\' && plan.subscribed"><div class="container"><strong>Basic Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'advanced\' && plan.subscribed"><div class="container"><strong>Advanced Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'enterprise\' && plan.subscribed"><div class="container"><strong>Enterprise Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="plan.status === \'Suspended\'"><div class="container">There was an issue processing your payment. Please update your billing information. Your Displays may be affected. <a href="{{storeAccountUrl}}" target="_blank" class="u_margin-left">Update Billing</a></div></div></div>');
 }]);
 })();
 
@@ -1510,16 +1510,19 @@ angular.module("risevision.common.header")
 
 angular.module("risevision.common.header")
   .controller("PlanBannerCtrl", ["$scope", "$rootScope", "$log", "$modal", "$templateCache", "userState", "planFactory",
-    function ($scope, $rootScope, $log, $modal, $templateCache, userState, planFactory) {
+    "STORE_URL", "ACCOUNT_PATH",
+    function ($scope, $rootScope, $log, $modal, $templateCache, userState, planFactory, STORE_URL, ACCOUNT_PATH) {
       $scope.plan = {};
 
       $rootScope.$on("risevision.company.selectedCompanyChanged", function () {
+        $scope.companyId = userState.getSelectedCompanyId();
+        $scope.storeAccountUrl = STORE_URL + ACCOUNT_PATH.replace("companyId", $scope.companyId);
         $scope.loadCompanyPlan();
       });
 
       $scope.loadCompanyPlan = function () {
         if (userState.getSelectedCompanyId()) {
-          planFactory.getCompanyPlan(userState.getSelectedCompanyId())
+          planFactory.getCompanyPlan($scope.companyId)
             .then(function (plan) {
               $log.debug("Current plan", plan);
               $scope.plan = plan;
@@ -3333,7 +3336,7 @@ angular.module("risevision.common.geodata", [])
             search: search
           })
             .then(function (resp) {
-              $log.debug("getPlansDescriptions response.");
+              $log.debug("getPlansDescriptions response.", resp);
               var itemMap = resp.items.reduce(function (accum, item) {
                 accum[item.productId] = item;
                 return accum;
@@ -3359,7 +3362,7 @@ angular.module("risevision.common.geodata", [])
 
           subscriptionStatusService.list(_plansCodesList, companyId)
             .then(function (resp) {
-              $log.debug("getCompanyPlan response.");
+              $log.debug("getCompanyPlan response.", resp);
 
               var itemMap = resp.reduce(function (accum, item) {
                 accum[item.pc] = item;
@@ -3371,9 +3374,10 @@ angular.module("risevision.common.geodata", [])
                 status: "Subscribed"
               };
 
-              _plansCodesList.forEach(function (planId) {
-                if (itemMap[planId] && (itemMap[planId].subscribed || itemMap[planId].status === "Suspended")) {
-                  subscribedPlan = itemMap[planId];
+              _plansCodesList.forEach(function (planCode) {
+                if (itemMap[planCode] && (itemMap[planCode].subscribed || itemMap[planCode].status ===
+                  "Suspended")) {
+                  subscribedPlan = itemMap[planCode];
                 }
               });
 

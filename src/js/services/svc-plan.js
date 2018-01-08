@@ -52,7 +52,7 @@
             search: search
           })
             .then(function (resp) {
-              $log.debug("getPlansDescriptions response.");
+              $log.debug("getPlansDescriptions response.", resp);
               var itemMap = resp.items.reduce(function (accum, item) {
                 accum[item.productId] = item;
                 return accum;
@@ -78,7 +78,7 @@
 
           subscriptionStatusService.list(_plansCodesList, companyId)
             .then(function (resp) {
-              $log.debug("getCompanyPlan response.");
+              $log.debug("getCompanyPlan response.", resp);
 
               var itemMap = resp.reduce(function (accum, item) {
                 accum[item.pc] = item;
@@ -90,9 +90,10 @@
                 status: "Subscribed"
               };
 
-              _plansCodesList.forEach(function (planId) {
-                if (itemMap[planId] && (itemMap[planId].subscribed || itemMap[planId].status === "Suspended")) {
-                  subscribedPlan = itemMap[planId];
+              _plansCodesList.forEach(function (planCode) {
+                if (itemMap[planCode] && (itemMap[planCode].subscribed || itemMap[planCode].status ===
+                  "Suspended")) {
+                  subscribedPlan = itemMap[planCode];
                 }
               });
 
