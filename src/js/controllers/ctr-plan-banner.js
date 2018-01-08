@@ -27,7 +27,12 @@ angular.module("risevision.common.header")
         $modal.open({
           template: $templateCache.get("plans-modal.html"),
           controller: "PlansModalCtrl",
-          size: "lg"
+          size: "lg",
+          resolve: {
+            currentPlan: function () {
+              return $scope.plan;
+            }
+          }
         });
       };
     }
