@@ -57,14 +57,17 @@ describe("Services: plan", function() {
     inject(function($injector){
       planFactory = $injector.get("planFactory");
       subscriptionStatusService = $injector.get("subscriptionStatusService");
-      FREE_PLAN_ID = $injector.get("FREE_PLAN_ID");
-      FREE_PLAN_CODE = $injector.get("FREE_PLAN_CODE");
-      BASIC_PLAN_CODE = $injector.get("BASIC_PLAN_CODE");
-      BASIC_PLAN_ID = $injector.get("BASIC_PLAN_ID");
-      ADVANCED_PLAN_CODE = $injector.get("ADVANCED_PLAN_CODE");
-      ADVANCED_PLAN_ID = $injector.get("ADVANCED_PLAN_ID");
-      ENTERPRISE_PLAN_CODE = $injector.get("ENTERPRISE_PLAN_CODE");
-      ENTERPRISE_PLAN_ID = $injector.get("ENTERPRISE_PLAN_ID");
+
+      var plansByType = _.keyBy($injector.get("PLANS_LIST"), "type");
+
+      FREE_PLAN_CODE = plansByType.free.pc;
+      FREE_PLAN_ID = plansByType.free.productId;
+      BASIC_PLAN_CODE = plansByType.basic.pc;
+      BASIC_PLAN_ID = plansByType.basic.productId;
+      ADVANCED_PLAN_CODE = plansByType.advanced.pc;
+      ADVANCED_PLAN_ID = plansByType.advanced.productId;
+      ENTERPRISE_PLAN_CODE = plansByType.enterprise.pc;
+      ENTERPRISE_PLAN_ID = plansByType.enterprise.productId;
     });
   });
 
@@ -103,7 +106,7 @@ describe("Services: plan", function() {
     it("should return existing plans", function(done) {
       sandbox.stub(planFactory, "getPlans").returns(Q.resolve({
         items: [{
-          productId: BASIC_PLAN_CODE,
+          productId: BASIC_PLAN_ID,
           descriptionShort: "Basic Plan"
         }]
       }));
@@ -113,8 +116,8 @@ describe("Services: plan", function() {
         expect(planFactory.getPlans).to.have.been.called;
         expect(resp[FREE_PLAN_ID]).to.be.ok;
         expect(resp[FREE_PLAN_ID].descriptionShort).to.be.ok;
-        expect(resp[BASIC_PLAN_CODE]).to.be.ok;
-        expect(resp[BASIC_PLAN_CODE].descriptionShort).to.be.ok;
+        expect(resp[BASIC_PLAN_ID]).to.be.ok;
+        expect(resp[BASIC_PLAN_ID].descriptionShort).to.be.ok;
         done();
       });
     });

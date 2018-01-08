@@ -73,6 +73,7 @@
   "globals": {
 
     "$": false,
+    "_": false,
     "Stripe": false,
     "Spinner": false,
     "SignInBaseCtr": false,

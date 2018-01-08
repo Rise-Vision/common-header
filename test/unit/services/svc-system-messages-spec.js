@@ -52,7 +52,7 @@ describe("Services: Core System Messages", function() {
         return deferred.promise;
       });
       systemMessages.resetAndGetMessages().then(function () {
-        var startDates = _.pluck(systemMessages, "startDate");
+        var startDates = _.map(systemMessages, "startDate");
         expect(startDates).to.deep.equal([
           "2014-04-18", "2014-04-18", "2014-02-01",
           "2010-07-11", "2005-12-23", "2003-01-02",

@@ -3288,28 +3288,32 @@ angular.module("risevision.common.geodata", [])
   angular.module("risevision.common.plan", [
     "risevision.common.gapi"
   ])
-    .value("FREE_PLAN_ID", "000")
-    .value("FREE_PLAN_CODE", "000")
-    .value("FREE_PLAN_DESCRIPTION",
-      "Get Rise Storage, Embedded Presentations, and Template Library for one great price.")
-    .value("BASIC_PLAN_ID", "289")
-    .value("BASIC_PLAN_CODE", "40c092161f547f8f72c9f173cd8eebcb9ca5dd25")
-    .value("ADVANCED_PLAN_ID", "290")
-    .value("ADVANCED_PLAN_CODE", "93b5595f0d7e4c04a3baba1102ffaecb17607bf4")
-    .value("ENTERPRISE_PLAN_ID", "301")
-    .value("ENTERPRISE_PLAN_CODE", "b1844725d63fde197f5125b58b6cba6260ee7a57")
-    .factory("planFactory", ["$q", "$log", "storeAPILoader", "subscriptionStatusService", "FREE_PLAN_ID",
-      "FREE_PLAN_CODE", "FREE_PLAN_DESCRIPTION", "BASIC_PLAN_CODE", "ADVANCED_PLAN_CODE", "ENTERPRISE_PLAN_CODE",
-      function ($q, $log, storeAPILoader, subscriptionStatusService, FREE_PLAN_ID, FREE_PLAN_CODE,
-        FREE_PLAN_DESCRIPTION, BASIC_PLAN_CODE, ADVANCED_PLAN_CODE, ENTERPRISE_PLAN_CODE) {
+    .value("PLANS_LIST", [{
+      type: "free",
+      productId: "000",
+      pc: "000",
+      status: "Subscribed",
+      price: "0",
+      descriptionShort: "Get Rise Storage, Embedded Presentations, and Template Library for one great price."
+    }, {
+      type: "basic",
+      productId: "289",
+      pc: "40c092161f547f8f72c9f173cd8eebcb9ca5dd25"
+    }, {
+      type: "advanced",
+      productId: "290",
+      pc: "93b5595f0d7e4c04a3baba1102ffaecb17607bf4"
+    }, {
+      type: "enterprise",
+      productId: "301",
+      pc: "b1844725d63fde197f5125b58b6cba6260ee7a57"
+    }])
+    .factory("planFactory", ["$q", "$log", "storeAPILoader", "subscriptionStatusService", "PLANS_LIST",
+      function ($q, $log, storeAPILoader, subscriptionStatusService, PLANS_LIST) {
         var _factory = {};
-        var _plansCodesList = [BASIC_PLAN_CODE, ADVANCED_PLAN_CODE, ENTERPRISE_PLAN_CODE];
-        var _planTypeMap = {};
-
-        _planTypeMap[FREE_PLAN_CODE] = "free";
-        _planTypeMap[BASIC_PLAN_CODE] = "basic";
-        _planTypeMap[ADVANCED_PLAN_CODE] = "advanced";
-        _planTypeMap[ENTERPRISE_PLAN_CODE] = "enterprise";
+        var _plansCodesList = _.map(PLANS_LIST, "pc");
+        var _plansByType = _.keyBy(PLANS_LIST, "type");
+        var _plansByCode = _.keyBy(PLANS_LIST, "pc");
 
         _factory.getPlans = function (params) { // companyId, search
           $log.debug("getPlans called.");
@@ -3337,15 +3341,10 @@ angular.module("risevision.common.geodata", [])
           })
             .then(function (resp) {
               $log.debug("getPlansDescriptions response.", resp);
-              var itemMap = resp.items.reduce(function (accum, item) {
-                accum[item.productId] = item;
-                return accum;
-              }, {});
+              var itemMap = _.keyBy(resp.items, "productId");
 
-              itemMap[FREE_PLAN_ID] = {
-                productId: FREE_PLAN_ID,
-                descriptionShort: FREE_PLAN_DESCRIPTION
-              };
+              // Add free plan, since it's not returned by the service
+              itemMap[_plansByType.free.productId] = _plansByType.free;
 
               deferred.resolve(itemMap);
             })
@@ -3364,24 +3363,18 @@ angular.module("risevision.common.geodata", [])
             .then(function (resp) {
               $log.debug("getCompanyPlan response.", resp);
 
-              var itemMap = resp.reduce(function (accum, item) {
-                accum[item.pc] = item;
-                return accum;
-              }, {});
-              var subscribedPlan = {
-                pc: FREE_PLAN_CODE,
-                subscribed: true,
-                status: "Subscribed"
-              };
+              // Use Free as default
+              var subscribedPlan = _plansByType.free;
+              var itemMap = _.keyBy(resp, "pc");
 
               _plansCodesList.forEach(function (planCode) {
-                if (itemMap[planCode] && (itemMap[planCode].subscribed || itemMap[planCode].status ===
-                  "Suspended")) {
+                if (itemMap[planCode] &&
+                  (itemMap[planCode].subscribed || itemMap[planCode].status === "Suspended")) {
                   subscribedPlan = itemMap[planCode];
                 }
               });
 
-              subscribedPlan.type = _planTypeMap[subscribedPlan.pc];
+              subscribedPlan.type = _plansByCode[subscribedPlan.pc].type;
 
               deferred.resolve(subscribedPlan);
             })
