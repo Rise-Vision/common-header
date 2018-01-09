@@ -13,7 +13,7 @@ angular.module("risevision.common.header")
           $scope.plans = plans;
         })
         .catch(function (err) {
-          $log.debug("Failed to load detauls", err);
+          $log.debug("Failed to load details", err);
         })
         .finally(function () {
           $loading.stop("plans-modal");
