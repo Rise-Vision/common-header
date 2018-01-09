@@ -3407,6 +3407,7 @@ angular.module("risevision.common.geodata", [])
               $log.debug("getPlansDetails response.", resp);
 
               return _getSelectedCurrency().then(function (currency) {
+                console.log("CURRENCY", currency);
                 resp.items.forEach(function (plan) {
                   var monthKey = "per Company per Month";
                   var priceMap = _.keyBy(plan.pricing, "unit");

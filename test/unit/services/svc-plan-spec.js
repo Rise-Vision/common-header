@@ -45,6 +45,26 @@ describe("Services: plan", function() {
         list: function() {}
       };
     });
+    $provide.service("userState", function () {
+      return {
+        getCopyOfUserCompany: function() {
+          return {};
+        }
+      };
+    });
+    $provide.service("currencyService", function () {
+      return function() {
+        return Q.resolve({
+          getByCountry: function() {
+            return {
+              pickPrice: function(val1) {
+                return val1;
+              }
+            };
+          }
+        });
+      };
+    });
   }));
 
   var sandbox, planFactory, subscriptionStatusService;
