@@ -250,7 +250,12 @@
       }
     }
     & .product-description {
-      min-height: 80px;
+      min-height: 130px;
+      @media (min-width: $screen-md-min) {
+        .product-description {
+          min-height: 40px;
+        }
+      }
     }
     & .info {
       position: absolute;

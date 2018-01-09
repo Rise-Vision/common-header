@@ -1,35 +1,35 @@
 <!-- Common Header Plan Info -->
 <div>
   <div class="alert alert-plan plan-active text-right" ng-show="plan.type === 'free'">
-    <div class="container">
+    <div class="u_margin-right">
       <strong>Get more out of Rise Vision!</strong>
       <a href="#" ng-click="showPlans()" class="u_margin-left">See Our Plans</a>
     </div>
   </div>
 
   <div class="alert alert-plan plan-active text-right" ng-show="plan.type === 'basic' && plan.subscribed">
-    <div class="container">
+    <div class="u_margin-right">
       <strong>Basic Plan</strong>
       <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a>
     </div>
   </div>
 
   <div class="alert alert-plan plan-active text-right" ng-show="plan.type === 'advanced' && plan.subscribed">
-    <div class="container">
+    <div class="u_margin-right">
       <strong>Advanced Plan</strong>
       <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a>
     </div>
   </div>
 
   <div class="alert alert-plan plan-active text-right" ng-show="plan.type === 'enterprise' && plan.subscribed">
-    <div class="container">
+    <div class="u_margin-right">
       <strong>Enterprise Plan</strong>
       <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a>
     </div>
   </div>
 
   <div class="alert alert-plan plan-suspended text-center" ng-show="plan.status === 'Suspended'">
-    <div class="container">There was an issue processing your payment. Please update your billing information. Your Displays may be affected.
+    <div class="u_margin-right">There was an issue processing your payment. Please update your billing information. Your Displays may be affected.
       <a href="{{storeAccountUrl}}" target="_blank" class="u_margin-left">Update Billing</a>
     </div>
   </div>

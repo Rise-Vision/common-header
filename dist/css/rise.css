@@ -11747,7 +11747,10 @@ li.dropdown-header {
       color: #3C7BDA;
       font-weight: bold; }
   .grid-list .panel .product-description, .grid-list .select-subcompany-modal .list-group .product-description, .select-subcompany-modal .grid-list .list-group .product-description, .grid-list .panel-editable .product-description, .grid-list .card .product-description, .grid-list #appLauncherContainer .scrollable-list .product-description, #appLauncherContainer .grid-list .scrollable-list .product-description {
-    min-height: 80px; }
+    min-height: 130px; }
+    @media (min-width: 992px) {
+      .grid-list .panel .product-description .product-description, .grid-list .select-subcompany-modal .list-group .product-description .product-description, .select-subcompany-modal .grid-list .list-group .product-description .product-description, .grid-list .panel-editable .product-description .product-description, .grid-list .card .product-description .product-description, .grid-list #appLauncherContainer .scrollable-list .product-description .product-description, #appLauncherContainer .grid-list .scrollable-list .product-description .product-description {
+        min-height: 40px; } }
   .grid-list .panel .info, .grid-list .select-subcompany-modal .list-group .info, .select-subcompany-modal .grid-list .list-group .info, .grid-list .panel-editable .info, .grid-list .card .info, .grid-list #appLauncherContainer .scrollable-list .info, #appLauncherContainer .grid-list .scrollable-list .info {
     position: absolute;
     top: 0;
