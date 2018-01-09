@@ -156,9 +156,9 @@ describe("Services: plan", function() {
 
     it("should return Free Plan for a non subscribed company", function(done) {
       sandbox.stub(subscriptionStatusService, "list").returns(Q.resolve([
-        { pc: BASIC_PLAN_CODE, subscribed: false },
-        { pc: ADVANCED_PLAN_CODE, subscribed: false },
-        { pc: ENTERPRISE_PLAN_CODE, subscribed: false }
+        { pc: BASIC_PLAN_CODE, status: "Not Subscribed" },
+        { pc: ADVANCED_PLAN_CODE, status: "Not Subscribed" },
+        { pc: ENTERPRISE_PLAN_CODE, status: "Not Subscribed" }
       ]));
 
       planFactory.getCompanyPlan(companyId)
@@ -173,9 +173,9 @@ describe("Services: plan", function() {
 
     it("should return Basic Plan for a subscribed company", function(done) {
       sandbox.stub(subscriptionStatusService, "list").returns(Q.resolve([
-        { pc: BASIC_PLAN_CODE, subscribed: true, status: "Subscribed" },
-        { pc: ADVANCED_PLAN_CODE, subscribed: false },
-        { pc: ENTERPRISE_PLAN_CODE, subscribed: false }
+        { pc: BASIC_PLAN_CODE, status: "Subscribed" },
+        { pc: ADVANCED_PLAN_CODE, status: "Not Subscribed" },
+        { pc: ENTERPRISE_PLAN_CODE, status: "Not Subscribed" }
       ]));
 
       planFactory.getCompanyPlan(companyId)
@@ -190,9 +190,9 @@ describe("Services: plan", function() {
 
     it("should return Advanced Plan for a subscribed company", function(done) {
       sandbox.stub(subscriptionStatusService, "list").returns(Q.resolve([
-        { pc: BASIC_PLAN_CODE, subscribed: false },
-        { pc: ADVANCED_PLAN_CODE, subscribed: true, status: "Subscribed" },
-        { pc: ENTERPRISE_PLAN_CODE, subscribed: false }
+        { pc: BASIC_PLAN_CODE, status: "Not Subscribed" },
+        { pc: ADVANCED_PLAN_CODE, status: "Subscribed" },
+        { pc: ENTERPRISE_PLAN_CODE, status: "Not Subscribed" }
       ]));
 
       planFactory.getCompanyPlan(companyId)
@@ -207,9 +207,9 @@ describe("Services: plan", function() {
 
     it("should return Enterprise Plan for a subscribed company", function(done) {
       sandbox.stub(subscriptionStatusService, "list").returns(Q.resolve([
-        { pc: BASIC_PLAN_CODE, subscribed: false },
-        { pc: ADVANCED_PLAN_CODE, subscribed: false },
-        { pc: ENTERPRISE_PLAN_CODE, subscribed: true, status: "Subscribed" }
+        { pc: BASIC_PLAN_CODE, status: "Not Subscribed" },
+        { pc: ADVANCED_PLAN_CODE, status: "Not Subscribed" },
+        { pc: ENTERPRISE_PLAN_CODE, status: "Subscribed" }
       ]));
 
       planFactory.getCompanyPlan(companyId)
@@ -224,9 +224,9 @@ describe("Services: plan", function() {
 
     it("should return Free Plan for a cancelled company", function(done) {
       sandbox.stub(subscriptionStatusService, "list").returns(Q.resolve([
-        { pc: BASIC_PLAN_CODE, subscribed: false },
-        { pc: ADVANCED_PLAN_CODE, subscribed: false, status: "Cancelled" },
-        { pc: ENTERPRISE_PLAN_CODE, subscribed: false }
+        { pc: BASIC_PLAN_CODE, status: "Not Subscribed" },
+        { pc: ADVANCED_PLAN_CODE, status: "Cancelled" },
+        { pc: ENTERPRISE_PLAN_CODE, status: "Not Subscribed" }
       ]));
 
       planFactory.getCompanyPlan(companyId)
@@ -241,9 +241,9 @@ describe("Services: plan", function() {
 
     it("should return Advanced Plan for a suspended company", function(done) {
       sandbox.stub(subscriptionStatusService, "list").returns(Q.resolve([
-        { pc: BASIC_PLAN_CODE, subscribed: false },
-        { pc: ADVANCED_PLAN_CODE, subscribed: false, status: "Suspended" },
-        { pc: ENTERPRISE_PLAN_CODE, subscribed: false }
+        { pc: BASIC_PLAN_CODE, status: "Not Subscribed" },
+        { pc: ADVANCED_PLAN_CODE, status: "Suspended" },
+        { pc: ENTERPRISE_PLAN_CODE, status: "Not Subscribed" }
       ]));
 
       planFactory.getCompanyPlan(companyId)
@@ -258,9 +258,9 @@ describe("Services: plan", function() {
 
     it("should stay in Suspended plan even if they are Subscribed to a lower plan", function(done) {
       sandbox.stub(subscriptionStatusService, "list").returns(Q.resolve([
-        { pc: BASIC_PLAN_CODE, subscribed: true, status: "Subscribed" },
-        { pc: ADVANCED_PLAN_CODE, subscribed: false },
-        { pc: ENTERPRISE_PLAN_CODE, subscribed: false, status: "Suspended" }
+        { pc: BASIC_PLAN_CODE, status: "Subscribed" },
+        { pc: ADVANCED_PLAN_CODE, status: "Not Subscribed" },
+        { pc: ENTERPRISE_PLAN_CODE, status: "Suspended" }
       ]));
 
       planFactory.getCompanyPlan(companyId)

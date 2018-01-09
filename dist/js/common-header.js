@@ -3428,18 +3428,18 @@ angular.module("risevision.common.geodata", [])
           $log.debug("getCompanyPlan called.");
           var deferred = $q.defer();
 
-          subscriptionStatusService.list(_plansCodesList, companyId)
+          subscriptionStatusService.list(_plansCodesList.slice(1), companyId)
             .then(function (resp) {
               $log.debug("getCompanyPlan response.", resp);
 
               // Use Free as default
               var subscribedPlan = _plansByType.free;
-              var itemMap = _.keyBy(resp, "pc");
+              var plansMap = _.keyBy(resp, "pc");
 
               _plansCodesList.forEach(function (planCode) {
-                if (itemMap[planCode] &&
-                  (itemMap[planCode].subscribed || itemMap[planCode].status === "Suspended")) {
-                  subscribedPlan = itemMap[planCode];
+                if (plansMap[planCode] &&
+                  (plansMap[planCode].status === "Subscribed" || plansMap[planCode].status === "Suspended")) {
+                  subscribedPlan = plansMap[planCode];
                 }
               });
 
