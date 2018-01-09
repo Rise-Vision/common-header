@@ -1587,7 +1587,7 @@ angular.module("risevision.common.header")
           $scope.plans = plans;
         })
         .catch(function (err) {
-          $log.debug("Failed to load detauls", err);
+          $log.debug("Failed to load details", err);
         })
         .finally(function () {
           $loading.stop("plans-modal");
@@ -3443,8 +3443,8 @@ angular.module("risevision.common.geodata", [])
               var plansMap = _.keyBy(resp, "pc");
 
               _plansCodesList.forEach(function (planCode) {
-                if (plansMap[planCode] &&
-                  (plansMap[planCode].status === "Subscribed" || plansMap[planCode].status === "Suspended")) {
+                if (plansMap[planCode] && ["Subscribed", "Suspended", "On Trial"].indexOf(plansMap[planCode].status) >=
+                  0) {
                   subscribedPlan = plansMap[planCode];
                 }
               });

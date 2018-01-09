@@ -208,6 +208,23 @@ describe("Services: plan", function() {
       });
     });
 
+    it("should return Basic Plan for an On Trial company", function(done) {
+      sandbox.stub(subscriptionStatusService, "list").returns(Q.resolve([
+        { pc: BASIC_PLAN_CODE, status: "On Trial" },
+        { pc: ADVANCED_PLAN_CODE, status: "Not Subscribed" },
+        { pc: ENTERPRISE_PLAN_CODE, status: "Not Subscribed" }
+      ]));
+
+      planFactory.getCompanyPlan(companyId)
+      .then(function(plan) {
+        expect(subscriptionStatusService.list).to.have.been.called;
+        expect(plan.pc).to.equal(BASIC_PLAN_CODE);
+        expect(plan.type).to.equal("basic");
+        expect(plan.status).to.equal("On Trial");
+        done();
+      });
+    });
+
     it("should return Advanced Plan for a subscribed company", function(done) {
       sandbox.stub(subscriptionStatusService, "list").returns(Q.resolve([
         { pc: BASIC_PLAN_CODE, status: "Not Subscribed" },
