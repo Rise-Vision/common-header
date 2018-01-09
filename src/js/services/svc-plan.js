@@ -25,8 +25,9 @@
       productId: "301",
       pc: "b1844725d63fde197f5125b58b6cba6260ee7a57"
     }])
-    .factory("planFactory", ["$q", "$log", "storeAPILoader", "subscriptionStatusService", "PLANS_LIST",
-      function ($q, $log, storeAPILoader, subscriptionStatusService, PLANS_LIST) {
+    .factory("planFactory", ["$q", "$log", "userState", "storeAPILoader", "subscriptionStatusService",
+      "currencyService", "PLANS_LIST",
+      function ($q, $log, userState, storeAPILoader, subscriptionStatusService, currencyService, PLANS_LIST) {
         var _factory = {};
         var _plansCodesList = _.map(PLANS_LIST, "pc");
         var _plansByType = _.keyBy(PLANS_LIST, "type");
@@ -58,18 +59,22 @@
           })
             .then(function (resp) {
               $log.debug("getPlansDetails response.", resp);
-              resp.items.forEach(function (plan) {
-                var monthKey = "per Company per Month";
-                var priceMap = _.keyBy(plan.pricing, "unit");
 
-                plan.type = plan.name.toLowerCase().replace(" plan", "");
-                plan.priceMonth = priceMap[monthKey] && priceMap[monthKey].priceUSD;
+              return _getSelectedCurrency().then(function (currency) {
+                resp.items.forEach(function (plan) {
+                  var monthKey = "per Company per Month";
+                  var priceMap = _.keyBy(plan.pricing, "unit");
+                  var price = priceMap[monthKey] || {};
+
+                  plan.type = plan.name.toLowerCase().replace(" plan", "");
+                  plan.priceMonth = currency.pickPrice(price.priceUSD, price.priceCAD);
+                });
+
+                var planMap = _.keyBy(resp.items, "type");
+
+                // Add free plan, since it's not returned by the service
+                deferred.resolve([_plansByType.free, planMap.basic, planMap.advanced, planMap.enterprise]);
               });
-
-              var planMap = _.keyBy(resp.items, "type");
-
-              // Add free plan, since it's not returned by the service
-              deferred.resolve([_plansByType.free, planMap.basic, planMap.advanced, planMap.enterprise]);
             })
             .catch(function (err) {
               deferred.reject(err);
@@ -107,6 +112,15 @@
 
           return deferred.promise;
         };
+
+        function _getSelectedCurrency() {
+          return currencyService()
+            .then(function (currency) {
+              var company = userState.getCopyOfUserCompany();
+              var country = (company && company.country) ? company.country : "";
+              return currency.getByCountry(country);
+            });
+        }
 
         return _factory;
       }
