@@ -1,8 +1,8 @@
 angular.module("risevision.common.header")
 
 .controller("PlansModalCtrl", [
-  "$scope", "$modalInstance", "$log", "planFactory", "$loading", "currentPlan",
-  function ($scope, $modalInstance, $log, planFactory, $loading, currentPlan) {
+  "$scope", "$modalInstance", "$log", "$modal", "$templateCache", "planFactory", "$loading", "currentPlan",
+  function ($scope, $modalInstance, $log, $modal, $templateCache, planFactory, $loading, currentPlan) {
     $scope.currentPlan = currentPlan;
 
     $scope.getPlansDetails = function () {
@@ -18,6 +18,14 @@ angular.module("risevision.common.header")
         .finally(function () {
           $loading.stop("plans-modal");
         });
+    };
+
+    $scope.showDowngradeModal = function () {
+      $modal.open({
+        template: $templateCache.get("plans-downgrade-modal.html"),
+        controller: "PlansDowngradeModalCtrl",
+        size: "md"
+      });
     };
 
     $scope.canUpgrade = function (plan) {

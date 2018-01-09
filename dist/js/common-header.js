@@ -245,8 +245,20 @@ try {
   module = angular.module('risevision.common.header.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('plans-downgrade-modal.html',
+    '<div><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 id="icpModalTitle" class="modal-title">Downgrade</h3></div><div class="modal-body u_padding-lg" stop-event="touchend"><div class="container-fluid text-center u_padding-lg">Downgrading an account needs to be processed through our Support team. Please reach out and we\'ll help!<br><a class="btn btn-primary btn-lg u_margin-lg-top" href="https://www.risevision.com/contact-us?contact_form=enterprise" target="_blank">Contact Us</a></div></div><div class="modal-footer"></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plans-modal.html',
-    '<div rv-spinner="" rv-spinner-key="plans-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title">Choose Your Plan</h3></div><div class="modal-body u_padding-lg" stop-event="touchend"><div class="grid-list row"><div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="plan in plans"><div class="panel panel-default"><div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><div class="grid-list-text text-center"><h4 id="productName">{{plan.name}}</h4><p class="product-description">{{plan.descriptionShort}}</p><div><h1>${{plan.priceMonth}}</h1>&nbsp;per Company per Month</div><a ng-show="currentPlan.type === plan.type" target="_blank" class="cta_button btn btn-white u_margin-lg">Current Plan</a> <a ng-show="canUpgrade(plan)" target="_blank" href="https://store.risevision.com/product/{{plan.productId}}" class="cta_button btn btn-primary u_margin-lg">Subscribe</a> <a ng-show="canDowngrade(plan)" class="cta_button btn btn-default u_margin-lg">Downgrade</a> <a ng-show="plan.type === \'enterprise\' && currentPlan.type !== plan.type" target="_blank" href="https://www.risevision.com/contact-us" class="cta_button btn btn-primary u_margin-lg">Contact Us</a></div></div></div></div></div><div id="plansDowngradeModal" style="display:none; position: fixed; top: 80px; left: 28%; border: 1px solid #636262; z-index: 999999979; border-radius: 4px; background-color: white; width: 500px;"><div class="modal-header"><button type="button" class="close" id="hideDowngradeModal" aria-hidden="true"><i class="fa fa-times"></i></button><h3 id="icpModalTitle" class="modal-title">Downgrade</h3></div><div class="modal-body u_padding-lg" stop-event="touchend"><div class="container-fluid text-center u_padding-lg">Downgrading an account needs to be processed through our Support team. Please reach out and we\'ll help!<br><a class="btn btn-primary btn-lg u_margin-lg-top" href="https://www.risevision.com/contact-us?contact_form=enterprise" target="_blank">Contact Us</a></div></div><div class="modal-footer"></div></div><div class="text-center u_margin-md-top"><a class="btn btn-white btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/pricing">Learn More About Our Plan Pricing</a></div></div><div class="modal-footer"></div></div>');
+    '<div rv-spinner="" rv-spinner-key="plans-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title">Choose Your Plan</h3></div><div class="modal-body u_padding-lg" stop-event="touchend"><div class="grid-list row"><div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="plan in plans"><div class="panel panel-default"><div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><div class="grid-list-text text-center"><h4 id="productName">{{plan.name}}</h4><p class="product-description">{{plan.descriptionShort}}</p><div><h1>${{plan.priceMonth}}</h1>&nbsp;per Company per Month</div><a ng-show="currentPlan.type === plan.type" target="_blank" class="cta_button btn btn-white u_margin-lg">Current Plan</a> <a ng-show="canUpgrade(plan)" target="_blank" href="https://store.risevision.com/product/{{plan.productId}}" class="cta_button btn btn-primary u_margin-lg">Subscribe</a> <a ng-show="canDowngrade(plan)" ng-click="showDowngradeModal()" class="cta_button btn btn-default u_margin-lg">Downgrade</a> <a ng-show="plan.type === \'enterprise\' && currentPlan.type !== plan.type" target="_blank" href="https://www.risevision.com/contact-us" class="cta_button btn btn-primary u_margin-lg">Contact Us</a></div></div></div></div></div><div class="text-center u_margin-md-top"><a class="btn btn-white btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/pricing">Learn More About Our Plan Pricing</a></div></div><div class="modal-footer"></div></div>');
 }]);
 })();
 
@@ -1550,9 +1562,21 @@ angular.module("risevision.common.header")
 
 angular.module("risevision.common.header")
 
+.controller("PlansDowngradeModalCtrl", [
+  "$scope", "$modalInstance",
+  function ($scope, $modalInstance) {
+
+    $scope.dismiss = function () {
+      $modalInstance.dismiss("cancel");
+    };
+  }
+]);
+
+angular.module("risevision.common.header")
+
 .controller("PlansModalCtrl", [
-  "$scope", "$modalInstance", "$log", "planFactory", "$loading", "currentPlan",
-  function ($scope, $modalInstance, $log, planFactory, $loading, currentPlan) {
+  "$scope", "$modalInstance", "$log", "$modal", "$templateCache", "planFactory", "$loading", "currentPlan",
+  function ($scope, $modalInstance, $log, $modal, $templateCache, planFactory, $loading, currentPlan) {
     $scope.currentPlan = currentPlan;
 
     $scope.getPlansDetails = function () {
@@ -1568,6 +1592,14 @@ angular.module("risevision.common.header")
         .finally(function () {
           $loading.stop("plans-modal");
         });
+    };
+
+    $scope.showDowngradeModal = function () {
+      $modal.open({
+        template: $templateCache.get("plans-downgrade-modal.html"),
+        controller: "PlansDowngradeModalCtrl",
+        size: "md"
+      });
     };
 
     $scope.canUpgrade = function (plan) {
