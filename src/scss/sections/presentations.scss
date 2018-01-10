@@ -24,7 +24,7 @@ $panel-width: 290px;
             margin-right: 10px;
         }
         .column {
-            @media (max-width: 920px) {
+            @media (max-width: 720px) {
                 width: 100%;
                 flex: none !important;
             }
@@ -101,7 +101,7 @@ $panel-width: 290px;
             left: 0;
             top: 0;
         }
-        @media (max-width: 920px) {
+        @media (max-width: 720px) {
             #addPlaceholderButton {
                 width: 100%;
                 display: block;
@@ -113,10 +113,6 @@ $panel-width: 290px;
 
   .workspace-sidebar {
     padding: 8px 0;
-    position: absolute;
-    top: 49px;
-    height: calc(100vh - 140px);
-    width: $panel-width;
     overflow: hidden;
     background-color: #f7f7f7;
     -webkit-transition: all 0.5s;
@@ -124,12 +120,7 @@ $panel-width: 290px;
     transition: all 0.5s;
     border-right: 1px solid $light-gray;
     .scrollable-list {
-      min-height: 45px;
-      max-height: calc(100vh - 150px);
       font-size: 13px;
-    }
-    #listWithHandle.scrollable-list {
-      max-height: calc(100vh - 290px);
     }
     .editor-playlist {
       border: none;
@@ -137,29 +128,10 @@ $panel-width: 290px;
         margin-bottom: 20px;
       }
     }
-    @media (max-width: $screen-md) {
-      height: calc(100vh - 185px);
-    }
-    @media (max-width: $screen-sm) {
-      width: 100%;
-      position: relative;
-      z-index: 80;
-      top: 133px;
-      .scrollable-list {
-        max-height: calc(100vh - 420px);
-      }
-    }
     h4 {
       line-height: 33px;
       margin-bottom: 8px;
       margin-top: 0;
-    }
-    .workspace-sidebar-content {
-      width: calc((#{$panel-width} * 2));
-      /* Total width of panels */
-      @media (max-width: $screen-sm) {
-        width: 100%;
-      }
     }
     .table-playlist-items {
       tbody>tr>td {
@@ -168,51 +140,19 @@ $panel-width: 290px;
     }
     .ph-list,
     .ph-properties {
-      width: $panel-width;
       padding: 0 10px;
       -webkit-transition: all 0.5s;
       transition: all 0.5s;
-      @media (max-width: $screen-sm) {
-        width: 100vw;
-      }
-    }
-    .ph-list {
-    .editor-playlist {
-      height: calc(100vh - 210px);
-      max-height: calc(100vh - 240px);
-      @media (max-width: $screen-sm) {
-        margin-right: 0;
-        max-height: calc(100vh - 300px);
-      }
-      .editor-playlist-item {
-           & div:nth-child(2) {
-          display: flex;
-        }
-      }
-    }
-  }
-    .ph-settings {
-     @media (max-width: $screen-sm) {
-        .scrollable-list {
-          max-height: calc(100vh - 350px) !important;
-        }
-    }
     }
     .ph-properties {
       float: right;
       opacity: 0;
-        .scrollable-list {
-          max-height: calc(100vh - 240px);
-        }
       @media (max-width: $screen-sm) {
         -webkit-transform: translateX(0);
         /* Safari */
         transform: translateX(0);
         float: none;
         display: none;
-        .scrollable-list {
-          max-height: calc(100vh - 430px);
-        }
       }
     }
     &.show-ph-properties {
@@ -240,14 +180,14 @@ $panel-width: 290px;
         }
       }
     }
-  }  //sidebar
+  }  //END sidebar
 
 
   .workspace-board {
     background-color: #FFF;
     overflow-x: scroll;
     overflow-y: scroll;
-    height: calc(100vh - 105px);
+
     position: relative;
     z-index: 80;
     margin-left: $panel-width;
@@ -255,22 +195,13 @@ $panel-width: 290px;
     /* Safari 3.1 to 6.0 */
     transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     perspective: 800px;
-    @media (max-width: $screen-md) {
-      height: calc(100vh - 125px);
-    }
     @media (max-width: $screen-sm) {
-      position: absolute;
-      top: 55px;
-      left: 0;
       margin-left: 0;
-      width: 100%;
       z-index: 40;
     }
   }
   &.hide-sidebar {
     .workspace-toolbar {
-      width: calc(100% - 11px);
-      left: 0;
       padding-left: 11px;
     }
     .workspace-sidebar {
@@ -282,9 +213,6 @@ $panel-width: 290px;
       margin-left: 0;
     }
     @media (max-width: $screen-sm) {
-      .workspace-toolbar {
-        width: 100%;
-      }
       .workspace-sidebar {
         -webkit-transform: translateX(-100%);
         /* Safari */
@@ -294,34 +222,7 @@ $panel-width: 290px;
   }
 } //workspace
 
-.active-banner-mode {
-  .workspace-board {
-    height: calc(100vh - 125px);
-  }
-}
 
-.active-banner-mode-double {
-  .workspace-board {
-    height: calc(100vh - 150px);
-  }
-}
-
-.active-onboard-mode {
-  .workspace-board {
-   height: calc(100vh - 225px);
-  }
-  .workspace-sidebar {
-    height: calc(100vh - 225px);
-    .ph-properties .scrollable-list {
-          max-height: calc(100vh - 450px);
-        }
-    @media (max-width: $screen-sm) {
-      .ph-properties .scrollable-list {
-          max-height: calc(100vh - 470px);
-        }
-    }
-  }
-}
 
 .placeholder-item-name {
   @extend .u_ellipsis-md;

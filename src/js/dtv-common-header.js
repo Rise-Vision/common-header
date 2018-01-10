@@ -10,6 +10,7 @@ angular.module("risevision.common.header", [
   "risevision.common.header.directives",
   "risevision.common.header.filters",
   "risevision.common.i18n",
+  "risevision.common.plan",
   "risevision.common.systemmessages", "risevision.core.systemmessages",
   "risevision.core.countries",
   "risevision.core.oauth2",

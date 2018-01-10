@@ -78,7 +78,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('common-header.html',
-    '<nav class="navbar navbar-default navbar-static-top hidden-print" ng-class="{\'active-banner\': isSubcompanySelected() || isTestCompanySelected()}" role="navigation"><div class="container-fluid"><div class="navbar-header" style="width: 100%;"><a class="navbar-brand visible-md visible-lg" href="http://www.risevision.com/" target="{{newTabHome ? \'_blank\' : \'_self\'}}" ng-if="!inRVAFrame"><img src="//s3.amazonaws.com/Rise-Images/UI/logo.svg" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></a> <a class="navbar-brand hidden-md hidden-lg text-center" href="" off-canvas-toggle=""><i class="fa fa-bars"></i></a><ul class="nav navbar-nav navbar-right actions-nav pull-right"><ng-include replace-include="" ng-controller="HelpDropdownButtonCtrl" src="\'help-dropdown.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="SystemMessagesButtonCtrl" src="\'system-messages-button.html\'"></ng-include><ng-include replace-include="" ng-controller="ShoppingCartButtonCtrl" src="\'shoppingcart-button.html\'"></ng-include><ng-include replace-include="" ng-if="inRVAFrame" ng-controller="CloseFrameButtonCtrl" src="\'close-frame-button.html\'"></ng-include><ng-include ng-if="!inRVAFrame" replace-include="" src="\'app-nav-buttons.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="AuthButtonsCtr" src="\'auth-buttons.html\'"></ng-include><li ng-if="inRVAFrame" ng-controller="AuthButtonsCtr"></li></ul><div class="navbar-collapse navbar-left hidden-xs hidden-sm"><ul class="nav navbar-nav"><li class="env-name-nav-item visible-md visible-lg" ng-if="ENV_NAME"><span class="env-name-label">{{ENV_NAME}}</span></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a></li><li ng-if="!inRVAFrame && !hideHelpMenu"><a href="http://www.risevision.com/help/" target="_blank">Help</a></li></ul></div><div class="navbar-left visible-xs visible-sm" ng-if="ENV_NAME"><ul class="nav navbar-nav"><li class="env-name-nav-item"><span class="env-name-label">{{ENV_NAME}}</span></li></ul></div></div><ng-include replace-include="" ng-controller="TestCompanyBannerCtrl" src="\'test-company-banner.html\'"></ng-include><ng-include replace-include="" ng-controller="SubcompanyBannerCtrl" src="\'subcompany-banner.html\'"></ng-include></div></nav><div ng-show="cookieEnabled === false" class="bg-warning text-center u_padding-sm"><small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small></div><ng-include replace-include="" ng-controller="GlobalAlertsCtrl" src="\'global-alerts.html\'"></ng-include><nav class="off-canvas-nav" off-canvas-nav=""><ul class="nav nav-pills nav-stacked"><li off-canvas-toggle=""><i class="fa fa-times fa-2x pull-right"></i> <img src="//s3.amazonaws.com/rise-common/images/logo-small.png" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}">{{opt.title}}</a></li><li ng-if="!hideHelpMenu"><a target="_blank" href="http://www.risevision.com/help">Help</a></li></ul></nav><iframe name="logoutFrame" id="logoutFrame" style="display:none"></iframe>');
+    '<ng-include replace-include="" ng-controller="PlanBannerCtrl" src="\'plan-banner.html\'"></ng-include><nav class="navbar navbar-default navbar-static-top hidden-print" ng-class="{\'active-banner\': isSubcompanySelected() || isTestCompanySelected()}" role="navigation"><div class="container-fluid"><div class="navbar-header" style="width: 100%;"><a class="navbar-brand visible-md visible-lg" href="http://www.risevision.com/" target="{{newTabHome ? \'_blank\' : \'_self\'}}" ng-if="!inRVAFrame"><img src="//s3.amazonaws.com/Rise-Images/UI/logo.svg" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></a> <a class="navbar-brand hidden-md hidden-lg text-center" href="" off-canvas-toggle=""><i class="fa fa-bars"></i></a><ul class="nav navbar-nav navbar-right actions-nav pull-right"><ng-include replace-include="" ng-controller="HelpDropdownButtonCtrl" src="\'help-dropdown.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="SystemMessagesButtonCtrl" src="\'system-messages-button.html\'"></ng-include><ng-include replace-include="" ng-controller="ShoppingCartButtonCtrl" src="\'shoppingcart-button.html\'"></ng-include><ng-include replace-include="" ng-if="inRVAFrame" ng-controller="CloseFrameButtonCtrl" src="\'close-frame-button.html\'"></ng-include><ng-include ng-if="!inRVAFrame" replace-include="" src="\'app-nav-buttons.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="AuthButtonsCtr" src="\'auth-buttons.html\'"></ng-include><li ng-if="inRVAFrame" ng-controller="AuthButtonsCtr"></li></ul><div class="navbar-collapse navbar-left hidden-xs hidden-sm"><ul class="nav navbar-nav"><li class="env-name-nav-item visible-md visible-lg" ng-if="ENV_NAME"><span class="env-name-label">{{ENV_NAME}}</span></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a></li><li ng-if="!inRVAFrame && !hideHelpMenu"><a href="http://www.risevision.com/help/" target="_blank">Help</a></li></ul></div><div class="navbar-left visible-xs visible-sm" ng-if="ENV_NAME"><ul class="nav navbar-nav"><li class="env-name-nav-item"><span class="env-name-label">{{ENV_NAME}}</span></li></ul></div></div><ng-include replace-include="" ng-controller="TestCompanyBannerCtrl" src="\'test-company-banner.html\'"></ng-include><ng-include replace-include="" ng-controller="SubcompanyBannerCtrl" src="\'subcompany-banner.html\'"></ng-include></div></nav><div ng-show="cookieEnabled === false" class="bg-warning text-center u_padding-sm"><small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small></div><ng-include replace-include="" ng-controller="GlobalAlertsCtrl" src="\'global-alerts.html\'"></ng-include><nav class="off-canvas-nav" off-canvas-nav=""><ul class="nav nav-pills nav-stacked"><li off-canvas-toggle=""><i class="fa fa-times fa-2x pull-right"></i> <img src="//s3.amazonaws.com/rise-common/images/logo-small.png" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}">{{opt.title}}</a></li><li ng-if="!hideHelpMenu"><a target="_blank" href="http://www.risevision.com/help">Help</a></li></ul></nav><iframe name="logoutFrame" id="logoutFrame" style="display:none"></iframe>');
 }]);
 })();
 
@@ -233,6 +233,42 @@ try {
   module = angular.module('risevision.common.header.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('plan-banner.html',
+    '<div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'free\'"><div class="u_margin-right"><strong>Get more out of Rise Vision!</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">See Our Plans</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'basic\' && plan.subscribed"><div class="u_margin-right"><strong>Basic Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'advanced\' && plan.subscribed"><div class="u_margin-right"><strong>Advanced Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'enterprise\' && plan.subscribed"><div class="u_margin-right"><strong>Enterprise Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="plan.status === \'Suspended\'"><div class="u_margin-right">There was an issue processing your payment. Please update your billing information. Your Displays may be affected. <a href="{{storeAccountUrl}}" target="_blank" class="u_margin-left">Update Billing</a></div></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('plans-downgrade-modal.html',
+    '<div><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 id="icpModalTitle" class="modal-title">Downgrade</h3></div><div class="modal-body u_padding-lg" stop-event="touchend"><div class="container-fluid text-center u_padding-lg">Downgrading an account needs to be processed through our Support team. Please reach out and we\'ll help!<br><a class="btn btn-primary btn-lg u_margin-lg-top" href="https://www.risevision.com/contact-us?contact_form=enterprise" target="_blank">Contact Us</a></div></div><div class="modal-footer"></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('plans-modal.html',
+    '<div rv-spinner="" rv-spinner-key="plans-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title">Choose Your Plan</h3></div><div class="modal-body u_padding-lg" stop-event="touchend"><div class="grid-list row"><div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="plan in plans"><div class="u_cursor_disabled panel panel-default"><div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><div class="grid-list-text text-center"><h4 id="productName">{{plan.name}}</h4><p class="product-description">{{plan.descriptionShort}}</p><div><h1>${{plan.priceMonth}}</h1>&nbsp;per Company per Month</div><a ng-show="currentPlan.type === plan.type" target="_blank" class="cta_button btn btn-white u_margin-lg">Current Plan</a> <a ng-show="canUpgrade(plan)" target="_blank" href="https://store.risevision.com/product/{{plan.productId}}" class="cta_button btn btn-primary u_margin-lg">Subscribe</a> <a ng-show="canDowngrade(plan)" ng-click="showDowngradeModal()" class="cta_button btn btn-default u_margin-lg">Downgrade</a> <a ng-show="plan.type === \'enterprise\' && currentPlan.type !== plan.type" target="_blank" href="https://www.risevision.com/contact-us" class="cta_button btn btn-primary u_margin-lg">Contact Us</a></div></div></div></div></div><div class="text-center u_margin-md-top"><a class="btn btn-white btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/pricing">Learn More About Our Plan Pricing</a></div></div><div class="modal-footer"></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('registration-modal.html',
     '<div rv-spinner="" rv-spinner-key="registration-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close registration-cancel-button" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 class="modal-title">Let\'s finish with your details</h2></div><div class="modal-body registration-modal" stop-event="touchend"><div class="row"><div class="col-sm-8"><form id="registrationForm" novalidate="" role="form" name="forms.registrationForm"><div class="form-group" ng-class="{ \'has-error\' : forms.registrationForm.firstName.$invalid && !forms.registrationForm.firstName.$pristine }"><label for="firstName">First Name</label> <input type="text" class="form-control firstName" name="firstName" id="firstName" required="" ng-model="profile.firstName"><p ng-show="forms.registrationForm.firstName.$invalid && !forms.registrationForm.firstName.$pristine" class="help-block validation-error-message-first-name">Enter First Name.</p></div><div class="form-group" ng-class="{ \'has-error\' : forms.registrationForm.lastName.$invalid && !forms.registrationForm.lastName.$pristine }"><label for="lastName">Last Name</label> <input type="text" class="form-control lastName" name="lastName" id="lastName" required="" ng-model="profile.lastName"><p ng-show="forms.registrationForm.lastName.$invalid && !forms.registrationForm.lastName.$pristine" class="help-block validation-error-message-last-name">Enter Last Name.</p></div><div class="form-group" ng-show="newUser" ng-class="{\'has-error\': forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine}"><label for="website">Website</label> <input type="text" class="form-control website" placeholder="http://" name="website" id="website" ng-model="company.website" website-validator=""><p ng-show="forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine" class="help-block validation-error-message-website">Please provide a valid URL.</p></div><div class="checkbox form-group" ng-class="{ \'has-error\' : forms.registrationForm.accepted.$invalid && !userForm.accepted.$pristine }"><label><input type="checkbox" name="accepted" ng-model="profile.accepted" class="accept-terms-checkbox" required=""> I accept the terms of <a href="https://www.risevision.com/terms-of-service" target="_blank">Service and Privacy</a><p ng-show="forms.registrationForm.accepted.$invalid && !forms.registrationForm.accepted.$pristine" class="help-block validation-error-message-accepted">You must accept terms and condtions.</p></label></div><div class="checkbox form-group"><label><input type="checkbox" class="sign-up-newsletter-checkbox" ng-model="profile.mailSyncEnabled"> Sign up for our newsletter</label></div><div class="u_margin-md-top"><button ng-click="save()" name="create-account" type="button" class="btn btn-lg btn-success btn-block registration-save-button" ng-disabled="registering">Create Account <i class="fa fa-white fa-check icon-right"></i></button> <button type="button" class="btn hidden btn-lg btn-link btn-fixed-width" ng-disabled="registering" ng-click="closeModal()">Cancel</button></div></form></div><div class="col-sm-4"><div class="signup-counters"><div class="counter"><p>129</p><span>New Companies Added Yesterday</span></div><div class="counter"><p>72,990</p><span>Total Companies</span></div><div class="counter"><p>120</p><span>Countries with Active Displays</span></div></div></div></div></div></div>');
 }]);
@@ -358,6 +394,7 @@ angular.module("risevision.common.header", [
   "risevision.common.header.directives",
   "risevision.common.header.filters",
   "risevision.common.i18n",
+  "risevision.common.plan",
   "risevision.common.systemmessages", "risevision.core.systemmessages",
   "risevision.core.countries",
   "risevision.core.oauth2",
@@ -1481,6 +1518,126 @@ angular.module("risevision.common.header")
       }
     });
   }
+]);
+
+angular.module("risevision.common.header")
+  .controller("PlanBannerCtrl", ["$scope", "$rootScope", "$log", "$modal", "$templateCache", "userState", "planFactory",
+    "STORE_URL", "ACCOUNT_PATH",
+    function ($scope, $rootScope, $log, $modal, $templateCache, userState, planFactory, STORE_URL, ACCOUNT_PATH) {
+      $scope.plan = {};
+
+      $rootScope.$on("risevision.company.selectedCompanyChanged", function () {
+        $scope.companyId = userState.getSelectedCompanyId();
+        $scope.storeAccountUrl = STORE_URL + ACCOUNT_PATH.replace("companyId", $scope.companyId);
+        $scope.loadCompanyPlan();
+      });
+
+      $scope.loadCompanyPlan = function () {
+        if (userState.getSelectedCompanyId()) {
+          planFactory.getCompanyPlan($scope.companyId)
+            .then(function (plan) {
+              $log.debug("Current plan", plan);
+              $scope.plan = plan;
+            })
+            .catch(function (err) {
+              $log.debug("Failed to load company's plan", err);
+            });
+        }
+      };
+
+      $scope.showPlans = function () {
+        $modal.open({
+          template: $templateCache.get("plans-modal.html"),
+          controller: "PlansModalCtrl",
+          size: "lg",
+          resolve: {
+            currentPlan: function () {
+              return $scope.plan;
+            }
+          }
+        });
+      };
+    }
+  ]);
+
+angular.module("risevision.common.header")
+
+.controller("PlansDowngradeModalCtrl", [
+  "$scope", "$modalInstance",
+  function ($scope, $modalInstance) {
+
+    $scope.dismiss = function () {
+      $modalInstance.dismiss("cancel");
+    };
+  }
+]);
+
+angular.module("risevision.common.header")
+
+.controller("PlansModalCtrl", [
+  "$scope", "$modalInstance", "$log", "$modal", "$templateCache", "planFactory", "$loading", "currentPlan",
+  function ($scope, $modalInstance, $log, $modal, $templateCache, planFactory, $loading, currentPlan) {
+    $scope.currentPlan = currentPlan;
+
+    $scope.getPlansDetails = function () {
+      $loading.start("plans-modal");
+
+      planFactory.getPlansDetails()
+        .then(function (plans) {
+          $scope.plans = plans;
+        })
+        .catch(function (err) {
+          $log.debug("Failed to load details", err);
+        })
+        .finally(function () {
+          $loading.stop("plans-modal");
+        });
+    };
+
+    $scope.showDowngradeModal = function () {
+      $modal.open({
+        template: $templateCache.get("plans-downgrade-modal.html"),
+        controller: "PlansDowngradeModalCtrl",
+        size: "md"
+      });
+    };
+
+    $scope.canUpgrade = function (plan) {
+      if (currentPlan.type === plan.type) {
+        return false;
+      } else if (currentPlan.type === "enterprise") {
+        return false;
+      } else if (currentPlan.type === "basic" && plan.type === "advanced") {
+        return true;
+      } else if (currentPlan.type === "free" && (plan.type === "basic" || plan.type === "advanced")) {
+        return true;
+      }
+
+      return false;
+    };
+
+    $scope.canDowngrade = function (plan) {
+      if (currentPlan.type === plan.type) {
+        return false;
+      } else if (currentPlan.type === "enterprise") {
+        return true;
+      } else if (currentPlan.type === "advanced" && (plan.type === "free" || plan.type === "basic")) {
+        return true;
+      } else if (currentPlan.type === "basic" && plan.type === "free") {
+        return true;
+      }
+
+      return false;
+    };
+
+    $scope.dismiss = function () {
+      $modalInstance.dismiss("cancel");
+    };
+
+    $scope.getPlansDetails();
+  }
+
+
 ]);
 
 angular.module("risevision.common.header")
@@ -3186,6 +3343,138 @@ angular.module("risevision.common.geodata", [])
   ["(GMT +12:00) Auckland, Fiji, Kamchatka, Marshall Is.", "720"],
   ["(GMT +13:00) Nuku'alofa", "780"],
 ]);
+
+(function (angular) {
+
+  "use strict";
+  angular.module("risevision.common.plan", [
+    "risevision.common.gapi",
+    "risevision.common.currency"
+  ])
+    .value("PLANS_LIST", [{
+      name: "Free",
+      type: "free",
+      productId: "000",
+      pc: "000",
+      status: "Subscribed",
+      priceMonth: 0,
+      descriptionShort: "Get Rise Storage, Embedded Presentations, and Template Library for one great price."
+    }, {
+      type: "basic",
+      productId: "289",
+      pc: "40c092161f547f8f72c9f173cd8eebcb9ca5dd25"
+    }, {
+      type: "advanced",
+      productId: "290",
+      pc: "93b5595f0d7e4c04a3baba1102ffaecb17607bf4"
+    }, {
+      type: "enterprise",
+      productId: "301",
+      pc: "b1844725d63fde197f5125b58b6cba6260ee7a57"
+    }])
+    .factory("planFactory", ["$q", "$log", "userState", "storeAPILoader", "subscriptionStatusService",
+      "currencyService", "PLANS_LIST",
+      function ($q, $log, userState, storeAPILoader, subscriptionStatusService, currencyService, PLANS_LIST) {
+        var _factory = {};
+        var _plansCodesList = _.map(PLANS_LIST, "pc");
+        var _plansByType = _.keyBy(PLANS_LIST, "type");
+        var _plansByCode = _.keyBy(PLANS_LIST, "pc");
+
+        _factory.getPlans = function (params) { // companyId, search
+          $log.debug("getPlans called.");
+          var deferred = $q.defer();
+          storeAPILoader().then(function (riseApi) {
+            riseApi.product.list(params).execute(function (resp) {
+              $log.debug("getPlans response", resp);
+              if (!resp.error) {
+                deferred.resolve(resp);
+              } else {
+                deferred.reject(resp.error);
+              }
+            });
+          });
+          return deferred.promise;
+        };
+
+        _factory.getPlansDetails = function () {
+          $log.debug("getPlansDetails called.");
+          var deferred = $q.defer();
+          var search = "(productTag=Plans)";
+
+          _factory.getPlans({
+            search: search
+          })
+            .then(function (resp) {
+              $log.debug("getPlansDetails response.", resp);
+
+              return _getSelectedCurrency().then(function (currency) {
+                console.log("CURRENCY", currency);
+                resp.items.forEach(function (plan) {
+                  var monthKey = "per Company per Month";
+                  var priceMap = _.keyBy(plan.pricing, "unit");
+                  var price = priceMap[monthKey] || {};
+
+                  plan.type = plan.name.toLowerCase().replace(" plan", "");
+                  plan.priceMonth = currency.pickPrice(price.priceUSD, price.priceCAD);
+                });
+
+                var planMap = _.keyBy(resp.items, "type");
+
+                // Add free plan, since it's not returned by the service
+                deferred.resolve([_plansByType.free, planMap.basic, planMap.advanced, planMap.enterprise]);
+              });
+            })
+            .catch(function (err) {
+              deferred.reject(err);
+            });
+
+          return deferred.promise;
+        };
+
+        _factory.getCompanyPlan = function (companyId) {
+          $log.debug("getCompanyPlan called.");
+          var deferred = $q.defer();
+
+          subscriptionStatusService.list(_plansCodesList.slice(1), companyId)
+            .then(function (resp) {
+              $log.debug("getCompanyPlan response.", resp);
+
+              // Use Free as default
+              var subscribedPlan = _plansByType.free;
+              var plansMap = _.keyBy(resp, "pc");
+
+              _plansCodesList.forEach(function (planCode) {
+                if (plansMap[planCode] && ["Subscribed", "Suspended", "On Trial"].indexOf(plansMap[planCode].status) >=
+                  0) {
+                  subscribedPlan = plansMap[planCode];
+                }
+              });
+
+              subscribedPlan.type = _plansByCode[subscribedPlan.pc].type;
+
+              deferred.resolve(subscribedPlan);
+            })
+            .catch(function (err) {
+              deferred.reject(err);
+            });
+
+          return deferred.promise;
+        };
+
+        function _getSelectedCurrency() {
+          return currencyService()
+            .then(function (currency) {
+              var company = userState.getCopyOfUserCompany();
+              var country = (company && company.country) ? company.country : "";
+              return currency.getByCountry(country);
+            });
+        }
+
+        return _factory;
+      }
+    ]);
+
+})(angular);
 
 (function (angular) {
   "use strict";
@@ -8720,10 +9009,6 @@ angular.module("risevision.common.components.svg", [])
           "Suspended", "Cancelled", "Free", "Not Subscribed",
           "Product Not Found", "Company Not Found", "Error"
         ];
-        var responseCode = ["on-trial", "trial-expired", "subscribed",
-          "suspended", "cancelled", "free", "not-subscribed",
-          "product-not-found", "company-not-found", "error"
-        ];
         var _MS_PER_DAY = 1000 * 60 * 60 * 24;
 
         // a and b are javascript Date objects
@@ -8749,71 +9034,78 @@ angular.module("risevision.common.components.svg", [])
           return deferred.promise;
         };
 
-        var checkSubscriptionStatus = function (productCode, companyId,
+        var checkSubscriptionStatus = function (productCodes, companyId,
           displayId) {
           var deferred = $q.defer();
 
+          productCodes = Array.isArray(productCodes) ? productCodes : [
+            productCodes
+          ];
+
           var url = STORE_SERVER_URL +
             PATH_URL.replace("companyId", companyId) +
-            productCode;
+            productCodes.join(",");
 
           if (displayId) {
             url = STORE_SERVER_URL +
-              PATH_URL_BY_DISPLAY_ID.replace("productCode", productCode) +
+              PATH_URL_BY_DISPLAY_ID.replace("productCode", productCodes.join(
+                ",")) +
               displayId;
           }
 
           $http.get(url).then(function (response) {
             if (response && response.data && response.data.length) {
-              var subscriptionStatus = response.data[0];
+              var statusList = [];
 
-              subscriptionStatus.plural = "";
+              for (var i = 0; i < response.data.length; i++) {
+                var subscriptionStatus = response.data[i];
 
-              var statusIndex = responseType.indexOf(subscriptionStatus
-                .status);
+                statusList.push(subscriptionStatus);
+                subscriptionStatus.plural = "";
+                subscriptionStatus.statusCode = subscriptionStatus.status
+                  .toLowerCase().replace(" ", "-");
 
-              if (statusIndex >= 0) {
-                subscriptionStatus.statusCode = responseCode[
-                  statusIndex];
-              }
-
-              if (subscriptionStatus.status === "") {
-                subscriptionStatus.status = "N/A";
-                subscriptionStatus.statusCode = "na";
-                subscriptionStatus.subscribed = false;
-              } else if (subscriptionStatus.status === responseType[0] ||
-                subscriptionStatus.status === responseType[2] ||
-                subscriptionStatus.status === responseType[5]) {
-                subscriptionStatus.subscribed = true;
-              } else {
-                subscriptionStatus.subscribed = false;
-              }
-
-              if (subscriptionStatus.statusCode === "not-subscribed" &&
-                subscriptionStatus.trialPeriod && subscriptionStatus.trialPeriod >
-                0) {
-                subscriptionStatus.statusCode = "trial-available";
-                subscriptionStatus.subscribed = true;
-              }
-
-              if (subscriptionStatus.expiry && subscriptionStatus.statusCode ===
-                "on-trial") {
-                subscriptionStatus.expiry = new Date(subscriptionStatus
-                  .expiry);
-
-                if (subscriptionStatus.expiry instanceof Date && !isNaN(
-                  subscriptionStatus.expiry.valueOf())) {
-                  subscriptionStatus.expiry = dateDiffInDays(new Date(),
-                    subscriptionStatus.expiry);
+                if (subscriptionStatus.status === "") {
+                  subscriptionStatus.status = "N/A";
+                  subscriptionStatus.statusCode = "na";
+                  subscriptionStatus.subscribed = false;
+                } else if (subscriptionStatus.status === responseType[0] ||
+                  subscriptionStatus.status === responseType[2] ||
+                  subscriptionStatus.status === responseType[5]) {
+                  subscriptionStatus.subscribed = true;
+                } else {
+                  subscriptionStatus.subscribed = false;
                 }
 
-                if (subscriptionStatus.expiry === 0) {
-                  subscriptionStatus.plural = "-zero";
-                } else if (subscriptionStatus.expiry > 1) {
-                  subscriptionStatus.plural = "-many";
+                if (subscriptionStatus.statusCode === "not-subscribed" &&
+                  subscriptionStatus.trialPeriod && subscriptionStatus.trialPeriod >
+                  0) {
+                  subscriptionStatus.statusCode = "trial-available";
+                  subscriptionStatus.subscribed = true;
+                }
+
+                if (subscriptionStatus.expiry && subscriptionStatus.statusCode ===
+                  "on-trial") {
+                  subscriptionStatus.expiry = new Date(
+                    subscriptionStatus
+                    .expiry);
+
+                  if (subscriptionStatus.expiry instanceof Date && !
+                    isNaN(
+                      subscriptionStatus.expiry.valueOf())) {
+                    subscriptionStatus.expiry = dateDiffInDays(new Date(),
+                      subscriptionStatus.expiry);
+                  }
+
+                  if (subscriptionStatus.expiry === 0) {
+                    subscriptionStatus.plural = "-zero";
+                  } else if (subscriptionStatus.expiry > 1) {
+                    subscriptionStatus.plural = "-many";
+                  }
                 }
               }
-              deferred.resolve(subscriptionStatus);
+
+              deferred.resolve(statusList);
             } else {
               deferred.reject("No response");
             }
@@ -8824,7 +9116,9 @@ angular.module("risevision.common.components.svg", [])
 
         this.get = function (productCode, companyId, displayId) {
           return checkSubscriptionStatus(productCode, companyId, displayId)
-            .then(function (subscriptionStatus) {
+            .then(function (statusList) {
+              var subscriptionStatus = statusList[0];
+
               if (subscriptionStatus.subscribed === false) {
                 // double check store authorization in case they're authorized
                 return checkAuthorizedStatus(productCode, companyId)
@@ -8837,6 +9131,10 @@ angular.module("risevision.common.components.svg", [])
                 return subscriptionStatus;
               }
             });
+        };
+
+        this.list = function (productCodes, companyId, displayId) {
+          return checkSubscriptionStatus(productCodes, companyId, displayId);
         };
 
       }
