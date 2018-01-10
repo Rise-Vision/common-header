@@ -3348,7 +3348,8 @@ angular.module("risevision.common.geodata", [])
 
   "use strict";
   angular.module("risevision.common.plan", [
-    "risevision.common.gapi"
+    "risevision.common.gapi",
+    "risevision.common.currency"
   ])
     .value("PLANS_LIST", [{
       name: "Free",
