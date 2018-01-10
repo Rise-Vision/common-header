@@ -251,10 +251,10 @@
     }
     & .product-description {
       min-height: 130px;
-      @media (min-width: $screen-md-min) {
-        .product-description {
+       @media (max-width: $screen-md) {
+        
           min-height: 40px;
-        }
+        
       }
     }
     & .info {

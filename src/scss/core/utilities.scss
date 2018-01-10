@@ -282,6 +282,11 @@ All utilities have a prefix u_ added to them
     pointer-events: none;
     text-decoration: none;
 }
+
+.u_cursor_disabled {
+  cursor: default !important;
+}
+
 .u_highlighted {
   background: #FFFFE0;
   text-transform: uppercase;

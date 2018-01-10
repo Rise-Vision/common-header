@@ -8062,6 +8062,9 @@ All utilities have a prefix u_ added to them
   pointer-events: none;
   text-decoration: none; }
 
+.u_cursor_disabled {
+  cursor: default !important; }
+
 .u_highlighted {
   background: #FFFFE0;
   text-transform: uppercase;
@@ -11748,8 +11751,8 @@ li.dropdown-header {
       font-weight: bold; }
   .grid-list .panel .product-description, .grid-list .select-subcompany-modal .list-group .product-description, .select-subcompany-modal .grid-list .list-group .product-description, .grid-list .panel-editable .product-description, .grid-list .card .product-description, .grid-list #appLauncherContainer .scrollable-list .product-description, #appLauncherContainer .grid-list .scrollable-list .product-description {
     min-height: 130px; }
-    @media (min-width: 992px) {
-      .grid-list .panel .product-description .product-description, .grid-list .select-subcompany-modal .list-group .product-description .product-description, .select-subcompany-modal .grid-list .list-group .product-description .product-description, .grid-list .panel-editable .product-description .product-description, .grid-list .card .product-description .product-description, .grid-list #appLauncherContainer .scrollable-list .product-description .product-description, #appLauncherContainer .grid-list .scrollable-list .product-description .product-description {
+    @media (max-width: 992px) {
+      .grid-list .panel .product-description, .grid-list .select-subcompany-modal .list-group .product-description, .select-subcompany-modal .grid-list .list-group .product-description, .grid-list .panel-editable .product-description, .grid-list .card .product-description, .grid-list #appLauncherContainer .scrollable-list .product-description, #appLauncherContainer .grid-list .scrollable-list .product-description {
         min-height: 40px; } }
   .grid-list .panel .info, .grid-list .select-subcompany-modal .list-group .info, .select-subcompany-modal .grid-list .list-group .info, .grid-list .panel-editable .info, .grid-list .card .info, .grid-list #appLauncherContainer .scrollable-list .info, #appLauncherContainer .grid-list .scrollable-list .info {
     position: absolute;
