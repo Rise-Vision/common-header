@@ -252,9 +252,7 @@
     & .product-description {
       min-height: 130px;
        @media (max-width: $screen-md) {
-        
           min-height: 40px;
-        
       }
     }
     & .info {
