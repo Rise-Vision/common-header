@@ -234,7 +234,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plan-banner.html',
-    '<div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'free\'"><div class="u_margin-right"><strong>Get more out of Rise Vision!</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">See Our Plans</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'basic\' && plan.subscribed"><div class="u_margin-right"><strong>Basic Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'advanced\' && plan.subscribed"><div class="u_margin-right"><strong>Advanced Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'enterprise\' && plan.subscribed"><div class="u_margin-right"><strong>Enterprise Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="plan.status === \'Suspended\'"><div class="u_margin-right">There was an issue processing your payment. Please update your billing information. Your Displays may be affected. <a href="{{storeAccountUrl}}" target="_blank" class="u_margin-left">Update Billing</a></div></div></div>');
+    '<div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'free\'"><div class="u_margin-right"><strong>Get more out of Rise Vision!</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">See Our Plans</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'basic\' && plan.subscribed"><div class="u_margin-right"><strong>Basic Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'advanced\' && plan.subscribed"><div class="u_margin-right"><strong>Advanced Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'enterprise\' && plan.subscribed"><div class="u_margin-right"><strong>Enterprise Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'enterprisesub\' && plan.subscribed"><div class="u_margin-right"><strong>Enterprise Plan</strong></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="plan.status === \'Suspended\'"><div class="u_margin-right">There was an issue processing your payment. Please update your billing information. Your Displays may be affected. <a href="{{storeAccountUrl}}" target="_blank" class="u_margin-left">Update Billing</a></div></div></div>');
 }]);
 })();
 
@@ -3371,6 +3371,10 @@ angular.module("risevision.common.geodata", [])
       type: "enterprise",
       productId: "301",
       pc: "b1844725d63fde197f5125b58b6cba6260ee7a57"
+    }, {
+      type: "enterprisesub",
+      productId: "303",
+      pc: "d521f5bfbc1eef109481eebb79831e11c7804ad8"
     }])
     .factory("planFactory", ["$q", "$log", "userState", "storeAPILoader", "subscriptionStatusService",
       "currencyService", "PLANS_LIST",

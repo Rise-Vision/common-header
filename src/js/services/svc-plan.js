@@ -25,6 +25,10 @@
       type: "enterprise",
       productId: "301",
       pc: "b1844725d63fde197f5125b58b6cba6260ee7a57"
+    }, {
+      type: "enterprisesub",
+      productId: "303",
+      pc: "d521f5bfbc1eef109481eebb79831e11c7804ad8"
     }])
     .factory("planFactory", ["$q", "$log", "userState", "storeAPILoader", "subscriptionStatusService",
       "currencyService", "PLANS_LIST",
