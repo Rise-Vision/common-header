@@ -70,6 +70,7 @@ describe("Services: plan", function() {
   var sandbox, planFactory, subscriptionStatusService;
   var FREE_PLAN_ID, FREE_PLAN_CODE, BASIC_PLAN_CODE, BASIC_PLAN_ID;
   var ADVANCED_PLAN_CODE, ADVANCED_PLAN_ID, ENTERPRISE_PLAN_CODE, ENTERPRISE_PLAN_ID;
+  var ENTERPRISE_SUB_PLAN_CODE, ENTERPRISE_SUB_PLAN_ID;
 
   beforeEach(function() {
     sandbox = sinon.sandbox.create();
@@ -88,6 +89,8 @@ describe("Services: plan", function() {
       ADVANCED_PLAN_ID = plansByType.advanced.productId;
       ENTERPRISE_PLAN_CODE = plansByType.enterprise.pc;
       ENTERPRISE_PLAN_ID = plansByType.enterprise.productId;
+      ENTERPRISE_SUB_PLAN_CODE = plansByType.enterprisesub.pc;
+      ENTERPRISE_SUB_PLAN_ID = plansByType.enterprisesub.productId;
     });
   });
 
@@ -254,6 +257,24 @@ describe("Services: plan", function() {
         expect(subscriptionStatusService.list).to.have.been.called;
         expect(plan.pc).to.equal(ENTERPRISE_PLAN_CODE);
         expect(plan.type).to.equal("enterprise");
+        expect(plan.status).to.equal("Subscribed");
+        done();
+      });
+    });
+
+    it("should return Sub Enterprise Plan for a subscribed sub company", function(done) {
+      sandbox.stub(subscriptionStatusService, "list").returns(Q.resolve([
+        { pc: BASIC_PLAN_CODE, status: "Not Subscribed" },
+        { pc: ADVANCED_PLAN_CODE, status: "Not Subscribed" },
+        { pc: ENTERPRISE_PLAN_CODE, status: "Not Subscribed" },
+        { pc: ENTERPRISE_SUB_PLAN_CODE, status: "Subscribed" }
+      ]));
+
+      planFactory.getCompanyPlan(companyId)
+      .then(function(plan) {
+        expect(subscriptionStatusService.list).to.have.been.called;
+        expect(plan.pc).to.equal(ENTERPRISE_SUB_PLAN_CODE);
+        expect(plan.type).to.equal("enterprisesub");
         expect(plan.status).to.equal("Subscribed");
         done();
       });
