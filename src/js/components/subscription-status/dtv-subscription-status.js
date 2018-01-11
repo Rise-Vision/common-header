@@ -21,8 +21,7 @@
             customProductLink: "@",
             customMessages: "@"
           },
-          template: $templateCache.get(
-            "subscription-status/subscription-status-template.html"),
+          template: $templateCache.get("subscription-status/subscription-status-template.html"),
           link: function ($scope, elm, attrs, ctrl) {
             $scope.subscriptionStatus = {
               "status": "N/A",
@@ -30,12 +29,10 @@
               "subscribed": false,
               "expiry": null
             };
-            $scope.messagesPrefix = $scope.customMessages ? $scope.customMessages :
-              "subscription-status";
+            $scope.messagesPrefix = $scope.customMessages ? $scope.customMessages : "subscription-status";
 
             var updateUrls = function () {
-              $scope.storeAccountUrl = STORE_URL + ACCOUNT_PATH
-                .replace("companyId", $scope.companyId);
+              $scope.storeAccountUrl = STORE_URL + ACCOUNT_PATH.replace("companyId", $scope.companyId);
 
               if ($scope.customProductLink) {
                 $scope.storeUrl = $scope.customProductLink;
@@ -47,15 +44,12 @@
             };
 
             function checkSubscriptionStatus() {
-              if ($scope.productCode && $scope.productId && ($scope.companyId ||
-                $scope.displayId)) {
-                subscriptionStatusService.get($scope.productCode, $scope.companyId,
-                  $scope.displayId).then(function (subscriptionStatus) {
+              if ($scope.productCode && $scope.productId && ($scope.companyId || $scope.displayId)) {
+                subscriptionStatusService.get($scope.productCode, $scope.companyId, $scope.displayId)
+                  .then(function (subscriptionStatus) {
                     if (subscriptionStatus) {
-                      if (!$scope.subscriptionStatus || $scope.subscriptionStatus
-                        .status !== subscriptionStatus.status) {
-                        $rootScope.$emit("subscription-status:changed",
-                          subscriptionStatus);
+                      if (!$scope.subscriptionStatus || $scope.subscriptionStatus.status !== subscriptionStatus.status) {
+                        $rootScope.$emit("subscription-status:changed", subscriptionStatus);
                       }
 
                       $scope.subscriptionStatus = subscriptionStatus;
@@ -76,8 +70,7 @@
             var subscriptionStatusListener = $rootScope.$on(
               "refreshSubscriptionStatus", function (event, data) {
                 // Only refresh if currentStatus code matches the provided value, or value is null
-                if (data === null || $scope.subscriptionStatus.statusCode ===
-                  data) {
+                if (data === null || $scope.subscriptionStatus.statusCode === data) {
                   checkSubscriptionStatus();
                 }
               });
@@ -87,8 +80,7 @@
             });
 
             if (ctrl) {
-              $scope.$watch("subscriptionStatus", function (
-                subscriptionStatus) {
+              $scope.$watch("subscriptionStatus", function (subscriptionStatus) {
                 ctrl.$setViewValue(subscriptionStatus);
               });
             }
