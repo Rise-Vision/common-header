@@ -2,7 +2,7 @@
 source: ./src/scss
 
 # Relative path where you want the documentation to be built
-destination: styleguide
+destination: docs
 
 # The path that contains supporting assets for the documentation page
 documentation_assets: bower_components/hologram-github-theme
