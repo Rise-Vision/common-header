@@ -1575,14 +1575,14 @@ angular.module("risevision.common.header")
 angular.module("risevision.common.header")
 
 .controller("PlansModalCtrl", [
-  "$scope", "$modalInstance", "$log", "$modal", "$templateCache", "planFactory", "$loading", "currentPlan",
-  function ($scope, $modalInstance, $log, $modal, $templateCache, planFactory, $loading, currentPlan) {
+  "$scope", "$modalInstance", "$log", "$modal", "$templateCache", "$loading", "planFactory", "currentPlan",
+  function ($scope, $modalInstance, $log, $modal, $templateCache, $loading, planFactory, currentPlan) {
     $scope.currentPlan = currentPlan;
 
     $scope.getPlansDetails = function () {
       $loading.start("plans-modal");
 
-      planFactory.getPlansDetails()
+      return planFactory.getPlansDetails()
         .then(function (plans) {
           $scope.plans = plans;
         })
