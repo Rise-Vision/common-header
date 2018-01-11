@@ -28,8 +28,8 @@ gulp.task("fonts-copy", function () {
 });
 
 gulp.task('hologram', function() {
-        gulp.src('hologram_config.yml')
-                .pipe(hologram({logging:true}));
+  gulp.src('hologram_config.yml')
+    .pipe(hologram({logging:true}));
 });
 
 gulp.task("css-build-alignment", function () {
