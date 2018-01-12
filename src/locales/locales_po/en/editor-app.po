@@ -376,6 +376,9 @@ msgstr "Days Trial"
 msgid "subscription.status.premium"
 msgstr "Premium"
 
+msgid "subscription.subscribe"
+msgstr "Subscribe"
+
 msgid "subscription.viewAccount"
 msgstr "View Account"
 
