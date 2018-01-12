@@ -286,11 +286,10 @@
 
   angular.module(
     "risevision.common.components.subscription-status.directives")
-    .directive("subscriptionStatus", ["$rootScope", "$templateCache",
-      "subscriptionStatusService", "STORE_URL", "ACCOUNT_PATH",
-      "IN_RVA_PATH",
-      function ($rootScope, $templateCache, subscriptionStatusService,
-        STORE_URL, ACCOUNT_PATH, IN_RVA_PATH) {
+    .directive("subscriptionStatus", ["$rootScope", "$templateCache", "subscriptionStatusService", "planFactory",
+      "STORE_URL", "ACCOUNT_PATH", "IN_RVA_PATH",
+      function ($rootScope, $templateCache, subscriptionStatusService, planFactory, STORE_URL, ACCOUNT_PATH,
+        IN_RVA_PATH) {
         return {
           restrict: "AE",
           require: "?ngModel",
@@ -300,25 +299,24 @@
             companyId: "@",
             displayId: "@",
             expandedFormat: "@",
+            usePlans: "@",
             showStoreModal: "=?",
             customProductLink: "@",
             customMessages: "@"
           },
-          template: $templateCache.get(
-            "subscription-status/subscription-status-template.html"),
+          template: $templateCache.get("subscription-status/subscription-status-template.html"),
           link: function ($scope, elm, attrs, ctrl) {
+            $scope.showPlansModal = planFactory.showPlansModal;
             $scope.subscriptionStatus = {
               "status": "N/A",
               "statusCode": "na",
               "subscribed": false,
               "expiry": null
             };
-            $scope.messagesPrefix = $scope.customMessages ? $scope.customMessages :
-              "subscription-status";
+            $scope.messagesPrefix = $scope.customMessages ? $scope.customMessages : "subscription-status";
 
             var updateUrls = function () {
-              $scope.storeAccountUrl = STORE_URL + ACCOUNT_PATH
-                .replace("companyId", $scope.companyId);
+              $scope.storeAccountUrl = STORE_URL + ACCOUNT_PATH.replace("companyId", $scope.companyId);
 
               if ($scope.customProductLink) {
                 $scope.storeUrl = $scope.customProductLink;
@@ -330,23 +328,20 @@
             };
 
             function checkSubscriptionStatus() {
-              if ($scope.productCode && $scope.productId && ($scope.companyId ||
-                $scope.displayId)) {
-                subscriptionStatusService.get($scope.productCode, $scope.companyId,
-                  $scope.displayId).then(function (subscriptionStatus) {
-                    if (subscriptionStatus) {
-                      if (!$scope.subscriptionStatus || $scope.subscriptionStatus
-                        .status !== subscriptionStatus.status) {
-                        $rootScope.$emit("subscription-status:changed",
-                          subscriptionStatus);
-                      }
+              if ($scope.productCode && $scope.productId && ($scope.companyId || $scope.displayId)) {
+                subscriptionStatusService.get($scope.productCode, $scope.companyId, $scope.displayId)
+                  .then(function (subscriptionStatus) {
+                      if (subscriptionStatus) {
+                        if (!$scope.subscriptionStatus || $scope.subscriptionStatus.status !== subscriptionStatus.status) {
+                          $rootScope.$emit("subscription-status:changed", subscriptionStatus);
+                        }
 
-                      $scope.subscriptionStatus = subscriptionStatus;
-                    }
-                  },
-                  function () {
-                    // TODO: catch error here
-                  });
+                        $scope.subscriptionStatus = subscriptionStatus;
+                      }
+                    },
+                    function (err) {
+                      console.log("Error checking subscription status", err);
+                    });
               }
             }
 
@@ -359,8 +354,7 @@
             var subscriptionStatusListener = $rootScope.$on(
               "refreshSubscriptionStatus", function (event, data) {
                 // Only refresh if currentStatus code matches the provided value, or value is null
-                if (data === null || $scope.subscriptionStatus.statusCode ===
-                  data) {
+                if (data === null || $scope.subscriptionStatus.statusCode === data) {
                   checkSubscriptionStatus();
                 }
               });
@@ -370,8 +364,7 @@
             });
 
             if (ctrl) {
-              $scope.$watch("subscriptionStatus", function (
-                subscriptionStatus) {
+              $scope.$watch("subscriptionStatus", function (subscriptionStatus) {
                 ctrl.$setViewValue(subscriptionStatus);
               });
             }
@@ -453,6 +446,6 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('subscription-status/subscription-status-template.html',
-    '<div ng-show="!expandedFormat"><h3 ng-disable-right-click=""><span ng-show="subscriptionStatus.statusCode !== \'not-subscribed\'" ng-bind-html="messagesPrefix + \'.\' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted"></span></h3><span ng-show="subscriptionStatus.statusCode === \'trial-available\'"><button class="btn btn-primary btn-xs" ng-click="showStoreModal = true;"><span translate="{{messagesPrefix}}.start-trial"></span></button></span> <span ng-show="[\'on-trial\', \'trial-expired\', \'cancelled\', \'not-subscribed\'].indexOf(subscriptionStatus.statusCode) >= 0"><a class="btn btn-primary btn-xs" ng-href="{{storeUrl}}" target="_blank"><span translate="{{messagesPrefix}}.subscribe"></span></a></span> <span ng-show="[\'suspended\'].indexOf(subscriptionStatus.statusCode) >= 0"><a type="button" class="btn btn-primary btn-xs" ng-href="{{storeAccountUrl}}" target="_blank"><span translate="{{messagesPrefix}}.view-account"></span></a></span></div><div ng-show="expandedFormat"><div class="subscription-status trial" ng-show="subscriptionStatus.statusCode === \'on-trial\'"><span ng-bind-html="messagesPrefix + \'.expanded-\' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank"><span translate="{{messagesPrefix}}.subscribe-now"></span></a></div><div class="subscription-status expired" ng-show="subscriptionStatus.statusCode === \'trial-expired\'"><span translate="{{messagesPrefix}}.expanded-expired"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank"><span translate="{{messagesPrefix}}.subscribe-now"></span></a></div><div class="subscription-status cancelled" ng-show="subscriptionStatus.statusCode === \'cancelled\'"><span translate="{{messagesPrefix}}.expanded-cancelled"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank"><span translate="{{messagesPrefix}}.subscribe-now"></span></a></div><div class="subscription-status suspended" ng-show="subscriptionStatus.statusCode === \'suspended\'"><span translate="{{messagesPrefix}}.expanded-suspended"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeAccountUrl}}" target="_blank"><span translate="{{messagesPrefix}}.view-invoices"></span></a></div></div>');
+    '<div ng-show="!expandedFormat"><h3 ng-disable-right-click=""><span ng-show="subscriptionStatus.statusCode !== \'not-subscribed\'" ng-bind-html="messagesPrefix + \'.\' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted"></span></h3><span ng-show="subscriptionStatus.statusCode === \'trial-available\'"><button class="btn btn-primary btn-xs" ng-click="showStoreModal = true;"><span translate="{{messagesPrefix}}.start-trial"></span></button></span> <span ng-show="[\'on-trial\', \'trial-expired\', \'cancelled\', \'not-subscribed\'].indexOf(subscriptionStatus.statusCode) >= 0"><a class="btn btn-primary btn-xs" ng-href="{{storeUrl}}" target="_blank" ng-show="!usePlans"><span translate="{{messagesPrefix}}.subscribe"></span></a> <a class="btn btn-primary btn-xs" ng-click="showPlansModal()" ng-show="usePlans"><span translate="{{messagesPrefix}}.subscribe"></span></a></span> <span ng-show="[\'suspended\'].indexOf(subscriptionStatus.statusCode) >= 0"><a type="button" class="btn btn-primary btn-xs" ng-href="{{storeAccountUrl}}" target="_blank"><span translate="{{messagesPrefix}}.view-account"></span></a></span></div><div ng-show="expandedFormat"><div class="subscription-status trial" ng-show="subscriptionStatus.statusCode === \'on-trial\'"><span ng-bind-html="messagesPrefix + \'.expanded-\' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank" ng-show="!usePlans"><span translate="{{messagesPrefix}}.subscribe-now"></span></a> <a type="button" class="btn btn-primary u_margin-left" ng-click="showPlansModal()" ng-show="usePlans"><span translate="{{messagesPrefix}}.subscribe-now"></span></a></div><div class="subscription-status expired" ng-show="subscriptionStatus.statusCode === \'trial-expired\'"><span translate="{{messagesPrefix}}.expanded-expired"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank" ng-show="!usePlans"><span translate="{{messagesPrefix}}.subscribe-now"></span></a> <a type="button" class="btn btn-primary u_margin-left" ng-click="showPlansModal()" ng-show="usePlans"><span translate="{{messagesPrefix}}.subscribe-now"></span></a></div><div class="subscription-status cancelled" ng-show="subscriptionStatus.statusCode === \'cancelled\'"><span translate="{{messagesPrefix}}.expanded-cancelled"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank" ng-show="!usePlans"><span translate="{{messagesPrefix}}.subscribe-now"></span></a> <a type="button" class="btn btn-primary u_margin-left" ng-click="showPlansModal()" ng-show="usePlans"><span translate="{{messagesPrefix}}.subscribe-now"></span></a></div><div class="subscription-status suspended" ng-show="subscriptionStatus.statusCode === \'suspended\'"><span translate="{{messagesPrefix}}.expanded-suspended"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeAccountUrl}}" target="_blank"><span translate="{{messagesPrefix}}.view-invoices"></span></a></div></div>');
 }]);
 })();

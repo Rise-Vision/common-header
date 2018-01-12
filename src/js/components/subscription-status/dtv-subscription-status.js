@@ -48,17 +48,17 @@
               if ($scope.productCode && $scope.productId && ($scope.companyId || $scope.displayId)) {
                 subscriptionStatusService.get($scope.productCode, $scope.companyId, $scope.displayId)
                   .then(function (subscriptionStatus) {
-                    if (subscriptionStatus) {
-                      if (!$scope.subscriptionStatus || $scope.subscriptionStatus.status !== subscriptionStatus.status) {
-                        $rootScope.$emit("subscription-status:changed", subscriptionStatus);
-                      }
+                      if (subscriptionStatus) {
+                        if (!$scope.subscriptionStatus || $scope.subscriptionStatus.status !== subscriptionStatus.status) {
+                          $rootScope.$emit("subscription-status:changed", subscriptionStatus);
+                        }
 
-                      $scope.subscriptionStatus = subscriptionStatus;
-                    }
-                  },
-                  function (err) {
-                    console.log("Error checking subscription status", err);
-                  });
+                        $scope.subscriptionStatus = subscriptionStatus;
+                      }
+                    },
+                    function (err) {
+                      console.log("Error checking subscription status", err);
+                    });
               }
             }
 

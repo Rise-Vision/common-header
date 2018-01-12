@@ -210,7 +210,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('help-send-us-a-note-modal.html',
-    '<div id="sendUsANoteModal"><div class="modal-header"><button id="sendUsANoteModalCloseButton" ng-click="dismiss()" type="button" class="close"><i class="fa fa-times"></i></button><h2 class="modal-title"></h2></div><div class="modal-body text-center" stop-event="touchend"><p class="lead">Send us a note and we typically get back to you within 2-3 business days.</p><a ng-if="!loggedIn" href="https://www.risevision.com/contact/" target="_blank" class="btn btn-primary btn-lg">Contact Support</a> <button ng-if="loggedIn" class="btn btn-primary btn-lg" ng-click="sendUsANote()">Contact Support</button><div class="content-box u_margin-md-top u_remove-bottom"><div class="content-box-body"><p class="lead u_margin-left u_margin-right"><strong>Need help fast?</strong> Check out Priority Support and have a response in <strong>10 minutes</strong>. We are online 8-5 CST Monday through Friday.</p><a class="btn btn-primary btn-lg" href="{{supportProductUrl}}" ng-click="dismiss();" target="_blank">Subscribe Now</a></div></div></div></div>');
+    '<div id="sendUsANoteModal"><div class="modal-header"><button id="sendUsANoteModalCloseButton" ng-click="dismiss()" type="button" class="close"><i class="fa fa-times"></i></button><h2 class="modal-title"></h2></div><div class="modal-body text-center" stop-event="touchend"><p class="lead">Send us a note and we typically get back to you within 2-3 business days.</p><a ng-if="!loggedIn" href="https://www.risevision.com/contact/" target="_blank" class="btn btn-primary btn-lg">Contact Support</a> <button ng-if="loggedIn" class="btn btn-primary btn-lg" ng-click="sendUsANote()">Contact Support</button><div class="content-box u_margin-md-top u_remove-bottom"><div class="content-box-body"><p class="lead u_margin-left u_margin-right"><strong>Need help fast?</strong> Check out Priority Support and have a response in <strong>10 minutes</strong>. We are online 8-5 CST Monday through Friday.</p><a class="btn btn-primary btn-lg" ng-click="showPlansModal();">Subscribe Now</a></div></div></div></div>');
 }]);
 })();
 
@@ -1424,12 +1424,10 @@ angular.module("risevision.common.header")
 angular.module("risevision.common.header")
 
 .controller("HelpSendUsANoteModalCtrl", [
-  "$scope", "$modalInstance", "supportFactory",
-  "zendesk", "userState",
-  "SUPPORT_PRODUCT_URL",
-  function ($scope, $modalInstance, supportFactory,
-    zendesk, userState, SUPPORT_PRODUCT_URL) {
+  "$scope", "$modalInstance", "supportFactory", "zendesk", "userState", "planFactory", "SUPPORT_PRODUCT_URL",
+  function ($scope, $modalInstance, supportFactory, zendesk, userState, planFactory, SUPPORT_PRODUCT_URL) {
 
+    $scope.showPlansModal = planFactory.showPlansModal;
     $scope.loggedIn = userState.isLoggedIn();
     $scope.supportProductUrl = SUPPORT_PRODUCT_URL;
 
@@ -1521,42 +1519,17 @@ angular.module("risevision.common.header")
 ]);
 
 angular.module("risevision.common.header")
-  .controller("PlanBannerCtrl", ["$scope", "$rootScope", "$log", "$modal", "$templateCache", "userState", "planFactory",
-    "STORE_URL", "ACCOUNT_PATH",
-    function ($scope, $rootScope, $log, $modal, $templateCache, userState, planFactory, STORE_URL, ACCOUNT_PATH) {
+  .controller("PlanBannerCtrl", ["$scope", "$rootScope", "$log", "userState", "planFactory", "STORE_URL",
+    "ACCOUNT_PATH",
+    function ($scope, $rootScope, $log, userState, planFactory, STORE_URL, ACCOUNT_PATH) {
       $scope.plan = {};
+      $scope.showPlans = planFactory.showPlansModal;
 
-      $rootScope.$on("risevision.company.selectedCompanyChanged", function () {
+      $rootScope.$on("risevision.plan.loaded", function () {
+        $scope.plan = planFactory.currentPlan;
         $scope.companyId = userState.getSelectedCompanyId();
         $scope.storeAccountUrl = STORE_URL + ACCOUNT_PATH.replace("companyId", $scope.companyId);
-        $scope.loadCompanyPlan();
       });
-
-      $scope.loadCompanyPlan = function () {
-        if (userState.getSelectedCompanyId()) {
-          planFactory.getCompanyPlan($scope.companyId)
-            .then(function (plan) {
-              $log.debug("Current plan", plan);
-              $scope.plan = plan;
-            })
-            .catch(function (err) {
-              $log.debug("Failed to load company's plan", err);
-            });
-        }
-      };
-
-      $scope.showPlans = function () {
-        $modal.open({
-          template: $templateCache.get("plans-modal.html"),
-          controller: "PlansModalCtrl",
-          size: "lg",
-          resolve: {
-            currentPlan: function () {
-              return $scope.plan;
-            }
-          }
-        });
-      };
     }
   ]);
 
@@ -3358,7 +3331,7 @@ angular.module("risevision.common.geodata", [])
       pc: "000",
       status: "Subscribed",
       priceMonth: 0,
-      descriptionShort: "Get Rise Storage, Embedded Presentations, and Template Library for one great price."
+      descriptionShort: "Design, distribute and manage your digital signage for free. Unlimited Displays, Companies and Users."
     }, {
       type: "basic",
       productId: "289",
@@ -3376,13 +3349,29 @@ angular.module("risevision.common.geodata", [])
       productId: "303",
       pc: "d521f5bfbc1eef109481eebb79831e11c7804ad8"
     }])
-    .factory("planFactory", ["$q", "$log", "userState", "storeAPILoader", "subscriptionStatusService",
-      "currencyService", "PLANS_LIST",
-      function ($q, $log, userState, storeAPILoader, subscriptionStatusService, currencyService, PLANS_LIST) {
+    .factory("planFactory", ["$q", "$log", "$rootScope", "$modal", "$templateCache", "userState", "storeAPILoader",
+      "subscriptionStatusService", "currencyService", "PLANS_LIST",
+      function ($q, $log, $rootScope, $modal, $templateCache, userState, storeAPILoader, subscriptionStatusService,
+        currencyService, PLANS_LIST) {
         var _factory = {};
         var _plansCodesList = _.map(PLANS_LIST, "pc");
         var _plansByType = _.keyBy(PLANS_LIST, "type");
         var _plansByCode = _.keyBy(PLANS_LIST, "pc");
+
+        $rootScope.$on("risevision.company.selectedCompanyChanged", function () {
+          console.log("SVC", userState.getSelectedCompanyId());
+          if (userState.getSelectedCompanyId()) {
+            _factory.getCompanyPlan(userState.getSelectedCompanyId())
+              .then(function (plan) {
+                _factory.currentPlan = plan;
+                $log.debug("Current plan", plan);
+                $rootScope.$emit("risevision.plan.loaded", plan);
+              })
+              .catch(function (err) {
+                $log.debug("Failed to load company's plan", err);
+              });
+          }
+        });
 
         _factory.getPlans = function (params) { // companyId, search
           $log.debug("getPlans called.");
@@ -3463,6 +3452,19 @@ angular.module("risevision.common.geodata", [])
             });
 
           return deferred.promise;
+        };
+
+        _factory.showPlansModal = function () {
+          $modal.open({
+            template: $templateCache.get("plans-modal.html"),
+            controller: "PlansModalCtrl",
+            size: "lg",
+            resolve: {
+              currentPlan: function () {
+                return _factory.currentPlan;
+              }
+            }
+          });
         };
 
         function _getSelectedCurrency() {
@@ -9245,11 +9247,10 @@ angular.module("risevision.common.components.svg", [])
 
   angular.module(
     "risevision.common.components.subscription-status.directives")
-    .directive("subscriptionStatus", ["$rootScope", "$templateCache",
-      "subscriptionStatusService", "STORE_URL", "ACCOUNT_PATH",
-      "IN_RVA_PATH",
-      function ($rootScope, $templateCache, subscriptionStatusService,
-        STORE_URL, ACCOUNT_PATH, IN_RVA_PATH) {
+    .directive("subscriptionStatus", ["$rootScope", "$templateCache", "subscriptionStatusService", "planFactory",
+      "STORE_URL", "ACCOUNT_PATH", "IN_RVA_PATH",
+      function ($rootScope, $templateCache, subscriptionStatusService, planFactory, STORE_URL, ACCOUNT_PATH,
+        IN_RVA_PATH) {
         return {
           restrict: "AE",
           require: "?ngModel",
@@ -9259,25 +9260,24 @@ angular.module("risevision.common.components.svg", [])
             companyId: "@",
             displayId: "@",
             expandedFormat: "@",
+            usePlans: "@",
             showStoreModal: "=?",
             customProductLink: "@",
             customMessages: "@"
           },
-          template: $templateCache.get(
-            "subscription-status/subscription-status-template.html"),
+          template: $templateCache.get("subscription-status/subscription-status-template.html"),
           link: function ($scope, elm, attrs, ctrl) {
+            $scope.showPlansModal = planFactory.showPlansModal;
             $scope.subscriptionStatus = {
               "status": "N/A",
               "statusCode": "na",
               "subscribed": false,
               "expiry": null
             };
-            $scope.messagesPrefix = $scope.customMessages ? $scope.customMessages :
-              "subscription-status";
+            $scope.messagesPrefix = $scope.customMessages ? $scope.customMessages : "subscription-status";
 
             var updateUrls = function () {
-              $scope.storeAccountUrl = STORE_URL + ACCOUNT_PATH
-                .replace("companyId", $scope.companyId);
+              $scope.storeAccountUrl = STORE_URL + ACCOUNT_PATH.replace("companyId", $scope.companyId);
 
               if ($scope.customProductLink) {
                 $scope.storeUrl = $scope.customProductLink;
@@ -9289,23 +9289,20 @@ angular.module("risevision.common.components.svg", [])
             };
 
             function checkSubscriptionStatus() {
-              if ($scope.productCode && $scope.productId && ($scope.companyId ||
-                $scope.displayId)) {
-                subscriptionStatusService.get($scope.productCode, $scope.companyId,
-                  $scope.displayId).then(function (subscriptionStatus) {
-                    if (subscriptionStatus) {
-                      if (!$scope.subscriptionStatus || $scope.subscriptionStatus
-                        .status !== subscriptionStatus.status) {
-                        $rootScope.$emit("subscription-status:changed",
-                          subscriptionStatus);
-                      }
+              if ($scope.productCode && $scope.productId && ($scope.companyId || $scope.displayId)) {
+                subscriptionStatusService.get($scope.productCode, $scope.companyId, $scope.displayId)
+                  .then(function (subscriptionStatus) {
+                      if (subscriptionStatus) {
+                        if (!$scope.subscriptionStatus || $scope.subscriptionStatus.status !== subscriptionStatus.status) {
+                          $rootScope.$emit("subscription-status:changed", subscriptionStatus);
+                        }
 
-                      $scope.subscriptionStatus = subscriptionStatus;
-                    }
-                  },
-                  function () {
-                    // TODO: catch error here
-                  });
+                        $scope.subscriptionStatus = subscriptionStatus;
+                      }
+                    },
+                    function (err) {
+                      console.log("Error checking subscription status", err);
+                    });
               }
             }
 
@@ -9318,8 +9315,7 @@ angular.module("risevision.common.components.svg", [])
             var subscriptionStatusListener = $rootScope.$on(
               "refreshSubscriptionStatus", function (event, data) {
                 // Only refresh if currentStatus code matches the provided value, or value is null
-                if (data === null || $scope.subscriptionStatus.statusCode ===
-                  data) {
+                if (data === null || $scope.subscriptionStatus.statusCode === data) {
                   checkSubscriptionStatus();
                 }
               });
@@ -9329,8 +9325,7 @@ angular.module("risevision.common.components.svg", [])
             });
 
             if (ctrl) {
-              $scope.$watch("subscriptionStatus", function (
-                subscriptionStatus) {
+              $scope.$watch("subscriptionStatus", function (subscriptionStatus) {
                 ctrl.$setViewValue(subscriptionStatus);
               });
             }
@@ -9412,7 +9407,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('subscription-status/subscription-status-template.html',
-    '<div ng-show="!expandedFormat"><h3 ng-disable-right-click=""><span ng-show="subscriptionStatus.statusCode !== \'not-subscribed\'" ng-bind-html="messagesPrefix + \'.\' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted"></span></h3><span ng-show="subscriptionStatus.statusCode === \'trial-available\'"><button class="btn btn-primary btn-xs" ng-click="showStoreModal = true;"><span translate="{{messagesPrefix}}.start-trial"></span></button></span> <span ng-show="[\'on-trial\', \'trial-expired\', \'cancelled\', \'not-subscribed\'].indexOf(subscriptionStatus.statusCode) >= 0"><a class="btn btn-primary btn-xs" ng-href="{{storeUrl}}" target="_blank"><span translate="{{messagesPrefix}}.subscribe"></span></a></span> <span ng-show="[\'suspended\'].indexOf(subscriptionStatus.statusCode) >= 0"><a type="button" class="btn btn-primary btn-xs" ng-href="{{storeAccountUrl}}" target="_blank"><span translate="{{messagesPrefix}}.view-account"></span></a></span></div><div ng-show="expandedFormat"><div class="subscription-status trial" ng-show="subscriptionStatus.statusCode === \'on-trial\'"><span ng-bind-html="messagesPrefix + \'.expanded-\' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank"><span translate="{{messagesPrefix}}.subscribe-now"></span></a></div><div class="subscription-status expired" ng-show="subscriptionStatus.statusCode === \'trial-expired\'"><span translate="{{messagesPrefix}}.expanded-expired"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank"><span translate="{{messagesPrefix}}.subscribe-now"></span></a></div><div class="subscription-status cancelled" ng-show="subscriptionStatus.statusCode === \'cancelled\'"><span translate="{{messagesPrefix}}.expanded-cancelled"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank"><span translate="{{messagesPrefix}}.subscribe-now"></span></a></div><div class="subscription-status suspended" ng-show="subscriptionStatus.statusCode === \'suspended\'"><span translate="{{messagesPrefix}}.expanded-suspended"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeAccountUrl}}" target="_blank"><span translate="{{messagesPrefix}}.view-invoices"></span></a></div></div>');
+    '<div ng-show="!expandedFormat"><h3 ng-disable-right-click=""><span ng-show="subscriptionStatus.statusCode !== \'not-subscribed\'" ng-bind-html="messagesPrefix + \'.\' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted"></span></h3><span ng-show="subscriptionStatus.statusCode === \'trial-available\'"><button class="btn btn-primary btn-xs" ng-click="showStoreModal = true;"><span translate="{{messagesPrefix}}.start-trial"></span></button></span> <span ng-show="[\'on-trial\', \'trial-expired\', \'cancelled\', \'not-subscribed\'].indexOf(subscriptionStatus.statusCode) >= 0"><a class="btn btn-primary btn-xs" ng-href="{{storeUrl}}" target="_blank" ng-show="!usePlans"><span translate="{{messagesPrefix}}.subscribe"></span></a> <a class="btn btn-primary btn-xs" ng-click="showPlansModal()" ng-show="usePlans"><span translate="{{messagesPrefix}}.subscribe"></span></a></span> <span ng-show="[\'suspended\'].indexOf(subscriptionStatus.statusCode) >= 0"><a type="button" class="btn btn-primary btn-xs" ng-href="{{storeAccountUrl}}" target="_blank"><span translate="{{messagesPrefix}}.view-account"></span></a></span></div><div ng-show="expandedFormat"><div class="subscription-status trial" ng-show="subscriptionStatus.statusCode === \'on-trial\'"><span ng-bind-html="messagesPrefix + \'.expanded-\' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank" ng-show="!usePlans"><span translate="{{messagesPrefix}}.subscribe-now"></span></a> <a type="button" class="btn btn-primary u_margin-left" ng-click="showPlansModal()" ng-show="usePlans"><span translate="{{messagesPrefix}}.subscribe-now"></span></a></div><div class="subscription-status expired" ng-show="subscriptionStatus.statusCode === \'trial-expired\'"><span translate="{{messagesPrefix}}.expanded-expired"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank" ng-show="!usePlans"><span translate="{{messagesPrefix}}.subscribe-now"></span></a> <a type="button" class="btn btn-primary u_margin-left" ng-click="showPlansModal()" ng-show="usePlans"><span translate="{{messagesPrefix}}.subscribe-now"></span></a></div><div class="subscription-status cancelled" ng-show="subscriptionStatus.statusCode === \'cancelled\'"><span translate="{{messagesPrefix}}.expanded-cancelled"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank" ng-show="!usePlans"><span translate="{{messagesPrefix}}.subscribe-now"></span></a> <a type="button" class="btn btn-primary u_margin-left" ng-click="showPlansModal()" ng-show="usePlans"><span translate="{{messagesPrefix}}.subscribe-now"></span></a></div><div class="subscription-status suspended" ng-show="subscriptionStatus.statusCode === \'suspended\'"><span translate="{{messagesPrefix}}.expanded-suspended"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeAccountUrl}}" target="_blank"><span translate="{{messagesPrefix}}.view-invoices"></span></a></div></div>');
 }]);
 })();
 
