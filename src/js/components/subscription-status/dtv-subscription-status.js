@@ -3,9 +3,9 @@
 
   angular.module(
     "risevision.common.components.subscription-status.directives")
-    .directive("subscriptionStatus", ["$rootScope", "$templateCache", "subscriptionStatusService", "planFactory",
+    .directive("subscriptionStatus", ["$rootScope", "$templateCache", "subscriptionStatusService",
       "STORE_URL", "ACCOUNT_PATH", "IN_RVA_PATH",
-      function ($rootScope, $templateCache, subscriptionStatusService, planFactory, STORE_URL, ACCOUNT_PATH,
+      function ($rootScope, $templateCache, subscriptionStatusService, STORE_URL, ACCOUNT_PATH,
         IN_RVA_PATH) {
         return {
           restrict: "AE",
@@ -16,14 +16,13 @@
             companyId: "@",
             displayId: "@",
             expandedFormat: "@",
-            usePlans: "@",
             showStoreModal: "=?",
             customProductLink: "@",
-            customMessages: "@"
+            customMessages: "@",
+            customOnClick: "&"
           },
           template: $templateCache.get("subscription-status/subscription-status-template.html"),
           link: function ($scope, elm, attrs, ctrl) {
-            $scope.showPlansModal = planFactory.showPlansModal;
             $scope.subscriptionStatus = {
               "status": "N/A",
               "statusCode": "na",

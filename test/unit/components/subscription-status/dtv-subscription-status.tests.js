@@ -20,11 +20,6 @@ describe("directive: subscription status", function() {
         }
       };
     });
-    $provide.service("planFactory", function() {
-      return {
-        showPlansModal: sinon.stub()
-      };
-    });
   }));
 
   beforeEach(inject(function(_$compile_, _$rootScope_, $templateCache){
