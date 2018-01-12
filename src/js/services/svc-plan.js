@@ -30,13 +30,29 @@
       productId: "303",
       pc: "d521f5bfbc1eef109481eebb79831e11c7804ad8"
     }])
-    .factory("planFactory", ["$q", "$log", "userState", "storeAPILoader", "subscriptionStatusService",
-      "currencyService", "PLANS_LIST",
-      function ($q, $log, userState, storeAPILoader, subscriptionStatusService, currencyService, PLANS_LIST) {
+    .factory("planFactory", ["$q", "$log", "$rootScope", "$modal", "$templateCache", "userState", "storeAPILoader",
+      "subscriptionStatusService", "currencyService", "PLANS_LIST",
+      function ($q, $log, $rootScope, $modal, $templateCache, userState, storeAPILoader, subscriptionStatusService,
+        currencyService, PLANS_LIST) {
         var _factory = {};
         var _plansCodesList = _.map(PLANS_LIST, "pc");
         var _plansByType = _.keyBy(PLANS_LIST, "type");
         var _plansByCode = _.keyBy(PLANS_LIST, "pc");
+
+        $rootScope.$on("risevision.company.selectedCompanyChanged", function () {
+          console.log("SVC", userState.getSelectedCompanyId());
+          if (userState.getSelectedCompanyId()) {
+            _factory.getCompanyPlan(userState.getSelectedCompanyId())
+              .then(function (plan) {
+                _factory.currentPlan = plan;
+                $log.debug("Current plan", plan);
+                $rootScope.$emit("risevision.plan.loaded", plan);
+              })
+              .catch(function (err) {
+                $log.debug("Failed to load company's plan", err);
+              });
+          }
+        });
 
         _factory.getPlans = function (params) { // companyId, search
           $log.debug("getPlans called.");
@@ -117,6 +133,19 @@
             });
 
           return deferred.promise;
+        };
+
+        _factory.showPlansModal = function () {
+          $modal.open({
+            template: $templateCache.get("plans-modal.html"),
+            controller: "PlansModalCtrl",
+            size: "lg",
+            resolve: {
+              currentPlan: function () {
+                return _factory.currentPlan;
+              }
+            }
+          });
         };
 
         function _getSelectedCurrency() {
