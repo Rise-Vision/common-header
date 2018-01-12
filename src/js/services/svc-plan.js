@@ -12,7 +12,7 @@
       pc: "000",
       status: "Subscribed",
       priceMonth: 0,
-      descriptionShort: "Get Rise Storage, Embedded Presentations, and Template Library for one great price."
+      descriptionShort: "Design, distribute and manage your digital signage for free. Unlimited Displays, Companies and Users."
     }, {
       type: "basic",
       productId: "289",
