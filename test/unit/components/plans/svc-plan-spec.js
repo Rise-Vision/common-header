@@ -4,7 +4,7 @@
 describe("Services: plan", function() {
   var storeApiFailure;
 
-  beforeEach(module("risevision.common.plan"));
+  beforeEach(module("risevision.common.components.plans"));
   beforeEach(module(function ($provide) {
     storeApiFailure = false;
 

@@ -245,30 +245,6 @@ try {
   module = angular.module('risevision.common.header.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('plans-downgrade-modal.html',
-    '<div><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 id="icpModalTitle" class="modal-title">Downgrade</h3></div><div class="modal-body u_padding-lg" stop-event="touchend"><div class="container-fluid text-center u_padding-lg">Downgrading an account needs to be processed through our Support team. Please reach out and we\'ll help!<br><a class="btn btn-primary btn-lg u_margin-lg-top" href="https://www.risevision.com/contact-us?contact_form=enterprise" target="_blank">Contact Us</a></div></div><div class="modal-footer"></div></div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('risevision.common.header.templates');
-} catch (e) {
-  module = angular.module('risevision.common.header.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('plans-modal.html',
-    '<div rv-spinner="" rv-spinner-key="plans-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title">Choose Your Plan</h3></div><div class="modal-body u_padding-lg" stop-event="touchend"><div class="grid-list row"><div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="plan in plans"><div class="u_cursor_disabled panel panel-default"><div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><div class="grid-list-text text-center"><h4 id="productName">{{plan.name}}</h4><p class="product-description">{{plan.descriptionShort}}</p><div><h1>${{plan.priceMonth}}</h1>&nbsp;per Company per Month</div><a ng-show="currentPlan.type === plan.type" target="_blank" class="cta_button btn btn-white u_margin-lg">Current Plan</a> <a ng-show="canUpgrade(plan)" target="_blank" href="https://store.risevision.com/product/{{plan.productId}}" class="cta_button btn btn-primary u_margin-lg">Subscribe</a> <a ng-show="canDowngrade(plan)" ng-click="showDowngradeModal()" class="cta_button btn btn-default u_margin-lg">Downgrade</a> <a ng-show="plan.type === \'enterprise\' && currentPlan.type !== plan.type" target="_blank" href="https://www.risevision.com/contact-us" class="cta_button btn btn-primary u_margin-lg">Contact Us</a></div></div></div></div></div><div class="text-center u_margin-md-top"><a class="btn btn-link btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/pricing">Learn More About Our Plan Pricing</a> <span class="bold">OR</span> <a class="btn btn-link btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/contact-us">Contact Sales If You Need Help</a></div></div><div class="modal-footer"></div></div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('risevision.common.header.templates');
-} catch (e) {
-  module = angular.module('risevision.common.header.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('registration-modal.html',
     '<div rv-spinner="" rv-spinner-key="registration-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close registration-cancel-button" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 class="modal-title">Let\'s finish with your details</h2></div><div class="modal-body registration-modal" stop-event="touchend"><div class="row"><div class="col-sm-8"><form id="registrationForm" novalidate="" role="form" name="forms.registrationForm"><div class="form-group" ng-class="{ \'has-error\' : forms.registrationForm.firstName.$invalid && !forms.registrationForm.firstName.$pristine }"><label for="firstName">First Name</label> <input type="text" class="form-control firstName" name="firstName" id="firstName" required="" ng-model="profile.firstName"><p ng-show="forms.registrationForm.firstName.$invalid && !forms.registrationForm.firstName.$pristine" class="help-block validation-error-message-first-name">Enter First Name.</p></div><div class="form-group" ng-class="{ \'has-error\' : forms.registrationForm.lastName.$invalid && !forms.registrationForm.lastName.$pristine }"><label for="lastName">Last Name</label> <input type="text" class="form-control lastName" name="lastName" id="lastName" required="" ng-model="profile.lastName"><p ng-show="forms.registrationForm.lastName.$invalid && !forms.registrationForm.lastName.$pristine" class="help-block validation-error-message-last-name">Enter Last Name.</p></div><div class="form-group" ng-show="newUser" ng-class="{\'has-error\': forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine}"><label for="website">Website</label> <input type="text" class="form-control website" placeholder="http://" name="website" id="website" ng-model="company.website" website-validator=""><p ng-show="forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine" class="help-block validation-error-message-website">Please provide a valid URL.</p></div><div class="checkbox form-group" ng-class="{ \'has-error\' : forms.registrationForm.accepted.$invalid && !userForm.accepted.$pristine }"><label><input type="checkbox" name="accepted" ng-model="profile.accepted" class="accept-terms-checkbox" required=""> I accept the terms of <a href="https://www.risevision.com/terms-of-service" target="_blank">Service and Privacy</a><p ng-show="forms.registrationForm.accepted.$invalid && !forms.registrationForm.accepted.$pristine" class="help-block validation-error-message-accepted">You must accept terms and condtions.</p></label></div><div class="checkbox form-group"><label><input type="checkbox" class="sign-up-newsletter-checkbox" ng-model="profile.mailSyncEnabled"> Sign up for our newsletter</label></div><div class="u_margin-md-top"><button ng-click="save()" name="create-account" type="button" class="btn btn-lg btn-success btn-block registration-save-button" ng-disabled="registering">Create Account <i class="fa fa-white fa-check icon-right"></i></button> <button type="button" class="btn hidden btn-lg btn-link btn-fixed-width" ng-disabled="registering" ng-click="closeModal()">Cancel</button></div></form></div><div class="col-sm-4"><div class="signup-counters"><div class="counter"><p>129</p><span>New Companies Added Yesterday</span></div><div class="counter"><p>72,990</p><span>Total Companies</span></div><div class="counter"><p>120</p><span>Countries with Active Displays</span></div></div></div></div></div></div>');
 }]);
@@ -394,7 +370,6 @@ angular.module("risevision.common.header", [
   "risevision.common.header.directives",
   "risevision.common.header.filters",
   "risevision.common.i18n",
-  "risevision.common.plan",
   "risevision.common.systemmessages", "risevision.core.systemmessages",
   "risevision.core.countries",
   "risevision.core.oauth2",
@@ -414,6 +389,7 @@ angular.module("risevision.common.header", [
   "risevision.common.components.analytics",
   "risevision.common.components.message-box",
   "risevision.common.components.svg",
+  "risevision.common.components.plans",
   "risevision.common.support",
   "risevision.common.email"
 ])
@@ -1532,86 +1508,6 @@ angular.module("risevision.common.header")
       });
     }
   ]);
-
-angular.module("risevision.common.header")
-
-.controller("PlansDowngradeModalCtrl", [
-  "$scope", "$modalInstance",
-  function ($scope, $modalInstance) {
-
-    $scope.dismiss = function () {
-      $modalInstance.dismiss("cancel");
-    };
-  }
-]);
-
-angular.module("risevision.common.header")
-
-.controller("PlansModalCtrl", [
-  "$scope", "$modalInstance", "$log", "$modal", "$templateCache", "$loading", "planFactory", "currentPlan",
-  function ($scope, $modalInstance, $log, $modal, $templateCache, $loading, planFactory, currentPlan) {
-    $scope.currentPlan = currentPlan;
-
-    $scope.getPlansDetails = function () {
-      $loading.start("plans-modal");
-
-      return planFactory.getPlansDetails()
-        .then(function (plans) {
-          $scope.plans = plans;
-        })
-        .catch(function (err) {
-          $log.debug("Failed to load details", err);
-        })
-        .finally(function () {
-          $loading.stop("plans-modal");
-        });
-    };
-
-    $scope.showDowngradeModal = function () {
-      $modal.open({
-        template: $templateCache.get("plans-downgrade-modal.html"),
-        controller: "PlansDowngradeModalCtrl",
-        size: "md"
-      });
-    };
-
-    $scope.canUpgrade = function (plan) {
-      if (currentPlan.type === plan.type) {
-        return false;
-      } else if (currentPlan.type === "enterprise") {
-        return false;
-      } else if (currentPlan.type === "basic" && plan.type === "advanced") {
-        return true;
-      } else if (currentPlan.type === "free" && (plan.type === "basic" || plan.type === "advanced")) {
-        return true;
-      }
-
-      return false;
-    };
-
-    $scope.canDowngrade = function (plan) {
-      if (currentPlan.type === plan.type) {
-        return false;
-      } else if (currentPlan.type === "enterprise") {
-        return true;
-      } else if (currentPlan.type === "advanced" && (plan.type === "free" || plan.type === "basic")) {
-        return true;
-      } else if (currentPlan.type === "basic" && plan.type === "free") {
-        return true;
-      }
-
-      return false;
-    };
-
-    $scope.dismiss = function () {
-      $modalInstance.dismiss("cancel");
-    };
-
-    $scope.getPlansDetails();
-  }
-
-
-]);
 
 angular.module("risevision.common.header")
   .controller("RegisterButtonCtrl", ["$scope", "cookieStore", "uiFlowManager",
@@ -3044,98 +2940,6 @@ angular.module("risevision.common.cookie", ["risevision.common.config"])
     }
   ]);
 
-(function (angular) {
-  "use strict";
-
-
-  angular.module("risevision.common.currency", [
-    "risevision.common.gapi"
-  ])
-
-  .factory("currencyService", ["$q", "storeAPILoader", "$log",
-    function ($q, storeAPILoader, $log) {
-
-      var deferred = null;
-      var currency = {
-        defaultItem: null
-      };
-
-      var CurrencyItem = function (obj) {
-        this.country = obj.country;
-        this.currencyCode = obj.currencyCode;
-        this.description = obj.description;
-        this.bankAccountCode = obj.bankAccountCode;
-        this.bankAccountDescription = obj.bankAccountDescription;
-
-        this.getName = function () {
-          return this.currencyCode.toUpperCase();
-        };
-
-        this.pickPrice = function (priceUSD, priceCAD) {
-          switch (this.currencyCode.toUpperCase()) {
-          case "CAD":
-            return priceCAD;
-          default:
-            return priceUSD;
-          }
-        };
-      };
-
-      currency.getByCountry = function (country) {
-        if (country) {
-          for (var i = 0; i < this.items.length; i++) {
-            if (this.items[i].country && this.items[i].country.toUpperCase() ===
-              country.toUpperCase()) {
-              return this.items[i];
-            }
-          }
-        }
-        return this.defaultItem;
-      };
-
-      currency.setItems = function (newItems) {
-        this.items = [];
-        //set default currency
-        for (var i = 0; i < newItems.length; i++) {
-          var ci = new CurrencyItem(newItems[i]);
-          this.items.push(ci);
-          if (!ci.country) {
-            this.defaultItem = ci;
-          }
-        }
-      };
-
-      return function () {
-
-        if (deferred !== null) {
-          return deferred.promise;
-        }
-
-        deferred = $q.defer();
-
-        $log.debug("currencyService called");
-        storeAPILoader().then(function (storeAPI) {
-          var request = storeAPI.currency.list();
-          request.execute(function (resp) {
-            $log.debug("currencyService resp", resp);
-            if (!resp.error) {
-              currency.setItems(resp.items);
-              deferred.resolve(currency);
-            } else {
-              console.error("currencyService error: ", resp.error);
-              deferred.reject(resp.error);
-            }
-          });
-        });
-
-        return deferred.promise;
-      };
-
-    }
-  ]);
-
-})(angular);
-
 "use strict";
 /*global gadgets: false */
 
@@ -3316,171 +3120,6 @@ angular.module("risevision.common.geodata", [])
   ["(GMT +12:00) Auckland, Fiji, Kamchatka, Marshall Is.", "720"],
   ["(GMT +13:00) Nuku'alofa", "780"],
 ]);
-
-(function (angular) {
-
-  "use strict";
-  angular.module("risevision.common.plan", [
-    "risevision.common.gapi",
-    "risevision.common.currency"
-  ])
-    .value("PLANS_LIST", [{
-      name: "Free",
-      type: "free",
-      productId: "000",
-      pc: "000",
-      status: "Subscribed",
-      priceMonth: 0,
-      descriptionShort: "Design, distribute and manage your digital signage for free. Unlimited Displays, Companies and Users."
-    }, {
-      type: "basic",
-      productId: "289",
-      pc: "40c092161f547f8f72c9f173cd8eebcb9ca5dd25"
-    }, {
-      type: "advanced",
-      productId: "290",
-      pc: "93b5595f0d7e4c04a3baba1102ffaecb17607bf4"
-    }, {
-      type: "enterprise",
-      productId: "301",
-      pc: "b1844725d63fde197f5125b58b6cba6260ee7a57"
-    }, {
-      type: "enterprisesub",
-      productId: "303",
-      pc: "d521f5bfbc1eef109481eebb79831e11c7804ad8"
-    }])
-    .factory("planFactory", ["$q", "$log", "$rootScope", "$modal", "$templateCache", "userState", "storeAPILoader",
-      "subscriptionStatusService", "currencyService", "PLANS_LIST",
-      function ($q, $log, $rootScope, $modal, $templateCache, userState, storeAPILoader, subscriptionStatusService,
-        currencyService, PLANS_LIST) {
-        var _factory = {};
-        var _plansCodesList = _.map(PLANS_LIST, "pc");
-        var _plansByType = _.keyBy(PLANS_LIST, "type");
-        var _plansByCode = _.keyBy(PLANS_LIST, "pc");
-
-        $rootScope.$on("risevision.company.selectedCompanyChanged", function () {
-          console.log("SVC", userState.getSelectedCompanyId());
-          if (userState.getSelectedCompanyId()) {
-            _factory.getCompanyPlan(userState.getSelectedCompanyId())
-              .then(function (plan) {
-                _factory.currentPlan = plan;
-                $log.debug("Current plan", plan);
-                $rootScope.$emit("risevision.plan.loaded", plan);
-              })
-              .catch(function (err) {
-                $log.debug("Failed to load company's plan", err);
-              });
-          }
-        });
-
-        _factory.getPlans = function (params) { // companyId, search
-          $log.debug("getPlans called.");
-          var deferred = $q.defer();
-          storeAPILoader().then(function (riseApi) {
-            riseApi.product.list(params).execute(function (resp) {
-              $log.debug("getPlans response", resp);
-              if (!resp.error) {
-                deferred.resolve(resp);
-              } else {
-                deferred.reject(resp.error);
-              }
-            });
-          });
-          return deferred.promise;
-        };
-
-        _factory.getPlansDetails = function () {
-          $log.debug("getPlansDetails called.");
-          var deferred = $q.defer();
-          var search = "(productTag=Plans)";
-
-          _factory.getPlans({
-            search: search
-          })
-            .then(function (resp) {
-              $log.debug("getPlansDetails response.", resp);
-
-              return _getSelectedCurrency().then(function (currency) {
-                console.log("CURRENCY", currency);
-                resp.items.forEach(function (plan) {
-                  var monthKey = "per Company per Month";
-                  var priceMap = _.keyBy(plan.pricing, "unit");
-                  var price = priceMap[monthKey] || {};
-
-                  plan.type = plan.name.toLowerCase().replace(" plan", "");
-                  plan.priceMonth = currency.pickPrice(price.priceUSD, price.priceCAD);
-                });
-
-                var planMap = _.keyBy(resp.items, "type");
-
-                // Add free plan, since it's not returned by the service
-                deferred.resolve([_plansByType.free, planMap.basic, planMap.advanced, planMap.enterprise]);
-              });
-            })
-            .catch(function (err) {
-              deferred.reject(err);
-            });
-
-          return deferred.promise;
-        };
-
-        _factory.getCompanyPlan = function (companyId) {
-          $log.debug("getCompanyPlan called.");
-          var deferred = $q.defer();
-
-          subscriptionStatusService.list(_plansCodesList.slice(1), companyId)
-            .then(function (resp) {
-              $log.debug("getCompanyPlan response.", resp);
-
-              // Use Free as default
-              var subscribedPlan = _plansByType.free;
-              var plansMap = _.keyBy(resp, "pc");
-
-              _plansCodesList.forEach(function (planCode) {
-                if (plansMap[planCode] && ["Subscribed", "Suspended", "On Trial"].indexOf(plansMap[planCode].status) >=
-                  0) {
-                  subscribedPlan = plansMap[planCode];
-                }
-              });
-
-              subscribedPlan.type = _plansByCode[subscribedPlan.pc].type;
-
-              deferred.resolve(subscribedPlan);
-            })
-            .catch(function (err) {
-              deferred.reject(err);
-            });
-
-          return deferred.promise;
-        };
-
-        _factory.showPlansModal = function () {
-          $modal.open({
-            template: $templateCache.get("plans-modal.html"),
-            controller: "PlansModalCtrl",
-            size: "lg",
-            resolve: {
-              currentPlan: function () {
-                return _factory.currentPlan;
-              }
-            }
-          });
-        };
-
-        function _getSelectedCurrency() {
-          return currencyService()
-            .then(function (currency) {
-              var company = userState.getCopyOfUserCompany();
-              var country = (company && company.country) ? company.country : "";
-              return currency.getByCountry(country);
-            });
-        }
-
-        return _factory;
-      }
-    ]);
-
-})(angular);
 
 (function (angular) {
   "use strict";

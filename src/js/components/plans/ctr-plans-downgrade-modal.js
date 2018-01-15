@@ -1,4 +1,4 @@
-angular.module("risevision.common.header")
+angular.module("risevision.common.components.plans")
 
 .controller("PlansDowngradeModalCtrl", [
   "$scope", "$modalInstance",

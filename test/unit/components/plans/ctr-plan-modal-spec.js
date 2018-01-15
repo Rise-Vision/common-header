@@ -1,7 +1,7 @@
 "use strict";
 
 describe("controller: plans modal", function() {
-  beforeEach(module("risevision.common.header"));
+  beforeEach(module("risevision.common.components.plans"));
   beforeEach(module(function ($provide) {
     $provide.service("$modalInstance", function() {
       return {

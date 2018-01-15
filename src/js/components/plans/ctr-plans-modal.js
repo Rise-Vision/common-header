@@ -1,4 +1,4 @@
-angular.module("risevision.common.header")
+angular.module("risevision.common.components.plans")
 
 .controller("PlansModalCtrl", [
   "$scope", "$modalInstance", "$log", "$modal", "$templateCache", "$loading", "planFactory", "currentPlan",
@@ -22,7 +22,7 @@ angular.module("risevision.common.header")
 
     $scope.showDowngradeModal = function () {
       $modal.open({
-        template: $templateCache.get("plans-downgrade-modal.html"),
+        template: $templateCache.get("plans/plans-downgrade-modal.html"),
         controller: "PlansDowngradeModalCtrl",
         size: "md"
       });

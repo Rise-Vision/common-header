@@ -1,10 +1,7 @@
 (function (angular) {
 
   "use strict";
-  angular.module("risevision.common.plan", [
-    "risevision.common.gapi",
-    "risevision.common.currency"
-  ])
+  angular.module("risevision.common.components.plans")
     .value("PLANS_LIST", [{
       name: "Free",
       type: "free",
@@ -137,7 +134,7 @@
 
         _factory.showPlansModal = function () {
           $modal.open({
-            template: $templateCache.get("plans-modal.html"),
+            template: $templateCache.get("plans/plans-modal.html"),
             controller: "PlansModalCtrl",
             size: "lg",
             resolve: {
