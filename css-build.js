@@ -7,6 +7,7 @@ var minifyCSS = require("gulp-minify-css");
 var watch = require("gulp-watch");
 var rename = require("gulp-rename");
 var colors = require("colors");
+var hologram = require("gulp-hologram");
 
 var paths = {
   sass: ["./src/scss/**/*.scss", "./src/scss/*.scss"],
@@ -24,6 +25,11 @@ gulp.task("fonts-copy", function () {
 
   gulp.src(paths.fonts)
     .pipe(gulp.dest(paths.distFonts));
+});
+
+gulp.task('hologram', function() {
+  gulp.src('hologram_config.yml')
+    .pipe(hologram({logging:true}));
 });
 
 gulp.task("css-build-alignment", function () {

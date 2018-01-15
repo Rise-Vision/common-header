@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Base CSS &ndash; Rise Vision Style Guide</title>
+
+    <!-- Styleguide CSS -->
+    <link rel="stylesheet" href="styles/hgt-syntax.css">
+    <link rel="stylesheet" href="styles/hgt.css">
+
+    <!-- Source CSS -->
+    
+      
+        <link rel="stylesheet" href="css/rise.min.css">
+      
+        <link rel="stylesheet" href="css/alignment.min.css">
+      
+    
+</head>
+
+  <body class="hgt-body">
+    <div class="hgt-pagehead">
+      <div class="hgt-container">
+        <nav class="hgt-pagehead-nav" role="navigation">
+          <a href="index.html"
+             class="hgt-pagehead-nav-item ">
+            Home
+          </a>
+
+          
+          <a href="base_css.html"
+             class="hgt-pagehead-nav-item selected">
+            Base CSS
+          </a>
+          
+          <a href="forms.html"
+             class="hgt-pagehead-nav-item ">
+            Forms
+          </a>
+          
+          <a href="index.html"
+             class="hgt-pagehead-nav-item ">
+            
+          </a>
+          
+        </nav>
+
+        <h1 class="hgt-pagehead-title">Rise Vision Style Guide</h1>
+      </div>
+    </div>
+
+    <div class="hgt-styleguide hgt-container">
+      <div class="hgt-columns">
+        
+          <div class="hgt-column one-fourth">
+            <nav class="hgt-menu">
+              
+                
+                  <a href="#alert" class="hgt-menu-item">Alerts</a>
+                
+              
+                
+                  <a href="#breadcrumb" class="hgt-menu-item">Breadcrumbs</a>
+                
+              
+                
+                  <a href="#button" class="hgt-menu-item">Buttons</a>
+                
+              
+                
+                  <a href="#dropdowns" class="hgt-menu-item">Dropdowns</a>
+                
+              
+            </nav>
+          </div>
+        
+
+        <div class="hgt-column three-fourths">
+          <div class="hgt-content">
+<h1 id="alert" class="styleguide">Alerts</h1>
+<div class="codeExample">
+  <div class="exampleOutput">
+        <div class='alert alert-success'>Hello</div>
+
+  </div>
+  <div class="codeBlock">
+    <div class="highlight">
+      <pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">'alert alert-success'</span><span class="nt">&gt;</span>Hello<span class="nt">&lt;/div&gt;</span></pre>
+    </div>
+  </div>
+</div>
+
+<h1 id="breadcrumb" class="styleguide">Breadcrumbs</h1>
+<p class="styleguide">Button styles can be applied to any element. Typically you&#39;ll want to use either a <code class="styleguide">&lt;button&gt;</code> or an <code class="styleguide">&lt;a&gt;</code> element:</p><div class="codeExample">
+  <div class="exampleOutput">
+    <ol class="breadcrumb"> 
+    <li>Step 1</li>
+    <li>Step 2</li>
+    <li>Step 3</li>
+    <li class="active">Step 4</li>
+</ol> 
+
+  </div>
+  <div class="codeBlock">
+    <div class="highlight">
+      <pre><span class="nt">&lt;ol</span> <span class="na">class=</span><span class="s">"breadcrumb"</span><span class="nt">&gt;</span> 
+    <span class="nt">&lt;li&gt;</span>Step 1<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li&gt;</span>Step 2<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li&gt;</span>Step 3<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"active"</span><span class="nt">&gt;</span>Step 4<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ol&gt;</span></pre>
+    </div>
+  </div>
+</div>
+
+<h1 id="button" class="styleguide">Buttons</h1>
+<p class="styleguide">Button styles can be applied to any element. Typically you&#39;ll want to use either a <code class="styleguide">&lt;button&gt;</code> or an <code class="styleguide">&lt;a&gt;</code> element:</p><div class="codeExample">
+  <div class="exampleOutput">
+    <button class="btn btn-default">Click</button>
+<a class="btn btn btn-primary" href="#">Trulia!</a>
+
+  </div>
+  <div class="codeBlock">
+    <div class="highlight">
+      <pre><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"btn btn-default"</span><span class="nt">&gt;</span>Click<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"btn btn btn-primary"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Trulia!<span class="nt">&lt;/a&gt;</span></pre>
+    </div>
+  </div>
+</div>
+
+<h1 id="dropdowns" class="styleguide">Dropdowns</h1>
+<p class="styleguide">Button styles can be applied to any element. Typically you&#39;ll want to use either a <code class="styleguide">&lt;button&gt;</code> or an <code class="styleguide">&lt;a&gt;</code> element:</p><div class="codeExample">
+  <div class="exampleOutput">
+     <div class="u_bordered dropdown" dropdown>
+      <ul class="dropdown-menu" role="menu">
+          <li><a> Lorem 100 </a></li>
+          <li><a> Lorem 200 </a></li>
+          <li><a> Lorem 300 </a></li>
+          <li><a> Lorem 400 </a></li>
+          <li><a> Lorem 500 </a></li>
+      </ul>
+  </div>
+
+  </div>
+  <div class="codeBlock">
+    <div class="highlight">
+      <pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"u_bordered dropdown"</span> <span class="na">dropdown</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"dropdown-menu"</span> <span class="na">role=</span><span class="s">"menu"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;li&gt;&lt;a&gt;</span> Lorem 100 <span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          <span class="nt">&lt;li&gt;&lt;a&gt;</span> Lorem 200 <span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          <span class="nt">&lt;li&gt;&lt;a&gt;</span> Lorem 300 <span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          <span class="nt">&lt;li&gt;&lt;a&gt;</span> Lorem 400 <span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          <span class="nt">&lt;li&gt;&lt;a&gt;</span> Lorem 500 <span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+      <span class="nt">&lt;/ul&gt;</span>
+  <span class="nt">&lt;/div&gt;</span></pre>
+    </div>
+  </div>
+</div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="hgt-footer">
+      Built using <a href="https://github.com/trulia/hologram">Hologram</a> and <a href="https://github.com/wearecube/hologram-github-theme">Hologram Github Theme</a>
+    </footer>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+  <script src="scripts/vendor/jquery.waypoints.min.js"></script>
+  <script src="scripts/vendor/sticky.min.js"></script>
+  <script src="scripts/vendor/infinite.min.js"></script>
+  <script src="scripts/hgt.js"></script>
+
+  
+
+  
+</body>
+</html>

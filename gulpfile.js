@@ -323,7 +323,7 @@ gulp.task("watch", function (cb) {
 });
 
 gulp.task("build", function (cb) {
-  runSequence(["clean", "lint"], ["css-build", "i18n-build", "html2js", "build-components"], "build-dist", cb);
+  runSequence(["clean", "lint"], ["css-build", "i18n-build", "html2js", "build-components"], ["build-dist", "hologram"], cb);
 });
 
 gulp.task("default", [], function () {
