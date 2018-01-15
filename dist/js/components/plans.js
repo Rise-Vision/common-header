@@ -185,7 +185,6 @@ angular.module("risevision.common.components.plans", [
               $log.debug("getPlansDetails response.", resp);
 
               return _getSelectedCurrency().then(function (currency) {
-                console.log("CURRENCY", currency);
                 resp.items.forEach(function (plan) {
                   var monthKey = "per Company per Month";
                   var priceMap = _.keyBy(plan.pricing, "unit");
@@ -198,7 +197,7 @@ angular.module("risevision.common.components.plans", [
                 var planMap = _.keyBy(resp.items, "type");
 
                 // Add free plan, since it's not returned by the service
-                deferred.resolve([_plansByType.free, planMap.basic, planMap.advanced, planMap.enterprise]);
+                deferred.resolve([_.cloneDeep(_plansByType.free), planMap.basic, planMap.advanced, planMap.enterprise]);
               });
             })
             .catch(function (err) {
@@ -217,13 +216,14 @@ angular.module("risevision.common.components.plans", [
               $log.debug("getCompanyPlan response.", resp);
 
               // Use Free as default
-              var subscribedPlan = _plansByType.free;
+              var subscribedPlan = _.cloneDeep(_plansByType.free);
               var plansMap = _.keyBy(resp, "pc");
 
               _plansCodesList.forEach(function (planCode) {
-                if (plansMap[planCode] && ["Subscribed", "Suspended", "On Trial"].indexOf(plansMap[planCode].status) >=
-                  0) {
-                  subscribedPlan = plansMap[planCode];
+                var plan = plansMap[planCode];
+
+                if (plan && ["Subscribed", "Suspended", "On Trial"].indexOf(plan.status) >= 0) {
+                  subscribedPlan = plan;
                 }
               });
 
@@ -313,9 +313,11 @@ angular.module("risevision.common.components.plans")
         return false;
       } else if (currentPlan.type === "enterprise") {
         return false;
-      } else if (currentPlan.type === "basic" && plan.type === "advanced") {
+      } else if (currentPlan.type === "advanced" && plan.type === "enterprise") {
         return true;
-      } else if (currentPlan.type === "free" && (plan.type === "basic" || plan.type === "advanced")) {
+      } else if (currentPlan.type === "basic" && (plan.type === "advanced" || plan.type === "enterprise")) {
+        return true;
+      } else if (currentPlan.type === "free") {
         return true;
       }
 
@@ -366,6 +368,6 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plans/plans-modal.html',
-    '<div rv-spinner="" rv-spinner-key="plans-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title">Choose Your Plan</h3></div><div class="modal-body u_padding-lg" stop-event="touchend"><div class="grid-list row"><div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="plan in plans"><div class="u_cursor_disabled panel panel-default"><div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><div class="grid-list-text text-center"><h4 id="productName">{{plan.name}}</h4><p class="product-description">{{plan.descriptionShort}}</p><div><h1>${{plan.priceMonth}}</h1>&nbsp;per Company per Month</div><a ng-show="currentPlan.type === plan.type" target="_blank" class="cta_button btn btn-white u_margin-lg">Current Plan</a> <a ng-show="canUpgrade(plan)" target="_blank" href="https://store.risevision.com/product/{{plan.productId}}" class="cta_button btn btn-primary u_margin-lg">Subscribe</a> <a ng-show="canDowngrade(plan)" ng-click="showDowngradeModal()" class="cta_button btn btn-default u_margin-lg">Downgrade</a> <a ng-show="plan.type === \'enterprise\' && currentPlan.type !== plan.type" target="_blank" href="https://www.risevision.com/contact-us" class="cta_button btn btn-primary u_margin-lg">Contact Us</a></div></div></div></div></div><div class="text-center u_margin-md-top"><a class="btn btn-link btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/pricing">Learn More About Our Plan Pricing</a> <span class="bold">OR</span> <a class="btn btn-link btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/contact-us">Contact Sales If You Need Help</a></div></div><div class="modal-footer"></div></div>');
+    '<div rv-spinner="" rv-spinner-key="plans-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title">Choose Your Plan</h3></div><div class="modal-body u_padding-lg" stop-event="touchend"><div class="grid-list row"><div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="plan in plans"><div class="u_cursor_disabled panel panel-default"><div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><div class="grid-list-text text-center"><h4 id="productName">{{plan.name}}</h4><p class="product-description">{{plan.descriptionShort}}</p><div><h1>${{plan.priceMonth}}</h1>&nbsp;per Company per Month</div><a ng-show="currentPlan.type === plan.type" target="_blank" class="cta_button btn btn-white u_margin-lg">Current Plan</a> <a ng-show="canUpgrade(plan)" target="_blank" href="https://store.risevision.com/product/{{plan.productId}}" class="cta_button btn btn-primary u_margin-lg">Subscribe</a> <a ng-show="canDowngrade(plan)" ng-click="showDowngradeModal()" class="cta_button btn btn-default u_margin-lg">Downgrade</a></div></div></div></div></div><div class="text-center u_margin-md-top"><a class="btn btn-link btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/pricing">Learn More About Our Plan Pricing</a> <span class="bold">OR</span> <a class="btn btn-link btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/contact-us">Contact Sales If You Need Help</a></div></div><div class="modal-footer"></div></div>');
 }]);
 })();

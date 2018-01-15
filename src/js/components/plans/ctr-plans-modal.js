@@ -33,9 +33,11 @@ angular.module("risevision.common.components.plans")
         return false;
       } else if (currentPlan.type === "enterprise") {
         return false;
-      } else if (currentPlan.type === "basic" && plan.type === "advanced") {
+      } else if (currentPlan.type === "advanced" && plan.type === "enterprise") {
         return true;
-      } else if (currentPlan.type === "free" && (plan.type === "basic" || plan.type === "advanced")) {
+      } else if (currentPlan.type === "basic" && (plan.type === "advanced" || plan.type === "enterprise")) {
+        return true;
+      } else if (currentPlan.type === "free") {
         return true;
       }
 
