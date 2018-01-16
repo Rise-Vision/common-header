@@ -186,6 +186,18 @@
         }
       },
       "browserVersion": "Browser Version",
+      "displayControl": {
+        "label": "Display Control",
+        "configure": "Configure",
+        "description": "Turn Screen ON/OFF based on Schedule",
+        "unsupported": "Your Rise Player version doesn't support <b>Display Control</b>.",
+        "configureModal": {
+          "title": "Configure Display Control",
+          "disclaimer": "<b>DISCLAIMER:</b> Display Control is currently in beta release and is only compatible on Displays running Rise Player version RisePlayerElectron {{playerVersion}} or higher.",
+          "help": "Need help configuring Display Control?",
+          "reset": "Reset To Defaults"
+        }
+      },
       "id": "Display ID",
       "install": {
         "heading": "Install Rise Player",
@@ -204,10 +216,11 @@
         "name": "Rotation:"
       },
       "playerVersion": "Player Version",
-      "playerWarning": "A Player has not been configured for your Display. To configure your Display, select your Operating System below and install the software <b>on the device</b> that will operate your Display. When the Player starts for the first time you will be prompted to enter the Display ID (above) to link the Player with the Display that you have setup here. Further setup details can be <a href=\"https://help.risevision.com/hc/en-us/articles/115000860926-Displays\" target=\"_blank\">found here</a>.",
+      "playerWarning": "A Player has not been configured for your Display. To configure your Display, select your Operating System below and install the software <b>on the device</b> that will operate your Display. When the Player starts for the first time you will be prompted to enter the Display ID (above) to link the Player with the Display that you have setup here. Further setup details can be <a href=\"https://help.risevision.com/hc/en-us/articles/115000860926\" target=\"_blank\">found here</a>.",
       "resolution": "Resolution",
       "schedule": {
         "addToSchedule": "Add To Schedule",
+        "assigned": "Assigned Schedule",
         "label": "Schedule",
         "notScheduled": "This Display is not scheduled."
       },
@@ -298,11 +311,26 @@
     },
     "viewAll": "View All Displays"
   },
-  "playerProTrial": {
-    "description": "Rise Player Professional is a self-contained application that eliminates having to be connected to the internet in order to start and show your content.",
-    "description2": "30 days FREE trial for all Displays in your Company. No credit card required.",
+  "playerProInfo": {
+    "displayControl": {
+      "title": "<b>Display Control</b> powers off your screen when nothing is showing, and powers on when content is available.",
+      "feature1": "Saves on electricity costs.",
+      "feature2": "Extends the life of your hardware."
+    },
+    "footer": "If you're already subscribed to Rise Player Professional, please assign your Display in your <a href=\"{{accountLink}}\" target=\"_blank\">Store Account</a>.",
+    "heading": "<a href=\"{{productLink}}\" target=\"_blank\">Rise Player Professional</a> offers premium features for your digital signage content!",
+    "offlinePlay": {
+      "title": "<b>Offline Play</b> eliminates having to be connected to the internet in order to start and show your content.",
+      "feature1": "Compatible with many widgets.",
+      "feature2": "Monitors network status.",
+      "feature3": "Refreshes content when connected."
+    },
     "price": "$9 USD/CAD Per Display Per Month",
-    "title": "Rise Player Professional"
+    "title": {
+      "trial": "Try Rise Player Professional",
+      "noTrial": "Rise Player Professional"
+    },
+    "trialInfo": "30 days FREE trial for all Displays in your Company. No credit card required."
   },
   "title": "Displays"
 }

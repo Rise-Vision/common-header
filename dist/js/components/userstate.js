@@ -1072,7 +1072,7 @@ angular.module("risevision.common.components.logging")
         var _resetUserState = function () {
           $log.debug("Clearing user token...");
           _cancelAccessTokenAutoRefresh();
-          objectHelper.clearObj(_state.userToken);
+          _state.userToken = null;
           rvTokenStore.clear();
 
           userState._resetState();

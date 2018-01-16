@@ -237,7 +237,7 @@ describe("Services: userAuthFactory", function() {
           expect(msg).to.equal("Authentication Failure");
 
           // _clearUserToken
-          expect(userState._state.userToken).to.deep.equal({});
+          expect(userState._state.userToken).to.be.null;
           rvTokenStore.clear.should.have.been.called;
           // Reset also happens before the authenticate process on forceAuth=true
           userState._resetState.should.have.been.calledTwice;
@@ -284,7 +284,7 @@ describe("Services: userAuthFactory", function() {
           expect(msg).to.equal("No user");
 
           // _clearUserToken
-          expect(userState._state.userToken).to.be.undefined;
+          expect(userState._state.userToken).to.be.null;
           rvTokenStore.clear.should.have.been.called;
           // Reset also happens before the authenticate process on forceAuth=true
           userState._resetState.should.have.been.calledTwice;
@@ -352,13 +352,14 @@ describe("Services: userAuthFactory", function() {
 
     it("should sign out Rise user", function(done) {
       isRiseAuthUser = true;
+      userState._state.userToken = {};
 
       userAuthFactory.signOut().then(function() {
         gapiLoader.should.have.been.called;
         gapiAuth.signOut.should.not.have.been.called;
 
         // _clearUserToken
-        expect(userState._state.userToken).to.be.undefined;
+        expect(userState._state.userToken).to.be.null;
         rvTokenStore.clear.should.have.been.called;
 
         userState._resetState.should.have.been.called;
@@ -371,12 +372,14 @@ describe("Services: userAuthFactory", function() {
     });
 
     it("should sign out Google user", function(done) {
+      userState._state.userToken = {};
+
       userAuthFactory.signOut().then(function() {
         gapiLoader.should.have.been.called;
         gapiAuth.signOut.should.have.been.called;
 
         // _clearUserToken
-        expect(userState._state.userToken).to.be.undefined;
+        expect(userState._state.userToken).to.be.null;
         rvTokenStore.clear.should.have.been.called;
 
         userState._resetState.should.have.been.called;

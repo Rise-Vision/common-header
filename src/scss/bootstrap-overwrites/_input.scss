@@ -1,3 +1,26 @@
+/*doc
+---
+title: Inputs
+name: inputs
+category: Forms
+---
+
+Button styles can be applied to any element. Typically you'll want to use either a `<button>` or an `<a>` element:
+
+```html_example
+<div class="form-group">
+      <label class="control-label"> Label </label>
+      <div class="input-group custom-addon">
+        <input type="text" class="form-control">
+        <span class="input-group-addon">
+          <button class="btn btn-default"> Click </button>
+        </span>
+      </div>
+</div>
+```
+
+*/ 
+
 .form-control {
     box-shadow: none;
 }

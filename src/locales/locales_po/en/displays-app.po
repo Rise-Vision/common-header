@@ -397,6 +397,30 @@ msgstr "User Managed"
 msgid "fields.player.browserVersion"
 msgstr "Browser Version"
 
+msgid "fields.player.displayControl.configure"
+msgstr "Configure"
+
+msgid "fields.player.displayControl.configureModal.disclaimer"
+msgstr "<b>DISCLAIMER:</b> Display Control is currently in beta release and is only compatible on Displays running Rise Player version RisePlayerElectron {{playerVersion}} or higher."
+
+msgid "fields.player.displayControl.configureModal.help"
+msgstr "Need help configuring Display Control?"
+
+msgid "fields.player.displayControl.configureModal.reset"
+msgstr "Reset To Defaults"
+
+msgid "fields.player.displayControl.configureModal.title"
+msgstr "Configure Display Control"
+
+msgid "fields.player.displayControl.description"
+msgstr "Turn Screen ON/OFF based on Schedule"
+
+msgid "fields.player.displayControl.label"
+msgstr "Display Control"
+
+msgid "fields.player.displayControl.unsupported"
+msgstr "Your Rise Player version doesn't support <b>Display Control</b>."
+
 msgid "fields.player.id"
 msgstr "Display ID"
 
@@ -440,13 +464,16 @@ msgid "fields.player.playerVersion"
 msgstr "Player Version"
 
 msgid "fields.player.playerWarning"
-msgstr "A Player has not been configured for your Display. To configure your Display, select your Operating System below and install the software <b>on the device</b> that will operate your Display. When the Player starts for the first time you will be prompted to enter the Display ID (above) to link the Player with the Display that you have setup here. Further setup details can be <a href="https://help.risevision.com/hc/en-us/articles/115000860926-Displays" target="_blank">found here</a>."
+msgstr "A Player has not been configured for your Display. To configure your Display, select your Operating System below and install the software <b>on the device</b> that will operate your Display. When the Player starts for the first time you will be prompted to enter the Display ID (above) to link the Player with the Display that you have setup here. Further setup details can be <a href="https://help.risevision.com/hc/en-us/articles/115000860926" target="_blank">found here</a>."
 
 msgid "fields.player.resolution"
 msgstr "Resolution"
 
 msgid "fields.player.schedule.addToSchedule"
 msgstr "Add To Schedule"
+
+msgid "fields.player.schedule.assigned"
+msgstr "Assigned Schedule"
 
 msgid "fields.player.schedule.label"
 msgstr "Schedule"
@@ -637,17 +664,44 @@ msgstr "Why is my Display offline?"
 msgid "list.viewAll"
 msgstr "View All Displays"
 
-msgid "playerProTrial.description"
-msgstr "Rise Player Professional is a self-contained application that eliminates having to be connected to the internet in order to start and show your content."
+msgid "playerProInfo.displayControl.feature1"
+msgstr "Saves on electricity costs."
 
-msgid "playerProTrial.description2"
-msgstr "30 days FREE trial for all Displays in your Company. No credit card required."
+msgid "playerProInfo.displayControl.feature2"
+msgstr "Extends the life of your hardware."
 
-msgid "playerProTrial.price"
+msgid "playerProInfo.displayControl.title"
+msgstr "<b>Display Control</b> powers off your screen when nothing is showing, and powers on when content is available."
+
+msgid "playerProInfo.footer"
+msgstr "If you're already subscribed to Rise Player Professional, please assign your Display in your <a href="{{accountLink}}" target="_blank">Store Account</a>."
+
+msgid "playerProInfo.heading"
+msgstr "<a href="{{productLink}}" target="_blank">Rise Player Professional</a> offers premium features for your digital signage content!"
+
+msgid "playerProInfo.offlinePlay.feature1"
+msgstr "Compatible with many widgets."
+
+msgid "playerProInfo.offlinePlay.feature2"
+msgstr "Monitors network status."
+
+msgid "playerProInfo.offlinePlay.feature3"
+msgstr "Refreshes content when connected."
+
+msgid "playerProInfo.offlinePlay.title"
+msgstr "<b>Offline Play</b> eliminates having to be connected to the internet in order to start and show your content."
+
+msgid "playerProInfo.price"
 msgstr "$9 USD/CAD Per Display Per Month"
 
-msgid "playerProTrial.title"
+msgid "playerProInfo.title.noTrial"
 msgstr "Rise Player Professional"
+
+msgid "playerProInfo.title.trial"
+msgstr "Try Rise Player Professional"
+
+msgid "playerProInfo.trialInfo"
+msgstr "30 days FREE trial for all Displays in your Company. No credit card required."
 
 msgid "title"
 msgstr "Displays"
