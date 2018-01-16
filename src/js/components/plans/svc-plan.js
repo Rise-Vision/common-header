@@ -36,20 +36,6 @@
         var _plansByType = _.keyBy(PLANS_LIST, "type");
         var _plansByCode = _.keyBy(PLANS_LIST, "pc");
 
-        $rootScope.$on("risevision.company.selectedCompanyChanged", function () {
-          if (userState.getSelectedCompanyId()) {
-            _factory.getCompanyPlan(userState.getSelectedCompanyId())
-              .then(function (plan) {
-                _factory.currentPlan = plan;
-                $log.debug("Current plan", plan);
-                $rootScope.$emit("risevision.plan.loaded", plan);
-              })
-              .catch(function (err) {
-                $log.debug("Failed to load company's plan", err);
-              });
-          }
-        });
-
         _factory.getPlans = function (params) { // companyId, search
           $log.debug("getPlans called.");
           var deferred = $q.defer();
@@ -152,6 +138,26 @@
               return currency.getByCountry(country);
             });
         }
+
+        function _loadCurrentPlan() {
+          if (userState.getSelectedCompanyId()) {
+            _factory.getCompanyPlan(userState.getSelectedCompanyId())
+              .then(function (plan) {
+                _factory.currentPlan = plan;
+                $log.debug("Current plan", plan);
+                $rootScope.$emit("risevision.plan.loaded", plan);
+              })
+              .catch(function (err) {
+                $log.debug("Failed to load company's plan", err);
+              });
+          }
+        }
+
+        _loadCurrentPlan();
+
+        $rootScope.$on("risevision.company.selectedCompanyChanged", function () {
+          _loadCurrentPlan();
+        });
 
         return _factory;
       }

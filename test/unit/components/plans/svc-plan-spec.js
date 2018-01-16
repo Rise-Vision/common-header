@@ -1,7 +1,7 @@
 /*jshint expr:true */
 "use strict";
 
-describe("Services: plan", function() {
+describe.only("Services: plan", function() {
   var storeApiFailure;
 
   beforeEach(module("risevision.common.components.plans"));
@@ -53,7 +53,9 @@ describe("Services: plan", function() {
     $provide.service("userState", function () {
       return {
         _restoreState: function () {},
-        getSelectedCompanyId: sinon.stub().returns("companyId"),
+        getSelectedCompanyId: function () {
+          return null;
+        },
         getCopyOfUserCompany: function() {
           return {};
         }
@@ -74,7 +76,7 @@ describe("Services: plan", function() {
     });
   }));
 
-  var sandbox, $rootScope, $modal, planFactory, subscriptionStatusService;
+  var sandbox, $rootScope, $modal, userState, planFactory, subscriptionStatusService;
   var FREE_PLAN_ID, FREE_PLAN_CODE, BASIC_PLAN_CODE, BASIC_PLAN_ID;
   var ADVANCED_PLAN_CODE, ADVANCED_PLAN_ID, ENTERPRISE_PLAN_CODE, ENTERPRISE_PLAN_ID;
   var ENTERPRISE_SUB_PLAN_CODE, ENTERPRISE_SUB_PLAN_ID;
@@ -85,6 +87,7 @@ describe("Services: plan", function() {
     inject(function($injector, _$rootScope_) {
       $rootScope = _$rootScope_;
       $modal = $injector.get("$modal");
+      userState =  $injector.get("userState");
       planFactory = $injector.get("planFactory");
       subscriptionStatusService = $injector.get("subscriptionStatusService");
 
@@ -110,6 +113,7 @@ describe("Services: plan", function() {
   describe("initialization", function() {
     it("should load the current plan when selected company changes", function(done) {
       sandbox.spy($rootScope, "$emit");
+      sandbox.stub(userState, "getSelectedCompanyId").returns("companyId");
       sandbox.stub(planFactory, "getCompanyPlan").returns(Q.resolve({ type: "basic" }));
 
       $rootScope.$emit("risevision.company.selectedCompanyChanged");
