@@ -79,7 +79,6 @@
               $log.debug("getPlansDetails response.", resp);
 
               return _getSelectedCurrency().then(function (currency) {
-                console.log("CURRENCY", currency);
                 resp.items.forEach(function (plan) {
                   var monthKey = "per Company per Month";
                   var priceMap = _.keyBy(plan.pricing, "unit");
@@ -92,7 +91,7 @@
                 var planMap = _.keyBy(resp.items, "type");
 
                 // Add free plan, since it's not returned by the service
-                deferred.resolve([_plansByType.free, planMap.basic, planMap.advanced, planMap.enterprise]);
+                deferred.resolve([_.cloneDeep(_plansByType.free), planMap.basic, planMap.advanced, planMap.enterprise]);
               });
             })
             .catch(function (err) {
@@ -111,13 +110,14 @@
               $log.debug("getCompanyPlan response.", resp);
 
               // Use Free as default
-              var subscribedPlan = _plansByType.free;
+              var subscribedPlan = _.cloneDeep(_plansByType.free);
               var plansMap = _.keyBy(resp, "pc");
 
               _plansCodesList.forEach(function (planCode) {
-                if (plansMap[planCode] && ["Subscribed", "Suspended", "On Trial"].indexOf(plansMap[planCode].status) >=
-                  0) {
-                  subscribedPlan = plansMap[planCode];
+                var plan = plansMap[planCode];
+
+                if (plan && ["Subscribed", "Suspended", "On Trial"].indexOf(plan.status) >= 0) {
+                  subscribedPlan = plan;
                 }
               });
 
