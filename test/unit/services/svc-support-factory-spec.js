@@ -2,6 +2,7 @@
 
 describe("Services: Support Factory", function() {
   beforeEach(module("risevision.common.components.subscription-status"));
+  beforeEach(module("risevision.common.components.plans"));
   beforeEach(module("risevision.common.support"));
   var supportFactory, subscriptionStatusGetCallWentOkay,
     subscriptionStatus, modalObject, intercomSpy, userId, identifyObject,

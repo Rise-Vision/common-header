@@ -3,16 +3,13 @@
 describe("controller: plan banner", function() {
   beforeEach(module("risevision.common.header"));
   beforeEach(module(function ($provide) {
-    $provide.service("$modal", function() {
-      return {
-        open: sinon.stub()
-      };
-    });
     $provide.factory("planFactory", function() {
       return {
+        currentPlan: { type: "basic" },
         getCompanyPlan: function() {
           return Q.resolve([]);
-        }
+        },
+        showPlansModal: sinon.stub()
       };
     });
     $provide.factory("userState", function() {
@@ -23,7 +20,7 @@ describe("controller: plan banner", function() {
     });
   }));
 
-  var sandbox, $scope, $rootScope, $modal, planFactory, userState;
+  var sandbox, $scope, $rootScope, planFactory, userState;
 
   beforeEach(function() {
     sandbox = sinon.sandbox.create();
@@ -31,7 +28,6 @@ describe("controller: plan banner", function() {
     inject(function($injector, _$rootScope_, $controller) {
       $rootScope = _$rootScope_;
       $scope = $rootScope.$new();
-      $modal = $injector.get("$modal");
       planFactory = $injector.get("planFactory");
       userState = $injector.get("userState");
 
@@ -39,7 +35,6 @@ describe("controller: plan banner", function() {
 
       $controller("PlanBannerCtrl", {
         $scope: $scope,
-        $modal: $modal,
         planFactory: planFactory,
         userState: userState
       });
@@ -53,26 +48,19 @@ describe("controller: plan banner", function() {
   });
 
   it("should initialize",function() {
-    expect($scope.loadCompanyPlan).to.be.a.function;
-    expect($scope.showPlans).to.be.a.function;
+    expect($scope.showPlans).to.be.ok;
   });
 
   it("should load the current plan when selected company changes", function(done) {
-    $rootScope.$emit("risevision.company.selectedCompanyChanged");
+    $rootScope.$emit("risevision.plan.loaded");
     $rootScope.$digest();
 
     setTimeout(function () {
       expect(userState.getSelectedCompanyId).to.have.been.called;
-      expect(planFactory.getCompanyPlan).to.have.been.called;
       expect($scope.plan).to.be.not.null;
+      expect($scope.plan.type).to.equal("basic");
 
       done();
     }, 0);
-  });
-
-  it("should show plans modal", function() {
-    $scope.showPlans();
-
-    expect($modal.open).to.have.been.called;
   });
 });

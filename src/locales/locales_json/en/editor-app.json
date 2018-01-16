@@ -175,6 +175,7 @@
   },
   "subscription": {
     "buy": "Buy",
+    "subscribe": "Subscribe",
     "status": {
       "daysRemaining": "Days Remaining",
       "daysTrial": "Days Trial",

@@ -1,7 +1,7 @@
 "use strict";
 
 describe("controller: plans modal", function() {
-  beforeEach(module("risevision.common.header"));
+  beforeEach(module("risevision.common.components.plans"));
   beforeEach(module(function ($provide) {
     $provide.service("$modalInstance", function() {
       return {
@@ -99,31 +99,31 @@ describe("controller: plans modal", function() {
   });
 
   describe("canUpgrade", function() {
-    it("should be able to upgrade directly from Free Plan to Basic or Advanced", function() {
+    it("should be able to upgrade from Free Plan to any other plan", function() {
       currentPlan.type = "free";
 
       expect($scope.canUpgrade({ type: "free" })).to.be.false;
       expect($scope.canUpgrade({ type: "basic" })).to.be.true;
       expect($scope.canUpgrade({ type: "advanced" })).to.be.true;
-      expect($scope.canUpgrade({ type: "enterprise" })).to.be.false; // Needs to contact Rise
+      expect($scope.canUpgrade({ type: "enterprise" })).to.be.true;
     });
 
-    it("should be able to upgrade directly from Basic Plan to Advanced", function() {
+    it("should be able to upgrade from Basic Plan to Advanced or Enterprise", function() {
       currentPlan.type = "basic";
 
       expect($scope.canUpgrade({ type: "free" })).to.be.false;
       expect($scope.canUpgrade({ type: "basic" })).to.be.false;
       expect($scope.canUpgrade({ type: "advanced" })).to.be.true;
-      expect($scope.canUpgrade({ type: "enterprise" })).to.be.false; // Needs to contact Rise
+      expect($scope.canUpgrade({ type: "enterprise" })).to.be.true;
     });
 
-    it("should not be able to upgrade directly from Advanced Plan to any other plan", function() {
+    it("should be able to upgrade from Advanced Plan to Enterprise", function() {
       currentPlan.type = "advanced";
 
       expect($scope.canUpgrade({ type: "free" })).to.be.false;
       expect($scope.canUpgrade({ type: "basic" })).to.be.false;
       expect($scope.canUpgrade({ type: "advanced" })).to.be.false;
-      expect($scope.canUpgrade({ type: "enterprise" })).to.be.false; // Needs to contact Rise
+      expect($scope.canUpgrade({ type: "enterprise" })).to.be.true;
     });
 
     it("should not be able to upgrade from Enterprise Plan to any other plan", function() {

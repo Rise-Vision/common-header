@@ -1,10 +1,7 @@
 (function (angular) {
 
   "use strict";
-  angular.module("risevision.common.plan", [
-    "risevision.common.gapi",
-    "risevision.common.currency"
-  ])
+  angular.module("risevision.common.components.plans")
     .value("PLANS_LIST", [{
       name: "Free",
       type: "free",
@@ -12,7 +9,7 @@
       pc: "000",
       status: "Subscribed",
       priceMonth: 0,
-      descriptionShort: "Get Rise Storage, Embedded Presentations, and Template Library for one great price."
+      descriptionShort: "Design, distribute and manage your digital signage for free. Unlimited Displays, Companies and Users."
     }, {
       type: "basic",
       productId: "289",
@@ -30,9 +27,10 @@
       productId: "303",
       pc: "d521f5bfbc1eef109481eebb79831e11c7804ad8"
     }])
-    .factory("planFactory", ["$q", "$log", "userState", "storeAPILoader", "subscriptionStatusService",
-      "currencyService", "PLANS_LIST",
-      function ($q, $log, userState, storeAPILoader, subscriptionStatusService, currencyService, PLANS_LIST) {
+    .factory("planFactory", ["$q", "$log", "$rootScope", "$modal", "$templateCache", "userState", "storeAPILoader",
+      "subscriptionStatusService", "currencyService", "PLANS_LIST",
+      function ($q, $log, $rootScope, $modal, $templateCache, userState, storeAPILoader, subscriptionStatusService,
+        currencyService, PLANS_LIST) {
         var _factory = {};
         var _plansCodesList = _.map(PLANS_LIST, "pc");
         var _plansByType = _.keyBy(PLANS_LIST, "type");
@@ -66,7 +64,6 @@
               $log.debug("getPlansDetails response.", resp);
 
               return _getSelectedCurrency().then(function (currency) {
-                console.log("CURRENCY", currency);
                 resp.items.forEach(function (plan) {
                   var monthKey = "per Company per Month";
                   var priceMap = _.keyBy(plan.pricing, "unit");
@@ -79,7 +76,7 @@
                 var planMap = _.keyBy(resp.items, "type");
 
                 // Add free plan, since it's not returned by the service
-                deferred.resolve([_plansByType.free, planMap.basic, planMap.advanced, planMap.enterprise]);
+                deferred.resolve([_.cloneDeep(_plansByType.free), planMap.basic, planMap.advanced, planMap.enterprise]);
               });
             })
             .catch(function (err) {
@@ -98,13 +95,14 @@
               $log.debug("getCompanyPlan response.", resp);
 
               // Use Free as default
-              var subscribedPlan = _plansByType.free;
+              var subscribedPlan = _.cloneDeep(_plansByType.free);
               var plansMap = _.keyBy(resp, "pc");
 
               _plansCodesList.forEach(function (planCode) {
-                if (plansMap[planCode] && ["Subscribed", "Suspended", "On Trial"].indexOf(plansMap[planCode].status) >=
-                  0) {
-                  subscribedPlan = plansMap[planCode];
+                var plan = plansMap[planCode];
+
+                if (plan && ["Subscribed", "Suspended", "On Trial"].indexOf(plan.status) >= 0) {
+                  subscribedPlan = plan;
                 }
               });
 
@@ -119,6 +117,19 @@
           return deferred.promise;
         };
 
+        _factory.showPlansModal = function () {
+          $modal.open({
+            template: $templateCache.get("plans/plans-modal.html"),
+            controller: "PlansModalCtrl",
+            size: "lg",
+            resolve: {
+              currentPlan: function () {
+                return _factory.currentPlan;
+              }
+            }
+          });
+        };
+
         function _getSelectedCurrency() {
           return currencyService()
             .then(function (currency) {
@@ -127,6 +138,26 @@
               return currency.getByCountry(country);
             });
         }
+
+        function _loadCurrentPlan() {
+          if (userState.getSelectedCompanyId()) {
+            _factory.getCompanyPlan(userState.getSelectedCompanyId())
+              .then(function (plan) {
+                _factory.currentPlan = plan;
+                $log.debug("Current plan", plan);
+                $rootScope.$emit("risevision.plan.loaded", plan);
+              })
+              .catch(function (err) {
+                $log.debug("Failed to load company's plan", err);
+              });
+          }
+        }
+
+        _loadCurrentPlan();
+
+        $rootScope.$on("risevision.company.selectedCompanyChanged", function () {
+          _loadCurrentPlan();
+        });
 
         return _factory;
       }

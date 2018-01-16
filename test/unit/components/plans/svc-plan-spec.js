@@ -4,11 +4,16 @@
 describe("Services: plan", function() {
   var storeApiFailure;
 
-  beforeEach(module("risevision.common.plan"));
+  beforeEach(module("risevision.common.components.plans"));
   beforeEach(module(function ($provide) {
     storeApiFailure = false;
 
     $provide.service("$q", function() {return Q;});
+    $provide.service("$modal", function() {
+      return {
+        open: sinon.stub()
+      };
+    });
     $provide.service("storeAPILoader", function () {
       return function() {
         var deferred = Q.defer();
@@ -47,6 +52,10 @@ describe("Services: plan", function() {
     });
     $provide.service("userState", function () {
       return {
+        _restoreState: function () {},
+        getSelectedCompanyId: function () {
+          return null;
+        },
         getCopyOfUserCompany: function() {
           return {};
         }
@@ -67,7 +76,7 @@ describe("Services: plan", function() {
     });
   }));
 
-  var sandbox, planFactory, subscriptionStatusService;
+  var sandbox, $rootScope, $modal, userState, planFactory, subscriptionStatusService;
   var FREE_PLAN_ID, FREE_PLAN_CODE, BASIC_PLAN_CODE, BASIC_PLAN_ID;
   var ADVANCED_PLAN_CODE, ADVANCED_PLAN_ID, ENTERPRISE_PLAN_CODE, ENTERPRISE_PLAN_ID;
   var ENTERPRISE_SUB_PLAN_CODE, ENTERPRISE_SUB_PLAN_ID;
@@ -75,7 +84,10 @@ describe("Services: plan", function() {
   beforeEach(function() {
     sandbox = sinon.sandbox.create();
 
-    inject(function($injector){
+    inject(function($injector, _$rootScope_) {
+      $rootScope = _$rootScope_;
+      $modal = $injector.get("$modal");
+      userState =  $injector.get("userState");
       planFactory = $injector.get("planFactory");
       subscriptionStatusService = $injector.get("subscriptionStatusService");
 
@@ -96,6 +108,34 @@ describe("Services: plan", function() {
 
   afterEach(function() {
     sandbox.restore();
+  });
+
+  describe("initialization", function() {
+    it("should load the current plan when selected company changes", function(done) {
+      sandbox.spy($rootScope, "$emit");
+      sandbox.stub(userState, "getSelectedCompanyId").returns("companyId");
+      sandbox.stub(planFactory, "getCompanyPlan").returns(Q.resolve({ type: "basic" }));
+
+      $rootScope.$emit("risevision.company.selectedCompanyChanged");
+      $rootScope.$digest();
+
+      setTimeout(function () {
+        expect(planFactory.getCompanyPlan).to.have.been.called;
+        expect($rootScope.$emit).to.have.been.called;
+        expect(planFactory.currentPlan).to.be.not.null;
+        expect(planFactory.currentPlan.type).to.equal("basic");
+
+        done();
+      }, 0);
+    });
+  });
+
+  describe("plans modal", function() {
+    it("should show plans modal", function() {
+      planFactory.showPlansModal();
+
+      expect($modal.open).to.have.been.called;
+    });
   });
 
   describe("getPlans: ", function() {

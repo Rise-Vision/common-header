@@ -82,7 +82,8 @@ var env = process.env.NODE_ENV || "dev",
     "./dist/js/components/segment-analytics.js",
     "./dist/js/components/message-box.js",
     "./dist/js/components/svg-icon.js",
-    "./dist/js/components/subscription-status.js"
+    "./dist/js/components/subscription-status.js",
+    "./dist/js/components/plans.js"
     ],
     dependencySrcFiles = ["./bower_components/jquery/dist/jquery.js",
     "./bower_components/angular/angular.js",
