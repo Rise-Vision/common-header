@@ -37,7 +37,6 @@
         var _plansByCode = _.keyBy(PLANS_LIST, "pc");
 
         $rootScope.$on("risevision.company.selectedCompanyChanged", function () {
-          console.log("SVC", userState.getSelectedCompanyId());
           if (userState.getSelectedCompanyId()) {
             _factory.getCompanyPlan(userState.getSelectedCompanyId())
               .then(function (plan) {
