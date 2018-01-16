@@ -1,7 +1,7 @@
 /*jshint expr:true */
 "use strict";
 
-describe.only("Services: plan", function() {
+describe("Services: plan", function() {
   var storeApiFailure;
 
   beforeEach(module("risevision.common.components.plans"));
