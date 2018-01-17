@@ -4,7 +4,7 @@
 
   var PlansModalPage = function () {
     var plansList = ["free", "basic", "advanced", "enterprise"];
-    var plansModal = element(by.css(".plans-modal"));
+    var plansModal = element(by.css("#plans-modal"));
 
     this.getPlansModal = function() {
       return plansModal;
