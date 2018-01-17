@@ -5,7 +5,7 @@
     </button>
     <h3 class="modal-title">Choose Your Plan</h3>
   </div>
-  <div class="modal-body u_padding-lg" stop-event="touchend">
+  <div class="modal-body u_padding-lg plans-modal" stop-event="touchend">
     <div class="grid-list row">
       <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="plan in plans">
         <div class="u_cursor_disabled panel panel-default">
@@ -18,11 +18,13 @@
                   &nbsp;per Company per Month
               </div>
               <a ng-show="currentPlan.type === plan.type"
-                 target="_blank" class="cta_button btn btn-white u_margin-lg">Current Plan</a>
+                 target="_blank"
+                 class="cta_button btn btn-white u_margin-lg current-plan">Current Plan</a>
               <a ng-show="canUpgrade(plan)"
-                 target="_blank" href="https://store.risevision.com/product/{{plan.productId}}" class="cta_button btn btn-primary u_margin-lg">Subscribe</a>
+                 target="_blank" href="https://store.risevision.com/product/{{plan.productId}}"
+                 class="cta_button btn btn-primary u_margin-lg subscribe-plan">Subscribe</a>
               <a ng-show="canDowngrade(plan)" ng-click="showDowngradeModal()"
-                 class="cta_button btn btn-default u_margin-lg">Downgrade</a>
+                 class="cta_button btn btn-default u_margin-lg downgrade-plan">Downgrade</a>
             </div>
           </div>
         </div>

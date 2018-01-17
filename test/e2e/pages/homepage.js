@@ -26,6 +26,9 @@
 
     var alertSettingsButton = element(by.css(".alert-settings-button"));
 
+    var freePlanBanner = element(by.id("free-plan-banner"));
+    var freePlansModalLink = freePlanBanner.element(by.tagName("a"));
+
     this.get = function() {
       browser.get(url);
     };
@@ -88,6 +91,14 @@
     
     this.getAlertSettingsButton = function() {
       return alertSettingsButton;
+    };
+
+    this.getFreePlanBanner = function() {
+      return freePlanBanner;
+    };
+
+    this.getFreePlansModalLink = function() {
+      return freePlansModalLink;
     };
 
   };

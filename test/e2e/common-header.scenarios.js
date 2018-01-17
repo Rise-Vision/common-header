@@ -19,6 +19,8 @@
   var HelpScenarios = require('./cases/help.js');
   var DisableDeleteKeyScenarios = require('./cases/disable-delete-key.js');
 
+  var PlansScenarios = require('./cases/plans.js');
+
   browser.driver.manage().window().setSize(1280, 768);
 
   describe("Common Header ", function() {
@@ -42,9 +44,11 @@
     var companyUsersSenarios = new CompanyUsersScenarios();
     var userSettingsScenarios = new UserSettingsScenarios();
     
+    var plansScenarios = new PlansScenarios();
     var accountRemovalScenarios = new AccountRemovalScenarios();
 
     var helpScenarios = new HelpScenarios();
+
   });
   
 })();
