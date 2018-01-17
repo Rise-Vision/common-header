@@ -17,14 +17,14 @@
                   <h1>${{plan.priceMonth}}</h1>
                   &nbsp;per Company per Month
               </div>
-              <a ng-show="currentPlan.type === plan.type"
+              <a id="current-plan" ng-show="currentPlan.type === plan.type"
                  target="_blank"
-                 class="cta_button btn btn-white u_margin-lg current-plan">Current Plan</a>
-              <a ng-show="canUpgrade(plan)"
+                 class="cta_button btn btn-white u_margin-lg">Current Plan</a>
+              <a id="subscribe-plan" ng-show="canUpgrade(plan)"
                  target="_blank" href="https://store.risevision.com/product/{{plan.productId}}"
-                 class="cta_button btn btn-primary u_margin-lg subscribe-plan">Subscribe</a>
-              <a ng-show="canDowngrade(plan)" ng-click="showDowngradeModal()"
-                 class="cta_button btn btn-default u_margin-lg downgrade-plan">Downgrade</a>
+                 class="cta_button btn btn-primary u_margin-lg">Subscribe</a>
+              <a id="downgrade-plan" ng-show="canDowngrade(plan)" ng-click="showDowngradeModal()"
+                 class="cta_button btn btn-default u_margin-lg">Downgrade</a>
             </div>
           </div>
         </div>

@@ -13,7 +13,7 @@
     function getButtonByPlan(selector, plan) {
       var idx = plansList.indexOf(plan) + 1;
 
-      return element(by.css("div.grid-list.row > div:nth-child(" + idx + ") > div a." + selector));
+      return element(by.css("div.grid-list.row > div:nth-child(" + idx + ") > div #" + selector));
     }
 
     this.getCurrentPlanButton = function(plan) {
