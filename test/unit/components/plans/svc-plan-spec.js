@@ -182,7 +182,6 @@ describe("Services: plan", function() {
 
       planFactory.getPlansDetails()
       .then(function(resp) {
-        console.log("RESP", resp);
         expect(planFactory.getPlans).to.have.been.called;
         expect(resp.length).to.equal(4);
         expect(resp[0].productId).to.equal("000");
