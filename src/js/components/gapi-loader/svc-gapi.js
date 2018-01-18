@@ -17,6 +17,7 @@ var handleClientJSLoad = function () {
 /* jshint ignore:end */
 
 angular.module("risevision.common.gapi", [])
+  .value("CLIENT_ID", "614513768474.apps.googleusercontent.com")
   .factory("gapiLoader", ["$q", "$window",
     function ($q, $window) {
       var deferred = $q.defer();
@@ -85,6 +86,42 @@ angular.module("risevision.common.gapi", [])
   }
 ])
 
+.factory("auth2APILoader", ["$q", "gapiLoader", "$log", "CLIENT_ID",
+  function ($q, gapiLoader, $log, CLIENT_ID) {
+    return function () {
+      var deferred = $q.defer();
+      gapiLoader().then(function (gApi) {
+        if (gApi.auth2) {
+          //already loaded. return right away
+          deferred.resolve(gApi.auth2);
+        } else {
+          gApi.load("auth2", function () {
+            if (gApi.auth2) {
+              gApi.auth2.init({
+                client_id: CLIENT_ID,
+                scope: "profile"
+              }).then(function () {
+                $log.debug("auth2 API Loaded");
+
+                deferred.resolve(gApi.auth2);
+              }, function () {
+                var errMsg = "auth2 GoogleAuth Init Failed";
+                $log.error(errMsg);
+                deferred.reject(errMsg);
+              });
+            } else {
+              var errMsg = "auth2 API Load Failed";
+              $log.error(errMsg);
+              deferred.reject(errMsg);
+            }
+          });
+        }
+      });
+      return deferred.promise;
+    };
+  }
+])
+
 .factory("oauth2APILoader", ["gapiClientLoaderGenerator",
   function (gapiClientLoaderGenerator) {
     return gapiClientLoaderGenerator("oauth2", "v2");
@@ -94,15 +131,18 @@ angular.module("risevision.common.gapi", [])
 .factory("coreAPILoader", ["CORE_URL", "gapiClientLoaderGenerator",
   "$location",
   function (CORE_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().core_api_base_url ? $location.search().core_api_base_url +
+    var baseUrl = $location.search().core_api_base_url ? $location.search()
+      .core_api_base_url +
       "/_ah/api" : CORE_URL;
     return gapiClientLoaderGenerator("core", "v1", baseUrl);
   }
 ])
 
-.factory("riseAPILoader", ["CORE_URL", "gapiClientLoaderGenerator", "$location",
+.factory("riseAPILoader", ["CORE_URL", "gapiClientLoaderGenerator",
+  "$location",
   function (CORE_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().core_api_base_url ? $location.search().core_api_base_url +
+    var baseUrl = $location.search().core_api_base_url ? $location.search()
+      .core_api_base_url +
       "/_ah/api" : CORE_URL;
     return gapiClientLoaderGenerator("rise", "v0", baseUrl);
   }
@@ -111,7 +151,8 @@ angular.module("risevision.common.gapi", [])
 .factory("storeAPILoader", ["STORE_ENDPOINT_URL", "gapiClientLoaderGenerator",
   "$location",
   function (STORE_ENDPOINT_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().store_api_base_url ? $location.search().store_api_base_url +
+    var baseUrl = $location.search().store_api_base_url ? $location.search()
+      .store_api_base_url +
       "/_ah/api" : STORE_ENDPOINT_URL;
     return gapiClientLoaderGenerator("store", "v0.01", baseUrl);
   }
@@ -129,7 +170,8 @@ angular.module("risevision.common.gapi", [])
 .factory("discoveryAPILoader", ["CORE_URL", "gapiClientLoaderGenerator",
   "$location",
   function (CORE_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().core_api_base_url ? $location.search().core_api_base_url +
+    var baseUrl = $location.search().core_api_base_url ? $location.search()
+      .core_api_base_url +
       "/_ah/api" : CORE_URL;
     return gapiClientLoaderGenerator("discovery", "v1", baseUrl);
   }
@@ -138,7 +180,8 @@ angular.module("risevision.common.gapi", [])
 .factory("monitoringAPILoader", ["MONITORING_SERVICE_URL",
   "gapiClientLoaderGenerator", "$location",
   function (MONITORING_SERVICE_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().core_api_base_url ? $location.search().core_api_base_url +
+    var baseUrl = $location.search().core_api_base_url ? $location.search()
+      .core_api_base_url +
       "/_ah/api" : MONITORING_SERVICE_URL;
     return gapiClientLoaderGenerator("monitoring", "v0", baseUrl);
   }

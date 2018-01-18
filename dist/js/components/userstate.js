@@ -169,9 +169,7 @@
         }
       });
     }
-  ])
-
-  .value("CLIENT_ID", "614513768474.apps.googleusercontent.com");
+  ]);
 
 })(angular);
 
@@ -620,12 +618,12 @@ angular.module("risevision.common.components.logging")
   )
     .value("GOOGLE_OAUTH2_URL", "https://accounts.google.com/o/oauth2/auth")
     .factory("googleAuthFactory", ["$rootScope", "$q", "$log", "$location",
-      "$interval", "$window", "$http", "$stateParams", "gapiLoader",
+      "$interval", "$window", "$http", "$stateParams", "auth2APILoader",
       "getOAuthUserInfo", "uiFlowManager", "getBaseDomain", "userState",
       "urlStateService", "CLIENT_ID", "OAUTH2_SCOPES", "GOOGLE_OAUTH2_URL",
       function ($rootScope, $q, $log, $location, $interval, $window, $http,
         $stateParams,
-        gapiLoader, getOAuthUserInfo, uiFlowManager, getBaseDomain,
+        auth2APILoader, getOAuthUserInfo, uiFlowManager, getBaseDomain,
         userState, urlStateService,
         CLIENT_ID, OAUTH2_SCOPES, GOOGLE_OAUTH2_URL) {
 
@@ -659,19 +657,19 @@ angular.module("risevision.common.components.logging")
               getBaseDomain()
           };
 
-          if (_state.userToken === "dummy") {
-            opts.authuser = $http.get(
-              "https://www.googleapis.com/oauth2/v1/userinfo?access_token=" +
-              _state.params.access_token)
-              .then(function (resp) {
-                return resp.data.email;
-              }, function (err) {
-                $log.debug("Error retrieving userinfo", err);
-                return opts.authuser;
-              });
-          } else if (_state.userToken) {
-            opts.authuser = _state.userToken.email;
-          }
+          // if (_state.userToken === "dummy") {
+          //   opts.authuser = $http.get(
+          //     "https://www.googleapis.com/oauth2/v1/userinfo?access_token=" +
+          //     _state.params.access_token)
+          //     .then(function (resp) {
+          //       return resp.data.email;
+          //     }, function (err) {
+          //       $log.debug("Error retrieving userinfo", err);
+          //       return opts.authuser;
+          //     });
+          // } else if (_state.userToken) {
+          //   opts.authuser = _state.userToken.email;
+          // }
 
           if (attemptImmediate) {
             opts.immediate = true;
@@ -679,18 +677,12 @@ angular.module("risevision.common.components.logging")
             opts.prompt = "select_account";
           }
 
-          $q.all([gapiLoader(), opts.authuser])
-            .then(function (qAll) {
-              var gApi = qAll[0];
-              opts.authuser = qAll[1];
-              // Setting the gapi token with the chosen user token. This is a fix for the multiple account issue.
-              gApi.auth.setToken(_state.params);
+          auth2APILoader()
+            .then(function (auth2) {
+              var authResult = auth2.getAuthInstance().isSignedIn.get();
 
-              return gApi.auth.authorize(opts);
-            })
-            .then(function (authResult) {
-              $log.debug("authResult");
-              if (authResult && !authResult.error) {
+              $log.debug("authResult", authResult);
+              if (authResult) {
                 if (_state.params) {
                   // clear token so we don't deal with expiry
                   delete _state.params;
@@ -700,11 +692,10 @@ angular.module("risevision.common.components.logging")
 
                 deferred.resolve(authResult);
               } else {
-                deferred.reject(authResult.error ||
-                  "failed to authorize user");
+                deferred.reject("failed to authorize user");
               }
             })
-            .then(null, deferred.reject); //gapiLoader
+            .then(null, deferred.reject); //auth2APILoader
 
           return deferred.promise;
         };
@@ -756,13 +747,13 @@ angular.module("risevision.common.components.logging")
             userState._persistState();
             uiFlowManager.persist();
 
-            redirectUrl = GOOGLE_OAUTH2_URL +
-              "?response_type=token" +
-              "&scope=" + encodeURIComponent(OAUTH2_SCOPES) +
-              "&client_id=" + CLIENT_ID +
-              "&redirect_uri=" + encodeURIComponent(loc) +
-            //http://stackoverflow.com/a/14393492
-            "&prompt=select_account";
+            // redirectUrl = GOOGLE_OAUTH2_URL +
+            //   "?response_type=token" +
+            //   "&scope=" + encodeURIComponent(OAUTH2_SCOPES) +
+            //   "&client_id=" + CLIENT_ID +
+            //   "&redirect_uri=" + encodeURIComponent(loc) +
+            // //http://stackoverflow.com/a/14393492
+            // "&prompt=select_account";
 
             if (state) {
               // double encode since response gets decoded once!
@@ -771,11 +762,30 @@ angular.module("risevision.common.components.logging")
               redirectUrl += "&state=" + state;
             }
 
-            $window.location.href = redirectUrl;
+            var opts = {
+              // client_id: CLIENT_ID,
+              // scope: OAUTH2_SCOPES,
+              response_type: "token",
+              prompt: "select_account",
+              cookie_policy: $location.protocol() + "://" +
+                getBaseDomain(),
+              // ux_mode: "redirect",
+              // redirect_uri: loc
+            };
+
+            var deferred = $q.defer();
+
+            auth2APILoader()
+              .then(function (auth2) {
+                return auth2.getAuthInstance().signIn(opts);
+              })
+              .then(authenticate, function (err) {
+                deferred.reject(err);
+              });
 
             // returns a promise that never get fulfilled since we are redirecting
             // to that google oauth2 page
-            return $q.resolve();
+            return deferred.promise;
           }
         };
 
@@ -1220,59 +1230,39 @@ angular.module("risevision.common.components.logging")
           $log.debug("authentication called");
 
           var _proceed = function () {
-            // This flag indicates a potentially authenticated user.
-            var userAuthed = (angular.isDefined(_state.userToken) &&
-              _state.userToken !== null);
-            $log.debug("userAuthed", userAuthed);
+            var authenticationPromise;
 
-            if (forceAuth || userAuthed === true) {
-              var authenticationPromise;
-
-              // Credentials or Token provided; assume authenticated
-              if (credentials || _state.userToken && _state.userToken.token &&
-                !FORCE_GOOGLE_AUTH) {
-                isRiseAuthUser = true;
-                authenticationPromise = customAuthFactory.authenticate(
-                  credentials);
-              } else {
-                authenticationPromise = googleAuthFactory.authenticate(
-                  forceAuth);
-              }
-
-              authenticationPromise
-                .then(_authorize)
-                .then(function () {
-                  userState._setIsRiseAuthUser(isRiseAuthUser);
-                  authenticateDeferred.resolve();
-                })
-                .then(null, function (err) {
-                  _resetUserState();
-
-                  $log.debug("Authentication Error: " + err);
-
-                  authenticateDeferred.reject(err);
-                })
-                .finally(function () {
-                  _addEventListenerVisibilityAPI();
-
-                  $loading.stopGlobal("risevision.user.authenticate");
-
-                  _logPageLoad("authenticated user");
-                });
+            // Credentials or Token provided; assume authenticated
+            if (credentials || _state.userToken && _state.userToken.token &&
+              !FORCE_GOOGLE_AUTH) {
+              isRiseAuthUser = true;
+              authenticationPromise = customAuthFactory.authenticate(
+                credentials);
             } else {
-              var msg = "user is not authenticated";
-              $log.debug(msg);
-
-              _resetUserState();
-
-              authenticateDeferred.reject(msg);
-
-              _addEventListenerVisibilityAPI();
-
-              $loading.stopGlobal("risevision.user.authenticate");
-
-              _logPageLoad("unauthenticated user");
+              authenticationPromise = googleAuthFactory.authenticate(
+                forceAuth);
             }
+
+            authenticationPromise
+              .then(_authorize)
+              .then(function () {
+                userState._setIsRiseAuthUser(isRiseAuthUser);
+                authenticateDeferred.resolve();
+              })
+              .then(null, function (err) {
+                _resetUserState();
+
+                $log.debug("Authentication Error: " + err);
+
+                authenticateDeferred.reject(err);
+              })
+              .finally(function () {
+                _addEventListenerVisibilityAPI();
+
+                $loading.stopGlobal("risevision.user.authenticate");
+
+                _logPageLoad("authenticated user");
+              });
           };
           // pre-load gapi to prevent popup blocker issues
           gapiLoader().finally(_proceed);
@@ -1291,7 +1281,12 @@ angular.module("risevision.common.components.logging")
                 $window.logoutFrame.location =
                   "https://accounts.google.com/Logout";
               }
-              gApi.auth.signOut();
+
+              if (gApi.auth2) {
+                gApi.auth2.getAuthInstance().signOut();
+              } else {
+                gApi.auth.signOut();
+              }
             }
 
             _authenticateDeferred = null;

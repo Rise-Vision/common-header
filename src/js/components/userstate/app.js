@@ -169,8 +169,6 @@
         }
       });
     }
-  ])
-
-  .value("CLIENT_ID", "614513768474.apps.googleusercontent.com");
+  ]);
 
 })(angular);
