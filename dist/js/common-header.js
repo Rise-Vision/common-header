@@ -6416,8 +6416,8 @@ angular.module("risevision.common.components.logging")
               prompt: "select_account",
               cookie_policy: $location.protocol() + "://" +
                 getBaseDomain(),
-              // ux_mode: "redirect",
-              // redirect_uri: loc
+              ux_mode: "redirect",
+              redirect_uri: loc
             };
 
             var deferred = $q.defer();
