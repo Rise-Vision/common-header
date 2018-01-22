@@ -5725,6 +5725,10 @@ angular.module("risevision.common.components.ui-flow")
         template: "<div class=\"app-launcher\" ui-view></div>"
       })
 
+      .state("common.googleresponse", {
+        url: "/:id_token&:client_id"
+      })
+
       .state("common.auth", {
         abstract: true,
         templateProvider: ["$templateCache",
