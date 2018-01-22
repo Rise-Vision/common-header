@@ -40,6 +40,7 @@
       $locationProvider) {
 
       $locationProvider.html5Mode(true);
+      $locationProvider.hashPrefix("/");
 
       $urlRouterProvider.otherwise("/");
 
@@ -679,7 +680,8 @@ angular.module("risevision.common.components.logging")
 
           auth2APILoader()
             .then(function (auth2) {
-              var authResult = auth2.getAuthInstance().isSignedIn.get();
+              var authResult = auth2.getAuthInstance() &&
+                auth2.getAuthInstance().isSignedIn.get();
 
               $log.debug("authResult", authResult);
               if (authResult) {

@@ -31,7 +31,7 @@ angular.module("risevision.common.gapi", [])
           $window.gapiLoadingStatus = "loading";
 
           var src = $window.gapiSrc ||
-            "//apis.google.com/js/client.js?onload=handleClientJSLoad";
+            "//apis.google.com/js/api.js?onload=handleClientJSLoad";
           var fileref = document.createElement("script");
           fileref.setAttribute("type", "text/javascript");
           fileref.setAttribute("src", src);
@@ -53,12 +53,12 @@ angular.module("risevision.common.gapi", [])
 //abstract method for creading a loader factory service that loads any
 //custom Google Client API library
 
-.factory("gapiClientLoaderGenerator", ["$q", "gapiLoader", "$log",
-  function ($q, gapiLoader, $log) {
+.factory("gapiClientLoaderGenerator", ["$q", "clientAPILoader", "$log",
+  function ($q, clientAPILoader, $log) {
     return function (libName, libVer, baseUrl) {
       return function () {
         var deferred = $q.defer();
-        gapiLoader().then(function (gApi) {
+        clientAPILoader().then(function (gApi) {
           if (gApi.client[libName]) {
             //already loaded. return right away
             deferred.resolve(gApi.client[libName]);
@@ -91,7 +91,7 @@ angular.module("risevision.common.gapi", [])
     return function () {
       var deferred = $q.defer();
       gapiLoader().then(function (gApi) {
-        if (gApi.auth2) {
+        if (gApi.auth2 && gApi.auth2.getAuthInstance()) {
           //already loaded. return right away
           deferred.resolve(gApi.auth2);
         } else {
@@ -111,6 +111,33 @@ angular.module("risevision.common.gapi", [])
               });
             } else {
               var errMsg = "auth2 API Load Failed";
+              $log.error(errMsg);
+              deferred.reject(errMsg);
+            }
+          });
+        }
+      });
+      return deferred.promise;
+    };
+  }
+])
+
+.factory("clientAPILoader", ["$q", "gapiLoader", "$log",
+  function ($q, gapiLoader, $log) {
+    return function () {
+      var deferred = $q.defer();
+      gapiLoader().then(function (gApi) {
+        if (gApi.client) {
+          //already loaded. return right away
+          deferred.resolve(gApi);
+        } else {
+          gApi.load("client", function () {
+            if (gApi.client) {
+              $log.debug("client API Loaded");
+
+              deferred.resolve(gApi);
+            } else {
+              var errMsg = "client API Load Failed";
               $log.error(errMsg);
               deferred.reject(errMsg);
             }

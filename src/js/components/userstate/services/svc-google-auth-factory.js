@@ -72,7 +72,8 @@
 
           auth2APILoader()
             .then(function (auth2) {
-              var authResult = auth2.getAuthInstance().isSignedIn.get();
+              var authResult = auth2.getAuthInstance() &&
+                auth2.getAuthInstance().isSignedIn.get();
 
               $log.debug("authResult", authResult);
               if (authResult) {
