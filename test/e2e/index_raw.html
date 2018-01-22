@@ -82,9 +82,8 @@
           $locationProvider) {
 
           $locationProvider.html5Mode(false);
-          $locationProvider.hashPrefix("");
 
-          $urlRouterProvider.otherwise("/shopping-cart");
+          $urlRouterProvider.otherwise("");
 
           // Use $stateProvider to configure states.
           $stateProvider.state("shopping-cart", {
