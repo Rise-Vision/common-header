@@ -5723,16 +5723,6 @@ angular.module("risevision.common.components.ui-flow")
         template: "<div class=\"app-launcher\" ui-view></div>"
       })
 
-      .state("common.googleresult", {
-        url: "/state=:state&access_token=:access_token&token_type=:token_type&expires_in=:expires_in",
-        controller: "GoogleResultCtrl"
-      })
-
-      .state("common.googleresult2", {
-        url: "/access_token=:access_token&token_type=:token_type&expires_in=:expires_in",
-        controller: "GoogleResultCtrl"
-      })
-
       .state("common.auth", {
         abstract: true,
         templateProvider: ["$templateCache",
@@ -6392,6 +6382,12 @@ angular.module("risevision.common.components.logging")
               return getOAuthUserInfo();
             })
             .then(function (oauthUserInfo) {
+              if (userState._state.state) {
+                urlStateService.redirectToState(userState._state.state);
+
+                delete userState._state.state;
+              }
+
               deferred.resolve(oauthUserInfo);
             })
             .then(null, function (err) {
@@ -6420,6 +6416,7 @@ angular.module("risevision.common.components.logging")
               loc = $window.location.origin + "/";
             }
 
+            userState._state.state = state;
             userState._persistState();
             uiFlowManager.persist();
 
@@ -6431,12 +6428,12 @@ angular.module("risevision.common.components.logging")
             // //http://stackoverflow.com/a/14393492
             // "&prompt=select_account";
 
-            if (state) {
-              // double encode since response gets decoded once!
-              state = encodeURIComponent(state);
-
-              redirectUrl += "&state=" + state;
-            }
+            // if (state) {
+            //   // double encode since response gets decoded once!
+            //   state = encodeURIComponent(state);
+            // 
+            //   redirectUrl += "&state=" + state;
+            // }
 
             var opts = {
               // client_id: CLIENT_ID,
@@ -6455,7 +6452,7 @@ angular.module("risevision.common.components.logging")
               .then(function (auth2) {
                 return auth2.getAuthInstance().signIn(opts);
               })
-              .then(authenticate, function (err) {
+              .then(null, function (err) {
                 deferred.reject(err);
               });
 
@@ -7539,24 +7536,6 @@ angular.module("risevision.common.components.userstate")
             accountConfirmed: true
           });
         });
-    }
-  ]);
-
-"use strict";
-
-/*jshint camelcase: false */
-
-angular.module("risevision.common.components.userstate")
-  .controller("GoogleResultCtrl", ["$log", "$stateParams", "userState",
-    "urlStateService",
-    function ($log, $stateParams, userState, urlStateService) {
-      $log.debug("URL params", $stateParams);
-
-      if ($stateParams.access_token) {
-        userState._setUserToken($stateParams);
-
-        urlStateService.redirectToState($stateParams.state);
-      }
     }
   ]);
 

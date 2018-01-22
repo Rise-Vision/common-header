@@ -49,16 +49,6 @@
         template: "<div class=\"app-launcher\" ui-view></div>"
       })
 
-      .state("common.googleresult", {
-        url: "/state=:state&access_token=:access_token&token_type=:token_type&expires_in=:expires_in",
-        controller: "GoogleResultCtrl"
-      })
-
-      .state("common.googleresult2", {
-        url: "/access_token=:access_token&token_type=:token_type&expires_in=:expires_in",
-        controller: "GoogleResultCtrl"
-      })
-
       .state("common.auth", {
         abstract: true,
         templateProvider: ["$templateCache",

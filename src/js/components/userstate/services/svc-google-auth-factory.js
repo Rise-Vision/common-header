@@ -110,6 +110,12 @@
               return getOAuthUserInfo();
             })
             .then(function (oauthUserInfo) {
+              if (userState._state.state) {
+                urlStateService.redirectToState(userState._state.state);
+
+                delete userState._state.state;
+              }
+
               deferred.resolve(oauthUserInfo);
             })
             .then(null, function (err) {
@@ -138,6 +144,7 @@
               loc = $window.location.origin + "/";
             }
 
+            userState._state.state = state;
             userState._persistState();
             uiFlowManager.persist();
 
@@ -149,12 +156,12 @@
             // //http://stackoverflow.com/a/14393492
             // "&prompt=select_account";
 
-            if (state) {
-              // double encode since response gets decoded once!
-              state = encodeURIComponent(state);
-
-              redirectUrl += "&state=" + state;
-            }
+            // if (state) {
+            //   // double encode since response gets decoded once!
+            //   state = encodeURIComponent(state);
+            // 
+            //   redirectUrl += "&state=" + state;
+            // }
 
             var opts = {
               // client_id: CLIENT_ID,
@@ -173,7 +180,7 @@
               .then(function (auth2) {
                 return auth2.getAuthInstance().signIn(opts);
               })
-              .then(authenticate, function (err) {
+              .then(null, function (err) {
                 deferred.reject(err);
               });
 
