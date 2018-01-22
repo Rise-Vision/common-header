@@ -18,37 +18,39 @@ var handleClientJSLoad = function () {
 
 angular.module("risevision.common.gapi", [])
   .value("CLIENT_ID", "614513768474.apps.googleusercontent.com")
-  .factory("gapiLoader", ["$q", "$window",
-    function ($q, $window) {
-      var deferred = $q.defer();
+  .value("OAUTH2_SCOPES", "profile")
 
-      return function () {
-        var gapiLoaded;
+.factory("gapiLoader", ["$q", "$window",
+  function ($q, $window) {
+    var deferred = $q.defer();
 
-        if ($window.gapiLoadingStatus === "loaded") {
-          deferred.resolve($window.gapi);
-        } else if (!$window.gapiLoadingStatus) {
-          $window.gapiLoadingStatus = "loading";
+    return function () {
+      var gapiLoaded;
 
-          var src = $window.gapiSrc ||
-            "//apis.google.com/js/api.js?onload=handleClientJSLoad";
-          var fileref = document.createElement("script");
-          fileref.setAttribute("type", "text/javascript");
-          fileref.setAttribute("src", src);
-          if (typeof fileref !== "undefined") {
-            document.getElementsByTagName("body")[0].appendChild(fileref);
-          }
+      if ($window.gapiLoadingStatus === "loaded") {
+        deferred.resolve($window.gapi);
+      } else if (!$window.gapiLoadingStatus) {
+        $window.gapiLoadingStatus = "loading";
 
-          gapiLoaded = function () {
-            deferred.resolve($window.gapi);
-            $window.removeEventListener("gapi.loaded", gapiLoaded, false);
-          };
-          $window.addEventListener("gapi.loaded", gapiLoaded, false);
+        var src = $window.gapiSrc ||
+          "//apis.google.com/js/api.js?onload=handleClientJSLoad";
+        var fileref = document.createElement("script");
+        fileref.setAttribute("type", "text/javascript");
+        fileref.setAttribute("src", src);
+        if (typeof fileref !== "undefined") {
+          document.getElementsByTagName("body")[0].appendChild(fileref);
         }
-        return deferred.promise;
-      };
-    }
-  ])
+
+        gapiLoaded = function () {
+          deferred.resolve($window.gapi);
+          $window.removeEventListener("gapi.loaded", gapiLoaded, false);
+        };
+        $window.addEventListener("gapi.loaded", gapiLoaded, false);
+      }
+      return deferred.promise;
+    };
+  }
+])
 
 //abstract method for creading a loader factory service that loads any
 //custom Google Client API library
@@ -86,8 +88,8 @@ angular.module("risevision.common.gapi", [])
   }
 ])
 
-.factory("auth2APILoader", ["$q", "gapiLoader", "$log", "CLIENT_ID",
-  function ($q, gapiLoader, $log, CLIENT_ID) {
+.factory("auth2APILoader", ["$q", "gapiLoader", "$log", "CLIENT_ID", "OAUTH2_SCOPES",
+  function ($q, gapiLoader, $log, CLIENT_ID, OAUTH2_SCOPES) {
     return function () {
       var deferred = $q.defer();
       gapiLoader().then(function (gApi) {
@@ -99,7 +101,7 @@ angular.module("risevision.common.gapi", [])
             if (gApi.auth2) {
               gApi.auth2.init({
                 client_id: CLIENT_ID,
-                scope: "profile"
+                scope: OAUTH2_SCOPES
               }).then(function () {
                 $log.debug("auth2 API Loaded");
 

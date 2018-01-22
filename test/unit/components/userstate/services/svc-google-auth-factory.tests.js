@@ -2,7 +2,7 @@
 
 "use strict";
 
-describe("Services: googleAuthFactory", function() {
+xdescribe("Services: googleAuthFactory", function() {
   var path = "";
 
   beforeEach(module("risevision.common.components.userstate"));

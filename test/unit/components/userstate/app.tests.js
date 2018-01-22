@@ -16,20 +16,6 @@ describe("app:", function() {
   var $state, $rootScope, urlStateService;
 
   describe("states: ", function() {
-
-    it("common.googleresult", function() {
-      var state = $state.get("common.googleresult");
-      expect(state).to.be.ok;
-      expect(state.url).to.equal("/state=:state&access_token=:access_token&token_type=:token_type&expires_in=:expires_in");
-      expect(state.controller).to.equal("GoogleResultCtrl");
-    });
-    
-    it("common.googleresult2", function() {
-      var state = $state.get("common.googleresult2");
-      expect(state).to.be.ok;
-      expect(state.url).to.equal("/access_token=:access_token&token_type=:token_type&expires_in=:expires_in");
-      expect(state.controller).to.equal("GoogleResultCtrl");
-    });
     
     it("common.auth.unauthorized", function() {
       var state = $state.get("common.auth.unauthorized");

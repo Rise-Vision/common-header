@@ -151,22 +151,6 @@ describe("Services: userAuthFactory", function() {
       gapiLoader.should.have.been.calledTwice;
     });
     
-    it("should handle unauthenticated users", function(done) {
-      userAuthFactory.authenticate().then(done, function(msg) {
-        expect(msg).to.equal("user is not authenticated");
-
-        userState._resetState.should.have.been.calledOnce;
-
-        $loading.stopGlobal.should.have.been.calledWith("risevision.user.authenticate");
-        $broadcastSpy.should.not.have.been.calledWith("risevision.user.authorized");
-
-        externalLogging.logEvent.should.have.been.calledWith("page load time", "unauthenticated user", sinon.match.number, "username@test.com", "companyId");
-
-        done();
-      })
-      .then(null,done);
-    });
-    
     describe("googleAuthFactory: ", function() {
       it("should call factory with forceAuth and no credentials", function(done) {
         userAuthFactory.authenticate(true);
