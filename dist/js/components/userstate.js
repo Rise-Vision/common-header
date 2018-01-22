@@ -600,7 +600,6 @@ angular.module("risevision.common.components.logging")
   "use strict";
 
   /*jshint camelcase: false */
-  /*jshint unused: false */
 
   angular.module("risevision.common.components.userstate")
   // constants (you can override them in your app as needed)
@@ -670,7 +669,6 @@ angular.module("risevision.common.components.logging")
       var forceAuthenticate = function () {
         var loc;
         var state = $stateParams.state;
-        var redirectUrl;
 
         // Redirect to full URL path
         if ($rootScope.redirectToRoot === false) {
@@ -972,11 +970,11 @@ angular.module("risevision.common.components.logging")
     .value("FORCE_GOOGLE_AUTH", false)
     .factory("userAuthFactory", ["$q", "$log", "$location",
       "$rootScope", "$loading", "$window", "$document",
-      "gapiLoader", "objectHelper", "rvTokenStore", "externalLogging",
+      "auth2APILoader", "objectHelper", "rvTokenStore", "externalLogging",
       "userState", "googleAuthFactory", "customAuthFactory",
       "FORCE_GOOGLE_AUTH",
       function ($q, $log, $location, $rootScope, $loading, $window,
-        $document, gapiLoader, objectHelper,
+        $document, auth2APILoader, objectHelper,
         rvTokenStore, externalLogging, userState, googleAuthFactory,
         customAuthFactory, FORCE_GOOGLE_AUTH) {
 
@@ -1195,7 +1193,7 @@ angular.module("risevision.common.components.logging")
               });
           };
           // pre-load gapi to prevent popup blocker issues
-          gapiLoader().finally(_proceed);
+          auth2APILoader().finally(_proceed);
 
           if (forceAuth) {
             $loading.startGlobal("risevision.user.authenticate");
@@ -1205,18 +1203,14 @@ angular.module("risevision.common.components.logging")
         };
 
         var signOut = function (signOutGoogle) {
-          return gapiLoader().then(function (gApi) {
+          return auth2APILoader().then(function (auth2) {
             if (!userState.isRiseAuthUser()) {
               if (signOutGoogle) {
                 $window.logoutFrame.location =
                   "https://accounts.google.com/Logout";
               }
 
-              if (gApi.auth2) {
-                gApi.auth2.getAuthInstance().signOut();
-              } else {
-                gApi.auth.signOut();
-              }
+              auth2.getAuthInstance().signOut();
             }
 
             _authenticateDeferred = null;

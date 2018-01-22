@@ -5,11 +5,11 @@
     .value("FORCE_GOOGLE_AUTH", false)
     .factory("userAuthFactory", ["$q", "$log", "$location",
       "$rootScope", "$loading", "$window", "$document",
-      "gapiLoader", "objectHelper", "rvTokenStore", "externalLogging",
+      "auth2APILoader", "objectHelper", "rvTokenStore", "externalLogging",
       "userState", "googleAuthFactory", "customAuthFactory",
       "FORCE_GOOGLE_AUTH",
       function ($q, $log, $location, $rootScope, $loading, $window,
-        $document, gapiLoader, objectHelper,
+        $document, auth2APILoader, objectHelper,
         rvTokenStore, externalLogging, userState, googleAuthFactory,
         customAuthFactory, FORCE_GOOGLE_AUTH) {
 
@@ -228,7 +228,7 @@
               });
           };
           // pre-load gapi to prevent popup blocker issues
-          gapiLoader().finally(_proceed);
+          auth2APILoader().finally(_proceed);
 
           if (forceAuth) {
             $loading.startGlobal("risevision.user.authenticate");
@@ -238,18 +238,14 @@
         };
 
         var signOut = function (signOutGoogle) {
-          return gapiLoader().then(function (gApi) {
+          return auth2APILoader().then(function (auth2) {
             if (!userState.isRiseAuthUser()) {
               if (signOutGoogle) {
                 $window.logoutFrame.location =
                   "https://accounts.google.com/Logout";
               }
 
-              if (gApi.auth2) {
-                gApi.auth2.getAuthInstance().signOut();
-              } else {
-                gApi.auth.signOut();
-              }
+              auth2.getAuthInstance().signOut();
             }
 
             _authenticateDeferred = null;

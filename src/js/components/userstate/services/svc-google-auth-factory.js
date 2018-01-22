@@ -2,7 +2,6 @@
   "use strict";
 
   /*jshint camelcase: false */
-  /*jshint unused: false */
 
   angular.module("risevision.common.components.userstate")
   // constants (you can override them in your app as needed)
@@ -72,7 +71,6 @@
       var forceAuthenticate = function () {
         var loc;
         var state = $stateParams.state;
-        var redirectUrl;
 
         // Redirect to full URL path
         if ($rootScope.redirectToRoot === false) {

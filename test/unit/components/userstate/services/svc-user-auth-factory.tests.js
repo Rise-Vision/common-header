@@ -82,11 +82,13 @@ describe("Services: userAuthFactory", function() {
       };
     }]);
 
-    $provide.service("gapiLoader", function () {
-      return gapiLoader = sinon.spy(function() {
+    $provide.service("auth2APILoader", function () {
+      return auth2APILoader = sinon.spy(function() {
         return Q.resolve({
-          auth: gapiAuth = {
-            signOut: sinon.spy()
+          getAuthInstance: function() {
+            return authInstance = {
+              signOut: sinon.spy()
+            };
           }
         });
       });
@@ -94,7 +96,7 @@ describe("Services: userAuthFactory", function() {
 
   }));
   
-  var userAuthFactory, userState, isRiseAuthUser, $loading, gapiLoader, gapiAuth, 
+  var userAuthFactory, userState, isRiseAuthUser, $loading, auth2APILoader, authInstance, 
   googleAuthFactory, customAuthFactory, rvTokenStore, $broadcastSpy, 
   externalLogging, $window;
 
@@ -137,7 +139,7 @@ describe("Services: userAuthFactory", function() {
 
       userState._resetState.should.not.have.been.called;
       $loading.startGlobal.should.not.have.been.called;
-      gapiLoader.should.have.been.calledOnce;
+      auth2APILoader.should.have.been.calledOnce;
     });
 
     it("should resetState, return new promise and start spinner if forceAuth", function() {
@@ -148,7 +150,7 @@ describe("Services: userAuthFactory", function() {
       userState._resetState.should.have.been.calledOnce;
       $loading.startGlobal.should.have.been.calledOnce;
       $loading.startGlobal.should.have.been.calledWith("risevision.user.authenticate");
-      gapiLoader.should.have.been.calledTwice;
+      auth2APILoader.should.have.been.calledTwice;
     });
     
     describe("googleAuthFactory: ", function() {
@@ -339,8 +341,8 @@ describe("Services: userAuthFactory", function() {
       userState._state.userToken = {};
 
       userAuthFactory.signOut().then(function() {
-        gapiLoader.should.have.been.called;
-        gapiAuth.signOut.should.not.have.been.called;
+        auth2APILoader.should.have.been.called;
+        expect(authInstance).to.be.undefined;
 
         // _clearUserToken
         expect(userState._state.userToken).to.be.null;
@@ -359,8 +361,8 @@ describe("Services: userAuthFactory", function() {
       userState._state.userToken = {};
 
       userAuthFactory.signOut().then(function() {
-        gapiLoader.should.have.been.called;
-        gapiAuth.signOut.should.have.been.called;
+        auth2APILoader.should.have.been.called;
+        authInstance.signOut.should.have.been.called;
 
         // _clearUserToken
         expect(userState._state.userToken).to.be.null;
