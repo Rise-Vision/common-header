@@ -5,7 +5,7 @@
     </button>
     <h3 class="modal-title">Choose Your Plan</h3>
   </div>
-  <div id="plans-modal" class="modal-body u_padding-lg" stop-event="touchend">
+  <div class="modal-body u_padding-lg" stop-event="touchend">
     <div class="grid-list row">
        <div class="col-xs-12 col-sm-6 col-md-3" >
         <div class="u_cursor_disabled panel panel-default">
@@ -17,7 +17,7 @@
                   <h1>$0</h1>
                   &nbsp;per Company per Month
               </div>
-              <a id="current-plan"
+              <a id="current-plan" ng-show="currentPlan.type === plan.type"
                  target="_blank"
                  class="cta_button btn btn-white u_margin-lg">Current Plan</a>
             </div>
@@ -34,7 +34,7 @@
                   <h1>$19</h1>
                   &nbsp;per Company per Month
               </div>
-              <a id="subscribe-plan" 
+              <a id="subscribe-plan" ng-show="canUpgrade(plan)"
                  target="_blank" href="https://store.risevision.com/product/{{plan.productId}}"
                  class="cta_button btn btn-primary u_margin-lg">Start Trial</a>
             </div>
@@ -51,7 +51,7 @@
                   <h1>$85</h1>
                   &nbsp;per Company per Month
               </div>
-              <a id="subscribe-plan"
+              <a id="subscribe-plan" ng-show="canUpgrade(plan)"
                  target="_blank" href="https://store.risevision.com/product/{{plan.productId}}"
                  class="cta_button btn btn-primary u_margin-lg">Subscribe</a>
             </div>
@@ -68,7 +68,7 @@
                   <h1>$489</h1>
                   &nbsp;per Company per Month
               </div>
-              <a id="subscribe-plan" 
+              <a id="subscribe-plan" ng-show="canUpgrade(plan)"
                  target="_blank" href="https://store.risevision.com/product/{{plan.productId}}"
                  class="cta_button btn btn-primary u_margin-lg">Subscribe</a>
             </div>
@@ -77,8 +77,8 @@
       </div>
     </div> <!-- end Grid List -->
 
-    <div class="text-center u_margin-md-top">
-      <a class="btn btn-link btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/pricing?utm_campaign=apps">Learn More About Our Plan Pricing</a>
+     <div class="text-center u_margin-md-top">
+      <a class="btn btn-link btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/pricing">Learn More About Our Plan Pricing</a>
       <span class="bold">OR</span>
       <a class="btn btn-link btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/contact-us">Contact Sales If You Need Help</a>
     </div>
