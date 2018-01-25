@@ -2,7 +2,7 @@
 
 "use strict";
 
-xdescribe("Services: googleAuthFactory", function() {
+describe("Services: googleAuthFactory", function() {
   var path = "";
 
   beforeEach(module("risevision.common.components.userstate"));
@@ -33,17 +33,10 @@ xdescribe("Services: googleAuthFactory", function() {
         return "domain";
       };
     });
-    $provide.factory("$http", function () {
-      return $http = {
-        get: sinon.spy(function() {
-          return Q.resolve({data:{email:"a@b.ca"}});
-        })
-      };
-    });
     $provide.service("userState", function() {
       return userState = {
         _state: {
-          inRVAFrame: inRVAFrame,
+          inRVAFrame: false,
           userToken: {
             email: "username@test.com"
           },
@@ -57,22 +50,49 @@ xdescribe("Services: googleAuthFactory", function() {
         _restoreState: sinon.spy()
       };
     });
-    $provide.service("gapiLoader", function () {
-      return gapiLoader = sinon.spy(function() {
+    $provide.service("uiFlowManager", function() {
+      return uiFlowManager = {
+        persist: sinon.spy()
+      };
+    });
+    $provide.value("$rootScope", $rootScope = {
+      redirectToRoot: true,
+      $on: function() {}
+    });
+    $provide.service("urlStateService", function() {
+      return urlStateService = {
+        clearStatePath: function() {
+          return "clearedPath";
+        },
+        redirectToState: sinon.spy()
+      };
+    });
+
+    authInstance = {
+      isSignedIn: {
+        get: sinon.spy(function() {
+          return isSignedIn;
+        })
+      },
+      signIn: sinon.spy(function() {
+        if (isSignedIn) {
+          return Q.resolve();
+        } else {
+          return Q.reject("popup closed");
+        }
+      })
+    };
+
+    $provide.service("auth2APILoader", function () {
+      return auth2APILoader = sinon.spy(function() {
         return Q.resolve({
-          auth: gapiAuth = {
-            authorize: sinon.spy(function() {
-              if (authorizeResponse) {
-                return Q.resolve(authorizeResponse);
-              } else {
-                return Q.reject();
-              }
-            }),
-            setToken: sinon.spy()
+          getAuthInstance: function() {
+            return authInstance;
           }
         });
       });
     });
+
     $provide.service("getOAuthUserInfo", function() {
       return function() {
         var deferred = Q.defer();
@@ -87,28 +107,18 @@ xdescribe("Services: googleAuthFactory", function() {
         return deferred.promise;
       };
     });
-    $provide.value("$rootScope", $rootScope = {
-      redirectToRoot: true,
-      $on: function() {},
-      $broadcast: function() {}
-    });
-    $provide.service("urlStateService", function() {
-      return {
-        clearStatePath: function() {
-          return "clearedPath";
-        }
-      };
-    });
+
   }));
   
-  var googleAuthFactory, userState, $http, $window, $rootScope, 
-    inRVAFrame, authorizeResponse, gapiLoader, gapiAuth, failOAuthUser;
+  var googleAuthFactory, userState, uiFlowManager, $window, $rootScope, 
+    urlStateService, auth2APILoader, authInstance;
+    
+  var isSignedIn, failOAuthUser;
   
   describe("authenticate: ", function() {
     beforeEach(function() {
-      authorizeResponse = true;
+      isSignedIn = true;
       failOAuthUser = false;
-      inRVAFrame = true;
 
       inject(function($injector){
         $window = $injector.get("$window");
@@ -121,130 +131,75 @@ xdescribe("Services: googleAuthFactory", function() {
       expect(googleAuthFactory.authenticate).to.be.a("function");
 
       expect(googleAuthFactory.authenticate().then).to.be.a("function");
+      expect(googleAuthFactory.authenticate(true).then).to.be.a("function");
     });
 
-    it("should load gapi and attempt to authorize user", function(done) {
-      googleAuthFactory.authenticate();
-      
-      setTimeout(function() {
-        gapiLoader.should.have.been.called;
-        gapiAuth.authorize.should.have.been.called;
+    describe("_gapiAuthorize: ", function() {
+      it("should load gapi.auth2 and attempt to authorize user", function(done) {
+        googleAuthFactory.authenticate();
+        
+        setTimeout(function() {
+          auth2APILoader.should.have.been.called;
+          authInstance.isSignedIn.get.should.have.been.called;
 
-        done();
-      }, 10);
+          done();
+        }, 10);
+      });
+      
+      it("should handle authorization failure", function(done) {
+        isSignedIn = false;
+
+        googleAuthFactory.authenticate()
+        .then(done)
+        .then(null, function(error) {
+          expect(error).to.equal("failed to authorize user");
+          done();
+        })
+        .then(null,done);
+      });
     });
     
-    it("should authorize with the default options", function(done) {
-      googleAuthFactory.authenticate();
+    describe("getOAuthUserInfo: ", function() {
+      it("should handle failure to retrieve oauthUserInfo", function(done) {
+        failOAuthUser = true;
+
+        googleAuthFactory.authenticate().then(function(resp) {
+          done(resp);
+        })
+        .then(null, function(error) {
+          expect(error).to.equal("oauth failure");
+          done();
+        })
+        .then(null,done);
+      });
+
+      it("should retrieve oauthUserInfo correctly", function(done) {
+        googleAuthFactory.authenticate().then(function(resp) {
+          urlStateService.redirectToState.should.not.have.been.called;
+
+          expect(resp).to.deep.equal({ email: "someuser@awesome.io" });
+
+          done();
+        })
+        .then(null,done);
+      });
       
-      setTimeout(function() {
-        gapiAuth.authorize.should.have.been.calledWith({
-          "client_id":"614513768474.apps.googleusercontent.com",
-          "scope":"https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
-          "cookie_policy":"protocol://domain",
-          "authuser":"username@test.com",
-          "immediate":true
-        });
+      it("should redirect and clear state if present", function(done) {
+        userState._state.redirectState = "someState";
 
-        done();
-      }, 10);
-    });
+        googleAuthFactory.authenticate().then(function() {
+          urlStateService.redirectToState.should.have.been.calledWith("someState");
 
-    it("should authorize even if authUser is missing", function(done) {
-      userState._state.userToken = undefined;
-      googleAuthFactory.authenticate();
-      
-      setTimeout(function() {
-        gapiAuth.authorize.should.have.been.calledWith({
-          "client_id":"614513768474.apps.googleusercontent.com",
-          "scope":"https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
-          "cookie_policy":"protocol://domain",
-          "authuser": undefined,
-          "immediate":true
-        });
+          expect(userState._state.redirectState).to.be.undefined;
 
-        done();
-      }, 10);
-    });
-
-    it("should authorize with popup via select_account", function(done) {
-      googleAuthFactory.authenticate(true);
-      
-      setTimeout(function() {
-        gapiAuth.authorize.should.have.been.calledWith({
-          "client_id":"614513768474.apps.googleusercontent.com",
-          "scope":"https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
-          "cookie_policy":"protocol://domain",
-          "authuser":"username@test.com",
-          "prompt":"select_account"
-        });
-
-        done();
-      }, 10);
-    });
-    
-    it("should authorize with popup via select_account if in iframe", function(done) {
-      inRVAFrame = false;
-      $window.self = 1;
-      $window.top = 0;
-      googleAuthFactory.authenticate(true);
-      
-      setTimeout(function() {
-        gapiAuth.authorize.should.have.been.calledWith({
-          "client_id":"614513768474.apps.googleusercontent.com",
-          "scope":"https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
-          "cookie_policy":"protocol://domain",
-          "authuser":"username@test.com",
-          "prompt":"select_account"
-        });
-
-        done();
-      }, 10);
-    });
-
-    it("should load selected account via $http request", function(done) {
-      userState._state.userToken = "dummy";
-      googleAuthFactory.authenticate();
-      
-      setTimeout(function() {
-        $http.get.should.have.been.calledWith("https://www.googleapis.com/oauth2/v1/userinfo?access_token=testToken");
-
-        gapiAuth.authorize.should.have.been.calledWith({
-          "client_id":"614513768474.apps.googleusercontent.com",
-          "scope":"https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
-          "cookie_policy":"protocol://domain",
-          "authuser":"a@b.ca",
-          "immediate":true
-        });
-
-        done();
-      }, 10);
-    });
-
-    it("should handle failure to retrieve oauthUserInfo", function(done) {
-      failOAuthUser = true;
-
-      googleAuthFactory.authenticate().then(function(resp) {
-        done(resp);
-      })
-      .then(null, function(error) {
-        expect(error).to.equal("oauth failure");
-        done();
-      })
-      .then(null,done);
-    });
-
-    it("should retrieve oauthUserInfo correctly", function(done) {
-      googleAuthFactory.authenticate().then(function(resp) {
-        expect(resp).to.deep.equal({ email: "someuser@awesome.io" });
-
-        done();
-      })
-      .then(null,done);
+          done();
+        })
+        .then(null,done);
+      });
     });
   });
-  
-  describe("authenticateRedirect: ", function() {
+
+  describe("forceAuthenticate", function() {
     beforeEach(module(function ($provide) {
       $provide.value("$window", {
         location: {
@@ -256,18 +211,111 @@ xdescribe("Services: googleAuthFactory", function() {
         }
       });
     }));
-    beforeEach(function() {
-      inRVAFrame = false;
 
+    beforeEach(function() {
       inject(function($injector){
         $window = $injector.get("$window");
         googleAuthFactory = $injector.get("googleAuthFactory");
       });
     });
 
-    it("should not redirect if forceAuth is false", function(done) {
-      googleAuthFactory.authenticate().then(function(resp) {
-        expect($window.location.href).to.equal("http://localhost:8000/editor/list?cid=companyId#somehash");
+    it("should save current state variables", function() {
+      googleAuthFactory.authenticate(true);
+
+      expect(userState._state.redirectState).to.equal("someState");
+      
+      userState._persistState.should.have.been.called;
+      uiFlowManager.persist.should.have.been.called;
+    });
+
+    it("should authenticate with the default options", function(done) {
+      isSignedIn = true;
+
+      googleAuthFactory.authenticate(true);
+      
+      setTimeout(function() {
+        auth2APILoader.should.have.been.called;
+        authInstance.signIn.should.have.been.called;
+        authInstance.isSignedIn.get.should.not.have.been.called;
+
+        expect(authInstance.signIn.args[0][0]).to.deep.equal({
+          "response_type":"token",
+          "prompt":"select_account",
+          "cookie_policy":"protocol://domain",
+          "ux_mode":"redirect",
+          "redirect_uri":"http://localhost:8000/"
+        });
+
+        done();
+      }, 10);
+    });
+    
+    it("should strip params for redirect_uri", function(done) {
+      $rootScope.redirectToRoot = false;
+
+      googleAuthFactory.authenticate(true);
+      
+      setTimeout(function() {
+        expect(userState._state.redirectState).to.equal("clearedPath");
+        
+        expect(authInstance.signIn.args[0][0]).to.deep.equal({
+          "response_type":"token",
+          "prompt":"select_account",
+          "cookie_policy":"protocol://domain",
+          "ux_mode":"redirect",
+          "redirect_uri":"http://localhost:8000/editor/list?cid=companyId"
+        });
+
+        done();
+      }, 10);
+    });
+
+    it("should authenticate with popup via select_account", function(done) {
+      userState._state.inRVAFrame = true;
+
+      googleAuthFactory.authenticate(true);
+      
+      setTimeout(function() {
+        expect(authInstance.signIn.args[0][0]).to.deep.equal({
+          "response_type":"token",
+          "prompt":"select_account",
+          "cookie_policy":"protocol://domain",
+          "ux_mode":"popup",
+          "redirect_uri":"http://localhost:8000/"
+        });
+
+        done();
+      }, 10);
+    });
+    
+    it("should authenticate with popup via select_account if in iframe", function(done) {
+      $window.self = 1;
+      $window.top = 0;
+      googleAuthFactory.authenticate(true);
+      
+      setTimeout(function() {
+        expect(authInstance.signIn.args[0][0]).to.deep.equal({
+          "response_type":"token",
+          "prompt":"select_account",
+          "cookie_policy":"protocol://domain",
+          "ux_mode":"popup",
+          "redirect_uri":"http://localhost:8000/"
+        });
+
+        done();
+      }, 10);
+    });
+    
+    it("should authorize user after popup authentication", function(done) {
+      userState._state.inRVAFrame = true;
+
+      isSignedIn = true;
+      failOAuthUser = false;
+
+      googleAuthFactory.authenticate(true).then(function(resp) {
+        authInstance.signIn.should.have.been.called;
+        authInstance.isSignedIn.get.should.have.been.called;
+
         expect(resp).to.deep.equal({ email: "someuser@awesome.io" });
 
         done();
@@ -275,41 +323,23 @@ xdescribe("Services: googleAuthFactory", function() {
       .then(null,done);
     });
 
-    it("should redirect to the google auth page", function(done) {
-      googleAuthFactory.authenticate(true);
-      
-      setTimeout(function() {
-        expect($window.location.href).to.equal("https://accounts.google.com/o/oauth2/auth" +
-          "?response_type=token" +
-          "&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile" +
-          "&client_id=614513768474.apps.googleusercontent.com" +
-          "&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2F" + 
-          "&prompt=select_account" +
-          "&state=someState"
-        );
+    it("should reject if user closes popup authentication", function(done) {
+      userState._state.inRVAFrame = true;
 
-        done();
-      }, 10);
+      isSignedIn = false;
+
+      googleAuthFactory.authenticate(true)
+        .then(done)
+        .then(null, function(error) {
+          authInstance.signIn.should.have.been.called;
+          authInstance.isSignedIn.get.should.not.have.been.called;
+
+          expect(error).to.equal("popup closed");
+          done();
+        })
+        .then(null,done);
     });
 
-    it("should redirect to a specific path and strip params", function(done) {
-      $rootScope.redirectToRoot = false;
-
-      googleAuthFactory.authenticate(true);
-      
-      setTimeout(function() {
-        expect($window.location.href).to.equal("https://accounts.google.com/o/oauth2/auth" +
-          "?response_type=token" +
-          "&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile" +
-          "&client_id=614513768474.apps.googleusercontent.com" +
-          "&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Feditor%2Flist%3Fcid%3DcompanyId" + 
-          "&prompt=select_account" +
-          "&state=clearedPath"
-        );
-
-        done();
-      }, 10);
-    });
 
   });
 

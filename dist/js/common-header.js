@@ -4067,42 +4067,6 @@ angular.module("risevision.common.gapi", [])
   }
 ])
 
-//abstract method for creading a loader factory service that loads any
-//custom Google Client API library
-
-.factory("gapiClientLoaderGenerator", ["$q", "clientAPILoader", "$log",
-  function ($q, clientAPILoader, $log) {
-    return function (libName, libVer, baseUrl) {
-      return function () {
-        var deferred = $q.defer();
-        clientAPILoader().then(function (gApi) {
-          if (gApi.client[libName]) {
-            //already loaded. return right away
-            deferred.resolve(gApi.client[libName]);
-          } else {
-            gApi.client.load.apply(this, [libName, libVer].concat([
-
-              function () {
-                if (gApi.client[libName]) {
-                  $log.debug(libName + "." + libVer + " Loaded");
-                  deferred.resolve(gApi.client[libName]);
-                } else {
-                  var errMsg = libName + "." + libVer +
-                    " Load Failed";
-                  $log.error(errMsg);
-                  deferred.reject(errMsg);
-                }
-              },
-              baseUrl
-            ]));
-          }
-        });
-        return deferred.promise;
-      };
-    };
-  }
-])
-
 .factory("auth2APILoader", ["$q", "gapiLoader", "$log", "CLIENT_ID", "OAUTH2_SCOPES",
   function ($q, gapiLoader, $log, CLIENT_ID, OAUTH2_SCOPES) {
     return function () {
@@ -4166,6 +4130,41 @@ angular.module("risevision.common.gapi", [])
   }
 ])
 
+//abstract method for creading a loader factory service that loads any
+//custom Google Client API library
+
+.factory("gapiClientLoaderGenerator", ["$q", "clientAPILoader", "$log",
+  function ($q, clientAPILoader, $log) {
+    return function (libName, libVer, baseUrl) {
+      return function () {
+        var deferred = $q.defer();
+        clientAPILoader().then(function (gApi) {
+          if (gApi.client[libName]) {
+            //already loaded. return right away
+            deferred.resolve(gApi.client[libName]);
+          } else {
+            gApi.client.load.apply(this, [libName, libVer].concat([
+
+              function () {
+                if (gApi.client[libName]) {
+                  $log.debug(libName + "." + libVer + " Loaded");
+                  deferred.resolve(gApi.client[libName]);
+                } else {
+                  var errMsg = libName + "." + libVer + " Load Failed";
+                  $log.error(errMsg);
+                  deferred.reject(errMsg);
+                }
+              },
+              baseUrl
+            ]));
+          }
+        });
+        return deferred.promise;
+      };
+    };
+  }
+])
+
 .factory("oauth2APILoader", ["gapiClientLoaderGenerator",
   function (gapiClientLoaderGenerator) {
     return gapiClientLoaderGenerator("oauth2", "v2");
@@ -4175,9 +4174,8 @@ angular.module("risevision.common.gapi", [])
 .factory("coreAPILoader", ["CORE_URL", "gapiClientLoaderGenerator",
   "$location",
   function (CORE_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().core_api_base_url ? $location.search()
-      .core_api_base_url +
-      "/_ah/api" : CORE_URL;
+    var baseUrl = $location.search().core_api_base_url ?
+      $location.search().core_api_base_url + "/_ah/api" : CORE_URL;
     return gapiClientLoaderGenerator("core", "v1", baseUrl);
   }
 ])
@@ -4185,9 +4183,8 @@ angular.module("risevision.common.gapi", [])
 .factory("riseAPILoader", ["CORE_URL", "gapiClientLoaderGenerator",
   "$location",
   function (CORE_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().core_api_base_url ? $location.search()
-      .core_api_base_url +
-      "/_ah/api" : CORE_URL;
+    var baseUrl = $location.search().core_api_base_url ?
+      $location.search().core_api_base_url + "/_ah/api" : CORE_URL;
     return gapiClientLoaderGenerator("rise", "v0", baseUrl);
   }
 ])
@@ -4195,9 +4192,8 @@ angular.module("risevision.common.gapi", [])
 .factory("storeAPILoader", ["STORE_ENDPOINT_URL", "gapiClientLoaderGenerator",
   "$location",
   function (STORE_ENDPOINT_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().store_api_base_url ? $location.search()
-      .store_api_base_url +
-      "/_ah/api" : STORE_ENDPOINT_URL;
+    var baseUrl = $location.search().store_api_base_url ?
+      $location.search().store_api_base_url + "/_ah/api" : STORE_ENDPOINT_URL;
     return gapiClientLoaderGenerator("store", "v0.01", baseUrl);
   }
 ])
@@ -4205,8 +4201,8 @@ angular.module("risevision.common.gapi", [])
 .factory("storageAPILoader", ["STORAGE_ENDPOINT_URL",
   "gapiClientLoaderGenerator", "$location",
   function (STORAGE_ENDPOINT_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().storage_api_base_url ? $location.search()
-      .storage_api_base_url + "/_ah/api" : STORAGE_ENDPOINT_URL;
+    var baseUrl = $location.search().storage_api_base_url ?
+      $location.search().storage_api_base_url + "/_ah/api" : STORAGE_ENDPOINT_URL;
     return gapiClientLoaderGenerator("storage", "v0.01", baseUrl);
   }
 ])
@@ -4214,9 +4210,8 @@ angular.module("risevision.common.gapi", [])
 .factory("discoveryAPILoader", ["CORE_URL", "gapiClientLoaderGenerator",
   "$location",
   function (CORE_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().core_api_base_url ? $location.search()
-      .core_api_base_url +
-      "/_ah/api" : CORE_URL;
+    var baseUrl = $location.search().core_api_base_url ?
+      $location.search().core_api_base_url + "/_ah/api" : CORE_URL;
     return gapiClientLoaderGenerator("discovery", "v1", baseUrl);
   }
 ])
@@ -4224,9 +4219,8 @@ angular.module("risevision.common.gapi", [])
 .factory("monitoringAPILoader", ["MONITORING_SERVICE_URL",
   "gapiClientLoaderGenerator", "$location",
   function (MONITORING_SERVICE_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().core_api_base_url ? $location.search()
-      .core_api_base_url +
-      "/_ah/api" : MONITORING_SERVICE_URL;
+    var baseUrl = $location.search().core_api_base_url ?
+      $location.search().core_api_base_url + "/_ah/api" : MONITORING_SERVICE_URL;
     return gapiClientLoaderGenerator("monitoring", "v0", baseUrl);
   }
 ]);
@@ -5725,7 +5719,7 @@ angular.module("risevision.common.components.ui-flow")
         template: "<div class=\"app-launcher\" ui-view></div>"
       })
 
-      .state("common.googleresponse", {
+      .state("common.googleresult", {
         url: "/:id_token&:client_id"
       })
 
@@ -6318,19 +6312,13 @@ angular.module("risevision.common.components.logging")
       var authenticate = function () {
         var deferred = $q.defer();
 
-        var authResult;
-
         _gapiAuthorize()
-          .then(function (res) {
-            authResult = res;
-
-            return getOAuthUserInfo();
-          })
+          .then(getOAuthUserInfo)
           .then(function (oauthUserInfo) {
-            if (userState._state.state) {
-              urlStateService.redirectToState(userState._state.state);
+            if (userState._state.redirectState) {
+              urlStateService.redirectToState(userState._state.redirectState);
 
-              delete userState._state.state;
+              delete userState._state.redirectState;
             }
 
             deferred.resolve(oauthUserInfo);
@@ -6347,20 +6335,21 @@ angular.module("risevision.common.components.logging")
       };
 
       var forceAuthenticate = function () {
+        var deferred = $q.defer();
         var loc;
-        var state = $stateParams.state;
+        var redirectState = $stateParams.state;
 
         // Redirect to full URL path
         if ($rootScope.redirectToRoot === false) {
           loc = $window.location.href.substr(0, $window.location.href
             .indexOf("#")) || $window.location.href;
 
-          state = urlStateService.clearStatePath(state);
+          redirectState = urlStateService.clearStatePath(redirectState);
         } else {
           loc = $window.location.origin + "/";
         }
 
-        userState._state.state = state;
+        userState._state.redirectState = redirectState;
         userState._persistState();
         uiFlowManager.persist();
 
@@ -6372,8 +6361,6 @@ angular.module("risevision.common.components.logging")
           ux_mode: _isPopupAuth() ? "popup" : "redirect",
           redirect_uri: loc
         };
-
-        var deferred = $q.defer();
 
         auth2APILoader()
           .then(function (auth2) {

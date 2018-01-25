@@ -16,7 +16,12 @@ describe("app:", function() {
   var $state, $rootScope, urlStateService;
 
   describe("states: ", function() {
-    
+    it("common.googleresult", function() {
+      var state = $state.get("common.googleresult");
+      expect(state).to.be.ok;
+      expect(state.url).to.equal("/:id_token&:client_id");
+    });
+ 
     it("common.auth.unauthorized", function() {
       var state = $state.get("common.auth.unauthorized");
       expect(state).to.be.ok;

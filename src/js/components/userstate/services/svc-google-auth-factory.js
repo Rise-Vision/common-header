@@ -40,19 +40,13 @@
       var authenticate = function () {
         var deferred = $q.defer();
 
-        var authResult;
-
         _gapiAuthorize()
-          .then(function (res) {
-            authResult = res;
-
-            return getOAuthUserInfo();
-          })
+          .then(getOAuthUserInfo)
           .then(function (oauthUserInfo) {
-            if (userState._state.state) {
-              urlStateService.redirectToState(userState._state.state);
+            if (userState._state.redirectState) {
+              urlStateService.redirectToState(userState._state.redirectState);
 
-              delete userState._state.state;
+              delete userState._state.redirectState;
             }
 
             deferred.resolve(oauthUserInfo);
@@ -69,20 +63,21 @@
       };
 
       var forceAuthenticate = function () {
+        var deferred = $q.defer();
         var loc;
-        var state = $stateParams.state;
+        var redirectState = $stateParams.state;
 
         // Redirect to full URL path
         if ($rootScope.redirectToRoot === false) {
           loc = $window.location.href.substr(0, $window.location.href
             .indexOf("#")) || $window.location.href;
 
-          state = urlStateService.clearStatePath(state);
+          redirectState = urlStateService.clearStatePath(redirectState);
         } else {
           loc = $window.location.origin + "/";
         }
 
-        userState._state.state = state;
+        userState._state.redirectState = redirectState;
         userState._persistState();
         uiFlowManager.persist();
 
@@ -94,8 +89,6 @@
           ux_mode: _isPopupAuth() ? "popup" : "redirect",
           redirect_uri: loc
         };
-
-        var deferred = $q.defer();
 
         auth2APILoader()
           .then(function (auth2) {

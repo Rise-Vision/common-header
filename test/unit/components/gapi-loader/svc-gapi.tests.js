@@ -10,33 +10,93 @@ describe("Services: gapi loader", function() {
     $provide.value("CORE_URL", "");
     $provide.value("MONITORING_SERVICE_URL", "");
     $provide.value("STORAGE_ENDPOINT_URL", "");
-    window.gapiSrc = "test/unit/gapi-loader/gapi-mock.js";
   }));
+  
+  var $window, gapiAuth2, auth2APILoader;
   
   beforeEach(function () {
     inject(function($injector) {
-      var $window = $injector.get("$window");
+      $window = $injector.get("$window");
 
-      $window.gapi = $window.gapi || {};
-
-      $window.gapi.client = {
+      var gapiClient = {
         load: function(path, version, cb) {
           window.gapi.client[path] = {version: version};
           cb();
         }
       };
+
+      gapiAuth2 = {
+        init: sinon.spy(function() {
+          return Q.resolve();
+        }),
+        getAuthInstance: sinon.spy()
+      };
+
+      $window.gapi = $window.gapi || {};
+      
+      $window.gapi.load = function(path, cb) {
+        if (path === "client") {
+          window.gapi[path] = gapiClient;
+        } else if (path === "auth2") {
+          window.gapi[path] = gapiAuth2;
+        } else {
+          window.gapi[path] = {};
+        }
+        cb();
+      };
       
       $window.handleClientJSLoad();
+      
+      auth2APILoader = $injector.get("auth2APILoader");
     });
   });
 
   describe("gapiLoader", function () {
     it("should load gapi", function(done) {
       inject(function (gapiLoader) {
-        expect(gapiLoader).be.defined;
+        expect(gapiLoader).to.be.ok;
         gapiLoader().then(function () {
           done();
         });
+      });
+    });
+  });
+
+  describe("auth2APILoader", function () {
+    it("should load and initialize auth2", function(done) {
+      expect(auth2APILoader).to.be.ok;
+      auth2APILoader().then(function (auth2) {
+        expect(auth2).to.be.an("object");
+        expect($window.gapi.auth2).to.be.ok;
+        
+        gapiAuth2.init.should.have.been.called;
+
+        done();
+      }, done);
+    });
+    
+    it("should return auth2 instance", function(done) {
+      auth2APILoader().then(function () {
+        gapiAuth2.getAuthInstance.should.not.have.been.called;
+
+        auth2APILoader().then(function (auth2) {
+          expect(auth2).to.be.an("object");
+          gapiAuth2.getAuthInstance.should.have.been.called;
+
+          done();
+        }, done);
+      }, done);
+    });
+  });
+  
+  describe("clientAPILoader", function () {
+    it("should load", function(done) {
+      inject(function (clientAPILoader, $window) {
+        expect(clientAPILoader).to.be.ok;
+        clientAPILoader().then(function () {
+          expect($window.gapi.client).to.be.ok;
+          done();
+        }, done);
       });
     });
   });
@@ -45,11 +105,11 @@ describe("Services: gapi loader", function() {
 
     it("should load a gapi client lib", function (done) {
       inject(function (gapiClientLoaderGenerator, $window) {
-        expect(gapiClientLoaderGenerator).be.defined;
+        expect(gapiClientLoaderGenerator).to.be.ok;
         var loaderFn = gapiClientLoaderGenerator("custom", "v0");
         loaderFn().then(function () {
-          expect($window.gapi).to.be.defined;
-          expect($window.gapi.custom).to.be.defined;
+          expect($window.gapi).to.be.ok;
+          expect($window.gapi.client.custom).to.be.ok;
           done();
         }, done);
       });
@@ -59,21 +119,21 @@ describe("Services: gapi loader", function() {
   describe("oauth2APILoader", function () {
     it("should load", function(done) {
       inject(function (oauth2APILoader, $window) {
-        expect(oauth2APILoader).be.defined;
+        expect(oauth2APILoader).to.be.ok;
         oauth2APILoader().then(function () {
-          expect($window.gapi.client.oauth2).to.be.defined;
+          expect($window.gapi.client.oauth2).to.be.ok;
           done();
         }, done);
       });
     });
   });
-
+  
   describe("coreAPILoader", function () {
     it("should load", function(done) {
       inject(function (coreAPILoader, $window) {
-        expect(coreAPILoader).be.defined;
+        expect(coreAPILoader).to.be.ok;
         coreAPILoader().then(function () {
-          expect($window.gapi.client.core).to.be.defined;
+          expect($window.gapi.client.core).to.be.ok;
           done();
         }, done);
       });
@@ -83,9 +143,9 @@ describe("Services: gapi loader", function() {
   describe("riseAPILoader", function () {
     it("should load", function(done) {
       inject(function (riseAPILoader, $window) {
-        expect(done).be.defined;
+        expect(done).to.be.ok;
         riseAPILoader().then(function () {
-          expect($window.gapi.client.rise).to.be.defined;
+          expect($window.gapi.client.rise).to.be.ok;
           done();
         }, done);
       });
@@ -95,9 +155,9 @@ describe("Services: gapi loader", function() {
   describe("storageAPILoader", function () {
     it("should load", function(done) {
       inject(function (storageAPILoader, $window) {
-        expect(done).be.defined;
+        expect(done).to.be.ok;
         storageAPILoader().then(function () {
-          expect($window.gapi.client.storage).to.be.defined;
+          expect($window.gapi.client.storage).to.be.ok;
           done();
         }, done);
       });
@@ -107,9 +167,9 @@ describe("Services: gapi loader", function() {
   describe("discoveryAPILoader", function () {
     it("should load", function(done) {
         inject(function (discoveryAPILoader, $window) {
-            expect(done).be.defined;
+            expect(done).to.be.ok;
             discoveryAPILoader().then(function () {
-                expect($window.gapi.client.discovery).to.be.defined;
+                expect($window.gapi.client.discovery).to.be.ok;
                 done();
             })
             .then(null,done);
@@ -117,16 +177,16 @@ describe("Services: gapi loader", function() {
     });
   });
 
-    describe("monitoringAPILoader", function () {
-        it("should load", function(done) {
-            inject(function (monitoringAPILoader, $window) {
-                expect(done).be.defined;
-                monitoringAPILoader().then(function () {
-                    expect($window.gapi.client.monitoring).to.be.defined;
-                    done();
-                }, done);
-            });
-        });
-    });
+  describe("monitoringAPILoader", function () {
+      it("should load", function(done) {
+          inject(function (monitoringAPILoader, $window) {
+              expect(done).to.be.ok;
+              monitoringAPILoader().then(function () {
+                  expect($window.gapi.client.monitoring).to.be.ok;
+                  done();
+              }, done);
+          });
+      });
+  });
 
 });

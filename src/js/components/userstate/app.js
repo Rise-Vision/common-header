@@ -49,7 +49,7 @@
         template: "<div class=\"app-launcher\" ui-view></div>"
       })
 
-      .state("common.googleresponse", {
+      .state("common.googleresult", {
         url: "/:id_token&:client_id"
       })
 

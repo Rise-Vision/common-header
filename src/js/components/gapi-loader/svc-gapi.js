@@ -52,42 +52,6 @@ angular.module("risevision.common.gapi", [])
   }
 ])
 
-//abstract method for creading a loader factory service that loads any
-//custom Google Client API library
-
-.factory("gapiClientLoaderGenerator", ["$q", "clientAPILoader", "$log",
-  function ($q, clientAPILoader, $log) {
-    return function (libName, libVer, baseUrl) {
-      return function () {
-        var deferred = $q.defer();
-        clientAPILoader().then(function (gApi) {
-          if (gApi.client[libName]) {
-            //already loaded. return right away
-            deferred.resolve(gApi.client[libName]);
-          } else {
-            gApi.client.load.apply(this, [libName, libVer].concat([
-
-              function () {
-                if (gApi.client[libName]) {
-                  $log.debug(libName + "." + libVer + " Loaded");
-                  deferred.resolve(gApi.client[libName]);
-                } else {
-                  var errMsg = libName + "." + libVer +
-                    " Load Failed";
-                  $log.error(errMsg);
-                  deferred.reject(errMsg);
-                }
-              },
-              baseUrl
-            ]));
-          }
-        });
-        return deferred.promise;
-      };
-    };
-  }
-])
-
 .factory("auth2APILoader", ["$q", "gapiLoader", "$log", "CLIENT_ID", "OAUTH2_SCOPES",
   function ($q, gapiLoader, $log, CLIENT_ID, OAUTH2_SCOPES) {
     return function () {
@@ -151,6 +115,41 @@ angular.module("risevision.common.gapi", [])
   }
 ])
 
+//abstract method for creading a loader factory service that loads any
+//custom Google Client API library
+
+.factory("gapiClientLoaderGenerator", ["$q", "clientAPILoader", "$log",
+  function ($q, clientAPILoader, $log) {
+    return function (libName, libVer, baseUrl) {
+      return function () {
+        var deferred = $q.defer();
+        clientAPILoader().then(function (gApi) {
+          if (gApi.client[libName]) {
+            //already loaded. return right away
+            deferred.resolve(gApi.client[libName]);
+          } else {
+            gApi.client.load.apply(this, [libName, libVer].concat([
+
+              function () {
+                if (gApi.client[libName]) {
+                  $log.debug(libName + "." + libVer + " Loaded");
+                  deferred.resolve(gApi.client[libName]);
+                } else {
+                  var errMsg = libName + "." + libVer + " Load Failed";
+                  $log.error(errMsg);
+                  deferred.reject(errMsg);
+                }
+              },
+              baseUrl
+            ]));
+          }
+        });
+        return deferred.promise;
+      };
+    };
+  }
+])
+
 .factory("oauth2APILoader", ["gapiClientLoaderGenerator",
   function (gapiClientLoaderGenerator) {
     return gapiClientLoaderGenerator("oauth2", "v2");
@@ -160,9 +159,8 @@ angular.module("risevision.common.gapi", [])
 .factory("coreAPILoader", ["CORE_URL", "gapiClientLoaderGenerator",
   "$location",
   function (CORE_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().core_api_base_url ? $location.search()
-      .core_api_base_url +
-      "/_ah/api" : CORE_URL;
+    var baseUrl = $location.search().core_api_base_url ?
+      $location.search().core_api_base_url + "/_ah/api" : CORE_URL;
     return gapiClientLoaderGenerator("core", "v1", baseUrl);
   }
 ])
@@ -170,9 +168,8 @@ angular.module("risevision.common.gapi", [])
 .factory("riseAPILoader", ["CORE_URL", "gapiClientLoaderGenerator",
   "$location",
   function (CORE_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().core_api_base_url ? $location.search()
-      .core_api_base_url +
-      "/_ah/api" : CORE_URL;
+    var baseUrl = $location.search().core_api_base_url ?
+      $location.search().core_api_base_url + "/_ah/api" : CORE_URL;
     return gapiClientLoaderGenerator("rise", "v0", baseUrl);
   }
 ])
@@ -180,9 +177,8 @@ angular.module("risevision.common.gapi", [])
 .factory("storeAPILoader", ["STORE_ENDPOINT_URL", "gapiClientLoaderGenerator",
   "$location",
   function (STORE_ENDPOINT_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().store_api_base_url ? $location.search()
-      .store_api_base_url +
-      "/_ah/api" : STORE_ENDPOINT_URL;
+    var baseUrl = $location.search().store_api_base_url ?
+      $location.search().store_api_base_url + "/_ah/api" : STORE_ENDPOINT_URL;
     return gapiClientLoaderGenerator("store", "v0.01", baseUrl);
   }
 ])
@@ -190,8 +186,8 @@ angular.module("risevision.common.gapi", [])
 .factory("storageAPILoader", ["STORAGE_ENDPOINT_URL",
   "gapiClientLoaderGenerator", "$location",
   function (STORAGE_ENDPOINT_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().storage_api_base_url ? $location.search()
-      .storage_api_base_url + "/_ah/api" : STORAGE_ENDPOINT_URL;
+    var baseUrl = $location.search().storage_api_base_url ?
+      $location.search().storage_api_base_url + "/_ah/api" : STORAGE_ENDPOINT_URL;
     return gapiClientLoaderGenerator("storage", "v0.01", baseUrl);
   }
 ])
@@ -199,9 +195,8 @@ angular.module("risevision.common.gapi", [])
 .factory("discoveryAPILoader", ["CORE_URL", "gapiClientLoaderGenerator",
   "$location",
   function (CORE_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().core_api_base_url ? $location.search()
-      .core_api_base_url +
-      "/_ah/api" : CORE_URL;
+    var baseUrl = $location.search().core_api_base_url ?
+      $location.search().core_api_base_url + "/_ah/api" : CORE_URL;
     return gapiClientLoaderGenerator("discovery", "v1", baseUrl);
   }
 ])
@@ -209,9 +204,8 @@ angular.module("risevision.common.gapi", [])
 .factory("monitoringAPILoader", ["MONITORING_SERVICE_URL",
   "gapiClientLoaderGenerator", "$location",
   function (MONITORING_SERVICE_URL, gapiClientLoaderGenerator, $location) {
-    var baseUrl = $location.search().core_api_base_url ? $location.search()
-      .core_api_base_url +
-      "/_ah/api" : MONITORING_SERVICE_URL;
+    var baseUrl = $location.search().core_api_base_url ?
+      $location.search().core_api_base_url + "/_ah/api" : MONITORING_SERVICE_URL;
     return gapiClientLoaderGenerator("monitoring", "v0", baseUrl);
   }
 ]);
