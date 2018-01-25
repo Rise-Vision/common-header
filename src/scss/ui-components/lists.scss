@@ -227,8 +227,13 @@
   }
   .grid-list-text {
     color: #333;
-    min-height: 180px;
     overflow: hidden;
+      @media (min-width: $screen-sm) {
+            min-height: 437px;
+        }
+      @media (min-width: $screen-md) {
+            min-height: 507px;
+        }
   }
   .panel {
     margin: 4px;
