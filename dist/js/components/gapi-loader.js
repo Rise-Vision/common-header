@@ -217,7 +217,7 @@ angular.module("risevision.common.gapi", [
 
 (function (angular) {
   "use strict";
-  angular.module("risevision.common.components.util")
+  angular.module("risevision.common.components.util", [])
 
   .value("humanReadableError", function (resp) {
     var message;

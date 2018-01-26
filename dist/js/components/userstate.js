@@ -11,7 +11,6 @@
     .value("ENABLE_EXTERNAL_LOGGING", true)
     .value("CORE_URL", "https://rvaserver2.appspot.com/_ah/api");
 
-  angular.module("risevision.common.components.util", []);
   angular.module("risevision.common.components.logging", []);
 
   angular.module("risevision.common.components.rvtokenstore", [
