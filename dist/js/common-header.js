@@ -4031,7 +4031,9 @@ var handleClientJSLoad = function () {
 };
 /* jshint ignore:end */
 
-angular.module("risevision.common.gapi", [])
+angular.module("risevision.common.gapi", [
+  "risevision.common.components.util"
+])
   .value("CLIENT_ID", "614513768474.apps.googleusercontent.com")
   .value("OAUTH2_SCOPES", "profile")
 
@@ -4067,8 +4069,9 @@ angular.module("risevision.common.gapi", [])
   }
 ])
 
-.factory("auth2APILoader", ["$q", "gapiLoader", "$log", "CLIENT_ID", "OAUTH2_SCOPES",
-  function ($q, gapiLoader, $log, CLIENT_ID, OAUTH2_SCOPES) {
+.factory("auth2APILoader", ["$q", "$log", "$location", "gapiLoader", "getBaseDomain",
+  "CLIENT_ID", "OAUTH2_SCOPES",
+  function ($q, $log, $location, gapiLoader, getBaseDomain, CLIENT_ID, OAUTH2_SCOPES) {
     return function () {
       var deferred = $q.defer();
       gapiLoader().then(function (gApi) {
@@ -4080,7 +4083,9 @@ angular.module("risevision.common.gapi", [])
             if (gApi.auth2) {
               gApi.auth2.init({
                 client_id: CLIENT_ID,
-                scope: OAUTH2_SCOPES
+                scope: OAUTH2_SCOPES,
+                cookie_policy: $location.protocol() + "://" +
+                  getBaseDomain()
               }).then(function () {
                 $log.debug("auth2 API Loaded");
 

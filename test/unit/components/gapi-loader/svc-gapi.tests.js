@@ -10,6 +10,21 @@ describe("Services: gapi loader", function() {
     $provide.value("CORE_URL", "");
     $provide.value("MONITORING_SERVICE_URL", "");
     $provide.value("STORAGE_ENDPOINT_URL", "");
+    
+    $provide.value("$location", {
+      search: function () {
+        return {};
+      },
+      protocol: function () {
+        return "protocol";
+      }
+    });
+    $provide.service("getBaseDomain", function() {
+      return function() {
+        return "domain";
+      };
+    });
+
   }));
   
   var $window, gapiAuth2, auth2APILoader;
@@ -69,7 +84,11 @@ describe("Services: gapi loader", function() {
         expect(auth2).to.be.an("object");
         expect($window.gapi.auth2).to.be.ok;
         
-        gapiAuth2.init.should.have.been.called;
+        expect(gapiAuth2.init.args[0][0]).to.deep.equal({
+          "client_id": "614513768474.apps.googleusercontent.com",
+          "scope": "profile",
+          "cookie_policy": "protocol://domain"
+        });
 
         done();
       }, done);
