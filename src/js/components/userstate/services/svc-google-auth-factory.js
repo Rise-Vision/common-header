@@ -84,8 +84,6 @@
         var opts = {
           response_type: "token",
           prompt: "select_account",
-          cookie_policy: $location.protocol() + "://" + getBaseDomain() +
-            ($location.port() ? ":" + $location.port() : ""),
           ux_mode: _isPopupAuth() ? "popup" : "redirect",
           redirect_uri: loc
         };

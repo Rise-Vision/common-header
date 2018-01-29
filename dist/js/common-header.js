@@ -4069,9 +4069,10 @@ angular.module("risevision.common.gapi", [
   }
 ])
 
-.factory("auth2APILoader", ["$q", "$log", "$location", "gapiLoader", "getBaseDomain",
-  "CLIENT_ID", "OAUTH2_SCOPES",
-  function ($q, $log, $location, gapiLoader, getBaseDomain, CLIENT_ID, OAUTH2_SCOPES) {
+.factory("auth2APILoader", ["$q", "$log", "$location", "$window", "gapiLoader",
+  "getBaseDomain", "CLIENT_ID", "OAUTH2_SCOPES",
+  function ($q, $log, $location, $window, gapiLoader, getBaseDomain,
+    CLIENT_ID, OAUTH2_SCOPES) {
     return function () {
       var deferred = $q.defer();
       gapiLoader().then(function (gApi) {
@@ -4085,7 +4086,7 @@ angular.module("risevision.common.gapi", [
                 client_id: CLIENT_ID,
                 scope: OAUTH2_SCOPES,
                 cookie_policy: $location.protocol() + "://" + getBaseDomain() +
-                  ($location.port() ? ":" + $location.port() : "")
+                  ($window.location.port ? ":" + $window.location.port : "")
               }).then(function () {
                 $log.debug("auth2 API Loaded");
 
@@ -6493,8 +6494,6 @@ angular.module("risevision.common.components.logging")
         var opts = {
           response_type: "token",
           prompt: "select_account",
-          cookie_policy: $location.protocol() + "://" + getBaseDomain() +
-            ($location.port() ? ":" + $location.port() : ""),
           ux_mode: _isPopupAuth() ? "popup" : "redirect",
           redirect_uri: loc
         };
