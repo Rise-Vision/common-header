@@ -3,8 +3,6 @@
 "use strict";
 
 describe("Services: googleAuthFactory", function() {
-  var path = "";
-
   beforeEach(module("risevision.common.components.userstate"));
 
   beforeEach(module(function ($provide) {
@@ -19,6 +17,9 @@ describe("Services: googleAuthFactory", function() {
       }),
       protocol: function () {
         return "protocol";
+      },
+      port: function () {
+        return port;
       },
       url: function() {
         return "";
@@ -54,10 +55,6 @@ describe("Services: googleAuthFactory", function() {
       return uiFlowManager = {
         persist: sinon.spy()
       };
-    });
-    $provide.value("$rootScope", $rootScope = {
-      redirectToRoot: true,
-      $on: function() {}
     });
     $provide.service("urlStateService", function() {
       return urlStateService = {
@@ -110,20 +107,31 @@ describe("Services: googleAuthFactory", function() {
 
   }));
   
+  beforeEach(function() {
+    path = "";
+    port = "";
+  });
+  
   var googleAuthFactory, userState, uiFlowManager, $window, $rootScope, 
     urlStateService, auth2APILoader, authInstance;
     
-  var isSignedIn, failOAuthUser;
+  var path, port, isSignedIn, failOAuthUser;
   
   describe("authenticate: ", function() {
     beforeEach(function() {
       isSignedIn = true;
       failOAuthUser = false;
 
-      inject(function($injector){
+      inject(function($injector) {
+        $rootScope = $injector.get("$rootScope");
+
         $window = $injector.get("$window");
         googleAuthFactory = $injector.get("googleAuthFactory");
       });
+    });
+
+    beforeEach(function() {
+      $rootScope.redirectToRoot = true;
     });
 
     it("should exist, return a promise", function() {
@@ -214,9 +222,15 @@ describe("Services: googleAuthFactory", function() {
 
     beforeEach(function() {
       inject(function($injector){
+        $rootScope = $injector.get("$rootScope");
+
         $window = $injector.get("$window");
         googleAuthFactory = $injector.get("googleAuthFactory");
       });
+    });
+
+    beforeEach(function() {
+      $rootScope.redirectToRoot = true;
     });
 
     it("should save current state variables", function() {
@@ -250,6 +264,24 @@ describe("Services: googleAuthFactory", function() {
       }, 10);
     });
     
+    it("should add port to cookie_policy", function(done) {
+      port = 8000;
+
+      googleAuthFactory.authenticate(true);
+      
+      setTimeout(function() {
+        expect(authInstance.signIn.args[0][0]).to.deep.equal({
+          "response_type":"token",
+          "prompt":"select_account",
+          "cookie_policy":"protocol://domain:8000",
+          "ux_mode":"redirect",
+          "redirect_uri":"http://localhost:8000/"
+        });
+
+        done();
+      }, 10);
+    });
+
     it("should strip params for redirect_uri", function(done) {
       $rootScope.redirectToRoot = false;
 

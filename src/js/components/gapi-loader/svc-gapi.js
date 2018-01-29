@@ -69,8 +69,8 @@ angular.module("risevision.common.gapi", [
               gApi.auth2.init({
                 client_id: CLIENT_ID,
                 scope: OAUTH2_SCOPES,
-                cookie_policy: $location.protocol() + "://" +
-                  getBaseDomain()
+                cookie_policy: $location.protocol() + "://" + getBaseDomain() +
+                  ($location.port() ? ":" + $location.port() : "")
               }).then(function () {
                 $log.debug("auth2 API Loaded");
 
