@@ -11807,13 +11807,8 @@ li.dropdown-header {
 
 .grid-list .grid-list-text {
   color: #333;
+  min-height: 180px;
   overflow: hidden; }
-  @media (min-width: 768px) {
-    .grid-list .grid-list-text {
-      min-height: 437px; } }
-  @media (min-width: 992px) {
-    .grid-list .grid-list-text {
-      min-height: 507px; } }
 
 .grid-list .panel, .grid-list .select-subcompany-modal .list-group, .select-subcompany-modal .grid-list .list-group, .grid-list .panel-editable, .grid-list .card, .grid-list #appLauncherContainer .scrollable-list, #appLauncherContainer .grid-list .scrollable-list {
   margin: 4px;
