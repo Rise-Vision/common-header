@@ -606,13 +606,11 @@ angular.module("risevision.common.components.logging")
 
   angular.module("risevision.common.components.userstate")
   // constants (you can override them in your app as needed)
-  .factory("googleAuthFactory", ["$rootScope", "$q", "$log", "$location",
-    "$window", "$stateParams", "auth2APILoader",
-    "getOAuthUserInfo", "uiFlowManager", "getBaseDomain", "userState",
-    "urlStateService",
-    function ($rootScope, $q, $log, $location, $window, $stateParams,
-      auth2APILoader, getOAuthUserInfo, uiFlowManager, getBaseDomain,
-      userState, urlStateService) {
+  .factory("googleAuthFactory", ["$rootScope", "$q", "$log", "$window",
+    "$stateParams", "auth2APILoader", "getOAuthUserInfo", "uiFlowManager",
+    "userState", "urlStateService",
+    function ($rootScope, $q, $log, $window, $stateParams, auth2APILoader,
+      getOAuthUserInfo, uiFlowManager, userState, urlStateService) {
 
       var _gapiAuthorize = function () {
         var deferred = $q.defer();

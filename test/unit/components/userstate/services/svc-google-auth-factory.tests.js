@@ -8,31 +8,8 @@ describe("Services: googleAuthFactory", function() {
   beforeEach(module(function ($provide) {
     //stub services
     $provide.service("$q", function() {return Q;});
-    $provide.value("$location", {
-      search: function () {
-        return {};
-      },
-      path: sinon.spy(function () {
-        return path;
-      }),
-      protocol: function () {
-        return "protocol";
-      },
-      port: function () {
-        return port;
-      },
-      url: function() {
-        return "";
-      },
-      $$html5: true
-    });
     $provide.value("$stateParams", {
       state: "someState"
-    });
-    $provide.service("getBaseDomain", function() {
-      return function() {
-        return "domain";
-      };
     });
     $provide.service("userState", function() {
       return userState = {
@@ -107,15 +84,10 @@ describe("Services: googleAuthFactory", function() {
 
   }));
   
-  beforeEach(function() {
-    path = "";
-    port = "";
-  });
-  
   var googleAuthFactory, userState, uiFlowManager, $window, $rootScope, 
     urlStateService, auth2APILoader, authInstance;
     
-  var path, port, isSignedIn, failOAuthUser;
+  var isSignedIn, failOAuthUser;
   
   describe("authenticate: ", function() {
     beforeEach(function() {
@@ -255,25 +227,6 @@ describe("Services: googleAuthFactory", function() {
         expect(authInstance.signIn.args[0][0]).to.deep.equal({
           "response_type":"token",
           "prompt":"select_account",
-          "cookie_policy":"protocol://domain",
-          "ux_mode":"redirect",
-          "redirect_uri":"http://localhost:8000/"
-        });
-
-        done();
-      }, 10);
-    });
-    
-    it("should add port to cookie_policy", function(done) {
-      port = 8000;
-
-      googleAuthFactory.authenticate(true);
-      
-      setTimeout(function() {
-        expect(authInstance.signIn.args[0][0]).to.deep.equal({
-          "response_type":"token",
-          "prompt":"select_account",
-          "cookie_policy":"protocol://domain:8000",
           "ux_mode":"redirect",
           "redirect_uri":"http://localhost:8000/"
         });
@@ -293,7 +246,6 @@ describe("Services: googleAuthFactory", function() {
         expect(authInstance.signIn.args[0][0]).to.deep.equal({
           "response_type":"token",
           "prompt":"select_account",
-          "cookie_policy":"protocol://domain",
           "ux_mode":"redirect",
           "redirect_uri":"http://localhost:8000/editor/list?cid=companyId"
         });
@@ -311,7 +263,6 @@ describe("Services: googleAuthFactory", function() {
         expect(authInstance.signIn.args[0][0]).to.deep.equal({
           "response_type":"token",
           "prompt":"select_account",
-          "cookie_policy":"protocol://domain",
           "ux_mode":"popup",
           "redirect_uri":"http://localhost:8000/"
         });
@@ -329,7 +280,6 @@ describe("Services: googleAuthFactory", function() {
         expect(authInstance.signIn.args[0][0]).to.deep.equal({
           "response_type":"token",
           "prompt":"select_account",
-          "cookie_policy":"protocol://domain",
           "ux_mode":"popup",
           "redirect_uri":"http://localhost:8000/"
         });

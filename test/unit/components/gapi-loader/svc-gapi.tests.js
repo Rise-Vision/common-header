@@ -17,9 +17,6 @@ describe("Services: gapi loader", function() {
       },
       protocol: function () {
         return "protocol";
-      },
-      port: function() {
-        return port;
       }
     });
     $provide.service("getBaseDomain", function() {
@@ -30,7 +27,7 @@ describe("Services: gapi loader", function() {
 
   }));
   
-  var $window, gapiAuth2, auth2APILoader, port;
+  var $window, gapiAuth2, auth2APILoader;
   
   beforeEach(function () {
     inject(function($injector) {
@@ -90,20 +87,7 @@ describe("Services: gapi loader", function() {
         expect(gapiAuth2.init.args[0][0]).to.deep.equal({
           "client_id": "614513768474.apps.googleusercontent.com",
           "scope": "profile",
-          "cookie_policy": "protocol://domain"
-        });
-
-        done();
-      }, done);
-    });
-
-    it("should initialize auth2 with correct port", function(done) {
-      port = 8000;
-      auth2APILoader().then(function () {
-        expect(gapiAuth2.init.args[0][0]).to.deep.equal({
-          "client_id": "614513768474.apps.googleusercontent.com",
-          "scope": "profile",
-          "cookie_policy": "protocol://domain:8000"
+          "cookie_policy": "protocol://domain:9876"
         });
 
         done();
