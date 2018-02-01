@@ -126,6 +126,13 @@ $toggle-group-height: $switch-height + 5;
             outline: thin dotted #333;
             outline: 0;
         }
+
+         &:disabled  ~ .onoffswitch .onoffswitch-inner:after,
+         &:disabled  ~ .onoffswitch .onoffswitch-inner:before,
+         &:disabled  ~.onoffswitch .onoffswitch-label .onoffswitch-switch {
+            background-color: #DDD;
+            color: #DDD;
+        }
     }
 
     label {

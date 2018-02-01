@@ -13076,6 +13076,11 @@ ul.tree ul li:last-child:before {
     .toggle-group input[type=checkbox]:focus ~ .onoffswitch {
       outline: thin dotted #333;
       outline: 0; }
+    .toggle-group input[type=checkbox]:disabled ~ .onoffswitch .onoffswitch-inner:after,
+    .toggle-group input[type=checkbox]:disabled ~ .onoffswitch .onoffswitch-inner:before,
+    .toggle-group input[type=checkbox]:disabled ~ .onoffswitch .onoffswitch-label .onoffswitch-switch {
+      background-color: #DDD;
+      color: #DDD; }
   .toggle-group label {
     position: absolute;
     cursor: pointer;
