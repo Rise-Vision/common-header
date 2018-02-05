@@ -11892,6 +11892,31 @@ li.dropdown-header {
     color: #FFF;
     text-decoration: none; }
 
+#plans-modal .panel-focus {
+  position: relative;
+  z-index: 100;
+  -webkit-box-shadow: 0 0 0 4px #4ab667;
+  -moz-box-shadow: 0 0 0 4px #4ab667;
+  box-shadow: 0 0 0 4px #4ab667;
+  border-radius: 1px; }
+
+#plans-modal .panel-focus::before {
+  content: 'Priority Support Included!';
+  background: #4ab667;
+  color: #FFF;
+  display: block;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 1px;
+  z-index: 100;
+  -webkit-box-shadow: 0 0 0 1px #4ab667;
+  -moz-box-shadow: 0 0 0 1px #4ab667;
+  box-shadow: 0 0 0 1px #4ab667;
+  text-align: center;
+  border-radius: 4px 4px 0 0;
+  position: absolute; }
+
 /* Standard Table
    ========================================================================== */
 .table {
