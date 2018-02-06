@@ -4050,7 +4050,7 @@ angular.module("risevision.common.gapi", [
         $window.gapiLoadingStatus = "loading";
 
         var src = $window.gapiSrc ||
-          "//apis.google.com/js/api.js?onload=handleClientJSLoad";
+          "//apis.google.com/js/client.js?onload=handleClientJSLoad";
         var fileref = document.createElement("script");
         fileref.setAttribute("type", "text/javascript");
         fileref.setAttribute("src", src);
