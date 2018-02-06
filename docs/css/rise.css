@@ -11894,11 +11894,8 @@ li.dropdown-header {
 
 #plans-modal .panel-focus {
   position: relative;
-  z-index: 100;
-  -webkit-box-shadow: 0 0 0 4px #4ab667;
-  -moz-box-shadow: 0 0 0 4px #4ab667;
-  box-shadow: 0 0 0 4px #4ab667;
-  border-radius: 1px; }
+  z-index: 9;
+  border: 4px solid #4ab667; }
 
 #plans-modal .panel-focus::before {
   content: 'Priority Support Included!';
