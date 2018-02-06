@@ -11892,27 +11892,6 @@ li.dropdown-header {
     color: #FFF;
     text-decoration: none; }
 
-.panel-focus {
-  position: relative;
-  z-index: 9;
-  border: 4px solid #4ab667; }
-
-.panel-focus::before {
-  content: 'Priority Support Included!';
-  background: #4ab667;
-  color: #FFF;
-  display: block;
-  width: 100%;
-  top: 0;
-  left: 0;
-  padding: 1px;
-  z-index: 100;
-  -webkit-box-shadow: 0 0 0 1px #4ab667;
-  -moz-box-shadow: 0 0 0 1px #4ab667;
-  box-shadow: 0 0 0 1px #4ab667;
-  text-align: center;
-  position: absolute; }
-
 /* Standard Table
    ========================================================================== */
 .table {
