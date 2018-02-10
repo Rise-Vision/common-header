@@ -9190,7 +9190,8 @@ angular.module("risevision.common.components.plans", [
                   var priceMap = _.keyBy(plan.pricing, "unit");
                   var price = priceMap[monthKey] || {};
 
-                  plan.type = plan.name.toLowerCase().replace(" plan", "");
+                  plan.name = plan.name.replace(" Plan", "");
+                  plan.type = plan.name.toLowerCase();
                   plan.priceMonth = currency.pickPrice(price.priceUSD, price.priceCAD);
                 });
 

@@ -185,9 +185,11 @@ describe("Services: plan", function() {
         expect(planFactory.getPlans).to.have.been.called;
         expect(resp.length).to.equal(4);
         expect(resp[0].productId).to.equal("000");
+        expect(resp[0].name).to.equal("Free");
         expect(resp[0].descriptionShort).to.be.ok;
         expect(resp[0].priceMonth).to.equal(0);
         expect(resp[1].productId).to.equal("289");
+        expect(resp[1].name).to.equal("Basic");
         expect(resp[1].descriptionShort).to.be.ok;
         expect(resp[1].priceMonth).to.equal(20);
         done();
