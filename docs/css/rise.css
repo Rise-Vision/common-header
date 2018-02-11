@@ -12996,6 +12996,119 @@ ul.tree ul li:last-child:before {
     line-height: 1.5;
     border-radius: 2px; } }
 
+/* ON/OFF Switch */
+.onoffswitch {
+  position: relative;
+  width: 55px;
+  display: inline-block;
+  font-size: 80%; }
+  .onoffswitch .onoffswitch-label {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid #e6e6e6;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+    margin: 0; }
+  .onoffswitch .onoffswitch-inner {
+    width: 200%;
+    margin-left: -100%;
+    -webkit-transition: margin 0.15s ease-in-out;
+    -o-transition: margin 0.15s ease-in-out;
+    -moz-transition: margin 0.15s ease-in-out;
+    transition: margin 0.15s ease-in-out; }
+    .onoffswitch .onoffswitch-inner:before, .onoffswitch .onoffswitch-inner:after {
+      float: left;
+      width: 50%;
+      height: 24px;
+      padding: 0;
+      line-height: 24px;
+      font-size: 100%;
+      color: white;
+      font-weight: normal;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box; }
+    .onoffswitch .onoffswitch-inner:before {
+      content: "ON";
+      padding-left: 10px;
+      background-color: #007bc8;
+      color: white;
+      padding-right: 29px; }
+    .onoffswitch .onoffswitch-inner:after {
+      content: "OFF";
+      padding-right: 9px;
+      background-color: #fafafa;
+      color: #3d3d3d;
+      text-align: right; }
+  .onoffswitch .onoffswitch-switch {
+    width: 22px;
+    height: 22px;
+    margin: 0;
+    background: white;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    bottom: 0;
+    right: 35px;
+    -webkit-transition: right 0.15s ease-in-out;
+    -o-transition: right 0.15s ease-in-out;
+    -moz-transition: right 0.15s ease-in-out;
+    transition: right 0.15s ease-in-out; }
+
+.toggle-group {
+  position: relative;
+  height: 27px;
+  left: -260px;
+  margin-top: 7px; }
+  .toggle-group input[type=checkbox] {
+    position: relative;
+    left: 30px; }
+    .toggle-group input[type=checkbox]:checked ~ .onoffswitch .onoffswitch-label .onoffswitch-inner {
+      margin-left: 0; }
+    .toggle-group input[type=checkbox]:checked ~ .onoffswitch .onoffswitch-label .onoffswitch-switch {
+      right: 1px;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.5); }
+    .toggle-group input[type=checkbox]:focus ~ .onoffswitch {
+      outline: thin dotted #333;
+      outline: 0; }
+    .toggle-group input[type=checkbox]:disabled ~ .onoffswitch .onoffswitch-inner:after,
+    .toggle-group input[type=checkbox]:disabled ~ .onoffswitch .onoffswitch-inner:before,
+    .toggle-group input[type=checkbox]:disabled ~ .onoffswitch .onoffswitch-label .onoffswitch-switch {
+      background-color: #DDD;
+      color: #DDD; }
+  .toggle-group label {
+    position: absolute;
+    cursor: pointer;
+    padding-left: 65px;
+    display: inline-block;
+    text-align: left;
+    line-height: 24px;
+    width: 100%;
+    z-index: 1;
+    height: 24px;
+    font-weight: 400; }
+
+/* ==== Accessibility ===== */
+.aural {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  width: 1px; }
+  .aural:focus {
+    clip: rect(0, 0, 0, 0);
+    font-size: 1em;
+    height: auto;
+    outline: thin dotted;
+    position: static !important;
+    width: auto;
+    overflow: visible; }
+
 /* Sections/Views
    ========================================================================== */
 /* ==========================================================================
@@ -13888,7 +14001,7 @@ tr.blocked-file {
 
 .ph-block {
   position: absolute;
-  border: 1px solid #fff;
+  border: 1px solid white;
   cursor: pointer;
   -webkit-box-shadow: inset 0px 0px 56px 0px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: inset 0px 0px 56px 0px rgba(0, 0, 0, 0.15);
