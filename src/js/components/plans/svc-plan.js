@@ -11,18 +11,22 @@
       priceMonth: 0,
       descriptionShort: "Design, distribute and manage your digital signage for free. Unlimited Displays, Companies and Users."
     }, {
+      name: "Basic",
       type: "basic",
       productId: "289",
       pc: "40c092161f547f8f72c9f173cd8eebcb9ca5dd25"
     }, {
+      name: "Advanced",
       type: "advanced",
       productId: "290",
       pc: "93b5595f0d7e4c04a3baba1102ffaecb17607bf4"
     }, {
+      name: "Enterprise",
       type: "enterprise",
       productId: "301",
       pc: "b1844725d63fde197f5125b58b6cba6260ee7a57"
     }, {
+      name: "Enterprise",
       type: "enterprisesub",
       productId: "303",
       pc: "d521f5bfbc1eef109481eebb79831e11c7804ad8"
@@ -107,6 +111,7 @@
                 }
               });
 
+              subscribedPlan.name = _plansByCode[subscribedPlan.pc].name;
               subscribedPlan.type = _plansByCode[subscribedPlan.pc].type;
 
               deferred.resolve(subscribedPlan);

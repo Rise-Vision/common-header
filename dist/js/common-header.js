@@ -234,7 +234,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plan-banner.html',
-    '<div><div id="free-plan-banner" class="alert alert-plan plan-active text-right" ng-show="plan.type === \'free\'"><div class="u_margin-right"><strong>Get more out of Rise Vision!</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">See Our Plans</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'basic\' && plan.subscribed"><div class="u_margin-right"><strong>Basic Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'advanced\' && plan.subscribed"><div class="u_margin-right"><strong>Advanced Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'enterprise\' && plan.subscribed"><div class="u_margin-right"><strong>Enterprise Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'enterprisesub\' && plan.subscribed"><div class="u_margin-right"><strong>Enterprise Plan</strong></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="plan.status === \'Suspended\'"><div class="u_margin-right">There was an issue processing your payment. Please update your billing information. Your Displays may be affected. <a href="{{storeAccountUrl}}" target="_blank" class="u_margin-left">Update Billing</a></div></div></div>');
+    '<div><div id="free-plan-banner" class="alert alert-plan plan-active text-right" ng-show="plan.type === \'free\'"><div class="u_margin-right"><strong>Get more out of Rise Vision!</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">See Our Plans</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type !== \'Free\' && plan.subscribed"><div class="u_margin-right"><strong>{{plan.name}} Plan</strong> <a href="#" ng-show="plan.type !== \'enterprisesub\'" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="plan.status === \'Suspended\'"><div class="u_margin-right">There was an issue processing your payment. Please update your billing information. Your Displays may be affected. <a href="{{storeAccountUrl}}" target="_blank" class="u_margin-left">Update Billing</a></div></div></div>');
 }]);
 })();
 
@@ -9132,18 +9132,22 @@ angular.module("risevision.common.components.plans", [
       priceMonth: 0,
       descriptionShort: "Design, distribute and manage your digital signage for free. Unlimited Displays, Companies and Users."
     }, {
+      name: "Basic",
       type: "basic",
       productId: "289",
       pc: "40c092161f547f8f72c9f173cd8eebcb9ca5dd25"
     }, {
+      name: "Advanced",
       type: "advanced",
       productId: "290",
       pc: "93b5595f0d7e4c04a3baba1102ffaecb17607bf4"
     }, {
+      name: "Enterprise",
       type: "enterprise",
       productId: "301",
       pc: "b1844725d63fde197f5125b58b6cba6260ee7a57"
     }, {
+      name: "Enterprise",
       type: "enterprisesub",
       productId: "303",
       pc: "d521f5bfbc1eef109481eebb79831e11c7804ad8"
@@ -9228,6 +9232,7 @@ angular.module("risevision.common.components.plans", [
                 }
               });
 
+              subscribedPlan.name = _plansByCode[subscribedPlan.pc].name;
               subscribedPlan.type = _plansByCode[subscribedPlan.pc].type;
 
               deferred.resolve(subscribedPlan);

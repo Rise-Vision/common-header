@@ -7,30 +7,10 @@
     </div>
   </div>
 
-  <div class="alert alert-plan plan-active text-right" ng-show="plan.type === 'basic' && plan.subscribed">
+  <div class="alert alert-plan plan-active text-right" ng-show="plan.type !== 'Free' && plan.subscribed">
     <div class="u_margin-right">
-      <strong>Basic Plan</strong>
-      <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a>
-    </div>
-  </div>
-
-  <div class="alert alert-plan plan-active text-right" ng-show="plan.type === 'advanced' && plan.subscribed">
-    <div class="u_margin-right">
-      <strong>Advanced Plan</strong>
-      <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a>
-    </div>
-  </div>
-
-  <div class="alert alert-plan plan-active text-right" ng-show="plan.type === 'enterprise' && plan.subscribed">
-    <div class="u_margin-right">
-      <strong>Enterprise Plan</strong>
-      <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a>
-    </div>
-  </div>
-
-  <div class="alert alert-plan plan-active text-right" ng-show="plan.type === 'enterprisesub' && plan.subscribed">
-    <div class="u_margin-right">
-      <strong>Enterprise Plan</strong>
+      <strong>{{plan.name}} Plan</strong>
+      <a href="#" ng-show="plan.type !== 'enterprisesub'" ng-click="showPlans()" class="u_margin-left">Change Plan</a>
     </div>
   </div>
 
