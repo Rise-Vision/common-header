@@ -229,6 +229,7 @@ describe("Services: plan", function() {
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
         expect(plan.pc).to.equal(FREE_PLAN_CODE);
+        expect(plan.name).to.equal("Free");
         expect(plan.type).to.equal("free");
         expect(plan.status).to.equal("Subscribed");
         done();
@@ -246,6 +247,7 @@ describe("Services: plan", function() {
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
         expect(plan.pc).to.equal(BASIC_PLAN_CODE);
+        expect(plan.name).to.equal("Basic");
         expect(plan.type).to.equal("basic");
         expect(plan.status).to.equal("Subscribed");
         done();
@@ -263,6 +265,7 @@ describe("Services: plan", function() {
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
         expect(plan.pc).to.equal(BASIC_PLAN_CODE);
+        expect(plan.name).to.equal("Basic");
         expect(plan.type).to.equal("basic");
         expect(plan.status).to.equal("On Trial");
         done();
@@ -280,6 +283,7 @@ describe("Services: plan", function() {
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
         expect(plan.pc).to.equal(ADVANCED_PLAN_CODE);
+        expect(plan.name).to.equal("Advanced");
         expect(plan.type).to.equal("advanced");
         expect(plan.status).to.equal("Subscribed");
         done();
@@ -297,6 +301,7 @@ describe("Services: plan", function() {
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
         expect(plan.pc).to.equal(ENTERPRISE_PLAN_CODE);
+        expect(plan.name).to.equal("Enterprise");
         expect(plan.type).to.equal("enterprise");
         expect(plan.status).to.equal("Subscribed");
         done();
@@ -315,6 +320,7 @@ describe("Services: plan", function() {
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
         expect(plan.pc).to.equal(ENTERPRISE_SUB_PLAN_CODE);
+        expect(plan.name).to.equal("Enterprise");
         expect(plan.type).to.equal("enterprisesub");
         expect(plan.status).to.equal("Subscribed");
         done();
@@ -332,6 +338,7 @@ describe("Services: plan", function() {
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
         expect(plan.pc).to.equal(FREE_PLAN_CODE);
+        expect(plan.name).to.equal("Free");
         expect(plan.type).to.equal("free");
         expect(plan.status).to.equal("Subscribed");
         done();
@@ -349,6 +356,7 @@ describe("Services: plan", function() {
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
         expect(plan.pc).to.equal(ADVANCED_PLAN_CODE);
+        expect(plan.name).to.equal("Advanced");
         expect(plan.type).to.equal("advanced");
         expect(plan.status).to.equal("Suspended");
         done();
@@ -366,6 +374,7 @@ describe("Services: plan", function() {
       .then(function(plan) {
         expect(subscriptionStatusService.list).to.have.been.called;
         expect(plan.pc).to.equal(ENTERPRISE_PLAN_CODE);
+        expect(plan.name).to.equal("Enterprise");
         expect(plan.type).to.equal("enterprise");
         expect(plan.status).to.equal("Suspended");
         done();

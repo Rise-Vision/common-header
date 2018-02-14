@@ -1507,7 +1507,7 @@ angular.module("risevision.common.header")
       });
 
       $scope.isFree = function () {
-        return $scope.plan.type === "Free";
+        return $scope.plan.type === "free";
       };
 
       $scope.isEnterpriseSubCompany = function () {
