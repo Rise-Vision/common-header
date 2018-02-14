@@ -106,7 +106,7 @@
               _plansCodesList.forEach(function (planCode) {
                 var plan = plansMap[planCode];
 
-                if (plan && ["Subscribed", "Suspended", "On Trial"].indexOf(plan.status) >= 0) {
+                if (plan && ["Subscribed", "Suspended", "On Trial", "Trial Expired"].indexOf(plan.status) >= 0) {
                   subscribedPlan = plan;
                 }
               });
