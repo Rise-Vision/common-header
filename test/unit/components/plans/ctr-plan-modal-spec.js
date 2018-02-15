@@ -37,7 +37,8 @@ describe("controller: plans modal", function() {
     });
   }));
 
-  var sandbox, $scope, $modalInstance, $modal, $loading, $log, planFactory, currentPlan;
+  var sandbox, $scope, $modalInstance, $modal, $loading, $log, planFactory, currentPlan, allPlansMap;
+  var BASIC_PLAN_CODE, ADVANCED_PLAN_CODE, ENTERPRISE_PLAN_CODE;
 
   beforeEach(function() {
     sandbox = sinon.sandbox.create();
@@ -50,8 +51,15 @@ describe("controller: plans modal", function() {
       $log = $injector.get("$log");
       planFactory = $injector.get("planFactory");
       currentPlan = {};
+      allPlansMap = {};
 
       sandbox.spy(planFactory, "getPlansDetails");
+
+      var plansByType = _.keyBy($injector.get("PLANS_LIST"), "type");
+
+      BASIC_PLAN_CODE = plansByType.basic.pc;
+      ADVANCED_PLAN_CODE = plansByType.advanced.pc;
+      ENTERPRISE_PLAN_CODE = plansByType.enterprise.pc;
 
       $controller("PlansModalCtrl", {
         $scope: $scope,
@@ -59,7 +67,8 @@ describe("controller: plans modal", function() {
         $modal: $modal,
         $loading: $loading,
         planFactory: planFactory,
-        currentPlan: currentPlan
+        currentPlan: currentPlan,
+        allPlansMap: allPlansMap
       });
 
       $scope.$digest();
@@ -171,6 +180,41 @@ describe("controller: plans modal", function() {
       expect($scope.canDowngrade({ type: "basic" })).to.be.true;
       expect($scope.canDowngrade({ type: "advanced" })).to.be.true;
       expect($scope.canDowngrade({ type: "enterprise" })).to.be.false;
+    });
+  });
+
+  describe("canStartTrial", function() {
+    it("should not be able to start trial on the current plan", function() {
+      currentPlan.type = "basic";
+
+      expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE })).to.be.false;
+    });
+
+    it("should be able to start trial on trial-available status", function() {
+      currentPlan.type = "free";
+      allPlansMap[BASIC_PLAN_CODE] = { statusCode: "trial-available", trialPeriod: 10 };
+      allPlansMap[ADVANCED_PLAN_CODE] = { statusCode: "trial-available", trialPeriod: 10 };
+
+      expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE })).to.be.true;
+      expect($scope.canStartTrial({ type: "advanced", productCode: ADVANCED_PLAN_CODE })).to.be.true;
+    });
+
+    it("should not be able to start trial on status that is different from trial-available", function() {
+      currentPlan.type = "free";
+      allPlansMap[BASIC_PLAN_CODE] = { statusCode: "subscribed", trialPeriod: 10 };
+      allPlansMap[ADVANCED_PLAN_CODE] = { statusCode: "cancelled", trialPeriod: 10 };
+
+      expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE })).to.be.false;
+      expect($scope.canStartTrial({ type: "advanced", productCode: ADVANCED_PLAN_CODE })).to.be.false;
+    });
+
+    it("should take into consideration trial period", function() {
+      currentPlan.type = "free";
+      allPlansMap[BASIC_PLAN_CODE] = { statusCode: "trial-available", trialPeriod: 10 };
+      allPlansMap[ADVANCED_PLAN_CODE] = { statusCode: "trial-available", trialPeriod: 0 };
+
+      expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE })).to.be.true;
+      expect($scope.canStartTrial({ type: "advanced", productCode: ADVANCED_PLAN_CODE })).to.be.false;
     });
   });
 });

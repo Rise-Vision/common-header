@@ -53,15 +53,18 @@
           expect(plansModalPage.getDowngradePlanButton("free").isDisplayed()).to.eventually.be.false;
 
           expect(plansModalPage.getCurrentPlanButton("basic").isDisplayed()).to.eventually.be.false;
-          expect(plansModalPage.getSubscribePlanButton("basic").isDisplayed()).to.eventually.be.true;
+          expect(plansModalPage.getSubscribePlanButton("basic").isDisplayed()).to.eventually.be.false;
+          expect(plansModalPage.getStartTrialPlanButton("basic").isDisplayed()).to.eventually.be.true;
           expect(plansModalPage.getDowngradePlanButton("basic").isDisplayed()).to.eventually.be.false;
 
           expect(plansModalPage.getCurrentPlanButton("advanced").isDisplayed()).to.eventually.be.false;
-          expect(plansModalPage.getSubscribePlanButton("advanced").isDisplayed()).to.eventually.be.true;
+          expect(plansModalPage.getSubscribePlanButton("advanced").isDisplayed()).to.eventually.be.false;
+          expect(plansModalPage.getStartTrialPlanButton("advanced").isDisplayed()).to.eventually.be.true;
           expect(plansModalPage.getDowngradePlanButton("advanced").isDisplayed()).to.eventually.be.false;
 
           expect(plansModalPage.getCurrentPlanButton("enterprise").isDisplayed()).to.eventually.be.false;
           expect(plansModalPage.getSubscribePlanButton("enterprise").isDisplayed()).to.eventually.be.true;
+          expect(plansModalPage.getStartTrialPlanButton("enterprise").isDisplayed()).to.eventually.be.false;
           expect(plansModalPage.getDowngradePlanButton("enterprise").isDisplayed()).to.eventually.be.false;
         });
       });

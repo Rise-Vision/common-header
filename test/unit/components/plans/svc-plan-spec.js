@@ -114,7 +114,7 @@ describe("Services: plan", function() {
     it("should load the current plan when selected company changes", function(done) {
       sandbox.spy($rootScope, "$emit");
       sandbox.stub(userState, "getSelectedCompanyId").returns("companyId");
-      sandbox.stub(planFactory, "getCompanyPlan").returns(Q.resolve({ type: "basic" }));
+      sandbox.stub(planFactory, "getCompanyPlan").returns(Q.resolve({ plan: {type: "basic" }}));
 
       $rootScope.$emit("risevision.company.selectedCompanyChanged");
       $rootScope.$digest();
@@ -224,11 +224,11 @@ describe("Services: plan", function() {
       ]));
 
       planFactory.getCompanyPlan(companyId)
-      .then(function(plan) {
+      .then(function(response) {
         expect(subscriptionStatusService.list).to.have.been.called;
-        expect(plan.pc).to.equal(FREE_PLAN_CODE);
-        expect(plan.type).to.equal("free");
-        expect(plan.status).to.equal("Subscribed");
+        expect(response.plan.pc).to.equal(FREE_PLAN_CODE);
+        expect(response.plan.type).to.equal("free");
+        expect(response.plan.status).to.equal("Subscribed");
         done();
       });
     });
@@ -241,11 +241,11 @@ describe("Services: plan", function() {
       ]));
 
       planFactory.getCompanyPlan(companyId)
-      .then(function(plan) {
+      .then(function(response) {
         expect(subscriptionStatusService.list).to.have.been.called;
-        expect(plan.pc).to.equal(BASIC_PLAN_CODE);
-        expect(plan.type).to.equal("basic");
-        expect(plan.status).to.equal("Subscribed");
+        expect(response.plan.pc).to.equal(BASIC_PLAN_CODE);
+        expect(response.plan.type).to.equal("basic");
+        expect(response.plan.status).to.equal("Subscribed");
         done();
       });
     });
@@ -258,11 +258,11 @@ describe("Services: plan", function() {
       ]));
 
       planFactory.getCompanyPlan(companyId)
-      .then(function(plan) {
+      .then(function(response) {
         expect(subscriptionStatusService.list).to.have.been.called;
-        expect(plan.pc).to.equal(BASIC_PLAN_CODE);
-        expect(plan.type).to.equal("basic");
-        expect(plan.status).to.equal("On Trial");
+        expect(response.plan.pc).to.equal(BASIC_PLAN_CODE);
+        expect(response.plan.type).to.equal("basic");
+        expect(response.plan.status).to.equal("On Trial");
         done();
       });
     });
@@ -275,11 +275,11 @@ describe("Services: plan", function() {
       ]));
 
       planFactory.getCompanyPlan(companyId)
-      .then(function(plan) {
+      .then(function(response) {
         expect(subscriptionStatusService.list).to.have.been.called;
-        expect(plan.pc).to.equal(ADVANCED_PLAN_CODE);
-        expect(plan.type).to.equal("advanced");
-        expect(plan.status).to.equal("Subscribed");
+        expect(response.plan.pc).to.equal(ADVANCED_PLAN_CODE);
+        expect(response.plan.type).to.equal("advanced");
+        expect(response.plan.status).to.equal("Subscribed");
         done();
       });
     });
@@ -292,11 +292,11 @@ describe("Services: plan", function() {
       ]));
 
       planFactory.getCompanyPlan(companyId)
-      .then(function(plan) {
+      .then(function(response) {
         expect(subscriptionStatusService.list).to.have.been.called;
-        expect(plan.pc).to.equal(ENTERPRISE_PLAN_CODE);
-        expect(plan.type).to.equal("enterprise");
-        expect(plan.status).to.equal("Subscribed");
+        expect(response.plan.pc).to.equal(ENTERPRISE_PLAN_CODE);
+        expect(response.plan.type).to.equal("enterprise");
+        expect(response.plan.status).to.equal("Subscribed");
         done();
       });
     });
@@ -310,11 +310,11 @@ describe("Services: plan", function() {
       ]));
 
       planFactory.getCompanyPlan(companyId)
-      .then(function(plan) {
+      .then(function(response) {
         expect(subscriptionStatusService.list).to.have.been.called;
-        expect(plan.pc).to.equal(ENTERPRISE_SUB_PLAN_CODE);
-        expect(plan.type).to.equal("enterprisesub");
-        expect(plan.status).to.equal("Subscribed");
+        expect(response.plan.pc).to.equal(ENTERPRISE_SUB_PLAN_CODE);
+        expect(response.plan.type).to.equal("enterprisesub");
+        expect(response.plan.status).to.equal("Subscribed");
         done();
       });
     });
@@ -327,11 +327,11 @@ describe("Services: plan", function() {
       ]));
 
       planFactory.getCompanyPlan(companyId)
-      .then(function(plan) {
+      .then(function(response) {
         expect(subscriptionStatusService.list).to.have.been.called;
-        expect(plan.pc).to.equal(FREE_PLAN_CODE);
-        expect(plan.type).to.equal("free");
-        expect(plan.status).to.equal("Subscribed");
+        expect(response.plan.pc).to.equal(FREE_PLAN_CODE);
+        expect(response.plan.type).to.equal("free");
+        expect(response.plan.status).to.equal("Subscribed");
         done();
       });
     });
@@ -344,11 +344,11 @@ describe("Services: plan", function() {
       ]));
 
       planFactory.getCompanyPlan(companyId)
-      .then(function(plan) {
+      .then(function(response) {
         expect(subscriptionStatusService.list).to.have.been.called;
-        expect(plan.pc).to.equal(ADVANCED_PLAN_CODE);
-        expect(plan.type).to.equal("advanced");
-        expect(plan.status).to.equal("Suspended");
+        expect(response.plan.pc).to.equal(ADVANCED_PLAN_CODE);
+        expect(response.plan.type).to.equal("advanced");
+        expect(response.plan.status).to.equal("Suspended");
         done();
       });
     });
@@ -361,11 +361,11 @@ describe("Services: plan", function() {
       ]));
 
       planFactory.getCompanyPlan(companyId)
-      .then(function(plan) {
+      .then(function(response) {
         expect(subscriptionStatusService.list).to.have.been.called;
-        expect(plan.pc).to.equal(ENTERPRISE_PLAN_CODE);
-        expect(plan.type).to.equal("enterprise");
-        expect(plan.status).to.equal("Suspended");
+        expect(response.plan.pc).to.equal(ENTERPRISE_PLAN_CODE);
+        expect(response.plan.type).to.equal("enterprise");
+        expect(response.plan.status).to.equal("Suspended");
         done();
       });
     });
@@ -379,6 +379,22 @@ describe("Services: plan", function() {
       .catch(function(err) {
         expect(subscriptionStatusService.list).to.have.been.called;
         expect(err.error).to.be.ok;
+        done();
+      });
+    });
+
+    it("should return populated planMap", function(done) {
+      sandbox.stub(subscriptionStatusService, "list").returns(Q.resolve([
+        { pc: BASIC_PLAN_CODE, status: "Subscribed" },
+        { pc: ADVANCED_PLAN_CODE, status: "Not Subscribed" },
+        { pc: ENTERPRISE_PLAN_CODE, status: "Suspended" }
+      ]));
+
+      planFactory.getCompanyPlan(companyId)
+      .then(function(response) {
+        expect(response.allPlansMap[BASIC_PLAN_CODE].status).to.equal("Subscribed");
+        expect(response.allPlansMap[ADVANCED_PLAN_CODE].status).to.equal("Not Subscribed");
+        expect(response.allPlansMap[ENTERPRISE_PLAN_CODE].status).to.equal("Suspended");
         done();
       });
     });

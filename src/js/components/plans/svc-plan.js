@@ -108,7 +108,11 @@
 
               subscribedPlan.type = _plansByCode[subscribedPlan.pc].type;
 
-              deferred.resolve(subscribedPlan);
+              var result = {};
+              result.plan = subscribedPlan;
+              result.allPlansMap = plansMap;
+
+              deferred.resolve(result);
             })
             .catch(function (err) {
               deferred.reject(err);
@@ -125,6 +129,9 @@
             resolve: {
               currentPlan: function () {
                 return _factory.currentPlan;
+              },
+              allPlansMap: function () {
+                return _factory.allPlansMap;
               }
             }
           });
@@ -142,10 +149,12 @@
         function _loadCurrentPlan() {
           if (userState.getSelectedCompanyId()) {
             _factory.getCompanyPlan(userState.getSelectedCompanyId())
-              .then(function (plan) {
-                _factory.currentPlan = plan;
-                $log.debug("Current plan", plan);
-                $rootScope.$emit("risevision.plan.loaded", plan);
+              .then(function (response) {
+                _factory.currentPlan = response.plan;
+                _factory.allPlansMap = response.allPlansMap;
+                $log.debug("Current plan", response.plan);
+                $log.debug("All plans", response.allPlansMap);
+                $rootScope.$emit("risevision.plan.loaded", response.plan);
               })
               .catch(function (err) {
                 $log.debug("Failed to load company's plan", err);
