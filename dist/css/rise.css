@@ -12697,6 +12697,53 @@ ul.tree ul li:last-child:before {
   .product-grid .product-grid_image {
     height: 150px; } }
 
+.professional-content--locked {
+  background-color: #4ab767; }
+
+.plan-promotion {
+  padding: 0 10px; }
+  .plan-promotion h2 {
+    color: #FFF; }
+  .plan-promotion p {
+    color: #FFF;
+    font-size: 16px; }
+
+.pro-display-promotion {
+  padding: 0 10px; }
+  .pro-display-promotion p {
+    color: #666;
+    font-size: 16px; }
+
+.product-grid_image--locked {
+  position: relative; }
+  .product-grid_image--locked:after {
+    content: '';
+    display: block;
+    background: url("https://s3.amazonaws.com/Rise-Images/UI/lock%402x.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50px;
+    background-color: rgba(50, 50, 50, 0.2);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0; }
+
+.product-grid_image--unlocked {
+  position: relative; }
+  .product-grid_image--unlocked:after {
+    content: '';
+    display: block;
+    background: url("https://s3.amazonaws.com/Rise-Images/UI/pro%402x.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50px;
+    background-color: rgba(50, 50, 50, 0.2);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0; }
+
 #intercom-launcher {
   list-style: none;
   position: fixed;
