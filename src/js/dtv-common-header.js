@@ -31,7 +31,8 @@ angular.module("risevision.common.header", [
   "risevision.common.components.svg",
   "risevision.common.components.plans",
   "risevision.common.support",
-  "risevision.common.email"
+  "risevision.common.email",
+  "risevision.common.store.authorization.services"
 ])
 
 .factory("bindToScopeWithWatch", [

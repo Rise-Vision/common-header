@@ -27,6 +27,10 @@
     this.getDowngradePlanButton = function(plan) {
       return getButtonByPlan("downgrade-plan", plan);
     };
+
+    this.getStartTrialPlanButton = function(plan) {
+      return getButtonByPlan("start-trial-plan", plan);
+    };
   };
 
   module.exports = PlansModalPage;

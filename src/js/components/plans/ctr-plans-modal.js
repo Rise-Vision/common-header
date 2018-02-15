@@ -2,7 +2,10 @@ angular.module("risevision.common.components.plans")
 
 .controller("PlansModalCtrl", [
   "$scope", "$modalInstance", "$log", "$modal", "$templateCache", "$loading", "planFactory", "currentPlan",
-  function ($scope, $modalInstance, $log, $modal, $templateCache, $loading, planFactory, currentPlan) {
+  "allPlansMap", "storeAuthorization",
+  function ($scope, $modalInstance, $log, $modal, $templateCache, $loading, planFactory, currentPlan,
+    allPlansMap, storeAuthorization) {
+
     $scope.currentPlan = currentPlan;
 
     $scope.getPlansDetails = function () {
@@ -56,6 +59,31 @@ angular.module("risevision.common.components.plans")
       }
 
       return false;
+    };
+
+    $scope.canStartTrial = function (plan) {
+
+      if (currentPlan.subscribed && currentPlan.statusCode !== "on-trial" &&
+        currentPlan.statusCode !== "trial-expired") {
+
+        return false;
+
+      } else if (currentPlan.type === plan.type) {
+
+        return false;
+
+      } else if (allPlansMap[plan.productCode] &&
+        allPlansMap[plan.productCode].statusCode === "trial-available") {
+
+        return true;
+      }
+
+      return false;
+    };
+
+    $scope.startTrial = function (plan) {
+      storeAuthorization.startTrial(plan.productCode);
+      $modalInstance.close();
     };
 
     $scope.dismiss = function () {
