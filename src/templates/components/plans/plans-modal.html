@@ -20,9 +20,12 @@
               <a id="current-plan" ng-show="currentPlan.type === plan.type"
                  target="_blank"
                  class="cta_button btn btn-white u_margin-lg">Current Plan</a>
-              <a id="subscribe-plan" ng-show="canUpgrade(plan)"
+              <a id="subscribe-plan" ng-show="canUpgrade(plan) && !canStartTrial(plan)"
                  target="_blank" href="https://store.risevision.com/product/{{plan.productId}}"
                  class="cta_button btn btn-primary u_margin-lg">Subscribe</a>
+              <a id="start-trial-plan" ng-show="canStartTrial(plan)"
+                 target="_blank" href="https://store.risevision.com/product/{{plan.productId}}"
+                 class="cta_button btn btn-primary u_margin-lg">Start Trial</a>
               <a id="downgrade-plan" ng-show="canDowngrade(plan)" ng-click="showDowngradeModal()"
                  class="cta_button btn btn-default u_margin-lg">Downgrade</a>
             </div>
