@@ -9181,7 +9181,6 @@ angular.module("risevision.common.components.plans", [
       function ($q, $log, $rootScope, $modal, $templateCache, userState, storeAPILoader, subscriptionStatusService,
         currencyService, PLANS_LIST) {
         var _factory = {};
-        var _plansCodesList = _.map(PLANS_LIST, "pc");
         var _plansByType = _.keyBy(PLANS_LIST, "type");
         var _plansByCode = _.keyBy(PLANS_LIST, "pc");
 
@@ -9236,38 +9235,6 @@ angular.module("risevision.common.components.plans", [
           return deferred.promise;
         };
 
-        _factory.getCompanyPlan = function (companyId) {
-          $log.debug("getCompanyPlan called.");
-          var deferred = $q.defer();
-
-          subscriptionStatusService.list(_plansCodesList.slice(1), companyId)
-            .then(function (resp) {
-              $log.debug("getCompanyPlan response.", resp);
-
-              // Use Free as default
-              var subscribedPlan = _.cloneDeep(_plansByType.free);
-              var plansMap = _.keyBy(resp, "pc");
-
-              _plansCodesList.forEach(function (planCode) {
-                var plan = plansMap[planCode];
-
-                if (plan && ["Subscribed", "Suspended", "On Trial", "Trial Expired"].indexOf(plan.status) >= 0) {
-                  subscribedPlan = plan;
-                }
-              });
-
-              subscribedPlan.name = _plansByCode[subscribedPlan.pc].name;
-              subscribedPlan.type = _plansByCode[subscribedPlan.pc].type;
-
-              deferred.resolve(subscribedPlan);
-            })
-            .catch(function (err) {
-              deferred.reject(err);
-            });
-
-          return deferred.promise;
-        };
-
         _factory.showPlansModal = function () {
           $modal.open({
             template: $templateCache.get("plans/plans-modal.html"),
@@ -9284,24 +9251,27 @@ angular.module("risevision.common.components.plans", [
         function _getSelectedCurrency() {
           return currencyService()
             .then(function (currency) {
-              var company = userState.getCopyOfUserCompany();
+              var company = userState.getCopyOfSelectedCompany();
               var country = (company && company.country) ? company.country : "";
               return currency.getByCountry(country);
             });
         }
 
         function _loadCurrentPlan() {
-          if (userState.getSelectedCompanyId()) {
-            _factory.getCompanyPlan(userState.getSelectedCompanyId())
-              .then(function (plan) {
-                _factory.currentPlan = plan;
-                $log.debug("Current plan", plan);
-                $rootScope.$emit("risevision.plan.loaded", plan);
-              })
-              .catch(function (err) {
-                $log.debug("Failed to load company's plan", err);
-              });
+          var company = userState.getCopyOfSelectedCompany();
+          var plan = null;
+
+          if (company.id && company.planProductCode) {
+            plan = _.cloneDeep(_plansByCode[company.planProductCode]);
+            plan.status = company.planSubscriptionStatus;
+            plan.trialPeriod = company.planTrialPeriod;
+          } else {
+            plan = _.cloneDeep(_plansByType.free);
           }
+
+          _factory.currentPlan = plan;
+          $log.debug("Current plan", plan);
+          $rootScope.$emit("risevision.plan.loaded", plan);
         }
 
         _loadCurrentPlan();
