@@ -234,7 +234,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plan-banner.html',
-    '<div><div id="free-plan-banner" class="alert alert-plan plan-active text-right" ng-show="isFree()"><div class="u_margin-right"><strong>Get more out of Rise Vision!</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">See Our Plans</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="isSubscribed()"><div class="u_margin-right"><strong>{{plan.name}} Plan</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="isOnTrial()"><div class="u_margin-right"><strong>You have {{plan.trialPeriod}} days left on your Rise Vision {{plan.name}} Plan trial!</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Subscribe Now</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="isTrialExpired()"><div class="u_margin-right"><strong>Your Rise Vision {{plan.name}} Plan trial has expired!</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Subscribe Now</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="isSuspended()"><div class="u_margin-right">There was an issue processing your payment. Please update your billing information. Your Displays may be affected. <a href="{{storeAccountUrl}}" target="_blank" class="u_margin-left">Update Billing</a></div></div></div>');
+    '<div><div id="free-plan-banner" class="alert alert-plan plan-active text-right" ng-show="isFree()"><div class="u_margin-right"><strong>Get more out of Rise Vision!</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">See Our Plans</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="isSubscribed()"><div class="u_margin-right"><strong>{{plan.name}} Plan</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="isOnTrial()"><div class="u_margin-right"><strong>You have {{plan.trialPeriod}} days left on your Rise Vision {{plan.name}} Plan trial!</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Subscribe Now</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="isTrialExpired()"><div class="u_margin-right"><strong ng-show="!isProSubscribed()">Your Rise Vision {{plan.name}} Plan trial has expired! Your Displays have been set to Standard.</strong> <strong ng-show="isProSubscribed()">Your Rise Vision {{plan.name}} Plan trial has expired!</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Subscribe Now</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="isSuspended()"><div class="u_margin-right">There was an issue processing your payment. Please update your billing information. Your Displays may be affected. <a href="{{storeAccountUrl}}" target="_blank" class="u_margin-left">Update Billing</a></div></div></div>');
 }]);
 })();
 
@@ -1528,6 +1528,10 @@ angular.module("risevision.common.header")
 
       $scope.isSuspended = function () {
         return !$scope.isFree() && $scope.plan.status === "Suspended";
+      };
+
+      $scope.isProSubscribed = function () {
+        return $scope.plan.proStatus === "Subscribed";
       };
     }
   ]);
@@ -9265,6 +9269,7 @@ angular.module("risevision.common.components.plans", [
             plan = _.cloneDeep(_plansByCode[company.planProductCode]);
             plan.status = company.planSubscriptionStatus;
             plan.trialPeriod = company.planTrialPeriod;
+            plan.proStatus = company.playerProSubscriptionStatus;
           } else {
             plan = _.cloneDeep(_plansByType.free);
           }

@@ -135,4 +135,16 @@ describe("controller: plan banner", function() {
       expect($scope.isSuspended()).to.be.false;
     });
   });
+
+  describe("Pro Subscribed status: ", function() {
+    it("should return the Pro subscription status is Subscribed", function() {
+      $scope.plan = { proStatus: "Subscribed" };
+      expect($scope.isProSubscribed()).to.be.true;
+    });
+
+    it("should return the Pro subscription status is not Subscribed", function() {
+      $scope.plan = { proStatus: "Cancelled" };
+      expect($scope.isProSubscribed()).to.be.false;
+    });
+  });
 });

@@ -34,5 +34,9 @@ angular.module("risevision.common.header")
       $scope.isSuspended = function () {
         return !$scope.isFree() && $scope.plan.status === "Suspended";
       };
+
+      $scope.isProSubscribed = function () {
+        return $scope.plan.proStatus === "Subscribed";
+      };
     }
   ]);

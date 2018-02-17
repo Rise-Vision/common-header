@@ -226,6 +226,7 @@ angular.module("risevision.common.components.plans", [
             plan = _.cloneDeep(_plansByCode[company.planProductCode]);
             plan.status = company.planSubscriptionStatus;
             plan.trialPeriod = company.planTrialPeriod;
+            plan.proStatus = company.playerProSubscriptionStatus;
           } else {
             plan = _.cloneDeep(_plansByType.free);
           }

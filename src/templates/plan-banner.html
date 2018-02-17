@@ -23,7 +23,8 @@
 
   <div class="alert alert-plan plan-suspended text-center" ng-show="isTrialExpired()">
     <div class="u_margin-right">
-      <strong>Your Rise Vision {{plan.name}} Plan trial has expired!</strong>
+      <strong ng-show="!isProSubscribed()">Your Rise Vision {{plan.name}} Plan trial has expired! Your Displays have been set to Standard.</strong>
+      <strong ng-show="isProSubscribed()">Your Rise Vision {{plan.name}} Plan trial has expired!</strong>
       <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Subscribe Now</a>
     </div>
   </div>

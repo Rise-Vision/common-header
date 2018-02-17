@@ -103,7 +103,8 @@ describe("Services: plan", function() {
       sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
         id: "companyId",
         planProductCode: BASIC_PLAN_CODE,
-        planSubscriptionStatus: "Subscribed"
+        planSubscriptionStatus: "Subscribed",
+        playerProSubscriptionStatus: "Not Subscribed"
       });
 
       $rootScope.$emit("risevision.company.selectedCompanyChanged");
@@ -114,6 +115,7 @@ describe("Services: plan", function() {
         expect(planFactory.currentPlan).to.be.not.null;
         expect(planFactory.currentPlan.type).to.equal("basic");
         expect(planFactory.currentPlan.status).to.equal("Subscribed");
+        expect(planFactory.currentPlan.proStatus).to.equal("Not Subscribed");
 
         done();
       }, 0);
@@ -125,7 +127,8 @@ describe("Services: plan", function() {
         id: "companyId",
         planProductCode: BASIC_PLAN_CODE,
         planSubscriptionStatus: "On Trial",
-        planTrialPeriod: 23
+        planTrialPeriod: 23,
+        playerProSubscriptionStatus: "Subscribed"
       });
 
       $rootScope.$emit("risevision.company.selectedCompanyChanged");
@@ -137,6 +140,7 @@ describe("Services: plan", function() {
         expect(planFactory.currentPlan.type).to.equal("basic");
         expect(planFactory.currentPlan.status).to.equal("On Trial");
         expect(planFactory.currentPlan.trialPeriod).to.equal(23);
+        expect(planFactory.currentPlan.proStatus).to.equal("Subscribed");
 
         done();
       }, 0);
