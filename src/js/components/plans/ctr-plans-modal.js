@@ -7,6 +7,7 @@ angular.module("risevision.common.components.plans")
     allPlansMap, storeAuthorization) {
 
     $scope.currentPlan = currentPlan;
+    $scope.startTrialError = null;
 
     $scope.getPlansDetails = function () {
       $loading.start("plans-modal");
@@ -82,8 +83,21 @@ angular.module("risevision.common.components.plans")
     };
 
     $scope.startTrial = function (plan) {
-      storeAuthorization.startTrial(plan.productCode);
-      $modalInstance.close();
+      $loading.start("plans-modal");
+      $scope.startTrialError = null;
+
+      storeAuthorization.startTrial(plan.productCode)
+        .then(function () {
+          $modalInstance.close();
+        })
+        .catch(function (err) {
+          $log.debug("Failed to start trial", err);
+          $scope.startTrialError = err;
+        })
+        .finally(function () {
+          $loading.stop("plans-modal");
+        });
+
     };
 
     $scope.dismiss = function () {

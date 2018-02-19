@@ -6,6 +6,9 @@
     <h3 class="modal-title">Choose Your Plan</h3>
   </div>
   <div id="plans-modal" class="modal-body u_padding-lg" stop-event="touchend">
+    <div ng-show="startTrialError" class="alert alert-danger u_margin-xs-bottom">
+      There was an error starting your Plan Trial. Please try again!
+    </div>
     <div class="grid-list row">
       <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="plan in plans">
         <div class="u_cursor_disabled panel panel-default">
