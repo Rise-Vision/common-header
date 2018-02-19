@@ -214,11 +214,7 @@ angular.module("risevision.common.components.plans", [
 
               subscribedPlan.type = _plansByCode[subscribedPlan.pc].type;
 
-              var result = {};
-              result.plan = subscribedPlan;
-              result.allPlansMap = plansMap;
-
-              deferred.resolve(result);
+              deferred.resolve(subscribedPlan);
             })
             .catch(function (err) {
               deferred.reject(err);
@@ -235,9 +231,6 @@ angular.module("risevision.common.components.plans", [
             resolve: {
               currentPlan: function () {
                 return _factory.currentPlan;
-              },
-              allPlansMap: function () {
-                return _factory.allPlansMap;
               }
             }
           });
@@ -258,18 +251,35 @@ angular.module("risevision.common.components.plans", [
         function _loadCurrentPlan() {
           if (userState.getSelectedCompanyId()) {
             _factory.getCompanyPlan(userState.getSelectedCompanyId())
-              .then(function (response) {
-                _factory.currentPlan = response.plan;
-                _factory.allPlansMap = response.allPlansMap;
-                $log.debug("Current plan", response.plan);
-                $log.debug("All plans", response.allPlansMap);
-                $rootScope.$emit("risevision.plan.loaded", response.plan);
+              .then(function (plan) {
+                _factory.currentPlan = plan;
+                $log.debug("Current plan", plan);
+                $rootScope.$emit("risevision.plan.loaded", plan);
               })
               .catch(function (err) {
                 $log.debug("Failed to load company's plan", err);
               });
           }
         }
+
+        _factory.getCompanyPlanStatus = function () {
+          $log.debug("getCompanyPlanStatus called.");
+          var deferred = $q.defer();
+
+          subscriptionStatusService.list(_plansCodesList.slice(1), userState.getSelectedCompanyId())
+            .then(function (resp) {
+              $log.debug("getCompanyPlanStatus response.", resp);
+
+              var plansMap = _.keyBy(resp, "pc");
+
+              deferred.resolve(plansMap);
+            })
+            .catch(function (err) {
+              deferred.reject(err);
+            });
+
+          return deferred.promise;
+        };
 
         _loadCurrentPlan();
 
@@ -299,9 +309,9 @@ angular.module("risevision.common.components.plans")
 
 .controller("PlansModalCtrl", [
   "$scope", "$modalInstance", "$log", "$modal", "$templateCache", "$loading", "planFactory", "currentPlan",
-  "allPlansMap", "storeAuthorization",
+  "storeAuthorization",
   function ($scope, $modalInstance, $log, $modal, $templateCache, $loading, planFactory, currentPlan,
-    allPlansMap, storeAuthorization) {
+    storeAuthorization) {
 
     $scope.currentPlan = currentPlan;
     $scope.startTrialError = null;
@@ -309,12 +319,16 @@ angular.module("risevision.common.components.plans")
     $scope.getPlansDetails = function () {
       $loading.start("plans-modal");
 
-      return planFactory.getPlansDetails()
+      return planFactory.getCompanyPlanStatus()
+        .then(function (allPlansMap) {
+          $scope.allPlansMap = allPlansMap;
+          return planFactory.getPlansDetails();
+        })
         .then(function (plans) {
           $scope.plans = plans;
         })
         .catch(function (err) {
-          $log.debug("Failed to load details", err);
+          $log.debug("Failed to load plans", err);
         })
         .finally(function () {
           $loading.stop("plans-modal");
@@ -361,6 +375,9 @@ angular.module("risevision.common.components.plans")
 
     $scope.canStartTrial = function (plan) {
 
+      console.log(plan);
+      console.log($scope.allPlansMap);
+
       if (currentPlan.subscribed && currentPlan.statusCode !== "on-trial" &&
         currentPlan.statusCode !== "trial-expired") {
 
@@ -370,8 +387,8 @@ angular.module("risevision.common.components.plans")
 
         return false;
 
-      } else if (allPlansMap[plan.productCode] &&
-        allPlansMap[plan.productCode].statusCode === "trial-available") {
+      } else if ($scope.allPlansMap[plan.productCode] &&
+        $scope.allPlansMap[plan.productCode].statusCode === "trial-available") {
 
         return true;
       }

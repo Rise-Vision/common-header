@@ -108,11 +108,7 @@
 
               subscribedPlan.type = _plansByCode[subscribedPlan.pc].type;
 
-              var result = {};
-              result.plan = subscribedPlan;
-              result.allPlansMap = plansMap;
-
-              deferred.resolve(result);
+              deferred.resolve(subscribedPlan);
             })
             .catch(function (err) {
               deferred.reject(err);
@@ -129,9 +125,6 @@
             resolve: {
               currentPlan: function () {
                 return _factory.currentPlan;
-              },
-              allPlansMap: function () {
-                return _factory.allPlansMap;
               }
             }
           });
@@ -152,18 +145,35 @@
         function _loadCurrentPlan() {
           if (userState.getSelectedCompanyId()) {
             _factory.getCompanyPlan(userState.getSelectedCompanyId())
-              .then(function (response) {
-                _factory.currentPlan = response.plan;
-                _factory.allPlansMap = response.allPlansMap;
-                $log.debug("Current plan", response.plan);
-                $log.debug("All plans", response.allPlansMap);
-                $rootScope.$emit("risevision.plan.loaded", response.plan);
+              .then(function (plan) {
+                _factory.currentPlan = plan;
+                $log.debug("Current plan", plan);
+                $rootScope.$emit("risevision.plan.loaded", plan);
               })
               .catch(function (err) {
                 $log.debug("Failed to load company's plan", err);
               });
           }
         }
+
+        _factory.getCompanyPlanStatus = function () {
+          $log.debug("getCompanyPlanStatus called.");
+          var deferred = $q.defer();
+
+          subscriptionStatusService.list(_plansCodesList.slice(1), userState.getSelectedCompanyId())
+            .then(function (resp) {
+              $log.debug("getCompanyPlanStatus response.", resp);
+
+              var plansMap = _.keyBy(resp, "pc");
+
+              deferred.resolve(plansMap);
+            })
+            .catch(function (err) {
+              deferred.reject(err);
+            });
+
+          return deferred.promise;
+        };
 
         _loadCurrentPlan();
 
