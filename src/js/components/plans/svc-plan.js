@@ -32,8 +32,8 @@
       pc: "d521f5bfbc1eef109481eebb79831e11c7804ad8"
     }])
     .factory("planFactory", ["$q", "$log", "$rootScope", "$modal", "$templateCache", "userState", "storeAPILoader",
-      "subscriptionStatusService", "currencyService", "PLANS_LIST",
-      function ($q, $log, $rootScope, $modal, $templateCache, userState, storeAPILoader, subscriptionStatusService,
+      "currencyService", "PLANS_LIST",
+      function ($q, $log, $rootScope, $modal, $templateCache, userState, storeAPILoader,
         currencyService, PLANS_LIST) {
         var _factory = {};
         var _plansByType = _.keyBy(PLANS_LIST, "type");

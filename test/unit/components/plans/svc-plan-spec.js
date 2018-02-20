@@ -44,12 +44,6 @@ describe("Services: plan", function() {
         return deferred.promise;
       };
     });
-    $provide.service("subscriptionStatusService", function () {
-      return {
-        get: function() {},
-        list: function() {}
-      };
-    });
     $provide.service("userState", function () {
       return {
         _restoreState: function () {},
@@ -73,7 +67,7 @@ describe("Services: plan", function() {
     });
   }));
 
-  var sandbox, $rootScope, $modal, userState, planFactory, subscriptionStatusService;
+  var sandbox, $rootScope, $modal, userState, planFactory;
   var BASIC_PLAN_CODE, BASIC_PLAN_ID;
 
   beforeEach(function() {
@@ -84,7 +78,6 @@ describe("Services: plan", function() {
       $modal = $injector.get("$modal");
       userState =  $injector.get("userState");
       planFactory = $injector.get("planFactory");
-      subscriptionStatusService = $injector.get("subscriptionStatusService");
 
       var plansByType = _.keyBy($injector.get("PLANS_LIST"), "type");
 
