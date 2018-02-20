@@ -373,6 +373,7 @@ angular.module("risevision.common.header", [
   "risevision.common.systemmessages", "risevision.core.systemmessages",
   "risevision.core.countries",
   "risevision.core.oauth2",
+  "risevision.store.authorization",
   "risevision.common.geodata",
   "risevision.store.data-gadgets",
   "risevision.core.userprofile",
@@ -391,8 +392,7 @@ angular.module("risevision.common.header", [
   "risevision.common.components.svg",
   "risevision.common.components.plans",
   "risevision.common.support",
-  "risevision.common.email",
-  "risevision.common.store.authorization.services"
+  "risevision.common.email"
 ])
 
 .factory("bindToScopeWithWatch", [
@@ -5275,7 +5275,7 @@ angular.module("risevision.common.monitoring.activity", [
 
 "use strict";
 
-angular.module("risevision.common.store.authorization.services", [
+angular.module("risevision.store.authorization", [
   "risevision.common.gapi"
 ])
   .factory("storeAuthorization", ["$q", "$log", "$http",
@@ -5329,16 +5329,6 @@ angular.module("risevision.common.store.authorization.services", [
       };
 
       return factory;
-    }
-  ])
-  .factory("checkTemplateAccess", ["storeAuthorization", "TEMPLATE_LIBRARY_PRODUCT_CODE",
-    function (storeAuthorization, TEMPLATE_LIBRARY_PRODUCT_CODE) {
-      return function (templateCode) {
-        return storeAuthorization.check(TEMPLATE_LIBRARY_PRODUCT_CODE)
-          .catch(function () {
-            return storeAuthorization.check(templateCode);
-          });
-      };
     }
   ]);
 
@@ -9459,9 +9449,6 @@ angular.module("risevision.common.components.plans")
     };
 
     $scope.canStartTrial = function (plan) {
-
-      console.log(plan);
-      console.log($scope.allPlansMap);
 
       if (currentPlan.subscribed && currentPlan.statusCode !== "on-trial" &&
         currentPlan.statusCode !== "trial-expired") {

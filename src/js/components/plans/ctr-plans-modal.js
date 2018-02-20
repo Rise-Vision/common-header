@@ -68,9 +68,6 @@ angular.module("risevision.common.components.plans")
 
     $scope.canStartTrial = function (plan) {
 
-      console.log(plan);
-      console.log($scope.allPlansMap);
-
       if (currentPlan.subscribed && currentPlan.statusCode !== "on-trial" &&
         currentPlan.statusCode !== "trial-expired") {
 

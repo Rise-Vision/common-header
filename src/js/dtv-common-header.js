@@ -13,6 +13,7 @@ angular.module("risevision.common.header", [
   "risevision.common.systemmessages", "risevision.core.systemmessages",
   "risevision.core.countries",
   "risevision.core.oauth2",
+  "risevision.store.authorization",
   "risevision.common.geodata",
   "risevision.store.data-gadgets",
   "risevision.core.userprofile",
@@ -31,8 +32,7 @@ angular.module("risevision.common.header", [
   "risevision.common.components.svg",
   "risevision.common.components.plans",
   "risevision.common.support",
-  "risevision.common.email",
-  "risevision.common.store.authorization.services"
+  "risevision.common.email"
 ])
 
 .factory("bindToScopeWithWatch", [
