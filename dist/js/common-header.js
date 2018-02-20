@@ -234,7 +234,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plan-banner.html',
-    '<div><div id="free-plan-banner" class="alert alert-plan plan-active text-right" ng-show="plan.type === \'free\'"><div class="u_margin-right"><strong>Get more out of Rise Vision!</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">See Our Plans</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'basic\' && plan.subscribed"><div class="u_margin-right"><strong>Basic Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'advanced\' && plan.subscribed"><div class="u_margin-right"><strong>Advanced Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'enterprise\' && plan.subscribed"><div class="u_margin-right"><strong>Enterprise Plan</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="plan.type === \'enterprisesub\' && plan.subscribed"><div class="u_margin-right"><strong>Enterprise Plan</strong></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="plan.status === \'Suspended\'"><div class="u_margin-right">There was an issue processing your payment. Please update your billing information. Your Displays may be affected. <a href="{{storeAccountUrl}}" target="_blank" class="u_margin-left">Update Billing</a></div></div></div>');
+    '<div><div id="free-plan-banner" class="alert alert-plan plan-active text-right" ng-show="isFree()"><div class="u_margin-right"><strong>Get more out of Rise Vision!</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">See Our Plans</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="isSubscribed()"><div class="u_margin-right"><strong>{{plan.name}} Plan</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="isOnTrial()"><div class="u_margin-right"><strong>You have {{plan.trialPeriod}} days left on your Rise Vision {{plan.name}} Plan trial!</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Subscribe Now</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="isTrialExpired()"><div class="u_margin-right"><strong ng-show="!isProSubscribed()">Your Rise Vision {{plan.name}} Plan trial has expired! Your Displays have been set to Standard.</strong> <strong ng-show="isProSubscribed()">Your Rise Vision {{plan.name}} Plan trial has expired!</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Subscribe Now</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="isSuspended()"><div class="u_margin-right"><strong>There was an issue processing your payment. Please update your billing information. Your Displays may be affected.</strong> <a href="{{storeAccountUrl}}" target="_blank" class="u_margin-left">Update Billing</a></div></div></div>');
 }]);
 })();
 
@@ -1506,6 +1506,34 @@ angular.module("risevision.common.header")
         $scope.companyId = userState.getSelectedCompanyId();
         $scope.storeAccountUrl = STORE_URL + ACCOUNT_PATH.replace("companyId", $scope.companyId);
       });
+
+      $scope.isFree = function () {
+        return $scope.plan.type === "free";
+      };
+
+      $scope.isEnterpriseSubCompany = function () {
+        return $scope.plan.type === "enterprisesub";
+      };
+
+      $scope.isSubscribed = function () {
+        return !$scope.isFree() && $scope.plan.status === "Subscribed";
+      };
+
+      $scope.isOnTrial = function () {
+        return !$scope.isFree() && $scope.plan.status === "On Trial";
+      };
+
+      $scope.isTrialExpired = function () {
+        return !$scope.isFree() && $scope.plan.status === "Trial Expired";
+      };
+
+      $scope.isSuspended = function () {
+        return !$scope.isFree() && $scope.plan.status === "Suspended";
+      };
+
+      $scope.isProSubscribed = function () {
+        return $scope.plan.proStatus === "Subscribed";
+      };
     }
   ]);
 
@@ -9192,28 +9220,31 @@ angular.module("risevision.common.components.plans", [
       priceMonth: 0,
       descriptionShort: "Design, distribute and manage your digital signage for free. Unlimited Displays, Companies and Users."
     }, {
+      name: "Basic",
       type: "basic",
       productId: "289",
       pc: "40c092161f547f8f72c9f173cd8eebcb9ca5dd25"
     }, {
+      name: "Advanced",
       type: "advanced",
       productId: "290",
       pc: "93b5595f0d7e4c04a3baba1102ffaecb17607bf4"
     }, {
+      name: "Enterprise",
       type: "enterprise",
       productId: "301",
       pc: "b1844725d63fde197f5125b58b6cba6260ee7a57"
     }, {
+      name: "Enterprise",
       type: "enterprisesub",
       productId: "303",
       pc: "d521f5bfbc1eef109481eebb79831e11c7804ad8"
     }])
     .factory("planFactory", ["$q", "$log", "$rootScope", "$modal", "$templateCache", "userState", "storeAPILoader",
-      "subscriptionStatusService", "currencyService", "PLANS_LIST",
-      function ($q, $log, $rootScope, $modal, $templateCache, userState, storeAPILoader, subscriptionStatusService,
+      "currencyService", "PLANS_LIST",
+      function ($q, $log, $rootScope, $modal, $templateCache, userState, storeAPILoader,
         currencyService, PLANS_LIST) {
         var _factory = {};
-        var _plansCodesList = _.map(PLANS_LIST, "pc");
         var _plansByType = _.keyBy(PLANS_LIST, "type");
         var _plansByCode = _.keyBy(PLANS_LIST, "pc");
 
@@ -9250,7 +9281,8 @@ angular.module("risevision.common.components.plans", [
                   var priceMap = _.keyBy(plan.pricing, "unit");
                   var price = priceMap[monthKey] || {};
 
-                  plan.type = plan.name.toLowerCase().replace(" plan", "");
+                  plan.name = plan.name.replace(" Plan", "");
+                  plan.type = plan.name.toLowerCase();
                   plan.priceMonth = currency.pickPrice(price.priceUSD, price.priceCAD);
                 });
 
@@ -9259,37 +9291,6 @@ angular.module("risevision.common.components.plans", [
                 // Add free plan, since it's not returned by the service
                 deferred.resolve([_.cloneDeep(_plansByType.free), planMap.basic, planMap.advanced, planMap.enterprise]);
               });
-            })
-            .catch(function (err) {
-              deferred.reject(err);
-            });
-
-          return deferred.promise;
-        };
-
-        _factory.getCompanyPlan = function (companyId) {
-          $log.debug("getCompanyPlan called.");
-          var deferred = $q.defer();
-
-          subscriptionStatusService.list(_plansCodesList.slice(1), companyId)
-            .then(function (resp) {
-              $log.debug("getCompanyPlan response.", resp);
-
-              // Use Free as default
-              var subscribedPlan = _.cloneDeep(_plansByType.free);
-              var plansMap = _.keyBy(resp, "pc");
-
-              _plansCodesList.forEach(function (planCode) {
-                var plan = plansMap[planCode];
-
-                if (plan && ["Subscribed", "Suspended", "On Trial"].indexOf(plan.status) >= 0) {
-                  subscribedPlan = plan;
-                }
-              });
-
-              subscribedPlan.type = _plansByCode[subscribedPlan.pc].type;
-
-              deferred.resolve(subscribedPlan);
             })
             .catch(function (err) {
               deferred.reject(err);
@@ -9317,24 +9318,28 @@ angular.module("risevision.common.components.plans", [
         function _getSelectedCurrency() {
           return currencyService()
             .then(function (currency) {
-              var company = userState.getCopyOfUserCompany();
+              var company = userState.getCopyOfSelectedCompany();
               var country = (company && company.country) ? company.country : "";
               return currency.getByCountry(country);
             });
         }
 
         function _loadCurrentPlan() {
-          if (userState.getSelectedCompanyId()) {
-            _factory.getCompanyPlan(userState.getSelectedCompanyId())
-              .then(function (plan) {
-                _factory.currentPlan = plan;
-                $log.debug("Current plan", plan);
-                $rootScope.$emit("risevision.plan.loaded", plan);
-              })
-              .catch(function (err) {
-                $log.debug("Failed to load company's plan", err);
-              });
+          var company = userState.getCopyOfSelectedCompany();
+          var plan = null;
+
+          if (company.id && company.planProductCode) {
+            plan = _.cloneDeep(_plansByCode[company.planProductCode]);
+            plan.status = company.planSubscriptionStatus;
+            plan.trialPeriod = company.planTrialPeriod;
+            plan.proStatus = company.playerProSubscriptionStatus;
+          } else {
+            plan = _.cloneDeep(_plansByType.free);
           }
+
+          _factory.currentPlan = plan;
+          $log.debug("Current plan", plan);
+          $rootScope.$emit("risevision.plan.loaded", plan);
         }
 
         _factory.getCompanyPlanStatus = function () {
