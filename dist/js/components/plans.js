@@ -209,7 +209,7 @@ angular.module("risevision.common.components.plans", [
             }
           });
           modalInstance.result.then(function (plan) {
-            var selectedCompany = userState.getCopyOfSelectedCompany();
+            var selectedCompany = userState.getCopyOfSelectedCompany(true);
             selectedCompany.planProductCode = plan.productCode;
             selectedCompany.planTrialPeriod = plan.trialPeriod;
             userState.updateCompanySettings(selectedCompany);
@@ -385,7 +385,7 @@ angular.module("risevision.common.components.plans")
 
       storeAuthorization.startTrial(plan.productCode)
         .then(function () {
-          $modalInstance.close();
+          $modalInstance.close(plan);
         })
         .catch(function (err) {
           $log.debug("Failed to start trial", err);

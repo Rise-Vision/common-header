@@ -93,7 +93,7 @@ angular.module("risevision.common.components.plans")
 
       storeAuthorization.startTrial(plan.productCode)
         .then(function () {
-          $modalInstance.close();
+          $modalInstance.close(plan);
         })
         .catch(function (err) {
           $log.debug("Failed to start trial", err);

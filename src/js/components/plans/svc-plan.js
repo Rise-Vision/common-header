@@ -103,7 +103,7 @@
             }
           });
           modalInstance.result.then(function (plan) {
-            var selectedCompany = userState.getCopyOfSelectedCompany();
+            var selectedCompany = userState.getCopyOfSelectedCompany(true);
             selectedCompany.planProductCode = plan.productCode;
             selectedCompany.planTrialPeriod = plan.trialPeriod;
             userState.updateCompanySettings(selectedCompany);
