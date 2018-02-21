@@ -23,6 +23,7 @@ angular.module("risevision.common.header")
 
       });
 
+    // TODO: Deprecate: button currently links to Support Form URL
     $scope.getSupport = function () {
       supportFactory.handleGetSupportAction();
     };
