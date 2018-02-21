@@ -208,8 +208,11 @@ angular.module("risevision.common.components.plans", [
               }
             }
           });
-          modalInstance.result.then(function () {
-            userState.refreshProfile();
+          modalInstance.result.then(function (plan) {
+            var selectedCompany = userState.getCopyOfSelectedCompany();
+            selectedCompany.planProductCode = plan.productCode;
+            selectedCompany.planTrialPeriod = plan.trialPeriod;
+            userState.updateCompanySettings(selectedCompany);
           });
         };
 
@@ -265,6 +268,10 @@ angular.module("risevision.common.components.plans", [
           _loadCurrentPlan();
         });
 
+        $rootScope.$on("risevision.company.updated", function () {
+          _loadCurrentPlan();
+        });
+
         return _factory;
       }
     ]);
@@ -293,13 +300,14 @@ angular.module("risevision.common.components.plans")
 
     $scope.currentPlan = currentPlan;
     $scope.startTrialError = null;
+    var _allPlansMap;
 
-    $scope.getPlansDetails = function () {
+    function _getPlansDetails() {
       $loading.start("plans-modal");
 
       return planFactory.getCompanyPlanStatus()
         .then(function (allPlansMap) {
-          $scope.allPlansMap = allPlansMap;
+          _allPlansMap = allPlansMap;
           return planFactory.getPlansDetails();
         })
         .then(function (plans) {
@@ -311,7 +319,7 @@ angular.module("risevision.common.components.plans")
         .finally(function () {
           $loading.stop("plans-modal");
         });
-    };
+    }
 
     $scope.showDowngradeModal = function () {
       $modal.open({
@@ -362,8 +370,8 @@ angular.module("risevision.common.components.plans")
 
         return false;
 
-      } else if ($scope.allPlansMap[plan.productCode] &&
-        $scope.allPlansMap[plan.productCode].statusCode === "trial-available") {
+      } else if (_allPlansMap[plan.productCode] &&
+        _allPlansMap[plan.productCode].statusCode === "trial-available") {
 
         return true;
       }
@@ -393,9 +401,12 @@ angular.module("risevision.common.components.plans")
       $modalInstance.dismiss("cancel");
     };
 
-    $scope.getPlansDetails();
-  }
+    $scope.init = function () {
+      _getPlansDetails();
+    };
 
+    $scope.init();
+  }
 
 ]);
 

@@ -102,8 +102,11 @@
               }
             }
           });
-          modalInstance.result.then(function () {
-            userState.refreshProfile();
+          modalInstance.result.then(function (plan) {
+            var selectedCompany = userState.getCopyOfSelectedCompany();
+            selectedCompany.planProductCode = plan.productCode;
+            selectedCompany.planTrialPeriod = plan.trialPeriod;
+            userState.updateCompanySettings(selectedCompany);
           });
         };
 
@@ -156,6 +159,10 @@
         _loadCurrentPlan();
 
         $rootScope.$on("risevision.company.selectedCompanyChanged", function () {
+          _loadCurrentPlan();
+        });
+
+        $rootScope.$on("risevision.company.updated", function () {
           _loadCurrentPlan();
         });
 

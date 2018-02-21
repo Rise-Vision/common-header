@@ -26,10 +26,10 @@ describe("controller: plans modal", function() {
     $provide.factory("planFactory", function() {
       return {
         getPlansDetails: function() {
-          return Q.resolve([]);
+          return null;
         },
         getCompanyPlanStatus: function() {
-          return Q.resolve([]);
+          return null;
         }
       };
     });
@@ -47,7 +47,7 @@ describe("controller: plans modal", function() {
     });
   }));
 
-  var sandbox, $scope, $modalInstance, $modal, $loading, $log, planFactory, currentPlan;
+  var sandbox, $scope, $modalInstance, $modal, $loading, $log, planFactory, currentPlan, $q;
   var storeAuthorization;
   var BASIC_PLAN_CODE, ADVANCED_PLAN_CODE;
 
@@ -62,18 +62,22 @@ describe("controller: plans modal", function() {
       $log = $injector.get("$log");
       planFactory = $injector.get("planFactory");
       storeAuthorization = $injector.get("storeAuthorization");
+      $q = $injector.get("$q");
       currentPlan = {};
 
-      sandbox.spy(planFactory, "getCompanyPlanStatus");
-      sandbox.spy(planFactory, "getPlansDetails");
+      sandbox.stub(planFactory, "getPlansDetails", function(){
+        $q.when();
+      });
 
       var plansByType = _.keyBy($injector.get("PLANS_LIST"), "type");
 
       BASIC_PLAN_CODE = plansByType.basic.pc;
       ADVANCED_PLAN_CODE = plansByType.advanced.pc;
 
-      $scope.allPlansMap = _.keyBy([{pc: BASIC_PLAN_CODE, statusCode: "trial-available"},
-        {pc: ADVANCED_PLAN_CODE, statusCode: "subscribed"}], "pc");
+      sandbox.stub(planFactory, "getCompanyPlanStatus", function() {
+        return $q.when(_.keyBy([{pc: BASIC_PLAN_CODE, statusCode: "trial-available"},
+          {pc: ADVANCED_PLAN_CODE, statusCode: "subscribed"}], "pc"));
+      });
 
       $controller("PlansModalCtrl", {
         $scope: $scope,
@@ -95,25 +99,19 @@ describe("controller: plans modal", function() {
 
   it("should initialize",function() {
     expect($scope.currentPlan).to.be.ok;
-    expect($scope.getPlansDetails).to.be.a.function;
     expect($scope.showDowngradeModal).to.be.a.function;
     expect($scope.canUpgrade).to.be.a.function;
     expect($scope.canDowngrade).to.be.a.function;
     expect($scope.dismiss).to.be.a.function;
 
     expect(planFactory.getCompanyPlanStatus).to.have.been.called;
+    expect(planFactory.getPlansDetails).to.have.been.called;
   });
 
   it("should load plans details", function() {
-    $scope.plans = null;
-
-    return $scope.getPlansDetails()
-    .then(function() {
-      expect($scope.plans).to.be.not.null;
-      expect($scope.allPlansMap).to.be.not.null;
-      expect($loading.start).to.have.been.called;
-      expect($loading.stop).to.have.been.called;
-    });
+    expect($scope.plans).to.be.not.null;
+    expect($loading.start).to.have.been.called;
+    expect($loading.stop).to.have.been.called;
   });
 
   it("should show downgrade modal", function() {
@@ -207,8 +205,6 @@ describe("controller: plans modal", function() {
 
     it("should be able to start trial on trial-available status", function() {
       currentPlan.type = "free";
-
-      
 
       expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE })).to.be.true;
     });
