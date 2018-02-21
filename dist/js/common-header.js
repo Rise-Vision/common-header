@@ -1519,7 +1519,7 @@ angular.module("risevision.common.header")
       };
 
       $scope.isOnTrial = function () {
-        return !$scope.isFree() && $scope.plan.status === "On Trial";
+        return !$scope.isFree() && $scope.plan.status === "Trial";
       };
 
       $scope.isTrialExpired = function () {
