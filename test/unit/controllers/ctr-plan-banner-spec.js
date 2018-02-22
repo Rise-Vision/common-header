@@ -102,7 +102,7 @@ describe("controller: plan banner", function() {
 
   describe("On Trial status: ", function() {
     it("should return the subscription status is On Trial", function() {
-      $scope.plan = { status: "On Trial" };
+      $scope.plan = { status: "Trial" };
       expect($scope.isOnTrial()).to.be.true;
     });
 
