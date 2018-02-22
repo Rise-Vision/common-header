@@ -132,7 +132,7 @@ describe("Services: plan", function() {
       sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
         id: "companyId",
         planProductCode: BASIC_PLAN_CODE,
-        planSubscriptionStatus: "On Trial",
+        planSubscriptionStatus: "Trial",
         planTrialPeriod: 23,
         playerProSubscriptionStatus: "Subscribed"
       });
@@ -144,7 +144,7 @@ describe("Services: plan", function() {
         expect($rootScope.$emit).to.have.been.called;
         expect(planFactory.currentPlan).to.be.not.null;
         expect(planFactory.currentPlan.type).to.equal("basic");
-        expect(planFactory.currentPlan.status).to.equal("On Trial");
+        expect(planFactory.currentPlan.status).to.equal("Trial");
         expect(planFactory.currentPlan.trialPeriod).to.equal(23);
         expect(planFactory.currentPlan.proStatus).to.equal("Subscribed");
 
