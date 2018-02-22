@@ -9403,7 +9403,7 @@ angular.module("risevision.common.components.plans")
 
     $scope.currentPlan = currentPlan;
     $scope.startTrialError = null;
-    var _allPlansMap;
+    var _allPlansMap = {};
 
     function _getPlansDetails() {
       $loading.start("plans-modal");
