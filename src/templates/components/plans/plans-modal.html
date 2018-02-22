@@ -6,6 +6,9 @@
     <h3 class="modal-title">Choose Your Plan</h3>
   </div>
   <div id="plans-modal" class="modal-body u_padding-lg" stop-event="touchend">
+    <div ng-show="startTrialError" class="alert alert-danger u_margin-xs-bottom">
+      There was an error starting your Plan Trial. Please try again!
+    </div>
     <div class="grid-list row">
       <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="plan in plans">
         <div class="u_cursor_disabled panel panel-default">
@@ -20,9 +23,12 @@
               <a id="current-plan" ng-show="currentPlan.type === plan.type"
                  target="_blank"
                  class="cta_button btn btn-white u_margin-lg">Current Plan</a>
-              <a id="subscribe-plan" ng-show="canUpgrade(plan)"
+              <a id="subscribe-plan" ng-show="canUpgrade(plan) && !canStartTrial(plan)"
                  target="_blank" href="https://store.risevision.com/product/{{plan.productId}}"
                  class="cta_button btn btn-primary u_margin-lg">Subscribe</a>
+              <a id="start-trial-plan" ng-show="canStartTrial(plan)"
+                 target="_blank" ng-click="startTrial(plan)"
+                 class="cta_button btn btn-primary u_margin-lg">Start Trial</a>
               <a id="downgrade-plan" ng-show="canDowngrade(plan)" ng-click="showDowngradeModal()"
                  class="cta_button btn btn-default u_margin-lg">Downgrade</a>
             </div>

@@ -13,6 +13,7 @@ angular.module("risevision.common.header", [
   "risevision.common.systemmessages", "risevision.core.systemmessages",
   "risevision.core.countries",
   "risevision.core.oauth2",
+  "risevision.store.authorization",
   "risevision.common.geodata",
   "risevision.store.data-gadgets",
   "risevision.core.userprofile",

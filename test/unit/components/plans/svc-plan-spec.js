@@ -11,7 +11,7 @@ describe("Services: plan", function() {
     $provide.service("$q", function() {return Q;});
     $provide.service("$modal", function() {
       return {
-        open: sinon.stub()
+        open: sinon.stub().returns({result: Q.defer().promise })
       };
     });
     $provide.service("storeAPILoader", function () {
@@ -44,9 +44,18 @@ describe("Services: plan", function() {
         return deferred.promise;
       };
     });
+    $provide.service("subscriptionStatusService", function () {
+      return {
+        get: function() {},
+        list: function() {}
+      };
+    });
     $provide.service("userState", function () {
       return {
         _restoreState: function () {},
+        getSelectedCompanyId: function () {
+          return null;
+        },
         getCopyOfSelectedCompany: function() {
           return {};
         }
@@ -67,8 +76,8 @@ describe("Services: plan", function() {
     });
   }));
 
-  var sandbox, $rootScope, $modal, userState, planFactory;
-  var BASIC_PLAN_CODE, BASIC_PLAN_ID;
+  var sandbox, $rootScope, $modal, userState, planFactory, subscriptionStatusService;
+  var BASIC_PLAN_CODE, BASIC_PLAN_ID, ADVANCED_PLAN_CODE, ENTERPRISE_PLAN_CODE;
 
   beforeEach(function() {
     sandbox = sinon.sandbox.create();
@@ -78,11 +87,14 @@ describe("Services: plan", function() {
       $modal = $injector.get("$modal");
       userState =  $injector.get("userState");
       planFactory = $injector.get("planFactory");
+      subscriptionStatusService = $injector.get("subscriptionStatusService");
 
       var plansByType = _.keyBy($injector.get("PLANS_LIST"), "type");
 
       BASIC_PLAN_CODE = plansByType.basic.pc;
       BASIC_PLAN_ID = plansByType.basic.productId;
+      ADVANCED_PLAN_CODE = plansByType.advanced.pc;
+      ENTERPRISE_PLAN_CODE = plansByType.enterprise.pc;
     });
   });
 
@@ -93,6 +105,7 @@ describe("Services: plan", function() {
   describe("initialization", function() {
     it("should load the current plan when selected company changes", function(done) {
       sandbox.spy($rootScope, "$emit");
+      sandbox.stub(userState, "getSelectedCompanyId").returns("companyId");
       sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
         id: "companyId",
         planProductCode: BASIC_PLAN_CODE,
@@ -234,6 +247,25 @@ describe("Services: plan", function() {
       .catch(function(err) {
         expect(planFactory.getPlans).to.have.been.called;
         expect(err.error).to.be.ok;
+        done();
+      });
+    });
+  });
+
+  describe("getCompanyPlanStatus: ", function() {
+    var companyId = "testCompanyId";
+    
+    it("should return populated planMap", function(done) {
+      sandbox.stub(subscriptionStatusService, "list").returns(Q.resolve([
+        { pc: BASIC_PLAN_CODE, status: "Subscribed" },
+        { pc: ADVANCED_PLAN_CODE, status: "Not Subscribed" },
+        { pc: ENTERPRISE_PLAN_CODE, status: "Suspended" }
+      ]));
+      planFactory.getCompanyPlanStatus(companyId)
+      .then(function(allPlansMap) {
+        expect(allPlansMap[BASIC_PLAN_CODE].status).to.equal("Subscribed");
+        expect(allPlansMap[ADVANCED_PLAN_CODE].status).to.equal("Not Subscribed");
+        expect(allPlansMap[ENTERPRISE_PLAN_CODE].status).to.equal("Suspended");
         done();
       });
     });

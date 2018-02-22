@@ -2,23 +2,32 @@ angular.module("risevision.common.components.plans")
 
 .controller("PlansModalCtrl", [
   "$scope", "$modalInstance", "$log", "$modal", "$templateCache", "$loading", "planFactory", "currentPlan",
-  function ($scope, $modalInstance, $log, $modal, $templateCache, $loading, planFactory, currentPlan) {
-    $scope.currentPlan = currentPlan;
+  "storeAuthorization",
+  function ($scope, $modalInstance, $log, $modal, $templateCache, $loading, planFactory, currentPlan,
+    storeAuthorization) {
 
-    $scope.getPlansDetails = function () {
+    $scope.currentPlan = currentPlan;
+    $scope.startTrialError = null;
+    var _allPlansMap = {};
+
+    function _getPlansDetails() {
       $loading.start("plans-modal");
 
-      return planFactory.getPlansDetails()
+      return planFactory.getCompanyPlanStatus()
+        .then(function (allPlansMap) {
+          _allPlansMap = allPlansMap;
+          return planFactory.getPlansDetails();
+        })
         .then(function (plans) {
           $scope.plans = plans;
         })
         .catch(function (err) {
-          $log.debug("Failed to load details", err);
+          $log.debug("Failed to load plans", err);
         })
         .finally(function () {
           $loading.stop("plans-modal");
         });
-    };
+    }
 
     $scope.showDowngradeModal = function () {
       $modal.open({
@@ -58,12 +67,53 @@ angular.module("risevision.common.components.plans")
       return false;
     };
 
+    $scope.canStartTrial = function (plan) {
+
+      if (currentPlan.subscribed && currentPlan.statusCode !== "on-trial" &&
+        currentPlan.statusCode !== "trial-expired") {
+
+        return false;
+
+      } else if (currentPlan.type === plan.type) {
+
+        return false;
+
+      } else if (_allPlansMap[plan.productCode] &&
+        _allPlansMap[plan.productCode].statusCode === "trial-available") {
+
+        return true;
+      }
+
+      return false;
+    };
+
+    $scope.startTrial = function (plan) {
+      $loading.start("plans-modal");
+      $scope.startTrialError = null;
+
+      storeAuthorization.startTrial(plan.productCode)
+        .then(function () {
+          $modalInstance.close(plan);
+        })
+        .catch(function (err) {
+          $log.debug("Failed to start trial", err);
+          $scope.startTrialError = err;
+        })
+        .finally(function () {
+          $loading.stop("plans-modal");
+        });
+
+    };
+
     $scope.dismiss = function () {
       $modalInstance.dismiss("cancel");
     };
 
-    $scope.getPlansDetails();
-  }
+    $scope.init = function () {
+      _getPlansDetails();
+    };
 
+    $scope.init();
+  }
 
 ]);
