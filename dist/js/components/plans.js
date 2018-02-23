@@ -113,7 +113,7 @@ angular.module("risevision.common.components.plans", [
       type: "free",
       productId: "000",
       pc: "000",
-      status: "Subscribed",
+      status: "Active",
       priceMonth: 0,
       descriptionShort: "Design, distribute and manage your digital signage for free. Unlimited Displays, Companies and Users."
     }, {
