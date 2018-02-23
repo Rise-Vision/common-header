@@ -20,7 +20,7 @@ angular.module("risevision.common.header")
       };
 
       $scope.isSubscribed = function () {
-        return !$scope.isFree() && $scope.plan.status === "Subscribed";
+        return !$scope.isFree() && $scope.plan.status === "Active";
       };
 
       $scope.isOnTrial = function () {
@@ -36,7 +36,7 @@ angular.module("risevision.common.header")
       };
 
       $scope.isProSubscribed = function () {
-        return $scope.plan.proStatus === "Subscribed";
+        return $scope.plan.proStatus === "Active";
       };
     }
   ]);
