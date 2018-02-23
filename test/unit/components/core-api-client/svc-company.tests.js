@@ -67,6 +67,21 @@ describe("Services: Company Core API Service", function() {
                   }, 0);
                 }
               };
+            },
+            enableProduct: function (obj) {
+              return {
+                execute: function(callback) {
+                  if (obj.id) {
+                    expect(obj.id).to.be.ok;
+                    expect(obj.productCode).to.be.ok;
+                    expect(obj.data).to.be.ok;
+                    callback({ result: "Ok" });
+                  }
+                  else {
+                    callback({});
+                  }
+                }
+              };
             }
           }
         });
@@ -146,11 +161,12 @@ describe("Services: Company Core API Service", function() {
   
   
   // Old services:
-  var companyService;
+  var companyService, enableCompanyProduct;
   
   beforeEach(function() {
     inject(function($injector){
       companyService = $injector.get("companyService");
+      enableCompanyProduct = $injector.get("enableCompanyProduct");
     });
   });
 
@@ -202,6 +218,22 @@ describe("Services: Company Core API Service", function() {
         expect(result).to.deep.equal(rvFixtures.companiesResp.items[0]);
         done();
       }, function (err) {throw err; });
+    });
+  });
+
+  describe("enableCompanyProduct", function() {
+    it("should enable a product", function (done) {
+      enableCompanyProduct("companyId", "productCode", { "displayId": true })
+      .then(function () {
+        done();
+      });
+    });
+
+    it("should fail to enable a product", function (done) {
+      enableCompanyProduct()
+      .catch(function () {
+        done();
+      });
     });
   });
 
