@@ -99,6 +99,9 @@
             resolve: {
               currentPlan: function () {
                 return _factory.currentPlan;
+              },
+              showRPPLink: function () {
+                return false;
               }
             }
           });
