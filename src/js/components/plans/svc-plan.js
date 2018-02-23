@@ -91,7 +91,7 @@
           return deferred.promise;
         };
 
-        _factory.showPlansModal = function () {
+        _factory.showPlansModal = function (showRPPLink) {
           var modalInstance = $modal.open({
             template: $templateCache.get("plans/plans-modal.html"),
             controller: "PlansModalCtrl",
@@ -101,7 +101,7 @@
                 return _factory.currentPlan;
               },
               showRPPLink: function () {
-                return false;
+                return showRPPLink;
               }
             }
           });

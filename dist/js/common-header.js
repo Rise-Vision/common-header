@@ -9301,7 +9301,7 @@ angular.module("risevision.common.components.plans", [
           return deferred.promise;
         };
 
-        _factory.showPlansModal = function () {
+        _factory.showPlansModal = function (showRPPLink) {
           var modalInstance = $modal.open({
             template: $templateCache.get("plans/plans-modal.html"),
             controller: "PlansModalCtrl",
@@ -9311,7 +9311,7 @@ angular.module("risevision.common.components.plans", [
                 return _factory.currentPlan;
               },
               showRPPLink: function () {
-                return false;
+                return showRPPLink;
               }
             }
           });
