@@ -568,7 +568,6 @@ angular.module("risevision.common.core.endpoint", [
         var deferred = $q.defer();
 
         $log.debug("enableCompanyProduct called", companyId, productCode, displayStatusMap);
-        console.log("enableCompanyProduct called", companyId, productCode, displayStatusMap);
 
         coreAPILoader().then(function (coreApi) {
           var request = coreApi.company.enableProduct({
