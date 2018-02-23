@@ -217,7 +217,7 @@ describe("controller: plans modal", function() {
 
     it("should not be able to start trial if current plan is Subscribed", function() {
       currentPlan.type = "enterprise";
-      currentPlan.subscribed = true;
+      currentPlan.planSubscriptionStatus = "Active";
 
       expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE })).to.be.false;
       expect($scope.canStartTrial({ type: "advanced", productCode: ADVANCED_PLAN_CODE })).to.be.false;
@@ -225,16 +225,14 @@ describe("controller: plans modal", function() {
 
     it("should be able to start trial if current plan is Subscribed but status is on trial", function() {
       currentPlan.type = "free";
-      currentPlan.subscribed = true;
-      currentPlan.statusCode = "on-trial";
+      currentPlan.planSubscriptionStatus = "Trial";
 
       expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE })).to.be.true;
     });
 
     it("should be able to start trial if current plan is Subscribed but status is on trial expired", function() {
       currentPlan.type = "free";
-      currentPlan.subscribed = true;
-      currentPlan.statusCode = "trial-expired";
+      currentPlan.planSubscriptionStatus = "Trial Expired";
 
       expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE })).to.be.true;
     });
