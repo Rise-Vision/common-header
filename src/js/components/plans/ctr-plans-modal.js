@@ -41,8 +41,18 @@ angular.module("risevision.common.components.plans")
       });
     };
 
+    $scope.isCurrentPlan = function (plan) {
+      return currentPlan.type === plan.type;
+    };
+
+    $scope.isOnTrial = function (plan) {
+      return _allPlansMap[plan.productCode] && _allPlansMap[plan.productCode].statusCode === "on-trial";
+    };
+
     $scope.canUpgrade = function (plan) {
-      if (currentPlan.type === plan.type) {
+      if ($scope.canStartTrial(plan)) {
+        return false;
+      } else if (currentPlan.type === plan.type) {
         return false;
       } else if (currentPlan.type === "enterprise") {
         return false;
@@ -58,7 +68,9 @@ angular.module("risevision.common.components.plans")
     };
 
     $scope.canDowngrade = function (plan) {
-      if (currentPlan.type === plan.type) {
+      if ($scope.canStartTrial(plan)) {
+        return false;
+      } else if (currentPlan.type === plan.type) {
         return false;
       } else if (currentPlan.type === "enterprise") {
         return true;
@@ -72,19 +84,12 @@ angular.module("risevision.common.components.plans")
     };
 
     $scope.canStartTrial = function (plan) {
-
-      if (currentPlan.subscribed && currentPlan.statusCode !== "on-trial" &&
-        currentPlan.statusCode !== "trial-expired") {
-
+      if (currentPlan.planSubscriptionStatus === "Active") {
         return false;
-
       } else if (currentPlan.type === plan.type) {
-
         return false;
-
       } else if (_allPlansMap[plan.productCode] &&
         _allPlansMap[plan.productCode].statusCode === "trial-available") {
-
         return true;
       }
 
