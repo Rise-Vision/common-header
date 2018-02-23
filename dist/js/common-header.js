@@ -4958,6 +4958,34 @@ angular.module("risevision.common.core.endpoint", [
     }
   ])
 
+  .factory("enableCompanyProduct", ["$q", "$log", "coreAPILoader",
+    function ($q, $log, coreAPILoader) {
+      return function (companyId, productCode, displayStatusMap) {
+        var deferred = $q.defer();
+
+        $log.debug("enableCompanyProduct called", companyId, productCode, displayStatusMap);
+
+        coreAPILoader().then(function (coreApi) {
+          var request = coreApi.company.enableProduct({
+            id: companyId,
+            productCode: productCode,
+            data: displayStatusMap
+          });
+          request.execute(function (resp) {
+            $log.debug("enableCompanyProduct resp", resp);
+            if (resp.result) {
+              deferred.resolve(resp);
+            } else {
+              deferred.reject(resp);
+            }
+          });
+        });
+
+        return deferred.promise;
+      };
+    }
+  ])
+
   .filter("fullAddress", function () {
     return function (company) {
       var res = (company.street ? company.street + ", " : "") +
@@ -9219,27 +9247,32 @@ angular.module("risevision.common.components.plans", [
       pc: "000",
       status: "Active",
       priceMonth: 0,
-      descriptionShort: "Design, distribute and manage your digital signage for free. Unlimited Displays, Companies and Users."
+      descriptionShort: "Design, distribute and manage your digital signage for free. Unlimited Displays, Companies and Users.",
+      proLicenseCount: 0
     }, {
       name: "Basic",
       type: "basic",
       productId: "289",
-      pc: "40c092161f547f8f72c9f173cd8eebcb9ca5dd25"
+      pc: "40c092161f547f8f72c9f173cd8eebcb9ca5dd25",
+      proLicenseCount: 2
     }, {
       name: "Advanced",
       type: "advanced",
       productId: "290",
-      pc: "93b5595f0d7e4c04a3baba1102ffaecb17607bf4"
+      pc: "93b5595f0d7e4c04a3baba1102ffaecb17607bf4",
+      proLicenseCount: 9
     }, {
       name: "Enterprise",
       type: "enterprise",
       productId: "301",
-      pc: "b1844725d63fde197f5125b58b6cba6260ee7a57"
+      pc: "b1844725d63fde197f5125b58b6cba6260ee7a57",
+      proLicenseCount: 50
     }, {
       name: "Enterprise",
       type: "enterprisesub",
       productId: "303",
-      pc: "d521f5bfbc1eef109481eebb79831e11c7804ad8"
+      pc: "d521f5bfbc1eef109481eebb79831e11c7804ad8",
+      proLicenseCount: 0
     }])
     .factory("planFactory", ["$q", "$log", "$rootScope", "$modal", "$templateCache", "userState", "storeAPILoader",
       "currencyService", "PLANS_LIST", "subscriptionStatusService",
@@ -9319,6 +9352,9 @@ angular.module("risevision.common.components.plans", [
             var selectedCompany = userState.getCopyOfSelectedCompany(true);
             selectedCompany.planProductCode = plan.productCode;
             selectedCompany.planTrialPeriod = plan.trialPeriod;
+            selectedCompany.planSubscriptionStatus = "Trial";
+            selectedCompany.planPlayerProLicenseCount = _plansByCode[plan.productCode].proLicenseCount;
+
             userState.updateCompanySettings(selectedCompany);
           });
         };

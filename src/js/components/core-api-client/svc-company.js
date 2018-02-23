@@ -303,6 +303,34 @@
     }
   ])
 
+  .factory("enableCompanyProduct", ["$q", "$log", "coreAPILoader",
+    function ($q, $log, coreAPILoader) {
+      return function (companyId, productCode, displayStatusMap) {
+        var deferred = $q.defer();
+
+        $log.debug("enableCompanyProduct called", companyId, productCode, displayStatusMap);
+
+        coreAPILoader().then(function (coreApi) {
+          var request = coreApi.company.enableProduct({
+            id: companyId,
+            productCode: productCode,
+            data: displayStatusMap
+          });
+          request.execute(function (resp) {
+            $log.debug("enableCompanyProduct resp", resp);
+            if (resp.result) {
+              deferred.resolve(resp);
+            } else {
+              deferred.reject(resp);
+            }
+          });
+        });
+
+        return deferred.promise;
+      };
+    }
+  ])
+
   .filter("fullAddress", function () {
     return function (company) {
       var res = (company.street ? company.street + ", " : "") +
