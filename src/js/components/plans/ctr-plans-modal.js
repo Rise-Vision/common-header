@@ -1,13 +1,17 @@
 angular.module("risevision.common.components.plans")
 
 .controller("PlansModalCtrl", [
-  "$scope", "$modalInstance", "$log", "$modal", "$templateCache", "$loading", "planFactory", "currentPlan",
-  "storeAuthorization",
-  function ($scope, $modalInstance, $log, $modal, $templateCache, $loading, planFactory, currentPlan,
-    storeAuthorization) {
+  "$scope", "$modalInstance", "$log", "$modal", "$templateCache", "$loading",
+  "planFactory", "currentPlan", "storeAuthorization", "showRPPLink", "userState",
+  function ($scope, $modalInstance, $log, $modal, $templateCache, $loading,
+    planFactory, currentPlan, storeAuthorization, showRPPLink, userState) {
 
     $scope.currentPlan = currentPlan;
     $scope.startTrialError = null;
+    $scope.showRPPLink = showRPPLink;
+    var company = userState.getCopyOfSelectedCompany();
+    $scope.playerProSubscriptionId = company.playerProSubscriptionId;
+    $scope.companyId = company.id;
     var _allPlansMap = {};
 
     function _getPlansDetails() {

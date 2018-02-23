@@ -37,10 +37,22 @@
       </div><!-- end products plan -->
     </div> <!-- end Grid List -->
 
-    <div class="text-center u_margin-md-top">
+    <div ng-show="!showRPPLink" class="text-center u_margin-md-top">
       <a class="btn btn-link btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/pricing?utm_campaign=apps">Learn More About Our Plan Pricing</a>
       <span class="bold">OR</span>
       <a class="btn btn-link btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/contact-us">Contact Sales If You Need Help</a>
+    </div>
+    <div ng-show="showRPPLink && !playerProSubscriptionId" class="text-center u_margin-md-top">
+      <a class="btn btn-link btn-lg" target="_blank" href="https://store.risevision.com/product/2048">
+        No need for a Plan upgrade right now? You can get individual Professional Display licenses
+      </a>
+      <a class="cta_button btn btn-primary u_margin-lg" target="_blank" href="https://store.risevision.com/product/2048">Go To Store</a>
+    </div>
+    <div ng-show="showRPPLink && playerProSubscriptionId" class="text-center u_margin-md-top">
+      <a class="btn btn-link btn-lg" target="_blank" href="https://store.risevision.com/account/subscription/{{playerProSubscriptionId}}?cid={{companyId}}">
+        No need for a Plan upgrade right now? You can get individual Professional Display licenses
+      </a>
+      <a class="cta_button btn btn-primary u_margin-lg" target="_blank" href="https://store.risevision.com/account/subscription/{{playerProSubscriptionId}}?cid={{companyId}}">Go To Store</a>
     </div>
 
   </div> <!-- //Modal Body -->
