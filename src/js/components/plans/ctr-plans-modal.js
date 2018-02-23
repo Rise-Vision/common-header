@@ -37,6 +37,14 @@ angular.module("risevision.common.components.plans")
       });
     };
 
+    $scope.isCurrentPlan = function (plan) {
+      return currentPlan.type === plan.type;
+    };
+
+    $scope.isOnTrial = function (plan) {
+      return _allPlansMap[plan.productCode] && _allPlansMap[plan.productCode].statusCode === "on-trial";
+    };
+
     $scope.canUpgrade = function (plan) {
       if ($scope.canStartTrial(plan)) {
         return false;
