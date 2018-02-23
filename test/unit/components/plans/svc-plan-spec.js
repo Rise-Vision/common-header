@@ -165,7 +165,7 @@ describe("Services: plan", function() {
         expect($rootScope.$emit).to.have.been.called;
         expect(planFactory.currentPlan).to.be.not.null;
         expect(planFactory.currentPlan.type).to.equal("free");
-        expect(planFactory.currentPlan.status).to.equal("Subscribed");
+        expect(planFactory.currentPlan.status).to.equal("Active");
 
         done();
       }, 0);

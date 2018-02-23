@@ -90,7 +90,7 @@ describe("controller: plan banner", function() {
 
   describe("Subscribed status: ", function() {
     it("should return the subscription status is Subscribed", function() {
-      $scope.plan = { status: "Subscribed" };
+      $scope.plan = { status: "Active" };
       expect($scope.isSubscribed()).to.be.true;
     });
 
@@ -138,7 +138,7 @@ describe("controller: plan banner", function() {
 
   describe("Pro Subscribed status: ", function() {
     it("should return the Pro subscription status is Subscribed", function() {
-      $scope.plan = { proStatus: "Subscribed" };
+      $scope.plan = { proStatus: "Active" };
       expect($scope.isProSubscribed()).to.be.true;
     });
 

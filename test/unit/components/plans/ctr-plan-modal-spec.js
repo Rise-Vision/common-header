@@ -33,6 +33,16 @@ describe("controller: plans modal", function() {
         }
       };
     });
+    $provide.factory("userState", function() {
+      return {
+        getCopyOfSelectedCompany: function() {
+          return {
+            playerProSubscriptionId: "playerProSubscriptionId",
+            id: "companyId"
+          };
+        }
+      };
+    });
     $provide.service("$modal", function() {
       return {
         open: sinon.stub()
@@ -48,7 +58,7 @@ describe("controller: plans modal", function() {
   }));
 
   var sandbox, $scope, $modalInstance, $modal, $loading, $log, planFactory, currentPlan, $q;
-  var storeAuthorization;
+  var storeAuthorization, userState;
   var BASIC_PLAN_CODE, ADVANCED_PLAN_CODE;
 
   beforeEach(function() {
@@ -63,6 +73,7 @@ describe("controller: plans modal", function() {
       planFactory = $injector.get("planFactory");
       storeAuthorization = $injector.get("storeAuthorization");
       $q = $injector.get("$q");
+      userState = $injector.get("userState");
       currentPlan = {};
 
       sandbox.stub(planFactory, "getPlansDetails", function(){
@@ -86,7 +97,9 @@ describe("controller: plans modal", function() {
         $loading: $loading,
         planFactory: planFactory,
         currentPlan: currentPlan,
-        storeAuthorization: storeAuthorization
+        storeAuthorization: storeAuthorization,
+        showRPPLink: false,
+        userState: userState
       });
 
       $scope.$digest();
@@ -103,6 +116,9 @@ describe("controller: plans modal", function() {
     expect($scope.canUpgrade).to.be.a.function;
     expect($scope.canDowngrade).to.be.a.function;
     expect($scope.dismiss).to.be.a.function;
+
+    expect($scope.playerProSubscriptionId).to.be.equal("playerProSubscriptionId");
+    expect($scope.companyId).to.be.equal("companyId");
 
     expect(planFactory.getCompanyPlanStatus).to.have.been.called;
     expect(planFactory.getPlansDetails).to.have.been.called;
@@ -217,7 +233,7 @@ describe("controller: plans modal", function() {
 
     it("should not be able to start trial if current plan is Subscribed", function() {
       currentPlan.type = "enterprise";
-      currentPlan.subscribed = true;
+      currentPlan.planSubscriptionStatus = "Active";
 
       expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE })).to.be.false;
       expect($scope.canStartTrial({ type: "advanced", productCode: ADVANCED_PLAN_CODE })).to.be.false;
@@ -225,16 +241,14 @@ describe("controller: plans modal", function() {
 
     it("should be able to start trial if current plan is Subscribed but status is on trial", function() {
       currentPlan.type = "free";
-      currentPlan.subscribed = true;
-      currentPlan.statusCode = "on-trial";
+      currentPlan.planSubscriptionStatus = "Trial";
 
       expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE })).to.be.true;
     });
 
     it("should be able to start trial if current plan is Subscribed but status is on trial expired", function() {
       currentPlan.type = "free";
-      currentPlan.subscribed = true;
-      currentPlan.statusCode = "trial-expired";
+      currentPlan.planSubscriptionStatus = "Trial Expired";
 
       expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE })).to.be.true;
     });
