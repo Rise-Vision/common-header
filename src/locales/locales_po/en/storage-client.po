@@ -265,11 +265,8 @@ msgstr "{{count}} Selected"
 msgid "start-trial.cta"
 msgstr "Start Your Free Trial"
 
-msgid "start-trial.free-30-days"
-msgstr "Free 30 days trial. No credit card required."
-
-msgid "start-trial.price"
-msgstr "$10 per Company per Month."
+msgid "start-trial.free-trial"
+msgstr "Included as part of our plan packages along with many more great features"
 
 msgid "start-trial.tagline"
 msgstr "Manage and deliver media to your digital signage displays, anywhere, anytime."
