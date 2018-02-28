@@ -109,8 +109,7 @@
   "selected-items": "{{count}} Selected",
   "start-trial": {
     "cta": "Start Your Free Trial",
-    "free-30-days": "Free 30 days trial. No credit card required.",
-    "price": "$10 per Company per Month.",
+    "free-trial": "Included as part of our plan packages along with many more great features",
     "tagline": "Manage and deliver media to your digital signage displays, anywhere, anytime."
   },
   "title": "Rise Vision Storage",

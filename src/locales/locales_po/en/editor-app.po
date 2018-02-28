@@ -383,7 +383,7 @@ msgid "subscription.viewAccount"
 msgstr "View Account"
 
 msgid "templatesLibrary.details.details-list-1"
-msgstr "Get access to all Premium Templates with a 30 day trial, and $15 per month thereafter."
+msgstr "Get access to all Premium Templates with any 14-day Plan Trial, and with any Plan Subscription thereafter."
 
 msgid "templatesLibrary.details.details-list-2"
 msgstr "There's no contract, and you can cancel at any time."
@@ -401,7 +401,7 @@ msgid "templatesLibrary.details.free"
 msgstr "FREE"
 
 msgid "templatesLibrary.details.freeWithTrial"
-msgstr "with 30-Day Template Library Trial"
+msgstr "with a Plan Trial or Subscription"
 
 msgid "templatesLibrary.details.preview"
 msgstr "Preview this Template"
