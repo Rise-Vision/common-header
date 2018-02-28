@@ -371,7 +371,7 @@ angular.module("risevision.common.components.plans")
     };
 
     $scope.canDowngrade = function (plan) {
-      if ($scope.canStartTrial(plan)) {
+      if ($scope.canStartTrial(plan) || $scope.isOnTrial(plan)) {
         return false;
       } else if (currentPlan.type === plan.type) {
         return false;
