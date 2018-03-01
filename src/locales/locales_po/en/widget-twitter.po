@@ -1,0 +1,24 @@
+msgid "authentication.connectButtonText"
+msgstr "Connect an account"
+
+msgid "authentication.connectText"
+msgstr "Connect your Twitter account to use the Twitter Widget"
+
+msgid "authentication.connectedText"
+msgstr "Twitter account succesfully connected."
+
+msgid "authentication.revokeLinkText"
+msgstr "Revoke Access"
+
+msgid "previewLable"
+msgstr "Preview"
+
+msgid "previewText"
+msgstr "The Twitter Widget uses sample content in Preview, your Tweets will only show on a Display with Rise Player Professional."
+
+msgid "screenNameText"
+msgstr "Enter a @handle to display Tweets from any public account"
+
+msgid "settings"
+msgstr "Twitter Widget Settings"
+
