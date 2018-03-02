@@ -58,6 +58,8 @@ describe("Services: plan", function() {
         },
         getCopyOfSelectedCompany: function() {
           return {};
+        },
+        updateCompanySettings: function () {
         }
       };
     });
@@ -268,6 +270,98 @@ describe("Services: plan", function() {
         expect(allPlansMap[ENTERPRISE_PLAN_CODE].status).to.equal("Suspended");
         done();
       });
+    });
+  });
+
+  describe("toggleDisplayLicenseLocal: ", function() {
+    var displayId = "displayId";
+
+    it("should add a display to the authorized displays list", function() {
+      sandbox.stub(userState, "getCopyOfSelectedCompany").returns({});
+      sandbox.stub(userState, "updateCompanySettings");
+
+      planFactory.toggleDisplayLicenseLocal(displayId, true);
+
+      expect(userState.updateCompanySettings).to.have.been.calledWith({
+        playerProAssignedDisplays: [displayId]
+      });
+    });
+
+    it("should remove a display from the authorized displays list", function() {
+      sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
+        playerProAssignedDisplays: ["1", displayId, "3"]
+      });
+      sandbox.stub(userState, "updateCompanySettings");
+
+      planFactory.toggleDisplayLicenseLocal(displayId, false);
+
+      expect(userState.updateCompanySettings).to.have.been.calledWith({
+        playerProAssignedDisplays: ["1", "3"]
+      });
+    });
+
+    it("should not add the same display twice to the authorized displays list", function() {
+      sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
+        playerProAssignedDisplays: ["1", displayId, "3"]
+      });
+      sandbox.stub(userState, "updateCompanySettings");
+
+      planFactory.toggleDisplayLicenseLocal(displayId, true);
+
+      expect(userState.updateCompanySettings).to.have.been.calledWith({
+        playerProAssignedDisplays: ["1", displayId, "3"]
+      });
+    });
+
+    it("should not fail if requested to remove a non existent display from the authorized displays list", function() {
+      sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
+        playerProAssignedDisplays: []
+      });
+      sandbox.stub(userState, "updateCompanySettings");
+
+      planFactory.toggleDisplayLicenseLocal(displayId, false);
+
+      expect(userState.updateCompanySettings).to.have.been.calledWith({
+        playerProAssignedDisplays: []
+      });
+    });
+  });
+
+  describe("getProLicenseCount:", function() {
+    it("should return zero licenses available", function () {
+      sandbox.stub(userState, "getCopyOfSelectedCompany").returns({});
+      expect(planFactory.getProLicenseCount()).to.equal(0);
+    });
+
+    it("should return three licenses available", function () {
+      sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
+        planPlayerProLicenseCount: 2,
+        playerProLicenseCount: 1
+      });
+
+      expect(planFactory.getProLicenseCount()).to.equal(3);
+    });
+  });
+
+  describe("areAllProLicensesUsed:", function() {
+    it("should return all licenses are used if display if assigned list equal license count", function () {
+      sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
+        planPlayerProLicenseCount: 2,
+        playerProLicenseCount: 1,
+        playerProAssignedDisplays: ["1", "2", "3"]
+      });
+
+      expect(planFactory.areAllProLicensesUsed()).to.be.true;
+    });
+
+    it("should return all licenses are used if display if assigned list is lower than license count", function () {
+      sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
+        planPlayerProLicenseCount: 2,
+        playerProLicenseCount: 1,
+        playerProAssignedDisplays: ["1", "2"]
+      });
+
+      expect(planFactory.areAllProLicensesUsed()).to.be.false;
     });
   });
 });

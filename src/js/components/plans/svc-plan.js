@@ -167,6 +167,33 @@
           return deferred.promise;
         };
 
+        _factory.getProLicenseCount = function (_company) {
+          var company = _company || userState.getCopyOfSelectedCompany(true);
+          return (company.planPlayerProLicenseCount || 0) + (company.playerProLicenseCount || 0);
+        };
+
+        _factory.areAllProLicensesUsed = function (_company) {
+          var company = _company || userState.getCopyOfSelectedCompany(true);
+          var maxProDisplays = _factory.getProLicenseCount();
+          var assignedDisplays = company.playerProAssignedDisplays || [];
+
+          return assignedDisplays.length === maxProDisplays;
+        };
+
+        _factory.toggleDisplayLicenseLocal = function (displayId, playerProAuthorized) {
+          var company = userState.getCopyOfSelectedCompany(true);
+          var assignedDisplays = company.playerProAssignedDisplays || [];
+
+          if (playerProAuthorized && assignedDisplays.indexOf(displayId) === -1) {
+            assignedDisplays.push(displayId);
+          } else if (!playerProAuthorized && assignedDisplays.indexOf(displayId) >= 0) {
+            assignedDisplays.splice(assignedDisplays.indexOf(displayId), 1);
+          }
+
+          company.playerProAssignedDisplays = assignedDisplays;
+          userState.updateCompanySettings(company);
+        };
+
         _loadCurrentPlan();
 
         $rootScope.$on("risevision.company.selectedCompanyChanged", function () {
