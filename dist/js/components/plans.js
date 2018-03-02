@@ -332,9 +332,9 @@ angular.module("risevision.common.components.plans")
 angular.module("risevision.common.components.plans")
 
 .controller("PlansModalCtrl", [
-  "$scope", "$modalInstance", "$log", "$modal", "$templateCache", "$loading", "$timeout",
+  "$scope", "$rootScope", "$modalInstance", "$log", "$modal", "$templateCache", "$loading", "$timeout",
   "planFactory", "currentPlan", "storeAuthorization", "showRPPLink", "userState",
-  function ($scope, $modalInstance, $log, $modal, $templateCache, $loading, $timeout,
+  function ($scope, $rootScope, $modalInstance, $log, $modal, $templateCache, $loading, $timeout,
     planFactory, currentPlan, storeAuthorization, showRPPLink, userState) {
 
     $scope.currentPlan = currentPlan;
@@ -436,6 +436,9 @@ angular.module("risevision.common.components.plans")
           return $timeout(5000)
             .then(function () {
               return userState.reloadSelectedCompany();
+            })
+            .then(function () {
+              $rootScope.$emit("risevision.company.trial.started");
             })
             .catch(function (err) {
               $log.debug("Failed to reload company", err);
