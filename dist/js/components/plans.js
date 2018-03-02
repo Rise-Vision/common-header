@@ -332,9 +332,9 @@ angular.module("risevision.common.components.plans")
 angular.module("risevision.common.components.plans")
 
 .controller("PlansModalCtrl", [
-  "$scope", "$modalInstance", "$log", "$modal", "$templateCache", "$loading",
+  "$scope", "$modalInstance", "$log", "$modal", "$templateCache", "$loading", "$timeout",
   "planFactory", "currentPlan", "storeAuthorization", "showRPPLink", "userState",
-  function ($scope, $modalInstance, $log, $modal, $templateCache, $loading,
+  function ($scope, $modalInstance, $log, $modal, $templateCache, $loading, $timeout,
     planFactory, currentPlan, storeAuthorization, showRPPLink, userState) {
 
     $scope.currentPlan = currentPlan;
@@ -433,7 +433,16 @@ angular.module("risevision.common.components.plans")
 
       storeAuthorization.startTrial(plan.productCode)
         .then(function () {
-          $modalInstance.close(plan);
+          return $timeout(5000)
+            .then(function () {
+              return userState.reloadSelectedCompany();
+            })
+            .catch(function (err) {
+              $log.debug("Failed to reload company", err);
+            })
+            .finally(function () {
+              $modalInstance.close(plan);
+            });
         })
         .catch(function (err) {
           $log.debug("Failed to start trial", err);

@@ -314,9 +314,31 @@ angular.module("risevision.common.components.logging")
           return deferred.promise;
         };
 
+        var _reloadSelectedCompany = function () {
+          var deferred = $q.defer();
+
+          getCompany(_state.selectedCompany.id)
+            .then(function (company) {
+              objectHelper.clearAndCopy(company, _state.selectedCompany);
+
+              deferred.resolve();
+              $rootScope.$broadcast("risevision.company.updated", {
+                "companyId": company.id
+              });
+            })
+            .then(null, function (resp) {
+              console.error("Failed to reload selected company.", resp);
+
+              deferred.reject(resp);
+            });
+
+          return deferred.promise;
+        };
+
         var _companyState = {
           init: _init,
           switchCompany: _switchCompany,
+          reloadSelectedCompany: _reloadSelectedCompany,
           updateCompanySettings: function (company) {
             if (company && company.id === _companyState.getSelectedCompanyId()) {
               objectHelper.clearAndCopy(company, _state.selectedCompany);
@@ -1598,6 +1620,7 @@ angular.module("risevision.common.components.logging")
           updateUserCompanySettings: companyState.updateUserCompanySettings,
           resetCompany: companyState.resetCompany,
           switchCompany: companyState.switchCompany,
+          reloadSelectedCompany: companyState.reloadSelectedCompany,
           // private
           _restoreState: _restoreState,
           _resetState: _resetState,

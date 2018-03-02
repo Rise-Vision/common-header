@@ -172,6 +172,7 @@
           updateUserCompanySettings: companyState.updateUserCompanySettings,
           resetCompany: companyState.resetCompany,
           switchCompany: companyState.switchCompany,
+          reloadSelectedCompany: companyState.reloadSelectedCompany,
           // private
           _restoreState: _restoreState,
           _resetState: _resetState,
