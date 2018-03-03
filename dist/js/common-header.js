@@ -9430,12 +9430,12 @@ angular.module("risevision.common.components.plans", [
         };
 
         _factory.getProLicenseCount = function (_company) {
-          var company = _company || userState.getCopyOfSelectedCompany(true);
+          var company = _company || userState.getCopyOfSelectedCompany();
           return (company.planPlayerProLicenseCount || 0) + (company.playerProLicenseCount || 0);
         };
 
         _factory.areAllProLicensesUsed = function (_company) {
-          var company = _company || userState.getCopyOfSelectedCompany(true);
+          var company = _company || userState.getCopyOfSelectedCompany();
           var maxProDisplays = _factory.getProLicenseCount();
           var assignedDisplays = company.playerProAssignedDisplays || [];
 
