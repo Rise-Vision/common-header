@@ -239,7 +239,22 @@
                 padding: 2px 8px;
                 }
     }
-
+    &.table--disabled { 
+         .table-body .table-body__row:not(:first-child)  {
+                background-color: #EEE;
+                opacity: .5;
+                cursor: not-allowed !important;
+                }
+          // .table-body .table-body__row:nth-child(2) > .table-body__cell {
+          //       border-top: 0;
+          // }
+    }
+    // &.table--pro-features { 
+    //     .table-body .table-body__row:nth-child(2) > .table-body__cell {
+    //             border-top: 0;
+    //       }
+    // }
+        
 } // end .table
 
 /* Presentation Selector */

@@ -21,6 +21,12 @@ Button styles can be applied to any element. Typically you'll want to use either
 
 */ 
 
+html input[disabled] {
+    cursor: not-allowed;
+    background-color: #EEE; 
+    opacity: .5;
+}
+
 .form-control {
     box-shadow: none;
 }
