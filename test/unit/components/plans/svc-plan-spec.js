@@ -364,4 +364,88 @@ describe("Services: plan", function() {
       expect(planFactory.areAllProLicensesUsed()).to.be.false;
     });
   });
+
+  describe("Free plan: ", function() {
+    it("should return the plan is Free", function() {
+      planFactory.currentPlan = { type: "free" };
+      expect(planFactory.isFree()).to.be.true;
+    });
+
+    it("should return the plan is not Free", function() {
+      planFactory.currentPlan = { type: "advanced" };
+      expect(planFactory.isFree()).to.be.false;
+    });
+  });
+
+  describe("Enterprise Sub Company plan: ", function() {
+    it("should return the plan is Enterprise Sub Company", function() {
+      planFactory.currentPlan = { type: "enterprisesub" };
+      expect(planFactory.isEnterpriseSubCompany()).to.be.true;
+    });
+
+    it("should return the plan is not Enterprise Sub Company", function() {
+      planFactory.currentPlan = { type: "advanced" };
+      expect(planFactory.isEnterpriseSubCompany()).to.be.false;
+    });
+  });
+
+  describe("Subscribed status: ", function() {
+    it("should return the subscription status is Subscribed", function() {
+      planFactory.currentPlan = { status: "Active" };
+      expect(planFactory.isSubscribed()).to.be.true;
+    });
+
+    it("should return the subscription status is not Subscribed", function() {
+      planFactory.currentPlan = { status: "Cancelled" };
+      expect(planFactory.isSubscribed()).to.be.false;
+    });
+  });
+
+  describe("On Trial status: ", function() {
+    it("should return the subscription status is On Trial", function() {
+      planFactory.currentPlan = { status: "Trial" };
+      expect(planFactory.isOnTrial()).to.be.true;
+    });
+
+    it("should return the subscription status is not On Trial", function() {
+      planFactory.currentPlan = { status: "Cancelled" };
+      expect(planFactory.isOnTrial()).to.be.false;
+    });
+  });
+
+  describe("Trial Expired status: ", function() {
+    it("should return the subscription status is Trial Expired", function() {
+      planFactory.currentPlan = { status: "Trial Expired" };
+      expect(planFactory.isTrialExpired()).to.be.true;
+    });
+
+    it("should return the subscription status is not Trial Expired", function() {
+      planFactory.currentPlan = { status: "Cancelled" };
+      expect(planFactory.isTrialExpired()).to.be.false;
+    });
+  });
+
+  describe("Suspended status: ", function() {
+    it("should return the subscription status is Suspended", function() {
+      planFactory.currentPlan = { status: "Suspended" };
+      expect(planFactory.isSuspended()).to.be.true;
+    });
+
+    it("should return the subscription status is not Suspended", function() {
+      planFactory.currentPlan = { status: "Cancelled" };
+      expect(planFactory.isSuspended()).to.be.false;
+    });
+  });
+
+  describe("Pro Subscribed status: ", function() {
+    it("should return the Pro subscription status is Subscribed", function() {
+      planFactory.currentPlan = { proStatus: "Active" };
+      expect(planFactory.isProSubscribed()).to.be.true;
+    });
+
+    it("should return the Pro subscription status is not Subscribed", function() {
+      planFactory.currentPlan = { proStatus: "Cancelled" };
+      expect(planFactory.isProSubscribed()).to.be.false;
+    });
+  });
 });

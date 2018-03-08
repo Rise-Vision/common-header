@@ -301,6 +301,34 @@ angular.module("risevision.common.components.plans", [
           userState.updateCompanySettings(company);
         };
 
+        _factory.isFree = function () {
+          return _factory.currentPlan.type === "free";
+        };
+
+        _factory.isEnterpriseSubCompany = function () {
+          return _factory.currentPlan.type === "enterprisesub";
+        };
+
+        _factory.isSubscribed = function () {
+          return !_factory.isFree() && _factory.currentPlan.status === "Active";
+        };
+
+        _factory.isOnTrial = function () {
+          return !_factory.isFree() && _factory.currentPlan.status === "Trial";
+        };
+
+        _factory.isTrialExpired = function () {
+          return !_factory.isFree() && _factory.currentPlan.status === "Trial Expired";
+        };
+
+        _factory.isSuspended = function () {
+          return !_factory.isFree() && _factory.currentPlan.status === "Suspended";
+        };
+
+        _factory.isProSubscribed = function () {
+          return _factory.currentPlan.proStatus === "Active";
+        };
+
         _loadCurrentPlan();
 
         $rootScope.$on("risevision.company.selectedCompanyChanged", function () {

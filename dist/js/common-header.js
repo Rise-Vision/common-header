@@ -1508,33 +1508,13 @@ angular.module("risevision.common.header")
         $scope.storeAccountUrl = STORE_URL + ACCOUNT_PATH.replace("companyId", $scope.companyId);
       });
 
-      $scope.isFree = function () {
-        return $scope.plan.type === "free";
-      };
-
-      $scope.isEnterpriseSubCompany = function () {
-        return $scope.plan.type === "enterprisesub";
-      };
-
-      $scope.isSubscribed = function () {
-        return !$scope.isFree() && $scope.plan.status === "Active";
-      };
-
-      $scope.isOnTrial = function () {
-        return !$scope.isFree() && $scope.plan.status === "Trial";
-      };
-
-      $scope.isTrialExpired = function () {
-        return !$scope.isFree() && $scope.plan.status === "Trial Expired";
-      };
-
-      $scope.isSuspended = function () {
-        return !$scope.isFree() && $scope.plan.status === "Suspended";
-      };
-
-      $scope.isProSubscribed = function () {
-        return $scope.plan.proStatus === "Active";
-      };
+      $scope.isFree = planFactory.isFree;
+      $scope.isEnterpriseSubCompany = planFactory.isEnterpriseSubCompany;
+      $scope.isSubscribed = planFactory.isSubscribed;
+      $scope.isOnTrial = planFactory.isOnTrial;
+      $scope.isTrialExpired = planFactory.isTrialExpired;
+      $scope.isSuspended = planFactory.isSuspended;
+      $scope.isProSubscribed = planFactory.isProSubscribed;
     }
   ]);
 
@@ -9454,6 +9434,34 @@ angular.module("risevision.common.components.plans", [
 
           company.playerProAssignedDisplays = assignedDisplays;
           userState.updateCompanySettings(company);
+        };
+
+        _factory.isFree = function () {
+          return _factory.currentPlan.type === "free";
+        };
+
+        _factory.isEnterpriseSubCompany = function () {
+          return _factory.currentPlan.type === "enterprisesub";
+        };
+
+        _factory.isSubscribed = function () {
+          return !_factory.isFree() && _factory.currentPlan.status === "Active";
+        };
+
+        _factory.isOnTrial = function () {
+          return !_factory.isFree() && _factory.currentPlan.status === "Trial";
+        };
+
+        _factory.isTrialExpired = function () {
+          return !_factory.isFree() && _factory.currentPlan.status === "Trial Expired";
+        };
+
+        _factory.isSuspended = function () {
+          return !_factory.isFree() && _factory.currentPlan.status === "Suspended";
+        };
+
+        _factory.isProSubscribed = function () {
+          return _factory.currentPlan.proStatus === "Active";
         };
 
         _loadCurrentPlan();
