@@ -12339,6 +12339,12 @@ ul.tree ul li:last-child:before {
     padding: 0 12px;
     color: #777777;
     -webkit-font-smoothing: subpixel-antialiased; }
+  .panel-editable.panel-disabled {
+    background-color: #d5d5d5 !important;
+    cursor: not-allowed !important; }
+    .panel-editable.panel-disabled .label-tag {
+      cursor: not-allowed !important;
+      opacity: .5; }
 
 .select-tags {
   padding: 3px; }

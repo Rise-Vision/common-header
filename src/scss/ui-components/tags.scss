@@ -95,6 +95,15 @@
     color: $gray-light;
     -webkit-font-smoothing: subpixel-antialiased;
   }
+
+  &.panel-disabled {
+    background-color: #d5d5d5 !important;
+    cursor: not-allowed !important;
+      .label-tag {
+          cursor: not-allowed !important;
+          opacity: .5;
+        }
+  }
 }
 
 //TODO: Still in use?
