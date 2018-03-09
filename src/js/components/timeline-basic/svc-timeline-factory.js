@@ -96,11 +96,13 @@ angular.module("risevision.common.components.timeline-basic.services")
 
       _service.getTimeline = function (useLocaldate, timeDefined, startTime, endTime, recurrenceDaysOfWeek) {
         var selectedDays = (recurrenceDaysOfWeek || []).length;
+        var allDay = !startTime && !endTime;
+        var everyDay = selectedDays === 0 || selectedDays === 7;
         var timeline = {
           useLocaldate: useLocaldate,
-          always: !timeDefined,
-          allDay: !startTime && !endTime,
-          everyDay: selectedDays === 0 || selectedDays === 7,
+          always: allDay && everyDay,
+          allDay: allDay,
+          everyDay: everyDay,
           startTime: startTime || null,
           endTime: endTime || null,
           recurrenceDaysOfWeek: recurrenceDaysOfWeek || []

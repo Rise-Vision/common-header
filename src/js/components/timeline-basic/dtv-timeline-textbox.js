@@ -11,7 +11,8 @@
             timeDefined: "=",
             startTime: "=",
             endTime: "=",
-            recurrenceDaysOfWeek: "="
+            recurrenceDaysOfWeek: "=",
+            ngDisabled: "="
           },
           templateUrl: "timeline-basic/timeline-textbox.html",
           link: function ($scope) {
@@ -33,6 +34,10 @@
             });
 
             $scope.openModal = function () {
+              if ($scope.ngDisabled) {
+                return;
+              }
+
               var modalInstance = $modal.open({
                 templateUrl: "timeline-basic/timeline-modal.html",
                 controller: "timelineBasicModal",

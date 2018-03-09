@@ -177,11 +177,13 @@ angular.module("risevision.common.components.timeline-basic.services")
 
       _service.getTimeline = function (useLocaldate, timeDefined, startTime, endTime, recurrenceDaysOfWeek) {
         var selectedDays = (recurrenceDaysOfWeek || []).length;
+        var allDay = !startTime && !endTime;
+        var everyDay = selectedDays === 0 || selectedDays === 7;
         var timeline = {
           useLocaldate: useLocaldate,
-          always: !timeDefined,
-          allDay: !startTime && !endTime,
-          everyDay: selectedDays === 0 || selectedDays === 7,
+          always: allDay && everyDay,
+          allDay: allDay,
+          everyDay: everyDay,
           startTime: startTime || null,
           endTime: endTime || null,
           recurrenceDaysOfWeek: recurrenceDaysOfWeek || []
@@ -207,7 +209,8 @@ angular.module("risevision.common.components.timeline-basic.services")
             timeDefined: "=",
             startTime: "=",
             endTime: "=",
-            recurrenceDaysOfWeek: "="
+            recurrenceDaysOfWeek: "=",
+            ngDisabled: "="
           },
           templateUrl: "timeline-basic/timeline-textbox.html",
           link: function ($scope) {
@@ -229,6 +232,10 @@ angular.module("risevision.common.components.timeline-basic.services")
             });
 
             $scope.openModal = function () {
+              if ($scope.ngDisabled) {
+                return;
+              }
+
               var modalInstance = $modal.open({
                 templateUrl: "timeline-basic/timeline-modal.html",
                 controller: "timelineBasicModal",
@@ -303,6 +310,6 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('timeline-basic/timeline-textbox.html',
-    '<label class="control-label control-label-secondary u_margin-left"><input ng-model="timeline.always" type="checkbox"> Always</label><div id="timelineTextbox" class="panel-editable u_remove-bottom u_clickable" ng-click="openModal()" ng-show="!timeline.always"><div class="label label-tag"><span id="timelineLabel" timeline="timeline">{{timeline.label}}</span></div></div>');
+    '<label class="control-label control-label-secondary u_margin-left"><input ng-model="timeline.always" type="checkbox" ng-disabled="ngDisabled"> Always</label><div id="timelineTextbox" class="panel-editable u_remove-bottom u_clickable" ng-click="openModal()" ng-show="!timeline.always"><div class="label label-tag"><span id="timelineLabel" timeline="timeline">{{timeline.label}}</span></div></div>');
 }]);
 })();
