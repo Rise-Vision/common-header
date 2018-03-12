@@ -36,40 +36,42 @@ angular.module("risevision.common.components.timeline-basic.services")
         var weekDays = [];
 
         if (tl.allDay) {
-          label = "All day";
+          label = "All day ";
         } else {
           if (tl.startTime) {
             var shortTimeformat = "hh:mm a";
             label = label + _filterDateFormat(tl.startTime, tl.useLocaldate, shortTimeformat) + " ";
 
             if (tl.endTime) {
-              label = label + " to " + _filterDateFormat(tl.endTime, tl.useLocaldate, shortTimeformat) + " ";
+              label = label + "to " + _filterDateFormat(tl.endTime, tl.useLocaldate, shortTimeformat) + " ";
             }
           }
         }
 
-        for (var i = 0; i < tl.recurrenceDaysOfWeek.length; i++) {
-          if (tl.recurrenceDaysOfWeek[i] === "Mon") {
-            weekDays.push(OPTIONS_DAY_OF_THE_WEEK[1]);
-          } else if (tl.recurrenceDaysOfWeek[i] === "Tue") {
-            weekDays.push(OPTIONS_DAY_OF_THE_WEEK[2]);
-          } else if (tl.recurrenceDaysOfWeek[i] === "Wed") {
-            weekDays.push(OPTIONS_DAY_OF_THE_WEEK[3]);
-          } else if (tl.recurrenceDaysOfWeek[i] === "Thu") {
-            weekDays.push(OPTIONS_DAY_OF_THE_WEEK[4]);
-          } else if (tl.recurrenceDaysOfWeek[i] === "Fri") {
-            weekDays.push(OPTIONS_DAY_OF_THE_WEEK[5]);
-          } else if (tl.recurrenceDaysOfWeek[i] === "Sat") {
-            weekDays.push(OPTIONS_DAY_OF_THE_WEEK[6]);
-          } else if (tl.recurrenceDaysOfWeek[i] === "Sun") {
-            weekDays.push(OPTIONS_DAY_OF_THE_WEEK[0]);
+        if (tl.recurrenceDaysOfWeek) {
+          for (var i = 0; i < tl.recurrenceDaysOfWeek.length; i++) {
+            if (tl.recurrenceDaysOfWeek[i] === "Mon") {
+              weekDays.push(OPTIONS_DAY_OF_THE_WEEK[1]);
+            } else if (tl.recurrenceDaysOfWeek[i] === "Tue") {
+              weekDays.push(OPTIONS_DAY_OF_THE_WEEK[2]);
+            } else if (tl.recurrenceDaysOfWeek[i] === "Wed") {
+              weekDays.push(OPTIONS_DAY_OF_THE_WEEK[3]);
+            } else if (tl.recurrenceDaysOfWeek[i] === "Thu") {
+              weekDays.push(OPTIONS_DAY_OF_THE_WEEK[4]);
+            } else if (tl.recurrenceDaysOfWeek[i] === "Fri") {
+              weekDays.push(OPTIONS_DAY_OF_THE_WEEK[5]);
+            } else if (tl.recurrenceDaysOfWeek[i] === "Sat") {
+              weekDays.push(OPTIONS_DAY_OF_THE_WEEK[6]);
+            } else if (tl.recurrenceDaysOfWeek[i] === "Sun") {
+              weekDays.push(OPTIONS_DAY_OF_THE_WEEK[0]);
+            }
           }
         }
 
         if (tl.everyDay || weekDays.length === 0 || weekDays.length === 7) {
-          label = label + " every day";
+          label = label + "every day";
         } else if (weekDays.length > 0) {
-          label = label + " every " + weekDays.join(" ");
+          label = label + "every " + weekDays.join(" ");
         }
 
         return label;
@@ -108,6 +110,10 @@ angular.module("risevision.common.components.timeline-basic.services")
         };
 
         var _initRecurrence = function () {
+          if (!_timeline.recurrenceDaysOfWeek) {
+            return;
+          }
+
           for (var i = 0; i < _timeline.recurrenceDaysOfWeek.length; i++) {
             if (_timeline.recurrenceDaysOfWeek[i] === "Mon") {
               _recurrence.weekly.monday = true;
@@ -139,29 +145,32 @@ angular.module("risevision.common.components.timeline-basic.services")
         _init();
 
         var _saveRecurrence = function () {
-          _timeline.recurrenceDaysOfWeek = [];
+          var recurrenceDaysOfWeek = [];
 
           if (_recurrence.weekly.monday) {
-            _timeline.recurrenceDaysOfWeek.push("Mon");
+            recurrenceDaysOfWeek.push("Mon");
           }
           if (_recurrence.weekly.tuesday) {
-            _timeline.recurrenceDaysOfWeek.push("Tue");
+            recurrenceDaysOfWeek.push("Tue");
           }
           if (_recurrence.weekly.wednesday) {
-            _timeline.recurrenceDaysOfWeek.push("Wed");
+            recurrenceDaysOfWeek.push("Wed");
           }
           if (_recurrence.weekly.thursday) {
-            _timeline.recurrenceDaysOfWeek.push("Thu");
+            recurrenceDaysOfWeek.push("Thu");
           }
           if (_recurrence.weekly.friday) {
-            _timeline.recurrenceDaysOfWeek.push("Fri");
+            recurrenceDaysOfWeek.push("Fri");
           }
           if (_recurrence.weekly.saturday) {
-            _timeline.recurrenceDaysOfWeek.push("Sat");
+            recurrenceDaysOfWeek.push("Sat");
           }
           if (_recurrence.weekly.sunday) {
-            _timeline.recurrenceDaysOfWeek.push("Sun");
+            recurrenceDaysOfWeek.push("Sun");
           }
+
+          _timeline.recurrenceDaysOfWeek = recurrenceDaysOfWeek;
+          _timeline.everyDay = recurrenceDaysOfWeek.length === 0 || recurrenceDaysOfWeek.length === 7;
         };
 
         this.save = function () {

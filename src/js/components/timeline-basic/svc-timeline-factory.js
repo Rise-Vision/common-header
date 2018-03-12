@@ -27,6 +27,10 @@ angular.module("risevision.common.components.timeline-basic.services")
         };
 
         var _initRecurrence = function () {
+          if (!_timeline.recurrenceDaysOfWeek) {
+            return;
+          }
+
           for (var i = 0; i < _timeline.recurrenceDaysOfWeek.length; i++) {
             if (_timeline.recurrenceDaysOfWeek[i] === "Mon") {
               _recurrence.weekly.monday = true;
@@ -58,29 +62,32 @@ angular.module("risevision.common.components.timeline-basic.services")
         _init();
 
         var _saveRecurrence = function () {
-          _timeline.recurrenceDaysOfWeek = [];
+          var recurrenceDaysOfWeek = [];
 
           if (_recurrence.weekly.monday) {
-            _timeline.recurrenceDaysOfWeek.push("Mon");
+            recurrenceDaysOfWeek.push("Mon");
           }
           if (_recurrence.weekly.tuesday) {
-            _timeline.recurrenceDaysOfWeek.push("Tue");
+            recurrenceDaysOfWeek.push("Tue");
           }
           if (_recurrence.weekly.wednesday) {
-            _timeline.recurrenceDaysOfWeek.push("Wed");
+            recurrenceDaysOfWeek.push("Wed");
           }
           if (_recurrence.weekly.thursday) {
-            _timeline.recurrenceDaysOfWeek.push("Thu");
+            recurrenceDaysOfWeek.push("Thu");
           }
           if (_recurrence.weekly.friday) {
-            _timeline.recurrenceDaysOfWeek.push("Fri");
+            recurrenceDaysOfWeek.push("Fri");
           }
           if (_recurrence.weekly.saturday) {
-            _timeline.recurrenceDaysOfWeek.push("Sat");
+            recurrenceDaysOfWeek.push("Sat");
           }
           if (_recurrence.weekly.sunday) {
-            _timeline.recurrenceDaysOfWeek.push("Sun");
+            recurrenceDaysOfWeek.push("Sun");
           }
+
+          _timeline.recurrenceDaysOfWeek = recurrenceDaysOfWeek;
+          _timeline.everyDay = recurrenceDaysOfWeek.length === 0 || recurrenceDaysOfWeek.length === 7;
         };
 
         this.save = function () {

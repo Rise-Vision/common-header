@@ -27,40 +27,42 @@ angular.module("risevision.common.components.timeline-basic.services")
         var weekDays = [];
 
         if (tl.allDay) {
-          label = "All day";
+          label = "All day ";
         } else {
           if (tl.startTime) {
             var shortTimeformat = "hh:mm a";
             label = label + _filterDateFormat(tl.startTime, tl.useLocaldate, shortTimeformat) + " ";
 
             if (tl.endTime) {
-              label = label + " to " + _filterDateFormat(tl.endTime, tl.useLocaldate, shortTimeformat) + " ";
+              label = label + "to " + _filterDateFormat(tl.endTime, tl.useLocaldate, shortTimeformat) + " ";
             }
           }
         }
 
-        for (var i = 0; i < tl.recurrenceDaysOfWeek.length; i++) {
-          if (tl.recurrenceDaysOfWeek[i] === "Mon") {
-            weekDays.push(OPTIONS_DAY_OF_THE_WEEK[1]);
-          } else if (tl.recurrenceDaysOfWeek[i] === "Tue") {
-            weekDays.push(OPTIONS_DAY_OF_THE_WEEK[2]);
-          } else if (tl.recurrenceDaysOfWeek[i] === "Wed") {
-            weekDays.push(OPTIONS_DAY_OF_THE_WEEK[3]);
-          } else if (tl.recurrenceDaysOfWeek[i] === "Thu") {
-            weekDays.push(OPTIONS_DAY_OF_THE_WEEK[4]);
-          } else if (tl.recurrenceDaysOfWeek[i] === "Fri") {
-            weekDays.push(OPTIONS_DAY_OF_THE_WEEK[5]);
-          } else if (tl.recurrenceDaysOfWeek[i] === "Sat") {
-            weekDays.push(OPTIONS_DAY_OF_THE_WEEK[6]);
-          } else if (tl.recurrenceDaysOfWeek[i] === "Sun") {
-            weekDays.push(OPTIONS_DAY_OF_THE_WEEK[0]);
+        if (tl.recurrenceDaysOfWeek) {
+          for (var i = 0; i < tl.recurrenceDaysOfWeek.length; i++) {
+            if (tl.recurrenceDaysOfWeek[i] === "Mon") {
+              weekDays.push(OPTIONS_DAY_OF_THE_WEEK[1]);
+            } else if (tl.recurrenceDaysOfWeek[i] === "Tue") {
+              weekDays.push(OPTIONS_DAY_OF_THE_WEEK[2]);
+            } else if (tl.recurrenceDaysOfWeek[i] === "Wed") {
+              weekDays.push(OPTIONS_DAY_OF_THE_WEEK[3]);
+            } else if (tl.recurrenceDaysOfWeek[i] === "Thu") {
+              weekDays.push(OPTIONS_DAY_OF_THE_WEEK[4]);
+            } else if (tl.recurrenceDaysOfWeek[i] === "Fri") {
+              weekDays.push(OPTIONS_DAY_OF_THE_WEEK[5]);
+            } else if (tl.recurrenceDaysOfWeek[i] === "Sat") {
+              weekDays.push(OPTIONS_DAY_OF_THE_WEEK[6]);
+            } else if (tl.recurrenceDaysOfWeek[i] === "Sun") {
+              weekDays.push(OPTIONS_DAY_OF_THE_WEEK[0]);
+            }
           }
         }
 
         if (tl.everyDay || weekDays.length === 0 || weekDays.length === 7) {
-          label = label + " every day";
+          label = label + "every day";
         } else if (weekDays.length > 0) {
-          label = label + " every " + weekDays.join(" ");
+          label = label + "every " + weekDays.join(" ");
         }
 
         return label;
