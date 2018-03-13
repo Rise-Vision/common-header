@@ -20,17 +20,24 @@
                   <h1>${{plan.priceMonth}}</h1>
                   &nbsp;per Company per Month
               </div>
-              <a id="current-plan" ng-show="isCurrentPlan(plan) && !isOnTrial(plan)"
-                 target="_blank"
-                 class="cta_button btn btn-white u_margin-lg">Current Plan</a>
-              <a id="subscribe-plan" ng-show="isOnTrial(plan) || canUpgrade(plan)"
-                 target="_blank" href="https://store.risevision.com/product/{{plan.productId}}"
-                 class="cta_button btn btn-primary u_margin-lg">Subscribe</a>
-              <a id="start-trial-plan" ng-show="canStartTrial(plan)"
-                 target="_blank" ng-click="startTrial(plan)"
-                 class="cta_button btn btn-primary u_margin-lg">Start Trial</a>
-              <a id="downgrade-plan" ng-show="canDowngrade(plan)" ng-click="showDowngradeModal()"
-                 class="cta_button btn btn-default u_margin-lg">Downgrade</a>
+              <div class="u_margin-lg">
+                <!-- &nbsp; is used to retain the fixed height in the panel for each Plan -->
+                <p class="small u_margin-sm-bottom" 
+                  ng-show="!isCurrentPlan(plan) || !isOnTrial(plan)">&nbsp;</p>
+                <p class="small u_margin-sm-bottom" 
+                  ng-show="isCurrentPlan(plan) && isOnTrial(plan)">{{currentPlan.trialPeriod}} days left on your trial.</p>
+                <a id="current-plan" ng-show="isCurrentPlan(plan) && !isOnTrial(plan)"
+                    target="_blank"
+                    class="cta_button btn btn-white">Current Plan</a>
+                <a id="subscribe-plan" ng-show="isOnTrial(plan) || canUpgrade(plan)"
+                    target="_blank" href="https://store.risevision.com/product/{{plan.productId}}"
+                    class="cta_button btn btn-primary">Subscribe</a>
+                <a id="start-trial-plan" ng-show="canStartTrial(plan)"
+                    target="_blank" ng-click="startTrial(plan)"
+                    class="cta_button btn btn-primary">Start Trial</a>
+                <a id="downgrade-plan" ng-show="canDowngrade(plan)" ng-click="showDowngradeModal()"
+                    class="cta_button btn btn-default">Downgrade</a>
+              </div>
             </div>
           </div>
         </div>
