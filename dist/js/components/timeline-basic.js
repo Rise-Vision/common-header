@@ -184,7 +184,7 @@ angular.module("risevision.common.components.timeline-basic.services")
         this.recurrence = _recurrence;
       };
 
-      _service.getTimeline = function (useLocaldate, timeDefined, startTime, endTime, recurrenceDaysOfWeek) {
+      _service.getTimeline = function (useLocaldate, startTime, endTime, recurrenceDaysOfWeek) {
         var selectedDays = (recurrenceDaysOfWeek || []).length;
         var allDay = !startTime && !endTime;
         var everyDay = selectedDays === 0 || selectedDays === 7;
@@ -215,7 +215,6 @@ angular.module("risevision.common.components.timeline-basic.services")
           restrict: "E",
           scope: {
             useLocaldate: "=",
-            timeDefined: "=",
             startTime: "=",
             endTime: "=",
             recurrenceDaysOfWeek: "=",
@@ -228,7 +227,6 @@ angular.module("risevision.common.components.timeline-basic.services")
             $scope.$watch("startTime", function () {
               $scope.timeline = TimelineBasicFactory.getTimeline(
                 $scope.useLocaldate,
-                $scope.timeDefined,
                 $scope.startTime,
                 $scope.endTime,
                 $scope.recurrenceDaysOfWeek);

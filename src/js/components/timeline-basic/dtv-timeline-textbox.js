@@ -8,7 +8,6 @@
           restrict: "E",
           scope: {
             useLocaldate: "=",
-            timeDefined: "=",
             startTime: "=",
             endTime: "=",
             recurrenceDaysOfWeek: "=",
@@ -21,7 +20,6 @@
             $scope.$watch("startTime", function () {
               $scope.timeline = TimelineBasicFactory.getTimeline(
                 $scope.useLocaldate,
-                $scope.timeDefined,
                 $scope.startTime,
                 $scope.endTime,
                 $scope.recurrenceDaysOfWeek);
