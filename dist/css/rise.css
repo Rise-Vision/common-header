@@ -13143,7 +13143,7 @@ ul.tree ul li:last-child:before {
 
 .email-tags .tags .tag-item .remove-button,
 .email-tags .tags .tag-item .remove-button:hover {
-  color: #fff; }
+  color: #fff !important; }
 
 .email-tags .tags .tag-item.selected {
   background: #d9534f;
