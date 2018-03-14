@@ -13141,7 +13141,8 @@ ul.tree ul li:last-child:before {
   border-radius: 4px;
   color: #fff; }
 
-.email-tags .tags .tag-item .remove-button {
+.email-tags .tags .tag-item .remove-button,
+.email-tags .tags .tag-item .remove-button:hover {
   color: #fff; }
 
 .email-tags .tags .tag-item.selected {
