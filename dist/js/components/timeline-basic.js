@@ -147,26 +147,28 @@ angular.module("risevision.common.components.timeline-basic.services")
         var _saveRecurrence = function () {
           var recurrenceDaysOfWeek = [];
 
-          if (_recurrence.weekly.monday) {
-            recurrenceDaysOfWeek.push("Mon");
-          }
-          if (_recurrence.weekly.tuesday) {
-            recurrenceDaysOfWeek.push("Tue");
-          }
-          if (_recurrence.weekly.wednesday) {
-            recurrenceDaysOfWeek.push("Wed");
-          }
-          if (_recurrence.weekly.thursday) {
-            recurrenceDaysOfWeek.push("Thu");
-          }
-          if (_recurrence.weekly.friday) {
-            recurrenceDaysOfWeek.push("Fri");
-          }
-          if (_recurrence.weekly.saturday) {
-            recurrenceDaysOfWeek.push("Sat");
-          }
-          if (_recurrence.weekly.sunday) {
-            recurrenceDaysOfWeek.push("Sun");
+          if (!timeline.everyDay) {
+            if (_recurrence.weekly.monday) {
+              recurrenceDaysOfWeek.push("Mon");
+            }
+            if (_recurrence.weekly.tuesday) {
+              recurrenceDaysOfWeek.push("Tue");
+            }
+            if (_recurrence.weekly.wednesday) {
+              recurrenceDaysOfWeek.push("Wed");
+            }
+            if (_recurrence.weekly.thursday) {
+              recurrenceDaysOfWeek.push("Thu");
+            }
+            if (_recurrence.weekly.friday) {
+              recurrenceDaysOfWeek.push("Fri");
+            }
+            if (_recurrence.weekly.saturday) {
+              recurrenceDaysOfWeek.push("Sat");
+            }
+            if (_recurrence.weekly.sunday) {
+              recurrenceDaysOfWeek.push("Sun");
+            }
           }
 
           _timeline.recurrenceDaysOfWeek = recurrenceDaysOfWeek;
@@ -215,16 +217,17 @@ angular.module("risevision.common.components.timeline-basic.services")
           restrict: "E",
           scope: {
             useLocaldate: "=",
+            timeDefined: "=",
             startTime: "=",
             endTime: "=",
             recurrenceDaysOfWeek: "=",
+            latestUpdate: "=",
             ngDisabled: "="
           },
           templateUrl: "timeline-basic/timeline-textbox.html",
           link: function ($scope) {
-            // Watch one of the scope variables to see when
-            // new data is coming in
-            $scope.$watch("startTime", function () {
+            // Watch a scope variable that's updated whenever data changes
+            $scope.$watch("latestUpdate", function () {
               $scope.timeline = TimelineBasicFactory.getTimeline(
                 $scope.useLocaldate,
                 $scope.startTime,
@@ -258,9 +261,11 @@ angular.module("risevision.common.components.timeline-basic.services")
                 //do what you need if user presses ok
                 $scope.timeline = timeline;
 
+                $scope.timeDefined = !(timeline.allDay && timeline.everyDay);
                 $scope.startTime = timeline.startTime;
                 $scope.endTime = timeline.endTime;
                 $scope.recurrenceDaysOfWeek = timeline.recurrenceDaysOfWeek;
+                $scope.latestUpdate = Date.now();
 
                 $scope.timeline.label = timelineBasicDescription.updateLabel($scope.timeline);
               }, function () {

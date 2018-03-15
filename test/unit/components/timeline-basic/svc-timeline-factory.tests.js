@@ -55,6 +55,7 @@ describe("service: TimelineBasicFactory ", function() {
     it("should save timeline correctly with one selected day",function() {
       var factory = new TimelineBasicFactory(timeline);
 
+      timeline.everyDay = false;
       factory.recurrence.weekly.tuesday = true;
 
       factory.save();

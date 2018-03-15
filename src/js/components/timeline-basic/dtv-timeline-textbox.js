@@ -8,16 +8,17 @@
           restrict: "E",
           scope: {
             useLocaldate: "=",
+            timeDefined: "=",
             startTime: "=",
             endTime: "=",
             recurrenceDaysOfWeek: "=",
+            latestUpdate: "=",
             ngDisabled: "="
           },
           templateUrl: "timeline-basic/timeline-textbox.html",
           link: function ($scope) {
-            // Watch one of the scope variables to see when
-            // new data is coming in
-            $scope.$watch("startTime", function () {
+            // Watch a scope variable that's updated whenever data changes
+            $scope.$watch("latestUpdate", function () {
               $scope.timeline = TimelineBasicFactory.getTimeline(
                 $scope.useLocaldate,
                 $scope.startTime,
@@ -51,9 +52,11 @@
                 //do what you need if user presses ok
                 $scope.timeline = timeline;
 
+                $scope.timeDefined = !(timeline.allDay && timeline.everyDay);
                 $scope.startTime = timeline.startTime;
                 $scope.endTime = timeline.endTime;
                 $scope.recurrenceDaysOfWeek = timeline.recurrenceDaysOfWeek;
+                $scope.latestUpdate = Date.now();
 
                 $scope.timeline.label = timelineBasicDescription.updateLabel($scope.timeline);
               }, function () {
