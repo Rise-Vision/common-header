@@ -221,13 +221,14 @@ angular.module("risevision.common.components.timeline-basic.services")
           },
           templateUrl: "timeline-basic/timeline-textbox.html",
           link: function ($scope) {
-            var updatingExternal = false;
+            var updatingModal = false;
+            var updatingAlwaysCheckbox = false;
 
             $scope.monitoringSchedule = {};
 
             // Watch for the formatted input string
             $scope.$watch("timelineString", function () {
-              if (!updatingExternal) {
+              if (!updatingModal && !updatingAlwaysCheckbox) {
                 $scope.monitoringSchedule = $scope.parseTimeline($scope.timelineString);
                 $scope.timeline = TimelineBasicFactory.getTimeline(
                   $scope.monitoringSchedule.useLocaldate,
@@ -237,14 +238,15 @@ angular.module("risevision.common.components.timeline-basic.services")
 
                 $scope.timeline.label = timelineBasicDescription.updateLabel($scope.timeline);
               } else {
-                updatingExternal = false;
+                updatingModal = false;
+                updatingAlwaysCheckbox = false;
               }
             });
 
             $scope.$watch("timeline.always", function (newValue) {
-              if (!updatingExternal) {
+              if (!updatingModal) {
+                updatingAlwaysCheckbox = true;
                 $scope.monitoringSchedule.timeDefined = !newValue;
-                updatingExternal = true;
                 $scope.timelineString = $scope.formatTimeline($scope.monitoringSchedule);
               }
             });
@@ -266,7 +268,7 @@ angular.module("risevision.common.components.timeline-basic.services")
               });
 
               modalInstance.result.then(function (timeline) {
-                updatingExternal = true;
+                updatingModal = true;
 
                 $scope.timeline = timeline;
                 $scope.timeline.always = (timeline.allDay && timeline.everyDay);
