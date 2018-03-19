@@ -13,16 +13,17 @@
         <section>
           <label class="control-label u_margin-sm-bottom">
             <input type="checkbox" ng-model="timeline.allDay"> <strong>All Day</strong>
+            <a href="https://help.risevision.com/hc/en-us/articles/360000382486" target="_blank"> <i class="fa fa-question-circle icon-right" aria-hidden="true"></i> </a>
           </label>
           <div class="row form-group" ng-hide="timeline.allDay">
             <div class="col-sm-4">
-              <label class="control-label">Start Time</label>
+              <label class="control-label">Start Time (UTC)</label>
               <div class="time-picker">
                 <timepicker id="startTime" ng-model="timeline.startTime" ng-change="changed()" hour-step="1" minute-step="15" show-meridian="true" datepicker-localdate="{{timeline.useLocaldate}}"></timepicker>
               </div>
             </div><!--col-sm-4-->
             <div class="col-sm-4">
-              <label class="control-label">End Time</label>
+              <label class="control-label">End Time (UTC)</label>
               <div class="time-picker">
                 <timepicker id="endTime" ng-model="timeline.endTime" ng-change="changed()" hour-step="1" minute-step="15" show-meridian="true" datepicker-localdate="{{timeline.useLocaldate}}"></timepicker>
               </div>
