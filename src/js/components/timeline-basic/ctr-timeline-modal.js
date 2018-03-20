@@ -8,8 +8,6 @@
         $scope.recurrence = factory.recurrence;
         $scope.timeline = factory.timeline;
 
-        $scope.today = new Date();
-
         $scope.save = function () {
           factory.save();
           $modalInstance.close($scope.timeline);
