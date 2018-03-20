@@ -83,6 +83,10 @@ All utilities have a prefix u_ added to them
   border-radius: $border-radius-base;
 }
 
+.u_no-border {
+  border: 0 !important; 
+}
+
 .fa.u_icon-gray:before {
     color: #BBB;
 }
@@ -262,6 +266,18 @@ All utilities have a prefix u_ added to them
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
+}
+
+.u_align-top {
+  vertical-align: top !important;
+}
+
+.u_align-middle {
+  vertical-align: middle !important;
+}
+
+.u_align-bottom {
+  vertical-align: bottom !important;
 }
 
 /* Misc Utilities
