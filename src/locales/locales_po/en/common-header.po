@@ -28,6 +28,45 @@ msgstr "Steps to Go!"
 msgid "onboarding.steps-remaining-single"
 msgstr "Step to Go!"
 
+msgid "plans.choose-plan"
+msgstr "Choose Your Plan"
+
+msgid "plans.current"
+msgstr "Current Plan"
+
+msgid "plans.days-left-trial"
+msgstr "{{count}} days left on your trial."
+
+msgid "plans.downgrade"
+msgstr "Downgrade"
+
+msgid "plans.error-starting-trial"
+msgstr "There was an error starting your Plan Trial. Please try again!"
+
+msgid "plans.go-to-store"
+msgstr "Go To Store"
+
+msgid "plans.individual-licenses"
+msgstr "No need for a Plan upgrade right now? You can get individual Professional Display licenses"
+
+msgid "plans.learn-more-1"
+msgstr "Learn More About Our Plan Pricing"
+
+msgid "plans.learn-more-2"
+msgstr "OR"
+
+msgid "plans.learn-more-3"
+msgstr "Contact Sales If You Need Help"
+
+msgid "plans.per-company-month"
+msgstr "per Company per Month"
+
+msgid "plans.start-trial"
+msgstr "Start Trial"
+
+msgid "plans.subscribe"
+msgstr "Subscribe"
+
 msgid "user.error.add-user"
 msgstr "User could not be added"
 

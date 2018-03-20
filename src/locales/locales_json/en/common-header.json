@@ -11,6 +11,21 @@
     "steps-remaining-plural": "Steps to Go!",
     "steps-remaining-single": "Step to Go!"
   },
+  "plans": {
+    "choose-plan": "Choose Your Plan",
+    "error-starting-trial": "There was an error starting your Plan Trial. Please try again!",
+    "per-company-month": "per Company per Month",
+    "days-left-trial": "{{count}} days left on your trial.",
+    "current": "Current Plan",
+    "subscribe": "Subscribe",
+    "start-trial": "Start Trial",
+    "downgrade": "Downgrade",
+    "learn-more-1": "Learn More About Our Plan Pricing",
+    "learn-more-2": "OR",
+    "learn-more-3": "Contact Sales If You Need Help",
+    "individual-licenses": "No need for a Plan upgrade right now? You can get individual Professional Display licenses",
+    "go-to-store": "Go To Store"
+  },
   "user": {
     "error": {
       "add-user": "User could not be added",
