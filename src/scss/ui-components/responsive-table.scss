@@ -239,7 +239,14 @@
                 padding: 2px 8px;
                 }
     }
-
+    &.table--disabled { 
+         .table-body .table-body__row:not(:first-child)  {
+                background-color: #EEE;
+                opacity: .5;
+                cursor: not-allowed !important;
+                }
+    }
+        
 } // end .table
 
 /* Presentation Selector */
