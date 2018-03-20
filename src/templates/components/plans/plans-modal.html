@@ -26,10 +26,10 @@
                   ng-show="!isCurrentPlan(plan) || !isOnTrial(plan)">&nbsp;</p>
                 <p class="small u_margin-sm-bottom" 
                   ng-show="isCurrentPlan(plan) && isOnTrial(plan)">{{currentPlan.trialPeriod}} days left on your trial.</p>
-                <a id="current-plan" ng-show="isCurrentPlan(plan) && !isOnTrial(plan)"
+                <a id="current-plan" ng-show="isCurrentPlan(plan) && !isOnTrial(plan) && !isTrialExpired(plan)"
                     target="_blank"
                     class="cta_button btn btn-white">Current Plan</a>
-                <a id="subscribe-plan" ng-show="isOnTrial(plan) || canUpgrade(plan)"
+                <a id="subscribe-plan" ng-show="isOnTrial(plan) || isTrialExpired(plan) || canUpgrade(plan)"
                     target="_blank" href="https://store.risevision.com/product/{{plan.productId}}"
                     class="cta_button btn btn-primary">Subscribe</a>
                 <a id="start-trial-plan" ng-show="canStartTrial(plan)"

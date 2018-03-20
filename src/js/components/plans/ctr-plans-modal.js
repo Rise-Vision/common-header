@@ -49,6 +49,10 @@ angular.module("risevision.common.components.plans")
       return _allPlansMap[plan.productCode] && _allPlansMap[plan.productCode].statusCode === "on-trial";
     };
 
+    $scope.isTrialExpired = function (plan) {
+      return _allPlansMap[plan.productCode] && _allPlansMap[plan.productCode].statusCode === "trial-expired";
+    };
+
     $scope.canUpgrade = function (plan) {
       if ($scope.canStartTrial(plan)) {
         return false;

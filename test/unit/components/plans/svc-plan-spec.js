@@ -365,6 +365,23 @@ describe("Services: plan", function() {
     });
   });
 
+  describe("Plan active: ", function() {
+    it("should return the plan is active when Subscribed", function() {
+      sandbox.stub(planFactory, "isSubscribed").returns(true);
+      expect(planFactory.isPlanActive()).to.be.true;
+    });
+
+    it("should return the plan is active when On Trial", function() {
+      sandbox.stub(planFactory, "isOnTrial").returns(true);
+      expect(planFactory.isPlanActive()).to.be.true;
+    });
+
+    it("should return the plan is not active otherwise", function() {
+      sandbox.stub(planFactory, "isTrialExpired").returns(true);
+      expect(planFactory.isPlanActive()).to.be.false;
+    });
+  });
+
   describe("Free plan: ", function() {
     it("should return the plan is Free", function() {
       planFactory.currentPlan = { type: "free" };

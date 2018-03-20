@@ -194,6 +194,10 @@
           userState.updateCompanySettings(company);
         };
 
+        _factory.isPlanActive = function () {
+          return _factory.isSubscribed() || _factory.isOnTrial();
+        };
+
         _factory.isFree = function () {
           return _factory.currentPlan.type === "free";
         };
