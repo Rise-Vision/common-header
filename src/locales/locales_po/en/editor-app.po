@@ -394,6 +394,9 @@ msgstr "Suggest a Template!"
 msgid "storeProduct.templates.title"
 msgstr "Add a New Presentation"
 
+msgid "storeProduct.viewInStore"
+msgstr "View in Store"
+
 msgid "subscription.buy"
 msgstr "Buy"
 
