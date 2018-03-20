@@ -13,18 +13,18 @@
   },
   "plans": {
     "choose-plan": "Choose Your Plan",
-    "error-starting-trial": "There was an error starting your Plan Trial. Please try again!",
-    "per-company-month": "per Company per Month",
-    "days-left-trial": "{{count}} days left on your trial.",
     "current": "Current Plan",
-    "subscribe": "Subscribe",
-    "start-trial": "Start Trial",
+    "days-left-trial": "{{count}} days left on your trial.",
     "downgrade": "Downgrade",
+    "error-starting-trial": "There was an error starting your Plan Trial. Please try again!",
+    "go-to-store": "Go To Store",
+    "individual-licenses": "No need for a Plan upgrade right now? You can get individual Professional Display licenses",
     "learn-more-1": "Learn More About Our Plan Pricing",
     "learn-more-2": "OR",
     "learn-more-3": "Contact Sales If You Need Help",
-    "individual-licenses": "No need for a Plan upgrade right now? You can get individual Professional Display licenses",
-    "go-to-store": "Go To Store"
+    "per-company-month": "per Company per Month",
+    "start-trial": "Start Trial",
+    "subscribe": "Subscribe"
   },
   "user": {
     "error": {

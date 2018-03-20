@@ -103,9 +103,13 @@
     "webServiceURL": "Web Service URL"
   },
   "details": {
+    "all-licenses-used": "You're using all <strong>{{count}}</strong> of your Rise Player Professional Displays.",
     "deleteTitle": "Deleting Display",
     "deleteWarning": "Are you sure you want to delete this Display?",
     "error": "Failed to update display!",
+    "get-more": "Get More Now",
+    "rpp-is": "Rise Player Professional is",
+    "rpp-loading": "LOADING",
     "startPlayerProTrial": "Start Rise Player Professional Trial",
     "subscribePlayerPro": "Subscribe to Rise Player Professional",
     "title": "Display Settings",
@@ -218,6 +222,18 @@
       "playerVersion": "Player Version",
       "playerWarning": "A Player has not been configured for your Display. To configure your Display, select your Operating System below and install the software <b>on the device</b> that will operate your Display. When the Player starts for the first time you will be prompted to enter the Display ID (above) to link the Player with the Display that you have setup here. Further setup details can be <a href=\"https://help.risevision.com/hc/en-us/articles/115000860926\" target=\"_blank\">found here</a>.",
       "resolution": "Resolution",
+      "rpp": {
+        "email-recipients": "Email Recipients",
+        "features": "Rise Player Professional Features",
+        "invalid-email": "A valid email address is required.",
+        "monitoring-timeline": "Monitoring Timeline",
+        "monitoring": "Display Monitoring",
+        "offline-play-desc": "Play your Display content without a network connection",
+        "offline-play": "Offline Play",
+        "send-email-offline": "Send email notifications when your Display goes offline",
+        "start-trial": "Start a Plan Trial",
+        "unlock": "Unlock Rise Professional Features with any plan!"
+      },
       "schedule": {
         "addToSchedule": "Add To Schedule",
         "assigned": "Assigned Schedule",

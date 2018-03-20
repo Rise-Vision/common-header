@@ -235,6 +235,9 @@ msgstr "View Terms and Conditions"
 msgid "alerts.webServiceURL"
 msgstr "Web Service URL"
 
+msgid "details.all-licenses-used"
+msgstr "You're using all <strong>{{count}}</strong> of your Rise Player Professional Displays."
+
 msgid "details.deleteTitle"
 msgstr "Deleting Display"
 
@@ -243,6 +246,15 @@ msgstr "Are you sure you want to delete this Display?"
 
 msgid "details.error"
 msgstr "Failed to update display!"
+
+msgid "details.get-more"
+msgstr "Get More Now"
+
+msgid "details.rpp-is"
+msgstr "Rise Player Professional is"
+
+msgid "details.rpp-loading"
+msgstr "LOADING"
 
 msgid "details.startPlayerProTrial"
 msgstr "Start Rise Player Professional Trial"
@@ -468,6 +480,36 @@ msgstr "A Player has not been configured for your Display. To configure your Dis
 
 msgid "fields.player.resolution"
 msgstr "Resolution"
+
+msgid "fields.player.rpp.email-recipients"
+msgstr "Email Recipients"
+
+msgid "fields.player.rpp.features"
+msgstr "Rise Player Professional Features"
+
+msgid "fields.player.rpp.invalid-email"
+msgstr "A valid email address is required."
+
+msgid "fields.player.rpp.monitoring"
+msgstr "Display Monitoring"
+
+msgid "fields.player.rpp.monitoring-timeline"
+msgstr "Monitoring Timeline"
+
+msgid "fields.player.rpp.offline-play"
+msgstr "Offline Play"
+
+msgid "fields.player.rpp.offline-play-desc"
+msgstr "Play your Display content without a network connection"
+
+msgid "fields.player.rpp.send-email-offline"
+msgstr "Send email notifications when your Display goes offline"
+
+msgid "fields.player.rpp.start-trial"
+msgstr "Start a Plan Trial"
+
+msgid "fields.player.rpp.unlock"
+msgstr "Unlock Rise Professional Features with any plan!"
 
 msgid "fields.player.schedule.addToSchedule"
 msgstr "Add To Schedule"
