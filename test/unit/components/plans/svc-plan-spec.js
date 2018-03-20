@@ -448,4 +448,29 @@ describe("Services: plan", function() {
       expect(planFactory.isProSubscribed()).to.be.false;
     });
   });
+
+  describe("hasProfessionalLicenses: ", function() {
+    it("should return true if Subscribed to a Plan", function() {
+      planFactory.currentPlan = { status: "Active" };
+      expect(planFactory.hasProfessionalLicenses()).to.be.true;
+    });
+
+    it("should return true if On Trial to a Plan", function() {
+      planFactory.currentPlan = { status: "Trial" };
+      expect(planFactory.hasProfessionalLicenses()).to.be.true;
+    });
+
+    it("should return true if Subscribed to Player Professional", function() {
+      planFactory.currentPlan = { proStatus: "Active" };
+      expect(planFactory.hasProfessionalLicenses()).to.be.true;
+    });
+
+    it("should return false if neither of those conditions is met", function() {
+      planFactory.currentPlan = { 
+        status: "Cancelled",
+        proStatus: "Cancelled"
+      };
+      expect(planFactory.hasProfessionalLicenses()).to.be.false;
+    });
+  });
 });
