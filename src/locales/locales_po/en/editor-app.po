@@ -130,14 +130,14 @@ msgstr "Add Widget"
 msgid "playlistItem.add-image"
 msgstr "Image"
 
-msgid "playlistItem.add-more"
-msgstr "More"
-
 msgid "playlistItem.add-text"
 msgstr "Text"
 
 msgid "playlistItem.add-video"
 msgstr "Video"
+
+msgid "playlistItem.add-widgets"
+msgstr "Widgets"
 
 msgid "playlistItem.content"
 msgstr "Widget"
@@ -164,7 +164,7 @@ msgid "playlistItem.name"
 msgstr "Name"
 
 msgid "playlistItem.no-playlistItem"
-msgstr "Click Image, Video, Text or More to add to this Playlist"
+msgstr "Click Image, Video, Text or Widgets to add to this Playlist"
 
 msgid "playlistItem.playUntilDone"
 msgstr "Play Until Done"
@@ -307,6 +307,9 @@ msgstr "Shared Templates"
 msgid "storeProduct.add"
 msgstr "Add"
 
+msgid "storeProduct.content.otherWidgets"
+msgstr "For All Displays"
+
 msgid "storeProduct.content.search"
 msgstr "Search for Widget"
 
@@ -343,6 +346,33 @@ msgstr "Retail"
 msgid "storeProduct.productTags.worship"
 msgstr "Worship"
 
+msgid "storeProduct.professional.learnMore"
+msgstr "Learn More"
+
+msgid "storeProduct.professional.promotion"
+msgstr "Add power and functionality to your Presentations with Professional Widgets"
+
+msgid "storeProduct.professional.promotionDisplaysButton"
+msgstr "View Displays"
+
+msgid "storeProduct.professional.promotionPlan"
+msgstr "Unlock the power of Professional Widgets, activate your included Professional Displays."
+
+msgid "storeProduct.professional.promotionTrial"
+msgstr "Unlock the power of Professional Widgets start any Plan trial for <strong>free</strong> to get the included Professional Displays."
+
+msgid "storeProduct.professional.promotionTrialButton"
+msgstr "Start a Plan Trial"
+
+msgid "storeProduct.professional.title"
+msgstr "For Professional Displays Only"
+
+msgid "storeProduct.professional.unlock"
+msgstr "Unlock"
+
+msgid "storeProduct.professional.widgetType"
+msgstr "Professional Widget"
+
 msgid "storeProduct.templates.back"
 msgstr "Back to all Templates"
 
@@ -363,6 +393,9 @@ msgstr "Suggest a Template!"
 
 msgid "storeProduct.templates.title"
 msgstr "Add a New Presentation"
+
+msgid "storeProduct.viewInStore"
+msgstr "View in Store"
 
 msgid "subscription.buy"
 msgstr "Buy"
@@ -524,7 +557,7 @@ msgid "workspace.sidebar.no-placeholder"
 msgstr "You haven't added any Placeholders to your Presentation yet."
 
 msgid "workspace.sidebar.placeholderTooltip"
-msgstr "Click to change Images, Video, Text, and More"
+msgstr "Click to change Images, Video, Text, and Widgets"
 
 msgid "workspace.sidebar.title"
 msgstr "Placeholders"
@@ -533,7 +566,7 @@ msgid "workspace.toolbar.addPlaceholder"
 msgstr "Add Placeholder"
 
 msgid "workspace.toolbar.addPlaceholderTooltip"
-msgstr "Click to add Images, Video, Text, and More"
+msgstr "Click to add Images, Video, Text, and Widgets"
 
 msgid "workspace.toolbar.changeTemplate"
 msgstr "Change Template"

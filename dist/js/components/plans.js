@@ -333,6 +333,10 @@ angular.module("risevision.common.components.plans", [
           return _factory.currentPlan.proStatus === "Active";
         };
 
+        _factory.hasProfessionalLicenses = function () {
+          return _factory.isSubscribed() || _factory.isOnTrial() || _factory.isProSubscribed();
+        };
+
         _loadCurrentPlan();
 
         $rootScope.$on("risevision.company.selectedCompanyChanged", function () {
