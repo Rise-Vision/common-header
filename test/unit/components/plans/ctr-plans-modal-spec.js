@@ -1,6 +1,6 @@
 "use strict";
 
-describe("controller: plans modal", function() {
+describe.only("controller: plans modal", function() {
   beforeEach(module("risevision.common.components.plans"));
   beforeEach(module(function ($provide) {
     $provide.service("$modalInstance", function() {
@@ -30,6 +30,9 @@ describe("controller: plans modal", function() {
         },
         getCompanyPlanStatus: function() {
           return null;
+        },
+        isTrialExpired: function() {
+          return false;
         }
       };
     });
@@ -48,6 +51,9 @@ describe("controller: plans modal", function() {
         open: sinon.stub()
       };
     });
+    $provide.service("$q", function() {
+      return Q;
+    });
     $provide.service("storeAuthorization", function() {
       return {
         startTrial: function() {
@@ -61,7 +67,7 @@ describe("controller: plans modal", function() {
   var storeAuthorization, userState;
   var BASIC_PLAN_CODE, ADVANCED_PLAN_CODE;
 
-  beforeEach(function() {
+  beforeEach(function(done) {
     sandbox = sinon.sandbox.create();
 
     inject(function($injector, $rootScope, $controller) {
@@ -76,18 +82,29 @@ describe("controller: plans modal", function() {
       userState = $injector.get("userState");
       currentPlan = {};
 
-      sandbox.stub(planFactory, "getPlansDetails", function(){
-        $q.when();
-      });
-
       var plansByType = _.keyBy($injector.get("PLANS_LIST"), "type");
 
       BASIC_PLAN_CODE = plansByType.basic.pc;
       ADVANCED_PLAN_CODE = plansByType.advanced.pc;
 
+      var plansList = [{
+        pc: BASIC_PLAN_CODE,
+        productCode: BASIC_PLAN_CODE,
+        status: "Trial Available",
+        statusCode: "trial-available"
+      }, {
+        pc: ADVANCED_PLAN_CODE,
+        productCode: ADVANCED_PLAN_CODE,
+        status: "Subscribed",
+        statusCode: "subscribed"
+      }];
+
       sandbox.stub(planFactory, "getCompanyPlanStatus", function() {
-        return $q.when(_.keyBy([{pc: BASIC_PLAN_CODE, statusCode: "trial-available"},
-          {pc: ADVANCED_PLAN_CODE, statusCode: "subscribed"}], "pc"));
+        return $q.when(_.keyBy(plansList, "pc"));
+      });
+
+      sandbox.stub(planFactory, "getPlansDetails", function(){
+        return $q.when(plansList);
       });
 
       $controller("PlansModalCtrl", {
@@ -103,6 +120,11 @@ describe("controller: plans modal", function() {
       });
 
       $scope.$digest();
+
+      setTimeout(function () {
+        $scope.$digest();
+        done();
+      });
     });
   });
 
@@ -184,31 +206,40 @@ describe("controller: plans modal", function() {
       expect($scope.canDowngrade({ type: "enterprise" })).to.be.false;
     });
 
-    it("should be able to downgrade from Basic Plan to Free", function() {
+    it.only("should be able to downgrade from Basic Plan to Free, unless status is Trial Expired", function() {
       currentPlan.type = "basic";
 
       expect($scope.canDowngrade({ type: "free" })).to.be.true;
       expect($scope.canDowngrade({ type: "basic" })).to.be.false;
       expect($scope.canDowngrade({ type: "advanced" })).to.be.false;
       expect($scope.canDowngrade({ type: "enterprise" })).to.be.false;
+
+      sandbox.stub(planFactory, "isTrialExpired").returns(true);
+      expect($scope.canDowngrade({ type: "free" })).to.be.false;
     });
 
-    it("should be able to downgrade from Advanced Plan to Free or Basic", function() {
+    it("should be able to downgrade from Advanced Plan to Free or Basic, except to Free when status is Trial Expired", function() {
       currentPlan.type = "advanced";
 
       expect($scope.canDowngrade({ type: "free" })).to.be.true;
       expect($scope.canDowngrade({ type: "basic" })).to.be.true;
       expect($scope.canDowngrade({ type: "advanced" })).to.be.false;
       expect($scope.canDowngrade({ type: "enterprise" })).to.be.false;
+
+      sandbox.stub(planFactory, "isTrialExpired").returns(true);
+      expect($scope.canDowngrade({ type: "free" })).to.be.false;
     });
 
-    it("should be able to downgrade from Enterprise Plan to any other plan", function() {
+    it("should be able to downgrade from Enterprise Plan to any other plan, except to Free when status is Trial Expired", function() {
       currentPlan.type = "enterprise";
 
       expect($scope.canDowngrade({ type: "free" })).to.be.true;
       expect($scope.canDowngrade({ type: "basic" })).to.be.true;
       expect($scope.canDowngrade({ type: "advanced" })).to.be.true;
       expect($scope.canDowngrade({ type: "enterprise" })).to.be.false;
+
+      sandbox.stub(planFactory, "isTrialExpired").returns(true);
+      expect($scope.canDowngrade({ type: "free" })).to.be.false;
     });
   });
 
@@ -222,7 +253,7 @@ describe("controller: plans modal", function() {
     it("should be able to start trial on trial-available status", function() {
       currentPlan.type = "free";
 
-      expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE })).to.be.true;
+      expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE, statusCode: "trial-available" })).to.be.true;
     });
 
     it("should not be able to start trial on status that is different from trial-available", function() {
@@ -243,14 +274,14 @@ describe("controller: plans modal", function() {
       currentPlan.type = "free";
       currentPlan.planSubscriptionStatus = "Trial";
 
-      expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE })).to.be.true;
+      expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE, statusCode: "trial-available" })).to.be.true;
     });
 
     it("should be able to start trial if current plan is Subscribed but status is on trial expired", function() {
       currentPlan.type = "free";
       currentPlan.planSubscriptionStatus = "Trial Expired";
 
-      expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE })).to.be.true;
+      expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE, statusCode: "trial-available" })).to.be.true;
     });
   });
 });

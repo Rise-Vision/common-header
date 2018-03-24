@@ -1,29 +1,31 @@
 angular.module("risevision.common.components.plans")
 
 .controller("PlansModalCtrl", [
-  "$scope", "$rootScope", "$modalInstance", "$log", "$modal", "$templateCache", "$loading", "$timeout",
+  "$scope", "$rootScope", "$modalInstance", "$log", "$modal", "$templateCache", "$loading", "$timeout", "$q",
   "planFactory", "currentPlan", "storeAuthorization", "showRPPLink", "userState",
-  function ($scope, $rootScope, $modalInstance, $log, $modal, $templateCache, $loading, $timeout,
+  function ($scope, $rootScope, $modalInstance, $log, $modal, $templateCache, $loading, $timeout, $q,
     planFactory, currentPlan, storeAuthorization, showRPPLink, userState) {
 
+    var company = userState.getCopyOfSelectedCompany();
     $scope.currentPlan = currentPlan;
     $scope.startTrialError = null;
     $scope.showRPPLink = showRPPLink;
-    var company = userState.getCopyOfSelectedCompany();
     $scope.playerProSubscriptionId = company.playerProSubscriptionId;
     $scope.companyId = company.id;
-    var _allPlansMap = {};
 
     function _getPlansDetails() {
       $loading.start("plans-modal");
 
-      return planFactory.getCompanyPlanStatus()
-        .then(function (allPlansMap) {
-          _allPlansMap = allPlansMap;
-          return planFactory.getPlansDetails();
-        })
-        .then(function (plans) {
-          $scope.plans = plans;
+      return $q.all([planFactory.getCompanyPlanStatus(), planFactory.getPlansDetails()])
+        .then(function (resp) {
+          var plansStatusMap = resp[0];
+
+          $scope.plans = resp[1];
+          $scope.plans.forEach(function (p) {
+            var plan = plansStatusMap[p.productCode] || p;
+            p.status = plan.status;
+            p.statusCode = plan.statusCode;
+          });
         })
         .catch(function (err) {
           $log.debug("Failed to load plans", err);
@@ -46,11 +48,34 @@ angular.module("risevision.common.components.plans")
     };
 
     $scope.isOnTrial = function (plan) {
-      return _allPlansMap[plan.productCode] && _allPlansMap[plan.productCode].statusCode === "on-trial";
+      return plan.statusCode === "on-trial";
+    };
+
+    $scope.isTrialAvailable = function (plan) {
+      return plan.statusCode === "trial-available";
     };
 
     $scope.isTrialExpired = function (plan) {
-      return _allPlansMap[plan.productCode] && _allPlansMap[plan.productCode].statusCode === "trial-expired";
+      return plan.statusCode === "trial-expired";
+    };
+
+    $scope.isSubscribed = function (plan) {
+      return plan.status === "Subscribed" || plan.status === "Active";
+    };
+
+    $scope.isFree = function (plan) {
+      return plan.type === "free";
+    };
+
+    $scope.currentButtonVisible = function (plan) {
+      var freeOnCurrenExpired = $scope.isFree(plan) && planFactory.isTrialExpired();
+      var currentSubscribed = $scope.isCurrentPlan(plan) && $scope.isSubscribed(plan);
+
+      return freeOnCurrenExpired || currentSubscribed;
+    };
+
+    $scope.subscribeButtonVisible = function (plan) {
+      return $scope.isOnTrial(plan) || $scope.isTrialExpired(plan) || $scope.canUpgrade(plan);
     };
 
     $scope.canUpgrade = function (plan) {
@@ -74,6 +99,8 @@ angular.module("risevision.common.components.plans")
     $scope.canDowngrade = function (plan) {
       if ($scope.canStartTrial(plan) || $scope.isOnTrial(plan)) {
         return false;
+      } else if ($scope.isFree(plan) && planFactory.isTrialExpired()) {
+        return false;
       } else if (currentPlan.type === plan.type) {
         return false;
       } else if (currentPlan.type === "enterprise") {
@@ -92,12 +119,9 @@ angular.module("risevision.common.components.plans")
         return false;
       } else if (currentPlan.type === plan.type) {
         return false;
-      } else if (_allPlansMap[plan.productCode] &&
-        _allPlansMap[plan.productCode].statusCode === "trial-available") {
-        return true;
+      } else {
+        return $scope.isTrialAvailable(plan);
       }
-
-      return false;
     };
 
     $scope.startTrial = function (plan) {

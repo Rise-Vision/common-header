@@ -234,7 +234,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plan-banner.html',
-    '<div><div id="free-plan-banner" class="alert alert-plan plan-active text-right" ng-show="isFree()"><div class="u_margin-right"><strong>Get more out of Rise Vision!</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">See Our Plans</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="isSubscribed()"><div class="u_margin-right"><strong>{{plan.name}} Plan</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="isOnTrial()"><div class="u_margin-right"><strong>You have {{plan.trialPeriod}} days left on your Rise Vision {{plan.name}} Plan trial!</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Subscribe Now</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="isTrialExpired()"><div class="u_margin-right"><strong ng-show="!isProSubscribed()">Your Rise Vision {{plan.name}} Plan trial has expired! Your Displays have been set to Standard.</strong> <strong ng-show="isProSubscribed()">Your Rise Vision {{plan.name}} Plan trial has expired!</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Subscribe Now</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="isSuspended()"><div class="u_margin-right"><strong>There was an issue processing your payment. Please update your billing information. Your Displays may be affected.</strong> <a href="{{storeAccountUrl}}" target="_blank" class="u_margin-left">Update Billing</a></div></div></div>');
+    '<div><div id="free-plan-banner" class="alert alert-plan plan-active text-right" ng-show="isFree()"><div class="u_margin-right"><strong>Get more out of Rise Vision!</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">See Our Plans</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="isSubscribed()"><div class="u_margin-right"><strong>{{plan.name}} Plan</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="isOnTrial()"><div class="u_margin-right"><strong>You have {{plan.trialPeriod}} days left on your Rise Vision {{plan.name}} Plan trial!</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Subscribe Now</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="isTrialExpired()"><div class="u_margin-right"><strong ng-show="!isProSubscribed()">Your Rise Vision {{plan.name}} Plan trial has expired! You are now on the Free Plan. Your Displays have been set to Standard.</strong> <strong ng-show="isProSubscribed()">Your Rise Vision {{plan.name}} Plan trial has expired! You are now on the Free Plan. Your Displays are still subscribed to Professional.</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Subscribe Now</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="isSuspended()"><div class="u_margin-right"><strong>There was an issue processing your payment. Please update your billing information. Your Displays may be affected.</strong> <a href="{{storeAccountUrl}}" target="_blank" class="u_margin-left">Update Billing</a></div></div></div>');
 }]);
 })();
 
@@ -9535,29 +9535,31 @@ angular.module("risevision.common.components.plans")
 angular.module("risevision.common.components.plans")
 
 .controller("PlansModalCtrl", [
-  "$scope", "$rootScope", "$modalInstance", "$log", "$modal", "$templateCache", "$loading", "$timeout",
+  "$scope", "$rootScope", "$modalInstance", "$log", "$modal", "$templateCache", "$loading", "$timeout", "$q",
   "planFactory", "currentPlan", "storeAuthorization", "showRPPLink", "userState",
-  function ($scope, $rootScope, $modalInstance, $log, $modal, $templateCache, $loading, $timeout,
+  function ($scope, $rootScope, $modalInstance, $log, $modal, $templateCache, $loading, $timeout, $q,
     planFactory, currentPlan, storeAuthorization, showRPPLink, userState) {
 
+    var company = userState.getCopyOfSelectedCompany();
     $scope.currentPlan = currentPlan;
     $scope.startTrialError = null;
     $scope.showRPPLink = showRPPLink;
-    var company = userState.getCopyOfSelectedCompany();
     $scope.playerProSubscriptionId = company.playerProSubscriptionId;
     $scope.companyId = company.id;
-    var _allPlansMap = {};
 
     function _getPlansDetails() {
       $loading.start("plans-modal");
 
-      return planFactory.getCompanyPlanStatus()
-        .then(function (allPlansMap) {
-          _allPlansMap = allPlansMap;
-          return planFactory.getPlansDetails();
-        })
-        .then(function (plans) {
-          $scope.plans = plans;
+      return $q.all([planFactory.getCompanyPlanStatus(), planFactory.getPlansDetails()])
+        .then(function (resp) {
+          var plansStatusMap = resp[0];
+
+          $scope.plans = resp[1];
+          $scope.plans.forEach(function (p) {
+            var plan = plansStatusMap[p.productCode] || p;
+            p.status = plan.status;
+            p.statusCode = plan.statusCode;
+          });
         })
         .catch(function (err) {
           $log.debug("Failed to load plans", err);
@@ -9580,11 +9582,34 @@ angular.module("risevision.common.components.plans")
     };
 
     $scope.isOnTrial = function (plan) {
-      return _allPlansMap[plan.productCode] && _allPlansMap[plan.productCode].statusCode === "on-trial";
+      return plan.statusCode === "on-trial";
+    };
+
+    $scope.isTrialAvailable = function (plan) {
+      return plan.statusCode === "trial-available";
     };
 
     $scope.isTrialExpired = function (plan) {
-      return _allPlansMap[plan.productCode] && _allPlansMap[plan.productCode].statusCode === "trial-expired";
+      return plan.statusCode === "trial-expired";
+    };
+
+    $scope.isSubscribed = function (plan) {
+      return plan.status === "Subscribed" || plan.status === "Active";
+    };
+
+    $scope.isFree = function (plan) {
+      return plan.type === "free";
+    };
+
+    $scope.currentButtonVisible = function (plan) {
+      var freeOnCurrenExpired = $scope.isFree(plan) && planFactory.isTrialExpired();
+      var currentSubscribed = $scope.isCurrentPlan(plan) && $scope.isSubscribed(plan);
+
+      return freeOnCurrenExpired || currentSubscribed;
+    };
+
+    $scope.subscribeButtonVisible = function (plan) {
+      return $scope.isOnTrial(plan) || $scope.isTrialExpired(plan) || $scope.canUpgrade(plan);
     };
 
     $scope.canUpgrade = function (plan) {
@@ -9608,6 +9633,8 @@ angular.module("risevision.common.components.plans")
     $scope.canDowngrade = function (plan) {
       if ($scope.canStartTrial(plan) || $scope.isOnTrial(plan)) {
         return false;
+      } else if ($scope.isFree(plan) && planFactory.isTrialExpired()) {
+        return false;
       } else if (currentPlan.type === plan.type) {
         return false;
       } else if (currentPlan.type === "enterprise") {
@@ -9626,12 +9653,9 @@ angular.module("risevision.common.components.plans")
         return false;
       } else if (currentPlan.type === plan.type) {
         return false;
-      } else if (_allPlansMap[plan.productCode] &&
-        _allPlansMap[plan.productCode].statusCode === "trial-available") {
-        return true;
+      } else {
+        return $scope.isTrialAvailable(plan);
       }
-
-      return false;
     };
 
     $scope.startTrial = function (plan) {
@@ -9697,7 +9721,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plans/plans-modal.html',
-    '<div rv-spinner="" rv-spinner-key="plans-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title" translate="">common-header.plans.choose-plan</h3></div><div id="plans-modal" class="modal-body u_padding-lg" stop-event="touchend"><div ng-show="startTrialError" class="alert alert-danger u_margin-xs-bottom" translate="">common-header.plans.error-starting-trial</div><div class="grid-list row"><div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="plan in plans"><div class="u_cursor_disabled panel panel-default"><div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><div class="grid-list-text text-center"><h4 id="productName">{{plan.name}}</h4><p class="product-description">{{plan.descriptionShort}}</p><div><h1>${{plan.priceMonth}}</h1>&nbsp;<span translate="">common-header.plans.per-company-month</span></div><div class="u_margin-lg"><p class="small u_margin-sm-bottom" ng-show="!isCurrentPlan(plan) || !isOnTrial(plan)">&nbsp;</p><p class="small u_margin-sm-bottom" ng-show="isCurrentPlan(plan) && isOnTrial(plan)" translate="" translate-values="{ count: currentPlan.trialPeriod }">common-header.plans.days-left-trial</p><a id="current-plan" ng-show="isCurrentPlan(plan) && !isOnTrial(plan) && !isTrialExpired(plan)" target="_blank" class="cta_button btn btn-white" translate="">common-header.plans.current</a> <a id="subscribe-plan" ng-show="isOnTrial(plan) || isTrialExpired(plan) || canUpgrade(plan)" target="_blank" href="https://store.risevision.com/product/{{plan.productId}}" class="cta_button btn btn-primary" translate="">common-header.plans.subscribe</a> <a id="start-trial-plan" ng-show="canStartTrial(plan)" target="_blank" ng-click="startTrial(plan)" class="cta_button btn btn-primary" translate="">common-header.plans.start-trial</a> <a id="downgrade-plan" ng-show="canDowngrade(plan)" ng-click="showDowngradeModal()" class="cta_button btn btn-default" translate="">common-header.plans.downgrade</a></div></div></div></div></div></div><div ng-show="!showRPPLink" class="text-center u_margin-md-top"><a class="btn btn-link btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/pricing?utm_campaign=apps" translate="">common-header.plans.learn-more-1</a> <span class="bold" translate="">common-header.plans.learn-more-2</span> <a class="btn btn-link btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/contact-us" translate="">common-header.plans.learn-more-3</a></div><div ng-show="showRPPLink && !playerProSubscriptionId" class="text-center u_margin-md-top"><a class="btn btn-link btn-lg" target="_blank" href="https://store.risevision.com/product/2048" translate="">common-header.plans.individual-licenses</a> <a class="cta_button btn btn-primary u_margin-lg" target="_blank" href="https://store.risevision.com/product/2048" translate="">common-header.plans.go-to-store</a></div><div ng-show="showRPPLink && playerProSubscriptionId" class="text-center u_margin-md-top"><a class="btn btn-link btn-lg" target="_blank" href="https://store.risevision.com/account/subscription/{{playerProSubscriptionId}}?cid={{companyId}}" translate="">common-header.plans.individual-licenses</a> <a class="cta_button btn btn-primary u_margin-lg" target="_blank" href="https://store.risevision.com/account/subscription/{{playerProSubscriptionId}}?cid={{companyId}}" translate="">common-header.plans.go-to-store</a></div></div><div class="modal-footer"></div></div>');
+    '<div rv-spinner="" rv-spinner-key="plans-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title" translate="">common-header.plans.choose-plan</h3></div><div id="plans-modal" class="modal-body u_padding-lg" stop-event="touchend"><div ng-show="startTrialError" class="alert alert-danger u_margin-xs-bottom" translate="">common-header.plans.error-starting-trial</div><div class="grid-list row"><div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="plan in plans"><div class="u_cursor_disabled panel panel-default"><div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><div class="grid-list-text text-center"><h4 id="productName">{{plan.name}}</h4><p class="product-description">{{plan.descriptionShort}}</p><div><h1>${{plan.priceMonth}}</h1>&nbsp;<span translate="">common-header.plans.per-company-month</span></div><div class="u_margin-lg"><p class="small u_margin-sm-bottom" ng-show="!isOnTrial(plan) && !isTrialExpired(plan)">&nbsp;</p><p class="small u_margin-sm-bottom" ng-show="isCurrentPlan(plan) && isOnTrial(plan)" translate="" translate-values="{ count: currentPlan.trialPeriod }">common-header.plans.days-left-trial</p><p class="small u_margin-sm-bottom text-danger" ng-show="isCurrentPlan(plan) && isTrialExpired(plan)" translate="">common-header.plans.trial-expired</p><a id="current-plan" ng-show="currentButtonVisible(plan)" target="_blank" class="cta_button btn btn-white" translate="">common-header.plans.current</a><a id="subscribe-plan" ng-show="subscribeButtonVisible(plan)" target="_blank" href="https://store.risevision.com/product/{{plan.productId}}" class="cta_button btn btn-primary" translate="">common-header.plans.subscribe</a><a id="start-trial-plan" ng-show="canStartTrial(plan)" target="_blank" ng-click="startTrial(plan)" class="cta_button btn btn-primary" translate="">common-header.plans.start-trial</a><a id="downgrade-plan" ng-show="canDowngrade(plan)" ng-click="showDowngradeModal()" class="cta_button btn btn-default" translate="">common-header.plans.downgrade</a></div></div></div></div></div></div><div ng-show="!showRPPLink" class="text-center u_margin-md-top"><a class="btn btn-link btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/pricing?utm_campaign=apps" translate="">common-header.plans.learn-more-1</a> <span class="bold" translate="">common-header.plans.learn-more-2</span> <a class="btn btn-link btn-lg get-started-guide" target="_blank" href="https://www.risevision.com/contact-us" translate="">common-header.plans.learn-more-3</a></div><div ng-show="showRPPLink && !playerProSubscriptionId" class="text-center u_margin-md-top"><a class="btn btn-link btn-lg" target="_blank" href="https://store.risevision.com/product/2048" translate="">common-header.plans.individual-licenses</a> <a class="cta_button btn btn-primary u_margin-lg" target="_blank" href="https://store.risevision.com/product/2048" translate="">common-header.plans.go-to-store</a></div><div ng-show="showRPPLink && playerProSubscriptionId" class="text-center u_margin-md-top"><a class="btn btn-link btn-lg" target="_blank" href="https://store.risevision.com/account/subscription/{{playerProSubscriptionId}}?cid={{companyId}}" translate="">common-header.plans.individual-licenses</a> <a class="cta_button btn btn-primary u_margin-lg" target="_blank" href="https://store.risevision.com/account/subscription/{{playerProSubscriptionId}}?cid={{companyId}}" translate="">common-header.plans.go-to-store</a></div></div><div class="modal-footer"></div></div>');
 }]);
 })();
 

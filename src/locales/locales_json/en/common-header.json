@@ -24,7 +24,8 @@
     "learn-more-3": "Contact Sales If You Need Help",
     "per-company-month": "per Company per Month",
     "start-trial": "Start Trial",
-    "subscribe": "Subscribe"
+    "subscribe": "Subscribe",
+    "trial-expired": "Trial Expired"
   },
   "user": {
     "error": {
