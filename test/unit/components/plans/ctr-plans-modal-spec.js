@@ -1,6 +1,6 @@
 "use strict";
 
-describe.only("controller: plans modal", function() {
+describe("controller: plans modal", function() {
   beforeEach(module("risevision.common.components.plans"));
   beforeEach(module(function ($provide) {
     $provide.service("$modalInstance", function() {
@@ -206,7 +206,7 @@ describe.only("controller: plans modal", function() {
       expect($scope.canDowngrade({ type: "enterprise" })).to.be.false;
     });
 
-    it.only("should be able to downgrade from Basic Plan to Free, unless status is Trial Expired", function() {
+    it("should be able to downgrade from Basic Plan to Free, unless status is Trial Expired", function() {
       currentPlan.type = "basic";
 
       expect($scope.canDowngrade({ type: "free" })).to.be.true;
