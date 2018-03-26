@@ -9602,10 +9602,10 @@ angular.module("risevision.common.components.plans")
     };
 
     $scope.currentButtonVisible = function (plan) {
-      var freeOnCurrenExpired = $scope.isFree(plan) && planFactory.isTrialExpired();
+      var freeOnCurrentExpired = $scope.isFree(plan) && planFactory.isTrialExpired();
       var currentSubscribed = $scope.isCurrentPlan(plan) && $scope.isSubscribed(plan);
 
-      return freeOnCurrenExpired || currentSubscribed;
+      return freeOnCurrentExpired || currentSubscribed;
     };
 
     $scope.subscribeButtonVisible = function (plan) {
