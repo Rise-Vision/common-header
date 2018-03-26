@@ -409,6 +409,9 @@ msgstr "Days Trial"
 msgid "subscription.status.premium"
 msgstr "Premium"
 
+msgid "subscription.status.professional"
+msgstr "Professional"
+
 msgid "subscription.subscribe"
 msgstr "Subscribe"
 
