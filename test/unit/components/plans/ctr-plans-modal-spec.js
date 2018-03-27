@@ -33,6 +33,12 @@ describe("controller: plans modal", function() {
         },
         isTrialExpired: function() {
           return false;
+        },
+        isProSubscribed: function() {
+          return false;
+        },
+        isProSuspended: function() {
+          return false;
         }
       };
     });
@@ -282,6 +288,76 @@ describe("controller: plans modal", function() {
       currentPlan.planSubscriptionStatus = "Trial Expired";
 
       expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE, statusCode: "trial-available" })).to.be.true;
+    });
+  });
+
+  describe("currentButtonVisible", function() {
+    it("should show the Current button if plan is free and current plan has expired", function() {
+      sandbox.stub(planFactory, "isTrialExpired").returns(true);
+      expect($scope.currentButtonVisible({ type: "free" })).to.be.true;
+    });
+
+    it("should show the Current button if plan is same as current and status is Subscribed/Active", function() {
+      currentPlan.type = "advanced";
+      expect($scope.currentButtonVisible({ type: "advanced", status: "Active" })).to.be.true;
+    });
+
+    it("should not show the Current button if plan is free and current plan has not expired", function() {
+      sandbox.stub(planFactory, "isTrialExpired").returns(false);
+      expect($scope.currentButtonVisible({ type: "free" })).to.be.false;
+    });
+
+    it("should not show the Current button if plan is same as current and status is not Subscribed/Active", function() {
+      currentPlan.type = "advanced";
+      expect($scope.currentButtonVisible({ type: "advanced", status: "Trial" })).to.be.false;
+    });
+  });
+
+  describe("subscribeButtonVisible", function() {
+    it("should not show the Subscribed button unless it's a trial, it has expired or it's a higher plan", function() {
+      expect($scope.subscribeButtonVisible({ statusCode: "subscribed" })).to.be.falsey;
+    });
+
+    it("should show the Subscribed button if it is a trial", function() {
+      expect($scope.subscribeButtonVisible({ statusCode: "on-trial" })).to.be.true;
+    });
+
+    it("should show the Subscribed button if it has expired", function() {
+      expect($scope.subscribeButtonVisible({ statusCode: "trial-expired" })).to.be.true;
+    });
+
+    it("should show the Subscribed button if it is a higher plan", function() {
+      currentPlan.type = "basic";
+      expect($scope.subscribeButtonVisible({ type: "advanced" })).to.be.true;
+    });
+  });
+
+  describe("proSubscriptionLinkVisible", function() {
+    it("should not show the Pro Subscription Link if playerProSubscriptionId is null", function() {
+      $scope.playerProSubscriptionId = null;
+      expect($scope.proSubscriptionLinkVisible()).to.be.falsey;
+    });
+
+    it("should not show the Pro Subscription Link if Pro is not Subscribed or Suspended", function() {
+      $scope.playerProSubscriptionId = "test";
+      sandbox.stub(planFactory, "isProSubscribed").returns(false);
+      sandbox.stub(planFactory, "isProSuspended").returns(false);
+
+      expect($scope.proSubscriptionLinkVisible()).to.be.false;
+    });
+
+    it("should show the Pro Subscription Link if Pro is Subscribed", function() {
+      $scope.playerProSubscriptionId = "test";
+      sandbox.stub(planFactory, "isProSubscribed").returns(true);
+
+      expect($scope.proSubscriptionLinkVisible()).to.be.true;
+    });
+
+    it("should show the Pro Subscription Link if Pro is Suspended", function() {
+      $scope.playerProSubscriptionId = "test";
+      sandbox.stub(planFactory, "isProSuspended").returns(true);
+
+      expect($scope.proSubscriptionLinkVisible()).to.be.true;
     });
   });
 });

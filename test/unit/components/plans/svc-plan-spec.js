@@ -464,6 +464,11 @@ describe("Services: plan", function() {
       planFactory.currentPlan = { proStatus: "Cancelled" };
       expect(planFactory.isProSubscribed()).to.be.false;
     });
+
+    it("should return the Pro subscription status is Suspended", function() {
+      planFactory.currentPlan = { proStatus: "Suspended" };
+      expect(planFactory.isProSuspended()).to.be.true;
+    });
   });
 
   describe("hasProfessionalLicenses: ", function() {

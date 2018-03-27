@@ -78,6 +78,10 @@ angular.module("risevision.common.components.plans")
       return $scope.isOnTrial(plan) || $scope.isTrialExpired(plan) || $scope.canUpgrade(plan);
     };
 
+    $scope.proSubscriptionLinkVisible = function () {
+      return $scope.playerProSubscriptionId && (planFactory.isProSubscribed() || planFactory.isProSuspended());
+    };
+
     $scope.canUpgrade = function (plan) {
       if ($scope.canStartTrial(plan)) {
         return false;

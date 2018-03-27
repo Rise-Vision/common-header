@@ -62,7 +62,7 @@
         common-header.plans.learn-more-3
       </a>
     </div>
-    <div ng-show="showRPPLink && !playerProSubscriptionId" class="text-center u_margin-md-top">
+    <div ng-show="showRPPLink && !proSubscriptionLinkVisible()" class="text-center u_margin-md-top">
       <a class="btn btn-link btn-lg" target="_blank" href="https://store.risevision.com/product/2048" translate>
         common-header.plans.individual-licenses
       </a>
@@ -70,7 +70,7 @@
         common-header.plans.go-to-store
       </a>
     </div>
-    <div ng-show="showRPPLink && playerProSubscriptionId" class="text-center u_margin-md-top">
+    <div ng-show="showRPPLink && proSubscriptionLinkVisible()" class="text-center u_margin-md-top">
       <a class="btn btn-link btn-lg" target="_blank" href="https://store.risevision.com/account/subscription/{{playerProSubscriptionId}}?cid={{companyId}}" translate>
         common-header.plans.individual-licenses
       </a>

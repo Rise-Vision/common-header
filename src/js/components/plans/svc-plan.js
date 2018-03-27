@@ -226,6 +226,10 @@
           return _factory.currentPlan.proStatus === "Active";
         };
 
+        _factory.isProSuspended = function () {
+          return _factory.currentPlan.proStatus === "Suspended";
+        };
+
         _factory.hasProfessionalLicenses = function () {
           return _factory.isSubscribed() || _factory.isOnTrial() || _factory.isProSubscribed();
         };
