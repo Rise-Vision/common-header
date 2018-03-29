@@ -41,8 +41,7 @@
 
         it("should show the get support button", function () {
           expect(helpDropdownPage.getSupportButton().isDisplayed()).to.eventually.be.true;
-          expect(helpDropdownPage.getSupportButton().getAttribute('href')).to.eventually.equal("https://help.risevision.com/hc/en-us/requests/new?ticket_form_id=12050");
-          expect(helpDropdownPage.getSupportButton().getAttribute('target')).to.eventually.equal("_blank");
+          expect(helpDropdownPage.getSupportButton().getAttribute('ng-click')).to.eventually.equal("getSupport()");
         });
 
         it("should show the sign up for training button", function () {
