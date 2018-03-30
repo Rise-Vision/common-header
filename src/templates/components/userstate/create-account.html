@@ -1,5 +1,12 @@
-<h1 class="u_remove-top" >Get Started For Free</h1>					
-<p class="lead text-muted" >No commitments or contracts</p>
+<div ng-if="!joinAccount">
+  <h1 class="u_remove-top" >Get Started For Free</h1>					
+  <p class="lead text-muted" >Sign Up now and enjoy your 14-day Basic Plan trial. No credit card or commitment required.</p>
+</div>
+
+<div ng-if="joinAccount">
+  <h1 class="u_remove-top" >Join Your Company</h1>					
+  <p class="lead text-muted" >Complete your account <span ng-if="!companyName">registration</span><span ng-if="companyName">with {{companyName}}</span>.</p>
+</div>
 
 <!-- GOOGLE API -->
 <div class="col-xs-12 col-md-8" ng-show="!errors.confirmationRequired">

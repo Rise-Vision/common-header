@@ -52,7 +52,10 @@ describe("controller: Log In", function() {
       };
     });
     $provide.value("$stateParams", {
-      state: "currentState"
+      state: "currentState",
+      isSignUp: "isSignUp",
+      joinAccount: "joinAccount",
+      companyName: "companyName"
     });
 
     $provide.service("uiFlowManager",function(){
@@ -83,8 +86,7 @@ describe("controller: Log In", function() {
         $scope: $scope,
         $state: $injector.get("$state"),
         $loading: $loading,
-        uiFlowManager: uiFlowManager,
-        isSignUp: false
+        uiFlowManager: uiFlowManager
       });
       $scope.$digest();
       
@@ -103,6 +105,12 @@ describe("controller: Log In", function() {
     expect($scope).to.be.ok;
     expect($scope.googleLogin).to.be.a("function");
     expect($scope.customLogin).to.be.a("function");
+  });
+
+  it("should initialize scope", function() {
+    expect($scope.isSignUp).to.equal("isSignUp");
+    expect($scope.joinAccount).to.equal("joinAccount");
+    expect($scope.companyName).to.equal("companyName");
   });
 
   describe("googleLogin: ", function() {

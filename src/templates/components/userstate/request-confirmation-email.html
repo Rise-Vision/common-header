@@ -18,9 +18,10 @@
       <span>The {{credentials.username}} account is already confirmed.</span>
     </p>
   </div>
-  <div class="panel-body bg-info u_margin-lg-top" ng-show="isGoogleAccount">
+  <div class="panel-body bg-danger u_margin-lg-top" ng-show="isGoogleAccount">
     <p class="u_remove-bottom">
       <span>
+        <i class="fa fa-warning icon-left"></i>
         This account is authenticated by Google.<br/>
         <p class="text-muted">
           You can <a id="sign-in-link" ui-sref="common.auth.unauthorized">Sign in with Google</a> in our login page.

@@ -17,7 +17,7 @@ describe("service: userEmail:", function() {
         get: function(url){
           expect(url).to.be.ok;
 
-          return "email template w/ {{newUser.username}} & {{newUser.companyName}} & {{user.name}}";
+          return "email template w/ {{newUser.username}} & {{newUser.companyName}} & {{newUser.encodedCompanyName}} & {{user.name}}";
         },
         put: function() {}
       };
@@ -25,7 +25,7 @@ describe("service: userEmail:", function() {
     $provide.service("userState", function() {
       return {
         getSelectedCompanyName: function() {
-          return "companyName";
+          return "Company Name%";
         },
         getCopyOfProfile: function() {
           return profile;
@@ -61,7 +61,7 @@ describe("service: userEmail:", function() {
     expect(userEmail.sendingEmail).to.be.true;
     sendSpy.should.have.been.calledWith("user@gmail.com",
       "You've been added to a Rise Vision account!",
-      "email template w/ username & companyName & Test User");
+      "email template w/ username & Company Name% & Company%20Name%25 & Test User");
 
     setTimeout(function() {
       expect(userEmail.sendingEmail).to.be.false;
@@ -76,7 +76,7 @@ describe("service: userEmail:", function() {
     userEmail.send("username", "user@gmail.com");
     sendSpy.should.have.been.calledWith("user@gmail.com",
       "You've been added to a Rise Vision account!",
-      "email template w/ username & companyName & test.user@gmail.com");
+      "email template w/ username & Company Name% & Company%20Name%25 & test.user@gmail.com");
   });
 
   it("should not call w/ missing parameters",function(){

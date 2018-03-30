@@ -34,6 +34,21 @@ describe("app:", function() {
       expect(state).to.be.ok;
       expect(state.url).to.equal("/createaccount/:state");
       expect(state.controller).to.equal("LoginCtrl");
+      expect(state.params).to.deep.equal({
+        isSignUp: true,
+        joinAccount: false
+      });
+    });
+
+    it("common.auth.joinaccount", function() {
+      var state = $state.get("common.auth.joinaccount");
+      expect(state).to.be.ok;
+      expect(state.url).to.equal("/joinaccount/:companyName");
+      expect(state.controller).to.equal("LoginCtrl");
+      expect(state.params).to.deep.equal({
+        isSignUp: true,
+        joinAccount: true
+      });
     });
   });
 

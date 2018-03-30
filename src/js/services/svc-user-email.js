@@ -28,6 +28,8 @@ angular.module("risevision.common.email")
         template = template.replace("{{newUser.username}}", username);
         template = template.replace("{{newUser.companyName}}",
           userState.getSelectedCompanyName());
+        template = template.replace("{{newUser.encodedCompanyName}}",
+          encodeURIComponent(userState.getSelectedCompanyName()));
 
         template = template.replace("{{user.name}}", _getCurrentUserName());
 

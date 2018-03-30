@@ -70,13 +70,9 @@
         url: "/unauthorized/:state",
         controller: "LoginCtrl",
         params: {
+          isSignUp: false,
           passwordReset: null,
           accountConfirmed: null
-        },
-        resolve: {
-          isSignUp: function () {
-            return false;
-          }
         }
       })
 
@@ -88,10 +84,23 @@
         ],
         url: "/createaccount/:state",
         controller: "LoginCtrl",
-        resolve: {
-          isSignUp: function () {
-            return true;
+        params: {
+          isSignUp: true,
+          joinAccount: false
+        }
+      })
+
+      .state("common.auth.joinaccount", {
+        templateProvider: ["$templateCache",
+          function ($templateCache) {
+            return $templateCache.get("userstate/create-account.html");
           }
+        ],
+        url: "/joinaccount/:companyName",
+        controller: "LoginCtrl",
+        params: {
+          isSignUp: true,
+          joinAccount: true
         }
       })
 
