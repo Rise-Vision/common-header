@@ -1,15 +1,15 @@
 angular.module("risevision.common.header")
   .controller("RegistrationModalCtrl", [
-    "$scope", "$rootScope", "$modalInstance",
+    "$q", "$scope", "$rootScope", "$modalInstance",
     "$loading", "registerAccount", "$log", "cookieStore",
     "userState", "pick", "uiFlowManager", "humanReadableError",
     "agreeToTermsAndUpdateUser", "account", "segmentAnalytics",
-    "bigQueryLogging", "analyticsEvents", "updateCompany", "$q",
-    function ($scope, $rootScope, $modalInstance, $loading, registerAccount,
+    "bigQueryLogging", "analyticsEvents", "updateCompany", "planFactory",
+    function ($q, $scope, $rootScope, $modalInstance, $loading, registerAccount,
       $log,
       cookieStore, userState, pick, uiFlowManager, humanReadableError,
       agreeToTermsAndUpdateUser, account, segmentAnalytics, bigQueryLogging,
-      analyticsEvents, updateCompany, $q) {
+      analyticsEvents, updateCompany, planFactory) {
 
       $scope.newUser = !account;
 
@@ -91,6 +91,10 @@ angular.module("risevision.common.header")
               userState.refreshProfile()
                 .then()
                 .finally(function () {
+                  if ($scope.newUser) {
+                    planFactory.startBasicPlanTrial();
+                  }
+
                   updateCompanyWebsite();
                   analyticsEvents.identify();
                   segmentAnalytics.track("User Registered", {

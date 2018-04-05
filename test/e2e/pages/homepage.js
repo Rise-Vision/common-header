@@ -29,6 +29,9 @@
     var freePlanBanner = element(by.id("free-plan-banner"));
     var freePlansModalLink = freePlanBanner.element(by.tagName("a"));
 
+    var trialPlanBanner = element(by.id("trial-plan-banner"));
+    var trialPlansModalLink = trialPlanBanner.element(by.tagName("a"));
+
     this.get = function() {
       browser.get(url);
     };
@@ -99,6 +102,14 @@
 
     this.getFreePlansModalLink = function() {
       return freePlansModalLink;
+    };
+
+    this.getTrialPlanBanner = function() {
+      return trialPlanBanner;
+    };
+
+    this.getTrialPlansModalLink = function() {
+      return trialPlansModalLink;
     };
 
   };

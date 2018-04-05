@@ -31,6 +31,9 @@ describe("controller: plans modal", function() {
         getCompanyPlanStatus: function() {
           return null;
         },
+        startTrial: function() {
+          return Q.resolve([]);
+        },
         isTrialExpired: function() {
           return false;
         },
@@ -60,17 +63,10 @@ describe("controller: plans modal", function() {
     $provide.service("$q", function() {
       return Q;
     });
-    $provide.service("storeAuthorization", function() {
-      return {
-        startTrial: function() {
-          return Q.resolve([]);
-        }
-      };
-    });
   }));
 
   var sandbox, $scope, $modalInstance, $modal, $loading, $log, planFactory, currentPlan, $q;
-  var storeAuthorization, userState;
+  var userState;
   var BASIC_PLAN_CODE, ADVANCED_PLAN_CODE;
 
   beforeEach(function(done) {
@@ -83,30 +79,27 @@ describe("controller: plans modal", function() {
       $loading = $injector.get("$loading");
       $log = $injector.get("$log");
       planFactory = $injector.get("planFactory");
-      storeAuthorization = $injector.get("storeAuthorization");
       $q = $injector.get("$q");
       userState = $injector.get("userState");
       currentPlan = {};
 
       var plansByType = _.keyBy($injector.get("PLANS_LIST"), "type");
 
-      BASIC_PLAN_CODE = plansByType.basic.pc;
-      ADVANCED_PLAN_CODE = plansByType.advanced.pc;
+      BASIC_PLAN_CODE = plansByType.basic.productCode;
+      ADVANCED_PLAN_CODE = plansByType.advanced.productCode;
 
       var plansList = [{
-        pc: BASIC_PLAN_CODE,
         productCode: BASIC_PLAN_CODE,
         status: "Trial Available",
         statusCode: "trial-available"
       }, {
-        pc: ADVANCED_PLAN_CODE,
         productCode: ADVANCED_PLAN_CODE,
         status: "Subscribed",
         statusCode: "subscribed"
       }];
 
       sandbox.stub(planFactory, "getCompanyPlanStatus", function() {
-        return $q.when(_.keyBy(plansList, "pc"));
+        return $q.when(_.keyBy(plansList, "productCode"));
       });
 
       sandbox.stub(planFactory, "getPlansDetails", function(){
@@ -120,7 +113,6 @@ describe("controller: plans modal", function() {
         $loading: $loading,
         planFactory: planFactory,
         currentPlan: currentPlan,
-        storeAuthorization: storeAuthorization,
         showRPPLink: false,
         userState: userState
       });

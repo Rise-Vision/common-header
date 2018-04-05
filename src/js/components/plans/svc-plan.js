@@ -6,7 +6,7 @@
       name: "Free",
       type: "free",
       productId: "000",
-      pc: "000",
+      productCode: "000",
       status: "Active",
       priceMonth: 0,
       descriptionShort: "Design, distribute and manage your digital signage for free. Unlimited Displays, Companies and Users.",
@@ -15,35 +15,38 @@
       name: "Basic",
       type: "basic",
       productId: "289",
-      pc: "40c092161f547f8f72c9f173cd8eebcb9ca5dd25",
-      proLicenseCount: 2
+      productCode: "40c092161f547f8f72c9f173cd8eebcb9ca5dd25",
+      proLicenseCount: 2,
+      trialPeriod: 14
     }, {
       name: "Advanced",
       type: "advanced",
       productId: "290",
-      pc: "93b5595f0d7e4c04a3baba1102ffaecb17607bf4",
-      proLicenseCount: 9
+      productCode: "93b5595f0d7e4c04a3baba1102ffaecb17607bf4",
+      proLicenseCount: 9,
+      trialPeriod: 14
     }, {
       name: "Enterprise",
       type: "enterprise",
       productId: "301",
-      pc: "b1844725d63fde197f5125b58b6cba6260ee7a57",
+      productCode: "b1844725d63fde197f5125b58b6cba6260ee7a57",
       proLicenseCount: 50
     }, {
       name: "Enterprise",
       type: "enterprisesub",
       productId: "303",
-      pc: "d521f5bfbc1eef109481eebb79831e11c7804ad8",
+      productCode: "d521f5bfbc1eef109481eebb79831e11c7804ad8",
       proLicenseCount: 0
     }])
-    .factory("planFactory", ["$q", "$log", "$rootScope", "$modal", "$templateCache", "userState", "storeAPILoader",
-      "currencyService", "PLANS_LIST", "subscriptionStatusService",
+    .factory("planFactory", ["$q", "$log", "$rootScope", "$modal", "$templateCache",
+      "userState", "storeAPILoader", "currencyService", "subscriptionStatusService", "storeAuthorization",
+      "PLANS_LIST",
       function ($q, $log, $rootScope, $modal, $templateCache, userState, storeAPILoader,
-        currencyService, PLANS_LIST, subscriptionStatusService) {
+        currencyService, subscriptionStatusService, storeAuthorization, PLANS_LIST) {
         var _factory = {};
-        var _plansCodesList = _.map(PLANS_LIST, "pc");
+        var _plansCodesList = _.map(PLANS_LIST, "productCode");
         var _plansByType = _.keyBy(PLANS_LIST, "type");
-        var _plansByCode = _.keyBy(PLANS_LIST, "pc");
+        var _plansByCode = _.keyBy(PLANS_LIST, "productCode");
 
         _factory.getPlans = function (params) { // companyId, search
           $log.debug("getPlans called.");
@@ -97,7 +100,7 @@
         };
 
         _factory.showPlansModal = function (showRPPLink) {
-          var modalInstance = $modal.open({
+          $modal.open({
             template: $templateCache.get("plans/plans-modal.html"),
             controller: "PlansModalCtrl",
             size: "lg",
@@ -109,15 +112,6 @@
                 return showRPPLink;
               }
             }
-          });
-          modalInstance.result.then(function (plan) {
-            var selectedCompany = userState.getCopyOfSelectedCompany(true);
-            selectedCompany.planProductCode = plan.productCode;
-            selectedCompany.planTrialPeriod = plan.trialPeriod;
-            selectedCompany.planSubscriptionStatus = "Trial";
-            selectedCompany.planPlayerProLicenseCount = _plansByCode[plan.productCode].proLicenseCount;
-
-            userState.updateCompanySettings(selectedCompany);
           });
         };
 
@@ -192,6 +186,29 @@
 
           company.playerProAssignedDisplays = assignedDisplays;
           userState.updateCompanySettings(company);
+        };
+
+        _factory.startTrial = function (plan) {
+          return storeAuthorization.startTrial(plan.productCode)
+            .then(function () {
+              var selectedCompany = userState.getCopyOfSelectedCompany(true);
+
+              selectedCompany.planProductCode = plan.productCode;
+              selectedCompany.planTrialPeriod = plan.trialPeriod;
+              selectedCompany.planSubscriptionStatus = "Trial";
+              selectedCompany.planPlayerProLicenseCount = _plansByCode[plan.productCode].proLicenseCount;
+
+              userState.updateCompanySettings(selectedCompany);
+            })
+            .catch(function (err) {
+              $log.debug("Failed to start trial", err);
+
+              throw err;
+            });
+        };
+
+        _factory.startBasicPlanTrial = function () {
+          return _factory.startTrial(_plansByType.basic);
         };
 
         _factory.isPlanActive = function () {

@@ -14,7 +14,7 @@
     </div>
   </div>
 
-  <div class="alert alert-plan plan-active text-right" ng-show="isOnTrial()">
+  <div id="trial-plan-banner" class="alert alert-plan plan-active text-right" ng-show="isOnTrial()">
     <div class="u_margin-right">
       <strong>You have {{plan.trialPeriod}} days left on your Rise Vision {{plan.name}} Plan trial!</strong>
       <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Subscribe Now</a>

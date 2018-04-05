@@ -31,6 +31,10 @@
     this.getStartTrialPlanButton = function(plan) {
       return getButtonByPlan("start-trial-plan", plan);
     };
+
+    this.getTrialDaysRemaining = function(plan) {
+      return getButtonByPlan("trial-days-remaining", plan);
+    };
   };
 
   module.exports = PlansModalPage;

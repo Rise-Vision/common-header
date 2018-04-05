@@ -25,7 +25,7 @@
                 <p class="small u_margin-sm-bottom"
                   ng-show="!isOnTrial(plan) && !isTrialExpired(plan)">&nbsp;</p>
                 <!-- Trial remaining days -->
-                <p class="small u_margin-sm-bottom"
+                <p id="trial-days-remaining" class="small u_margin-sm-bottom"
                   ng-show="isCurrentPlan(plan) && isOnTrial(plan)" translate
                   translate-values="{ count: currentPlan.trialPeriod }">common-header.plans.days-left-trial</p>
                 <!-- Trial expired notice -->

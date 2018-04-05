@@ -50,6 +50,13 @@ describe("Services: plan", function() {
         list: function() {}
       };
     });
+    $provide.service("storeAuthorization", function() {
+      return storeAuthorization = {
+        startTrial: sinon.spy(function() {
+          return (startTrial ? Q.resolve() : Q.reject("error"));
+        })
+      };
+    });
     $provide.service("userState", function () {
       return {
         _restoreState: function () {},
@@ -59,8 +66,7 @@ describe("Services: plan", function() {
         getCopyOfSelectedCompany: function() {
           return {};
         },
-        updateCompanySettings: function () {
-        }
+        updateCompanySettings: sinon.stub()
       };
     });
     $provide.service("currencyService", function () {
@@ -79,6 +85,7 @@ describe("Services: plan", function() {
   }));
 
   var sandbox, $rootScope, $modal, userState, planFactory, subscriptionStatusService;
+  var storeAuthorization, startTrial;
   var BASIC_PLAN_CODE, BASIC_PLAN_ID, ADVANCED_PLAN_CODE, ENTERPRISE_PLAN_CODE;
 
   beforeEach(function() {
@@ -93,10 +100,10 @@ describe("Services: plan", function() {
 
       var plansByType = _.keyBy($injector.get("PLANS_LIST"), "type");
 
-      BASIC_PLAN_CODE = plansByType.basic.pc;
+      BASIC_PLAN_CODE = plansByType.basic.productCode;
       BASIC_PLAN_ID = plansByType.basic.productId;
-      ADVANCED_PLAN_CODE = plansByType.advanced.pc;
-      ENTERPRISE_PLAN_CODE = plansByType.enterprise.pc;
+      ADVANCED_PLAN_CODE = plansByType.advanced.productCode;
+      ENTERPRISE_PLAN_CODE = plansByType.enterprise.productCode;
     });
   });
 
@@ -278,7 +285,6 @@ describe("Services: plan", function() {
 
     it("should add a display to the authorized displays list", function() {
       sandbox.stub(userState, "getCopyOfSelectedCompany").returns({});
-      sandbox.stub(userState, "updateCompanySettings");
 
       planFactory.toggleDisplayLicenseLocal(displayId, true);
 
@@ -291,7 +297,6 @@ describe("Services: plan", function() {
       sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
         playerProAssignedDisplays: ["1", displayId, "3"]
       });
-      sandbox.stub(userState, "updateCompanySettings");
 
       planFactory.toggleDisplayLicenseLocal(displayId, false);
 
@@ -304,7 +309,6 @@ describe("Services: plan", function() {
       sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
         playerProAssignedDisplays: ["1", displayId, "3"]
       });
-      sandbox.stub(userState, "updateCompanySettings");
 
       planFactory.toggleDisplayLicenseLocal(displayId, true);
 
@@ -317,13 +321,68 @@ describe("Services: plan", function() {
       sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
         playerProAssignedDisplays: []
       });
-      sandbox.stub(userState, "updateCompanySettings");
 
       planFactory.toggleDisplayLicenseLocal(displayId, false);
 
       expect(userState.updateCompanySettings).to.have.been.calledWith({
         playerProAssignedDisplays: []
       });
+    });
+  });
+
+  describe("startTrial: ", function() {
+    var plan = {
+      name: "Advanced",
+      type: "advanced",
+      productCode: "93b5595f0d7e4c04a3baba1102ffaecb17607bf4",
+      proLicenseCount: 9,
+      trialPeriod: 14
+    };
+    
+    beforeEach(function() {
+      startTrial = true;
+    });
+
+    it("should start the trial and update company settings", function(done) {
+      planFactory.startTrial(plan)
+        .then(function() {
+          storeAuthorization.startTrial.should.have.been.calledWith(plan.productCode);
+
+          userState.updateCompanySettings.should.have.been.calledWith({
+            planProductCode: plan.productCode,
+            planTrialPeriod: plan.trialPeriod,
+            planSubscriptionStatus: "Trial",
+            planPlayerProLicenseCount: plan.proLicenseCount
+          });
+
+          done();
+        }, done);
+    });
+
+    it("should handle failure to start the trial", function(done) {
+      startTrial = false;
+
+      planFactory.startTrial(plan)
+        .then(function() {
+          done("fail");
+        }, function(err) {
+          expect(err).to.equal("error");
+
+          storeAuthorization.startTrial.should.have.been.calledWith(plan.productCode);
+
+          userState.updateCompanySettings.should.not.have.been.called;
+
+          done();
+        });
+    });
+
+    it("startBasicPlanTrial: ", function(done) {
+      planFactory.startBasicPlanTrial()
+        .then(function() {
+          storeAuthorization.startTrial.should.have.been.calledWith(BASIC_PLAN_CODE);
+
+          done();
+        }, done);
     });
   });
 

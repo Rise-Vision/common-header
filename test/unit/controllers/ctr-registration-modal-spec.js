@@ -78,6 +78,12 @@ describe("controller: registration modal", function() {
     $provide.service("agreeToTermsAndUpdateUser", function() {
       return registrationService("agreeToTerms");
     });
+
+    $provide.service("planFactory", function() {
+      return planFactory = {
+        startBasicPlanTrial: sinon.spy()
+      };
+    });
     
     $provide.factory("cookieStore", function() {
       return {
@@ -126,7 +132,7 @@ describe("controller: registration modal", function() {
   }));
   var $scope, userProfile, userState, $modalInstance, cookieStored, newUser;
   var registerUser, account, trackerCalled, bqCalled, identifySpy,
-    updateCompanyCalled;
+    updateCompanyCalled, planFactory;
   
   beforeEach(function() {
     registerUser = true;
@@ -206,6 +212,7 @@ describe("controller: registration modal", function() {
       var profileSpy = sinon.spy(userState, "refreshProfile");
       setTimeout(function() {
         expect(newUser).to.be.true;
+        planFactory.startBasicPlanTrial.should.have.been.called;
         identifySpy.should.have.been.called;
         expect(trackerCalled).to.equal("User Registered");
         expect(bqCalled).to.equal("User Registered");
@@ -229,6 +236,7 @@ describe("controller: registration modal", function() {
       var profileSpy = sinon.spy(userState, "refreshProfile");
       setTimeout(function() {
         expect(newUser).to.be.true;
+        planFactory.startBasicPlanTrial.should.have.been.called;
         identifySpy.should.have.been.called;
         expect(trackerCalled).to.equal("User Registered");
         expect(bqCalled).to.equal("User Registered");
@@ -250,6 +258,7 @@ describe("controller: registration modal", function() {
       var profileSpy = sinon.spy(userState, "refreshProfile");
       setTimeout(function(){
         expect(newUser).to.be.true;
+        planFactory.startBasicPlanTrial.should.not.have.been.called;
         identifySpy.should.not.have.been.called;
         expect(trackerCalled).to.not.be.ok;
         expect(bqCalled).to.not.be.ok;
@@ -283,6 +292,7 @@ describe("controller: registration modal", function() {
       var profileSpy = sinon.spy(userState, "refreshProfile");
       setTimeout(function() {
         expect(newUser).to.be.false;
+        planFactory.startBasicPlanTrial.should.not.have.been.called;
         identifySpy.should.have.been.called;
         expect(trackerCalled).to.equal("User Registered");
         expect(bqCalled).to.equal("User Registered");

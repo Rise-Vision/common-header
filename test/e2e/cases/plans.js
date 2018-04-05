@@ -28,33 +28,34 @@
       });
 
       describe("Plan banner", function () {
-        it("should show free plan banner", function () {
-          expect(homepage.getFreePlanBanner().isDisplayed()).to.eventually.be.true;
+        it("should show Basic Plan Trial", function () {
+          expect(homepage.getFreePlanBanner().isDisplayed()).to.eventually.be.false;
+          expect(homepage.getTrialPlanBanner().isDisplayed()).to.eventually.be.true;
         });
 
-        it("should show 'See Our Plans' link", function () {
-          expect(homepage.getFreePlansModalLink().isDisplayed()).to.eventually.be.true;
+        it("should show 'Subscribe Now' link", function () {
+          expect(homepage.getTrialPlansModalLink().isDisplayed()).to.eventually.be.true;
         });
       });
 
-      describe("Plans modal (free plan)", function () {
+      describe("Plans modal (Basic Plan Trial)", function () {
         it("show open the Plans Modal", function () {
-          expect(homepage.getFreePlansModalLink().isDisplayed()).to.eventually.be.true;
-          homepage.getFreePlansModalLink().click();
+          expect(homepage.getTrialPlansModalLink().isDisplayed()).to.eventually.be.true;
+          homepage.getTrialPlansModalLink().click();
 
           helper.wait(plansModalPage.getPlansModal(), "Plans Modal");
 
           expect(plansModalPage.getPlansModal().isDisplayed()).to.eventually.be.true;
 
-          helper.wait(plansModalPage.getCurrentPlanButton("free"), "Current Plan Button");
+          helper.wait(plansModalPage.getTrialDaysRemaining("basic"), "Basic Plan Trial");
 
-          expect(plansModalPage.getCurrentPlanButton("free").isDisplayed()).to.eventually.be.true;
+          expect(plansModalPage.getCurrentPlanButton("free").isDisplayed()).to.eventually.be.false;
           expect(plansModalPage.getSubscribePlanButton("free").isDisplayed()).to.eventually.be.false;
-          expect(plansModalPage.getDowngradePlanButton("free").isDisplayed()).to.eventually.be.false;
+          expect(plansModalPage.getDowngradePlanButton("free").isDisplayed()).to.eventually.be.true;
 
           expect(plansModalPage.getCurrentPlanButton("basic").isDisplayed()).to.eventually.be.false;
-          expect(plansModalPage.getSubscribePlanButton("basic").isDisplayed()).to.eventually.be.false;
-          expect(plansModalPage.getStartTrialPlanButton("basic").isDisplayed()).to.eventually.be.true;
+          expect(plansModalPage.getSubscribePlanButton("basic").isDisplayed()).to.eventually.be.true;
+          expect(plansModalPage.getStartTrialPlanButton("basic").isDisplayed()).to.eventually.be.false;
           expect(plansModalPage.getDowngradePlanButton("basic").isDisplayed()).to.eventually.be.false;
 
           expect(plansModalPage.getCurrentPlanButton("advanced").isDisplayed()).to.eventually.be.false;
