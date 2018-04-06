@@ -3703,13 +3703,13 @@ angular.module("risevision.common.email")
 
         var template = $templateCache.get("add-user-email.html");
 
-        template = template.replace("{{newUser.username}}", username);
-        template = template.replace("{{newUser.companyName}}",
+        template = template.replace(/{{newUser.username}}/g, username);
+        template = template.replace(/{{newUser.companyName}}/g,
           userState.getSelectedCompanyName());
-        template = template.replace("{{newUser.encodedCompanyName}}",
+        template = template.replace(/{{newUser.encodedCompanyName}}/g,
           encodeURIComponent(userState.getSelectedCompanyName()));
 
-        template = template.replace("{{user.name}}", _getCurrentUserName());
+        template = template.replace(/{{user.name}}/g, _getCurrentUserName());
 
         factory.sendingEmail = true;
 
