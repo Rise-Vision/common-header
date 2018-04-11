@@ -16186,7 +16186,8 @@ a.mfp-iframe:hover:after {
   line-height: 24px; }
 
 .app-launcher-wizard .panel-body {
-  height: 70vh; }
+  height: 70vh;
+  min-height: 500px; }
 
 .app-launcher-wizard_step h1 {
   font-size: 2em;
@@ -16200,6 +16201,9 @@ a.mfp-iframe:hover:after {
 .app-launcher-wizard_image {
   float: none;
   display: none; }
+
+.app-launcher-wizard_text {
+  max-width: 75%; }
 
 .app-launcher-wizard_progress-bar {
   display: flex; }

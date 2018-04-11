@@ -1,5 +1,8 @@
+.app-launcher-wizard {
+}
 .app-launcher-wizard .panel-body {
 	height: 70vh;
+	min-height: 500px;
 }
 
 .app-launcher-wizard_step {
@@ -17,6 +20,10 @@
 .app-launcher-wizard_image {
 	float: none;
 	display: none;
+}
+
+.app-launcher-wizard_text {
+	max-width: 75%;
 }
 
 .app-launcher-wizard_progress-bar {
