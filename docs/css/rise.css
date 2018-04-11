@@ -7592,7 +7592,8 @@ html {
 
 body {
   min-height: 100%;
-  overflow: auto; }
+  overflow: auto;
+  background-color: red; }
 
 html,
 body {
