@@ -54,7 +54,7 @@ rv-spinner-start-active="1">
           </span>
         </div>
       </div>
-      <div id="passwordForm" class="animated" ng-if="editingYourself && !isAdd" ng-show="isRiseAuthUser && showChangePassword" ng-class="{ 'fadeIn': showChangePassword }">
+      <div id="passwordForm" class="animated" ng-if="editingYourself && !isAdd && isRiseAuthUser && showChangePassword" ng-class="{ 'fadeIn': showChangePassword }">
         <div class="form-group"
              ng-class="{ 'has-error' : (forms.resetPasswordForm.$submitted && forms.resetPasswordForm.newPassword.$invalid) || currentPasswordNotValid }">
           <label for="user-settings-current-password">
