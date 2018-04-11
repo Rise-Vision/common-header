@@ -42,6 +42,12 @@ describe("controller: Reset Password Confirm", function() {
         userauth: userauth
       });
 
+      $scope.forms = {
+        resetPasswordForm: {
+          $valid: true
+        }  
+      };
+
       $scope.credentials.username = "username";
       $scope.$digest();
     });
@@ -59,13 +65,11 @@ describe("controller: Reset Password Confirm", function() {
     it("should redirect to login on success", function(done) {
       sandbox.stub(userauth, "resetPassword").returns(Q.resolve());
       $scope.credentials.newPassword = "password1";
-      $scope.credentials.confirmPassword = "password1";
       $scope.resetPassword();
 
       setTimeout(function() {
         expect(userauth.resetPassword).to.have.been.calledWith("username", "token", "password1");
         expect($state.go).to.have.been.calledWith("common.auth.unauthorized");
-        expect($scope.notMatchingPassword).to.be.false;
         expect($scope.invalidToken).to.be.false;
         expect($loading.startGlobal).to.have.been.called;
         expect($loading.stopGlobal).to.have.been.called;
@@ -74,16 +78,14 @@ describe("controller: Reset Password Confirm", function() {
       }, 0);
     });
 
-    it("should reject non matching passwords", function(done) {
+    it("should reject if the form is invalid", function(done) {
       sandbox.stub(userauth, "resetPassword").returns(Q.resolve());
-      $scope.credentials.newPassword = "password1";
-      $scope.credentials.confirmPassword = "password2";
+      $scope.forms.resetPasswordForm.$valid = false;
       $scope.resetPassword();
 
       setTimeout(function() {
         expect(userauth.resetPassword).to.not.have.been.called;
         expect($state.go).to.not.have.been.called;
-        expect($scope.notMatchingPassword).to.be.true;
         expect($scope.invalidToken).to.be.false;
         done();
       }, 0);
@@ -92,13 +94,11 @@ describe("controller: Reset Password Confirm", function() {
     it("should reject invalid tokens", function(done) {
       sandbox.stub(userauth, "resetPassword").returns(Q.reject({ result: { error: { message: "Password reset token does not match" }}}));
       $scope.credentials.newPassword = "password1";
-      $scope.credentials.confirmPassword = "password1";
       $scope.resetPassword();
 
       setTimeout(function() {
         expect(userauth.resetPassword).to.have.been.calledWith("username", "token", "password1");
         expect($state.go).to.not.have.been.called;
-        expect($scope.notMatchingPassword).to.be.false;
         expect($scope.invalidToken).to.be.true;
         expect($loading.startGlobal).to.have.been.called;
         expect($loading.stopGlobal).to.have.been.called;
@@ -109,13 +109,11 @@ describe("controller: Reset Password Confirm", function() {
     it("should reject other errors", function(done) {
       sandbox.stub(userauth, "resetPassword").returns(Q.reject({ result: { error: { message: "Other error" }}}));
       $scope.credentials.newPassword = "password1";
-      $scope.credentials.confirmPassword = "password1";
       $scope.resetPassword();
 
       setTimeout(function() {
         expect(userauth.resetPassword).to.have.been.calledWith("username", "token", "password1");
         expect($state.go).to.not.have.been.called;
-        expect($scope.notMatchingPassword).to.be.false;
         expect($scope.invalidToken).to.be.false;
         expect($loading.startGlobal).to.have.been.called;
         expect($loading.stopGlobal).to.have.been.called;

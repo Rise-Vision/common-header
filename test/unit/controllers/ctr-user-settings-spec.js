@@ -164,16 +164,13 @@ describe("controller: user settings", function() {
   });
   
   describe("save: ",function(){
-    var formInvalid;
     
     beforeEach(function(done){      
-      formInvalid = false;
-
       $scope.forms.userSettingsForm = {
         email: {},
         firstName: {},
         lastName: {},
-        $invalid: false
+        $valid: true
       };
       setTimeout(function(){
         $scope.$digest();
@@ -183,7 +180,7 @@ describe("controller: user settings", function() {
     });
     
     it("should not save if form is invalid", function() {
-      $scope.forms.userSettingsForm.$invalid = true;
+      $scope.forms.userSettingsForm.$valid = false;
       $scope.save();
       expect($scope.loading).to.be.false;
 

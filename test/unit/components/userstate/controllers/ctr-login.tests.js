@@ -21,9 +21,6 @@ describe("controller: Log In", function() {
           }
 
           return deferred.promise;
-        },
-        isPasswordValid: function() {
-          return true;
         }
       };
     });
@@ -253,14 +250,6 @@ describe("controller: Log In", function() {
       $scope.forms.loginForm.$valid = false;
       $scope.createAccount("endStatus");
       
-      $loading.startGlobal.should.not.have.been.called;
-    });
-
-    it("should not submit if password is invalid", function() {
-      sinon.stub(userAuthFactory, "isPasswordValid").returns(false);
-      $scope.forms.loginForm.$valid = true;
-      $scope.createAccount("endStatus");
-
       $loading.startGlobal.should.not.have.been.called;
     });
 

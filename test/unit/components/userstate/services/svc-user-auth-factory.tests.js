@@ -400,22 +400,4 @@ describe("Services: userAuthFactory", function() {
     });
   });
 
-  describe("isPasswordValid: ", function() {
-    it("should exist", function() {
-      expect(userAuthFactory.isPasswordValid).to.be.a("function");
-    });
-
-    it("should accept a valid password", function() {
-      expect(userAuthFactory.isPasswordValid("password")).to.be.true;
-    });
-
-    it("should reject an empty password", function() {
-      expect(userAuthFactory.isPasswordValid("    ")).to.be.false;
-    });
-
-    it("should reject an invalid password", function() {
-      expect(userAuthFactory.isPasswordValid("pas")).to.be.false;
-    });
-  });
-
 });

@@ -2,9 +2,8 @@
 
 angular.module("risevision.common.components.userstate")
   .controller("ResetPasswordConfirmCtrl", ["$scope", "$loading", "$log",
-    "$state", "$stateParams", "userauth", "userAuthFactory",
-    function ($scope, $loading, $log, $state, $stateParams, userauth,
-      userAuthFactory) {
+    "$state", "$stateParams", "userauth",
+    function ($scope, $loading, $log, $state, $stateParams, userauth) {
       $scope.forms = {};
       $scope.credentials = {};
       $scope.errors = {};
@@ -12,42 +11,34 @@ angular.module("risevision.common.components.userstate")
       function _resetErrorStates() {
         $scope.emailResetSent = false;
         $scope.invalidToken = false;
-        $scope.invalidPassword = false;
-        $scope.notMatchingPassword = false;
       }
 
       $scope.resetPassword = function () {
         _resetErrorStates();
 
-        if (!userAuthFactory.isPasswordValid($scope.credentials.newPassword)) {
-          $scope.invalidPassword = true;
-          return;
-        } else if ($scope.credentials.newPassword !== $scope.credentials.confirmPassword) {
-          $scope.notMatchingPassword = true;
-          return;
-        }
+        if ($scope.forms.resetPasswordForm.$valid) {
+          $loading.startGlobal("auth-reset-password");
+          userauth.resetPassword($stateParams.user, $stateParams.token, $scope.credentials
+            .newPassword)
+            .then(function () {
+              $log.log("Password updated");
+              $state.go("common.auth.unauthorized", {
+                passwordReset: true
+              });
+            })
+            .catch(function (err) {
+              var error = err.result && err.result.error && err.result.error.message;
 
-        $loading.startGlobal("auth-reset-password");
-        userauth.resetPassword($stateParams.user, $stateParams.token, $scope.credentials
-          .newPassword)
-          .then(function () {
-            $log.log("Password updated");
-            $state.go("common.auth.unauthorized", {
-              passwordReset: true
+              if (error === "Password reset token does not match") {
+                $scope.invalidToken = true;
+              } else {
+                console.error(err);
+              }
+            })
+            .finally(function () {
+              $loading.stopGlobal("auth-reset-password");
             });
-          })
-          .catch(function (err) {
-            var error = err.result && err.result.error && err.result.error.message;
-
-            if (error === "Password reset token does not match") {
-              $scope.invalidToken = true;
-            } else {
-              console.error(err);
-            }
-          })
-          .finally(function () {
-            $loading.stopGlobal("auth-reset-password");
-          });
+        }
       };
 
       $scope.requestPasswordReset = function () {

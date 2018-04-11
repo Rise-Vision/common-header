@@ -14,7 +14,7 @@ rv-spinner-start-active="1">
     <div ng-if="isAdd" class="alert alert-info">
       A Google account is no longer required by users being added to your Company. Any email address can be used!
     </div>
-    <form id="userSettingsForm" role="form" novalidate name="forms.userSettingsForm">
+    <form id="forms.userSettingsForm" role="form" novalidate name="forms.userSettingsForm">
       <div id="passwordAlert" class="animated" ng-if="editingYourself && !isAdd" ng-show="!isRiseAuthUser && showChangePassword" ng-class="{ 'fadeIn': showChangePassword }">
         <div class="panel-body bg-info u_margin-sm-bottom">
           <p class="u_remove-bottom">
@@ -56,47 +56,56 @@ rv-spinner-start-active="1">
       </div>
       <div id="passwordForm" class="animated" ng-if="editingYourself && !isAdd" ng-show="isRiseAuthUser && showChangePassword" ng-class="{ 'fadeIn': showChangePassword }">
         <div class="form-group"
-             ng-class="{ 'has-error' : (userPassword.currentPassword === '' && !forms.userSettingsForm.currentPassword.$pristine) || currentPasswordNotValid }">
+             ng-class="{ 'has-error' : (forms.resetPasswordForm.$submitted && forms.resetPasswordForm.newPassword.$invalid) || currentPasswordNotValid }">
           <label for="user-settings-current-password">
             Current Password *
           </label>
           <input id="user-settings-current-password"
                  type="password" name="currentPassword"
                  class="form-control"
-                 ng-model="userPassword.currentPassword" />
-            <p ng-show="userPassword.currentPassword === '' && !forms.userSettingsForm.currentPassword.$pristine"
-               class="help-block validation-error-message-email">Current Password is required.</p>
-            <p ng-show="currentPasswordNotValid"
-               class="help-block validation-error-message-mail">Current Password is not valid.</p>
+                 ng-model="userPassword.currentPassword" required />
+          <p class="text-danger" ng-show="forms.userSettingsForm.$submitted && forms.userSettingsForm.currentPassword.$error.required">
+            Current Password is required.
+          </p>
+          <p ng-show="currentPasswordNotValid" class="help-block validation-error-message-mail">
+            Current Password is not valid.
+          </p>
         </div>
         <div class="form-group"
-             ng-class="{ 'has-error' : (userPassword.newPassword === '' && !forms.userSettingsForm.newPassword.$pristine) || newPasswordFormatNotValid }">
+             ng-class="{ 'has-error' : (forms.resetPasswordForm.$submitted && forms.resetPasswordForm.newPassword.$invalid) }">
           <label for="user-settings-new-password">
             New Password *
           </label>
           <input id="user-settings-new-password"
                  type="password" name="newPassword"
                  class="form-control"
-                 ng-model="userPassword.newPassword" />
-            <p ng-show="userPassword.newPassword === '' && !forms.userSettingsForm.newPassword.$pristine"
-               class="help-block validation-error-message-email">New Password is required.</p>
-            <p ng-show="newPasswordFormatNotValid"
-               class="help-block validation-error-message-mail">New Password must be at least four characters long.</p>
+                 ng-model="userPassword.newPassword" required minlength="4" />
+          <p class="text-danger" ng-show="forms.userSettingsForm.$submitted && forms.userSettingsForm.newPassword.$error.required">
+            New Password is required.
+          </p>
+          <p class="text-danger" ng-show="forms.userSettingsForm.$submitted && forms.userSettingsForm.newPassword.$error.minlength">
+            New Password must be at least 4 characters long.
+          </p>
+          <p class="text-warning" ng-show="forms.userSettingsForm.newPassword.$valid">
+            A strong password is at least 8 characters, includes uppercase/lowercase letters, and one or more numbers.
+          </p>
         </div>
         <div class="form-group"
-             ng-class="{ 'has-error' : (userPassword.confirmPassword === '' && !forms.userSettingsForm.confirmPassword.$pristine) || confirmPasswordDoesNotMatch }">
+             ng-class="{ 'has-error' : (forms.resetPasswordForm.$submitted && forms.resetPasswordForm.confirmPassword.$invalid) }">
           <label for="user-settings-confirm-password">
             Confirm Password *
           </label>
           <input id="user-settings-confirm-password"
                  type="password" name="confirmPassword"
                  class="form-control"
-                 ng-model="userPassword.confirmPassword" />
-            <p ng-show="userPassword.confirmPassword === '' && !forms.userSettingsForm.confirmPassword.$pristine"
-               class="help-block validation-error-message-email">Confirm Password is required.</p>
-            <p ng-show="confirmPasswordDoesNotMatch"
-               class="help-block validation-error-message-mail">Confirm Password must match New Password.</p>
-            <hr />
+                 ng-model="userPassword.confirmPassword" required confirm-password-validator="userPassword.newPassword" />
+          <p ng-show="forms.userSettingsForm.$submitted && forms.userSettingsForm.confirmPassword.$error.required" class="text-danger">
+            Confirm Password is required.
+          </p>
+          <p ng-show="forms.userSettingsForm.$submitted && forms.userSettingsForm.confirmPassword.$error.passwordMatch" class="text-danger">
+            New Password and Confirm Password must match.
+          </p>
+          <hr />
         </div>
       </div>
       <div class="form-group"
@@ -201,7 +210,7 @@ rv-spinner-start-active="1">
       Delete <i class="fa fa-white fa-trash-o icon-right"></i>
     </button>
     <div class="pull-right">
-      <button type="button"
+      <button type="submit" form="forms.userSettingsForm"
         class="btn btn-primary btn-fixed-width"
         data-dismiss="modal"
         ng-click="save()" id="save-button" ng-if="isUserAdmin">

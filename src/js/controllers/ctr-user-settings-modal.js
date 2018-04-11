@@ -77,41 +77,11 @@ angular.module("risevision.common.header")
     };
 
     $scope.save = function () {
-      var passwordChangeValid = true;
-
-      $scope.forms.userSettingsForm.email.$pristine = false;
-      $scope.forms.userSettingsForm.firstName.$pristine = false;
-      $scope.forms.userSettingsForm.lastName.$pristine = false;
-
       if ($scope.showChangePassword) {
-        $scope.forms.userSettingsForm.currentPassword.$pristine = false;
-        $scope.forms.userSettingsForm.newPassword.$pristine = false;
-        $scope.forms.userSettingsForm.confirmPassword.$pristine = false;
-
         $scope.currentPasswordNotValid = false;
-        $scope.newPasswordFormatNotValid = false;
-        $scope.confirmPasswordDoesNotMatch = false;
-
-        if (!$scope.userPassword.currentPassword) {
-          passwordChangeValid = false;
-        }
-
-        if (!$scope.userPassword.newPassword) {
-          passwordChangeValid = false;
-        } else if (!userAuthFactory.isPasswordValid($scope.userPassword.newPassword)) {
-          $scope.newPasswordFormatNotValid = true;
-          passwordChangeValid = false;
-        }
-
-        if (!$scope.userPassword.confirmPassword) {
-          passwordChangeValid = false;
-        } else if ($scope.userPassword.newPassword !== $scope.userPassword.confirmPassword) {
-          $scope.confirmPasswordDoesNotMatch = true;
-          passwordChangeValid = false;
-        }
       }
 
-      if (!$scope.forms.userSettingsForm.$invalid && passwordChangeValid) {
+      if ($scope.forms.userSettingsForm.$valid) {
         var changePasswordPromise = $q.resolve();
 
         $scope.loading = true;
