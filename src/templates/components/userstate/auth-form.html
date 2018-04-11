@@ -84,7 +84,7 @@
       <label class="control-label" for="confirm-password">
         Confirm Password
       </label>
-      <input id="confirm-password" type="password" name="confirmPassword" class="form-control" placeholder="Re-type Password" ng-model="credentials.confirmPassword" required confirm-password-validator="credentials.password" />
+      <input id="confirmPassword" type="password" name="confirmPassword" class="form-control" placeholder="Re-type Password" ng-model="credentials.confirmPassword" required confirm-password-validator="credentials.password" />
       <p ng-show="forms.loginForm.$submitted && forms.loginForm.confirmPassword.$error.required" class="text-danger">
         Confirm Password is required.
       </p>
