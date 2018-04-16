@@ -256,6 +256,9 @@ msgstr "Rise Player Professional is"
 msgid "details.rpp-loading"
 msgstr "LOADING"
 
+msgid "details.rpp-not-supported"
+msgstr "Player version does not support Rise Player Professional features"
+
 msgid "details.startPlayerProTrial"
 msgstr "Start Rise Player Professional Trial"
 
