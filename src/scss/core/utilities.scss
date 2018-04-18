@@ -83,8 +83,15 @@ All utilities have a prefix u_ added to them
   border-radius: $border-radius-base;
 }
 
+.u_bordered-hover:hover {
+  border: 1px solid #4ab766;
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
 .u_no-border {
-  border: 0 !important; 
+  border: 0 !important;
 }
 
 .fa.u_icon-gray:before {

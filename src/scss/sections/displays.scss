@@ -1,3 +1,42 @@
+.download-content a:hover {
+  color: #0081BA;
+  text-decoration: none;
+}
+
+.id-form {
+  cursor: default !important;
+  background-color: #FFF !important;
+  font-family: 'Lucida Console', Monaco, monospace;
+  text-indent: 66px;
+  letter-spacing: 19px;
+  background: none;
+  text-transform: uppercase;
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 24px;
+  line-height: 1.42857;
+  color: #5b5b5b;
+  background-color: #FFF;
+  background-image: none;
+  border: 1px solid #dad7d4;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  /* On Medium Devices, Tablets */
+  @media (max-width: 550px) {
+    text-indent: 4px;
+  }
+  /* On Small Devices, Phones */
+  @media (max-width: 480px) {
+    letter-spacing: 16px;
+    font-size: 17px;
+  }
+}
+
 /* Deprecate Below
  +   ========================================================================== 
  +   ========================================================================== 
@@ -24,43 +63,43 @@
 }
 
 .offline {
-   &:before {
-    color:#e74c3c;
-   }
+  &:before {
+    color: #e74c3c;
+  }
 }
- .notinstalled {
-   &:before {
-     color:#444;
-   }
- }
- .online {
-   &:before {
-     color:$rise-green;
-   }
- }
+
+.notinstalled {
+  &:before {
+    color: #444;
+  }
+}
+
+.online {
+  &:before {
+    color: $rise-green;
+  }
+}
+
 .display-product {
   padding: 4px 8px !important;
-  & span, a {
+  & span,
+  a {
     display: block;
-    // margin-left: 7px;
-  }
-  & a {
-    font-size: 12px ;
+    cursor: pointer;
   }
   & span:nth-child(2) {
     display: inline;
   }
 }
+
 .display-status {
   padding: 4px 8px !important;
-  & span, a {
+  & span,
+  a {
     display: block;
-    // margin-left: 7px;
-  }
-   & a {
-    font-size: 12px ;
+    cursor: pointer;
   }
   & .btn-link.btn-xs {
-    display: block; 
+    display: block;
   }
 }
