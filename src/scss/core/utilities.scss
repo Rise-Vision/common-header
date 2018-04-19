@@ -300,10 +300,14 @@ All utilities have a prefix u_ added to them
 }
 
 .u_link-disabled {
-    color: #AAAAAA;
-    cursor: default;
-    pointer-events: none;
-    text-decoration: none;
+  color: #AAAAAA;
+  cursor: default;
+  pointer-events: none;
+  text-decoration: none;
+}
+
+.u_link-no-underline {
+  text-decoration: none !important;
 }
 
 .u_cursor_disabled {

@@ -8487,6 +8487,9 @@ All utilities have a prefix u_ added to them
   pointer-events: none;
   text-decoration: none; }
 
+.u_link-no-underline {
+  text-decoration: none !important; }
+
 .u_cursor_disabled {
   cursor: default !important; }
 
@@ -14874,10 +14877,6 @@ tr.blocked-file {
     max-height: calc(100vh - 360px); }
   .workspace.active-banner-mode.active-onboard-mode .workspace-sidebar .ph-properties .scrollable-list {
     max-height: calc(100vh - 480px); }
-
-.download-content a:hover {
-  color: #0081BA;
-  text-decoration: none; }
 
 .id-form {
   cursor: default !important;
