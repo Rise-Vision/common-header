@@ -286,7 +286,9 @@ gulp.task("html-inject", function () {
 
 gulp.task("server", ["html-inject", "html2js", "config", "fonts-copy"], factory.testServer({https: false}));
 gulp.task("server-close", factory.testServerClose());
-gulp.task("test:webdrive_update", factory.webdriveUpdate("2.37"));
+gulp.task("test:webdrive_update", function (cb) {
+  factory.webdriveUpdate("2.37", cb)();
+});
 gulp.task("test:e2e:core", ["test:webdrive_update"], factory.testE2EAngular({
   browser: "chrome",
   loginUser: process.env.E2E_USER2,
