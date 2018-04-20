@@ -23,13 +23,14 @@
         registrationModalPage = new RegistrationModalPage();
 
         homepage.get();
+
+        //wait for spinner to go away.
+        helper.waitDisappear(commonHeaderPage.getLoader(), 'CH spinner loader');
       });
 
       it("should show T&C Dialog on new Google Account", function() {
-        //sign in, wait for spinner to go away
-        helper.waitDisappear(commonHeaderPage.getLoader(), 'CH spinner loader').then(function () {
-          commonHeaderPage.signin();
-        });
+        //sign in
+        commonHeaderPage.signin();
         
         helper.wait(registrationModalPage.getRegistrationModal(), "Registration Modal");
         
