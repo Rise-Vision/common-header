@@ -1,0 +1,51 @@
+version: 2
+
+jobs:
+  dependencies:
+    working_directory: ~/common-header
+    docker:
+      - image: circleci/node:8.1.4
+    steps:
+      - checkout
+      - run:
+          name: Install npm
+          command: npm install
+      - run: sudo npm install -g bower
+      - run: bower cache clean
+      - run: 
+          name: install bower
+          command: bower install
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - common-header/*
+  test:
+    working_directory: ~/common-header
+    docker:
+      - image: circleci/node:8.1.4
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: echo $CHROME_INSTANCES
+      # Install latest chrome
+      - run: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+      - run: echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee -a /etc/apt/sources.list
+      - run: sudo apt-get update -qq
+      - run: sudo apt-get install -y google-chrome-stable
+      - run:
+          name: tests
+          command: |
+            NODE_ENV=dev XUNIT_FILE=~/common-header/reports/angular-xunit.xml PROSHOT_DIR=~/common-header/reports/screenshots DBUS_SESSION_BUS_ADDRESS=/dev/null xvfb-run npm run test
+      - store_test_results:
+          path: ~/common-header/reports
+      - store_artifacts:
+          path: ~/common-header/reports
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs: 
+      - dependencies
+      - test:
+          requires:
+            - dependencies

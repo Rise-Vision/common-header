@@ -12,7 +12,6 @@
   var UserSettingsScenarios = function() {
 
     describe("User Settings", function() {
-      this.timeout(2000);// to allow for protactor to load the seperate page
       var commonHeaderPage, 
         homepage, 
         userSettingsModalPage;
@@ -103,7 +102,6 @@
     });
 
     describe("Alerts link", function() {
-      this.timeout(2000);// to allow for protactor to load the seperate page
       var commonHeaderPage,
           homepage;
 
