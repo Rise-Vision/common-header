@@ -24,6 +24,8 @@
   browser.driver.manage().window().setSize(1280, 768);
 
   describe("Common Header ", function() {
+    this.timeout(2000);// to allow for protactor to load the seperate page
+
     beforeEach("should use correct Core URL", function() {
       var expect = require('rv-common-e2e').expect;
 

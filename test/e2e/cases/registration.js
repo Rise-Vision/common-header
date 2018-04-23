@@ -11,7 +11,6 @@
 
   var RegistrationScenarios = function() {
 
-    browser.driver.manage().window().setSize(1400, 900);
     describe("Registration", function() {
       this.timeout(2000);// to allow for protactor to load the seperate page
       var commonHeaderPage, 
@@ -24,14 +23,13 @@
         registrationModalPage = new RegistrationModalPage();
 
         homepage.get();
-
-        //wait for spinner to go away.
-        helper.waitDisappear(commonHeaderPage.getLoader(), 'CH spinner loader');
       });
 
       it("should show T&C Dialog on new Google Account", function() {
-        //sign in
-        commonHeaderPage.signin();
+        //sign in, wait for spinner to go away
+        helper.waitDisappear(commonHeaderPage.getLoader(), 'CH spinner loader').then(function () {
+          commonHeaderPage.signin();
+        });
         
         helper.wait(registrationModalPage.getRegistrationModal(), "Registration Modal");
         
