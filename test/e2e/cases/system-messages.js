@@ -11,7 +11,6 @@
   var SystemMessagesScenarios = function() {
 
     describe("Authentication", function() {
-      this.timeout(2000);// to allow for protactor to load the seperate page
       var commonHeaderPage, homepage;
       before(function (){
         commonHeaderPage = new CommonHeaderPage();

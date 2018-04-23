@@ -11,7 +11,6 @@
   var RegistrationScenarios = function() {
 
     describe("Nav Menu", function() {
-      this.timeout(2000);// to allow for protactor to load the seperate page
       var commonHeaderPage, 
         homepage, 
         registrationModalPage;
@@ -42,8 +41,6 @@
       });
 
       it("links target & href should be configured", function(done) {
-        this.timeout(1000);// to allow for protactor to load the page
-
         homepage.getNavMenuOptions().then(function(elements) {
           expect(elements[0].element(by.tagName('a')).getAttribute('target')).to.eventually.not.be.ok;
           expect(elements[0].element(by.tagName('a')).getAttribute('href')).to.eventually.not.contain('?cid=');
