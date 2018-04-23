@@ -2,22 +2,22 @@
 All utilities have a prefix u_ added to them
 */
 
-
 /* Line Height Utilities
    ==========================================================================
    To be used with forms and buttons
 */
 
 /* For Normal Sized Buttons and Input Fields */
-.u_lh-normal { 
+
+.u_lh-normal {
   line-height: 33px;
 }
-
 
 /* Ellipsis Utilities
    ==========================================================================
    To be used with forms and buttons
 */
+
 .u_ellipsis {
   display: inline-block;
   overflow: hidden;
@@ -27,52 +27,51 @@ All utilities have a prefix u_ added to them
 
 .u_ellipsis-sm {
   @extend .u_ellipsis;
-  @media(max-width: $screen-xs-max){
+  @media(max-width: $screen-xs-max) {
     width: 60px;
   }
-  @media(min-width: $screen-sm){
+  @media(min-width: $screen-sm) {
     max-width: 100px;
   }
-  @media(min-width: $screen-md){
+  @media(min-width: $screen-md) {
     max-width: 140px;
   }
-  @media(min-width: $screen-lg){
+  @media(min-width: $screen-lg) {
     max-width: 160px;
   }
 }
 
 .u_ellipsis-md {
   @extend .u_ellipsis;
-  @media(max-width: $screen-xs-max){
+  @media(max-width: $screen-xs-max) {
     width: 100px;
   }
-  @media(min-width: $screen-sm){
+  @media(min-width: $screen-sm) {
     max-width: 140px;
   }
-  @media(min-width: $screen-md){
+  @media(min-width: $screen-md) {
     max-width: 180px;
   }
-  @media(min-width: $screen-lg){
+  @media(min-width: $screen-lg) {
     max-width: 240px;
   }
 }
 
 .u_ellipsis-lg {
   @extend .u_ellipsis;
-  @media(max-width: $screen-xs-max){
+  @media(max-width: $screen-xs-max) {
     width: 200px;
   }
-  @media(min-width: $screen-sm){
+  @media(min-width: $screen-sm) {
     max-width: 260px;
   }
-  @media(min-width: $screen-md){
+  @media(min-width: $screen-md) {
     max-width: 320px;
   }
-  @media(min-width: $screen-lg){
+  @media(min-width: $screen-lg) {
     max-width: 340px;
   }
 }
-
 
 /* Styling Utilities
    ==========================================================================
@@ -95,21 +94,20 @@ All utilities have a prefix u_ added to them
 }
 
 .fa.u_icon-gray:before {
-    color: #BBB;
+  color: #BBB;
 }
 
 .fa.u_icon-red:before {
-    color: #cf371f;
+  color: #cf371f;
 }
 
 .fa.u_icon-green:before {
-    color: $rise-green;
+  color: $rise-green;
 }
 
 .fa.u_icon-white:before {
-    color: $white;
+  color: $white;
 }
-
 
 /* Text Utilities
    ========================================================================== 
@@ -163,17 +161,17 @@ All utilities have a prefix u_ added to them
   padding-right: 8px;
 }
 
-.u_padding-lg-vertical {  
+.u_padding-lg-vertical {
   padding-top: 32px;
   padding-bottom: 32px;
 }
 
-.u_padding-md-vertical {  
+.u_padding-md-vertical {
   padding-top: 16px;
   padding-bottom: 16px;
 }
 
-.u_padding-sm-vertical {  
+.u_padding-sm-vertical {
   padding-top: 8px;
   padding-bottom: 8px;
 }
@@ -183,84 +181,83 @@ All utilities have a prefix u_ added to them
 */
 
 .u_margin-xs {
-    margin: 3px !important;
+  margin: 3px !important;
 }
 
 .u_margin-sm {
-    margin: 10px !important;
+  margin: 10px !important;
 }
 
 .u_margin-md {
-    margin: 20px !important;
+  margin: 20px !important;
 }
 
 .u_margin-lg {
-    margin: 40px !important;
+  margin: 40px !important;
 }
 
 .u_margin-left {
-    margin-left: 10px !important;
+  margin-left: 10px !important;
 }
 
 .u_margin-right {
-    margin-right: 10px !important;
+  margin-right: 10px !important;
 }
 
 .u_margin-xs-top {
-    margin-top: 3px !important;
+  margin-top: 3px !important;
 }
 
 .u_margin-sm-top {
-    margin-top: 10px !important;
+  margin-top: 10px !important;
 }
 
 .u_margin-md-top {
-    margin-top: 20px !important;
+  margin-top: 20px !important;
 }
 
 .u_margin-lg-top {
-    margin-top: 40px !important;
+  margin-top: 40px !important;
 }
 
 .u_margin-xs-bottom {
-    margin-bottom: 3px !important;
+  margin-bottom: 3px !important;
 }
 
 .u_margin-sm-bottom {
-    margin-bottom: 10px !important;
+  margin-bottom: 10px !important;
 }
 
 .u_margin-md-bottom {
-    margin-bottom: 20px !important;
+  margin-bottom: 20px !important;
 }
 
 .u_margin-lg-bottom {
-    margin-bottom: 40px !important;
+  margin-bottom: 40px !important;
 }
-
 
 /* Clearing Utilities
    ========================================================================== 
 */
 
 .u_remove-radius {
-    border-radius: 0 !important;
+  border-radius: 0 !important;
 }
 
 .u_remove-margin {
-    margin: 0 !important;
+  margin: 0 !important;
 }
 
 .u_remove-padding {
-    padding: 0 !important;
+  padding: 0 !important;
 }
 
 .u_remove-top {
-    margin-top: 0 !important;
+  margin-top: 0 !important;
 }
 
 .u_remove-bottom {
-    margin-bottom: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 /* Alignment Utilities
@@ -268,11 +265,11 @@ All utilities have a prefix u_ added to them
 */
 
 %vertical-align {
-    position: relative;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 .u_align-top {
@@ -292,7 +289,7 @@ All utilities have a prefix u_ added to them
 */
 
 .u_nowrap {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 .u_clickable {
