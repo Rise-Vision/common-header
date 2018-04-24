@@ -19,7 +19,8 @@
   browser.driver.manage().window().setSize(1280, 768);
 
   describe("Components: ", function() {
-
+    this.timeout(2000);// to allow for protactor to load the seperate page
+  
     var backgroundImageSettingScenarios = new BackgroundImageSettingScenarios();
     var repeatSettingScenarios = new RepeatSettingScenarios();
 

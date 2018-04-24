@@ -13,7 +13,6 @@
   var AccountRemoval = function() {
 
     describe("Account Removal", function() {
-      this.timeout(2000);// to allow for protactor to load the seperate page
       var commonHeaderPage, 
         homepage, 
         companySettingsModalPage,

@@ -8521,6 +8521,20 @@ All utilities have a prefix u_ added to them
   padding-right: 0px;
   padding-left: 0px; }
 
+.aligner {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.aligner-item {
+  max-width: 50%; }
+
+.aligner-item--top {
+  align-self: flex-start; }
+
+.aligner-item--bottom {
+  align-self: flex-end; }
+
 /* ==========================================================================
    font awesome
    ========================================================================== */
@@ -16547,6 +16561,59 @@ a.mfp-iframe:hover:after {
 .playlist-item-reference {
   max-width: 320px;
   line-height: 24px; }
+
+.app-launcher-wizard .panel-body {
+  height: 70vh;
+  min-height: 500px; }
+
+.app-launcher-wizard_step h1 {
+  font-size: 2em;
+  margin-top: 0; }
+
+.app-launcher-wizard_step h2 {
+  font-weight: 400;
+  font-size: 1.5em;
+  color: #888; }
+
+.app-launcher-wizard_image {
+  float: none;
+  display: none; }
+
+.app-launcher-wizard_text {
+  max-width: 75%; }
+
+.app-launcher-wizard_progress-bar {
+  display: flex; }
+  .app-launcher-wizard_progress-bar .progress-bar-step {
+    flex: 1;
+    display: inline-block;
+    height: 8px;
+    background-color: #e6e6e6; }
+    .app-launcher-wizard_progress-bar .progress-bar-step.progress-bar-step--active {
+      background-color: #4ab767; }
+
+/* ==========================================================================
+   Small devices (tablets, 768px and up)
+   ========================================================================== */
+@media (min-width: 768px) {
+  .app-launcher-wizard_step {
+    max-width: 100%; }
+    .app-launcher-wizard_step h1 {
+      font-size: 2.8em;
+      margin-top: 0; }
+    .app-launcher-wizard_step h2 {
+      font-weight: 400;
+      font-size: 1.8em;
+      color: #888; }
+  .app-launcher-wizard_text {
+    max-width: 60%; }
+  .app-launcher-wizard_image {
+    max-width: 40%;
+    display: block;
+    padding: 0 20px; }
+    .app-launcher-wizard_image img {
+      margin: 0 auto;
+      max-height: 500px; } }
 
 #appLauncherContainer h3 {
   margin-top: 0;

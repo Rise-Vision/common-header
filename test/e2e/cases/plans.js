@@ -11,7 +11,6 @@
 
   var PlansScenarios = function() {
     describe("Plans", function() {
-      this.timeout(2000);// to allow for protactor to load the seperate page
       var commonHeaderPage, homepage, plansModalPage;
 
       before(function (){
