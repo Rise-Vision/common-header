@@ -103,6 +103,9 @@ msgstr "Logging in..."
 msgid "lremove"
 msgstr "remove"
 
+msgid "lretry"
+msgstr "retry"
+
 msgid "mar"
 msgstr "Mar"
 

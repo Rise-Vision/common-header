@@ -442,9 +442,6 @@ msgstr "with a Plan Trial or Subscription"
 msgid "templatesLibrary.details.preview"
 msgstr "Preview this Template"
 
-msgid "templatesLibrary.details.purchase"
-msgstr "Purchase in Store"
-
 msgid "templatesLibrary.subscription.cancelled"
 msgstr "Subscription Cancelled"
 
