@@ -3,20 +3,41 @@
     "new": "Add Display"
   },
   "add": {
+    "activate": "Activate your Display",
+    "added-activate": "You've added a Display named <b>{{displayName}}</b>. Now activate this Display by following these steps:",
     "download": {
-      "armv7l": "Download Raspbian 8.0 [ARMv7]",
-      "linux32": "Download Ubuntu 16.04 LTS [32-bit]",
-      "linux64": "Download Ubuntu 16.04 LTS [64-bit]",
-      "win32": "Download Windows 10 [32-bit]",
-      "win64": "Download Windows 10 [64-bit]"
+      "armv7l": "for Raspbian 8.0 [ARMv7]",
+      "chromeos": "for Chrome OS",
+      "diff-32-64": "How can I tell if I need the 32-bit or 64-bit version?",
+      "label": "Download",
+      "linux32": "for Ubuntu 16.04 LTS [32-bit]",
+      "linux64": "for Ubuntu 16.04 LTS [64-bit]",
+      "win32": "for Windows 10 [32-bit]",
+      "win64": "for Windows 10 [64-bit]"
     },
     "error": "Failed to create display!",
     "instructions": {
       "anotherEmail": "Send To Another E-Mail",
+      "claimIds": "Claim IDs",
+      "claimIdsDesc": "can quickly deploy a large number of Displays.",
+      "displayId": "Display ID",
       "emailInfo": "We’ve also emailed these instructions to",
       "emailPlaceholder": "Enter Email Address",
-      "step1": "1. Install Rise Player on your Media Player",
-      "step2": "2. When prompted, enter this Display ID to complete the installation",
+      "mediaPlayer": "Media Player",
+      "needMediaPlayer": "Need a",
+      "once-activated": "Once activated, the Display will show your",
+      "os": {
+        "chromeos": "Chrome OS",
+        "linux": "Linux",
+        "pi": "Rapsberry Pi",
+        "windows10": "Windows 10"
+      },
+      "presentations": "Presentations",
+      "step1": "Step 1",
+      "step1-desc": "Download and install Rise Player on your Media Player.",
+      "step2": "Step 2",
+      "step2-a": "When prompted by Rise Player, enter the",
+      "step2-b": "to complete your installation.",
       "title": "Complete '{{displayName}}' Display by installing Rise Player"
     },
     "name": {
