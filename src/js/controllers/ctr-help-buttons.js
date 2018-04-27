@@ -10,9 +10,7 @@ angular.module("risevision.common.header")
       function (loggedIn) {
         $scope.isLoggedIn = loggedIn;
 
-        if (loggedIn) {
-          zendesk.ensureScript();
-        }
+
       });
 
     $scope.$watch(function () {
