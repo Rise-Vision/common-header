@@ -23,6 +23,10 @@
     "anchor": "X-Frame-Options",
     "message": "The owner of the Web Page at the URL provided does not allow the page to be embedded within an iFrame. If possible, please contact the Web Page owner to discuss"
   },
+  "offline": {
+    "anchor": "these instructions.",
+    "message": "To use the Web Page Widget offline you will need to build an Offline Play compatible Web Page by following "
+  },
   "zoom": {
     "heading": "Zoom"
   }

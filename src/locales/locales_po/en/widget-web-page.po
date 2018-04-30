@@ -7,6 +7,12 @@ msgstr "Allow Interaction"
 msgid "interactivity.scrollbars"
 msgstr "Scrollbars Enabled"
 
+msgid "offline.anchor"
+msgstr "these instructions."
+
+msgid "offline.message"
+msgstr "To use the Web Page Widget offline you will need to build an Offline Play compatible Web Page by following "
+
 msgid "refresh.label"
 msgstr "Refresh Interval"
 
