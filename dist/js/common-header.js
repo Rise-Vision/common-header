@@ -5,18 +5,6 @@ try {
   module = angular.module('risevision.common.header.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('add-user-email.html',
-    '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"></head><body><div style="background:#f9f9f9;margin:0px;padding:20px" bgcolor="f9f9f9"><table cellspacing="0" border="0" cellpadding="0" align="center" width="595" bgcolor="white" style="border-collapse:separate;border-spacing:0;font-family:Helvetica,Arial,sans-serif;letter-spacing:0;table-layout:fixed"><tbody><tr><td style="border:1px solid #dddddd;border-radius:2px;font-family:Helvetica,Arial,sans-serif;font-size:16px;padding:40px 60px"><table width="100%" style="border-collapse:separate;border-spacing:0;table-layout:fixed"><tbody><tr><td style="font-family:Helvetica,Arial,sans-serif;font-size:16px;padding:0;text-align:center" align="left"><img src="https://ci4.googleusercontent.com/proxy/tIn39Uu_-8P30B-NjHrQ6M6cn10CNDo8yKsbzHxTVxQDdshB0RN9KmjFHpgXqGvxfJy7jhFQFRMnvpkBo-cGxyTaPHX-YnB8cvvmC5v4FbYHFSbiRAgMRCOGqol3psI81bf9vVzerfYrewyW=s0-d-e1-ft#http://s3.amazonaws.com/Rise-Images/UI/logo.svg" width="165" height="62" style="padding:15px 0 30px;text-align:left" class="CToWUd"></td></tr></tbody></table><table width="100%" style="border-collapse:separate;border-spacing:0;table-layout:fixed"><tbody><tr><td style="color:#525252;font-family:Helvetica,Arial,sans-serif;font-size:15px;line-height:22px;padding:0"><p style="line-height:1.5;margin:0 0 17px;text-align:left!important" align="left">Hi there,</p><p style="line-height:1.5;margin:0 0 17px;text-align:left!important" align="left">You\'ve been granted access to Rise Vision by <b>{{user.name}}</b></p><p style="line-height:1.5;margin:0 0 17px;text-align:left!important" align="left">To join <b>{{newUser.companyName}}</b> as a user, follow these instructions:</p><div style="width: 100%; display: inline-block; padding: 10px; background-color: #f5f5f5; text-align:center;"><p><span>Visit our <a href="https://apps.risevision.com/joinaccount/{{newUser.encodedCompanyName}}" target="_blank">Sign Up</a> page and use the email address</span></p><p><b style="border: none; outline: none!important; font-size: 26px; line-height: 18px; padding: 0; margin: 0 18px;">{{newUser.username}}</b></p><p></p></div><p></p><div style="margin-bottom:16px;text-align:center!important" align="center"><a href="https://apps.risevision.com/joinaccount/{{newUser.encodedCompanyName}}" style="background:#47b767;border:none;border-radius:3px;color:#fff;display:inline-block;font-size:14px;font-weight:bold;outline:none!important;padding:12px 35px;text-decoration:none" target="_blank">Join Now</a></div><p style="line-height:1.5;margin:0 0 17px;text-align:left!important" align="left">You can find more details about getting started with Rise Vision in our <a href="https://help.risevision.com/hc/en-us/articles/115002868706/" target="_blank">Help Center</a>.</p><p style="line-height:1.5;margin:0 0 17px;text-align:left!important" align="left">If you have any questions at all, just reply to this email. &nbsp;We’re here to help!</p><p style="line-height:1.5;margin:0 0 17px;text-align:left!important" align="left">Thank you,<br>Rise Vision Support Team</p></td></tr><tr></tr></tbody></table><div style="width: 100%; display: inline-block; padding: 10px; background-color: #f5f5f5;"><p style="text-align:center"><a href="http://blog.risevision.com/" style="border:none;outline:none!important" target="_blank">Follow Our Blog</a> <span style="margin:6px;">|</span> <a href="https://help.risevision.com/hc/en-us/community/topics/" style="border:none;outline:none!important" target="_blank">Join Our Community</a></p></div></td></tr></tbody></table><table width="100%" align="middle" style="border-collapse:separate;border-spacing:0;table-layout:fixed"><tbody><tr><td style="font-family:Helvetica,Arial,sans-serif;font-size:16px;padding:0"><table cellspacing="0" border="0" cellpadding="0" align="center" width="600" bgcolor="transparent" style="border-collapse:separate;border-spacing:0;font-family:Helvetica,Arial,sans-serif;letter-spacing:0;table-layout:fixed"><tbody><tr><td style="font-family:Helvetica,Arial,sans-serif;font-size:16px;padding:21px 30px 15px;text-align:center" align="center"><p style="color:#b7b7b7;font-size:12px;font-weight:300;margin:0 0 6px;text-decoration:none">Rise Vision 545 King Street West Toronto, Ontario Canada M5V 1M1</p></td></tr></tbody></table></td></tr></tbody></table></div></body></html>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('risevision.common.header.templates');
-} catch (e) {
-  module = angular.module('risevision.common.header.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('app-nav-buttons-menu.html',
     '<ul><li class="new-app"><a href="https://apps.risevision.com/editor" target="_blank" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/editor-image.png"></div><span>Presentations</span></a></li><li class="new-app"><a href="https://apps.risevision.com/schedules" target="_blank" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/schedule-image.png"></div><span>Schedules</span></a></li><li class="new-app"><a href="https://apps.risevision.com/displays" target="_blank" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/displays-image.png"></div><span>Displays</span></a></li><li><a href="https://store.risevision.com/" target="_blank" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/store-image.png"></div><span>Store</span></a></li><li><a href="https://apps.risevision.com/storage" target="_blank" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/storage-image.png"></div><span>Storage</span></a></li><li><a href="https://rva.risevision.com/#PRESENTATIONS" target="_blank" class="old-app" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/editor-image-gray.png"></div><span>Classic Editor</span></a></li></ul>');
 }]);
@@ -391,8 +379,7 @@ angular.module("risevision.common.header", [
   "risevision.common.components.message-box",
   "risevision.common.components.svg",
   "risevision.common.components.plans",
-  "risevision.common.support",
-  "risevision.common.email"
+  "risevision.common.support"
 ])
 
 .factory("bindToScopeWithWatch", [
@@ -1964,11 +1951,11 @@ angular.module("risevision.common.header")
 
 angular.module("risevision.common.header")
 
-.controller("AddUserModalCtrl", ["$scope", "$filter", "addUser", "userEmail",
+.controller("AddUserModalCtrl", ["$scope", "$filter", "addUser",
   "$modalInstance", "companyId", "userState", "userRoleMap",
   "humanReadableError", "messageBox", "$loading", "segmentAnalytics",
   "COMPANY_ROLE_FIELDS",
-  function ($scope, $filter, addUser, userEmail, $modalInstance, companyId,
+  function ($scope, $filter, addUser, $modalInstance, companyId,
     userState, userRoleMap, humanReadableError, messageBox, $loading,
     segmentAnalytics, COMPANY_ROLE_FIELDS) {
     $scope.isAdd = true;
@@ -2014,8 +2001,6 @@ angular.module("risevision.common.header")
                 userId: $scope.user.username,
                 companyId: companyId
               });
-
-              userEmail.send($scope.user.username, $scope.user.email);
 
               $modalInstance.close("success");
             },
@@ -2952,49 +2937,6 @@ angular.module("risevision.store.data-gadgets", [])
     }
   ]);
 
-"use strict";
-
-angular.module("risevision.common.email", [
-  "risevision.common.gapi"
-])
-  .constant("EMAIL_FROM", "support@risevision.com")
-  .constant("EMAIL_FROM_NAME", "Rise Vision Support")
-  .service("email", ["$q", "$log", "riseAPILoader",
-    "EMAIL_FROM", "EMAIL_FROM_NAME",
-    function ($q, $log, riseAPILoader, EMAIL_FROM, EMAIL_FROM_NAME) {
-
-      var service = {
-        send: function (recipients, subject, text) {
-          var deferred = $q.defer();
-
-          var obj = {
-            "from": EMAIL_FROM,
-            "fromName": EMAIL_FROM_NAME,
-            "recipients": recipients,
-            "subject": subject,
-            "data": {
-              "text": text
-            }
-          };
-          riseAPILoader().then(function (riseApi) {
-            return riseApi.email.send(obj);
-          })
-            .then(function (resp) {
-              $log.debug("email sent", resp);
-              deferred.resolve(resp.result);
-            })
-            .then(null, function (e) {
-              console.error("Failed to send email.", e);
-              deferred.reject(e);
-            });
-          return deferred.promise;
-        }
-      };
-
-      return service;
-    }
-  ]);
-
 angular.module("risevision.common.geodata", [])
   .value("REGIONS_CA", [
     ["Alberta", "AB"],
@@ -3645,55 +3587,6 @@ angular.module("risevision.common.support", [
   ]);
 
 })(angular);
-
-"use strict";
-
-angular.module("risevision.common.email")
-  .service("userEmail", ["$templateCache", "userState", "email", "$q",
-    function ($templateCache, userState, email, $q) {
-      var factory = {};
-
-      factory.sendingEmail = false;
-
-      var _getCurrentUserName = function () {
-        var profile = userState.getCopyOfProfile();
-        var name;
-
-        name = profile.firstName ? (profile.firstName + " ") : "";
-        name += profile.lastName ? profile.lastName : "";
-        name = name ? name : profile.email;
-
-        return name.trim();
-      };
-
-      factory.send = function (username, emailAddress) {
-        if (!username || !emailAddress) {
-          return $q.reject("Missing required parameters");
-        }
-
-        var template = $templateCache.get("add-user-email.html");
-
-        template = template.replace(/{{newUser.username}}/g, username);
-        template = template.replace(/{{newUser.companyName}}/g,
-          userState.getSelectedCompanyName());
-        template = template.replace(/{{newUser.encodedCompanyName}}/g,
-          encodeURIComponent(userState.getSelectedCompanyName()));
-
-        template = template.replace(/{{user.name}}/g, _getCurrentUserName());
-
-        factory.sendingEmail = true;
-
-        return email.send(emailAddress,
-            "You've been added to a Rise Vision account!", template)
-          .finally(function () {
-            factory.sendingEmail = false;
-          });
-      };
-
-      return factory;
-
-    }
-  ]);
 
 /* jshint maxlen: false */
 

@@ -1,10 +1,10 @@
 angular.module("risevision.common.header")
 
-.controller("AddUserModalCtrl", ["$scope", "$filter", "addUser", "userEmail",
+.controller("AddUserModalCtrl", ["$scope", "$filter", "addUser",
   "$modalInstance", "companyId", "userState", "userRoleMap",
   "humanReadableError", "messageBox", "$loading", "segmentAnalytics",
   "COMPANY_ROLE_FIELDS",
-  function ($scope, $filter, addUser, userEmail, $modalInstance, companyId,
+  function ($scope, $filter, addUser, $modalInstance, companyId,
     userState, userRoleMap, humanReadableError, messageBox, $loading,
     segmentAnalytics, COMPANY_ROLE_FIELDS) {
     $scope.isAdd = true;
@@ -50,8 +50,6 @@ angular.module("risevision.common.header")
                 userId: $scope.user.username,
                 companyId: companyId
               });
-
-              userEmail.send($scope.user.username, $scope.user.email);
 
               $modalInstance.close("success");
             },

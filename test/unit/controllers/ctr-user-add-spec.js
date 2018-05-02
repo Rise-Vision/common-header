@@ -45,13 +45,6 @@ describe("controller: user add", function() {
         load: function() {}
       };
     });
-    $provide.service("userEmail", function() { 
-      return {
-        send: function(username) {
-          emailCalled = username;
-        }
-      };
-    });
 
     $provide.factory("customLoader", function ($q) {
       return function () {
@@ -72,12 +65,11 @@ describe("controller: user add", function() {
 
   }));
   var $scope, userState, $modalInstance, createUserError,
-  trackerCalled, emailCalled, messageBoxStub, filterStub;
+  trackerCalled, messageBoxStub, filterStub;
   var isRiseAdmin = true, isUserAdmin = true, isRiseVisionUser = true;
   beforeEach(function(){
     createUserError = false;
     trackerCalled = undefined;
-    emailCalled = undefined;
     userState = function(){
       return {
         _restoreState : function(){
@@ -153,7 +145,6 @@ describe("controller: user add", function() {
       expect($scope.loading).to.be.false;
 
       expect(trackerCalled).to.not.be.ok;
-      expect(emailCalled).to.not.be.ok;
       expect($modalInstance._closed).to.be.false;
     });
     
@@ -164,7 +155,6 @@ describe("controller: user add", function() {
         expect($scope.loading).to.be.false;
 
         expect(trackerCalled).to.equal("User Created");
-        expect(emailCalled).to.equal("user@example.io");
         expect($modalInstance._closed).to.be.true;
         
         done();
