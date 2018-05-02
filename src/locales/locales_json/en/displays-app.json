@@ -175,6 +175,7 @@
       "error": "Error:",
       "howto": "How do I show Presentations on my device?",
       "howtoInstall": "How do I install Rise Player?",
+      "install": "Install Rise Player",
       "reboot": {
         "name": "Reboot Media Player",
         "success": "Reboot signal sent",
@@ -295,7 +296,8 @@
     "status": {
       "active": "Active",
       "inactive": "Inactive",
-      "name": "Status"
+      "name": "Status",
+      "notActivated": "Not Activated"
     }
   },
   "landing": {
@@ -343,6 +345,7 @@
     "status": {
       "error": "Error",
       "install": "Install Player",
+      "notActivated": "Not Activated",
       "offline": "Offline",
       "online": "Online",
       "whyOffline": "Why is my Display offline?"

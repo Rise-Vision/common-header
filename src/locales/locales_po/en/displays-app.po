@@ -406,6 +406,9 @@ msgstr "How do I show Presentations on my device?"
 msgid "fields.controls.howtoInstall"
 msgstr "How do I install Rise Player?"
 
+msgid "fields.controls.install"
+msgstr "Install Rise Player"
+
 msgid "fields.controls.reboot.name"
 msgstr "Reboot Media Player"
 
@@ -667,6 +670,9 @@ msgstr "Inactive"
 msgid "fields.status.name"
 msgstr "Status"
 
+msgid "fields.status.notActivated"
+msgstr "Not Activated"
+
 msgid "landing.manageDisplaysText"
 msgstr "Manage and monitor your digital signage displays, anywhere, anytime."
 
@@ -753,6 +759,9 @@ msgstr "Error"
 
 msgid "list.status.install"
 msgstr "Install Player"
+
+msgid "list.status.notActivated"
+msgstr "Not Activated"
 
 msgid "list.status.offline"
 msgstr "Offline"
