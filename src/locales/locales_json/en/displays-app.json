@@ -4,7 +4,7 @@
   },
   "add": {
     "activate": "Activate your Display",
-    "added-activate": "You've added a Display named <b>{{displayName}}</b>. Now activate this Display by following these steps:",
+    "added-activate": "You've added a Display named <b>'{{displayName}}'</b>. Now activate this Display by following these steps:",
     "download": {
       "armv7l": "for Raspbian 8.0 [ARMv7]",
       "chromeos": "for Chrome OS",

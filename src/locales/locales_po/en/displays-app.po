@@ -5,7 +5,7 @@ msgid "add.activate"
 msgstr "Activate your Display"
 
 msgid "add.added-activate"
-msgstr "You've added a Display named <b>{{displayName}}</b>. Now activate this Display by following these steps:"
+msgstr "You've added a Display named <b>'{{displayName}}'</b>. Now activate this Display by following these steps:"
 
 msgid "add.download.armv7l"
 msgstr "for Raspbian 8.0 [ARMv7]"
