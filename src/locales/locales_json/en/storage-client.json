@@ -119,6 +119,6 @@
   "upload-folder": "Upload Folder",
   "upload-status": "Upload Status",
   "uploading": "Uploading {{filename}}",
-  "uploading-count-files": "Uploading {{count}} files",
+  "uploading-count-files": "Uploading {{count}} files. (Files are uploaded one at a time)",
   "uploading-one-file": "Uploading 1 file"
 }
