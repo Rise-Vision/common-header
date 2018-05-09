@@ -66,7 +66,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('common-header.html',
-    '<div id="commonHeaderDiv" ng-hide="hideCommonHeader"><ng-include replace-include="" ng-controller="PlanBannerCtrl" src="\'plan-banner.html\'"></ng-include><nav class="navbar navbar-default navbar-static-top hidden-print" ng-class="{\'active-banner\': isSubcompanySelected() || isTestCompanySelected()}" role="navigation"><div class="container-fluid"><div class="navbar-header" style="width: 100%;"><a class="navbar-brand visible-md visible-lg" href="http://www.risevision.com/" target="{{newTabHome ? \'_blank\' : \'_self\'}}" ng-if="!inRVAFrame"><img src="//s3.amazonaws.com/Rise-Images/UI/logo.svg" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></a> <a class="navbar-brand hidden-md hidden-lg text-center" href="" off-canvas-toggle=""><i class="fa fa-bars"></i></a><ul class="nav navbar-nav navbar-right actions-nav pull-right"><ng-include replace-include="" ng-controller="HelpDropdownButtonCtrl" src="\'help-dropdown.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="SystemMessagesButtonCtrl" src="\'system-messages-button.html\'"></ng-include><ng-include replace-include="" ng-controller="ShoppingCartButtonCtrl" src="\'shoppingcart-button.html\'"></ng-include><ng-include replace-include="" ng-if="inRVAFrame" ng-controller="CloseFrameButtonCtrl" src="\'close-frame-button.html\'"></ng-include><ng-include ng-if="!inRVAFrame" replace-include="" src="\'app-nav-buttons.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="AuthButtonsCtr" src="\'auth-buttons.html\'"></ng-include><li ng-if="inRVAFrame" ng-controller="AuthButtonsCtr"></li></ul><div class="navbar-collapse navbar-left hidden-xs hidden-sm"><ul class="nav navbar-nav"><li class="env-name-nav-item visible-md visible-lg" ng-if="ENV_NAME"><span class="env-name-label">{{ENV_NAME}}</span></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a></li><li ng-if="!inRVAFrame && !hideHelpMenu"><a href="http://www.risevision.com/help/" target="_blank">Help</a></li></ul></div><div class="navbar-left visible-xs visible-sm" ng-if="ENV_NAME"><ul class="nav navbar-nav"><li class="env-name-nav-item"><span class="env-name-label">{{ENV_NAME}}</span></li></ul></div></div><ng-include replace-include="" ng-controller="TestCompanyBannerCtrl" src="\'test-company-banner.html\'"></ng-include><ng-include replace-include="" ng-controller="SubcompanyBannerCtrl" src="\'subcompany-banner.html\'"></ng-include></div></nav><ng-include replace-include="" ng-controller="GlobalAlertsCtrl" src="\'global-alerts.html\'"></ng-include><nav class="off-canvas-nav" off-canvas-nav=""><ul class="nav nav-pills nav-stacked"><li off-canvas-toggle=""><i class="fa fa-times fa-2x pull-right"></i> <img src="//s3.amazonaws.com/rise-common/images/logo-small.png" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}">{{opt.title}}</a></li><li ng-if="!hideHelpMenu"><a target="_blank" href="http://www.risevision.com/help">Help</a></li></ul></nav></div><div ng-show="cookieEnabled === false" class="bg-warning text-center u_padding-sm"><small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small></div><iframe name="logoutFrame" id="logoutFrame" style="display:none"></iframe>');
+    '<div id="commonHeaderDiv" ng-hide="hideCommonHeader"><ng-include replace-include="" ng-controller="PlanBannerCtrl" src="\'plan-banner.html\'"></ng-include><nav class="navbar navbar-default navbar-static-top hidden-print" ng-class="{\'active-banner\': isSubcompanySelected() || isTestCompanySelected()}" role="navigation"><div class="container-fluid"><div class="navbar-header" style="width: 100%;"><a class="navbar-brand visible-md visible-lg" href="http://www.risevision.com/" target="{{newTabHome ? \'_blank\' : \'_self\'}}" ng-if="!inRVAFrame"><img src="//s3.amazonaws.com/Rise-Images/UI/logo.svg" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></a> <a class="navbar-brand hidden-md hidden-lg text-center" href="" off-canvas-toggle=""><i class="fa fa-bars"></i></a><ul class="nav navbar-nav navbar-right actions-nav pull-right"><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="SystemMessagesButtonCtrl" src="\'system-messages-button.html\'"></ng-include><ng-include replace-include="" ng-controller="ShoppingCartButtonCtrl" src="\'shoppingcart-button.html\'"></ng-include><ng-include replace-include="" ng-if="inRVAFrame" ng-controller="CloseFrameButtonCtrl" src="\'close-frame-button.html\'"></ng-include><ng-include ng-if="!inRVAFrame" replace-include="" src="\'app-nav-buttons.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="AuthButtonsCtr" src="\'auth-buttons.html\'"></ng-include><li ng-if="inRVAFrame" ng-controller="AuthButtonsCtr"></li></ul><div class="navbar-collapse navbar-left hidden-xs hidden-sm"><ul class="nav navbar-nav"><li class="env-name-nav-item visible-md visible-lg" ng-if="ENV_NAME"><span class="env-name-label">{{ENV_NAME}}</span></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a></li><li ng-if="!inRVAFrame && !hideHelpMenu"><a href="http://www.risevision.com/help/" target="_blank">Help</a></li></ul></div><div class="navbar-left visible-xs visible-sm" ng-if="ENV_NAME"><ul class="nav navbar-nav"><li class="env-name-nav-item"><span class="env-name-label">{{ENV_NAME}}</span></li></ul></div></div><ng-include replace-include="" ng-controller="TestCompanyBannerCtrl" src="\'test-company-banner.html\'"></ng-include><ng-include replace-include="" ng-controller="SubcompanyBannerCtrl" src="\'subcompany-banner.html\'"></ng-include></div></nav><ng-include replace-include="" ng-controller="GlobalAlertsCtrl" src="\'global-alerts.html\'"></ng-include><nav class="off-canvas-nav" off-canvas-nav=""><ul class="nav nav-pills nav-stacked"><li off-canvas-toggle=""><i class="fa fa-times fa-2x pull-right"></i> <img src="//s3.amazonaws.com/rise-common/images/logo-small.png" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}">{{opt.title}}</a></li><li ng-if="!hideHelpMenu"><a target="_blank" href="http://www.risevision.com/help">Help</a></li></ul></nav></div><div ng-show="cookieEnabled === false" class="bg-warning text-center u_padding-sm"><small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small></div><iframe name="logoutFrame" id="logoutFrame" style="display:none"></iframe>');
 }]);
 })();
 
@@ -151,54 +151,6 @@ try {
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('global-alerts.html',
     '<div class="container"><div class="row"><div class="col-md-12"><div class="alert alert-danger" role="alert" ng-repeat="msg in errors"><span ng-bind-html="msg"></span> <button type="button" class="close pull-right" ng-click="dismiss(\'errors\', $index);"><i class="fa fa-times"></i></button></div></div></div></div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('risevision.common.header.templates');
-} catch (e) {
-  module = angular.module('risevision.common.header.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('help-dropdown-menu.html',
-    '<ul><li><a id="getStartedButton" href="https://help.risevision.com/hc/en-us/articles/115002868706-Get-started-with-Rise-Vision" target="_blank">Get Started</a></li><li><a id="documentationButton" href="https://help.risevision.com/hc/en-us/" target="_blank">Help Center</a></li><li><a id="askCommunityButton" href="https://help.risevision.com/hc/en-us/community/topics/" target="_blank">Ask the Community</a></li><li><a id="getSupportButton" ng-click="getSupport()" href="">Get Support</a></li><li><a id="askSalesButton" href="https://www.risevision.com/contact-us#sales" target="_blank">Ask Sales</a></li></ul>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('risevision.common.header.templates');
-} catch (e) {
-  module = angular.module('risevision.common.header.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('help-dropdown.html',
-    '<li ng-show="!isLoggedIn || (isLoggedIn && isRiseVisionUser)" dropdown="" class="dropdown hidden-xs"><button id="helpDropdownButton" dropdown-toggle="" class="dropdown-toggle btn btn-primary"><span class="hidden-sm hidden-xs hidden-md">Need Help</span><i class="fa fa-question u_icon-white"></i></button><div class="dropdown-menu app-navigation" role="menu"><ng-include replace-include="" src="\'help-dropdown-menu.html\'"></ng-include></div></li><li ng-show="!isLoggedIn || (isLoggedIn && isRiseVisionUser)" class="visible-xs-inline-block"><button class="dropdown-toggle btn btn-primary" action-sheet="\'help-dropdown-menu.html\'" action-sheet-class="app-navigation"><i class="fa fa-question u_icon-white"></i></button></li>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('risevision.common.header.templates');
-} catch (e) {
-  module = angular.module('risevision.common.header.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('help-priority-support-modal.html',
-    '<div id="prioritySupportModal"><div class="modal-header"><button id="prioritySupportModalCloseButton" ng-click="dismiss()" type="button" class="close"><i class="fa fa-times"></i></button><h2 class="modal-title">Priority Support</h2></div><div class="modal-body" stop-event="touchend"><div class="u_margin-lg-bottom blank-state"><div class="product-graphic" ng-show="[\'trial-available\', \'not-subscribed\'].indexOf(subscriptionStatus.statusCode) >= 0"><img itemprop="image" class="img-responsive" src="https://s3.amazonaws.com/Store-Products/Rise-Vision/support_image.png"></div><div class="content-box-body" ng-show="subscriptionStatus.statusCode != \'subscribed\'"><div class="product-intro"><h1>Priority Support</h1><p class="lead">Get the help you need in 10 minutes or less, 8-5 CST Monday through Friday, or let us remotely connect, diagnose and correct display problems all without the need for you to intervene!</p><p class="lead">$75 per Company per Month.</p><a class="btn btn-hg btn-primary" href="{{supportProductUrl}}" ng-click="dismiss()" target="_blank"><span>Subscribe Now!</span></a></div></div></div></div></div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('risevision.common.header.templates');
-} catch (e) {
-  module = angular.module('risevision.common.header.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('help-send-us-a-note-modal.html',
-    '<div id="sendUsANoteModal"><div class="modal-header"><button id="sendUsANoteModalCloseButton" ng-click="dismiss()" type="button" class="close"><i class="fa fa-times"></i></button><h2 class="modal-title"></h2></div><div class="modal-body text-center" stop-event="touchend"><p class="lead">Send us a note and we typically get back to you within 2-3 business days.</p><a ng-if="!loggedIn" href="https://www.risevision.com/contact/" target="_blank" class="btn btn-primary btn-lg">Contact Support</a> <button ng-if="loggedIn" class="btn btn-primary btn-lg" ng-click="sendUsANote()">Contact Support</button><div class="content-box u_margin-md-top u_remove-bottom"><div class="content-box-body"><p class="lead u_margin-left u_margin-right"><strong>Need help fast?</strong> Check out Priority Support and have a response in <strong>10 minutes</strong>. We are online 8-5 CST Monday through Friday.</p><a class="btn btn-primary btn-lg" ng-click="showPlansModal();">Subscribe Now</a></div></div></div></div>');
 }]);
 })();
 
@@ -1334,87 +1286,6 @@ angular.module("risevision.common.header")
     $scope.dismiss = function (messageType, index) {
       $scope[messageType].splice(index, 1);
     };
-  }
-]);
-
-angular.module("risevision.common.header")
-
-.controller("HelpDropdownButtonCtrl", ["zendesk", "$scope", "supportFactory",
-  "userState",
-  function (zendesk, $scope, supportFactory, userState) {
-
-    $scope.$watch(function () {
-        return userState.isLoggedIn();
-      },
-      function (loggedIn) {
-        $scope.isLoggedIn = loggedIn;
-
-        if (loggedIn) {
-          zendesk.ensureScript();
-        }
-      });
-
-    $scope.$watch(function () {
-        return userState.isRiseVisionUser();
-      },
-      function (riseVisionUser) {
-        $scope.isRiseVisionUser = riseVisionUser;
-
-      });
-
-    // TODO: Deprecate: button currently links to Support Form URL
-    $scope.getSupport = function () {
-      supportFactory.handleGetSupportAction();
-    };
-  }
-]);
-
-angular.module("risevision.common.header")
-
-.controller("HelpPrioritySupportModalCtrl", [
-  "$scope", "$modalInstance", "subscriptionStatus", "supportFactory",
-  "SUPPORT_PRODUCT_URL",
-  function ($scope, $modalInstance, subscriptionStatus,
-    supportFactory, SUPPORT_PRODUCT_URL) {
-    $scope.subscriptionStatus = subscriptionStatus;
-    $scope.supportProductUrl = SUPPORT_PRODUCT_URL;
-
-    $scope.dismiss = function () {
-      $modalInstance.dismiss();
-    };
-
-  }
-]);
-
-angular.module("risevision.common.header")
-
-.controller("HelpSendUsANoteModalCtrl", [
-  "$scope", "$modalInstance", "supportFactory", "zendesk", "userState", "planFactory",
-  function ($scope, $modalInstance, supportFactory, zendesk, userState, planFactory) {
-
-    $scope.showPlansModal = planFactory.showPlansModal;
-    $scope.loggedIn = userState.isLoggedIn();
-
-    $scope.sendUsANote = function () {
-      zendesk.showSendNote();
-      $scope.dismiss();
-    };
-
-    $scope.prioritySupport = function () {
-      zendesk.showWidget();
-      $scope.dismiss();
-    };
-
-    $scope.startTrial = function () {
-      supportFactory.initiateTrial().then(function () {
-        $scope.dismiss();
-      });
-    };
-
-    $scope.dismiss = function () {
-      $modalInstance.dismiss();
-    };
-
   }
 ]);
 
