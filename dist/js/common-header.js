@@ -3467,12 +3467,9 @@ angular.module("risevision.common.support", [
   angular.module("risevision.common.support")
 
   .factory("zendesk", ["getSubscriptionStatus", "segmentAnalytics",
-    "userState",
-    "$window", "$q", "$location", "$log",
+    "userState", "$window", "$q", "$location", "$log",
     function (getSubscriptionStatus, segmentAnalytics, userState,
-      $window,
-      $q,
-      $location, $log) {
+      $window, $q, $location, $log) {
 
       var loaded = false;
       var $ = $window.$;
@@ -3511,7 +3508,6 @@ angular.module("risevision.common.support", [
             }
           };
 
-          var deferred = $q.defer();
           var script =
             /* jshint quotmark: single */
             'window.zE||(function(e,t,s){var n=window.zE=window.zEmbed=function(){n._.push(arguments)},a=n.s=e.createElement(t),r=e.getElementsByTagName(t)[0];n.set=function(e){n.set._.push(e)},n._=[],n.set._=[],a.async=true,a.setAttribute("charset","utf-8"),a.src="https://static.zdassets.com/ekr/asset_composer.js?key="+s,n.t=+new Date,a.type="text/javascript",r.parentNode.insertBefore(a,r)})(document,"script","b8d6bdba-10ea-4b88-b96c-9d3905b85d8f");';
@@ -3522,12 +3518,13 @@ angular.module("risevision.common.support", [
 
           $window.document.body.appendChild(scriptElem);
           loaded = true;
-          $window.zE(function () {
-            $window.zE.hide();
-            deferred.resolve();
-          });
 
-          return deferred.promise;
+          return _identify()
+            .then(function () {
+              // clear send-a-note flag
+              $location.search("c2VuZC11cy1hLW5vdGU", null);
+            })
+            .then(_activate);
         }
         return $q.when();
       }
@@ -3543,20 +3540,22 @@ angular.module("risevision.common.support", [
             "rise_vision_company_id": userState.getUserCompanyId(),
           };
 
-          getSubscriptionStatus().then(function (
-            subscriptionStatus) {
-
-            if (subscriptionStatus && subscriptionStatus.statusCode ===
-              "subscribed") {
-              // append priority support flag
-              $location.search("cHJpb3JpdHktc3VwcG9ydA", 1);
-            } else {
-              // clear priority support flag
-              $location.search("cHJpb3JpdHktc3VwcG9ydA", null);
-            }
-            segmentAnalytics.identify(username, properties);
-            deferred.resolve();
-          }).catch(deferred.reject);
+          getSubscriptionStatus()
+            .then(function (subscriptionStatus) {
+              if (subscriptionStatus && subscriptionStatus.statusCode === "subscribed") {
+                // append priority support flag
+                $location.search("cHJpb3JpdHktc3VwcG9ydA", 1);
+              } else {
+                // clear priority support flag
+                $location.search("cHJpb3JpdHktc3VwcG9ydA", null);
+              }
+              segmentAnalytics.identify(username, properties);
+              deferred.resolve();
+            })
+            .catch(function (err) {
+              console.log("Error getting subscription status", err);
+              deferred.reject();
+            });
 
         });
         return deferred.promise;
@@ -3594,7 +3593,7 @@ angular.module("risevision.common.support", [
 
         _startDomMonitor();
 
-        $window.zE.activate();
+        $window.zE.show();
         _changeBorderStyle();
       }
 
@@ -3611,12 +3610,10 @@ angular.module("risevision.common.support", [
           var companyId = userState.getSelectedCompanyId();
 
           cancelDomMonitor = setInterval(function () {
-            var iframe = $(
-              "iframe.zEWidget-webWidget--active");
+            var iframe = $("iframe.zEWidget-webWidget--active");
             if (iframe && iframe.contents) {
               // automatically fill in rise vision username
-              var rvUsernameInput = iframe.contents().find(
-                "input[name=email]");
+              var rvUsernameInput = iframe.contents().find("input[name=email]");
               if (rvUsernameInput && rvUsernameInput.length > 0) {
                 rvUsernameInput.val(username);
                 rvUsernameInput.prop("disabled", true);
@@ -3626,13 +3623,10 @@ angular.module("risevision.common.support", [
               var rvCompanyInput = iframe.contents().find(
                 "input[name=24893323]");
               if (rvCompanyInput && rvCompanyInput.length > 0) {
-                getSubscriptionStatus().then(function (
-                  subscriptionStatus) {
+                getSubscriptionStatus().then(function (subscriptionStatus) {
                   var prioritySupport = false;
-                  $log.info("Subscription status is",
-                    subscriptionStatus);
-                  if (subscriptionStatus && subscriptionStatus.statusCode ===
-                    "subscribed") {
+                  $log.info("Subscription status is", subscriptionStatus);
+                  if (subscriptionStatus && subscriptionStatus.statusCode === "subscribed") {
                     // append priority support flag
                     prioritySupport = 1;
                   }
@@ -3647,12 +3641,10 @@ angular.module("risevision.common.support", [
                 });
 
                 rvCompanyInput.prop("disabled", true);
-                rvCompanyInput.parents(
-                  "label").parent().hide();
+                rvCompanyInput.parents("label").parent().hide();
 
                 $log.debug("ZD form found!");
-                clearInterval(
-                  cancelDomMonitor);
+                clearInterval(cancelDomMonitor);
                 cancelDomMonitor = null;
               }
             }
@@ -3678,10 +3670,24 @@ angular.module("risevision.common.support", [
       };
 
     }
-  ]).run(["$rootScope", "zendesk",
-    function ($rootScope, zendesk) {
-      $rootScope.$on("$stateChangeSuccess", function () {
-        zendesk.forceCloseAll();
+  ]).run(["$rootScope", "$window", "zendesk",
+    function ($rootScope, $window, zendesk) {
+      $rootScope.$on("risevision.user.authorized", function () {
+        zendesk.ensureScript();
+      });
+
+      $rootScope.$on("$stateChangeSuccess", function (event, toState) {
+        var $element = $(".zEWidget-launcher");
+
+        $window.zE.setHelpCenterSuggestions({
+          url: true
+        });
+
+        if (toState && toState.name.indexOf("apps.editor.workspace") >= 0) {
+          $element.css("bottom", "40px");
+        } else {
+          $element.css("bottom", "0px");
+        }
       });
     }
   ]);
