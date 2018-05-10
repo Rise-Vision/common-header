@@ -218,9 +218,11 @@
       $rootScope.$on("$stateChangeSuccess", function (event, toState) {
         var $element = $(".zEWidget-launcher");
 
-        $window.zE.setHelpCenterSuggestions({
-          url: true
-        });
+        if ($window.zE && $window.zE.setHelpCenterSuggestions) {
+          $window.zE.setHelpCenterSuggestions({
+            url: true
+          });
+        }
 
         if (toState && toState.name.indexOf("apps.editor.workspace") >= 0) {
           $element.css("bottom", "40px");
