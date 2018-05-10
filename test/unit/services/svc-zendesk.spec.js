@@ -3,16 +3,19 @@
 describe("Services: Zendesk", function() {
   beforeEach(module("risevision.common.support"));
 
-  var windowObj, zeSpy, locationSearchSpy, zeActivateSpy, widgetShown,
+  var sandbox, windowObj, zeSpy, locationSearchSpy, zeShowSpy, widgetShown,
     hideRvUsernameFieldSpy, hideRvCompanySpy, setUsernameValueSpy,
     setCompanyInputStub;
 
+  sandbox = sinon.sandbox.create();
+
   beforeEach(function() {
-    this.clock = sinon.useFakeTimers();
+    this.clock = sandbox.useFakeTimers();
   });
 
   afterEach(function() {
     this.clock.restore();
+    sandbox.restore();
   });
 
   beforeEach(function() {
@@ -35,7 +38,7 @@ describe("Services: Zendesk", function() {
         identify: function() {},
       };
     });
-    locationSearchSpy = sinon.stub();
+    locationSearchSpy = sandbox.stub();
     $provide.service("$location", function() {
       return {
         search: locationSearchSpy,
@@ -44,9 +47,9 @@ describe("Services: Zendesk", function() {
 
 
 
-    zeActivateSpy = sinon.stub();
-    hideRvUsernameFieldSpy = sinon.stub();
-    setUsernameValueSpy = sinon.stub();
+    zeShowSpy = sandbox.stub();
+    hideRvUsernameFieldSpy = sandbox.stub();
+    setUsernameValueSpy = sandbox.stub();
     var fakeRvUsernameInput = {
       val: setUsernameValueSpy,
       prop: function() {},
@@ -60,8 +63,8 @@ describe("Services: Zendesk", function() {
       length: 1
     };
 
-    hideRvCompanySpy = sinon.stub();
-    setCompanyInputStub = sinon.stub();
+    hideRvCompanySpy = sandbox.stub();
+    setCompanyInputStub = sandbox.stub();
     var fakeRvCompanyInput = {
       val: setCompanyInputStub,
       prop: function() {},
@@ -83,11 +86,11 @@ describe("Services: Zendesk", function() {
     windowObj = {
       document: {
         body: { appendChild: function () {
-          zeSpy = sinon.spy(function(cb) {
+          zeSpy = sandbox.spy(function(cb) {
             cb();
           });
           zeSpy.hide = function() {};
-          zeSpy.activate = zeActivateSpy;
+          zeSpy.show = zeShowSpy;
           windowObj.zE = zeSpy;
           windowObj.zE.identify = function() {};
         } },
@@ -152,7 +155,7 @@ describe("Services: Zendesk", function() {
       zendesk.showWidget().then(function(){
         expect(zeSpy).to.have.been.called;
         expect(locationSearchSpy).to.have.been.calledWith("cHJpb3JpdHktc3VwcG9ydA", 1);
-        expect(zeActivateSpy).to.have.been.called;
+        expect(zeShowSpy).to.have.been.called;
         done();
       }, done);
     });
@@ -163,7 +166,7 @@ describe("Services: Zendesk", function() {
       zendesk.showSendNote().then(function(){
         expect(zeSpy).to.have.been.called;
         expect(locationSearchSpy).to.have.been.calledWith("c2VuZC11cy1hLW5vdGU", 1);
-        expect(zeActivateSpy).to.have.been.called;
+        expect(zeShowSpy).to.have.been.called;
         done();
       }, done);
     });
