@@ -160,17 +160,6 @@ describe("Services: Zendesk", function() {
     });
   });
 
-  it("showSendNote", function(done) {
-    inject(function(zendesk) {
-      zendesk.showSendNote().then(function(){
-        expect(zeSpy).to.have.been.called;
-        expect(locationSearchSpy).to.have.been.calledWith("c2VuZC11cy1hLW5vdGU", 1);
-        expect(zeShowSpy).to.have.been.called;
-        done();
-      }, done);
-    });
-  });
-
   it("hides inputs that auto-collect their values", function(done) {
     var _this = this;
     inject(function(zendesk) {

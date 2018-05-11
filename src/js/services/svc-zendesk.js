@@ -103,18 +103,6 @@
           .then(_activate);
       }
 
-      function showSendNote() {
-        return ensureScript()
-          .then(_identify)
-          .then(function () {
-            // append send-a-note flag
-            $location.search("c2VuZC11cy1hLW5vdGU", 1);
-            // clear priority support flag
-            $location.search("cHJpb3JpdHktc3VwcG9ydA", null);
-          })
-          .then(_activate);
-      }
-
       function _activate() {
         var username = userState.getUsername();
 
@@ -213,7 +201,6 @@
       return {
         ensureScript: ensureScript,
         showWidget: showWidget,
-        showSendNote: showSendNote,
         forceCloseAll: forceCloseAll,
         enableSuggestions: enableSuggestions,
         logout: logout
