@@ -3686,8 +3686,6 @@ angular.module("risevision.common.support", [
       $rootScope.$on("$stateChangeSuccess", function (event, toState) {
         var $element = $(".zEWidget-launcher");
 
-        zendesk.enableSuggestions();
-
         if (toState && toState.name.indexOf("apps.editor.workspace") >= 0) {
           $element.css("bottom", "40px");
         } else {
