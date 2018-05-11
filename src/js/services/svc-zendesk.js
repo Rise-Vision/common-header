@@ -15,6 +15,7 @@
       $window, $q, $location, $log, ZENDESK_WEB_WIDGET_SCRIPT) {
 
       var loaded = false;
+      var previousUsername = "";
       var $ = $window.$;
 
       var cancelDomMonitor;
@@ -116,11 +117,15 @@
 
       function _activate() {
         var username = userState.getUsername();
-        var identity = {
-          email: username,
-        };
 
-        $window.zE.identify(identity);
+        if (previousUsername !== username) {
+          var identity = {
+            email: username,
+          };
+
+          $window.zE.identify(identity);
+          previousUsername = username;
+        }
 
         _startDomMonitor();
 
@@ -201,12 +206,17 @@
         }
       }
 
+      function logout() {
+        previousUsername = "";
+      }
+
       return {
         ensureScript: ensureScript,
         showWidget: showWidget,
         showSendNote: showSendNote,
         forceCloseAll: forceCloseAll,
-        enableSuggestions: enableSuggestions
+        enableSuggestions: enableSuggestions,
+        logout: logout
       };
 
     }
@@ -214,6 +224,10 @@
     function ($rootScope, $window, zendesk) {
       $rootScope.$on("risevision.user.authorized", function () {
         zendesk.showWidget();
+      });
+
+      $rootScope.$on("risevision.user.signedOut", function () {
+        zendesk.logout();
       });
 
       $rootScope.$on("$stateChangeStart", function () {
