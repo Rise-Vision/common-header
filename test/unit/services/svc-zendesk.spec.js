@@ -144,7 +144,6 @@ describe("Services: Zendesk", function() {
   it("ensureScript", function(done) {
     inject(function(zendesk) {
       zendesk.ensureScript().then(function() {
-        expect(zeSpy).to.have.been.called;
         done();
       }, done);
     });

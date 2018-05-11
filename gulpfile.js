@@ -60,7 +60,8 @@ var env = process.env.NODE_ENV || "dev",
     "node_modules/widget-tester/mocks/translate-mock.js",
     "test/unit/**/*spec.js",
     "test/unit/**/mocks/*.js",
-    "test/unit/**/*.tests.js"
+    "test/unit/**/*.tests.js",
+    "test/unit/services/svc-zendesk-override.js"
     ],
     commonHeaderSrcFiles = ["./tmp/partials/templates.js", 
     "./src/js/dtv-common-header.js",

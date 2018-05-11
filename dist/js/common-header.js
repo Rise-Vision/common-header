@@ -3465,11 +3465,15 @@ angular.module("risevision.common.support", [
   "use strict";
 
   angular.module("risevision.common.support")
-
+  /* jshint quotmark: single */
+  .value('ZENDESK_WEB_WIDGET_SCRIPT',
+    'window.zE||(function(e,t,s){var n=window.zE=window.zEmbed=function(){n._.push(arguments)},a=n.s=e.createElement(t),r=e.getElementsByTagName(t)[0];n.set=function(e){n.set._.push(e)},n._=[],n.set._=[],a.async=true,a.setAttribute("charset","utf-8"),a.src="https://static.zdassets.com/ekr/asset_composer.js?key="+s,n.t=+new Date,a.type="text/javascript",r.parentNode.insertBefore(a,r)})(document,"script","b8d6bdba-10ea-4b88-b96c-9d3905b85d8f");'
+  )
+  /* jshint quotmark: double */
   .factory("zendesk", ["getSubscriptionStatus", "segmentAnalytics",
-    "userState", "$window", "$q", "$location", "$log",
+    "userState", "$window", "$q", "$location", "$log", "ZENDESK_WEB_WIDGET_SCRIPT",
     function (getSubscriptionStatus, segmentAnalytics, userState,
-      $window, $q, $location, $log) {
+      $window, $q, $location, $log, ZENDESK_WEB_WIDGET_SCRIPT) {
 
       var loaded = false;
       var $ = $window.$;
@@ -3508,23 +3512,11 @@ angular.module("risevision.common.support", [
             }
           };
 
-          var script =
-            /* jshint quotmark: single */
-            'window.zE||(function(e,t,s){var n=window.zE=window.zEmbed=function(){n._.push(arguments)},a=n.s=e.createElement(t),r=e.getElementsByTagName(t)[0];n.set=function(e){n.set._.push(e)},n._=[],n.set._=[],a.async=true,a.setAttribute("charset","utf-8"),a.src="https://static.zdassets.com/ekr/asset_composer.js?key="+s,n.t=+new Date,a.type="text/javascript",r.parentNode.insertBefore(a,r)})(document,"script","b8d6bdba-10ea-4b88-b96c-9d3905b85d8f");';
-          /* jshint quotmark: double */
-
           var scriptElem = $window.document.createElement("script");
-          scriptElem.innerText = script;
+          scriptElem.innerText = ZENDESK_WEB_WIDGET_SCRIPT;
 
           $window.document.body.appendChild(scriptElem);
           loaded = true;
-
-          return _identify()
-            .then(function () {
-              // clear send-a-note flag
-              $location.search("c2VuZC11cy1hLW5vdGU", null);
-            })
-            .then(_activate);
         }
         return $q.when();
       }
@@ -3662,26 +3654,38 @@ angular.module("risevision.common.support", [
         }
       }
 
+      function enableSuggestions() {
+        if ($window.zE && $window.zE.setHelpCenterSuggestions) {
+          $window.zE.setHelpCenterSuggestions({
+            url: true
+          });
+        }
+      }
+
       return {
         ensureScript: ensureScript,
         showWidget: showWidget,
         showSendNote: showSendNote,
         forceCloseAll: forceCloseAll,
+        enableSuggestions: enableSuggestions
       };
 
     }
   ]).run(["$rootScope", "$window", "zendesk",
     function ($rootScope, $window, zendesk) {
       $rootScope.$on("risevision.user.authorized", function () {
+        zendesk.showWidget();
+      });
+
+      $rootScope.$on("$stateChangeStart", function () {
         zendesk.ensureScript();
+        zendesk.enableSuggestions();
       });
 
       $rootScope.$on("$stateChangeSuccess", function (event, toState) {
         var $element = $(".zEWidget-launcher");
 
-        $window.zE.setHelpCenterSuggestions({
-          url: true
-        });
+        zendesk.enableSuggestions();
 
         if (toState && toState.name.indexOf("apps.editor.workspace") >= 0) {
           $element.css("bottom", "40px");
