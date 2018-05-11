@@ -16,7 +16,6 @@
   
   var AccountRemovalScenarios = require('./cases/account-removal.js');
 
-  var HelpScenarios = require('./cases/help.js');
   var DisableDeleteKeyScenarios = require('./cases/disable-delete-key.js');
 
   var PlansScenarios = require('./cases/plans.js');
@@ -48,8 +47,6 @@
     
     var plansScenarios = new PlansScenarios();
     var accountRemovalScenarios = new AccountRemovalScenarios();
-
-    var helpScenarios = new HelpScenarios();
 
   });
   
