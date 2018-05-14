@@ -9,9 +9,9 @@
     'window.zE||(function(e,t,s){var n=window.zE=window.zEmbed=function(){n._.push(arguments)},a=n.s=e.createElement(t),r=e.getElementsByTagName(t)[0];n.set=function(e){n.set._.push(e)},n._=[],n.set._=[],a.async=true,a.setAttribute("charset","utf-8"),a.src="https://static.zdassets.com/ekr/asset_composer.js?key="+s,n.t=+new Date,a.type="text/javascript",r.parentNode.insertBefore(a,r)})(document,"script","b8d6bdba-10ea-4b88-b96c-9d3905b85d8f");'
   )
   /* jshint quotmark: double */
-  .factory("zendesk", ["getSubscriptionStatus", "segmentAnalytics",
+  .factory("zendesk", ["getSupportSubscriptionStatus", "segmentAnalytics",
     "userState", "$window", "$q", "$location", "$log", "ZENDESK_WEB_WIDGET_SCRIPT",
-    function (getSubscriptionStatus, segmentAnalytics, userState,
+    function (getSupportSubscriptionStatus, segmentAnalytics, userState,
       $window, $q, $location, $log, ZENDESK_WEB_WIDGET_SCRIPT) {
 
       var loaded = false;
@@ -72,7 +72,7 @@
             "rise_vision_company_id": userState.getUserCompanyId(),
           };
 
-          getSubscriptionStatus()
+          getSupportSubscriptionStatus()
             .then(function (subscriptionStatus) {
               if (subscriptionStatus && subscriptionStatus.statusCode === "subscribed") {
                 // append priority support flag
@@ -147,7 +147,7 @@
               var rvCompanyInput = iframe.contents().find(
                 "input[name=24893323]");
               if (rvCompanyInput && rvCompanyInput.length > 0) {
-                getSubscriptionStatus().then(function (subscriptionStatus) {
+                getSupportSubscriptionStatus().then(function (subscriptionStatus) {
                   var prioritySupport = false;
                   $log.info("Subscription status is", subscriptionStatus);
                   if (subscriptionStatus && subscriptionStatus.statusCode === "subscribed") {

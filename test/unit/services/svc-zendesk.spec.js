@@ -126,7 +126,7 @@ describe("Services: Zendesk", function() {
     $provide.service("$window", function() {
       return windowObj;
     });
-    $provide.factory("getSubscriptionStatus", function() {
+    $provide.factory("getSupportSubscriptionStatus", function() {
       return function() {
         return Q.when({
           statusCode: "subscribed"

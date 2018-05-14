@@ -3,11 +3,11 @@
 angular.module("risevision.common.support", [
   "risevision.common.components.subscription-status"
 ])
-  .factory("supportFactory", ["getSubscriptionStatus", "$q",
+  .factory("supportFactory", ["getSupportSubscriptionStatus", "$q",
     "SUPPORT_PRODUCT_CODE", "STORE_SERVER_URL", "userState",
     "$modal", "$templateCache", "$window", "segmentAnalytics",
     "zendesk", "$log",
-    function (getSubscriptionStatus, $q, SUPPORT_PRODUCT_CODE,
+    function (getSupportSubscriptionStatus, $q, SUPPORT_PRODUCT_CODE,
       STORE_SERVER_URL, userState, $modal, $templateCache,
       $window, segmentAnalytics, zendesk, $log) {
       var factory = {};
@@ -24,7 +24,7 @@ angular.module("risevision.common.support", [
 
       var _isSubscribed = function () {
         var deferred = $q.defer();
-        getSubscriptionStatus().then(function (subscriptionStatus) {
+        getSupportSubscriptionStatus().then(function (subscriptionStatus) {
           var subscriptionValid = false;
 
           if (subscriptionStatus.statusCode ===
@@ -77,11 +77,11 @@ angular.module("risevision.common.support", [
       return factory;
     }
   ])
-  .factory("getSubscriptionStatus", ["SUPPORT_PRODUCT_CODE", "userState", "$q",
+  .factory("getSupportSubscriptionStatus", ["SUPPORT_PRODUCT_CODE", "userState", "$q",
     "subscriptionStatusService", "$log",
     function (SUPPORT_PRODUCT_CODE, userState, $q, subscriptionStatusService,
       $log) {
-      return function getSubscriptionStatus() {
+      return function getSupportSubscriptionStatus() {
         var deferred = $q.defer();
 
         if (SUPPORT_PRODUCT_CODE && userState.getSelectedCompanyId()) {
