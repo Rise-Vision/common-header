@@ -27,10 +27,10 @@
 
               helpCenter: {
                 title: {
-                  "*": "Let's Find You an Answer"
+                  "*": "Help"
                 },
                 searchPlaceholder: {
-                  "*": "Let's find you an answer"
+                  "*": "How can we help?"
                 },
                 messageButton: {
                   "*": "Open a Support Ticket"
