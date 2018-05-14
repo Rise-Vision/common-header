@@ -3267,110 +3267,6 @@ angular.module("risevision.common.geodata", [])
   ]);
 })(angular);
 
-"use strict";
-
-angular.module("risevision.common.support", [
-  "risevision.common.components.subscription-status"
-])
-  .factory("supportFactory", ["getSupportSubscriptionStatus", "$q",
-    "SUPPORT_PRODUCT_CODE", "STORE_SERVER_URL", "userState",
-    "$modal", "$templateCache", "$window", "segmentAnalytics",
-    "zendesk", "$log",
-    function (getSupportSubscriptionStatus, $q, SUPPORT_PRODUCT_CODE,
-      STORE_SERVER_URL, userState, $modal, $templateCache,
-      $window, segmentAnalytics, zendesk, $log) {
-      var factory = {};
-      var PREMIUM_PLAN = "Premium";
-      var BASIC_PLAN = "Free";
-
-      factory.handleGetSupportAction = function () {
-        _isSubscribed().then(function subscribed() {
-          factory.openZendeskForm();
-        }, function notSubscribed() {
-          _openSendUsANote();
-        });
-      };
-
-      var _isSubscribed = function () {
-        var deferred = $q.defer();
-        getSupportSubscriptionStatus().then(function (subscriptionStatus) {
-          var subscriptionValid = false;
-
-          if (subscriptionStatus.statusCode ===
-            "subscribed") {
-            subscriptionValid = true;
-          } else if ((subscriptionStatus.statusCode || "").toLowerCase() ===
-            "cancelled") {
-            console.log(subscriptionStatus);
-            var expiryTime = new Date(subscriptionStatus.expiry);
-            if (expiryTime > new Date()) {
-              subscriptionValid = true;
-            } else {
-              subscriptionValid = false;
-            }
-          }
-
-          if (subscriptionValid) {
-            _sendUserPlanUpdateToIntercom(PREMIUM_PLAN);
-            deferred.resolve(subscriptionStatus);
-          } else {
-            _sendUserPlanUpdateToIntercom(BASIC_PLAN);
-            deferred.reject(subscriptionStatus);
-          }
-        }, function (err) {
-          $log.debug("Could not retrieve a subscription status", err);
-          deferred.reject();
-        });
-
-        return deferred.promise;
-      };
-
-      var _sendUserPlanUpdateToIntercom = function (plan) {
-        segmentAnalytics.identify(userState.getUsername(), {
-          "plan": plan
-        });
-      };
-
-      factory.openZendeskForm = function () {
-        zendesk.showWidget();
-      };
-
-      var _openSendUsANote = function () {
-        $log.debug("opening send us a note popup");
-        $modal.open({
-          template: $templateCache.get("help-send-us-a-note-modal.html"),
-          controller: "HelpSendUsANoteModalCtrl",
-        });
-      };
-
-      return factory;
-    }
-  ])
-  .factory("getSupportSubscriptionStatus", ["SUPPORT_PRODUCT_CODE", "userState", "$q",
-    "subscriptionStatusService", "$log",
-    function (SUPPORT_PRODUCT_CODE, userState, $q, subscriptionStatusService,
-      $log) {
-      return function getSupportSubscriptionStatus() {
-        var deferred = $q.defer();
-
-        if (SUPPORT_PRODUCT_CODE && userState.getSelectedCompanyId()) {
-          subscriptionStatusService.get(SUPPORT_PRODUCT_CODE, userState.getSelectedCompanyId())
-            .then(function (subscriptionStatus) {
-                $log.debug("subscriptionStatus", subscriptionStatus);
-                deferred.resolve(subscriptionStatus);
-              },
-              function (err) {
-                $log.debug("Could not retrieve a subscription status", err);
-                deferred.reject(err);
-              });
-        } else {
-          deferred.reject();
-        }
-        return deferred.promise;
-      };
-    }
-  ]);
-
 (function (angular) {
 
   "use strict";
@@ -3464,7 +3360,7 @@ angular.module("risevision.common.support", [
 (function (angular) {
   "use strict";
 
-  angular.module("risevision.common.support")
+  angular.module("risevision.common.support", ["risevision.common.components.subscription-status"])
   /* jshint quotmark: single */
   .value('ZENDESK_WEB_WIDGET_SCRIPT',
     'window.zE||(function(e,t,s){var n=window.zE=window.zEmbed=function(){n._.push(arguments)},a=n.s=e.createElement(t),r=e.getElementsByTagName(t)[0];n.set=function(e){n.set._.push(e)},n._=[],n.set._=[],a.async=true,a.setAttribute("charset","utf-8"),a.src="https://static.zdassets.com/ekr/asset_composer.js?key="+s,n.t=+new Date,a.type="text/javascript",r.parentNode.insertBefore(a,r)})(document,"script","b8d6bdba-10ea-4b88-b96c-9d3905b85d8f");'
@@ -3668,32 +3564,57 @@ angular.module("risevision.common.support", [
       };
 
     }
-  ]).run(["$rootScope", "$window", "zendesk",
-    function ($rootScope, $window, zendesk) {
-      $rootScope.$on("risevision.user.authorized", function () {
-        zendesk.showWidget();
-      });
+  ])
+    .factory("getSupportSubscriptionStatus", ["SUPPORT_PRODUCT_CODE", "userState", "$q",
+      "subscriptionStatusService", "$log",
+      function (SUPPORT_PRODUCT_CODE, userState, $q, subscriptionStatusService,
+        $log) {
+        return function getSupportSubscriptionStatus() {
+          var deferred = $q.defer();
 
-      $rootScope.$on("risevision.user.signedOut", function () {
-        zendesk.logout();
-      });
+          if (SUPPORT_PRODUCT_CODE && userState.getSelectedCompanyId()) {
+            subscriptionStatusService.get(SUPPORT_PRODUCT_CODE, userState.getSelectedCompanyId())
+              .then(function (subscriptionStatus) {
+                  $log.debug("subscriptionStatus", subscriptionStatus);
+                  deferred.resolve(subscriptionStatus);
+                },
+                function (err) {
+                  $log.debug("Could not retrieve a subscription status", err);
+                  deferred.reject(err);
+                });
+          } else {
+            deferred.reject();
+          }
+          return deferred.promise;
+        };
+      }
+    ])
+    .run(["$rootScope", "$window", "zendesk",
+      function ($rootScope, $window, zendesk) {
+        $rootScope.$on("risevision.user.authorized", function () {
+          zendesk.showWidget();
+        });
 
-      $rootScope.$on("$stateChangeStart", function () {
-        zendesk.ensureScript();
-        zendesk.enableSuggestions();
-      });
+        $rootScope.$on("risevision.user.signedOut", function () {
+          zendesk.logout();
+        });
 
-      $rootScope.$on("$stateChangeSuccess", function (event, toState) {
-        var $element = $(".zEWidget-launcher");
+        $rootScope.$on("$stateChangeStart", function () {
+          zendesk.ensureScript();
+          zendesk.enableSuggestions();
+        });
 
-        if (toState && toState.name.indexOf("apps.editor.workspace") >= 0) {
-          $element.css("bottom", "40px");
-        } else {
-          $element.css("bottom", "0px");
-        }
-      });
-    }
-  ]);
+        $rootScope.$on("$stateChangeSuccess", function (event, toState) {
+          var $element = $(".zEWidget-launcher");
+
+          if (toState && toState.name.indexOf("apps.editor.workspace") >= 0) {
+            $element.css("bottom", "40px");
+          } else {
+            $element.css("bottom", "0px");
+          }
+        });
+      }
+    ]);
 })(angular);
 
 "use strict";
