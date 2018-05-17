@@ -421,7 +421,7 @@ describe("Services: plan", function() {
   });
 
   describe("areAllProLicensesUsed:", function() {
-    it("should return all licenses are used if display if assigned list equal license count", function () {
+    it("should return all licenses are used if assigned list length equals license count", function () {
       sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
         planPlayerProLicenseCount: 2,
         playerProLicenseCount: 1,
@@ -432,7 +432,18 @@ describe("Services: plan", function() {
       expect(planFactory.areAllProLicensesUsed()).to.be.true;
     });
 
-    it("should return all licenses are used if display if assigned list is lower than license count", function () {
+    it("should return all licenses are used if assigned list length is greater than license count (this should not happen, but could be caused by migration issues)", function () {
+      sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
+        planPlayerProLicenseCount: 2,
+        playerProLicenseCount: 1,
+        playerProSubscriptionStatus: "Active",
+        playerProAssignedDisplays: ["1", "2", "3", "4"]
+      });
+
+      expect(planFactory.areAllProLicensesUsed()).to.be.true;
+    });
+
+    it("should return not all licenses are used if assigned list length is lower than license count", function () {
       sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
         planPlayerProLicenseCount: 2,
         playerProLicenseCount: 1,

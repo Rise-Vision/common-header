@@ -173,7 +173,7 @@
           var maxProDisplays = _factory.getProLicenseCount();
           var assignedDisplays = company.playerProAssignedDisplays || [];
 
-          return assignedDisplays.length === maxProDisplays;
+          return assignedDisplays.length >= maxProDisplays;
         };
 
         _factory.toggleDisplayLicenseLocal = function (displayId, playerProAuthorized) {
