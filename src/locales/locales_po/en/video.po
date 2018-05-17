@@ -10,6 +10,9 @@ msgstr "Video Options"
 msgid "pause.label"
 msgstr "If video is paused resume playing after"
 
+msgid "preview.previewMutedText"
+msgstr "The Video Widget will be muted in Preview, your videos will play with volume on your display if configured for it."
+
 msgid "settings"
 msgstr "Video Settings"
 
@@ -25,5 +28,3 @@ msgstr "How do you want to show your video(s)?"
 msgid "volume.label"
 msgstr "Volume"
 
-msgid "preview.previewMutedText"
-msgstr "The Video Widget will be muted in Preview, your videos will play with volume on your display if configured for it."

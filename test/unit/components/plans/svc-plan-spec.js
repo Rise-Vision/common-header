@@ -392,9 +392,27 @@ describe("Services: plan", function() {
       expect(planFactory.getProLicenseCount()).to.equal(0);
     });
 
+    it("should return zero licenses available (correct handling of null value)", function () {
+      sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
+        playerProSubscriptionStatus: "Active",
+      });
+      expect(planFactory.getProLicenseCount()).to.equal(0);
+    });
+
+    it("should return one license available", function () {
+      sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
+        planPlayerProLicenseCount: 1,
+        playerProLicenseCount: 2,
+        playerProSubscriptionStatus: "Suspended"
+      });
+
+      expect(planFactory.getProLicenseCount()).to.equal(1);
+    });
+
     it("should return three licenses available", function () {
       sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
         planPlayerProLicenseCount: 2,
+        playerProSubscriptionStatus: "Active",
         playerProLicenseCount: 1
       });
 
@@ -407,6 +425,7 @@ describe("Services: plan", function() {
       sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
         planPlayerProLicenseCount: 2,
         playerProLicenseCount: 1,
+        playerProSubscriptionStatus: "Active",
         playerProAssignedDisplays: ["1", "2", "3"]
       });
 
@@ -417,6 +436,7 @@ describe("Services: plan", function() {
       sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
         planPlayerProLicenseCount: 2,
         playerProLicenseCount: 1,
+        playerProSubscriptionStatus: "Active",
         playerProAssignedDisplays: ["1", "2"]
       });
 
