@@ -25,3 +25,5 @@ msgstr "How do you want to show your video(s)?"
 msgid "volume.label"
 msgstr "Volume"
 
+msgid "preview.previewMutedText"
+msgstr "The Video Widget will be muted in Preview, your videos will play with volume on your display if configured for it."

@@ -15,5 +15,8 @@
   },
   "volume": {
     "label": "Volume"
+  },
+  "preview": {
+    "previewMutedText": "The Video Widget will be muted in Preview, your videos will play with volume on your display if configured for it."
   }
 }
