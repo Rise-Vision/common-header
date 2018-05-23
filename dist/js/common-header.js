@@ -3405,13 +3405,10 @@ angular.module("risevision.common.geodata", [])
       var previousUsername = "";
       var $ = $window.$;
 
-      var cancelDomMonitor;
-
       function ensureScript() {
         if (!loaded) {
           $window.zESettings = {
             webWidget: {
-
               helpCenter: {
                 title: {
                   "*": "Help"
@@ -3430,9 +3427,6 @@ angular.module("risevision.common.geodata", [])
 
               contactForm: {
                 title: {
-                  "*": "Open a Support Ticket"
-                },
-                messageButton: {
                   "*": "Open a Support Ticket"
                 }
               }
@@ -3510,63 +3504,12 @@ angular.module("risevision.common.geodata", [])
           previousUsername = username;
         }
 
-        _startDomMonitor();
         _changeBorderStyle();
       }
 
       function _changeBorderStyle() {
         $("iframe[class^=zEWidget]").contents().find(".Container")
           .css("border", "1px solid #4ab767");
-      }
-
-      function _startDomMonitor() {
-        // continuous monitor DOM and alter ZD widget form
-        // when it's present on the web page
-        if (!cancelDomMonitor) {
-          var username = userState.getUsername();
-          var companyId = userState.getSelectedCompanyId();
-
-          cancelDomMonitor = setInterval(function () {
-            var iframe = $("iframe.zEWidget-webWidget--active");
-            if (iframe && iframe.contents) {
-              // automatically fill in rise vision username
-              var rvUsernameInput = iframe.contents().find("input[name=email]");
-              if (rvUsernameInput && rvUsernameInput.length > 0) {
-                rvUsernameInput.val(username);
-                rvUsernameInput.prop("disabled", true);
-                rvUsernameInput.parents("label").parent().hide();
-              }
-
-              var rvCompanyInput = iframe.contents().find(
-                "input[name=24893323]");
-              if (rvCompanyInput && rvCompanyInput.length > 0) {
-                getSupportSubscriptionStatus().then(function (subscriptionStatus) {
-                  var prioritySupport = false;
-                  $log.info("Subscription status is", subscriptionStatus);
-                  if (subscriptionStatus && subscriptionStatus.statusCode === "subscribed") {
-                    // append priority support flag
-                    prioritySupport = 1;
-                  }
-
-                  rvCompanyInput.val(JSON.stringify({
-                    riseVisionCompanyId: companyId,
-                    riseVisionUsername: username,
-                    prioritySupport: prioritySupport
-                  }));
-                }).catch(function (err) {
-                  $log.error("error: ", err);
-                });
-
-                rvCompanyInput.prop("disabled", true);
-                rvCompanyInput.parents("label").parent().hide();
-
-                $log.debug("ZD form found!");
-                clearInterval(cancelDomMonitor);
-                cancelDomMonitor = null;
-              }
-            }
-          }, 1000);
-        }
       }
 
       function logout() {
@@ -3636,7 +3579,7 @@ angular.module("risevision.common.geodata", [])
     ])
     .run(["$rootScope", "$window", "userState", "zendesk", "ZENDESK_WEB_WIDGET_SCRIPT",
       function ($rootScope, $window, userState, zendesk, ZENDESK_WEB_WIDGET_SCRIPT) {
-        var widgetVisible = false;
+        var widgetVisible;
 
         if (ZENDESK_WEB_WIDGET_SCRIPT) {
           zendesk.initializeWidget();
@@ -3648,7 +3591,7 @@ angular.module("risevision.common.geodata", [])
 
         $rootScope.$on("$stateChangeSuccess", function (event, toState) {
           if (toState && toState.name.indexOf("common.auth.") === 0) {
-            if (!widgetVisible) {
+            if (widgetVisible !== false) {
               zendesk.logout();
               zendesk.displayButton();
             }
