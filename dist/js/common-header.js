@@ -66,7 +66,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('common-header.html',
-    '<div id="commonHeaderDiv" ng-hide="hideCommonHeader"><ng-include replace-include="" ng-controller="PlanBannerCtrl" src="\'plan-banner.html\'"></ng-include><nav class="navbar navbar-default navbar-static-top hidden-print" ng-class="{\'active-banner\': isSubcompanySelected() || isTestCompanySelected()}" role="navigation"><div class="container-fluid"><div class="navbar-header" style="width: 100%;"><a class="navbar-brand visible-md visible-lg" href="http://www.risevision.com/" target="{{newTabHome ? \'_blank\' : \'_self\'}}" ng-if="!inRVAFrame"><img src="//s3.amazonaws.com/Rise-Images/UI/logo.svg" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></a> <a class="navbar-brand hidden-md hidden-lg text-center" href="" off-canvas-toggle=""><i class="fa fa-bars"></i></a><ul class="nav navbar-nav navbar-right actions-nav pull-right"><li ng-show="!isLoggedIn || (isLoggedIn && isRiseVisionUser)" dropdown="" class="dropdown hidden-xs"><button id="zendeskHelpButton" class="btn btn-primary"><i><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewbox="0 0 22 22"><path d="M11,12.3V13c0,0-1.8,0-2,0v-0.6c0-0.6,0.1-1.4,0.8-2.1c0.7-0.7,1.6-1.2,1.6-2.1c0-0.9-0.7-1.4-1.4-1.4 c-1.3,0-1.4,1.4-1.5,1.7H6.6C6.6,7.1,7.2,5,10,5c2.4,0,3.4,1.6,3.4,3C13.4,10.4,11,10.8,11,12.3z" fill="white"></path><circle cx="10" cy="15" r="1" fill="white"></circle><path d="M10,2c4.4,0,8,3.6,8,8s-3.6,8-8,8s-8-3.6-8-8S5.6,2,10,2 M10,0C4.5,0,0,4.5,0,10s4.5,10,10,10s10-4.5,10-10S15.5,0,10,0 L10,0z" fill="white"></path></svg></i> <span class="hidden-sm hidden-xs hidden-md">Help</span></button></li><li ng-show="!isLoggedIn || (isLoggedIn && isRiseVisionUser)" class="visible-xs-inline-block"><button class="btn btn-primary"><i><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewbox="0 0 22 22"><path d="M11,12.3V13c0,0-1.8,0-2,0v-0.6c0-0.6,0.1-1.4,0.8-2.1c0.7-0.7,1.6-1.2,1.6-2.1c0-0.9-0.7-1.4-1.4-1.4 c-1.3,0-1.4,1.4-1.5,1.7H6.6C6.6,7.1,7.2,5,10,5c2.4,0,3.4,1.6,3.4,3C13.4,10.4,11,10.8,11,12.3z" fill="white"></path><circle cx="10" cy="15" r="1" fill="white"></circle><path d="M10,2c4.4,0,8,3.6,8,8s-3.6,8-8,8s-8-3.6-8-8S5.6,2,10,2 M10,0C4.5,0,0,4.5,0,10s4.5,10,10,10s10-4.5,10-10S15.5,0,10,0 L10,0z" fill="white"></path></svg></i></button></li><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="SystemMessagesButtonCtrl" src="\'system-messages-button.html\'"></ng-include><ng-include replace-include="" ng-controller="ShoppingCartButtonCtrl" src="\'shoppingcart-button.html\'"></ng-include><ng-include replace-include="" ng-if="inRVAFrame" ng-controller="CloseFrameButtonCtrl" src="\'close-frame-button.html\'"></ng-include><ng-include ng-if="!inRVAFrame" replace-include="" src="\'app-nav-buttons.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="AuthButtonsCtr" src="\'auth-buttons.html\'"></ng-include><li ng-if="inRVAFrame" ng-controller="AuthButtonsCtr"></li></ul><div class="navbar-collapse navbar-left hidden-xs hidden-sm"><ul class="nav navbar-nav"><li class="env-name-nav-item visible-md visible-lg" ng-if="ENV_NAME"><span class="env-name-label">{{ENV_NAME}}</span></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a></li><li ng-if="!inRVAFrame && !hideHelpMenu"><a href="http://www.risevision.com/help/" target="_blank">Help</a></li></ul></div><div class="navbar-left visible-xs visible-sm" ng-if="ENV_NAME"><ul class="nav navbar-nav"><li class="env-name-nav-item"><span class="env-name-label">{{ENV_NAME}}</span></li></ul></div></div><ng-include replace-include="" ng-controller="TestCompanyBannerCtrl" src="\'test-company-banner.html\'"></ng-include><ng-include replace-include="" ng-controller="SubcompanyBannerCtrl" src="\'subcompany-banner.html\'"></ng-include></div></nav><ng-include replace-include="" ng-controller="GlobalAlertsCtrl" src="\'global-alerts.html\'"></ng-include><nav class="off-canvas-nav" off-canvas-nav=""><ul class="nav nav-pills nav-stacked"><li off-canvas-toggle=""><i class="fa fa-times fa-2x pull-right"></i> <img src="//s3.amazonaws.com/rise-common/images/logo-small.png" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}">{{opt.title}}</a></li><li ng-if="!hideHelpMenu"><a target="_blank" href="http://www.risevision.com/help">Help</a></li></ul></nav></div><div ng-show="cookieEnabled === false" class="bg-warning text-center u_padding-sm"><small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small></div><iframe name="logoutFrame" id="logoutFrame" style="display:none"></iframe>');
+    '<div id="commonHeaderDiv" ng-hide="hideCommonHeader"><ng-include replace-include="" ng-controller="PlanBannerCtrl" src="\'plan-banner.html\'"></ng-include><nav class="navbar navbar-default navbar-static-top hidden-print" ng-class="{\'active-banner\': isSubcompanySelected() || isTestCompanySelected()}" role="navigation"><div class="container-fluid"><div class="navbar-header" style="width: 100%;"><a class="navbar-brand visible-md visible-lg" href="http://www.risevision.com/" target="{{newTabHome ? \'_blank\' : \'_self\'}}" ng-if="!inRVAFrame"><img src="//s3.amazonaws.com/Rise-Images/UI/logo.svg" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></a> <a class="navbar-brand hidden-md hidden-lg text-center" href="" off-canvas-toggle=""><i class="fa fa-bars"></i></a><ul class="nav navbar-nav navbar-right actions-nav pull-right"><ng-include replace-include="" ng-controller="ZendeskButtonCtrl" src="\'zendesk-button.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="SystemMessagesButtonCtrl" src="\'system-messages-button.html\'"></ng-include><ng-include replace-include="" ng-controller="ShoppingCartButtonCtrl" src="\'shoppingcart-button.html\'"></ng-include><ng-include replace-include="" ng-if="inRVAFrame" ng-controller="CloseFrameButtonCtrl" src="\'close-frame-button.html\'"></ng-include><ng-include ng-if="!inRVAFrame" replace-include="" src="\'app-nav-buttons.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="AuthButtonsCtr" src="\'auth-buttons.html\'"></ng-include><li ng-if="inRVAFrame" ng-controller="AuthButtonsCtr"></li></ul><div class="navbar-collapse navbar-left hidden-xs hidden-sm"><ul class="nav navbar-nav"><li class="env-name-nav-item visible-md visible-lg" ng-if="ENV_NAME"><span class="env-name-label">{{ENV_NAME}}</span></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a></li><li ng-if="!inRVAFrame && !hideHelpMenu"><a href="http://www.risevision.com/help/" target="_blank">Help</a></li></ul></div><div class="navbar-left visible-xs visible-sm" ng-if="ENV_NAME"><ul class="nav navbar-nav"><li class="env-name-nav-item"><span class="env-name-label">{{ENV_NAME}}</span></li></ul></div></div><ng-include replace-include="" ng-controller="TestCompanyBannerCtrl" src="\'test-company-banner.html\'"></ng-include><ng-include replace-include="" ng-controller="SubcompanyBannerCtrl" src="\'subcompany-banner.html\'"></ng-include></div></nav><ng-include replace-include="" ng-controller="GlobalAlertsCtrl" src="\'global-alerts.html\'"></ng-include><nav class="off-canvas-nav" off-canvas-nav=""><ul class="nav nav-pills nav-stacked"><li off-canvas-toggle=""><i class="fa fa-times fa-2x pull-right"></i> <img src="//s3.amazonaws.com/rise-common/images/logo-small.png" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}">{{opt.title}}</a></li><li ng-if="!hideHelpMenu"><a target="_blank" href="http://www.risevision.com/help">Help</a></li></ul></nav></div><div ng-show="cookieEnabled === false" class="bg-warning text-center u_padding-sm"><small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small></div><iframe name="logoutFrame" id="logoutFrame" style="display:none"></iframe>');
 }]);
 })();
 
@@ -295,6 +295,18 @@ try {
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('user-settings-modal.html',
     '<div rv-spinner="spinnerOptions" rv-spinner-key="user-settings-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 id="user-settings-label" class="modal-title"><span ng-if="!isAdd">User Settings</span> <span ng-if="isAdd">Add User</span></h2></div><div class="modal-body user-settings-modal" stop-event="touchend"><div ng-if="isAdd" class="alert alert-info">A Google account is no longer required by users being added to your Company. Any email address can be used!</div><form id="forms.userSettingsForm" role="form" novalidate="" name="forms.userSettingsForm"><div id="passwordAlert" class="animated" ng-if="editingYourself && !isAdd" ng-show="!isRiseAuthUser && showChangePassword" ng-class="{ \'fadeIn\': showChangePassword }"><div class="panel-body bg-info u_margin-sm-bottom"><p class="u_remove-bottom"><span>This account is authenticated by Google.<br><a href="https://myaccount.google.com/security#signin" target="_blank">Change your password on your Google account.</a></span></p></div></div><div class="form-group" ng-class="{ \'has-error\' : forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine }" ng-if="isAdd"><label>Username *</label> <input id="user-settings-username" type="email" required="" name="username" class="form-control" ng-model="user.username"><p ng-show="forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine" class="help-block validation-error-message-email">User name must be a valid email address.</p></div><div class="row" ng-if="!isAdd"><div class="col-xs-6"><div class="form-group"><label>Username *</label><div><span>{{user.username}}</span></div></div></div><div class="col-xs-6 text-right"><span ng-if="editingYourself && isUserAdmin"><a href="" class="btn btn-default btn-sm change-password" ng-click="toggleChangePassword()">Change password</a></span></div></div><div id="passwordForm" class="animated" ng-if="editingYourself && !isAdd && isRiseAuthUser && showChangePassword" ng-class="{ \'fadeIn\': showChangePassword }"><div class="form-group" ng-class="{ \'has-error\' : (forms.resetPasswordForm.$submitted && forms.resetPasswordForm.newPassword.$invalid) || currentPasswordNotValid }"><label for="user-settings-current-password">Current Password *</label> <input id="user-settings-current-password" type="password" name="currentPassword" class="form-control" ng-model="userPassword.currentPassword" required=""><p class="text-danger" ng-show="forms.userSettingsForm.$submitted && forms.userSettingsForm.currentPassword.$error.required">Current Password is required.</p><p ng-show="currentPasswordNotValid" class="help-block validation-error-message-mail">Current Password is not valid.</p></div><div class="form-group" ng-class="{ \'has-error\' : (forms.resetPasswordForm.$submitted && forms.resetPasswordForm.newPassword.$invalid) }"><label for="user-settings-new-password">New Password *</label> <input id="user-settings-new-password" type="password" name="newPassword" class="form-control" ng-model="userPassword.newPassword" required="" minlength="4"><p class="text-danger" ng-show="forms.userSettingsForm.$submitted && forms.userSettingsForm.newPassword.$error.required">New Password is required.</p><p class="text-danger" ng-show="forms.userSettingsForm.$submitted && forms.userSettingsForm.newPassword.$error.minlength">New Password must be at least 4 characters long.</p><p class="text-warning" ng-show="forms.userSettingsForm.newPassword.$valid">A strong password is at least 8 characters, includes uppercase/lowercase letters, and one or more numbers.</p></div><div class="form-group" ng-class="{ \'has-error\' : (forms.resetPasswordForm.$submitted && forms.resetPasswordForm.confirmPassword.$invalid) }"><label for="user-settings-confirm-password">Confirm Password *</label> <input id="user-settings-confirm-password" type="password" name="confirmPassword" class="form-control" ng-model="userPassword.confirmPassword" required="" confirm-password-validator="userPassword.newPassword"><p ng-show="forms.userSettingsForm.$submitted && forms.userSettingsForm.confirmPassword.$error.required" class="text-danger">Confirm Password is required.</p><p ng-show="forms.userSettingsForm.$submitted && forms.userSettingsForm.confirmPassword.$error.passwordMatch" class="text-danger">New Password and Confirm Password must match.</p><hr></div></div><div class="form-group" ng-class="{ \'has-error\' : forms.userSettingsForm.firstName.$invalid && !forms.userSettingsForm.firstName.$pristine }"><label for="user-settings-first-name">First Name *</label> <input id="user-settings-first-name" type="text" required="" name="firstName" class="form-control" ng-model="user.firstName"><p ng-show="forms.userSettingsForm.firstName.$invalid && !forms.userSettingsForm.firstName.$pristine" class="help-block validation-error-message-firstName">First Name is required.</p></div><div class="form-group" ng-class="{ \'has-error\' : forms.userSettingsForm.lastName.$invalid && !forms.userSettingsForm.lastName.$pristine }"><label for="user-settings-last-name">Last Name *</label> <input id="user-settings-last-name" type="text" required="" name="lastName" class="form-control" ng-model="user.lastName"><p ng-show="forms.userSettingsForm.lastName.$invalid && !forms.userSettingsForm.lastName.$pristine" class="help-block validation-error-message-lastName">Last Name is required.</p></div><div class="form-group"><label for="company-role">Company Role</label><select id="company-role" class="form-control selectpicker" ng-model="user.companyRole"><option value="" ng-show="false">&lt; Select Role &gt;</option><option ng-repeat="role in COMPANY_ROLE_FIELDS" value="{{role[1]}}">{{role[0]}}</option></select></div><div class="form-group"><label for="user-settings-phone">Phone</label> <input id="user-settings-phone" type="tel" name="phone" class="form-control" ng-model="user.telephone"></div><div class="form-group" ng-class="{ \'has-error\' : forms.userSettingsForm.email.$invalid && !forms.userSettingsForm.email.$pristine }"><label for="user-settings-email">Email *</label> <input id="user-settings-email" type="email" required="" name="email" class="form-control" ng-model="user.email"><p ng-show="forms.userSettingsForm.email.$invalid && !forms.userSettingsForm.email.$pristine" class="help-block validation-error-message-email">A valid email address is required.</p></div><div class="form-group"><label>Roles</label><div class="checkbox" ng-repeat="role in availableRoles" ng-show="editRoleVisible(role)"><label><input type="checkbox" id="user-settings-{{role.key}}" checklist-model="user.roles" ng-disabled="!editRoleAllowed(role)" checklist-value="role.key"> {{role.name}}</label></div></div><div class="form-group" ng-if="user.lastLogin"><label>Last Login</label><div>{{user.lastLogin | date:\'d-MMM-yyyy h:mm a\'}}</div></div><div class="form-group" ng-if="!editingYourself && !isAdd"><label for="user-settings-status">Status</label><select id="user-settings-status" class="form-control selectpicker" ng-model="user.status" integer-parser=""><option value="1">Active</option><option value="0">Inactive</option></select></div></form></div><div class="modal-footer"><p class="text-right"><last-modified change-date="user.changeDate" changed-by="user.changedBy"></last-modified></p><button type="button" id="delete-button" class="btn btn-danger btn-fixed-width pull-left" ng-if="!isAdd && isUserAdmin" ng-click="deleteUser()">Delete <i class="fa fa-white fa-trash-o icon-right"></i></button><div class="pull-right"><button type="submit" form="forms.userSettingsForm" class="btn btn-primary btn-fixed-width" data-dismiss="modal" ng-click="save()" id="save-button" ng-if="isUserAdmin">Save <i class="fa fa-white fa-check icon-right"></i></button> <button type="button" class="btn btn-default btn-fixed-width" ng-click="closeModal()">Cancel <i class="fa fa-white fa-times icon-right"></i></button></div></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('zendesk-button.html',
+    '<li dropdown="" class="dropdown hidden-xs"><button id="zendeskHelpButton" class="btn btn-primary" ng-click="showZendeskWidget()"><i><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewbox="0 0 22 22"><path d="M11,12.3V13c0,0-1.8,0-2,0v-0.6c0-0.6,0.1-1.4,0.8-2.1c0.7-0.7,1.6-1.2,1.6-2.1c0-0.9-0.7-1.4-1.4-1.4 c-1.3,0-1.4,1.4-1.5,1.7H6.6C6.6,7.1,7.2,5,10,5c2.4,0,3.4,1.6,3.4,3C13.4,10.4,11,10.8,11,12.3z" fill="white"></path><circle cx="10" cy="15" r="1" fill="white"></circle><path d="M10,2c4.4,0,8,3.6,8,8s-3.6,8-8,8s-8-3.6-8-8S5.6,2,10,2 M10,0C4.5,0,0,4.5,0,10s4.5,10,10,10s10-4.5,10-10S15.5,0,10,0 L10,0z" fill="white"></path></svg></i> <span class="hidden-sm hidden-xs hidden-md">Help</span></button></li><li class="visible-xs-inline-block"><button class="btn btn-primary" ng-click="showZendeskWidget()"><i><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewbox="0 0 22 22"><path d="M11,12.3V13c0,0-1.8,0-2,0v-0.6c0-0.6,0.1-1.4,0.8-2.1c0.7-0.7,1.6-1.2,1.6-2.1c0-0.9-0.7-1.4-1.4-1.4 c-1.3,0-1.4,1.4-1.5,1.7H6.6C6.6,7.1,7.2,5,10,5c2.4,0,3.4,1.6,3.4,3C13.4,10.4,11,10.8,11,12.3z" fill="white"></path><circle cx="10" cy="15" r="1" fill="white"></circle><path d="M10,2c4.4,0,8,3.6,8,8s-3.6,8-8,8s-8-3.6-8-8S5.6,2,10,2 M10,0C4.5,0,0,4.5,0,10s4.5,10,10,10s10-4.5,10-10S15.5,0,10,0 L10,0z" fill="white"></path></svg></i></button></li>');
 }]);
 })();
 
@@ -2132,6 +2144,24 @@ angular.module("risevision.common.header")
   }
 ]);
 
+angular.module("risevision.common.header")
+
+.controller("ZendeskButtonCtrl", ["$scope", "userState", "zendesk",
+  function ($scope, userState, zendesk) {
+    $scope.isRiseVisionUser = function () {
+      return userState.isRiseVisionUser();
+    };
+
+    $scope.isLoggedIn = function () {
+      return userState.isLoggedIn();
+    };
+
+    $scope.showZendeskWidget = function () {
+      zendesk.activateWidget();
+    };
+  }
+]);
+
 // ------------------------------------
 // Action Sheet
 // ------------------------------------
@@ -3414,6 +3444,8 @@ angular.module("risevision.common.geodata", [])
 
           $window.document.body.appendChild(scriptElem);
           loaded = true;
+
+          hideWidget();
         }
         return $q.when();
       }
@@ -3450,17 +3482,17 @@ angular.module("risevision.common.geodata", [])
         return deferred.promise;
       }
 
-      function showWidget() {
+      function initializeWidget() {
         return ensureScript()
           .then(_identify)
           .then(function () {
             // clear send-a-note flag
             $location.search("c2VuZC11cy1hLW5vdGU", null);
           })
-          .then(_activate);
+          .then(_completeInitialization);
       }
 
-      function _activate() {
+      function _completeInitialization() {
         var username = userState.getUsername();
 
         if (previousUsername !== username) {
@@ -3468,13 +3500,14 @@ angular.module("risevision.common.geodata", [])
             email: username,
           };
 
-          $window.zE.identify(identity);
+          if (username) {
+            $window.zE.identify(identity);
+          }
+
           previousUsername = username;
         }
 
         _startDomMonitor();
-
-        $window.zE.show();
         _changeBorderStyle();
       }
 
@@ -3555,9 +3588,30 @@ angular.module("risevision.common.geodata", [])
         previousUsername = "";
       }
 
+      function displayButton() {
+        $window.zE(function () {
+          $window.zE.show();
+        });
+      }
+
+      function hideWidget() {
+        $window.zE(function () {
+          $window.zE.hide();
+        });
+      }
+
+      function activateWidget() {
+        $window.zE(function () {
+          $window.zE.activate();
+        });
+      }
+
       return {
         ensureScript: ensureScript,
-        showWidget: showWidget,
+        initializeWidget: initializeWidget,
+        displayButton: displayButton,
+        hideWidget: hideWidget,
+        activateWidget: activateWidget,
         forceCloseAll: forceCloseAll,
         enableSuggestions: enableSuggestions,
         logout: logout
@@ -3589,29 +3643,25 @@ angular.module("risevision.common.geodata", [])
         };
       }
     ])
-    .run(["$rootScope", "$window", "zendesk",
-      function ($rootScope, $window, zendesk) {
-        $rootScope.$on("risevision.user.authorized", function () {
-          zendesk.showWidget();
-        });
+    .run(["$rootScope", "$window", "userState", "zendesk",
+      function ($rootScope, $window, userState, zendesk) {
+        zendesk.initializeWidget();
 
-        $rootScope.$on("risevision.user.signedOut", function () {
-          zendesk.logout();
-        });
+        setTimeout(function () {
+          $rootScope.$watch(userState.isLoggedIn,
+            function (isLoggedIn) {
+              console.log("CALLED isLoggedIn", isLoggedIn);
+              if (isLoggedIn) {
+                zendesk.hideWidget();
+              } else {
+                zendesk.logout();
+                zendesk.displayButton();
+              }
+            });
+        }, 1000);
 
         $rootScope.$on("$stateChangeStart", function () {
-          zendesk.ensureScript();
           zendesk.enableSuggestions();
-        });
-
-        $rootScope.$on("$stateChangeSuccess", function (event, toState) {
-          var $element = $(".zEWidget-launcher");
-
-          if (toState && toState.name.indexOf("apps.editor.workspace") >= 0) {
-            $element.css("bottom", "40px");
-          } else {
-            $element.css("bottom", "0px");
-          }
         });
       }
     ]);

@@ -57,6 +57,8 @@
 
           $window.document.body.appendChild(scriptElem);
           loaded = true;
+
+          hideWidget();
         }
         return $q.when();
       }
@@ -93,17 +95,17 @@
         return deferred.promise;
       }
 
-      function showWidget() {
+      function initializeWidget() {
         return ensureScript()
           .then(_identify)
           .then(function () {
             // clear send-a-note flag
             $location.search("c2VuZC11cy1hLW5vdGU", null);
           })
-          .then(_activate);
+          .then(_completeInitialization);
       }
 
-      function _activate() {
+      function _completeInitialization() {
         var username = userState.getUsername();
 
         if (previousUsername !== username) {
@@ -111,13 +113,14 @@
             email: username,
           };
 
-          $window.zE.identify(identity);
+          if (username) {
+            $window.zE.identify(identity);
+          }
+
           previousUsername = username;
         }
 
         _startDomMonitor();
-
-        $window.zE.show();
         _changeBorderStyle();
       }
 
@@ -198,9 +201,30 @@
         previousUsername = "";
       }
 
+      function displayButton() {
+        $window.zE(function () {
+          $window.zE.show();
+        });
+      }
+
+      function hideWidget() {
+        $window.zE(function () {
+          $window.zE.hide();
+        });
+      }
+
+      function activateWidget() {
+        $window.zE(function () {
+          $window.zE.activate();
+        });
+      }
+
       return {
         ensureScript: ensureScript,
-        showWidget: showWidget,
+        initializeWidget: initializeWidget,
+        displayButton: displayButton,
+        hideWidget: hideWidget,
+        activateWidget: activateWidget,
         forceCloseAll: forceCloseAll,
         enableSuggestions: enableSuggestions,
         logout: logout
@@ -232,29 +256,25 @@
         };
       }
     ])
-    .run(["$rootScope", "$window", "zendesk",
-      function ($rootScope, $window, zendesk) {
-        $rootScope.$on("risevision.user.authorized", function () {
-          zendesk.showWidget();
-        });
+    .run(["$rootScope", "$window", "userState", "zendesk",
+      function ($rootScope, $window, userState, zendesk) {
+        zendesk.initializeWidget();
 
-        $rootScope.$on("risevision.user.signedOut", function () {
-          zendesk.logout();
-        });
+        setTimeout(function () {
+          $rootScope.$watch(userState.isLoggedIn,
+            function (isLoggedIn) {
+              console.log("CALLED isLoggedIn", isLoggedIn);
+              if (isLoggedIn) {
+                zendesk.hideWidget();
+              } else {
+                zendesk.logout();
+                zendesk.displayButton();
+              }
+            });
+        }, 1000);
 
         $rootScope.$on("$stateChangeStart", function () {
-          zendesk.ensureScript();
           zendesk.enableSuggestions();
-        });
-
-        $rootScope.$on("$stateChangeSuccess", function (event, toState) {
-          var $element = $(".zEWidget-launcher");
-
-          if (toState && toState.name.indexOf("apps.editor.workspace") >= 0) {
-            $element.css("bottom", "40px");
-          } else {
-            $element.css("bottom", "0px");
-          }
         });
       }
     ]);
