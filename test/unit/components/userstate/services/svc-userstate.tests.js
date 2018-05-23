@@ -186,6 +186,21 @@ describe("Services: userState", function() {
 
       expect(userState.getUsername()).to.equal("username@test.com");
     });
+
+    it("getUserFullName: ", function () {
+      expect(userState.getUserFullName()).to.equal("");
+
+      userState._state.profile.firstName = "John";
+      expect(userState.getUserFullName()).to.equal("John");
+
+      userState._state.profile.firstName = "";
+      userState._state.profile.lastName = "Williams";
+      expect(userState.getUserFullName()).to.equal("Williams");
+
+      userState._state.profile.firstName = "John";
+      userState._state.profile.lastName = "Williams";
+      expect(userState.getUserFullName()).to.equal("John Williams");
+    });
     
     it("getUserEmail: ", function() {
       expect(userState.getUserEmail()).to.not.be.ok;

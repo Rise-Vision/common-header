@@ -3498,10 +3498,13 @@ angular.module("risevision.common.geodata", [])
         if (previousUsername !== username) {
           var identity = {
             email: username,
+            name: userState.getUserFullName()
           };
 
           if (username) {
-            $window.zE.identify(identity);
+            $window.zE(function () {
+              $window.zE.identify(identity);
+            });
           }
 
           previousUsername = username;
@@ -3638,6 +3641,10 @@ angular.module("risevision.common.geodata", [])
         if (ZENDESK_WEB_WIDGET_SCRIPT) {
           zendesk.initializeWidget();
         }
+
+        $rootScope.$on("risevision.user.authorized", function () {
+          zendesk.initializeWidget();
+        });
 
         $rootScope.$on("$stateChangeSuccess", function (event, toState) {
           if (toState && toState.name.indexOf("common.auth.") === 0) {
@@ -7183,6 +7190,12 @@ angular.module("risevision.common.components.logging")
           // user getters
           getUsername: function () {
             return (_state.user && _state.user.username) || null;
+          },
+          getUserFullName: function () {
+            var firstName = (_state.profile && _state.profile.firstName) || "";
+            var lastName = (_state.profile && _state.profile.lastName) || "";
+
+            return (firstName + " " + lastName).trim();
           },
           getUserEmail: function () {
             return _state.profile.email;

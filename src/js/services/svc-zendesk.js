@@ -111,10 +111,13 @@
         if (previousUsername !== username) {
           var identity = {
             email: username,
+            name: userState.getUserFullName()
           };
 
           if (username) {
-            $window.zE.identify(identity);
+            $window.zE(function () {
+              $window.zE.identify(identity);
+            });
           }
 
           previousUsername = username;
@@ -251,6 +254,10 @@
         if (ZENDESK_WEB_WIDGET_SCRIPT) {
           zendesk.initializeWidget();
         }
+
+        $rootScope.$on("risevision.user.authorized", function () {
+          zendesk.initializeWidget();
+        });
 
         $rootScope.$on("$stateChangeSuccess", function (event, toState) {
           if (toState && toState.name.indexOf("common.auth.") === 0) {

@@ -96,6 +96,12 @@
           getUsername: function () {
             return (_state.user && _state.user.username) || null;
           },
+          getUserFullName: function () {
+            var firstName = (_state.profile && _state.profile.firstName) || "";
+            var lastName = (_state.profile && _state.profile.lastName) || "";
+
+            return (firstName + " " + lastName).trim();
+          },
           getUserEmail: function () {
             return _state.profile.email;
           },
