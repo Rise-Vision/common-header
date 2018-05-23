@@ -3,7 +3,7 @@
 describe("Services: Zendesk", function() {
   beforeEach(module("risevision.common.support"));
 
-  var sandbox, windowObj, zeSpy, locationSearchSpy, zeShowSpy, widgetShown,
+  var sandbox, windowObj, zeSpy, locationSearchSpy, widgetShown,
     hideRvUsernameFieldSpy, hideRvCompanySpy, setUsernameValueSpy,
     setCompanyInputStub;
 
@@ -45,9 +45,6 @@ describe("Services: Zendesk", function() {
       };
     });
 
-
-
-    zeShowSpy = sandbox.stub();
     hideRvUsernameFieldSpy = sandbox.stub();
     setUsernameValueSpy = sandbox.stub();
     var fakeRvUsernameInput = {
@@ -90,7 +87,7 @@ describe("Services: Zendesk", function() {
             cb();
           });
           zeSpy.hide = function() {};
-          zeSpy.show = zeShowSpy;
+          zeSpy.show = function() {};
           windowObj.zE = zeSpy;
           windowObj.zE.identify = function() {};
         } },
@@ -141,20 +138,11 @@ describe("Services: Zendesk", function() {
     });
   });
 
-  it("ensureScript", function(done) {
+  it("initializeWidget", function(done) {
     inject(function(zendesk) {
-      zendesk.ensureScript().then(function() {
-        done();
-      }, done);
-    });
-  });
-
-  it("showWidget", function(done) {
-    inject(function(zendesk) {
-      zendesk.showWidget().then(function(){
+      zendesk.initializeWidget().then(function(){
         expect(zeSpy).to.have.been.called;
         expect(locationSearchSpy).to.have.been.calledWith("cHJpb3JpdHktc3VwcG9ydA", 1);
-        expect(zeShowSpy).to.have.been.called;
         done();
       }, done);
     });
@@ -163,7 +151,7 @@ describe("Services: Zendesk", function() {
   it("hides inputs that auto-collect their values", function(done) {
     var _this = this;
     inject(function(zendesk) {
-      zendesk.showWidget().then(function() {
+      zendesk.initializeWidget().then(function() {
         expect(hideRvUsernameFieldSpy).not.to.have.been.called;
         expect(hideRvCompanySpy).not.to.have.been.called;
         expect(setUsernameValueSpy).not.to.have.been.called;

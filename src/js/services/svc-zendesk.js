@@ -179,16 +179,6 @@
         }
       }
 
-      function forceCloseAll() {
-        if ($window.zE && $window.zE.hide) {
-          $window.zE.hide();
-          if (cancelDomMonitor) {
-            clearInterval(cancelDomMonitor);
-            cancelDomMonitor = null;
-          }
-        }
-      }
-
       function enableSuggestions() {
         if ($window.zE && $window.zE.setHelpCenterSuggestions) {
           $window.zE.setHelpCenterSuggestions({
@@ -220,12 +210,10 @@
       }
 
       return {
-        ensureScript: ensureScript,
         initializeWidget: initializeWidget,
         displayButton: displayButton,
         hideWidget: hideWidget,
         activateWidget: activateWidget,
-        forceCloseAll: forceCloseAll,
         enableSuggestions: enableSuggestions,
         logout: logout
       };
