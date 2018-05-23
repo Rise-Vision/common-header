@@ -5737,7 +5737,7 @@ angular.module("risevision.common.components.ui-flow")
 
       $rootScope.$on("$stateChangeStart", function (event, toState,
         toParams, fromState, fromParams) {
-        if (toState && toState.name !== "common.auth.unsubscribe" && (
+        if (toState && (
           toState.name === "common.auth.unauthorized" ||
           toState.name === "common.auth.unregistered" ||
           toState.name === "common.auth.createaccount") && !toParams.state) {
