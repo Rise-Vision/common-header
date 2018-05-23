@@ -240,6 +240,8 @@ angular.module("risevision.common.components.plans", [
             plan.status = company.planSubscriptionStatus;
             plan.trialPeriod = company.planTrialPeriod;
             plan.proStatus = company.playerProSubscriptionStatus;
+            plan.planPlayerProLicenseCount = company.planPlayerProLicenseCount;
+            plan.playerProLicenseCount = company.playerProLicenseCount;
           } else {
             plan = _.cloneDeep(_plansByType.free);
           }
@@ -268,17 +270,20 @@ angular.module("risevision.common.components.plans", [
           return deferred.promise;
         };
 
-        _factory.getProLicenseCount = function (_company) {
-          var company = _company || userState.getCopyOfSelectedCompany();
-          return (company.planPlayerProLicenseCount || 0) + (company.playerProLicenseCount || 0);
+        _factory.getProLicenseCount = function () {
+          var planActive = _factory.isSubscribed() || _factory.isOnTrial();
+          var planProLicenses = (planActive && _factory.currentPlan.planPlayerProLicenseCount) || 0;
+          var extraProLicenses = (_factory.isProSubscribed() && _factory.currentPlan.playerProLicenseCount) || 0;
+
+          return planProLicenses + extraProLicenses;
         };
 
-        _factory.areAllProLicensesUsed = function (_company) {
-          var company = _company || userState.getCopyOfSelectedCompany();
+        _factory.areAllProLicensesUsed = function () {
+          var company = userState.getCopyOfSelectedCompany();
           var maxProDisplays = _factory.getProLicenseCount();
           var assignedDisplays = company.playerProAssignedDisplays || [];
 
-          return assignedDisplays.length === maxProDisplays;
+          return assignedDisplays.length >= maxProDisplays;
         };
 
         _factory.toggleDisplayLicenseLocal = function (displayId, playerProAuthorized) {

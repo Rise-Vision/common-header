@@ -388,38 +388,80 @@ describe("Services: plan", function() {
 
   describe("getProLicenseCount:", function() {
     it("should return zero licenses available", function () {
-      sandbox.stub(userState, "getCopyOfSelectedCompany").returns({});
+      planFactory.currentPlan = {};
       expect(planFactory.getProLicenseCount()).to.equal(0);
     });
 
+    it("should return zero licenses available (correct handling of null value)", function () {
+      planFactory.currentPlan = {
+        status: "Active"
+      };
+      expect(planFactory.getProLicenseCount()).to.equal(0);
+    });
+
+    it("should return one license available", function () {
+      planFactory.currentPlan = {
+        status: "Active",
+        planPlayerProLicenseCount: 1,
+        proStatus: "Suspended",
+        playerProLicenseCount: 2
+      };
+
+      expect(planFactory.getProLicenseCount()).to.equal(1);
+    });
+
     it("should return three licenses available", function () {
-      sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
+      planFactory.currentPlan = {
+        status: "Active",
         planPlayerProLicenseCount: 2,
+        proStatus: "Active",
         playerProLicenseCount: 1
-      });
+      };
 
       expect(planFactory.getProLicenseCount()).to.equal(3);
     });
   });
 
   describe("areAllProLicensesUsed:", function() {
-    it("should return all licenses are used if display if assigned list equal license count", function () {
+    it("should return all licenses are used if assigned list length equals license count", function () {
       sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
-        planPlayerProLicenseCount: 2,
-        playerProLicenseCount: 1,
         playerProAssignedDisplays: ["1", "2", "3"]
       });
 
+      planFactory.currentPlan = {
+        status: "Active",
+        planPlayerProLicenseCount: 2,
+        proStatus: "Active",
+        playerProLicenseCount: 1
+      };
       expect(planFactory.areAllProLicensesUsed()).to.be.true;
     });
 
-    it("should return all licenses are used if display if assigned list is lower than license count", function () {
+    it("should return all licenses are used if assigned list length is greater than license count (this should not happen, but could be caused by migration issues)", function () {
       sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
+        playerProAssignedDisplays: ["1", "2", "3", "4"]
+      });
+
+      planFactory.currentPlan = {
+        status: "Active",
         planPlayerProLicenseCount: 2,
-        playerProLicenseCount: 1,
+        proStatus: "Active",
+        playerProLicenseCount: 1
+      };
+      expect(planFactory.areAllProLicensesUsed()).to.be.true;
+    });
+
+    it("should return not all licenses are used if assigned list length is lower than license count", function () {
+      sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
         playerProAssignedDisplays: ["1", "2"]
       });
 
+      planFactory.currentPlan = {
+        status: "Active",
+        planPlayerProLicenseCount: 2,
+        proStatus: "Active",
+        playerProLicenseCount: 1
+      };
       expect(planFactory.areAllProLicensesUsed()).to.be.false;
     });
   });
