@@ -92,10 +92,6 @@
       function initializeWidget() {
         return ensureScript()
           .then(_identify)
-          .then(function () {
-            // clear send-a-note flag
-            $location.search("c2VuZC11cy1hLW5vdGU", null);
-          })
           .then(_completeInitialization);
       }
 
@@ -192,7 +188,7 @@
     ])
     .run(["$rootScope", "$window", "userState", "zendesk", "ZENDESK_WEB_WIDGET_SCRIPT",
       function ($rootScope, $window, userState, zendesk, ZENDESK_WEB_WIDGET_SCRIPT) {
-        var widgetVisible;
+        var widgetVisible = false;
 
         if (ZENDESK_WEB_WIDGET_SCRIPT) {
           zendesk.initializeWidget();
@@ -202,19 +198,24 @@
           zendesk.initializeWidget();
         });
 
-        $rootScope.$on("$stateChangeSuccess", function (event, toState) {
-          if (toState && toState.name.indexOf("common.auth.") === 0) {
-            if (widgetVisible !== false) {
-              zendesk.logout();
-              zendesk.displayButton();
-            }
-          } else {
-            zendesk.enableSuggestions();
-
+        $rootScope.$on("$stateChangeStart", function (event, toState) {
+          if (toState && toState.name.indexOf("common.auth.") === -1) {
             if (widgetVisible) {
               zendesk.hideWidget();
               widgetVisible = false;
             }
+
+            zendesk.enableSuggestions();
+          }
+        });
+
+        $rootScope.$on("$stateChangeSuccess", function (event, toState) {
+          if (toState && toState.name.indexOf("common.auth.") === 0) {
+            setTimeout(function () {
+              zendesk.logout();
+              zendesk.displayButton();
+              widgetVisible = true;
+            }, 2000);
           }
         });
       }
