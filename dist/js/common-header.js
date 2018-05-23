@@ -3566,16 +3566,16 @@ angular.module("risevision.common.geodata", [])
         }
       }
 
+      function logout() {
+        previousUsername = "";
+      }
+
       function enableSuggestions() {
-        if ($window.zE && $window.zE.setHelpCenterSuggestions) {
+        $window.zE(function () {
           $window.zE.setHelpCenterSuggestions({
             url: true
           });
-        }
-      }
-
-      function logout() {
-        previousUsername = "";
+        });
       }
 
       function displayButton() {
@@ -3633,24 +3633,26 @@ angular.module("risevision.common.geodata", [])
     ])
     .run(["$rootScope", "$window", "userState", "zendesk", "ZENDESK_WEB_WIDGET_SCRIPT",
       function ($rootScope, $window, userState, zendesk, ZENDESK_WEB_WIDGET_SCRIPT) {
+        var widgetVisible = false;
+
         if (ZENDESK_WEB_WIDGET_SCRIPT) {
           zendesk.initializeWidget();
         }
 
-        setTimeout(function () {
-          $rootScope.$watch(userState.isLoggedIn,
-            function (isLoggedIn) {
-              if (isLoggedIn) {
-                zendesk.hideWidget();
-              } else {
-                zendesk.logout();
-                zendesk.displayButton();
-              }
-            });
-        }, 1000);
+        $rootScope.$on("$stateChangeSuccess", function (event, toState) {
+          if (toState && toState.name.indexOf("common.auth.") === 0) {
+            if (!widgetVisible) {
+              zendesk.logout();
+              zendesk.displayButton();
+            }
+          } else {
+            zendesk.enableSuggestions();
 
-        $rootScope.$on("$stateChangeStart", function () {
-          zendesk.enableSuggestions();
+            if (widgetVisible) {
+              zendesk.hideWidget();
+              widgetVisible = false;
+            }
+          }
         });
       }
     ]);
