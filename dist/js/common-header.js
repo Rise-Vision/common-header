@@ -3631,14 +3631,15 @@ angular.module("risevision.common.geodata", [])
         };
       }
     ])
-    .run(["$rootScope", "$window", "userState", "zendesk",
-      function ($rootScope, $window, userState, zendesk) {
-        zendesk.initializeWidget();
+    .run(["$rootScope", "$window", "userState", "zendesk", "ZENDESK_WEB_WIDGET_SCRIPT",
+      function ($rootScope, $window, userState, zendesk, ZENDESK_WEB_WIDGET_SCRIPT) {
+        if (ZENDESK_WEB_WIDGET_SCRIPT) {
+          zendesk.initializeWidget();
+        }
 
         setTimeout(function () {
           $rootScope.$watch(userState.isLoggedIn,
             function (isLoggedIn) {
-              console.log("CALLED isLoggedIn", isLoggedIn);
               if (isLoggedIn) {
                 zendesk.hideWidget();
               } else {
