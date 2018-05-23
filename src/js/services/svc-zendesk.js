@@ -195,7 +195,9 @@
         }
 
         $rootScope.$on("risevision.user.authorized", function () {
-          zendesk.initializeWidget();
+          if (ZENDESK_WEB_WIDGET_SCRIPT) {
+            zendesk.initializeWidget();
+          }
         });
 
         $rootScope.$on("$stateChangeStart", function (event, toState) {
