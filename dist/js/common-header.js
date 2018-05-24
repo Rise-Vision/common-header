@@ -3606,9 +3606,11 @@ angular.module("risevision.common.geodata", [])
         }
 
         function _showWebWidget() {
-          zendesk.logout();
-          zendesk.displayButton();
-          widgetVisible = true;
+          setTimeout(function () {
+            zendesk.logout();
+            zendesk.displayButton();
+            widgetVisible = true;
+          }, 2000);
         }
       }
     ]);
