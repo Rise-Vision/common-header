@@ -37,6 +37,13 @@ describe("Services: Zendesk", function() {
         identify: function() {},
       };
     });
+    $provide.service("userAuthFactory", function() {
+      return {
+        authenticate: function() {
+          return Q.resolve();
+        },
+      };
+    });
     locationSearchSpy = sandbox.stub();
     $provide.service("$location", function() {
       return {
