@@ -186,14 +186,19 @@
         };
       }
     ])
-    .run(["$rootScope", "$window", "userAuthFactory", "zendesk", "ZENDESK_WEB_WIDGET_SCRIPT",
-      function ($rootScope, $window, userAuthFactory, zendesk, ZENDESK_WEB_WIDGET_SCRIPT) {
+    .run(["$rootScope", "$window", "userState", "userAuthFactory", "zendesk", "ZENDESK_WEB_WIDGET_SCRIPT",
+      function ($rootScope, $window, userState, userAuthFactory, zendesk, ZENDESK_WEB_WIDGET_SCRIPT) {
         var widgetVisible = false;
 
         if (ZENDESK_WEB_WIDGET_SCRIPT) {
           zendesk.initializeWidget();
 
           userAuthFactory.authenticate()
+            .then(function () {
+              if (!userState.isLoggedIn()) {
+                _showWebWidget();
+              }
+            })
             .catch(function () {
               _showWebWidget();
             });
