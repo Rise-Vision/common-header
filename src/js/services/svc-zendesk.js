@@ -194,51 +194,51 @@
         };
       }
     ])
-  .run(["$rootScope", "$window", "userState", "userAuthFactory", "zendesk", "ZENDESK_WEB_WIDGET_SCRIPT",
-    function ($rootScope, $window, userState, userAuthFactory, zendesk, ZENDESK_WEB_WIDGET_SCRIPT) {
-      var widgetVisible = false;
+    .run(["$rootScope", "$window", "userState", "userAuthFactory", "zendesk", "ZENDESK_WEB_WIDGET_SCRIPT",
+      function ($rootScope, $window, userState, userAuthFactory, zendesk, ZENDESK_WEB_WIDGET_SCRIPT) {
+        var widgetVisible = false;
 
-      if (ZENDESK_WEB_WIDGET_SCRIPT) {
-        zendesk.initializeWidget();
+        if (ZENDESK_WEB_WIDGET_SCRIPT) {
+          zendesk.initializeWidget();
 
-        userAuthFactory.authenticate()
-          .then(function () {
-            if (!userState.isLoggedIn()) {
+          userAuthFactory.authenticate()
+            .then(function () {
+              if (!userState.isLoggedIn()) {
+                _showWebWidget();
+              }
+            })
+            .catch(function () {
               _showWebWidget();
-            }
-          })
-          .catch(function () {
+            });
+
+          $rootScope.$on("risevision.user.authorized", function () {
+            zendesk.initializeWidget(); // Needed to authenticate the user
+            _hideWebWidget();
+          });
+
+          $rootScope.$on("risevision.user.signedOut", function () {
             _showWebWidget();
           });
 
-        $rootScope.$on("risevision.user.authorized", function () {
-          zendesk.initializeWidget(); // Needed to authenticate the user
-          _hideWebWidget();
-        });
+          $rootScope.$on("$stateChangeStart", function () {
+            zendesk.enableSuggestions();
+          });
+        }
 
-        $rootScope.$on("risevision.user.signedOut", function () {
-          _showWebWidget();
-        });
+        function _hideWebWidget() {
+          if (widgetVisible) {
+            zendesk.hideWidget();
+            widgetVisible = false;
+          }
+        }
 
-        $rootScope.$on("$stateChangeStart", function () {
-          zendesk.enableSuggestions();
-        });
-      }
-
-      function _hideWebWidget() {
-        if (widgetVisible) {
-          zendesk.hideWidget();
-          widgetVisible = false;
+        function _showWebWidget() {
+          setTimeout(function () {
+            zendesk.logout();
+            zendesk.displayButton();
+            widgetVisible = true;
+          }, 2000);
         }
       }
-
-      function _showWebWidget() {
-        setTimeout(function () {
-          zendesk.logout();
-          zendesk.displayButton();
-          widgetVisible = true;
-        }, 2000);
-      }
-    }
-  ]);
+    ]);
 })(angular);

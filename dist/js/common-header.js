@@ -3389,9 +3389,9 @@ angular.module("risevision.common.geodata", [])
   )
   /* jshint quotmark: double */
   .factory("zendesk", ["getSupportSubscriptionStatus", "segmentAnalytics",
-    "userState", "$window", "$q", "$location", "$log", "ZENDESK_WEB_WIDGET_SCRIPT",
+    "userState", "$window", "$q", "$location", "ZENDESK_WEB_WIDGET_SCRIPT",
     function (getSupportSubscriptionStatus, segmentAnalytics, userState,
-      $window, $q, $location, $log, ZENDESK_WEB_WIDGET_SCRIPT) {
+      $window, $q, $location, ZENDESK_WEB_WIDGET_SCRIPT) {
 
       var loaded = false;
       var previousUsername = "";
@@ -3505,29 +3505,37 @@ angular.module("risevision.common.geodata", [])
       }
 
       function enableSuggestions() {
-        $window.zE(function () {
-          $window.zE.setHelpCenterSuggestions({
-            url: true
+        if ($window.zE) {
+          $window.zE(function () {
+            $window.zE.setHelpCenterSuggestions({
+              url: true
+            });
           });
-        });
+        }
       }
 
       function displayButton() {
-        $window.zE(function () {
-          $window.zE.show();
-        });
+        if ($window.zE) {
+          $window.zE(function () {
+            $window.zE.show();
+          });
+        }
       }
 
       function hideWidget() {
-        $window.zE(function () {
-          $window.zE.hide();
-        });
+        if ($window.zE) {
+          $window.zE(function () {
+            $window.zE.hide();
+          });
+        }
       }
 
       function activateWidget() {
-        $window.zE(function () {
-          $window.zE.activate();
-        });
+        if ($window.zE) {
+          $window.zE(function () {
+            $window.zE.activate();
+          });
+        }
       }
 
       return {
@@ -3581,22 +3589,20 @@ angular.module("risevision.common.geodata", [])
             .catch(function () {
               _showWebWidget();
             });
-        }
 
-        $rootScope.$on("risevision.user.authorized", function () {
-          if (ZENDESK_WEB_WIDGET_SCRIPT) {
+          $rootScope.$on("risevision.user.authorized", function () {
             zendesk.initializeWidget(); // Needed to authenticate the user
             _hideWebWidget();
-          }
-        });
+          });
 
-        $rootScope.$on("risevision.user.signedOut", function () {
-          _showWebWidget();
-        });
+          $rootScope.$on("risevision.user.signedOut", function () {
+            _showWebWidget();
+          });
 
-        $rootScope.$on("$stateChangeStart", function () {
-          zendesk.enableSuggestions();
-        });
+          $rootScope.$on("$stateChangeStart", function () {
+            zendesk.enableSuggestions();
+          });
+        }
 
         function _hideWebWidget() {
           if (widgetVisible) {
@@ -4827,7 +4833,9 @@ angular.module("risevision.common.fastpass", [])
           deferred.reject(e);
         };
         script.src = src;
-        $document[0].body.appendChild(script);
+        if ($document && $document[0]) {
+          $document[0].body.appendChild(script);
+        }
         return deferred.promise;
       };
 
@@ -7712,9 +7720,11 @@ angular.module("risevision.common.components.loading")
 
       /* Global Spinner */
       //append global spinner
-      angular.element($document[0].body).append(
-        "<div rv-global-spinner class=\"ng-hide\" style=\"position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 1040; \"></div>"
-      );
+      if ($document && $document[0]) {
+        angular.element($document[0].body).append(
+          "<div rv-global-spinner class=\"ng-hide\" style=\"position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 1040; \"></div>"
+        );
+      }
 
       function _addKeyToRegistry(key) {
         if (_rvGlobalSpinnerRegistry.indexOf(key) < 0) {

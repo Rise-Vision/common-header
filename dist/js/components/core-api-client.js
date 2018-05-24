@@ -782,7 +782,9 @@ angular.module("risevision.common.fastpass", [])
           deferred.reject(e);
         };
         script.src = src;
-        $document[0].body.appendChild(script);
+        if ($document && $document[0]) {
+          $document[0].body.appendChild(script);
+        }
         return deferred.promise;
       };
 
