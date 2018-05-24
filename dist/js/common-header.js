@@ -2146,8 +2146,8 @@ angular.module("risevision.common.header")
 
 angular.module("risevision.common.header")
 
-.controller("ZendeskButtonCtrl", ["$scope", "userState", "zendesk",
-  function ($scope, userState, zendesk) {
+.controller("ZendeskButtonCtrl", ["$scope", "zendesk",
+  function ($scope, zendesk) {
     $scope.showZendeskWidget = function () {
       zendesk.activateWidget();
     };
