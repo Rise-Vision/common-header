@@ -10,9 +10,9 @@
   )
   /* jshint quotmark: double */
   .factory("zendesk", ["getSupportSubscriptionStatus", "segmentAnalytics",
-    "userState", "$window", "$q", "$location", "$log", "ZENDESK_WEB_WIDGET_SCRIPT",
+    "userState", "$window", "$q", "$location", "ZENDESK_WEB_WIDGET_SCRIPT",
     function (getSupportSubscriptionStatus, segmentAnalytics, userState,
-      $window, $q, $location, $log, ZENDESK_WEB_WIDGET_SCRIPT) {
+      $window, $q, $location, ZENDESK_WEB_WIDGET_SCRIPT) {
 
       var loaded = false;
       var previousUsername = "";
@@ -126,29 +126,37 @@
       }
 
       function enableSuggestions() {
-        $window.zE(function () {
-          $window.zE.setHelpCenterSuggestions({
-            url: true
+        if ($window.zE) {
+          $window.zE(function () {
+            $window.zE.setHelpCenterSuggestions({
+              url: true
+            });
           });
-        });
+        }
       }
 
       function displayButton() {
-        $window.zE(function () {
-          $window.zE.show();
-        });
+        if ($window.zE) {
+          $window.zE(function () {
+            $window.zE.show();
+          });
+        }
       }
 
       function hideWidget() {
-        $window.zE(function () {
-          $window.zE.hide();
-        });
+        if ($window.zE) {
+          $window.zE(function () {
+            $window.zE.hide();
+          });
+        }
       }
 
       function activateWidget() {
-        $window.zE(function () {
-          $window.zE.activate();
-        });
+        if ($window.zE) {
+          $window.zE(function () {
+            $window.zE.activate();
+          });
+        }
       }
 
       return {
@@ -186,29 +194,26 @@
         };
       }
     ])
-    .run(["$rootScope", "$window", "userState", "userAuthFactory", "zendesk", "ZENDESK_WEB_WIDGET_SCRIPT",
-      function ($rootScope, $window, userState, userAuthFactory, zendesk, ZENDESK_WEB_WIDGET_SCRIPT) {
-        var widgetVisible = false;
+  .run(["$rootScope", "$window", "userState", "userAuthFactory", "zendesk", "ZENDESK_WEB_WIDGET_SCRIPT",
+    function ($rootScope, $window, userState, userAuthFactory, zendesk, ZENDESK_WEB_WIDGET_SCRIPT) {
+      var widgetVisible = false;
 
-        if (ZENDESK_WEB_WIDGET_SCRIPT) {
-          zendesk.initializeWidget();
+      if (ZENDESK_WEB_WIDGET_SCRIPT) {
+        zendesk.initializeWidget();
 
-          userAuthFactory.authenticate()
-            .then(function () {
-              if (!userState.isLoggedIn()) {
-                _showWebWidget();
-              }
-            })
-            .catch(function () {
+        userAuthFactory.authenticate()
+          .then(function () {
+            if (!userState.isLoggedIn()) {
               _showWebWidget();
-            });
-        }
+            }
+          })
+          .catch(function () {
+            _showWebWidget();
+          });
 
         $rootScope.$on("risevision.user.authorized", function () {
-          if (ZENDESK_WEB_WIDGET_SCRIPT) {
-            zendesk.initializeWidget(); // Needed to authenticate the user
-            _hideWebWidget();
-          }
+          zendesk.initializeWidget(); // Needed to authenticate the user
+          _hideWebWidget();
         });
 
         $rootScope.$on("risevision.user.signedOut", function () {
@@ -218,21 +223,22 @@
         $rootScope.$on("$stateChangeStart", function () {
           zendesk.enableSuggestions();
         });
+      }
 
-        function _hideWebWidget() {
-          if (widgetVisible) {
-            zendesk.hideWidget();
-            widgetVisible = false;
-          }
-        }
-
-        function _showWebWidget() {
-          setTimeout(function () {
-            zendesk.logout();
-            zendesk.displayButton();
-            widgetVisible = true;
-          }, 2000);
+      function _hideWebWidget() {
+        if (widgetVisible) {
+          zendesk.hideWidget();
+          widgetVisible = false;
         }
       }
-    ]);
+
+      function _showWebWidget() {
+        setTimeout(function () {
+          zendesk.logout();
+          zendesk.displayButton();
+          widgetVisible = true;
+        }, 2000);
+      }
+    }
+  ]);
 })(angular);
