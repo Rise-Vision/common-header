@@ -16812,5 +16812,10 @@ a.mfp-iframe:hover:after {
         .app-launcher-login .rise-logo img {
           width: 100px; } }
 
-.sortable-fallback {
-  margin-top: -150px; }
+@media (max-width: 768px) {
+  .sortable-fallback {
+    margin-top: -230px; } }
+
+@media (min-width: 768px) {
+  .sortable-fallback {
+    margin-top: -150px; } }

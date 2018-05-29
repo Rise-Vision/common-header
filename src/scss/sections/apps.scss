@@ -339,5 +339,10 @@
 }
 
 .sortable-fallback {
-	margin-top: -150px;
+	@media (max-width: $screen-sm) {
+		margin-top: -230px;
+	}
+	@media (min-width: $screen-sm) {
+		margin-top: -150px;
+	}
 }
