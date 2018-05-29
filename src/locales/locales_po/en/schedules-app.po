@@ -41,7 +41,7 @@ msgid "list.empty"
 msgstr "You haven't created any Schedules yet."
 
 msgid "list.error"
-msgstr "Failed to load schedules. Please try again later."
+msgstr "Failed to load schedules."
 
 msgid "list.filter.filters"
 msgstr "Filters"

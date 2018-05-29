@@ -166,6 +166,9 @@ msgstr "Delete failed. Please try again."
 msgid "pending-operation.failed.duplicate"
 msgstr "Duplicate failed. Please try again."
 
+msgid "pending-operation.failed.load"
+msgstr "Load failed. Please try again."
+
 msgid "pending-operation.failed.move"
 msgstr "Move failed. Please try again."
 
@@ -177,6 +180,9 @@ msgstr "Move to trash failed. Please try again."
 
 msgid "pending-operation.leave-page"
 msgstr "There are tasks in progress. If you close this window they won't be completed."
+
+msgid "pending-operation.load"
+msgstr "Loading Files..."
 
 msgid "pending-operation.move"
 msgstr "Moving..."

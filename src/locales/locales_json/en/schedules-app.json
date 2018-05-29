@@ -26,7 +26,7 @@
   },
   "list": {
     "empty": "You haven't created any Schedules yet.",
-    "error": "Failed to load schedules. Please try again later.",
+    "error": "Failed to load schedules.",
     "filter": {
       "filters": "Filters",
       "placeholder": "Search for Schedules"

@@ -69,10 +69,12 @@
     "failed": {
       "delete": "Delete failed. Please try again.",
       "duplicate": "Duplicate failed. Please try again.",
+      "load": "Load failed. Please try again.",
       "move": "Move failed. Please try again.",
       "restore": "Restore failed. Please try again.",
       "trash": "Move to trash failed. Please try again."
     },
+    "load": "Loading Files...",
     "leave-page": "There are tasks in progress. If you close this window they won't be completed.",
     "move": "Moving...",
     "restore": "Restoring...",
