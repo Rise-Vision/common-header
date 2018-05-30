@@ -337,12 +337,3 @@
 		}
 	}
 }
-
-.sortable-fallback {
-	@media (max-width: $screen-sm) {
-		margin-top: -230px;
-	}
-	@media (min-width: $screen-sm) {
-		margin-top: -150px;
-	}
-}

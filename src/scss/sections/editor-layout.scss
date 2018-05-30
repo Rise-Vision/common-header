@@ -162,6 +162,22 @@
         }
     }
 }
+
+.workspace-sidebar {
+    .editor-playlist {
+        .editor-playlist-item.sortable-fallback
+        {
+            @media (max-width: $screen-sm)
+            {
+                margin-top: -230px;
+            }
+            @media (min-width: $screen-sm)
+            {
+                margin-top: -150px;
+            }
+        }
+    }
+}
 // END PH Playlist
 
 
