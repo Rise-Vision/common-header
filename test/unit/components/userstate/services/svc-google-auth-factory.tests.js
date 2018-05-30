@@ -132,7 +132,7 @@ describe("Services: googleAuthFactory", function() {
         googleAuthFactory.authenticate()
         .then(done)
         .then(null, function(error) {
-          expect(error).to.equal("failed to authorize user");
+          expect(error).to.equal("Failed to authorize user (auth2)");
           done();
         })
         .then(null,done);

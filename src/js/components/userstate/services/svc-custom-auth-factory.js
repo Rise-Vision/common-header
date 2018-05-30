@@ -18,6 +18,7 @@
                 var gApi = result[0];
                 var loginInfo = result[1] && result[1].result;
 
+                $log.debug("JWT login result:", loginInfo);
                 if (loginInfo && loginInfo.item) {
                   var token = {
                     access_token: loginInfo.item,
@@ -31,9 +32,7 @@
                     token: token
                   });
                 } else {
-                  deferred.reject({
-                    error: "Invalid token"
-                  });
+                  deferred.reject("Invalid Auth Token (JWT)");
                 }
               })
               .then(null, function (err) {

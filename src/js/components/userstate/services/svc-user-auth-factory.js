@@ -54,6 +54,8 @@
         var _detectUserOrAuthChange = function () {
           var token = rvTokenStore.read();
           if (!angular.equals(token, _state.userToken)) {
+            $log.error("Authentication Failed. User token no longer matches stored token.");
+
             //token change indicates that user either signed in, or signed out, or changed account in other app
             $window.location.reload();
           } else if (_state.userToken) {
@@ -62,7 +64,8 @@
             //make sure user is not signed out of Google account outside of the CH enabled apps
             authenticate(false).finally(function () {
               if (!_state.userToken) {
-                $log.debug("Authentication failed. Reloading...");
+                $log.error("Authentication Failed. User no longer signed in.");
+
                 $window.location.reload();
               }
             });
@@ -213,9 +216,14 @@
                 authenticateDeferred.resolve();
               })
               .then(null, function (err) {
-                _resetUserState();
+                if (_state.redirectDetected) {
+                  $log.error("Authentication Error from Redirect: ", err);
 
-                $log.debug("Authentication Error: " + err);
+                  delete _state.redirectDetected;
+                } else {
+                  $log.debug("Authentication Error: ", err);
+                }
+                _resetUserState();
 
                 authenticateDeferred.reject(err);
               })

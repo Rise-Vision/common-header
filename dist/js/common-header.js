@@ -6046,6 +6046,7 @@ angular.module("risevision.common.components.logging")
                 var gApi = result[0];
                 var loginInfo = result[1] && result[1].result;
 
+                $log.debug("JWT login result:", loginInfo);
                 if (loginInfo && loginInfo.item) {
                   var token = {
                     access_token: loginInfo.item,
@@ -6059,9 +6060,7 @@ angular.module("risevision.common.components.logging")
                     token: token
                   });
                 } else {
-                  deferred.reject({
-                    error: "Invalid token"
-                  });
+                  deferred.reject("Invalid Auth Token (JWT)");
                 }
               })
               .then(null, function (err) {
@@ -6254,11 +6253,11 @@ angular.module("risevision.common.components.logging")
             var authResult = auth2.getAuthInstance() &&
               auth2.getAuthInstance().isSignedIn.get();
 
-            $log.debug("authResult", authResult);
+            $log.debug("auth2.isSignedIn result:", authResult);
             if (authResult) {
               deferred.resolve(authResult);
             } else {
-              deferred.reject("failed to authorize user");
+              deferred.reject("Failed to authorize user (auth2)");
             }
           })
           .then(null, deferred.reject); //auth2APILoader
@@ -6645,6 +6644,8 @@ angular.module("risevision.common.components.logging")
         var _detectUserOrAuthChange = function () {
           var token = rvTokenStore.read();
           if (!angular.equals(token, _state.userToken)) {
+            $log.error("Authentication Failed. User token no longer matches stored token.");
+
             //token change indicates that user either signed in, or signed out, or changed account in other app
             $window.location.reload();
           } else if (_state.userToken) {
@@ -6653,7 +6654,8 @@ angular.module("risevision.common.components.logging")
             //make sure user is not signed out of Google account outside of the CH enabled apps
             authenticate(false).finally(function () {
               if (!_state.userToken) {
-                $log.debug("Authentication failed. Reloading...");
+                $log.error("Authentication Failed. User no longer signed in.");
+
                 $window.location.reload();
               }
             });
@@ -6804,9 +6806,14 @@ angular.module("risevision.common.components.logging")
                 authenticateDeferred.resolve();
               })
               .then(null, function (err) {
-                _resetUserState();
+                if (_state.redirectDetected) {
+                  $log.error("Authentication Error from Redirect: ", err);
 
-                $log.debug("Authentication Error: " + err);
+                  delete _state.redirectDetected;
+                } else {
+                  $log.debug("Authentication Error: ", err);
+                }
+                _resetUserState();
 
                 authenticateDeferred.reject(err);
               })
@@ -7124,6 +7131,8 @@ angular.module("risevision.common.components.logging")
             angular.extend(_state, sFromStorage);
             localStorageService.remove("risevision.common.userState"); //clear
             $log.debug("userState restored with", sFromStorage);
+
+            _state.redirectDetected = true;
           }
         };
 
