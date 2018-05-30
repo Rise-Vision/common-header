@@ -6046,6 +6046,7 @@ angular.module("risevision.common.components.logging")
                 var gApi = result[0];
                 var loginInfo = result[1] && result[1].result;
 
+                $log.debug("JWT login result:", loginInfo);
                 if (loginInfo && loginInfo.item) {
                   var token = {
                     access_token: loginInfo.item,
@@ -6059,9 +6060,7 @@ angular.module("risevision.common.components.logging")
                     token: token
                   });
                 } else {
-                  deferred.reject({
-                    error: "Invalid token"
-                  });
+                  deferred.reject("Invalid Auth Token (JWT)");
                 }
               })
               .then(null, function (err) {
@@ -6254,11 +6253,11 @@ angular.module("risevision.common.components.logging")
             var authResult = auth2.getAuthInstance() &&
               auth2.getAuthInstance().isSignedIn.get();
 
-            $log.debug("authResult", authResult);
+            $log.debug("auth2.isSignedIn result:", authResult);
             if (authResult) {
               deferred.resolve(authResult);
             } else {
-              deferred.reject("failed to authorize user");
+              deferred.reject("Failed to authorize user (auth2)");
             }
           })
           .then(null, deferred.reject); //auth2APILoader
@@ -6804,9 +6803,12 @@ angular.module("risevision.common.components.logging")
                 authenticateDeferred.resolve();
               })
               .then(null, function (err) {
+                if (_state.redirectDetected) {
+                  $log.error("Authentication Error from Redirect: ", err);
+                } else {
+                  $log.debug("Authentication Error: ", err);
+                }
                 _resetUserState();
-
-                $log.debug("Authentication Error: " + err);
 
                 authenticateDeferred.reject(err);
               })
@@ -7124,6 +7126,8 @@ angular.module("risevision.common.components.logging")
             angular.extend(_state, sFromStorage);
             localStorageService.remove("risevision.common.userState"); //clear
             $log.debug("userState restored with", sFromStorage);
+
+            _state.redirectDetected = true;
           }
         };
 

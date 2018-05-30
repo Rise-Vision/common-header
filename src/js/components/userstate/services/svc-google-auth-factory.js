@@ -19,11 +19,11 @@
             var authResult = auth2.getAuthInstance() &&
               auth2.getAuthInstance().isSignedIn.get();
 
-            $log.debug("authResult", authResult);
+            $log.debug("auth2.isSignedIn result:", authResult);
             if (authResult) {
               deferred.resolve(authResult);
             } else {
-              deferred.reject("failed to authorize user");
+              deferred.reject("Failed to authorize user (auth2)");
             }
           })
           .then(null, deferred.reject); //auth2APILoader

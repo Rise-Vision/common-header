@@ -70,6 +70,8 @@
             angular.extend(_state, sFromStorage);
             localStorageService.remove("risevision.common.userState"); //clear
             $log.debug("userState restored with", sFromStorage);
+
+            _state.redirectDetected = true;
           }
         };
 

@@ -213,9 +213,12 @@
                 authenticateDeferred.resolve();
               })
               .then(null, function (err) {
+                if (_state.redirectDetected) {
+                  $log.error("Authentication Error from Redirect: ", err);
+                } else {
+                  $log.debug("Authentication Error: ", err);
+                }
                 _resetUserState();
-
-                $log.debug("Authentication Error: " + err);
 
                 authenticateDeferred.reject(err);
               })
