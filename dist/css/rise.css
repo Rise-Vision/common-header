@@ -14826,6 +14826,14 @@ tr.blocked-file {
     .ph-playlist .editor-playlist .editor-playlist-item {
       padding: 3px !important; }
 
+@media (max-width: 768px) {
+  .workspace-sidebar .editor-playlist .editor-playlist-item.sortable-fallback {
+    margin-top: -230px; } }
+
+@media (min-width: 768px) {
+  .workspace-sidebar .editor-playlist .editor-playlist-item.sortable-fallback {
+    margin-top: -150px; } }
+
 .workspace.active-onboard-mode .workspace-board {
   height: calc(100vh - 240px); }
 
