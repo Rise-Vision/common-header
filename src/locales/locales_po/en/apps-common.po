@@ -1,6 +1,9 @@
 msgid "errors.actionFailed"
 msgstr "The {{itemName}} could not be {{actionName}}."
 
+msgid "errors.checkConnection"
+msgstr "The server could not be reached. Check your connection and proxy or firewall settings."
+
 msgid "errors.generalAccess"
 msgstr "You may have not have the required permissions, or an action is required by parent Company."
 

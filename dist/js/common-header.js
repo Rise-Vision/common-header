@@ -3794,8 +3794,8 @@ angular.module("risevision.common.gapi", [
   }
 ])
 
-.factory("clientAPILoader", ["$q", "gapiLoader", "$log",
-  function ($q, gapiLoader, $log) {
+.factory("clientAPILoader", ["$q", "$log", "gapiLoader",
+  function ($q, $log, gapiLoader) {
     return function () {
       var deferred = $q.defer();
       gapiLoader().then(function (gApi) {
@@ -3824,18 +3824,17 @@ angular.module("risevision.common.gapi", [
 //abstract method for creading a loader factory service that loads any
 //custom Google Client API library
 
-.factory("gapiClientLoaderGenerator", ["$q", "clientAPILoader", "$log",
-  function ($q, clientAPILoader, $log) {
+.factory("gapiClientLoaderGenerator", ["$q", "$log", "$timeout", "$http", "clientAPILoader",
+  function ($q, $log, $timeout, $http, clientAPILoader) {
     return function (libName, libVer, baseUrl) {
       return function () {
         var deferred = $q.defer();
         clientAPILoader().then(function (gApi) {
           if (gApi.client[libName]) {
-            //already loaded. return right away
+            // already loaded. return right away
             deferred.resolve(gApi.client[libName]);
           } else {
-            gApi.client.load.apply(this, [libName, libVer].concat([
-
+            gApi.client.load(libName, libVer,
               function () {
                 if (gApi.client[libName]) {
                   $log.debug(libName + "." + libVer + " Loaded");
@@ -3846,8 +3845,34 @@ angular.module("risevision.common.gapi", [
                   deferred.reject(errMsg);
                 }
               },
-              baseUrl
-            ]));
+              baseUrl);
+
+            $timeout(function () {
+              if (baseUrl && !gApi.client[libName]) {
+                $http({
+                  url: baseUrl,
+                  method: "GET",
+                }).catch(function (e) {
+                  // Expect 404 for success (allow for other valid HTTP responses)
+                  if (e && e.status !== 404 && (e.status < 200 || e.status >= 400)) {
+                    var errorString = libName + " (" + baseUrl + ") failed to respond";
+                    $log.error(errorString, e);
+
+                    // Throw consistent error object
+                    deferred.reject({
+                      status: -1,
+                      result: {
+                        error: {
+                          code: -1,
+                          message: errorString,
+                          error: e
+                        }
+                      }
+                    });
+                  }
+                });
+              }
+            }, 10 * 1000);
           }
         });
         return deferred.promise;
