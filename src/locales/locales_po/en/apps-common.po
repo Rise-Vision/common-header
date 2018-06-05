@@ -8,7 +8,7 @@ msgid "errors.generalError"
 msgstr "An Error has Occurred"
 
 msgid "errors.notAuthenticated"
-msgstr "You do not have permissions to {{actionName}} this {{itemName}}, because you are not authenticated. Please, sign in.;"
+msgstr "You do not have permissions to {{actionName}} the {{itemName}}, because you are not authenticated. Please, sign in."
 
 msgid "errors.notFound"
 msgstr "The {{itemName}} could not be found. Please validate it still exists."

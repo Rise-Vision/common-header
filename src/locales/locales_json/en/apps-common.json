@@ -3,7 +3,7 @@
     "tryAgain": "Please try again; you may need to reload the page.",
     "generalError": "An Error has Occurred",
     "actionFailed": "The {{itemName}} could not be {{actionName}}.",
-    "notAuthenticated": "You do not have permissions to {{actionName}} this {{itemName}}, because you are not authenticated. Please, sign in.;",
+    "notAuthenticated": "You do not have permissions to {{actionName}} the {{itemName}}, because you are not authenticated. Please, sign in.",
     "parentCompanyAction": "Action required by parent Company.",
     "permissionRequired": "You do not have the required permissions.",
     "premiumTemplate": "You need to be subscribed to a Plan to use the Template Library.",
