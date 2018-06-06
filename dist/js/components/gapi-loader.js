@@ -219,7 +219,7 @@ angular.module("risevision.common.gapi", [
   function (STORAGE_ENDPOINT_URL, gapiClientLoaderGenerator, $location) {
     var baseUrl = $location.search().storage_api_base_url ?
       $location.search().storage_api_base_url + "/_ah/api" : STORAGE_ENDPOINT_URL;
-    return gapiClientLoaderGenerator("storage", "v0.01", baseUrl);
+    return gapiClientLoaderGenerator("storage", "v0.02", baseUrl);
   }
 ])
 

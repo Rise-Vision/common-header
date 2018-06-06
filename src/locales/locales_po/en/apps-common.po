@@ -28,6 +28,9 @@ msgstr "You need to be subscribed to a Plan to use the Template Library."
 msgid "errors.serverError"
 msgstr "An error occurred while trying to {{actionName}} the {{itemName}}."
 
+msgid "errors.storageSubscription"
+msgstr "You need to be subscribed to a Plan to use Storage."
+
 msgid "errors.tryAgain"
 msgstr "Please try again; you may need to reload the page."
 
