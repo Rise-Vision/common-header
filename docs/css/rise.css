@@ -13235,21 +13235,6 @@ ul.tree ul li:last-child:before {
     height: 100%;
     top: 0; }
 
-.product-grid_image--unlocked {
-  position: relative; }
-  .product-grid_image--unlocked:after {
-    content: '';
-    display: block;
-    background: url("https://s3.amazonaws.com/Rise-Images/UI/pro%402x.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 50px;
-    background-color: rgba(50, 50, 50, 0.2);
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0; }
-
 #intercom-launcher {
   list-style: none;
   position: fixed;

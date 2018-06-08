@@ -147,16 +147,22 @@
   },
   "storeProduct": {
     "add": "Add",
+    "category": {
+      "all": "All",
+      "free": "Free",
+      "premium": "For Licensed Displays",
+      "subscription": "For Licensed Displays"
+    },
     "content": {
       "search": "Search for Widget",
       "title": "Add Widget",
       "otherWidgets": "For All Displays"
     },
     "professional": {
-      "title": "For Professional Displays Only",
+      "title": "For Licensed Displays Only",
       "learnMore": "Learn More",
       "unlock": "Unlock",
-      "widgetType": "Professional Widget",
+      "widgetType": "For Licensed Displays",
       "promotion": "Add power and functionality to your Presentations with Professional Widgets",
       "promotionTrial": "Unlock the power of Professional Widgets start any Plan trial for <strong>free</strong> to get the included Professional Displays.",
       "promotionTrialButton": "Start a Plan Trial",

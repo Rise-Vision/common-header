@@ -307,6 +307,18 @@ msgstr "Shared Templates"
 msgid "storeProduct.add"
 msgstr "Add"
 
+msgid "storeProduct.category.all"
+msgstr "All"
+
+msgid "storeProduct.category.free"
+msgstr "Free"
+
+msgid "storeProduct.category.premium"
+msgstr "For Licensed Displays"
+
+msgid "storeProduct.category.subscription"
+msgstr "For Licensed Displays"
+
 msgid "storeProduct.content.otherWidgets"
 msgstr "For All Displays"
 
@@ -365,13 +377,13 @@ msgid "storeProduct.professional.promotionTrialButton"
 msgstr "Start a Plan Trial"
 
 msgid "storeProduct.professional.title"
-msgstr "For Professional Displays Only"
+msgstr "For Licensed Displays Only"
 
 msgid "storeProduct.professional.unlock"
 msgstr "Unlock"
 
 msgid "storeProduct.professional.widgetType"
-msgstr "Professional Widget"
+msgstr "For Licensed Displays"
 
 msgid "storeProduct.templates.back"
 msgstr "Back to all Templates"
