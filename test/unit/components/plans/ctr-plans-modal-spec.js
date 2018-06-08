@@ -324,25 +324,25 @@ describe("controller: plans modal", function() {
     });
   });
 
-  describe("currentButtonVisible", function() {
-    it("should show the Current button if plan is free and current plan has expired", function() {
+  describe("currentPlanLabelVisible", function() {
+    it("should show the current plan label if plan is free and current plan has expired", function() {
       sandbox.stub(planFactory, "isTrialExpired").returns(true);
-      expect($scope.currentButtonVisible({ type: "free" })).to.be.true;
+      expect($scope.currentPlanLabelVisible({ type: "free" })).to.be.true;
     });
 
-    it("should show the Current button if plan is same as current and status is Subscribed/Active", function() {
+    it("should show the current plan label if plan is same as current and status is Subscribed/Active", function() {
       currentPlan.type = "advanced";
-      expect($scope.currentButtonVisible({ type: "advanced", status: "Active" })).to.be.true;
+      expect($scope.currentPlanLabelVisible({ type: "advanced", status: "Active" })).to.be.true;
     });
 
-    it("should not show the Current button if plan is free and current plan has not expired", function() {
+    it("should show the current plan label if plan is same as current and status is On Trial", function() {
+      currentPlan.type = "advanced";
+      expect($scope.currentPlanLabelVisible({ type: "advanced", statusCode: "on-trial" })).to.be.true;
+    });
+
+    it("should not show the current plan label if plan is free and current plan has not expired", function() {
       sandbox.stub(planFactory, "isTrialExpired").returns(false);
-      expect($scope.currentButtonVisible({ type: "free" })).to.be.false;
-    });
-
-    it("should not show the Current button if plan is same as current and status is not Subscribed/Active", function() {
-      currentPlan.type = "advanced";
-      expect($scope.currentButtonVisible({ type: "advanced", status: "Trial" })).to.be.false;
+      expect($scope.currentPlanLabelVisible({ type: "free" })).to.be.false;
     });
   });
 

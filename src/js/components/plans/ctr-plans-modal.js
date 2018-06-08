@@ -48,6 +48,10 @@ angular.module("risevision.common.components.plans")
       return currentPlan.type === plan.type;
     };
 
+    $scope.isCurrentPlanSubscribed = function (plan) {
+      return $scope.isCurrentPlan(plan) && $scope.isSubscribed(plan);
+    };
+
     $scope.isOnTrial = function (plan) {
       return plan.statusCode === "on-trial";
     };
@@ -76,11 +80,11 @@ angular.module("risevision.common.components.plans")
       return !$scope.isFree(plan) && !$scope.isStarter(plan);
     };
 
-    $scope.currentButtonVisible = function (plan) {
+    $scope.currentPlanLabelVisible = function (plan) {
       var freeOnCurrentExpired = $scope.isFree(plan) && planFactory.isTrialExpired();
-      var currentSubscribed = $scope.isCurrentPlan(plan) && $scope.isSubscribed(plan);
+      var currentActive = $scope.isCurrentPlan(plan) && ($scope.isSubscribed(plan) || $scope.isOnTrial(plan));
 
-      return freeOnCurrentExpired || currentSubscribed;
+      return freeOnCurrentExpired || currentActive;
     };
 
     $scope.subscribeButtonVisible = function (plan) {
@@ -97,21 +101,6 @@ angular.module("risevision.common.components.plans")
       } else {
         return currentPlan.order < plan.order;
       }
-      /*
-      else if (currentPlan.type === plan.type) {
-        return false;
-      } else if (currentPlan.type === "enterprise") {
-        return false;
-      } else if (currentPlan.type === "advanced" && plan.type === "enterprise") {
-        return true;
-      } else if (currentPlan.type === "basic" && (plan.type === "advanced" || plan.type === "enterprise")) {
-        return true;
-      } else if (currentPlan.type === "free") {
-        return true;
-      }
-
-      return false;
-*/
     };
 
     $scope.canDowngrade = function (plan) {
@@ -122,19 +111,6 @@ angular.module("risevision.common.components.plans")
       } else {
         return currentPlan.order > plan.order;
       }
-      /*
-      else if (currentPlan.type === plan.type) {
-        return false;
-      } else if (currentPlan.type === "enterprise") {
-        return true;
-      } else if (currentPlan.type === "advanced" && (plan.type === "free" || plan.type === "basic")) {
-        return true;
-      } else if (currentPlan.type === "basic" && plan.type === "free") {
-        return true;
-      }
-
-      return false;
-*/
     };
 
     $scope.canStartTrial = function (plan) {
