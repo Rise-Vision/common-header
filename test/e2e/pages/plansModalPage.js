@@ -3,7 +3,7 @@
   'use strict';
 
   var PlansModalPage = function () {
-    var plansList = ["free", "basic", "advanced", "enterprise"];
+    var plansList = ["free", "starter", "basic", "advanced", "enterprise"];
     var plansModal = element(by.css("#plans-modal"));
 
     this.getPlansModal = function() {
