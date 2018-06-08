@@ -18,7 +18,7 @@
     <div class="pricing-table">
         <div id="planHeader" class="monthly">
           <div class="planColumn" ng-class="{ currentPlan: currentButtonVisible(plan) }" ng-repeat="plan in plans">
-            <div class="currentPlanLabel" ng-show="currentButtonVisible(plan)" translate>
+            <div id="current-plan" class="currentPlanLabel" ng-show="currentButtonVisible(plan)" translate>
               common-header.plans.current
             </div>
 
