@@ -9099,61 +9099,12 @@ angular.module("risevision.common.components.plans", [
         var _plansCodesList = _.map(PLANS_LIST, "productCode");
         var _plansByType = _.keyBy(PLANS_LIST, "type");
         var _plansByCode = _.keyBy(PLANS_LIST, "productCode");
-
-        _factory.getPlans = function (params) { // companyId, search
-          $log.debug("getPlans called.");
-          var deferred = $q.defer();
-          storeAPILoader().then(function (riseApi) {
-            riseApi.product.list(params).execute(function (resp) {
-              $log.debug("getPlans response", resp);
-              if (!resp.error) {
-                deferred.resolve(resp);
-              } else {
-                deferred.reject(resp.error);
-              }
-            });
-          });
-          return deferred.promise;
-        };
+        var _plansList = [
+          _plansByType.free, _plansByType.starter, _plansByType.basic, _plansByType.advanced, _plansByType.enterprise
+        ];
 
         _factory.getPlansDetails = function () {
-          $log.debug("getPlansDetails called.");
-          var deferred = $q.defer();
-          var search = "(productTag=Plans)";
-
-          _factory.getPlans({
-            search: search
-          })
-            .then(function (resp) {
-              $log.debug("getPlansDetails response.", resp);
-
-              resp.items.forEach(function (plan) {
-                var staticPlan = _plansByCode[plan.productCode];
-
-                plan.name = plan.name.replace(" Plan", "");
-                plan.type = plan.name.toLowerCase();
-
-                if (staticPlan) {
-                  plan.order = staticPlan.order;
-                  plan.monthly = staticPlan.monthly;
-                  plan.yearly = staticPlan.yearly;
-                  plan.proLicenseCount = staticPlan.proLicenseCount;
-                }
-              });
-
-              var planMap = _.keyBy(resp.items, "type");
-              // Add free plan, since it's not returned by the service
-              var _plansList = [
-                _.cloneDeep(_plansByType.free), planMap.starter, planMap.basic, planMap.advanced, planMap.enterprise
-              ];
-
-              deferred.resolve(_plansList);
-            })
-            .catch(function (err) {
-              deferred.reject(err);
-            });
-
-          return deferred.promise;
+          return $q.resolve(_.cloneDeep(_plansList));
         };
 
         _factory.showPlansModal = function (showRPPLink) {

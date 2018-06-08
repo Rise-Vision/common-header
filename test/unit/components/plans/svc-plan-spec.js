@@ -189,28 +189,6 @@ describe("Services: plan", function() {
     });
   });
 
-  describe("getPlans: ", function() {
-    it("should exist", function() {
-      expect(planFactory.getPlans).to.be.ok;
-      expect(planFactory.getPlans).to.be.a("function");
-    });
-
-    it("should succeed", function(done) {
-      planFactory.getPlans()
-      .then(function() {
-        done();
-      });
-    });
-
-    it("should fail", function(done) {
-      storeApiFailure = true;
-      planFactory.getPlans()
-      .catch(function() {
-        done();
-      });
-    });
-  });
-
   describe("getPlansDetails: ", function() {
     it("should exist", function() {
       expect(planFactory.getPlansDetails).to.be.ok;
@@ -218,40 +196,13 @@ describe("Services: plan", function() {
     });
 
     it("should return existing plans", function(done) {
-      sandbox.stub(planFactory, "getPlans").returns(Q.resolve({
-        items: [{
-          name: "Basic Plan",
-          productId: BASIC_PLAN_ID,
-          descriptionShort: "Basic Plan Description",
-          pricing: [{
-            "unit": "per Company per Month",
-            "priceUSD": 20.0,
-            "priceCAD": 25.0,
-          }]
-        }]
-      }));
-
       planFactory.getPlansDetails()
       .then(function(resp) {
-        expect(planFactory.getPlans).to.have.been.called;
         expect(resp.length).to.equal(5);
         expect(resp[0].productId).to.equal("000");
         expect(resp[0].name).to.equal("Free");
         expect(resp[2].productId).to.equal("289");
         expect(resp[2].name).to.equal("Basic");
-        done();
-      });
-    });
-
-    it("should fail to return existing plans", function(done) {
-      sandbox.stub(planFactory, "getPlans").returns(Q.reject({
-        error: "Error"
-      }));
-
-      planFactory.getPlansDetails()
-      .catch(function(err) {
-        expect(planFactory.getPlans).to.have.been.called;
-        expect(err.error).to.be.ok;
         done();
       });
     });
