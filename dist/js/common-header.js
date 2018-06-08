@@ -9438,9 +9438,7 @@ angular.module("risevision.common.components.plans")
     };
 
     $scope.canDowngrade = function (plan) {
-      if ($scope.canStartTrial(plan) || $scope.isOnTrial(plan)) {
-        return false;
-      } else if ($scope.isFree(plan) && planFactory.isTrialExpired()) {
+      if ($scope.canStartTrial(plan) || $scope.isOnTrial(plan) || planFactory.isTrialExpired()) {
         return false;
       } else {
         return currentPlan.order > plan.order;
