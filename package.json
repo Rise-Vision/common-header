@@ -14,7 +14,6 @@
     "gulp": "~3.9.0",
     "gulp-concat": "^2.3.4",
     "gulp-folders": "^1.0.0",
-    "gulp-hologram": "^1.2.3",
     "gulp-inject": "^1.0.2",
     "gulp-jsbeautifier": "0.0.3",
     "gulp-jshint": "^2.0.4",
