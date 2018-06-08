@@ -159,85 +159,126 @@ describe("controller: plans modal", function() {
   describe("canUpgrade", function() {
     it("should be able to upgrade from Free Plan to any other plan", function() {
       currentPlan.type = "free";
+      currentPlan.order = 0;
 
-      expect($scope.canUpgrade({ type: "free" })).to.be.false;
-      expect($scope.canUpgrade({ type: "basic" })).to.be.true;
-      expect($scope.canUpgrade({ type: "advanced" })).to.be.true;
-      expect($scope.canUpgrade({ type: "enterprise" })).to.be.true;
+      expect($scope.canUpgrade({ type: "free", order: 0 })).to.be.false;
+      expect($scope.canUpgrade({ type: "starter", order: 1 })).to.be.true;
+      expect($scope.canUpgrade({ type: "basic", order: 2 })).to.be.true;
+      expect($scope.canUpgrade({ type: "advanced", order: 3 })).to.be.true;
+      expect($scope.canUpgrade({ type: "enterprise", order: 4 })).to.be.true;
+    });
+
+    it("should be able to upgrade from Starter Plan to Basic, Advanced or Enterprise", function() {
+      currentPlan.type = "starter";
+      currentPlan.order = 1;
+
+      expect($scope.canUpgrade({ type: "free", order: 0 })).to.be.false;
+      expect($scope.canUpgrade({ type: "starter", order: 1 })).to.be.false;
+      expect($scope.canUpgrade({ type: "basic", order: 2 })).to.be.true;
+      expect($scope.canUpgrade({ type: "advanced", order: 3 })).to.be.true;
+      expect($scope.canUpgrade({ type: "enterprise", order: 4 })).to.be.true;
     });
 
     it("should be able to upgrade from Basic Plan to Advanced or Enterprise", function() {
       currentPlan.type = "basic";
+      currentPlan.order = 2;
 
-      expect($scope.canUpgrade({ type: "free" })).to.be.false;
-      expect($scope.canUpgrade({ type: "basic" })).to.be.false;
-      expect($scope.canUpgrade({ type: "advanced" })).to.be.true;
-      expect($scope.canUpgrade({ type: "enterprise" })).to.be.true;
+      expect($scope.canUpgrade({ type: "free", order: 0 })).to.be.false;
+      expect($scope.canUpgrade({ type: "starter", order: 1 })).to.be.false;
+      expect($scope.canUpgrade({ type: "basic", order: 2 })).to.be.false;
+      expect($scope.canUpgrade({ type: "advanced", order: 3 })).to.be.true;
+      expect($scope.canUpgrade({ type: "enterprise", order: 4 })).to.be.true;
     });
 
     it("should be able to upgrade from Advanced Plan to Enterprise", function() {
       currentPlan.type = "advanced";
+      currentPlan.order = 3;
 
-      expect($scope.canUpgrade({ type: "free" })).to.be.false;
-      expect($scope.canUpgrade({ type: "basic" })).to.be.false;
-      expect($scope.canUpgrade({ type: "advanced" })).to.be.false;
-      expect($scope.canUpgrade({ type: "enterprise" })).to.be.true;
+      expect($scope.canUpgrade({ type: "free", order: 0 })).to.be.false;
+      expect($scope.canUpgrade({ type: "starter", order: 1 })).to.be.false;
+      expect($scope.canUpgrade({ type: "basic", order: 2 })).to.be.false;
+      expect($scope.canUpgrade({ type: "advanced", order: 3 })).to.be.false;
+      expect($scope.canUpgrade({ type: "enterprise", order: 4 })).to.be.true;
     });
 
     it("should not be able to upgrade from Enterprise Plan to any other plan", function() {
       currentPlan.type = "enterprise";
+      currentPlan.order = 4;
 
-      expect($scope.canUpgrade({ type: "free" })).to.be.false;
-      expect($scope.canUpgrade({ type: "basic" })).to.be.false;
-      expect($scope.canUpgrade({ type: "advanced" })).to.be.false;
-      expect($scope.canUpgrade({ type: "enterprise" })).to.be.false;
+      expect($scope.canUpgrade({ type: "free", order: 0 })).to.be.false;
+      expect($scope.canUpgrade({ type: "starter", order: 1 })).to.be.false;
+      expect($scope.canUpgrade({ type: "basic", order: 2 })).to.be.false;
+      expect($scope.canUpgrade({ type: "advanced", order: 3 })).to.be.false;
+      expect($scope.canUpgrade({ type: "enterprise", order: 4 })).to.be.false;
     });
   });
 
   describe("canDowngrade", function() {
     it("should not be able to downgrade from Free Plan to any other plan", function() {
       currentPlan.type = "free";
+      currentPlan.order = 0;
 
-      expect($scope.canDowngrade({ type: "free" })).to.be.false;
-      expect($scope.canDowngrade({ type: "basic" })).to.be.false;
-      expect($scope.canDowngrade({ type: "advanced" })).to.be.false;
-      expect($scope.canDowngrade({ type: "enterprise" })).to.be.false;
+      expect($scope.canDowngrade({ type: "free", order: 0 })).to.be.false;
+      expect($scope.canDowngrade({ type: "starter", order: 1 })).to.be.false;
+      expect($scope.canDowngrade({ type: "basic", order: 2 })).to.be.false;
+      expect($scope.canDowngrade({ type: "advanced", order: 3 })).to.be.false;
+      expect($scope.canDowngrade({ type: "enterprise", order: 4 })).to.be.false;
     });
 
-    it("should be able to downgrade from Basic Plan to Free, unless status is Trial Expired", function() {
+    it("should be able to downgrade from Starter Plan to Free, unless status is Trial Expired", function() {
       currentPlan.type = "basic";
+      currentPlan.order = 2;
 
-      expect($scope.canDowngrade({ type: "free" })).to.be.true;
-      expect($scope.canDowngrade({ type: "basic" })).to.be.false;
-      expect($scope.canDowngrade({ type: "advanced" })).to.be.false;
-      expect($scope.canDowngrade({ type: "enterprise" })).to.be.false;
+      expect($scope.canDowngrade({ type: "free", order: 0 })).to.be.true;
+      expect($scope.canDowngrade({ type: "starter", order: 1 })).to.be.true;
+      expect($scope.canDowngrade({ type: "basic", order: 2 })).to.be.false;
+      expect($scope.canDowngrade({ type: "advanced", order: 3 })).to.be.false;
+      expect($scope.canDowngrade({ type: "enterprise", order: 4 })).to.be.false;
 
       sandbox.stub(planFactory, "isTrialExpired").returns(true);
-      expect($scope.canDowngrade({ type: "free" })).to.be.false;
+      expect($scope.canDowngrade({ type: "free", order: 0 })).to.be.false;
+    });
+
+    it("should be able to downgrade from Basic Plan to Free or Starter, unless status is Trial Expired", function() {
+      currentPlan.type = "basic";
+      currentPlan.order = 2;
+
+      expect($scope.canDowngrade({ type: "free", order: 0 })).to.be.true;
+      expect($scope.canDowngrade({ type: "starter", order: 1 })).to.be.true;
+      expect($scope.canDowngrade({ type: "basic", order: 2 })).to.be.false;
+      expect($scope.canDowngrade({ type: "advanced", order: 3 })).to.be.false;
+      expect($scope.canDowngrade({ type: "enterprise", order: 4 })).to.be.false;
+
+      sandbox.stub(planFactory, "isTrialExpired").returns(true);
+      expect($scope.canDowngrade({ type: "free", order: 0 })).to.be.false;
     });
 
     it("should be able to downgrade from Advanced Plan to Free or Basic, except to Free when status is Trial Expired", function() {
       currentPlan.type = "advanced";
+      currentPlan.order = 3;
 
-      expect($scope.canDowngrade({ type: "free" })).to.be.true;
-      expect($scope.canDowngrade({ type: "basic" })).to.be.true;
-      expect($scope.canDowngrade({ type: "advanced" })).to.be.false;
-      expect($scope.canDowngrade({ type: "enterprise" })).to.be.false;
+      expect($scope.canDowngrade({ type: "free", order: 0 })).to.be.true;
+      expect($scope.canDowngrade({ type: "starter", order: 1 })).to.be.true;
+      expect($scope.canDowngrade({ type: "basic", order: 2 })).to.be.true;
+      expect($scope.canDowngrade({ type: "advanced", order: 3 })).to.be.false;
+      expect($scope.canDowngrade({ type: "enterprise", order: 4 })).to.be.false;
 
       sandbox.stub(planFactory, "isTrialExpired").returns(true);
-      expect($scope.canDowngrade({ type: "free" })).to.be.false;
+      expect($scope.canDowngrade({ type: "free", order: 0 })).to.be.false;
     });
 
     it("should be able to downgrade from Enterprise Plan to any other plan, except to Free when status is Trial Expired", function() {
       currentPlan.type = "enterprise";
+      currentPlan.order = 4;
 
-      expect($scope.canDowngrade({ type: "free" })).to.be.true;
-      expect($scope.canDowngrade({ type: "basic" })).to.be.true;
-      expect($scope.canDowngrade({ type: "advanced" })).to.be.true;
-      expect($scope.canDowngrade({ type: "enterprise" })).to.be.false;
+      expect($scope.canDowngrade({ type: "free", order: 0 })).to.be.true;
+      expect($scope.canDowngrade({ type: "starter", order: 1 })).to.be.true;
+      expect($scope.canDowngrade({ type: "basic", order: 2 })).to.be.true;
+      expect($scope.canDowngrade({ type: "advanced", order: 3 })).to.be.true;
+      expect($scope.canDowngrade({ type: "enterprise", order: 4 })).to.be.false;
 
       sandbox.stub(planFactory, "isTrialExpired").returns(true);
-      expect($scope.canDowngrade({ type: "free" })).to.be.false;
+      expect($scope.canDowngrade({ type: "free", order: 0 })).to.be.false;
     });
   });
 
@@ -320,7 +361,8 @@ describe("controller: plans modal", function() {
 
     it("should show the Subscribed button if it is a higher plan", function() {
       currentPlan.type = "basic";
-      expect($scope.subscribeButtonVisible({ type: "advanced" })).to.be.true;
+      currentPlan.order = 2;
+      expect($scope.subscribeButtonVisible({ type: "advanced", order: 3 })).to.be.true;
     });
   });
 

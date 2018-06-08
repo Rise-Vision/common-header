@@ -12,6 +12,7 @@ angular.module("risevision.common.components.plans")
     $scope.showRPPLink = showRPPLink;
     $scope.playerProSubscriptionId = company.playerProSubscriptionId;
     $scope.companyId = company.id;
+    $scope.monthlyPrices = true;
 
     function _getPlansDetails() {
       $loading.start("plans-modal");
@@ -67,6 +68,14 @@ angular.module("risevision.common.components.plans")
       return plan.type === "free";
     };
 
+    $scope.isStarter = function (plan) {
+      return plan.type === "starter";
+    };
+
+    $scope.showSavings = function (plan) {
+      return !$scope.isFree(plan) && !$scope.isStarter(plan);
+    };
+
     $scope.currentButtonVisible = function (plan) {
       var freeOnCurrentExpired = $scope.isFree(plan) && planFactory.isTrialExpired();
       var currentSubscribed = $scope.isCurrentPlan(plan) && $scope.isSubscribed(plan);
@@ -85,7 +94,11 @@ angular.module("risevision.common.components.plans")
     $scope.canUpgrade = function (plan) {
       if ($scope.canStartTrial(plan)) {
         return false;
-      } else if (currentPlan.type === plan.type) {
+      } else {
+        return currentPlan.order < plan.order;
+      }
+      /*
+      else if (currentPlan.type === plan.type) {
         return false;
       } else if (currentPlan.type === "enterprise") {
         return false;
@@ -98,6 +111,7 @@ angular.module("risevision.common.components.plans")
       }
 
       return false;
+*/
     };
 
     $scope.canDowngrade = function (plan) {
@@ -105,7 +119,11 @@ angular.module("risevision.common.components.plans")
         return false;
       } else if ($scope.isFree(plan) && planFactory.isTrialExpired()) {
         return false;
-      } else if (currentPlan.type === plan.type) {
+      } else {
+        return currentPlan.order > plan.order;
+      }
+      /*
+      else if (currentPlan.type === plan.type) {
         return false;
       } else if (currentPlan.type === "enterprise") {
         return true;
@@ -116,6 +134,7 @@ angular.module("risevision.common.components.plans")
       }
 
       return false;
+*/
     };
 
     $scope.canStartTrial = function (plan) {

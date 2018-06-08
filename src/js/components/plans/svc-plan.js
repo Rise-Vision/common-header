@@ -5,35 +5,96 @@
     .value("PLANS_LIST", [{
       name: "Free",
       type: "free",
+      order: 0,
       productId: "000",
       productCode: "000",
       status: "Active",
-      priceMonth: 0,
-      descriptionShort: "Design, distribute and manage your digital signage for free. Unlimited Displays, Companies and Users.",
-      proLicenseCount: 0
+      proLicenseCount: 0,
+      monthly: {
+        priceDisplayMonth: 0,
+        billAmount: 0,
+        save: 0
+      },
+      yearly: {
+        priceDisplayMonth: 0,
+        billAmount: 0,
+        save: 0
+      }
+    }, {
+      name: "Starter",
+      type: "starter",
+      order: 1,
+      productId: "335",
+      productCode: "019137f7bb35f5f90085a033c013672471faadae",
+      proLicenseCount: 1,
+      monthly: {
+        priceDisplayMonth: 10,
+        billAmount: 10,
+        save: 0
+      },
+      yearly: {
+        priceDisplayMonth: 10,
+        billAmount: 110,
+        save: 0
+      },
+      trialPeriod: 14
     }, {
       name: "Basic",
       type: "basic",
+      order: 2,
       productId: "289",
       productCode: "40c092161f547f8f72c9f173cd8eebcb9ca5dd25",
-      proLicenseCount: 2,
+      proLicenseCount: 3,
+      monthly: {
+        priceDisplayMonth: 9,
+        billAmount: 27,
+        save: 36
+      },
+      yearly: {
+        priceDisplayMonth: 9,
+        billAmount: 297,
+        save: 63
+      },
       trialPeriod: 14
     }, {
       name: "Advanced",
       type: "advanced",
+      order: 3,
       productId: "290",
       productCode: "93b5595f0d7e4c04a3baba1102ffaecb17607bf4",
-      proLicenseCount: 9,
+      proLicenseCount: 11,
+      monthly: {
+        priceDisplayMonth: 8,
+        billAmount: 88,
+        save: 264
+      },
+      yearly: {
+        priceDisplayMonth: 8,
+        billAmount: 968,
+        save: 352
+      },
       trialPeriod: 14
     }, {
       name: "Enterprise",
       type: "enterprise",
+      order: 4,
       productId: "301",
       productCode: "b1844725d63fde197f5125b58b6cba6260ee7a57",
-      proLicenseCount: 50
+      proLicenseCount: 70,
+      monthly: {
+        priceDisplayMonth: 7,
+        billAmount: 490,
+        save: 2520
+      },
+      yearly: {
+        priceDisplayMonth: 7,
+        billAmount: 5390,
+        save: 3010
+      }
     }, {
       name: "Enterprise",
       type: "enterprisesub",
+      order: 5,
       productId: "303",
       productCode: "d521f5bfbc1eef109481eebb79831e11c7804ad8",
       proLicenseCount: 0
@@ -75,22 +136,27 @@
             .then(function (resp) {
               $log.debug("getPlansDetails response.", resp);
 
-              return _getSelectedCurrency().then(function (currency) {
-                resp.items.forEach(function (plan) {
-                  var monthKey = "per Company per Month";
-                  var priceMap = _.keyBy(plan.pricing, "unit");
-                  var price = priceMap[monthKey] || {};
+              resp.items.forEach(function (plan) {
+                var staticPlan = _plansByCode[plan.productCode];
 
-                  plan.name = plan.name.replace(" Plan", "");
-                  plan.type = plan.name.toLowerCase();
-                  plan.priceMonth = currency.pickPrice(price.priceUSD, price.priceCAD);
-                });
+                plan.name = plan.name.replace(" Plan", "");
+                plan.type = plan.name.toLowerCase();
 
-                var planMap = _.keyBy(resp.items, "type");
-
-                // Add free plan, since it's not returned by the service
-                deferred.resolve([_.cloneDeep(_plansByType.free), planMap.basic, planMap.advanced, planMap.enterprise]);
+                if (staticPlan) {
+                  plan.order = staticPlan.order;
+                  plan.monthly = staticPlan.monthly;
+                  plan.yearly = staticPlan.yearly;
+                  plan.proLicenseCount = staticPlan.proLicenseCount;
+                }
               });
+
+              var planMap = _.keyBy(resp.items, "type");
+              // Add free plan, since it's not returned by the service
+              var _plansList = [
+                _.cloneDeep(_plansByType.free), planMap.starter, planMap.basic, planMap.advanced, planMap.enterprise
+              ];
+
+              deferred.resolve(_plansList);
             })
             .catch(function (err) {
               deferred.reject(err);
@@ -114,15 +180,6 @@
             }
           });
         };
-
-        function _getSelectedCurrency() {
-          return currencyService()
-            .then(function (currency) {
-              var company = userState.getCopyOfSelectedCompany();
-              var country = (company && company.country) ? company.country : "";
-              return currency.getByCountry(country);
-            });
-        }
 
         function _loadCurrentPlan() {
           var company = userState.getCopyOfSelectedCompany();

@@ -37,6 +37,12 @@ msgstr "Current Plan"
 msgid "plans.days-left-trial"
 msgstr "{{count}} days left on your trial."
 
+msgid "plans.displayIncluded"
+msgstr "Display Included"
+
+msgid "plans.displaysIncluded"
+msgstr "Displays Included"
+
 msgid "plans.downgrade"
 msgstr "Downgrade"
 
@@ -47,7 +53,7 @@ msgid "plans.go-to-store"
 msgstr "Go To Store"
 
 msgid "plans.individual-licenses"
-msgstr "No need for a Plan upgrade right now? You can get individual Professional Display licenses"
+msgstr "Purchase Additional Licenses"
 
 msgid "plans.learn-more-1"
 msgstr "Learn More About Our Plan Pricing"
@@ -58,8 +64,20 @@ msgstr "OR"
 msgid "plans.learn-more-3"
 msgstr "Contact Sales If You Need Help"
 
+msgid "plans.needMoreDisplays"
+msgstr "Need more than {{count}} Displays?"
+
 msgid "plans.per-company-month"
 msgstr "per Company per Month"
+
+msgid "plans.perDisplayBilledMonthly"
+msgstr "per Display per Month billed monthly at ${{price}}"
+
+msgid "plans.perDisplayBilledYearly"
+msgstr "per Display per Month billed yearly at ${{price}}"
+
+msgid "plans.saveEachYear"
+msgstr "Save ${{save}} each year"
 
 msgid "plans.start-trial"
 msgstr "Start Trial"
