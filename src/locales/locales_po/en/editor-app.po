@@ -446,19 +446,19 @@ msgid "templatesLibrary.subscription.cancelled"
 msgstr "Subscription Cancelled"
 
 msgid "templatesLibrary.subscription.expanded-cancelled"
-msgstr "Your Template Library subscription was cancelled"
+msgstr "Your subscription was cancelled"
 
 msgid "templatesLibrary.subscription.expanded-expired"
-msgstr "Your Template Library subscription has expired!"
+msgstr "Your subscription has expired!"
 
 msgid "templatesLibrary.subscription.expanded-on-trial"
-msgstr "{{expiry}} day remaining on your Template Library trial!"
+msgstr "{{expiry}} day remaining on your trial!"
 
 msgid "templatesLibrary.subscription.expanded-on-trial-many"
-msgstr "{{expiry}} days remaining on your Template Library trial!"
+msgstr "{{expiry}} days remaining on your trial!"
 
 msgid "templatesLibrary.subscription.expanded-on-trial-zero"
-msgstr "{{expiry}} days remaining on your Template Library trial!"
+msgstr "{{expiry}} days remaining on your trial!"
 
 msgid "templatesLibrary.subscription.expanded-suspended"
 msgstr "Your account is suspended"
@@ -482,10 +482,10 @@ msgid "templatesLibrary.subscription.on-trial"
 msgstr "<strong>{{expiry}} day</strong> left on trial"
 
 msgid "templatesLibrary.subscription.on-trial-many"
-msgstr "<strong>{{expiry}} days</strong> remaining on your Template Library subscription!"
+msgstr "<strong>{{expiry}} days</strong> remaining on your subscription!"
 
 msgid "templatesLibrary.subscription.on-trial-zero"
-msgstr "<strong>{{expiry}} days</strong> remaining on your Template Library subscription!"
+msgstr "<strong>{{expiry}} days</strong> remaining on your subscription!"
 
 msgid "templatesLibrary.subscription.start-trial"
 msgstr "Start Trial"
