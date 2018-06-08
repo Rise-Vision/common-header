@@ -52,7 +52,7 @@
           expect(plansModalPage.getSubscribePlanButton("free").isDisplayed()).to.eventually.be.false;
           expect(plansModalPage.getDowngradePlanButton("free").isDisplayed()).to.eventually.be.true;
 
-          expect(plansModalPage.getCurrentPlanButton("basic").isDisplayed()).to.eventually.be.false;
+          expect(plansModalPage.getCurrentPlanButton("basic").isDisplayed()).to.eventually.be.true;
           expect(plansModalPage.getSubscribePlanButton("basic").isDisplayed()).to.eventually.be.true;
           expect(plansModalPage.getStartTrialPlanButton("basic").isDisplayed()).to.eventually.be.false;
           expect(plansModalPage.getDowngradePlanButton("basic").isDisplayed()).to.eventually.be.false;
