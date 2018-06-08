@@ -44,7 +44,7 @@
                translate translate-values="{ save: (monthlyPrices ? plan.monthly.save : plan.yearly.save) }">
               common-header.plans.saveEachYear
             </p>
-            <p ng-show="showSavings(plan) && isCurrentPlan(plan)" translate>
+            <p ng-show="showSavings(plan) && isCurrentPlanSubscribed(plan)" translate>
               common-header.plans.needMoreDisplays
             </p>
             <a ng-show="showSavings(plan) && isCurrentPlanSubscribed(plan) && !proSubscriptionLinkVisible()"
@@ -109,8 +109,8 @@
         <div id="planFooter"></div>
     </div>
     <div class="text-center u_padding-sm-vertical">
-      <h3><a href="#">Questions? We can help!</a></h3>
-      <h3><a href="#">Need to license your Sub-Company?</a></h3>
+      <h3><a href="https://www.risevision.com/contact-us" target="_blank">Questions? We can help!</a></h3>
+      <h3><a href="https://www.risevision.com/contact-us" target="_blank">Need to license your Sub-Company?</a></h3>
     </div>
   </div> <!-- //Modal Body -->
   <div class="modal-footer"></div>
