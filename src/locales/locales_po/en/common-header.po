@@ -65,7 +65,7 @@ msgid "plans.learn-more-3"
 msgstr "Contact Sales If You Need Help"
 
 msgid "plans.needMoreDisplays"
-msgstr "Need more than {{count}} Displays?"
+msgstr "Need more Displays?"
 
 msgid "plans.per-company-month"
 msgstr "per Company per Month"

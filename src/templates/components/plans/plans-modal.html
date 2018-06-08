@@ -44,8 +44,7 @@
                translate translate-values="{ save: (monthlyPrices ? plan.monthly.save : plan.yearly.save) }">
               common-header.plans.saveEachYear
             </p>
-            <p ng-show="showSavings(plan) && isCurrentPlan(plan)"
-               translate translate-values="{ count: plan.proLicenseCount }">
+            <p ng-show="showSavings(plan) && isCurrentPlan(plan)" translate>
               common-header.plans.needMoreDisplays
             </p>
             <a ng-show="showSavings(plan) && isCurrentPlanSubscribed(plan) && !proSubscriptionLinkVisible()"
@@ -104,6 +103,7 @@
             <div class="planFeature"><p class="featureTitle">Content Shows Offline</p></div>
             <div class="planFeature"><p class="featureTitle">Alert Integration</p></div>
             <div class="planFeature"><p class="featureTitle">Display On/Off Control</p></div>
+            <h4 class="text-center" style="column-span: all;"><a href="https://www.risevision.com/pricing" target="_blank">Learn More About Key Features</a></h4>
           </div>
         </div>
         <div id="planFooter"></div>
