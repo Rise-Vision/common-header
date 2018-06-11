@@ -362,16 +362,16 @@ msgid "storeProduct.professional.learnMore"
 msgstr "Learn More"
 
 msgid "storeProduct.professional.promotion"
-msgstr "Add power and functionality to your Presentations with Professional Widgets"
+msgstr "Add power and functionality to your Presentations with Widgets for Licensed Displays"
 
 msgid "storeProduct.professional.promotionDisplaysButton"
 msgstr "View Displays"
 
 msgid "storeProduct.professional.promotionPlan"
-msgstr "Unlock the power of Professional Widgets, activate your included Professional Displays."
+msgstr "Unlock the power of Widgets for Licensed Displays. Assign your included Display Licenses."
 
 msgid "storeProduct.professional.promotionTrial"
-msgstr "Unlock the power of Professional Widgets start any Plan trial for <strong>free</strong> to get the included Professional Displays."
+msgstr "Unlock the power of Widgets for Licensed Displays with a Paid Plan."
 
 msgid "storeProduct.professional.promotionTrialButton"
 msgstr "Start a Plan Trial"
