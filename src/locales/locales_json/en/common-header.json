@@ -26,9 +26,9 @@
     "learn-more-3": "Contact Sales If You Need Help",
     "needMoreDisplays": "Need more Displays?",
     "per-company-month": "per Company per Month",
-    "perDisplayBilledMonthly": "per Display per Month billed monthly at ${{price}}",
-    "perDisplayBilledYearly": "per Display per Month billed yearly at ${{price}}",
-    "saveEachYear": "Save ${{save}} each year",
+    "perDisplayBilledMonthly": "per Display per Month billed monthly at ${{price | number:0}}",
+    "perDisplayBilledYearly": "per Display per Month billed yearly at ${{price | number:0}}",
+    "saveEachYear": "Save ${{save | number:0}} each year",
     "start-trial": "Start Trial",
     "subscribe": "Subscribe",
     "trial-expired": "Trial Expired"

@@ -71,13 +71,13 @@ msgid "plans.per-company-month"
 msgstr "per Company per Month"
 
 msgid "plans.perDisplayBilledMonthly"
-msgstr "per Display per Month billed monthly at ${{price}}"
+msgstr "per Display per Month billed monthly at ${{price | number:0}}"
 
 msgid "plans.perDisplayBilledYearly"
-msgstr "per Display per Month billed yearly at ${{price}}"
+msgstr "per Display per Month billed yearly at ${{price | number:0}}"
 
 msgid "plans.saveEachYear"
-msgstr "Save ${{save}} each year"
+msgstr "Save ${{save | number:0}} each year"
 
 msgid "plans.start-trial"
 msgstr "Start Trial"
