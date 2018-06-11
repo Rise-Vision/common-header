@@ -47,12 +47,8 @@
             <p ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan)" translate>
               common-header.plans.needMoreDisplays
             </p>
-            <a ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan) && !proSubscriptionLinkVisible()"
-               href="https://store.risevision.com/product/2048" target="_blank" link-cid translate>
-              common-header.plans.individual-licenses
-            </a>
-            <a ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan) && proSubscriptionLinkVisible()"
-               href="https://store.risevision.com/account/subscription/{{playerProSubscriptionId}}?cid={{companyId}}" target="_blank" translate>
+            <a ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan)"
+               href="https://www.risevision.com/purchaseadditionaldisplaylicenses" target="_blank" translate>
               common-header.plans.individual-licenses
             </a>
 
@@ -67,7 +63,8 @@
             <a id="subscribe-plan" ng-show="subscribeButtonVisible(plan)"
                 target="_blank" href="https://store.risevision.com/product/{{plan.productId}}"
                 class="btn btn-primary btn-block" translate>common-header.plans.subscribe</a>
-            <a id="downgrade-plan" ng-show="canDowngrade(plan)" ng-click="showDowngradeModal()"
+            <a id="downgrade-plan" ng-show="canDowngrade(plan)"
+                target="_blank" href="https://www.risevision.com/downgradeplan"
                 class="btn btn-default btn-block" translate>common-header.plans.downgrade</a>
             <a id="start-trial-plan" ng-show="canStartTrial(plan)"
                 target="_blank" ng-click="startTrial(plan)"
@@ -110,7 +107,7 @@
     </div>
     <div class="text-center u_padding-sm-vertical">
       <h3><a href="https://www.risevision.com/contact-us" target="_blank">Questions? We can help!</a></h3>
-      <h3><a href="https://www.risevision.com/contact-us" target="_blank">Need to license your Sub-Company?</a></h3>
+      <h3><a href="https://www.risevision.com/licensesubcompany" target="_blank">Need to license your Sub-Company?</a></h3>
     </div>
   </div> <!-- //Modal Body -->
   <div class="modal-footer"></div>

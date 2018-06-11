@@ -36,14 +36,6 @@ angular.module("risevision.common.components.plans")
         });
     }
 
-    $scope.showDowngradeModal = function () {
-      $modal.open({
-        template: $templateCache.get("plans/plans-downgrade-modal.html"),
-        controller: "PlansDowngradeModalCtrl",
-        size: "md"
-      });
-    };
-
     $scope.isCurrentPlan = function (plan) {
       return currentPlan.type === plan.type;
     };

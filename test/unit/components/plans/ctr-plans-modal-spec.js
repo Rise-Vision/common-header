@@ -132,7 +132,6 @@ describe("controller: plans modal", function() {
 
   it("should initialize",function() {
     expect($scope.currentPlan).to.be.ok;
-    expect($scope.showDowngradeModal).to.be.a.function;
     expect($scope.canUpgrade).to.be.a.function;
     expect($scope.canDowngrade).to.be.a.function;
     expect($scope.dismiss).to.be.a.function;
@@ -148,12 +147,6 @@ describe("controller: plans modal", function() {
     expect($scope.plans).to.be.not.null;
     expect($loading.start).to.have.been.called;
     expect($loading.stop).to.have.been.called;
-  });
-
-  it("should show downgrade modal", function() {
-    $scope.showDowngradeModal();
-
-    expect($modal.open).to.have.been.called;
   });
 
   describe("canUpgrade", function() {
