@@ -421,11 +421,8 @@ msgstr "Days Remaining"
 msgid "subscription.status.daysTrial"
 msgstr "Days Trial"
 
-msgid "subscription.status.premium"
-msgstr "Premium"
-
 msgid "subscription.status.professional"
-msgstr "Professional"
+msgstr "For Licensed Displays"
 
 msgid "subscription.subscribe"
 msgstr "Subscribe"
