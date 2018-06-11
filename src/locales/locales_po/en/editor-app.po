@@ -377,7 +377,7 @@ msgid "storeProduct.professional.promotionTrial"
 msgstr "Unlock the power of Widgets for Licensed Displays with a Paid Plan."
 
 msgid "storeProduct.professional.promotionTrialButton"
-msgstr "Start a Plan Trial"
+msgstr "View Plans"
 
 msgid "storeProduct.professional.title"
 msgstr "For Licensed Displays Only"
