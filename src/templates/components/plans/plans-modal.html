@@ -44,14 +44,14 @@
                translate translate-values="{ save: (monthlyPrices ? plan.monthly.save : plan.yearly.save) }">
               common-header.plans.saveEachYear
             </p>
-            <p ng-show="showSavings(plan) && isCurrentPlanSubscribed(plan)" translate>
+            <p ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan)" translate>
               common-header.plans.needMoreDisplays
             </p>
-            <a ng-show="showSavings(plan) && isCurrentPlanSubscribed(plan) && !proSubscriptionLinkVisible()"
+            <a ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan) && !proSubscriptionLinkVisible()"
                href="https://store.risevision.com/product/2048" target="_blank" link-cid translate>
               common-header.plans.individual-licenses
             </a>
-            <a ng-show="showSavings(plan) && isCurrentPlanSubscribed(plan) && proSubscriptionLinkVisible()"
+            <a ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan) && proSubscriptionLinkVisible()"
                href="https://store.risevision.com/account/subscription/{{playerProSubscriptionId}}?cid={{companyId}}" target="_blank" translate>
               common-header.plans.individual-licenses
             </a>
