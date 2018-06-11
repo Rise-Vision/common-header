@@ -9,6 +9,8 @@
     "premiumTemplate": "You need to be subscribed to a Plan to use the Template Library.",
     "generalAccess": "You may have not have the required permissions, or an action is required by parent Company.",
     "notFound": "The {{itemName}} could not be found. Please validate it still exists.",
-    "serverError": "An error occurred while trying to {{actionName}} the {{itemName}}."
+    "serverError": "An error occurred while trying to {{actionName}} the {{itemName}}.",
+    "checkConnection": "The server could not be reached. Check your connection and proxy or firewall settings.",
+    "storageSubscription": "You need to be subscribed to a Plan to use Storage."
   }
 }

@@ -27,16 +27,20 @@ describe("Services: gapi loader", function() {
 
   }));
   
-  var $window, gapiAuth2, auth2APILoader;
+  var $window, gapiAuth2, auth2APILoader, loadApi;
   
   beforeEach(function () {
+    loadApi = true;
+
     inject(function($injector) {
       $window = $injector.get("$window");
 
       var gapiClient = {
         load: function(path, version, cb) {
-          window.gapi.client[path] = {version: version};
-          cb();
+          if (loadApi) {
+            $window.gapi.client[path] = {version: version};
+            cb();
+          }
         }
       };
 
@@ -47,15 +51,15 @@ describe("Services: gapi loader", function() {
         getAuthInstance: sinon.spy()
       };
 
-      $window.gapi = $window.gapi || {};
+      $window.gapi = {};
       
       $window.gapi.load = function(path, cb) {
         if (path === "client") {
-          window.gapi[path] = gapiClient;
+          $window.gapi[path] = gapiClient;
         } else if (path === "auth2") {
-          window.gapi[path] = gapiAuth2;
+          $window.gapi[path] = gapiAuth2;
         } else {
-          window.gapi[path] = {};
+          $window.gapi[path] = {};
         }
         cb();
       };
@@ -121,18 +125,92 @@ describe("Services: gapi loader", function() {
   });
 
   describe("gapiClientLoaderGenerator", function () {
-
-    it("should load a gapi client lib", function (done) {
-      inject(function (gapiClientLoaderGenerator, $window) {
-        expect(gapiClientLoaderGenerator).to.be.ok;
-        var loaderFn = gapiClientLoaderGenerator("custom", "v0");
-        loaderFn().then(function () {
-          expect($window.gapi).to.be.ok;
-          expect($window.gapi.client.custom).to.be.ok;
-          done();
-        }, done);
+    var gapiClientLoaderGenerator, $httpBackend, $timeout;
+    beforeEach(function() {
+      inject(function($injector) {
+        gapiClientLoaderGenerator = $injector.get("gapiClientLoaderGenerator");
+        $httpBackend = $injector.get("$httpBackend");
+        $timeout = $injector.get("$timeout");
       });
     });
+
+    it("should exist", function() {
+      expect(gapiClientLoaderGenerator).to.be.ok;      
+    });
+
+    it("should load a gapi client lib", function (done) {
+      var loaderFn = gapiClientLoaderGenerator("custom", "v0", "someUrls");
+      loaderFn().then(function () {
+        expect($window.gapi).to.be.ok;
+        expect($window.gapi.client.custom).to.be.ok;
+        done();
+      }, done);
+    });
+
+    it("should check endpoint url if no response is received", function (done) {
+      loadApi = false;
+      $httpBackend.expect("GET", "baseUrl").respond(403, {});
+
+      gapiClientLoaderGenerator("custom", "v0", "baseUrl")();
+
+      setTimeout(function(){
+        $timeout.flush(10 * 1000);
+        
+        setTimeout(function() {
+          $httpBackend.flush();
+
+          done();          
+        }, 10);
+      }, 10);
+    });
+
+    it("should reject promise if invalid response is received", function (done) {
+      loadApi = false;
+      $httpBackend.expect("GET", "baseUrl").respond(403, {});
+
+      var loaderFn = gapiClientLoaderGenerator("custom", "v0", "baseUrl");
+      loaderFn().then(done, function (e) {
+        expect(e).to.be.ok;
+        expect(e.status).to.equal(-1);
+
+        expect($window.gapi).to.be.ok;
+        expect($window.gapi.client.custom).to.not.be.ok;
+        done();
+      });
+
+      setTimeout(function(){
+        $timeout.flush(10 * 1000);
+        
+        setTimeout(function() {
+          $httpBackend.flush();
+        }, 10);
+      }, 10);
+    });
+
+    it("should not reject promise if valid response is received", function (done) {
+      loadApi = false;
+      $httpBackend.expect("GET", "baseUrl").respond(404, {});
+
+      var loaderFn = gapiClientLoaderGenerator("custom", "v0", "baseUrl");
+      // should not resolve or reject
+      loaderFn().then(done, done);
+
+      setTimeout(function(){
+        $timeout.flush(10 * 1000);
+        
+        setTimeout(function() {
+          $httpBackend.flush();
+          
+          setTimeout(function() {
+            expect($window.gapi).to.be.ok;
+            expect($window.gapi.client.custom).to.not.be.ok;
+
+            done();
+          }, 10);
+        }, 10);
+      }, 10);
+    });
+
   });
 
   describe("oauth2APILoader", function () {

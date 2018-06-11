@@ -5,11 +5,13 @@
     "text2": "If you are using this asset in any Presentation, the link for each must be manually updated in the Editor."
   },
   "cancel-uploads": "Cancel All",
-  "delete-files-folders-plural": "{{count}} files and folders are about to be permanently deleted.",
-  "delete-files-plural": "{{count}} files are about to be permanently deleted.",
-  "delete-files-singular": "One file is about to be permanently deleted.",
-  "delete-folders-plural": "{{count}} folders are about to be permanently deleted.",
-  "delete-folders-singular": "One folder is about to be permanently deleted.",
+  "delete": {
+    "files-folders-plural": "{{count}} files and folders are about to be permanently deleted.",
+    "files-plural": "{{count}} files are about to be permanently deleted.",
+    "files-singular": "One file is about to be permanently deleted.",
+    "folders-plural": "{{count}} folders are about to be permanently deleted.",
+    "folders-singular": "One folder is about to be permanently deleted." 
+  },
   "download-status": "Download Status",
   "empty-state": {
     "no-uploads": "You haven't uploaded any files yet!",
@@ -19,12 +21,8 @@
     "select-folder": "Select a Folder to show and update Images and Videos as you add or remove them from the Folder."
   },
   "error": {
-    "access-denied": "You don't have access to that action. Please contact your Administrator to give you the access you need.",
     "blocked-file": "This file is being requested too many times and is blocked.",
-    "delete-verify-company": "You cannot delete a file because your account {{username}} doesn't have access to this company. Please login with a different account and try again.",
     "duplicate-folder": "A Folder already uses that name, please choose a different one",
-    "folder-inactive-subscription": "You cannot add a folder because you don't have an active subscription. Please purchase a subscription and try again.",
-    "folder-verify-company": "You cannot create a folder because your account {{username}} doesn't have access to this company. Please login with a different account and try again.",
     "move": {
       "both-files-or-folders": "Destination must be a folder.",
       "both-root-or-trash": "Source and destination must be both in Root or in Trash.",
@@ -37,19 +35,9 @@
       "subfolders-not-valid": "Source and destination cannot be subfolders of each other.",
       "unknown": "An error occured while moving. Please try again."
     },
-    "not-authorized": "Your account {{username}} doesn't have access to this company. Please login with a different account and try again.",
-    "restore-inactive-subscription": "You cannot restore the file from trash because you don't have an active subscription. Please purchase a subscription and try again.",
-    "restore-verify-company": "You cannot restore the file from trash because your account {{username}} doesn't have access to this company. Please login with a different account and try again.",
     "server-error": "An error has occured.",
     "signed-download-uri-request-failed": "Download failed. Please try again.",
-    "signed-url-verify-company": "The download failed because your account {{username}} does not have access to this company. Please log in with a different account and try again.",
-    "trash-inactive-subscription": "You cannot move the file to trash because you don't have an active subscription. Please purchase a subscription and try again.",
-    "trash-verify-company": "You cannot move the file to trash because your account {{username}} doesn't have access to this company. Please login with a different account and try again.",
-    "upload-failed": "Upload failed. Please try again.",
-    "upload-inactive-subscription": "You cannot upload files because you don't have an active subscription. Please purchase a subscription and try again.",
-    "upload-uri-request-failed": "Upload failed. Please try again.",
-    "upload-uri-request-failed-mail": "Upload failed for {{username}}. Please try again.",
-    "upload-verify-company": "The upload failed because your account {{username}} does not have access to this company. Please log in with a different account and try again."
+    "upload-failed": "Upload failed. Please try again."
   },
   "folder-selector": {
     "title": "Select Destination"

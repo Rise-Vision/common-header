@@ -10,7 +10,7 @@ rv-spinner-start-active="1">
 <div class="modal-body registration-modal" stop-event="touchend">
   
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-12">
 
       <form id="registrationForm" novalidate role="form" name="forms.registrationForm">
         <!-- First Name -->
@@ -49,7 +49,7 @@ rv-spinner-start-active="1">
           <input type="checkbox" name="accepted"
             ng-model="profile.accepted"
             class="accept-terms-checkbox" required />
-          I accept the terms of <a href="https://www.risevision.com/terms-of-service" target="_blank">Service and Privacy</a>
+          I accept the terms of <a href="https://help.risevision.com/hc/en-us/articles/360000924446-Terms-of-Service" target="_blank">Service</a> and <a href="https://help.risevision.com/hc/en-us/articles/360000915023-Privacy-Policy" target="_blank">Privacy</a>
           <p ng-show="forms.registrationForm.accepted.$invalid && !forms.registrationForm.accepted.$pristine"
             class="help-block validation-error-message-accepted">You must accept terms and condtions.</p>
           </label>
@@ -77,22 +77,7 @@ rv-spinner-start-active="1">
       </form>
 
     </div>
-    <div class="col-sm-4">
-      <div class="signup-counters">
-        <div class="counter">
-          <p>129</p>
-          <span>New Companies Added Yesterday</span>
-        </div>
-        <div class="counter">
-          <p>72,990</p>
-          <span>Total Companies</span>
-        </div>
-        <div class="counter">
-          <p>120</p>
-          <span>Countries with Active Displays</span>
-        </div>
-      </div>
-    </div>
+
   </div>  
  
 </div>

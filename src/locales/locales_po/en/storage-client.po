@@ -10,19 +10,19 @@ msgstr "If you are using this asset in any Presentation, the link for each must 
 msgid "cancel-uploads"
 msgstr "Cancel All"
 
-msgid "delete-files-folders-plural"
+msgid "delete.files-folders-plural"
 msgstr "{{count}} files and folders are about to be permanently deleted."
 
-msgid "delete-files-plural"
+msgid "delete.files-plural"
 msgstr "{{count}} files are about to be permanently deleted."
 
-msgid "delete-files-singular"
+msgid "delete.files-singular"
 msgstr "One file is about to be permanently deleted."
 
-msgid "delete-folders-plural"
+msgid "delete.folders-plural"
 msgstr "{{count}} folders are about to be permanently deleted."
 
-msgid "delete-folders-singular"
+msgid "delete.folders-singular"
 msgstr "One folder is about to be permanently deleted."
 
 msgid "download-status"
@@ -43,23 +43,11 @@ msgstr "Or just select single Images and Videos to add and order them in your Pl
 msgid "empty-state.select-folder"
 msgstr "Select a Folder to show and update Images and Videos as you add or remove them from the Folder."
 
-msgid "error.access-denied"
-msgstr "You don't have access to that action. Please contact your Administrator to give you the access you need."
-
 msgid "error.blocked-file"
 msgstr "This file is being requested too many times and is blocked."
 
-msgid "error.delete-verify-company"
-msgstr "You cannot delete a file because your account {{username}} doesn't have access to this company. Please login with a different account and try again."
-
 msgid "error.duplicate-folder"
 msgstr "A Folder already uses that name, please choose a different one"
-
-msgid "error.folder-inactive-subscription"
-msgstr "You cannot add a folder because you don't have an active subscription. Please purchase a subscription and try again."
-
-msgid "error.folder-verify-company"
-msgstr "You cannot create a folder because your account {{username}} doesn't have access to this company. Please login with a different account and try again."
 
 msgid "error.move.both-files-or-folders"
 msgstr "Destination must be a folder."
@@ -91,44 +79,14 @@ msgstr "Source and destination cannot be subfolders of each other."
 msgid "error.move.unknown"
 msgstr "An error occured while moving. Please try again."
 
-msgid "error.not-authorized"
-msgstr "Your account {{username}} doesn't have access to this company. Please login with a different account and try again."
-
-msgid "error.restore-inactive-subscription"
-msgstr "You cannot restore the file from trash because you don't have an active subscription. Please purchase a subscription and try again."
-
-msgid "error.restore-verify-company"
-msgstr "You cannot restore the file from trash because your account {{username}} doesn't have access to this company. Please login with a different account and try again."
-
 msgid "error.server-error"
 msgstr "An error has occured."
 
 msgid "error.signed-download-uri-request-failed"
 msgstr "Download failed. Please try again."
 
-msgid "error.signed-url-verify-company"
-msgstr "The download failed because your account {{username}} does not have access to this company. Please log in with a different account and try again."
-
-msgid "error.trash-inactive-subscription"
-msgstr "You cannot move the file to trash because you don't have an active subscription. Please purchase a subscription and try again."
-
-msgid "error.trash-verify-company"
-msgstr "You cannot move the file to trash because your account {{username}} doesn't have access to this company. Please login with a different account and try again."
-
 msgid "error.upload-failed"
 msgstr "Upload failed. Please try again."
-
-msgid "error.upload-inactive-subscription"
-msgstr "You cannot upload files because you don't have an active subscription. Please purchase a subscription and try again."
-
-msgid "error.upload-uri-request-failed"
-msgstr "Upload failed. Please try again."
-
-msgid "error.upload-uri-request-failed-mail"
-msgstr "Upload failed for {{username}}. Please try again."
-
-msgid "error.upload-verify-company"
-msgstr "The upload failed because your account {{username}} does not have access to this company. Please log in with a different account and try again."
 
 msgid "folder-selector.title"
 msgstr "Select Destination"
