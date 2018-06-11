@@ -35,7 +35,7 @@
       yearly: {
         priceDisplayMonth: 10,
         billAmount: 110,
-        save: 0
+        save: 10
       },
       trialPeriod: 14
     }, {

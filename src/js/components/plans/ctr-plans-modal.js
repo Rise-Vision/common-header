@@ -69,7 +69,7 @@ angular.module("risevision.common.components.plans")
     };
 
     $scope.showSavings = function (plan) {
-      return !$scope.isFree(plan) && !$scope.isStarter(plan);
+      return !$scope.isFree(plan) && (!$scope.isStarter(plan) || !$scope.monthlyPrices);
     };
 
     $scope.currentPlanLabelVisible = function (plan) {

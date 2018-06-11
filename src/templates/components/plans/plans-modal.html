@@ -23,7 +23,7 @@
             </div>
 
             <h2>{{plan.name}}</h2>
-            <h3 class="planColumnPrice" ng-show="showSavings(plan)">
+            <h3 class="planColumnPrice" ng-show="!isFree(plan) && !isStarter(plan)">
               <span>$10</span>${{ monthlyPrices ? plan.monthly.priceDisplayMonth : plan.yearly.priceDisplayMonth }}
             </h3>
             <h3 class="planColumnPrice" ng-show="isStarter(plan)">
