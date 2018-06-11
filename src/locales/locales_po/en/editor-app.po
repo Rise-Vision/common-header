@@ -313,6 +313,9 @@ msgstr "All"
 msgid "storeProduct.category.free"
 msgstr "Free"
 
+msgid "storeProduct.category.metered"
+msgstr "For Licensed Displays"
+
 msgid "storeProduct.category.premium"
 msgstr "For Licensed Displays"
 

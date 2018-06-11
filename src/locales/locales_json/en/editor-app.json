@@ -150,6 +150,7 @@
     "category": {
       "all": "All",
       "free": "Free",
+      "metered": "For Licensed Displays",
       "premium": "For Licensed Displays",
       "subscription": "For Licensed Displays"
     },
