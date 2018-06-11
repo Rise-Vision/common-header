@@ -24,8 +24,7 @@
     "q": "1.0.1",
     "seiyria-bootstrap-slider": "~3.1.0",
     "select2": "~3.4",
-    "spectrum": "git://github.com/Rise-Vision/spectrum",
-    "hologram-github-theme": "^0.1.4"
+    "spectrum": "git://github.com/Rise-Vision/spectrum"
   },
   "dependencies": {
     "angular": "~1.5.0",

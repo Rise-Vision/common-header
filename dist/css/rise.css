@@ -7224,21 +7224,6 @@ button.close {
 
 /* Bootstrap Overwrites
    ========================================================================== */
-/*doc
----
-title: Buttons
-name: button
-category: Base CSS
----
-
-Button styles can be applied to any element. Typically you'll want to use either a `<button>` or an `<a>` element:
-
-```html_example
-<button class="btn btn-default">Click</button>
-<a class="btn btn btn-primary" href="#">Trulia!</a>
-```
-
-*/
 .btn, .icon-nav label {
   outline: 0;
   -webkit-transition: all 0.2s;
@@ -7428,28 +7413,6 @@ Button styles can be applied to any element. Typically you'll want to use either
   .btn-multi-line ~ ul li {
     font-size: 12px; }
 
-/*doc
----
-title: Dropdowns
-name: dropdowns
-category: Base CSS
----
-
-Button styles can be applied to any element. Typically you'll want to use either a `<button>` or an `<a>` element:
-
-```html_example
- <div class="u_bordered dropdown" dropdown>
-      <ul class="dropdown-menu" role="menu">
-          <li><a> Lorem 100 </a></li>
-          <li><a> Lorem 200 </a></li>
-          <li><a> Lorem 300 </a></li>
-          <li><a> Lorem 400 </a></li>
-          <li><a> Lorem 500 </a></li>
-      </ul>
-  </div>
-```
-
-*/
 .dropdown .dropdown-menu {
   top: 120%;
   left: auto;
@@ -7736,28 +7699,6 @@ Button styles can be applied to any element. Typically you'll want to use either
   tr.visible-print {
     display: table-row !important; } }
 
-/*doc
----
-title: Inputs
-name: inputs
-category: Forms
----
-
-Button styles can be applied to any element. Typically you'll want to use either a `<button>` or an `<a>` element:
-
-```html_example
-<div class="form-group">
-      <label class="control-label"> Label </label>
-      <div class="input-group custom-addon">
-        <input type="text" class="form-control">
-        <span class="input-group-addon">
-          <button class="btn btn-default"> Click </button>
-        </span>
-      </div>
-</div>
-```
-
-*/
 html input[disabled] {
   cursor: not-allowed;
   background-color: #EEE;
@@ -7865,25 +7806,6 @@ input[type=number] {
   .modal-sm {
     width: 300px; } }
 
-/*doc
----
-title: Breadcrumbs
-name: breadcrumb
-category: Base CSS
----
-
-Button styles can be applied to any element. Typically you'll want to use either a `<button>` or an `<a>` element:
-
-```html_example
-<ol class="breadcrumb"> 
-	<li>Step 1</li>
-	<li>Step 2</li>
-	<li>Step 3</li>
-	<li class="active">Step 4</li>
-</ol> 
-```
-
-*/
 .breadcrumb {
   font-size: 14px;
   padding: 7px 10px;
