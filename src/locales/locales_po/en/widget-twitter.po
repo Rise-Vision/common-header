@@ -14,7 +14,7 @@ msgid "previewLable"
 msgstr "Preview"
 
 msgid "previewText"
-msgstr "The Twitter Widget uses sample content in Preview, your Tweets will only show on a Display with Rise Player Professional."
+msgstr "The Twitter Widget uses sample content in Preview, your Tweets will only show on a Licensed Display."
 
 msgid "screenNameText"
 msgstr "Enter a @handle to display Tweets from any public account"

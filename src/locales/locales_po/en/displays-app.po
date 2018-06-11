@@ -293,7 +293,7 @@ msgid "alerts.webServiceURL"
 msgstr "Web Service URL"
 
 msgid "details.all-licenses-used"
-msgstr "You're using all <strong>{{count}}</strong> of your Rise Player Professional Displays."
+msgstr "You're using all <strong>{{count}}</strong> of your Display Licenses."
 
 msgid "details.deleteTitle"
 msgstr "Deleting Display"
@@ -308,19 +308,16 @@ msgid "details.get-more"
 msgstr "Get More Now"
 
 msgid "details.rpp-is"
-msgstr "Rise Player Professional is"
+msgstr "Licensed Display is"
 
 msgid "details.rpp-loading"
 msgstr "LOADING"
 
 msgid "details.rpp-not-supported"
-msgstr "Player version does not support Rise Player Professional features"
+msgstr "Player version does not support Licensed Display features"
 
 msgid "details.startPlayerProTrial"
-msgstr "Start Rise Player Professional Trial"
-
-msgid "details.subscribePlayerPro"
-msgstr "Subscribe to Rise Player Professional"
+msgstr "Start Licensed Display Trial"
 
 msgid "details.title"
 msgstr "Display Settings"
@@ -330,9 +327,6 @@ msgstr "Unsaved Changes"
 
 msgid "details.unsavedWarning"
 msgstr "You have unsaved changes. Do you want to Save or Discard them?"
-
-msgid "details.whatIsPlayerPro"
-msgstr "What is Rise Player Professional?"
 
 msgid "displayDetails"
 msgstr "Display Details"
@@ -548,7 +542,7 @@ msgid "fields.player.rpp.email-recipients"
 msgstr "Email Recipients"
 
 msgid "fields.player.rpp.features"
-msgstr "Rise Player Professional Features"
+msgstr "Licensed Display Features"
 
 msgid "fields.player.rpp.invalid-email"
 msgstr "A valid email address is required."
@@ -572,7 +566,7 @@ msgid "fields.player.rpp.start-trial"
 msgstr "Start a Plan Trial"
 
 msgid "fields.player.rpp.unlock"
-msgstr "Unlock Rise Professional Features with any plan!"
+msgstr "Unlock Licensed Display with any paid plan!"
 
 msgid "fields.player.schedule.addToSchedule"
 msgstr "Add To Schedule"
@@ -731,19 +725,19 @@ msgid "list.player.type.3rdParty"
 msgstr "3rd Party Player"
 
 msgid "list.player.type.cancelled"
-msgstr "Professional (Cancelled)"
+msgstr "Licensed (Cancelled)"
 
 msgid "list.player.type.professional"
-msgstr "Professional"
+msgstr "Licensed"
 
 msgid "list.player.type.professionalSuspended"
-msgstr "Professional (Suspended)"
+msgstr "Licensed (Suspended)"
 
 msgid "list.player.type.professionalTrial"
-msgstr "Professional (Trial)"
+msgstr "Licensed (Trial)"
 
 msgid "list.player.type.standard"
-msgstr "Standard"
+msgstr "Free"
 
 msgid "list.player.type.unsupported"
 msgstr "Unsupported"
