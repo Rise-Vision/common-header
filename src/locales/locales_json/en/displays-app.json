@@ -12,8 +12,8 @@
       "label": "Download",
       "linux32": "for Ubuntu 16.04 LTS [32-bit]",
       "linux64": "for Ubuntu 16.04 LTS [64-bit]",
-      "win32": "for Windows 10 [32-bit]",
-      "win64": "for Windows 10 [64-bit]"
+      "win32": "for Windows 7 and Up [32-bit]",
+      "win64": "for Windows 7 and Up [64-bit]"
     },
     "error": "Failed to create display!",
     "instructions": {
@@ -30,7 +30,7 @@
         "chromeos": "Chrome OS",
         "linux": "Linux",
         "pi": "Rapsberry Pi",
-        "windows10": "Windows 10"
+        "windows10": "Windows 7 and Up"
       },
       "presentations": "Presentations",
       "step1": "Step 1",
@@ -143,8 +143,8 @@
     "linux32": "Download Player for Ubuntu 16.04 LTS [32-bit]",
     "linux64": "Download Player for Ubuntu 16.04 LTS [64-bit]",
     "player": "Download Player",
-    "win32": "Download Player for Windows 10 [32-bit]",
-    "win64": "Download Player for Windows 10 [64-bit]"
+    "win32": "Download Player for Windows 7 and Up [32-bit]",
+    "win64": "Download Player for Windows 7 and Up [64-bit]"
   },
   "fields": {
     "address": {
