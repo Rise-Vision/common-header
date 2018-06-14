@@ -10600,40 +10600,40 @@ a[data-wysihtml5-command=underline].active {
   align-items: center;
   padding: 0 8px; }
 
-.navbar.navbar-default .navbar-nav > li > a {
-  border-radius: 4px;
-  font-size: 13px; }
-  .navbar.navbar-default .navbar-nav > li > a:hover, .navbar.navbar-default .navbar-nav > li > a:focus {
-    color: #0081BA;
-    background-color: #f4f4f4; }
-  .navbar.navbar-default .navbar-nav > li > a.selected {
-    color: #0081BA;
-    background-color: #f4f4f4; }
-
-.navbar .navbar-brand {
-  padding: 6px; }
-  .navbar .navbar-brand img {
-    width: 100px; }
-  .navbar .navbar-brand .fa {
-    padding: 10px; }
-
-.navbar .navbar-nav {
-  display: flex;
-  align-items: center;
-  margin: 0; }
-  .navbar .navbar-nav.actions-nav {
-    margin-left: auto;
-    display: flex; }
-  .navbar .navbar-nav > li > a {
+.navbar {
+  margin-bottom: 0; }
+  .navbar.navbar-default .navbar-nav > li > a {
+    border-radius: 4px;
+    font-size: 13px; }
+    .navbar.navbar-default .navbar-nav > li > a:hover, .navbar.navbar-default .navbar-nav > li > a:focus {
+      color: #0081BA;
+      background-color: #f4f4f4; }
+    .navbar.navbar-default .navbar-nav > li > a.selected {
+      color: #0081BA;
+      background-color: #f4f4f4; }
+  .navbar .navbar-brand {
     padding: 6px; }
-    .navbar .navbar-nav > li > a.btn, .navbar .navbar-nav > li > a.company-buttons-icon-mobile {
-      margin-top: 8px;
-      margin-bottom: 0; }
-  .navbar .navbar-nav > li > a.btn-link:hover, .navbar .navbar-nav > li > a.btn-link:focus, .navbar .navbar-nav > li > a.btn-link:active,
-  .navbar .navbar-nav > li > button.btn-link:hover,
-  .navbar .navbar-nav > li > button.btn-link:focus,
-  .navbar .navbar-nav > li > button.btn-link:active {
-    color: gray; }
+    .navbar .navbar-brand img {
+      width: 100px; }
+    .navbar .navbar-brand .fa {
+      padding: 10px; }
+  .navbar .navbar-nav {
+    display: flex;
+    align-items: center;
+    margin: 0; }
+    .navbar .navbar-nav.actions-nav {
+      margin-left: auto;
+      display: flex; }
+    .navbar .navbar-nav > li > a {
+      padding: 6px; }
+      .navbar .navbar-nav > li > a.btn, .navbar .navbar-nav > li > a.company-buttons-icon-mobile {
+        margin-top: 8px;
+        margin-bottom: 0; }
+    .navbar .navbar-nav > li > a.btn-link:hover, .navbar .navbar-nav > li > a.btn-link:focus, .navbar .navbar-nav > li > a.btn-link:active,
+    .navbar .navbar-nav > li > button.btn-link:hover,
+    .navbar .navbar-nav > li > button.btn-link:focus,
+    .navbar .navbar-nav > li > button.btn-link:active {
+      color: gray; }
 
 .navbar-default li.user-profile-dropdown {
   margin-left: auto;
