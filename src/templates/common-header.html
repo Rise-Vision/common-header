@@ -1,4 +1,4 @@
-<div id="commonHeaderDiv" ng-hide="hideCommonHeader">
+<div id="commonHeaderDiv" class="apps-header" ng-hide="hideCommonHeader">
 	<!-- Plan Banner -->
 	<ng-include
 		replace-include
@@ -8,10 +8,10 @@
 	<!-- END Plan Banner -->
 
 	<!-- Common Header Navbar -->
-	<nav class="navbar navbar-default navbar-static-top hidden-print"
+	<nav class="navbar navbar-default hidden-print"
 		ng-class="{'active-banner': isSubcompanySelected() || isTestCompanySelected()}" role="navigation">
-		<div class="container-fluid">
-			<div class="navbar-header" style="width: 100%;">
+			<div class="navbar-header">
+
 				<a class="navbar-brand visible-md visible-lg"
 				  href="http://www.risevision.com/" target="{{newTabHome ? '_blank' : '_self'}}" ng-if="!inRVAFrame">
 					<img src="//s3.amazonaws.com/Rise-Images/UI/logo.svg" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision">
@@ -21,6 +21,36 @@
 					<i class="fa fa-bars"></i>
 				</a>
 				<!-- If User Authenticated -->
+				
+
+				<!-- Nav Links -->
+				<div class="navbar-left visible-xs visible-sm" ng-if="ENV_NAME">
+					<ul class="nav navbar-nav">
+						<li class="env-name-nav-item">
+							<span class="env-name-label">{{ENV_NAME}}</span>
+						</li>
+					</ul>
+				</div>
+
+				<div class="navbar-collapse navbar-left hidden-xs hidden-sm">
+					<ul class="nav navbar-nav">
+						<li class="env-name-nav-item visible-md visible-lg" ng-if="ENV_NAME">
+							<span class="env-name-label">{{ENV_NAME}}</span>
+						</li>
+						<li ng-repeat="opt in navOptions">
+							<a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid target="{{opt.target}}" ng-class="{'selected': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a>
+							<a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}" ng-class="{'selected': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a>
+						</li>
+						
+						<li ng-if="!inRVAFrame && !hideHelpMenu">
+							<a href="http://www.risevision.com/help/" target="_blank">
+								Help
+							</a>
+						</li>
+					</ul>
+				</div>
+
+
 				<!-- Action Nav -->
 				<ul class="nav navbar-nav navbar-right actions-nav pull-right">
 					<!-- Zendesk -->
@@ -68,32 +98,7 @@
 					  ng-controller="AuthButtonsCtr"></li>
 				</ul>
 				<!-- END Action Nav -->
-
-				<!-- Nav Links -->
-				<div class="navbar-collapse navbar-left hidden-xs hidden-sm">
-					<ul class="nav navbar-nav">
-						<li class="env-name-nav-item visible-md visible-lg" ng-if="ENV_NAME">
-							<span class="env-name-label">{{ENV_NAME}}</span>
-						</li>
-						<li ng-repeat="opt in navOptions">
-							<a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid target="{{opt.target}}" ng-class="{'selected': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a>
-							<a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}" ng-class="{'selected': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a>
-						</li>
-						
-						<li ng-if="!inRVAFrame && !hideHelpMenu">
-							<a href="http://www.risevision.com/help/" target="_blank">
-								Help
-							</a>
-						</li>
-					</ul>
-				</div>
-				<div class="navbar-left visible-xs visible-sm" ng-if="ENV_NAME">
-					<ul class="nav navbar-nav">
-						<li class="env-name-nav-item">
-							<span class="env-name-label">{{ENV_NAME}}</span>
-						</li>
-					</ul>
-				</div>
+				
 				<!-- END Nav Links -->
 			</div>
 
@@ -106,7 +111,6 @@
 			replace-include
 			ng-controller="SubcompanyBannerCtrl"
 			src="'subcompany-banner.html'"></ng-include>
-		</div>
 	</nav>
 
 	<ng-include
