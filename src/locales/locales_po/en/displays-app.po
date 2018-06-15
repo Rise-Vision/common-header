@@ -26,10 +26,10 @@ msgid "add.download.linux64"
 msgstr "for Ubuntu 16.04 LTS [64-bit]"
 
 msgid "add.download.win32"
-msgstr "for Windows 10 [32-bit]"
+msgstr "for Windows 7 and Up [32-bit]"
 
 msgid "add.download.win64"
-msgstr "for Windows 10 [64-bit]"
+msgstr "for Windows 7 and Up [64-bit]"
 
 msgid "add.error"
 msgstr "Failed to create display!"
@@ -71,7 +71,7 @@ msgid "add.instructions.os.pi"
 msgstr "Rapsberry Pi"
 
 msgid "add.instructions.os.windows10"
-msgstr "Windows 10"
+msgstr "Windows 7 and Up"
 
 msgid "add.instructions.presentations"
 msgstr "Presentations"
@@ -344,10 +344,10 @@ msgid "download.player"
 msgstr "Download Player"
 
 msgid "download.win32"
-msgstr "Download Player for Windows 10 [32-bit]"
+msgstr "Download Player for Windows 7 and Up [32-bit]"
 
 msgid "download.win64"
-msgstr "Download Player for Windows 10 [64-bit]"
+msgstr "Download Player for Windows 7 and Up [64-bit]"
 
 msgid "fields.address.city"
 msgstr "City"
