@@ -10922,6 +10922,7 @@ a[data-wysihtml5-command=underline].active {
   padding: 0 8px; }
 
 .navbar {
+  z-index: 1000;
   margin-bottom: 0; }
   .navbar.navbar-default .navbar-nav > li > a {
     border-radius: 4px;
