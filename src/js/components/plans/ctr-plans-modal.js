@@ -6,12 +6,9 @@ angular.module("risevision.common.components.plans")
   function ($scope, $rootScope, $modalInstance, $log, $modal, $templateCache, $loading, $timeout, $q,
     planFactory, currentPlan, showRPPLink, userState) {
 
-    var company = userState.getCopyOfSelectedCompany();
     $scope.currentPlan = currentPlan;
     $scope.startTrialError = null;
     $scope.showRPPLink = showRPPLink;
-    $scope.playerProSubscriptionId = company.playerProSubscriptionId;
-    $scope.companyId = company.id;
     $scope.monthlyPrices = true;
 
     function _getPlansDetails() {
@@ -73,43 +70,44 @@ angular.module("risevision.common.components.plans")
     };
 
     $scope.currentPlanLabelVisible = function (plan) {
-      var freeOnCurrentExpired = $scope.isFree(plan) && planFactory.isTrialExpired();
-      var currentActive = $scope.isCurrentPlan(plan) && ($scope.isSubscribed(plan) || $scope.isOnTrial(plan));
-
-      return freeOnCurrentExpired || currentActive;
-    };
-
-    $scope.subscribeButtonVisible = function (plan) {
-      return $scope.isOnTrial(plan) || $scope.isTrialExpired(plan) || $scope.canUpgrade(plan);
-    };
-
-    $scope.proSubscriptionLinkVisible = function () {
-      return $scope.playerProSubscriptionId && (planFactory.isProSubscribed() || planFactory.isProSuspended());
-    };
-
-    $scope.canUpgrade = function (plan) {
-      if ($scope.canStartTrial(plan)) {
-        return false;
-      } else {
-        return currentPlan.order < plan.order;
+      // Has a Plan?
+      if (planFactory.isPlanActive()) {
+        // Is it the Current Plan?
+        return $scope.isCurrentPlan(plan);
+      } else { // Were on Free Plan
+        // Is it the Free Plan?
+        return $scope.isFree(plan);
       }
     };
 
-    $scope.canDowngrade = function (plan) {
-      if ($scope.canStartTrial(plan) || $scope.isOnTrial(plan) || planFactory.isTrialExpired()) {
-        return false;
-      } else {
-        return currentPlan.order > plan.order;
-      }
-    };
-
-    $scope.canStartTrial = function (plan) {
-      if (currentPlan.planSubscriptionStatus === "Active") {
-        return false;
-      } else if (currentPlan.type === plan.type) {
-        return false;
-      } else {
-        return $scope.isTrialAvailable(plan);
+    $scope.getVisibleAction = function (plan) {
+      // Has a Plan?
+      if (planFactory.isPlanActive()) {
+        // Is this that Plan?
+        if ($scope.isCurrentPlan(plan)) {
+          // Can buy Subscription?
+          if ($scope.isOnTrial(plan)) {
+            return "subscribe";
+          } else {
+            return "";
+          }
+        } else { // This is a different Plan
+          // Is lower Plan?
+          if (currentPlan.order > plan.order) {
+            return "downgrade";
+          } else { // Higher Plan
+            return "subscribe";
+          }
+        }
+      } else { // Were on Free Plan
+        // Is there a Trial?
+        if ($scope.isFree(plan)) {
+          return "";
+        } else if ($scope.isTrialAvailable(plan)) {
+          return "start-trial";
+        } else { // Subscribe
+          return "subscribe";
+        }
       }
     };
 

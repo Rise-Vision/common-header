@@ -34,25 +34,14 @@ describe("controller: plans modal", function() {
         startTrial: function() {
           return Q.resolve([]);
         },
-        isTrialExpired: function() {
-          return false;
-        },
-        isProSubscribed: function() {
-          return false;
-        },
-        isProSuspended: function() {
-          return false;
+        isPlanActive: function() {
+          return true;
         }
       };
     });
     $provide.factory("userState", function() {
       return {
-        getCopyOfSelectedCompany: function() {
-          return {
-            playerProSubscriptionId: "playerProSubscriptionId",
-            id: "companyId"
-          };
-        }
+        reloadSelectedCompany: function() {}
       };
     });
     $provide.service("$modal", function() {
@@ -132,12 +121,20 @@ describe("controller: plans modal", function() {
 
   it("should initialize",function() {
     expect($scope.currentPlan).to.be.ok;
-    expect($scope.canUpgrade).to.be.a.function;
-    expect($scope.canDowngrade).to.be.a.function;
-    expect($scope.dismiss).to.be.a.function;
 
-    expect($scope.playerProSubscriptionId).to.be.equal("playerProSubscriptionId");
-    expect($scope.companyId).to.be.equal("companyId");
+    expect($scope.isCurrentPlan).to.be.a("function");
+    expect($scope.isCurrentPlanSubscribed).to.be.a("function");
+    expect($scope.isOnTrial).to.be.a("function");
+    expect($scope.isTrialAvailable).to.be.a("function");
+    expect($scope.isTrialExpired).to.be.a("function");
+    expect($scope.isSubscribed).to.be.a("function");
+    expect($scope.isFree).to.be.a("function");
+    expect($scope.isStarter).to.be.a("function");
+    expect($scope.showSavings).to.be.a("function");
+    expect($scope.currentPlanLabelVisible).to.be.a("function");
+    expect($scope.getVisibleAction).to.be.a("function");
+
+    expect($scope.dismiss).to.be.a("function");
 
     expect(planFactory.getCompanyPlanStatus).to.have.been.called;
     expect(planFactory.getPlansDetails).to.have.been.called;
@@ -149,242 +146,80 @@ describe("controller: plans modal", function() {
     expect($loading.stop).to.have.been.called;
   });
 
-  describe("canUpgrade", function() {
-    it("should be able to upgrade from Free Plan to any other plan", function() {
-      currentPlan.type = "free";
-      currentPlan.order = 0;
-
-      expect($scope.canUpgrade({ type: "free", order: 0 })).to.be.false;
-      expect($scope.canUpgrade({ type: "starter", order: 1 })).to.be.true;
-      expect($scope.canUpgrade({ type: "basic", order: 2 })).to.be.true;
-      expect($scope.canUpgrade({ type: "advanced", order: 3 })).to.be.true;
-      expect($scope.canUpgrade({ type: "enterprise", order: 4 })).to.be.true;
-    });
-
-    it("should be able to upgrade from Starter Plan to Basic, Advanced or Enterprise", function() {
-      currentPlan.type = "starter";
-      currentPlan.order = 1;
-
-      expect($scope.canUpgrade({ type: "free", order: 0 })).to.be.false;
-      expect($scope.canUpgrade({ type: "starter", order: 1 })).to.be.false;
-      expect($scope.canUpgrade({ type: "basic", order: 2 })).to.be.true;
-      expect($scope.canUpgrade({ type: "advanced", order: 3 })).to.be.true;
-      expect($scope.canUpgrade({ type: "enterprise", order: 4 })).to.be.true;
-    });
-
-    it("should be able to upgrade from Basic Plan to Advanced or Enterprise", function() {
-      currentPlan.type = "basic";
-      currentPlan.order = 2;
-
-      expect($scope.canUpgrade({ type: "free", order: 0 })).to.be.false;
-      expect($scope.canUpgrade({ type: "starter", order: 1 })).to.be.false;
-      expect($scope.canUpgrade({ type: "basic", order: 2 })).to.be.false;
-      expect($scope.canUpgrade({ type: "advanced", order: 3 })).to.be.true;
-      expect($scope.canUpgrade({ type: "enterprise", order: 4 })).to.be.true;
-    });
-
-    it("should be able to upgrade from Advanced Plan to Enterprise", function() {
+  describe("currentPlanLabelVisible: ", function() {
+    it("should show if plan is same as current and current plan active", function() {
+      sandbox.stub(planFactory, "isPlanActive").returns(true);
       currentPlan.type = "advanced";
-      currentPlan.order = 3;
-
-      expect($scope.canUpgrade({ type: "free", order: 0 })).to.be.false;
-      expect($scope.canUpgrade({ type: "starter", order: 1 })).to.be.false;
-      expect($scope.canUpgrade({ type: "basic", order: 2 })).to.be.false;
-      expect($scope.canUpgrade({ type: "advanced", order: 3 })).to.be.false;
-      expect($scope.canUpgrade({ type: "enterprise", order: 4 })).to.be.true;
+      expect($scope.currentPlanLabelVisible({ type: "advanced" })).to.be.true;
     });
 
-    it("should not be able to upgrade from Enterprise Plan to any other plan", function() {
-      currentPlan.type = "enterprise";
-      currentPlan.order = 4;
-
-      expect($scope.canUpgrade({ type: "free", order: 0 })).to.be.false;
-      expect($scope.canUpgrade({ type: "starter", order: 1 })).to.be.false;
-      expect($scope.canUpgrade({ type: "basic", order: 2 })).to.be.false;
-      expect($scope.canUpgrade({ type: "advanced", order: 3 })).to.be.false;
-      expect($scope.canUpgrade({ type: "enterprise", order: 4 })).to.be.false;
-    });
-  });
-
-  describe("canDowngrade", function() {
-    it("should not be able to downgrade from Free Plan to any other plan", function() {
-      currentPlan.type = "free";
-      currentPlan.order = 0;
-
-      expect($scope.canDowngrade({ type: "free", order: 0 })).to.be.false;
-      expect($scope.canDowngrade({ type: "starter", order: 1 })).to.be.false;
-      expect($scope.canDowngrade({ type: "basic", order: 2 })).to.be.false;
-      expect($scope.canDowngrade({ type: "advanced", order: 3 })).to.be.false;
-      expect($scope.canDowngrade({ type: "enterprise", order: 4 })).to.be.false;
-    });
-
-    it("should be able to downgrade from Starter Plan to Free, unless status is Trial Expired", function() {
-      currentPlan.type = "basic";
-      currentPlan.order = 2;
-
-      expect($scope.canDowngrade({ type: "free", order: 0 })).to.be.true;
-      expect($scope.canDowngrade({ type: "starter", order: 1 })).to.be.true;
-      expect($scope.canDowngrade({ type: "basic", order: 2 })).to.be.false;
-      expect($scope.canDowngrade({ type: "advanced", order: 3 })).to.be.false;
-      expect($scope.canDowngrade({ type: "enterprise", order: 4 })).to.be.false;
-
-      sandbox.stub(planFactory, "isTrialExpired").returns(true);
-      expect($scope.canDowngrade({ type: "free", order: 0 })).to.be.false;
-    });
-
-    it("should be able to downgrade from Basic Plan to Free or Starter, unless status is Trial Expired", function() {
-      currentPlan.type = "basic";
-      currentPlan.order = 2;
-
-      expect($scope.canDowngrade({ type: "free", order: 0 })).to.be.true;
-      expect($scope.canDowngrade({ type: "starter", order: 1 })).to.be.true;
-      expect($scope.canDowngrade({ type: "basic", order: 2 })).to.be.false;
-      expect($scope.canDowngrade({ type: "advanced", order: 3 })).to.be.false;
-      expect($scope.canDowngrade({ type: "enterprise", order: 4 })).to.be.false;
-
-      sandbox.stub(planFactory, "isTrialExpired").returns(true);
-      expect($scope.canDowngrade({ type: "free", order: 0 })).to.be.false;
-    });
-
-    it("should be able to downgrade from Advanced Plan to Free or Basic, except to Free when status is Trial Expired", function() {
+    it("should not show if plan is same as current and current plan is inactive", function() {
+      sandbox.stub(planFactory, "isPlanActive").returns(false);
       currentPlan.type = "advanced";
-      currentPlan.order = 3;
-
-      expect($scope.canDowngrade({ type: "free", order: 0 })).to.be.true;
-      expect($scope.canDowngrade({ type: "starter", order: 1 })).to.be.true;
-      expect($scope.canDowngrade({ type: "basic", order: 2 })).to.be.true;
-      expect($scope.canDowngrade({ type: "advanced", order: 3 })).to.be.false;
-      expect($scope.canDowngrade({ type: "enterprise", order: 4 })).to.be.false;
-
-      sandbox.stub(planFactory, "isTrialExpired").returns(true);
-      expect($scope.canDowngrade({ type: "free", order: 0 })).to.be.false;
+      expect($scope.currentPlanLabelVisible({ type: "advanced" })).to.be.false;
     });
 
-    it("should be able to downgrade from Enterprise Plan to any other plan, except to Free when status is Trial Expired", function() {
-      currentPlan.type = "enterprise";
-      currentPlan.order = 4;
-
-      expect($scope.canDowngrade({ type: "free", order: 0 })).to.be.true;
-      expect($scope.canDowngrade({ type: "starter", order: 1 })).to.be.true;
-      expect($scope.canDowngrade({ type: "basic", order: 2 })).to.be.true;
-      expect($scope.canDowngrade({ type: "advanced", order: 3 })).to.be.true;
-      expect($scope.canDowngrade({ type: "enterprise", order: 4 })).to.be.false;
-
-      sandbox.stub(planFactory, "isTrialExpired").returns(true);
-      expect($scope.canDowngrade({ type: "free", order: 0 })).to.be.false;
-    });
-  });
-
-  describe("canStartTrial", function() {
-    it("should not be able to start trial on the current plan", function() {
-      currentPlan.type = "basic";
-
-      expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE })).to.be.false;
-    });
-
-    it("should be able to start trial on trial-available status", function() {
-      currentPlan.type = "free";
-
-      expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE, statusCode: "trial-available" })).to.be.true;
-    });
-
-    it("should not be able to start trial on status that is different from trial-available", function() {
-      currentPlan.type = "free";
-      
-      expect($scope.canStartTrial({ type: "advanced", productCode: ADVANCED_PLAN_CODE })).to.be.false;
-    });
-
-    it("should not be able to start trial if current plan is Subscribed", function() {
-      currentPlan.type = "enterprise";
-      currentPlan.planSubscriptionStatus = "Active";
-
-      expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE })).to.be.false;
-      expect($scope.canStartTrial({ type: "advanced", productCode: ADVANCED_PLAN_CODE })).to.be.false;
-    });
-
-    it("should be able to start trial if current plan is Subscribed but status is on trial", function() {
-      currentPlan.type = "free";
-      currentPlan.planSubscriptionStatus = "Trial";
-
-      expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE, statusCode: "trial-available" })).to.be.true;
-    });
-
-    it("should be able to start trial if current plan is Subscribed but status is on trial expired", function() {
-      currentPlan.type = "free";
-      currentPlan.planSubscriptionStatus = "Trial Expired";
-
-      expect($scope.canStartTrial({ type: "basic", productCode: BASIC_PLAN_CODE, statusCode: "trial-available" })).to.be.true;
-    });
-  });
-
-  describe("currentPlanLabelVisible", function() {
-    it("should show the current plan label if plan is free and current plan has expired", function() {
-      sandbox.stub(planFactory, "isTrialExpired").returns(true);
+    it("should show if plan is free and and current plan is inactive", function() {
+      sandbox.stub(planFactory, "isPlanActive").returns(false);
       expect($scope.currentPlanLabelVisible({ type: "free" })).to.be.true;
     });
 
-    it("should show the current plan label if plan is same as current and status is Subscribed/Active", function() {
-      currentPlan.type = "advanced";
-      expect($scope.currentPlanLabelVisible({ type: "advanced", status: "Active" })).to.be.true;
-    });
-
-    it("should show the current plan label if plan is same as current and status is On Trial", function() {
-      currentPlan.type = "advanced";
-      expect($scope.currentPlanLabelVisible({ type: "advanced", statusCode: "on-trial" })).to.be.true;
-    });
-
-    it("should not show the current plan label if plan is free and current plan has not expired", function() {
-      sandbox.stub(planFactory, "isTrialExpired").returns(false);
-      expect($scope.currentPlanLabelVisible({ type: "free" })).to.be.false;
+    it("should show if plan is free and and current plan is inactive", function() {
+      sandbox.stub(planFactory, "isPlanActive").returns(false);
+      expect($scope.currentPlanLabelVisible({ type: "advanced" })).to.be.false;
     });
   });
 
-  describe("subscribeButtonVisible", function() {
-    it("should not show the Subscribed button unless it's a trial, it has expired or it's a higher plan", function() {
-      expect($scope.subscribeButtonVisible({ statusCode: "subscribed" })).to.be.falsey;
+  describe("getVisibleAction: ", function() {
+    describe("active plan: ", function() {
+      beforeEach(function() {
+        sandbox.stub(planFactory, "isPlanActive").returns(true);        
+      });
+
+      it("should show the Subscribe button if active plan is on trial", function() {
+        currentPlan.type = "advanced";
+        currentPlan.order = 3;
+        expect($scope.getVisibleAction({ type: "advanced", order: 3, statusCode: "on-trial" })).equal("subscribe");        
+      });
+
+      it("should not show a button if active plan is subscribed", function() {
+        currentPlan.type = "advanced";
+        currentPlan.order = 3;
+        expect($scope.getVisibleAction({ type: "advanced", order: 3, statusCode: "subscribed" })).equal("");        
+      });
+
+      it("should show the Subscribed button if it is a higher plan", function() {
+        currentPlan.type = "basic";
+        currentPlan.order = 2;
+        expect($scope.getVisibleAction({ type: "advanced", order: 3 })).equal("subscribe");
+      });
+
+      it("should show the Downgrade button if it is a lower plan", function() {
+        currentPlan.type = "advanced";
+        currentPlan.order = 3;
+        expect($scope.getVisibleAction({ type: "basic", order: 2 })).equal("downgrade");
+      });
+      
     });
 
-    it("should show the Subscribed button if it is a trial", function() {
-      expect($scope.subscribeButtonVisible({ statusCode: "on-trial" })).to.be.true;
-    });
+    describe("no active plan: ", function() {
+      beforeEach(function() {
+        sandbox.stub(planFactory, "isPlanActive").returns(false);        
+      });
 
-    it("should show the Subscribed button if it has expired", function() {
-      expect($scope.subscribeButtonVisible({ statusCode: "trial-expired" })).to.be.true;
-    });
+      it("should not show a button if plan is free", function() {
+        expect($scope.getVisibleAction({ type: "free" })).equal("");        
+      });
 
-    it("should show the Subscribed button if it is a higher plan", function() {
-      currentPlan.type = "basic";
-      currentPlan.order = 2;
-      expect($scope.subscribeButtonVisible({ type: "advanced", order: 3 })).to.be.true;
+      it("should show the Start Trial button if plan has a trial available", function() {
+        expect($scope.getVisibleAction({ type: "advanced", statusCode: "trial-available" })).equal("start-trial");        
+      });
+
+      it("should show the Subscribe button if plan has no trial available", function() {
+        expect($scope.getVisibleAction({ type: "advanced", statusCode: "trial-expired" })).equal("subscribe");        
+      });
+
     });
   });
 
-  describe("proSubscriptionLinkVisible", function() {
-    it("should not show the Pro Subscription Link if playerProSubscriptionId is null", function() {
-      $scope.playerProSubscriptionId = null;
-      expect($scope.proSubscriptionLinkVisible()).to.be.falsey;
-    });
-
-    it("should not show the Pro Subscription Link if Pro is not Subscribed or Suspended", function() {
-      $scope.playerProSubscriptionId = "test";
-      sandbox.stub(planFactory, "isProSubscribed").returns(false);
-      sandbox.stub(planFactory, "isProSuspended").returns(false);
-
-      expect($scope.proSubscriptionLinkVisible()).to.be.false;
-    });
-
-    it("should show the Pro Subscription Link if Pro is Subscribed", function() {
-      $scope.playerProSubscriptionId = "test";
-      sandbox.stub(planFactory, "isProSubscribed").returns(true);
-
-      expect($scope.proSubscriptionLinkVisible()).to.be.true;
-    });
-
-    it("should show the Pro Subscription Link if Pro is Suspended", function() {
-      $scope.playerProSubscriptionId = "test";
-      sandbox.stub(planFactory, "isProSuspended").returns(true);
-
-      expect($scope.proSubscriptionLinkVisible()).to.be.true;
-    });
-  });
 });
