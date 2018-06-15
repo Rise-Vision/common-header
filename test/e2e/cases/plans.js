@@ -58,8 +58,8 @@
           expect(plansModalPage.getDowngradePlanButton("basic").isDisplayed()).to.eventually.be.false;
 
           expect(plansModalPage.getCurrentPlanButton("advanced").isDisplayed()).to.eventually.be.false;
-          expect(plansModalPage.getSubscribePlanButton("advanced").isDisplayed()).to.eventually.be.false;
-          expect(plansModalPage.getStartTrialPlanButton("advanced").isDisplayed()).to.eventually.be.true;
+          expect(plansModalPage.getSubscribePlanButton("advanced").isDisplayed()).to.eventually.be.true;
+          expect(plansModalPage.getStartTrialPlanButton("advanced").isDisplayed()).to.eventually.be.false;
           expect(plansModalPage.getDowngradePlanButton("advanced").isDisplayed()).to.eventually.be.false;
 
           expect(plansModalPage.getCurrentPlanButton("enterprise").isDisplayed()).to.eventually.be.false;
