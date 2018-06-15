@@ -401,28 +401,7 @@ ul.social {
   @include background-image-retina('http://s3.amazonaws.com/Rise-Images/Icons/widget-icon-storage', 'png', 30px, 30px);
 }
 
-/*ENV NAME*/
 
-.env-name {
-  text-align: center;
-  font-weight: 500;
-}
-
-.env-name-label {
-  background-color: #222;
-  padding: 5px;
-  color: #FFF;
-}
-
-.env-name-nav-item {
-  .env-name-label {
-    border-radius: 5px;
-    display: block;
-    padding: 5px 10px;
-    margin-top: 10px;
-    margin-right: 5px;
-  }
-}
 
 /* ==========================================================================
    Small devices (tablets, 768px and up)

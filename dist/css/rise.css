@@ -7535,7 +7535,7 @@ button.close {
 .alert.alert-plan, .support-app .alert-plan.support-time {
   font-size: 13px;
   margin: 0 !important;
-  padding: 8px;
+  padding: 6px;
   color: #020621; }
   .alert.alert-plan.plan-active, .support-app .alert-plan.plan-active.support-time {
     border-color: #d6e9c6;
@@ -7563,66 +7563,6 @@ button.close {
   color: #5b5b5b; }
   .label-default[href]:hover, .label-default[href]:focus {
     background-color: #fff; }
-
-.navbar {
-  z-index: 1000;
-  padding: 0;
-  border-radius: 0;
-  border: none;
-  min-height: 0;
-  margin-bottom: 0; }
-  .navbar .navbar-header {
-    display: inline-block; }
-  .navbar .navbar-nav {
-    margin: 0; }
-    .navbar .navbar-nav.navbar-left {
-      float: left; }
-    .navbar .navbar-nav.navbar-right {
-      float: right;
-      display: inline-block; }
-    .navbar .navbar-nav .open .dropdown-menu > li > a:hover, .navbar .navbar-nav .open .dropdown-menu > li > a:focus {
-      color: #0081BA; }
-  .navbar.navbar-default {
-    box-shadow: 0px 2px 10px 0 rgba(22, 22, 22, 0.05); }
-    .navbar.navbar-default .navbar-nav .dropdown .dropdown-menu {
-      border-radius: 4px; }
-    .navbar.navbar-default .navbar-nav > li {
-      display: inline-block;
-      vertical-align: top;
-      border-right: 1px solid white; }
-    .navbar.navbar-default .navbar-nav > li > a {
-      border-radius: 4px;
-      font-size: 13px; }
-      .navbar.navbar-default .navbar-nav > li > a:hover, .navbar.navbar-default .navbar-nav > li > a:focus {
-        color: #0081BA;
-        background-color: #f4f4f4; }
-      .navbar.navbar-default .navbar-nav > li > a.selected {
-        color: #0081BA;
-        background-color: #f4f4f4; }
-    .navbar.navbar-default .navbar-nav > .open > a {
-      background: #FFF; }
-  .navbar .navbar-brand {
-    height: 36px;
-    min-width: 36px;
-    margin-top: 8px;
-    padding: 4px 8px; }
-    .navbar .navbar-brand img {
-      height: 100%; }
-
-.navbar {
-  /* Small Devices, Tablets */
-  /* Medium Devices, Desktops */ }
-  @media (max-width: 767px) {
-    .navbar .navbar-nav .open .dropdown-menu {
-      background-color: #FFF;
-      position: absolute;
-      border: 1px solid #CCC; } }
-  @media (min-width: 992px) {
-    .navbar {
-      padding: 2px 0;
-      margin-bottom: 0; }
-      .navbar .navbar-brand {
-        padding-top: 0; } }
 
 .nav-tabs-justified > li > a, .nav-tabs.nav-justified > li > a {
   border-radius: 0;
@@ -8141,23 +8081,6 @@ ul.social {
     .btn-widget-icon-storage:active .btn-widget-icon-storage.active {
       background-image: url("http://s3.amazonaws.com/Rise-Images/Icons/widget-icon-storage-2x.png");
       -webkit-background-size: 30px 30px; } }
-
-/*ENV NAME*/
-.env-name {
-  text-align: center;
-  font-weight: 500; }
-
-.env-name-label {
-  background-color: #222;
-  padding: 5px;
-  color: #FFF; }
-
-.env-name-nav-item .env-name-label {
-  border-radius: 5px;
-  display: block;
-  padding: 5px 10px;
-  margin-top: 10px;
-  margin-right: 5px; }
 
 /* ==========================================================================
    Small devices (tablets, 768px and up)
@@ -10992,24 +10915,49 @@ a[data-wysihtml5-command=underline].active {
   border-radius: 4px;
   margin-right: 4px; }
 
-.navbar .navbar-nav > li > a {
-  padding: 5px 10px;
-  margin-top: 10px; }
-  .navbar .navbar-nav > li > a.btn, .navbar .navbar-nav > li > a.company-buttons-icon-mobile {
-    margin-top: 8px;
-    margin-bottom: 0; }
+.navbar-default .navbar-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 8px; }
 
-.navbar .navbar-nav > li > a.btn-link:hover, .navbar .navbar-nav > li > a.btn-link:focus, .navbar .navbar-nav > li > a.btn-link:active,
-.navbar .navbar-nav > li > button.btn-link:hover,
-.navbar .navbar-nav > li > button.btn-link:focus,
-.navbar .navbar-nav > li > button.btn-link:active {
-  color: gray; }
-
-.navbar .navbar-brand .fa {
-  padding: 8px; }
+.navbar {
+  margin-bottom: 0; }
+  .navbar.navbar-default .navbar-nav > li > a {
+    border-radius: 4px;
+    font-size: 13px; }
+    .navbar.navbar-default .navbar-nav > li > a:hover, .navbar.navbar-default .navbar-nav > li > a:focus {
+      color: #0081BA;
+      background-color: #f4f4f4; }
+    .navbar.navbar-default .navbar-nav > li > a.selected {
+      color: #0081BA;
+      background-color: #f4f4f4; }
+  .navbar .navbar-brand {
+    padding: 6px; }
+    .navbar .navbar-brand img {
+      width: 100px; }
+    .navbar .navbar-brand .fa {
+      padding: 10px; }
+  .navbar .navbar-nav {
+    display: flex;
+    align-items: center;
+    margin: 0; }
+    .navbar .navbar-nav.actions-nav {
+      margin-left: auto;
+      display: flex; }
+    .navbar .navbar-nav > li > a {
+      padding: 6px; }
+      .navbar .navbar-nav > li > a.btn, .navbar .navbar-nav > li > a.company-buttons-icon-mobile {
+        margin-top: 8px;
+        margin-bottom: 0; }
+    .navbar .navbar-nav > li > a.btn-link:hover, .navbar .navbar-nav > li > a.btn-link:focus, .navbar .navbar-nav > li > a.btn-link:active,
+    .navbar .navbar-nav > li > button.btn-link:hover,
+    .navbar .navbar-nav > li > button.btn-link:focus,
+    .navbar .navbar-nav > li > button.btn-link:active {
+      color: gray; }
 
 .navbar-default li.user-profile-dropdown {
-  padding: 0;
+  margin-left: auto;
   text-align: right; }
   .navbar-default li.user-profile-dropdown > a {
     padding: 8px;
@@ -11027,6 +10975,19 @@ a[data-wysihtml5-command=underline].active {
     .navbar-default li.user-profile-dropdown .profile-pic img {
       height: 100%; }
 
+.navbar {
+  /* Small Devices, Tablets */
+  /* Medium Devices, Desktops */ }
+  @media (max-width: 767px) {
+    .navbar .navbar-nav .open .dropdown-menu {
+      background-color: #FFF;
+      position: absolute;
+      border: 1px solid #CCC; } }
+  @media (min-width: 992px) {
+    .navbar {
+      padding: 2px 0;
+      margin-bottom: 0; } }
+
 .app-navigation ul > li > a {
   display: block; }
   .app-navigation ul > li > a .image {
@@ -11038,8 +10999,7 @@ a[data-wysihtml5-command=underline].active {
 
 .app-navigation svg {
   width: 24px;
-  height: 24px;
-  background: red; }
+  height: 24px; }
 
 .app-navigation path:first-child {
   fill: #4AB767; }
@@ -11054,6 +11014,21 @@ a[data-wysihtml5-command=underline].active {
     margin-top: 8px; }
   li.user-profile-dropdown .user-id span {
     max-width: 100px; } }
+
+/*ENV NAME*/
+.env-name {
+  text-align: center;
+  font-weight: 500; }
+
+.env-name-label {
+  background-color: #222;
+  padding: 6px;
+  color: #FFF;
+  margin-right: 4px; }
+
+.env-name-nav-item .env-name-label {
+  border-radius: 5px;
+  display: inline-block; }
 
 /* Signup Modal
    ========================================================================== */

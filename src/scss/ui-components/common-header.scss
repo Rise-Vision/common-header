@@ -1,17 +1,55 @@
+.navbar-default .navbar-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+}
+
 .navbar {
+  margin-bottom: 0;
+  &.navbar-default {
+    .navbar-nav>li>a {
+      border-radius: 4px;
+      font-size: 13px;
+      &:hover,&:focus {
+        color: $rise-blue;
+        background-color: $brand-bg;
+      }
+      &.selected {
+        color: $rise-blue;
+        background-color: $brand-bg;
+      }
+    }
+  }
+    .navbar-brand {
+      padding: 6px;
+      img {
+        width: 100px;
+      }
+      .fa {
+        padding: 10px;
+      }
+    }
+
     .navbar-nav {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      &.actions-nav {
+        margin-left: auto;
+        display: flex;
+      }
         >li {
             >a {
-              padding: 5px 10px;
-              margin-top: 10px;
-                &.btn,
+              padding: 6px;
+              &.btn,
                 &.company-buttons-icon-mobile {
                     margin-top: 8px;
                     margin-bottom: 0;
                 }
             }
             button {
-                @extend .navbar-btn;
+              @extend .navbar-btn;
             }
             >a.btn-link,
             >button.btn-link {
@@ -23,27 +61,23 @@
             }
         }
     }
-    .navbar-brand {
-        .fa {
-            padding: 8px;
-        }
-    }
+    
 }
 
 .navbar-default {
     li.user-profile-dropdown {
+      margin-left: auto;
         >a {
             padding: 8px;
             margin-top: 0;
         }
-        padding: 0;
         text-align: right;
         .user-id {
             span {
-                @extend .u_ellipsis-md;
-                display: block;
-                font-size: 13px;
-                line-height: 18px;
+              @extend .u_ellipsis-md;
+              display: block;
+              font-size: 13px;
+              line-height: 18px;
             }
             .username {
                 line-height: 16px;
@@ -59,6 +93,28 @@
         }
     }
 }
+
+.navbar {
+  /* Small Devices, Tablets */
+  @media (max-width: $screen-xs-max) {
+      .navbar-nav {
+        .open {
+          .dropdown-menu {
+            background-color: #FFF;
+            position: absolute;
+            border: 1px solid #CCC;
+          }
+        }
+      }
+  }
+
+  /* Medium Devices, Desktops */
+  @media (min-width: $screen-md) {
+    padding: 2px 0;
+    margin-bottom: 0;
+  }
+}
+
 
 .app-navigation {
     ul {
@@ -77,7 +133,6 @@
     svg {
         width: 24px;
         height: 24px;
-        background: red;
     }
     & path:first-child {
         fill: #4AB767;
@@ -104,6 +159,26 @@
     }
 }
 
+/*ENV NAME*/
+
+.env-name {
+  text-align: center;
+  font-weight: 500;
+}
+
+.env-name-label {
+  background-color: #222;
+  padding: 6px;
+  color: #FFF;
+  margin-right: 4px;
+}
+
+.env-name-nav-item {
+  .env-name-label {
+    border-radius: 5px;
+    display: inline-block;
+  }
+}
 
 /* Signup Modal
    ========================================================================== */
