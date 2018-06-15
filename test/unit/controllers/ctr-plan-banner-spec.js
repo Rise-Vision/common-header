@@ -3,13 +3,9 @@
 describe("controller: plan banner", function() {
   beforeEach(module("risevision.common.header"));
   beforeEach(module(function ($provide) {
-    $provide.factory("planFactory", function() {
+    $provide.factory("currentPlanFactory", function() {
       return {
-        currentPlan: { type: "basic" },
-        getCompanyPlan: function() {
-          return Q.resolve([]);
-        },
-        showPlansModal: sinon.stub()
+        currentPlan: { type: "basic" }
       };
     });
     $provide.factory("userState", function() {
@@ -20,7 +16,7 @@ describe("controller: plan banner", function() {
     });
   }));
 
-  var sandbox, $scope, $rootScope, planFactory, userState;
+  var sandbox, $scope, $rootScope, currentPlanFactory, userState;
 
   beforeEach(function() {
     sandbox = sinon.sandbox.create();
@@ -28,14 +24,12 @@ describe("controller: plan banner", function() {
     inject(function($injector, _$rootScope_, $controller) {
       $rootScope = _$rootScope_;
       $scope = $rootScope.$new();
-      planFactory = $injector.get("planFactory");
+      currentPlanFactory = $injector.get("currentPlanFactory");
       userState = $injector.get("userState");
-
-      sandbox.spy(planFactory, "getCompanyPlan");
 
       $controller("PlanBannerCtrl", {
         $scope: $scope,
-        planFactory: planFactory,
+        currentPlanFactory: currentPlanFactory,
         userState: userState
       });
 

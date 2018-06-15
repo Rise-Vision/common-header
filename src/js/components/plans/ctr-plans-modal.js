@@ -1,32 +1,21 @@
 angular.module("risevision.common.components.plans")
 
 .controller("PlansModalCtrl", [
-  "$scope", "$rootScope", "$modalInstance", "$log", "$modal", "$templateCache", "$loading", "$timeout", "$q",
-  "planFactory", "currentPlan", "showRPPLink", "userState",
-  function ($scope, $rootScope, $modalInstance, $log, $modal, $templateCache, $loading, $timeout, $q,
-    planFactory, currentPlan, showRPPLink, userState) {
+  "$scope", "$rootScope", "$modalInstance", "$log", "$loading", "$timeout",
+  "plansFactory", "currentPlanFactory", "userState",
+  function ($scope, $rootScope, $modalInstance, $log, $loading, $timeout,
+    plansFactory, currentPlanFactory, userState) {
 
-    $scope.currentPlan = currentPlan;
+    $scope.currentPlan = currentPlanFactory.currentPlan;
     $scope.startTrialError = null;
-    $scope.showRPPLink = showRPPLink;
     $scope.monthlyPrices = true;
 
     function _getPlansDetails() {
       $loading.start("plans-modal");
 
-      return $q.all([planFactory.getCompanyPlanStatus(), planFactory.getPlansDetails()])
+      return plansFactory.getPlansDetails()
         .then(function (resp) {
-          var plansStatusMap = resp[0];
-
-          $scope.plans = resp[1];
-          $scope.plans.forEach(function (p) {
-            var plan = plansStatusMap[p.productCode] || p;
-            p.status = plan.status;
-            p.statusCode = plan.statusCode;
-          });
-        })
-        .catch(function (err) {
-          $log.debug("Failed to load plans", err);
+          $scope.plans = resp;
         })
         .finally(function () {
           $loading.stop("plans-modal");
@@ -34,7 +23,7 @@ angular.module("risevision.common.components.plans")
     }
 
     $scope.isCurrentPlan = function (plan) {
-      return currentPlan.type === plan.type;
+      return $scope.currentPlan.type === plan.type;
     };
 
     $scope.isCurrentPlanSubscribed = function (plan) {
@@ -71,7 +60,7 @@ angular.module("risevision.common.components.plans")
 
     $scope.currentPlanLabelVisible = function (plan) {
       // Has a Plan?
-      if (planFactory.isPlanActive()) {
+      if (currentPlanFactory.isPlanActive()) {
         // Is it the Current Plan?
         return $scope.isCurrentPlan(plan);
       } else { // Were on Free Plan
@@ -82,7 +71,7 @@ angular.module("risevision.common.components.plans")
 
     $scope.getVisibleAction = function (plan) {
       // Has a Plan?
-      if (planFactory.isPlanActive()) {
+      if (currentPlanFactory.isPlanActive()) {
         // Is this that Plan?
         if ($scope.isCurrentPlan(plan)) {
           // Can buy Subscription?
@@ -93,7 +82,7 @@ angular.module("risevision.common.components.plans")
           }
         } else { // This is a different Plan
           // Is lower Plan?
-          if (currentPlan.order > plan.order) {
+          if ($scope.currentPlan.order > plan.order) {
             return "downgrade";
           } else { // Higher Plan
             return "subscribe";
@@ -115,7 +104,7 @@ angular.module("risevision.common.components.plans")
       $loading.start("plans-modal");
       $scope.startTrialError = null;
 
-      planFactory.startTrial(plan)
+      plansFactory.startTrial(plan)
         .then(function () {
           return $timeout(5000)
             .then(function () {

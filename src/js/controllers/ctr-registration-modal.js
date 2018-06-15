@@ -4,12 +4,12 @@ angular.module("risevision.common.header")
     "$loading", "registerAccount", "$log", "cookieStore",
     "userState", "pick", "uiFlowManager", "humanReadableError",
     "agreeToTermsAndUpdateUser", "account", "segmentAnalytics",
-    "bigQueryLogging", "analyticsEvents", "updateCompany", "planFactory",
+    "bigQueryLogging", "analyticsEvents", "updateCompany", "plansFactory",
     function ($q, $scope, $rootScope, $modalInstance, $loading, registerAccount,
       $log,
       cookieStore, userState, pick, uiFlowManager, humanReadableError,
       agreeToTermsAndUpdateUser, account, segmentAnalytics, bigQueryLogging,
-      analyticsEvents, updateCompany, planFactory) {
+      analyticsEvents, updateCompany, plansFactory) {
 
       $scope.newUser = !account;
 
@@ -92,7 +92,7 @@ angular.module("risevision.common.header")
                 .then()
                 .finally(function () {
                   if ($scope.newUser) {
-                    planFactory.startBasicPlanTrial();
+                    plansFactory.startBasicPlanTrial();
                   }
 
                   updateCompanyWebsite();

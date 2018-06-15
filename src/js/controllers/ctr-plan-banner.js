@@ -1,22 +1,23 @@
 angular.module("risevision.common.header")
-  .controller("PlanBannerCtrl", ["$scope", "$rootScope", "$log", "userState", "planFactory", "STORE_URL",
-    "ACCOUNT_PATH",
-    function ($scope, $rootScope, $log, userState, planFactory, STORE_URL, ACCOUNT_PATH) {
+  .controller("PlanBannerCtrl", ["$scope", "$rootScope", "userState", "plansFactory",
+    "currentPlanFactory", "STORE_URL", "ACCOUNT_PATH",
+    function ($scope, $rootScope, userState, plansFactory, currentPlanFactory,
+      STORE_URL, ACCOUNT_PATH) {
       $scope.plan = {};
-      $scope.showPlans = planFactory.showPlansModal;
+      $scope.showPlans = plansFactory.showPlansModal;
 
       $rootScope.$on("risevision.plan.loaded", function () {
-        $scope.plan = planFactory.currentPlan;
+        $scope.plan = currentPlanFactory.currentPlan;
         $scope.companyId = userState.getSelectedCompanyId();
         $scope.storeAccountUrl = STORE_URL + ACCOUNT_PATH.replace("companyId", $scope.companyId);
       });
 
-      $scope.isFree = planFactory.isFree;
-      $scope.isEnterpriseSubCompany = planFactory.isEnterpriseSubCompany;
-      $scope.isSubscribed = planFactory.isSubscribed;
-      $scope.isOnTrial = planFactory.isOnTrial;
-      $scope.isTrialExpired = planFactory.isTrialExpired;
-      $scope.isSuspended = planFactory.isSuspended;
-      $scope.isProSubscribed = planFactory.isProSubscribed;
+      $scope.isFree = currentPlanFactory.isFree;
+      $scope.isEnterpriseSubCompany = currentPlanFactory.isEnterpriseSubCompany;
+      $scope.isSubscribed = currentPlanFactory.isSubscribed;
+      $scope.isOnTrial = currentPlanFactory.isOnTrial;
+      $scope.isTrialExpired = currentPlanFactory.isTrialExpired;
+      $scope.isSuspended = currentPlanFactory.isSuspended;
+      $scope.isProSubscribed = currentPlanFactory.isProSubscribed;
     }
   ]);

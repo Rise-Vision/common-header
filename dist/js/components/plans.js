@@ -109,6 +109,88 @@ angular.module("risevision.common.components.plans", [
 
   "use strict";
   angular.module("risevision.common.components.plans")
+    .factory("currentPlanFactory", ["$log", "$rootScope", "userState", "PLANS_LIST",
+      function ($log, $rootScope, userState, PLANS_LIST) {
+        var _factory = {};
+        var _plansByType = _.keyBy(PLANS_LIST, "type");
+        var _plansByCode = _.keyBy(PLANS_LIST, "productCode");
+
+        var _loadCurrentPlan = function () {
+          var company = userState.getCopyOfSelectedCompany();
+          var plan = null;
+
+          if (company.id && company.planProductCode) {
+            plan = _.cloneDeep(_plansByCode[company.planProductCode]);
+            plan.status = company.planSubscriptionStatus;
+            plan.trialPeriod = company.planTrialPeriod;
+            plan.proStatus = company.playerProSubscriptionStatus;
+            plan.planPlayerProLicenseCount = company.planPlayerProLicenseCount;
+            plan.playerProLicenseCount = company.playerProLicenseCount;
+          } else {
+            plan = _.cloneDeep(_plansByType.free);
+          }
+
+          _factory.currentPlan = plan;
+          $log.debug("Current plan", plan);
+          $rootScope.$emit("risevision.plan.loaded", plan);
+        };
+
+        _factory.isPlanActive = function () {
+          return _factory.isSubscribed() || _factory.isOnTrial();
+        };
+
+        _factory.isFree = function () {
+          return _factory.currentPlan.type === "free";
+        };
+
+        _factory.isEnterpriseSubCompany = function () {
+          return _factory.currentPlan.type === "enterprisesub";
+        };
+
+        _factory.isSubscribed = function () {
+          return !_factory.isFree() && _factory.currentPlan.status === "Active";
+        };
+
+        _factory.isOnTrial = function () {
+          return !_factory.isFree() && _factory.currentPlan.status === "Trial";
+        };
+
+        _factory.isTrialExpired = function () {
+          return !_factory.isFree() && _factory.currentPlan.status === "Trial Expired";
+        };
+
+        _factory.isSuspended = function () {
+          return !_factory.isFree() && _factory.currentPlan.status === "Suspended";
+        };
+
+        _factory.isProSubscribed = function () {
+          return _factory.currentPlan.proStatus === "Active";
+        };
+
+        _factory.isProSuspended = function () {
+          return _factory.currentPlan.proStatus === "Suspended";
+        };
+
+        _loadCurrentPlan();
+
+        $rootScope.$on("risevision.company.selectedCompanyChanged", function () {
+          _loadCurrentPlan();
+        });
+
+        $rootScope.$on("risevision.company.updated", function () {
+          _loadCurrentPlan();
+        });
+
+        return _factory;
+      }
+    ]);
+
+})(angular);
+
+(function (angular) {
+
+  "use strict";
+  angular.module("risevision.common.components.plans")
     .value("PLANS_LIST", [{
       name: "Free",
       type: "free",
@@ -206,11 +288,10 @@ angular.module("risevision.common.components.plans", [
       productCode: "d521f5bfbc1eef109481eebb79831e11c7804ad8",
       proLicenseCount: 0
     }])
-    .factory("planFactory", ["$q", "$log", "$rootScope", "$modal", "$templateCache",
-      "userState", "storeAPILoader", "currencyService", "subscriptionStatusService", "storeAuthorization",
-      "PLANS_LIST",
-      function ($q, $log, $rootScope, $modal, $templateCache, userState, storeAPILoader,
-        currencyService, subscriptionStatusService, storeAuthorization, PLANS_LIST) {
+    .factory("plansFactory", ["$q", "$log", "$modal", "$templateCache",
+      "userState", "subscriptionStatusService", "storeAuthorization", "PLANS_LIST",
+      function ($q, $log, $modal, $templateCache, userState,
+        subscriptionStatusService, storeAuthorization, PLANS_LIST) {
         var _factory = {};
         var _plansCodesList = _.map(PLANS_LIST, "productCode");
         var _plansByType = _.keyBy(PLANS_LIST, "type");
@@ -219,69 +300,91 @@ angular.module("risevision.common.components.plans", [
           _plansByType.free, _plansByType.starter, _plansByType.basic, _plansByType.advanced, _plansByType.enterprise
         ];
 
-        _factory.getPlansDetails = function () {
-          return $q.resolve(_.cloneDeep(_plansList));
-        };
-
-        _factory.showPlansModal = function (showRPPLink) {
+        _factory.showPlansModal = function () {
           $modal.open({
             template: $templateCache.get("plans/plans-modal.html"),
             controller: "PlansModalCtrl",
-            size: "lg",
-            resolve: {
-              currentPlan: function () {
-                return _factory.currentPlan;
-              },
-              showRPPLink: function () {
-                return showRPPLink;
-              }
-            }
+            size: "lg"
           });
         };
 
-        function _loadCurrentPlan() {
-          var company = userState.getCopyOfSelectedCompany();
-          var plan = null;
-
-          if (company.id && company.planProductCode) {
-            plan = _.cloneDeep(_plansByCode[company.planProductCode]);
-            plan.status = company.planSubscriptionStatus;
-            plan.trialPeriod = company.planTrialPeriod;
-            plan.proStatus = company.playerProSubscriptionStatus;
-            plan.planPlayerProLicenseCount = company.planPlayerProLicenseCount;
-            plan.playerProLicenseCount = company.playerProLicenseCount;
-          } else {
-            plan = _.cloneDeep(_plansByType.free);
-          }
-
-          _factory.currentPlan = plan;
-          $log.debug("Current plan", plan);
-          $rootScope.$emit("risevision.plan.loaded", plan);
-        }
-
-        _factory.getCompanyPlanStatus = function () {
+        var _getCompanyPlanStatus = function () {
           $log.debug("getCompanyPlanStatus called.");
-          var deferred = $q.defer();
 
-          subscriptionStatusService.list(_plansCodesList.slice(1), userState.getSelectedCompanyId())
+          return subscriptionStatusService.list(_plansCodesList.slice(1), userState.getSelectedCompanyId())
             .then(function (resp) {
               $log.debug("getCompanyPlanStatus response.", resp);
 
               var plansMap = _.keyBy(resp, "pc");
 
-              deferred.resolve(plansMap);
+              return plansMap;
+            });
+        };
+
+        _factory.getPlansDetails = function () {
+          var plans = _.cloneDeep(_plansList);
+
+          return _getCompanyPlanStatus()
+            .then(function (plansStatusMap) {
+              plans.forEach(function (p) {
+                var plan = plansStatusMap[p.productCode] || p;
+                p.status = plan.status;
+                p.statusCode = plan.statusCode;
+              });
+
+              return plans;
             })
             .catch(function (err) {
-              deferred.reject(err);
+              $log.debug("Failed to load plans", err);
             });
+        };
 
-          return deferred.promise;
+        _factory.startTrial = function (plan) {
+          return storeAuthorization.startTrial(plan.productCode)
+            .then(function () {
+              var selectedCompany = userState.getCopyOfSelectedCompany(true);
+
+              selectedCompany.planProductCode = plan.productCode;
+              selectedCompany.planTrialPeriod = plan.trialPeriod;
+              selectedCompany.planSubscriptionStatus = "Trial";
+              selectedCompany.planPlayerProLicenseCount = _plansByCode[plan.productCode].proLicenseCount;
+
+              userState.updateCompanySettings(selectedCompany);
+            })
+            .catch(function (err) {
+              $log.debug("Failed to start trial", err);
+
+              throw err;
+            });
+        };
+
+        _factory.startBasicPlanTrial = function () {
+          return _factory.startTrial(_plansByType.basic);
+        };
+
+        return _factory;
+      }
+    ]);
+
+})(angular);
+
+(function (angular) {
+
+  "use strict";
+  angular.module("risevision.common.components.plans")
+    .factory("playerLicenseFactory", ["userState", "currentPlanFactory",
+      function (userState, currentPlanFactory) {
+        var _factory = {};
+
+        _factory.hasProfessionalLicenses = function () {
+          return currentPlanFactory.isPlanActive() || currentPlanFactory.isProSubscribed();
         };
 
         _factory.getProLicenseCount = function () {
-          var planActive = _factory.isSubscribed() || _factory.isOnTrial();
-          var planProLicenses = (planActive && _factory.currentPlan.planPlayerProLicenseCount) || 0;
-          var extraProLicenses = (_factory.isProSubscribed() && _factory.currentPlan.playerProLicenseCount) || 0;
+          var planProLicenses = (currentPlanFactory.isPlanActive() && currentPlanFactory.currentPlan.planPlayerProLicenseCount) ||
+            0;
+          var extraProLicenses = (currentPlanFactory.isProSubscribed() && currentPlanFactory.currentPlan.playerProLicenseCount) ||
+            0;
 
           return planProLicenses + extraProLicenses;
         };
@@ -308,79 +411,6 @@ angular.module("risevision.common.components.plans", [
           userState.updateCompanySettings(company);
         };
 
-        _factory.startTrial = function (plan) {
-          return storeAuthorization.startTrial(plan.productCode)
-            .then(function () {
-              var selectedCompany = userState.getCopyOfSelectedCompany(true);
-
-              selectedCompany.planProductCode = plan.productCode;
-              selectedCompany.planTrialPeriod = plan.trialPeriod;
-              selectedCompany.planSubscriptionStatus = "Trial";
-              selectedCompany.planPlayerProLicenseCount = _plansByCode[plan.productCode].proLicenseCount;
-
-              userState.updateCompanySettings(selectedCompany);
-            })
-            .catch(function (err) {
-              $log.debug("Failed to start trial", err);
-
-              throw err;
-            });
-        };
-
-        _factory.startBasicPlanTrial = function () {
-          return _factory.startTrial(_plansByType.basic);
-        };
-
-        _factory.isPlanActive = function () {
-          return _factory.isSubscribed() || _factory.isOnTrial();
-        };
-
-        _factory.isFree = function () {
-          return _factory.currentPlan.type === "free";
-        };
-
-        _factory.isEnterpriseSubCompany = function () {
-          return _factory.currentPlan.type === "enterprisesub";
-        };
-
-        _factory.isSubscribed = function () {
-          return !_factory.isFree() && _factory.currentPlan.status === "Active";
-        };
-
-        _factory.isOnTrial = function () {
-          return !_factory.isFree() && _factory.currentPlan.status === "Trial";
-        };
-
-        _factory.isTrialExpired = function () {
-          return !_factory.isFree() && _factory.currentPlan.status === "Trial Expired";
-        };
-
-        _factory.isSuspended = function () {
-          return !_factory.isFree() && _factory.currentPlan.status === "Suspended";
-        };
-
-        _factory.isProSubscribed = function () {
-          return _factory.currentPlan.proStatus === "Active";
-        };
-
-        _factory.isProSuspended = function () {
-          return _factory.currentPlan.proStatus === "Suspended";
-        };
-
-        _factory.hasProfessionalLicenses = function () {
-          return _factory.isSubscribed() || _factory.isOnTrial() || _factory.isProSubscribed();
-        };
-
-        _loadCurrentPlan();
-
-        $rootScope.$on("risevision.company.selectedCompanyChanged", function () {
-          _loadCurrentPlan();
-        });
-
-        $rootScope.$on("risevision.company.updated", function () {
-          _loadCurrentPlan();
-        });
-
         return _factory;
       }
     ]);
@@ -390,32 +420,21 @@ angular.module("risevision.common.components.plans", [
 angular.module("risevision.common.components.plans")
 
 .controller("PlansModalCtrl", [
-  "$scope", "$rootScope", "$modalInstance", "$log", "$modal", "$templateCache", "$loading", "$timeout", "$q",
-  "planFactory", "currentPlan", "showRPPLink", "userState",
-  function ($scope, $rootScope, $modalInstance, $log, $modal, $templateCache, $loading, $timeout, $q,
-    planFactory, currentPlan, showRPPLink, userState) {
+  "$scope", "$rootScope", "$modalInstance", "$log", "$loading", "$timeout",
+  "plansFactory", "currentPlanFactory", "userState",
+  function ($scope, $rootScope, $modalInstance, $log, $loading, $timeout,
+    plansFactory, currentPlanFactory, userState) {
 
-    $scope.currentPlan = currentPlan;
+    $scope.currentPlan = currentPlanFactory.currentPlan;
     $scope.startTrialError = null;
-    $scope.showRPPLink = showRPPLink;
     $scope.monthlyPrices = true;
 
     function _getPlansDetails() {
       $loading.start("plans-modal");
 
-      return $q.all([planFactory.getCompanyPlanStatus(), planFactory.getPlansDetails()])
+      return plansFactory.getPlansDetails()
         .then(function (resp) {
-          var plansStatusMap = resp[0];
-
-          $scope.plans = resp[1];
-          $scope.plans.forEach(function (p) {
-            var plan = plansStatusMap[p.productCode] || p;
-            p.status = plan.status;
-            p.statusCode = plan.statusCode;
-          });
-        })
-        .catch(function (err) {
-          $log.debug("Failed to load plans", err);
+          $scope.plans = resp;
         })
         .finally(function () {
           $loading.stop("plans-modal");
@@ -423,7 +442,7 @@ angular.module("risevision.common.components.plans")
     }
 
     $scope.isCurrentPlan = function (plan) {
-      return currentPlan.type === plan.type;
+      return $scope.currentPlan.type === plan.type;
     };
 
     $scope.isCurrentPlanSubscribed = function (plan) {
@@ -460,7 +479,7 @@ angular.module("risevision.common.components.plans")
 
     $scope.currentPlanLabelVisible = function (plan) {
       // Has a Plan?
-      if (planFactory.isPlanActive()) {
+      if (currentPlanFactory.isPlanActive()) {
         // Is it the Current Plan?
         return $scope.isCurrentPlan(plan);
       } else { // Were on Free Plan
@@ -471,7 +490,7 @@ angular.module("risevision.common.components.plans")
 
     $scope.getVisibleAction = function (plan) {
       // Has a Plan?
-      if (planFactory.isPlanActive()) {
+      if (currentPlanFactory.isPlanActive()) {
         // Is this that Plan?
         if ($scope.isCurrentPlan(plan)) {
           // Can buy Subscription?
@@ -482,7 +501,7 @@ angular.module("risevision.common.components.plans")
           }
         } else { // This is a different Plan
           // Is lower Plan?
-          if (currentPlan.order > plan.order) {
+          if ($scope.currentPlan.order > plan.order) {
             return "downgrade";
           } else { // Higher Plan
             return "subscribe";
@@ -504,7 +523,7 @@ angular.module("risevision.common.components.plans")
       $loading.start("plans-modal");
       $scope.startTrialError = null;
 
-      planFactory.startTrial(plan)
+      plansFactory.startTrial(plan)
         .then(function () {
           return $timeout(5000)
             .then(function () {

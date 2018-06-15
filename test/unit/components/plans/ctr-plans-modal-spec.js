@@ -23,20 +23,22 @@ describe("controller: plans modal", function() {
         stop: sinon.stub()
       };
     });
-    $provide.factory("planFactory", function() {
+    $provide.factory("plansFactory", function() {
       return {
         getPlansDetails: function() {
           return null;
         },
-        getCompanyPlanStatus: function() {
-          return null;
-        },
         startTrial: function() {
           return Q.resolve([]);
-        },
+        }
+      };
+    });
+    $provide.factory("currentPlanFactory", function() {
+      return {
         isPlanActive: function() {
           return true;
-        }
+        },
+        currentPlan: {}
       };
     });
     $provide.factory("userState", function() {
@@ -54,7 +56,7 @@ describe("controller: plans modal", function() {
     });
   }));
 
-  var sandbox, $scope, $modalInstance, $modal, $loading, $log, planFactory, currentPlan, $q;
+  var sandbox, $scope, $modalInstance, $modal, $loading, $log, plansFactory, currentPlanFactory, $q;
   var userState;
   var BASIC_PLAN_CODE, ADVANCED_PLAN_CODE;
 
@@ -67,10 +69,10 @@ describe("controller: plans modal", function() {
       $modal = $injector.get("$modal");
       $loading = $injector.get("$loading");
       $log = $injector.get("$log");
-      planFactory = $injector.get("planFactory");
+      plansFactory = $injector.get("plansFactory");
+      currentPlanFactory = $injector.get("currentPlanFactory");
       $q = $injector.get("$q");
       userState = $injector.get("userState");
-      currentPlan = {};
 
       var plansByType = _.keyBy($injector.get("PLANS_LIST"), "type");
 
@@ -87,11 +89,7 @@ describe("controller: plans modal", function() {
         statusCode: "subscribed"
       }];
 
-      sandbox.stub(planFactory, "getCompanyPlanStatus", function() {
-        return $q.when(_.keyBy(plansList, "productCode"));
-      });
-
-      sandbox.stub(planFactory, "getPlansDetails", function(){
+      sandbox.stub(plansFactory, "getPlansDetails", function(){
         return $q.when(plansList);
       });
 
@@ -100,8 +98,7 @@ describe("controller: plans modal", function() {
         $modalInstance: $modalInstance,
         $modal: $modal,
         $loading: $loading,
-        planFactory: planFactory,
-        currentPlan: currentPlan,
+        plansFactory: plansFactory,
         showRPPLink: false,
         userState: userState
       });
@@ -136,8 +133,7 @@ describe("controller: plans modal", function() {
 
     expect($scope.dismiss).to.be.a("function");
 
-    expect(planFactory.getCompanyPlanStatus).to.have.been.called;
-    expect(planFactory.getPlansDetails).to.have.been.called;
+    expect(plansFactory.getPlansDetails).to.have.been.called;
   });
 
   it("should load plans details", function() {
@@ -148,24 +144,24 @@ describe("controller: plans modal", function() {
 
   describe("currentPlanLabelVisible: ", function() {
     it("should show if plan is same as current and current plan active", function() {
-      sandbox.stub(planFactory, "isPlanActive").returns(true);
-      currentPlan.type = "advanced";
+      sandbox.stub(currentPlanFactory, "isPlanActive").returns(true);
+      currentPlanFactory.currentPlan.type = "advanced";
       expect($scope.currentPlanLabelVisible({ type: "advanced" })).to.be.true;
     });
 
     it("should not show if plan is same as current and current plan is inactive", function() {
-      sandbox.stub(planFactory, "isPlanActive").returns(false);
-      currentPlan.type = "advanced";
+      sandbox.stub(currentPlanFactory, "isPlanActive").returns(false);
+      currentPlanFactory.currentPlan.type = "advanced";
       expect($scope.currentPlanLabelVisible({ type: "advanced" })).to.be.false;
     });
 
     it("should show if plan is free and and current plan is inactive", function() {
-      sandbox.stub(planFactory, "isPlanActive").returns(false);
+      sandbox.stub(currentPlanFactory, "isPlanActive").returns(false);
       expect($scope.currentPlanLabelVisible({ type: "free" })).to.be.true;
     });
 
     it("should show if plan is free and and current plan is inactive", function() {
-      sandbox.stub(planFactory, "isPlanActive").returns(false);
+      sandbox.stub(currentPlanFactory, "isPlanActive").returns(false);
       expect($scope.currentPlanLabelVisible({ type: "advanced" })).to.be.false;
     });
   });
@@ -173,30 +169,30 @@ describe("controller: plans modal", function() {
   describe("getVisibleAction: ", function() {
     describe("active plan: ", function() {
       beforeEach(function() {
-        sandbox.stub(planFactory, "isPlanActive").returns(true);        
+        sandbox.stub(currentPlanFactory, "isPlanActive").returns(true);        
       });
 
       it("should show the Subscribe button if active plan is on trial", function() {
-        currentPlan.type = "advanced";
-        currentPlan.order = 3;
+        currentPlanFactory.currentPlan.type = "advanced";
+        currentPlanFactory.currentPlan.order = 3;
         expect($scope.getVisibleAction({ type: "advanced", order: 3, statusCode: "on-trial" })).equal("subscribe");        
       });
 
       it("should not show a button if active plan is subscribed", function() {
-        currentPlan.type = "advanced";
-        currentPlan.order = 3;
+        currentPlanFactory.currentPlan.type = "advanced";
+        currentPlanFactory.currentPlan.order = 3;
         expect($scope.getVisibleAction({ type: "advanced", order: 3, statusCode: "subscribed" })).equal("");        
       });
 
       it("should show the Subscribed button if it is a higher plan", function() {
-        currentPlan.type = "basic";
-        currentPlan.order = 2;
+        currentPlanFactory.currentPlan.type = "basic";
+        currentPlanFactory.currentPlan.order = 2;
         expect($scope.getVisibleAction({ type: "advanced", order: 3 })).equal("subscribe");
       });
 
       it("should show the Downgrade button if it is a lower plan", function() {
-        currentPlan.type = "advanced";
-        currentPlan.order = 3;
+        currentPlanFactory.currentPlan.type = "advanced";
+        currentPlanFactory.currentPlan.order = 3;
         expect($scope.getVisibleAction({ type: "basic", order: 2 })).equal("downgrade");
       });
       
@@ -204,7 +200,7 @@ describe("controller: plans modal", function() {
 
     describe("no active plan: ", function() {
       beforeEach(function() {
-        sandbox.stub(planFactory, "isPlanActive").returns(false);        
+        sandbox.stub(currentPlanFactory, "isPlanActive").returns(false);        
       });
 
       it("should not show a button if plan is free", function() {
