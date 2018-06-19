@@ -1,7 +1,7 @@
 .workspace {
-  --sidebar-width: 300px;
-  --toolbar-height : 133px;
-  --footer-height : 150px;
+  --sidebar-width: 290px;
+  --toolbar-height : 53px;
+  --footer-height : 50px;
   --header-height : 90px;
   --sidebar-displace : calc(var(--sidebar-width)*-1);
   &.active-banner-mode {--header-height : 111px;}
@@ -10,12 +10,10 @@
   height: calc(100vh - var(--total-height) );
 }
 
-@media (min-width: $screen-sm) {
+@media (max-width: $screen-sm) {
   .workspace {
-    --sidebar-width: 290px;
-    --toolbar-height : 53px;
-    --footer-height : 50px;
-    --header-height : 90px;
+    --toolbar-height : 133px;
+    --footer-height : 67px;
   }
 }
 

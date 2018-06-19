@@ -13832,9 +13832,9 @@ tr.blocked-file {
         cursor: pointer; }
 
 .workspace {
-  --sidebar-width: 300px;
-  --toolbar-height: 133px;
-  --footer-height: 150px;
+  --sidebar-width: 290px;
+  --toolbar-height: 53px;
+  --footer-height: 50px;
   --header-height: 90px;
   --sidebar-displace: calc(var(--sidebar-width)*-1);
   --total-height: calc(var(--toolbar-height) + var(--footer-height) + var(--header-height));
@@ -13844,12 +13844,10 @@ tr.blocked-file {
   .workspace.hide-sidebar {
     --sidebar-width: 0px; }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .workspace {
-    --sidebar-width: 290px;
-    --toolbar-height: 53px;
-    --footer-height: 50px;
-    --header-height: 90px; } }
+    --toolbar-height: 133px;
+    --footer-height: 67px; } }
 
 .workspace-wrapper {
   display: flex;
