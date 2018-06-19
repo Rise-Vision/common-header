@@ -10603,6 +10603,8 @@ a[data-wysihtml5-command=underline].active {
 .navbar {
   z-index: 1000;
   margin-bottom: 0; }
+  .navbar.navbar-default .navbar-nav > .open > a {
+    background: #FFF; }
   .navbar.navbar-default .navbar-nav > li > a {
     border-radius: 4px;
     font-size: 13px; }
@@ -13841,6 +13843,8 @@ tr.blocked-file {
   height: calc(100vh - var(--total-height)); }
   .workspace.active-banner-mode {
     --header-height: 111px; }
+  .workspace.active-banner-mode-double {
+    --header-height: 132px; }
   .workspace.hide-sidebar {
     --sidebar-width: 0px; }
 
@@ -14104,7 +14108,7 @@ tr.blocked-file {
   position: relative;
   background: #FFF; }
   .editor-footer .footer-content {
-    padding: 8px 0; }
+    padding: 8px 10px; }
   @media (max-width: 992px) {
     .editor-footer .save-status {
       display: block;
@@ -14176,8 +14180,7 @@ tr.blocked-file {
 
 .cm-s-twilight.CodeMirror {
   position: relative;
-  height: 100%;
-  padding-top: 50px; }
+  height: 100%; }
 
 .CodeMirror-hscrollbar::-webkit-scrollbar {
   -webkit-appearance: none; }
@@ -14282,7 +14285,6 @@ tr.blocked-file {
     background: #222;
     color: #4ab767;
     margin: 0;
-    padding-top: 60px;
     font-size: 14px;
     -webkit-text-stroke: 0.25px; }
 
@@ -14310,8 +14312,6 @@ tr.blocked-file {
   -moz-box-shadow: 0 0 0 10000px #d4d4d4;
   box-shadow: 0 0 0 10000px #d4d4d4;
   border: 12px solid #d4d4d4;
-  border-top-width: 0px;
-  margin-top: 60px;
   padding: 12px;
   -webkit-transition: all .4s;
   transition: all .4s; }

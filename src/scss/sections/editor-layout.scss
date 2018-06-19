@@ -5,6 +5,7 @@
   --header-height : 90px;
   --sidebar-displace : calc(var(--sidebar-width)*-1);
   &.active-banner-mode {--header-height : 111px;}
+  &.active-banner-mode-double {--header-height : 132px;}
   &.hide-sidebar {--sidebar-width: 0px;}
   --total-height:  calc(var(--toolbar-height) + var(--footer-height) + var(--header-height));
   height: calc(100vh - var(--total-height) );
@@ -332,7 +333,7 @@
   position: relative;
   background: #FFF;
   .footer-content {
-    padding: 8px 0;
+    padding: 8px 10px;
   }
   @media (max-width: $screen-md) {
     .save-status {
@@ -423,7 +424,6 @@
 .cm-s-twilight.CodeMirror {
   position: relative;
   height: 100%;
-  padding-top: 50px;
 }
 
 .CodeMirror-hscrollbar {
@@ -553,7 +553,6 @@
     background: #222;
     color: $rise-green;
     margin: 0;
-    padding-top: 60px;
     font-size: 14px;
     -webkit-text-stroke: 0.25px;
   }
@@ -586,8 +585,6 @@
   -moz-box-shadow: 0 0 0 10000px #d4d4d4;
   box-shadow: 0 0 0 10000px #d4d4d4;
   border: 12px solid #d4d4d4;
-  border-top-width: 0px;
-  margin-top: 60px;
   padding: 12px;
   -webkit-transition: all .4s;
   transition: all .4s;

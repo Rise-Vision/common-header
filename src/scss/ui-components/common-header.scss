@@ -9,6 +9,9 @@
   z-index: 1000;
   margin-bottom: 0;
   &.navbar-default {
+    .navbar-nav>.open>a {
+        background: #FFF;
+    } 
     .navbar-nav>li>a {
       border-radius: 4px;
       font-size: 13px;
