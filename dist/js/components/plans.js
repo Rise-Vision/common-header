@@ -620,7 +620,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plans/checkout-subscriptions.html',
-    '<div id="content-one" class="prototype-show prototype-show-ready" style="padding: 0 180px;"><h3>Basic Plan</h3><div class="row"><div class="col-sm-4 col-xs-12"><div class="panel text-center u_padding-md"><p style="font-size: 62px;line-height: 1;">$10</p><span>per Display<br>per Month</span></div></div><div class="col-sm-4 col-xs-12" style="border-right: 1px solid #DDD;"><div class="text-center u_padding-md"><p style="font-size: 62px;line-height: 1;">1</p><span>Display Included</span></div></div><div class="col-sm-4 col-xs-12 text-center u_margin-md-top"><p>All Free & Paid<br>Features Included</p><a href="#">View Plan Details</a></div></div><hr><style>\n' +
+    '<div id="content-one" class="prototype-show prototype-show-ready"><h3>Basic Plan</h3><div class="row"><div class="col-sm-4 col-xs-12"><div class="panel text-center u_padding-md"><p style="font-size: 62px;line-height: 1;">$10</p><span>per Display<br>per Month</span></div></div><div class="col-sm-4 col-xs-12 bordered-right"><div class="text-center u_padding-md"><p style="font-size: 62px;line-height: 1;">1</p><span>Display Included</span></div></div><div class="col-sm-4 col-xs-12 text-center u_margin-md-top"><p>All Free & Paid<br>Features Included</p><a href="#">View Plan Details</a></div></div><hr><style>\n' +
     '    .spinner {\n' +
     '      /* width: 100px; */\n' +
     '    }\n' +
@@ -662,7 +662,11 @@ module.run(['$templateCache', function($templateCache) {
     '      top: 0;\n' +
     '      left: 4px;\n' +
     '    }\n' +
-    '  </style><div class="row"><div class="col-xs-12">Need more Displays than Basic Plan offers? <label class="label" style="color: #020622;">($9 per Display)</label><br><br></div><div class="col-xs-12"><div class="input-group spinner" style="border-radius: 4px !important;"><div class="input-group-btn-vertical"><button class="btn btn-white" type="button"><i class="fa fa-caret-up"></i></button> <button class="btn btn-white" type="button"><i class="fa fa-caret-down"></i></button></div><input type="text" class="form-control" value="2" style="width: 50px; font-size: 18px; border-radius: 4px; text-align: center;"> <span class="icon-right u_margin-md-top" style="vertical-align: -webkit-baseline-middle;">additional Display licenses added to your purchase.</span></div></div><div class="col-xs-12"><hr></div><div class="col-xs-8"><div class="text-right"><div class="label" style="color: #020622;">Pay yearly, get one month free!</div></div><div class="panel u_padding-md" style="padding: 0 26px;"><div class="radio" style="background: aliceblue"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> $27 billed monthly</label></div><div class="radio"><label><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> $267 billed yearly</label> <label style="border: 1px solid #1fbc52; padding: 0px 12px; float: right; color: #1fbc52;">Save $54!</label></div></div></div></div><div class="col-xs-12"><button id="" class="btn btn-primary btn-lg" style="float: right">Next</button></div></div>');
+    '    .radio label {\n' +
+    '    padding: 5px 0 5px 30px;\n' +
+    '    }\n' +
+    '\n' +
+    '  </style><div class="row"><div class="col-xs-12">Need more Displays than Basic Plan offers?<label class="label" style="color: #020622;">($9 per Display)</label><br><br></div><div class="col-xs-12"><div class="input-group spinner" style="border-radius: 4px !important;"><div class="input-group-btn-vertical"><button class="btn btn-white" type="button"><i class="fa fa-caret-up"></i></button> <button class="btn btn-white" type="button"><i class="fa fa-caret-down"></i></button></div><input type="text" class="form-control" value="2" style="width: 50px; font-size: 18px; border-radius: 4px; text-align: center;"> <span class="icon-right u_margin-md-top" style="vertical-align: -webkit-baseline-middle;">additional Display licenses added to your purchase.</span></div></div><div class="col-xs-12"><hr></div><div class="col-xs-12"><div class="text-right"><div class="label" style="color: #020622;">Pay yearly, get one month free!</div></div><div class="panel u_padding-md" style="padding: 0 26px;"><div class="radio" style="background: aliceblue"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> $27 billed monthly</label></div><div class="radio"><label><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> $267 billed yearly</label> <label style="border: 1px solid #1fbc52; padding: 0px 12px; float: right; color: #1fbc52; cursor: default; top: 3px; position: relative;">Save $54!</label></div></div></div></div><div class="col-xs-12"><button id="" class="btn btn-primary btn-lg" style="float: right">Next</button></div></div>');
 }]);
 })();
 
@@ -682,7 +686,9 @@ module.run(['$templateCache', function($templateCache) {
     '  .progress-bar-step p {\n' +
     '    text-align: center;\n' +
     '    position: relative;\n' +
-    '    top: -19px;\n' +
+    '    top: -39px;\n' +
+    '    margin: 0;\n' +
+    '    font-size: 13px;\n' +
     '    color: #a2a2a2;\n' +
     '  }\n' +
     '\n' +
@@ -706,7 +712,17 @@ module.run(['$templateCache', function($templateCache) {
     '    font-weight: normal;\n' +
     '    text-decoration: inherit;\n' +
     '  }\n' +
-    '</style><div id="checkout-modal" class="modal-body u_padding-lg" stop-event="touchend"><div class="app-launcher-wizard_progress-bar"><div id="step-one" class="progress-bar-step progress-bar-step--active"><p>Subscriptions</p></div><div id="step-two" class="progress-bar-step"><p>Billing Address</p></div><div id="step-three" class="progress-bar-step"><p>Shipping Address</p></div><div id="step-four" class="progress-bar-step"><p>Payment Methods</p></div><div id="step-five" class="progress-bar-step"><p>Purchase Review</p></div></div><div ng-include="\'plans/checkout-subscriptions.html\'"></div><div ng-include="\'plans/checkout-billing-address.html\'"></div><div ng-include="\'plans/checkout-shipping-address.html\'"></div><div ng-include="\'plans/checkout-payment-methods.html\'"></div><div ng-include="\'plans/checkout-review-purchase.html\'"></div></div><div class="modal-footer"></div><script>\n' +
+    '\n' +
+    '  .bordered-right {\n' +
+    '    border-right: 1px solid #DDD;\n' +
+    '    \n' +
+    '  }\n' +
+    '  @media (max-width: 768px) {\n' +
+    '    .bordered-right {\n' +
+    '      border-right: 0;\n' +
+    '    }\n' +
+    '		}\n' +
+    '</style><div id="checkout-modal" class="modal-body u_padding-lg" stop-event="touchend"><div class="app-launcher-wizard_progress-bar hidden-sm hidden-xs" style="padding-top: 32px;"><div id="step-one" class="progress-bar-step progress-bar-step--active"><p>Subscriptions</p></div><div id="step-two" class="progress-bar-step"><p>Billing Address</p></div><div id="step-three" class="progress-bar-step"><p>Shipping Address</p></div><div id="step-four" class="progress-bar-step"><p>Payment Methods</p></div><div id="step-five" class="progress-bar-step"><p>Purchase Review</p></div></div><div ng-include="\'plans/checkout-subscriptions.html\'"></div><div ng-include="\'plans/checkout-billing-address.html\'"></div><div ng-include="\'plans/checkout-shipping-address.html\'"></div><div ng-include="\'plans/checkout-payment-methods.html\'"></div><div ng-include="\'plans/checkout-review-purchase.html\'"></div></div><div class="modal-footer"></div><script>\n' +
     '  //SETUP\n' +
     '  $(document).ready(function () {\n' +
     '    $(".prototype-show").hide();\n' +
@@ -754,12 +770,25 @@ module.run(['$templateCache', function($templateCache) {
     '    $(this).prevAll().addClass("progress-bar-step--complete");\n' +
     '  });\n' +
     '\n' +
+    '  $(\'input:radio[name="optionsRadios"]\').change(\n' +
+    '    function(){\n' +
+    '        if ($(this).is(\':checked\')) {\n' +
+    '          $(this).parent(".radio").css( "background", "aliceblue" );\n' +
+    '        }\n' +
+    '        else {\n' +
+    '          $(this).parent(".radio").css( "background", "white" );\n' +
+    '        }\n' +
+    '    });\n' +
+    '\n' +
     '  //CONTROL MODAL\n' +
     '  $(document).on("click", "#subscribe-plan", function () {\n' +
     '    $("#plans-modal").hide();\n' +
     '    $("#checkout-modal").show();\n' +
     '\n' +
     '    $("h3#modalTitle").text("Checkout");\n' +
+    '\n' +
+    '    $(".modal-dialog").removeClass("modal-lg");\n' +
+    '    $(".modal-dialog").addClass("modal-md");\n' +
     '  });\n' +
     '</script></div>');
 }]);

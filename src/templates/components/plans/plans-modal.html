@@ -161,7 +161,9 @@
   .progress-bar-step p {
     text-align: center;
     position: relative;
-    top: -19px;
+    top: -39px;
+    margin: 0;
+    font-size: 13px;
     color: #a2a2a2;
   }
 
@@ -185,6 +187,16 @@
     font-weight: normal;
     text-decoration: inherit;
   }
+
+  .bordered-right {
+    border-right: 1px solid #DDD;
+    
+  }
+  @media (max-width: 768px) {
+    .bordered-right {
+      border-right: 0;
+    }
+		}
 </style>
   <!-- //Checkout Start -->
   <div id="checkout-modal" class="modal-body u_padding-lg" stop-event="touchend">
@@ -196,7 +208,7 @@
       <div class="text-center" style="flex: 1; display: inline-block;">Review Purchase</div>
     </div> -->
 
-    <div class="app-launcher-wizard_progress-bar">
+    <div class="app-launcher-wizard_progress-bar hidden-sm hidden-xs" style="padding-top: 32px;" >
       <div id="step-one" class="progress-bar-step progress-bar-step--active">
         <p>Subscriptions</p>
       </div>
@@ -275,11 +287,24 @@
     $(this).prevAll().addClass("progress-bar-step--complete");
   });
 
+  $('input:radio[name="optionsRadios"]').change(
+    function(){
+        if ($(this).is(':checked')) {
+          $(this).parent(".radio").css( "background", "aliceblue" );
+        }
+        else {
+          $(this).parent(".radio").css( "background", "white" );
+        }
+    });
+
   //CONTROL MODAL
   $(document).on("click", "#subscribe-plan", function () {
     $("#plans-modal").hide();
     $("#checkout-modal").show();
 
     $("h3#modalTitle").text("Checkout");
+
+    $(".modal-dialog").removeClass("modal-lg");
+    $(".modal-dialog").addClass("modal-md");
   });
 </script>
