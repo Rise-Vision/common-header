@@ -74,7 +74,7 @@
 }
 
 .ph-settings {
-  --sidebar-body-displace : 151px;
+  --sidebar-body-displace : 92px;
 }
 
 .ph-playlist {
@@ -88,14 +88,15 @@
 }
 
 .workspace-sidebar-body::-webkit-scrollbar {
-    width: 5px;
+    --base-size : 5px;
+    width: var(--base-size);
 }
 .workspace-sidebar-body::-webkit-scrollbar-track {
     background: #cccccc; 
-    border-radius: 5px;
+    border-radius: var(--base-size);
 }
 .workspace-sidebar-body::-webkit-scrollbar-thumb {
-    border-radius: 5px;
+    border-radius: var(--base-size);
     background: gray;
 }
 
