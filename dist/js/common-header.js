@@ -9482,8 +9482,197 @@ try {
   module = angular.module('risevision.common.components.plans', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('plans/checkout-billing-address.html',
+    '<div id="content-two" class="prototype-show" style="display: none; padding: 0 180px;"><h3>Content Two</h3></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.components.plans');
+} catch (e) {
+  module = angular.module('risevision.common.components.plans', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('plans/checkout-payment-methods.html',
+    '<div id="content-four" class="prototype-show" style="display: none; padding: 0 180px;"><h3>Content Four</h3></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.components.plans');
+} catch (e) {
+  module = angular.module('risevision.common.components.plans', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('plans/checkout-review-purchase.html',
+    '<div id="content-five" class="prototype-show" style="display: none; padding: 0 180px;"><h3>Content Five</h3></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.components.plans');
+} catch (e) {
+  module = angular.module('risevision.common.components.plans', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('plans/checkout-shipping-address.html',
+    '<div id="content-three" class="prototype-show" style="display: none; padding: 0 180px;"><h3>Content Three</h3></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.components.plans');
+} catch (e) {
+  module = angular.module('risevision.common.components.plans', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('plans/checkout-subscriptions.html',
+    '<div id="content-one" class="prototype-show prototype-show-ready" style="padding: 0 180px;"><h3>Basic Plan</h3><div class="row"><div class="col-sm-4 col-xs-12"><div class="panel text-center u_padding-md"><p style="font-size: 62px;line-height: 1;">$10</p><span>per Display<br>per Month</span></div></div><div class="col-sm-4 col-xs-12" style="border-right: 1px solid #DDD;"><div class="text-center u_padding-md"><p style="font-size: 62px;line-height: 1;">1</p><span>Display Included</span></div></div><div class="col-sm-4 col-xs-12 text-center u_margin-md-top"><p>All Free & Paid<br>Features Included</p><a href="#">View Plan Details</a></div></div><hr><style>\n' +
+    '    .spinner {\n' +
+    '      /* width: 100px; */\n' +
+    '    }\n' +
+    '\n' +
+    '    .spinner input {\n' +
+    '      text-align: right;\n' +
+    '    }\n' +
+    '\n' +
+    '    .input-group-btn-vertical {\n' +
+    '      position: relative;\n' +
+    '      white-space: nowrap;\n' +
+    '      width: 1%;\n' +
+    '      vertical-align: middle;\n' +
+    '      display: table-cell;\n' +
+    '    }\n' +
+    '\n' +
+    '    .input-group-btn-vertical>.btn {\n' +
+    '      display: block;\n' +
+    '      float: none;\n' +
+    '      width: 100%;\n' +
+    '      max-width: 100%;\n' +
+    '      padding: 8px;\n' +
+    '      margin-left: -1px;\n' +
+    '      position: relative;\n' +
+    '      border-radius: 0;\n' +
+    '    }\n' +
+    '\n' +
+    '    .input-group-btn-vertical>.btn:first-child {\n' +
+    '      border-top-left-radius: 4px;\n' +
+    '    }\n' +
+    '\n' +
+    '    .input-group-btn-vertical>.btn:last-child {\n' +
+    '      margin-top: -2px;\n' +
+    '      border-bottom-left-radius: 4px;\n' +
+    '    }\n' +
+    '\n' +
+    '    .input-group-btn-vertical i {\n' +
+    '      position: absolute;\n' +
+    '      top: 0;\n' +
+    '      left: 4px;\n' +
+    '    }\n' +
+    '  </style><div class="row"><div class="col-xs-12">Need more Displays than Basic Plan offers? <label class="label" style="color: #020622;">($9 per Display)</label><br><br></div><div class="col-xs-12"><div class="input-group spinner" style="border-radius: 4px !important;"><div class="input-group-btn-vertical"><button class="btn btn-white" type="button"><i class="fa fa-caret-up"></i></button> <button class="btn btn-white" type="button"><i class="fa fa-caret-down"></i></button></div><input type="text" class="form-control" value="2" style="width: 50px; font-size: 18px; border-radius: 4px; text-align: center;"> <span class="icon-right u_margin-md-top" style="vertical-align: -webkit-baseline-middle;">additional Display licenses added to your purchase.</span></div></div><div class="col-xs-12"><hr></div><div class="col-xs-8"><div class="text-right"><div class="label" style="color: #020622;">Pay yearly, get one month free!</div></div><div class="panel u_padding-md" style="padding: 0 26px;"><div class="radio" style="background: aliceblue"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> $27 billed monthly</label></div><div class="radio"><label><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> $267 billed yearly</label> <label style="border: 1px solid #1fbc52; padding: 0px 12px; float: right; color: #1fbc52;">Save $54!</label></div></div></div></div><div class="col-xs-12"><button id="" class="btn btn-primary btn-lg" style="float: right">Next</button></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.components.plans');
+} catch (e) {
+  module = angular.module('risevision.common.components.plans', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plans/plans-modal.html',
-    '<div rv-spinner="" rv-spinner-key="plans-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title" translate="">common-header.plans.choose-plan</h3></div><div id="plans-modal" class="modal-body u_padding-lg" stop-event="touchend"><div class="text-center"><div class="btn-group" role="group" aria-label="..."><button ng-click="monthlyPrices = true" type="button" class="btn btn-default" ng-class="{ active: monthlyPrices }">Monthly</button> <button ng-click="monthlyPrices = false" type="button" class="btn btn-default" ng-class="{ active: !monthlyPrices }">Yearly</button></div><p class="u_padding-sm-vertical">Pay yearly, get one month free!</p></div><div class="pricing-table"><div id="planHeader" class="monthly"><div class="planColumn" ng-class="{ currentPlan: currentPlanLabelVisible(plan) }" ng-repeat="plan in plans"><div id="current-plan" class="currentPlanLabel" ng-show="currentPlanLabelVisible(plan)" translate="">common-header.plans.current</div><h2>{{plan.name}}</h2><h3 class="planColumnPrice" ng-show="!isFree(plan) && !isStarter(plan)"><span>$10</span>${{ monthlyPrices ? plan.monthly.priceDisplayMonth : plan.yearly.priceDisplayMonth }}</h3><h3 class="planColumnPrice" ng-show="isStarter(plan)">${{ monthlyPrices ? plan.monthly.priceDisplayMonth : plan.yearly.priceDisplayMonth }}</h3><p ng-show="!isFree(plan) && monthlyPrices" class="text-muted" translate="" translate-values="{ price: plan.monthly.billAmount }">common-header.plans.perDisplayBilledMonthly</p><p ng-show="!isFree(plan) && !monthlyPrices" class="text-muted" translate="" translate-values="{ price: plan.yearly.billAmount }">common-header.plans.perDisplayBilledYearly</p><div ng-show="!isFree(plan)"><h3>{{plan.proLicenseCount}}</h3><span ng-show="plan.proLicenseCount === 1" translate="">common-header.plans.displayIncluded</span> <span ng-show="plan.proLicenseCount > 1" translate="">common-header.plans.displaysIncluded</span></div><p ng-show="showSavings(plan)" class="planSavings" translate="" translate-values="{ save: (monthlyPrices ? plan.monthly.save : plan.yearly.save) }">common-header.plans.saveEachYear</p><p ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan)" translate="">common-header.plans.needMoreDisplays</p><a ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan)" href="https://www.risevision.com/purchaseadditionaldisplaylicenses" target="_blank" translate="">common-header.plans.individual-licenses</a><p id="trial-days-remaining" class="small u_margin-sm-bottom" ng-show="isCurrentPlan(plan) && isOnTrial(plan)" translate="" translate-values="{ count: currentPlan.trialPeriod }">common-header.plans.days-left-trial</p><p class="small u_margin-sm-bottom text-danger" ng-show="isCurrentPlan(plan) && isTrialExpired(plan)" translate="">common-header.plans.trial-expired</p><a id="subscribe-plan" ng-show="getVisibleAction(plan) === \'subscribe\'" target="_blank" href="https://store.risevision.com/product/{{plan.productId}}" class="btn btn-primary btn-block" translate="">common-header.plans.subscribe</a> <a id="downgrade-plan" ng-show="getVisibleAction(plan) === \'downgrade\'" target="_blank" href="https://www.risevision.com/downgradeplan" class="btn btn-default btn-block" translate="">common-header.plans.downgrade</a> <a id="start-trial-plan" ng-show="getVisibleAction(plan) === \'start-trial\'" target="_blank" ng-click="startTrial(plan)" class="btn btn-primary btn-block" translate="">common-header.plans.start-trial</a></div></div><div id="planFeatures"><div class="planFeatureColumn" id="planFreeFeatures"><h4 id="planFeatures" class="planFeatureColumnTitle" style="column-span: all;">You can use the following features for free on any of your displays!</h4><div class="planFeature"><p class="featureTitle">Text</p></div><div class="planFeature"><p class="featureTitle">Image by URL</p></div><div class="planFeature"><p class="featureTitle">Video by URL</p></div><div class="planFeature"><p class="featureTitle">RSS</p></div><div class="planFeature"><p class="featureTitle">Time & Date</p></div><div class="planFeature"><p class="featureTitle">HTML</p></div></div><div class="planFeatureColumn" id="planPaidFeatures"><h4 class="planFeatureColumnTitle" style="column-span: all;">Key Features Included With All Paid Plans <span class="u_padding-sm-vertical">Everything in \'Free\' +</span></h4><div class="planFeature"><p class="featureTitle">Image Slideshows</p></div><div class="planFeature"><p class="featureTitle">Video Playlists</p></div><div class="planFeature"><p class="featureTitle">Unlimited Image & Video File Storage</p></div><div class="planFeature"><p class="featureTitle">Pre-made Templates</p></div><div class="planFeature"><p class="featureTitle">Centralized Content Control</p></div><div class="planFeature"><p class="featureTitle">Scheduling</p></div><div class="planFeature"><p class="featureTitle">Google Calendar</p></div><div class="planFeature"><p class="featureTitle">Google Spreadsheet</p></div><div class="planFeature"><p class="featureTitle">Twitter</p></div><div class="planFeature"><p class="featureTitle">Web Pages</p></div><div class="planFeature"><p class="featureTitle">Google Reliability & Security</p></div><div class="planFeature"><p class="featureTitle">Account / Sub-Account Hierarchy</p></div><div class="planFeature"><p class="featureTitle">User Role Permissioning</p></div><div class="planFeature"><p class="featureTitle">Display Monitoring Notifications</p></div><div class="planFeature"><p class="featureTitle">Content Shows Offline</p></div><div class="planFeature"><p class="featureTitle">Alert Integration</p></div><div class="planFeature"><p class="featureTitle">Display On/Off Control</p></div><h4 class="text-center" style="column-span: all;"><a href="https://www.risevision.com/pricing" target="_blank">Learn More About Key Features</a></h4></div></div><div id="planFooter"></div></div><div class="text-center u_padding-sm-vertical"><h3><a href="https://www.risevision.com/contact-us" target="_blank">Questions? We can help!</a></h3><h3><a href="https://www.risevision.com/licensesubcompany" target="_blank">Need to license your Sub-Company?</a></h3></div></div><div class="modal-footer"></div></div>');
+    '<div rv-spinner="" rv-spinner-key="plans-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 id="modalTitle" class="modal-title" translate="">common-header.plans.choose-plan</h3></div><div id="plans-modal" class="modal-body u_padding-lg" stop-event="touchend"><div class="text-center"><div class="btn-group" role="group" aria-label="..."><button ng-click="monthlyPrices = true" type="button" class="btn btn-default" ng-class="{ active: monthlyPrices }">Monthly</button> <button ng-click="monthlyPrices = false" type="button" class="btn btn-default" ng-class="{ active: !monthlyPrices }">Yearly</button></div><p class="u_padding-sm-vertical">Pay yearly, get one month free!</p></div><div class="pricing-table"><div id="planHeader" class="monthly"><div class="planColumn" ng-class="{ currentPlan: currentPlanLabelVisible(plan) }" ng-repeat="plan in plans"><div id="current-plan" class="currentPlanLabel" ng-show="currentPlanLabelVisible(plan)" translate="">common-header.plans.current</div><h2>{{plan.name}}</h2><h3 class="planColumnPrice" ng-show="!isFree(plan) && !isStarter(plan)"><span>$10</span>${{ monthlyPrices ? plan.monthly.priceDisplayMonth : plan.yearly.priceDisplayMonth }}</h3><h3 class="planColumnPrice" ng-show="isStarter(plan)">${{ monthlyPrices ? plan.monthly.priceDisplayMonth : plan.yearly.priceDisplayMonth }}</h3><p ng-show="!isFree(plan) && monthlyPrices" class="text-muted" translate="" translate-values="{ price: plan.monthly.billAmount }">common-header.plans.perDisplayBilledMonthly</p><p ng-show="!isFree(plan) && !monthlyPrices" class="text-muted" translate="" translate-values="{ price: plan.yearly.billAmount }">common-header.plans.perDisplayBilledYearly</p><div ng-show="!isFree(plan)"><h3>{{plan.proLicenseCount}}</h3><span ng-show="plan.proLicenseCount === 1" translate="">common-header.plans.displayIncluded</span> <span ng-show="plan.proLicenseCount > 1" translate="">common-header.plans.displaysIncluded</span></div><p ng-show="showSavings(plan)" class="planSavings" translate="" translate-values="{ save: (monthlyPrices ? plan.monthly.save : plan.yearly.save) }">common-header.plans.saveEachYear</p><p ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan)" translate="">common-header.plans.needMoreDisplays</p><a ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan)" href="https://www.risevision.com/purchaseadditionaldisplaylicenses" target="_blank" translate="">common-header.plans.individual-licenses</a><p id="trial-days-remaining" class="small u_margin-sm-bottom" ng-show="isCurrentPlan(plan) && isOnTrial(plan)" translate="" translate-values="{ count: currentPlan.trialPeriod }">common-header.plans.days-left-trial</p><p class="small u_margin-sm-bottom text-danger" ng-show="isCurrentPlan(plan) && isTrialExpired(plan)" translate="">common-header.plans.trial-expired</p><a id="subscribe-plan" ng-show="getVisibleAction(plan) === \'subscribe\'" x="" class="btn btn-primary btn-block" translate="">common-header.plans.subscribe</a> <a id="downgrade-plan" ng-show="getVisibleAction(plan) === \'downgrade\'" target="_blank" href="https://www.risevision.com/downgradeplan" class="btn btn-default btn-block" translate="">common-header.plans.downgrade</a> <a id="start-trial-plan" ng-show="getVisibleAction(plan) === \'start-trial\'" target="_blank" ng-click="startTrial(plan)" class="btn btn-primary btn-block" translate="">common-header.plans.start-trial</a></div></div><div id="planFeatures"><div class="planFeatureColumn" id="planFreeFeatures"><h4 id="planFeatures" class="planFeatureColumnTitle" style="column-span: all;">You can use the following features for free on any of your displays!</h4><div class="planFeature"><p class="featureTitle">Text</p></div><div class="planFeature"><p class="featureTitle">Image by URL</p></div><div class="planFeature"><p class="featureTitle">Video by URL</p></div><div class="planFeature"><p class="featureTitle">RSS</p></div><div class="planFeature"><p class="featureTitle">Time & Date</p></div><div class="planFeature"><p class="featureTitle">HTML</p></div></div><div class="planFeatureColumn" id="planPaidFeatures"><h4 class="planFeatureColumnTitle" style="column-span: all;">Key Features Included With All Paid Plans <span class="u_padding-sm-vertical">Everything in \'Free\' +</span></h4><div class="planFeature"><p class="featureTitle">Image Slideshows</p></div><div class="planFeature"><p class="featureTitle">Video Playlists</p></div><div class="planFeature"><p class="featureTitle">Unlimited Image & Video File Storage</p></div><div class="planFeature"><p class="featureTitle">Pre-made Templates</p></div><div class="planFeature"><p class="featureTitle">Centralized Content Control</p></div><div class="planFeature"><p class="featureTitle">Scheduling</p></div><div class="planFeature"><p class="featureTitle">Google Calendar</p></div><div class="planFeature"><p class="featureTitle">Google Spreadsheet</p></div><div class="planFeature"><p class="featureTitle">Twitter</p></div><div class="planFeature"><p class="featureTitle">Web Pages</p></div><div class="planFeature"><p class="featureTitle">Google Reliability & Security</p></div><div class="planFeature"><p class="featureTitle">Account / Sub-Account Hierarchy</p></div><div class="planFeature"><p class="featureTitle">User Role Permissioning</p></div><div class="planFeature"><p class="featureTitle">Display Monitoring Notifications</p></div><div class="planFeature"><p class="featureTitle">Content Shows Offline</p></div><div class="planFeature"><p class="featureTitle">Alert Integration</p></div><div class="planFeature"><p class="featureTitle">Display On/Off Control</p></div><h4 class="text-center" style="column-span: all;"><a href="https://www.risevision.com/pricing" target="_blank">Learn More About Key Features</a></h4></div></div><div id="planFooter"></div></div><div class="text-center u_padding-sm-vertical"><h3><a href="https://www.risevision.com/contact-us" target="_blank">Questions? We can help!</a></h3><h3><a href="https://www.risevision.com/licensesubcompany" target="_blank">Need to license your Sub-Company?</a></h3></div></div><style>\n' +
+    '  .progress-bar-step {\n' +
+    '    cursor: pointer;\n' +
+    '  }\n' +
+    '  \n' +
+    '  .progress-bar-step p {\n' +
+    '    text-align: center;\n' +
+    '    position: relative;\n' +
+    '    top: -19px;\n' +
+    '    color: #a2a2a2;\n' +
+    '  }\n' +
+    '\n' +
+    '  .progress-bar-step--active p {\n' +
+    '    color: #4ab766;\n' +
+    '  }\n' +
+    '\n' +
+    '  .progress-bar-step--complete {\n' +
+    '    background-color: #a4dbff !important;\n' +
+    '  }\n' +
+    '\n' +
+    '  .progress-bar-step--complete p {\n' +
+    '    color: #a4dbff;\n' +
+    '  }\n' +
+    '\n' +
+    '  .progress-bar-step--complete p::before {\n' +
+    '    content: "\\f00c";\n' +
+    '    margin-right: 4px;\n' +
+    '    font-family: FontAwesome;\n' +
+    '    font-style: normal;\n' +
+    '    font-weight: normal;\n' +
+    '    text-decoration: inherit;\n' +
+    '  }\n' +
+    '</style><div id="checkout-modal" class="modal-body u_padding-lg" stop-event="touchend"><div class="app-launcher-wizard_progress-bar"><div id="step-one" class="progress-bar-step progress-bar-step--active"><p>Subscriptions</p></div><div id="step-two" class="progress-bar-step"><p>Billing Address</p></div><div id="step-three" class="progress-bar-step"><p>Shipping Address</p></div><div id="step-four" class="progress-bar-step"><p>Payment Methods</p></div><div id="step-five" class="progress-bar-step"><p>Purchase Review</p></div></div><div ng-include="\'plans/checkout-subscriptions.html\'"></div><div ng-include="\'plans/checkout-billing-address.html\'"></div><div ng-include="\'plans/checkout-shipping-address.html\'"></div><div ng-include="\'plans/checkout-payment-methods.html\'"></div><div ng-include="\'plans/checkout-review-purchase.html\'"></div></div><div class="modal-footer"></div><script>\n' +
+    '  //SETUP\n' +
+    '  $(document).ready(function () {\n' +
+    '    $(".prototype-show").hide();\n' +
+    '    $(".prototype-show-ready").show();\n' +
+    '\n' +
+    '    //SPINNER doesnt work\n' +
+    '    (function ($) {\n' +
+    '      $(\'.spinner .btn:first-of-type\').on(\'click\', function () {\n' +
+    '        $(\'.spinner input\').val(parseInt($(\'.spinner input\').val(), 10) + 1);\n' +
+    '      });\n' +
+    '      $(\'.spinner .btn:last-of-type\').on(\'click\', function () {\n' +
+    '        $(\'.spinner input\').val(parseInt($(\'.spinner input\').val(), 10) - 1);\n' +
+    '      });\n' +
+    '    })(jQuery);\n' +
+    '  });\n' +
+    '\n' +
+    '  //CYCLE\n' +
+    '  $(document).on("click", "#step-one", function () {\n' +
+    '    $(".prototype-show").hide();\n' +
+    '    $("#content-one").show();\n' +
+    '  });\n' +
+    '  $(document).on("click", "#step-two", function () {\n' +
+    '    $(".prototype-show").hide();\n' +
+    '    $("#content-two").show();\n' +
+    '  });\n' +
+    '  $(document).on("click", "#step-three", function () {\n' +
+    '    $(".prototype-show").hide();\n' +
+    '    $("#content-three").show();\n' +
+    '  });\n' +
+    '  $(document).on("click", "#step-four", function () {\n' +
+    '    $(".prototype-show").hide();\n' +
+    '    $("#content-four").show();\n' +
+    '  });\n' +
+    '  $(document).on("click", "#step-five", function () {\n' +
+    '    $(".prototype-show").hide();\n' +
+    '    $("#content-five").show();\n' +
+    '  });\n' +
+    '\n' +
+    '  // STEP THROUGH CHECKOUT NAV \n' +
+    '  $(document).on("click", ".progress-bar-step", function () {\n' +
+    '    var target = $(this);\n' +
+    '    $(".progress-bar-step").removeClass("progress-bar-step--active");\n' +
+    '    $(this).removeClass("progress-bar-step--complete");\n' +
+    '    $(this).addClass("progress-bar-step--active");\n' +
+    '    $(this).prevAll().addClass("progress-bar-step--complete");\n' +
+    '  });\n' +
+    '\n' +
+    '  //CONTROL MODAL\n' +
+    '  $(document).on("click", "#subscribe-plan", function () {\n' +
+    '    $("#plans-modal").hide();\n' +
+    '    $("#checkout-modal").show();\n' +
+    '\n' +
+    '    $("h3#modalTitle").text("Checkout");\n' +
+    '  });\n' +
+    '</script></div>');
 }]);
 })();
 
