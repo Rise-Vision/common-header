@@ -164,7 +164,8 @@
     top: -39px;
     margin: 0;
     font-size: 13px;
-    color: #a2a2a2;
+    color: #5b5b5b;
+    word-spacing: 100vw;
   }
 
   .progress-bar-step--active p {
@@ -196,7 +197,19 @@
     .bordered-right {
       border-right: 0;
     }
-		}
+    }
+    
+    .lead {
+      margin-bottom: 10px;
+    }
+
+    .text-block {
+      font-size: 12px;
+    }
+
+    small {
+      color: #5b5b5b;
+    }
 </style>
   <!-- //Checkout Start -->
   <div id="checkout-modal" class="modal-body u_padding-lg" stop-event="touchend">
@@ -210,7 +223,7 @@
 
     <div class="app-launcher-wizard_progress-bar hidden-sm hidden-xs" style="padding-top: 32px;" >
       <div id="step-one" class="progress-bar-step progress-bar-step--active">
-        <p>Subscriptions</p>
+        <p>Subscription Details</p>
       </div>
       <div id="step-two" class="progress-bar-step">
           <p>Billing Address</p>
@@ -219,7 +232,7 @@
           <p>Shipping Address</p>
       </div>
       <div id="step-four" class="progress-bar-step">
-          <p>Payment Methods</p>
+          <p>Payment Method</p>
       </div>
       <div id="step-five" class="progress-bar-step">
           <p>Purchase Review</p>
@@ -238,7 +251,6 @@
 <div class="modal-footer">
   
 </div>
-
 <script>
   //SETUP
   $(document).ready(function () {
@@ -288,13 +300,12 @@
   });
 
   $('input:radio[name="optionsRadios"]').change(
-    function(){
-        if ($(this).is(':checked')) {
-          $(this).parent(".radio").css( "background", "aliceblue" );
-        }
-        else {
-          $(this).parent(".radio").css( "background", "white" );
-        }
+    function () {
+      if ($(this).is(':checked')) {
+        $(this).parent(".radio").css("background", "aliceblue");
+      } else {
+        $(this).parent(".radio").css("background", "white");
+      }
     });
 
   //CONTROL MODAL
@@ -307,4 +318,11 @@
     $(".modal-dialog").removeClass("modal-lg");
     $(".modal-dialog").addClass("modal-md");
   });
+
+  //HIDE CC ADDRESS
+  $(document).on("click", "#toggleMatchBillingAddress", function () {
+    this.checked ? $('#targetCCAddress').hide(400) : $('#targetCCAddress').show(400);
+  });
+
+  
 </script>
