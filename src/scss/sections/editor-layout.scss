@@ -13,8 +13,8 @@
 
 @media (max-width: $screen-sm) {
   .workspace {
-    --toolbar-height : 133px;
-    --footer-height : 67px;
+    --toolbar-height : 94px;
+    --footer-height : 50px;
   }
 }
 
@@ -101,107 +101,87 @@
 }
 
 .workspace-toolbar {
-  width: 100%;
   display: flex;
-  flex-wrap: wrap;
-  white-space: nowrap;
+  align-items: center;
+  width: 100%;
   z-index: 100;
   background-color: #FFF;
   border-bottom: 1px solid #f2f2f2;
   border-top: 1px solid #f2f2f2;
   padding: 8px 10px;
-}
-
-.workspace-toolbar {
-  #addPlaceholderButton {
-    width: calc((var(--sidebar-width) - 20px));
+  .toolbar-right {
+    display: flex;
+    margin-left: auto;
+    flex-wrap: nowrap;
+  }
+  .add-placeholder {
     margin-right: 10px;
   }
-  .column {
-    @media (max-width: 720px) {
-      width: 100%;
-      flex: none !important;
-    }
-  }
-  .fixed-toolset {
-      flex: none;
-      &.add-placeholder {
-          order: -1;
-          @media (max-width: 920px) {
-              order: 0;
-          }
-      }
-  }
-  .flex-title {
-      flex: 1;
-      min-width: 0;
-      display: flex;
-      .btn {
-          display: inline;
-      }
-  }
-   .zoom-selector {
-        display: inline-flex;
-        width: 148px;
-        cursor: pointer;
-        align-items: center;
-        justify-content: space-between;
-        background-color: #fff;
-        & > div {
-            height: 32px;
-            width: 53px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-        .dropdown-menu {
-            left: initial;
-            margin: -3px 22px 0;
-            min-width: 78px;
-            li a {
-               color: #4d4d4d;
-            }
-        }
-        @media (max-width: $screen-sm) {
-            display: none;
-        }
-    }
   .presentation-name {
-      display: inline;
-      line-height: 32px;
-      cursor: pointer;
-      font-size: 18px;
-      font-weight: 400;
-      vertical-align: top;
-      margin: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      @media (max-width: $screen-sm) {
-          max-width: 200px;
-      }
-  }
-  @media (max-width: $screen-sm) {
-      width: 100%;
-      overflow: hidden;
-      left: 0;
-      top: 0;
-  }
-  @media (max-width: 720px) {
-      #addPlaceholderButton {
-          width: 100%;
-          display: block;
-          float: none;
-          margin: 8px 0;
-      }
+    max-width: calc(100vw - 240px);
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    line-height: 32px;
   }
 }
+
+@media (max-width: $screen-md) {
+  .workspace-toolbar {
+    .presentation-name {
+      max-width: calc(100vw - 240px);
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  }
+}
+
+@media (max-width: $screen-sm) {
+  .workspace-toolbar {
+    flex-wrap: wrap;
+    .add-placeholder {
+      margin-right: 0;
+      margin-bottom: 10px;
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+.zoom-selector {
+     display: inline-flex;
+     width: 148px;
+     cursor: pointer;
+     align-items: center;
+     justify-content: space-between;
+     background-color: #fff;
+     & > div {
+         height: 32px;
+         width: 53px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         -webkit-touch-callout: none;
+         -webkit-user-select: none;
+         -khtml-user-select: none;
+         -moz-user-select: none;
+         -ms-user-select: none;
+         user-select: none;
+     }
+     .dropdown-menu {
+         left: initial;
+         margin: -3px 22px 0;
+         min-width: 78px;
+         li a {
+            color: #4d4d4d;
+         }
+     }
+     @media (max-width: $screen-sm) {
+         display: none;
+     }
+ }
+
 
 .ph-list, .ph-properties {
   width: var(--sidebar-width);
@@ -330,31 +310,37 @@
 .editor-footer {
   width: 100%;
   z-index: 100;
+  display: flex;
+  align-items: center;
   border-top: 1px solid #CCC;
   position: relative;
   background: #FFF;
-  .footer-content {
-    padding: 8px 10px;
+  padding: 8px 10px;
+  .btn {
+    margin-left: 10px;
+  }
+  .footer-right {
+    margin-left: auto;
+    flex-wrap: nowrap;
+    display: flex;
   }
   @media (max-width: $screen-md) {
     .save-status {
-      display: block;
       width: 100%;
-    }
-    #deleteButton {
-      margin-top: 20px;
+      text-align: left;
     }
   }
   @media (max-width: $screen-sm) {
     z-index: 100;
-    .footer-content {
-      .btn {
-        padding: 5px;
-        .fa {
-          margin-left: 2px;
-        }
-      }
+    .save-status {
+      display: none;
     }
+    .btn {
+      margin-left: 5px;
+    }
+  }
+  @media (max-width: $screen-xs) {
+    
   }
 }
 
