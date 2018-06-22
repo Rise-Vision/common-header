@@ -140,6 +140,9 @@
 @media (max-width: $screen-sm) {
   .workspace-toolbar {
     flex-wrap: wrap;
+    .presentation-name {
+      max-width: calc(100vw - 250px);
+    }
     .add-placeholder {
       margin-right: 0;
       margin-bottom: 10px;
