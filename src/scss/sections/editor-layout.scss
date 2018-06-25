@@ -319,19 +319,19 @@
   position: relative;
   background: #FFF;
   padding: 8px 10px;
-  .btn {
-    margin-left: 10px;
-  }
   .footer-right {
     margin-left: auto;
     flex-wrap: nowrap;
     display: flex;
+    .btn {
+      margin-left: 10px;
+    }
+    .save-status {
+      align-self: center;
+    }
   }
   @media (max-width: $screen-md) {
-    .save-status {
-      width: 100%;
-      text-align: left;
-    }
+
   }
   @media (max-width: $screen-sm) {
     z-index: 100;
@@ -815,4 +815,3 @@
 
 
  
-

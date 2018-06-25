@@ -14408,16 +14408,14 @@ tr.blocked-file {
   position: relative;
   background: #FFF;
   padding: 8px 10px; }
-  .editor-footer .btn, .editor-footer .icon-nav label, .icon-nav .editor-footer label {
-    margin-left: 10px; }
   .editor-footer .footer-right {
     margin-left: auto;
     flex-wrap: nowrap;
     display: flex; }
-  @media (max-width: 992px) {
-    .editor-footer .save-status {
-      width: 100%;
-      text-align: left; } }
+    .editor-footer .footer-right .btn, .editor-footer .footer-right .icon-nav label, .icon-nav .editor-footer .footer-right label {
+      margin-left: 10px; }
+    .editor-footer .footer-right .save-status {
+      align-self: center; }
   @media (max-width: 768px) {
     .editor-footer {
       z-index: 100; }
