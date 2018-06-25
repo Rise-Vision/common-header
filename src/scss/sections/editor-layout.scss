@@ -2,7 +2,7 @@
   --sidebar-width: 290px;
   --toolbar-height : 53px;
   --footer-height : 50px;
-  --header-height : 90px;
+  --header-height : 60px;
   --sidebar-displace : calc(var(--sidebar-width)*-1);
   &.active-banner-mode {--header-height : 111px;}
   &.active-banner-mode-double {--header-height : 132px;}
@@ -13,7 +13,7 @@
 
 @media (max-width: $screen-sm) {
   .workspace {
-    --toolbar-height : 94px;
+    --toolbar-height : 120px;
     --footer-height : 50px;
   }
 }
@@ -113,9 +113,13 @@
     display: flex;
     margin-left: auto;
     flex-wrap: nowrap;
+    & span {
+      align-self: center;
+    }
   }
   .add-placeholder {
     margin-right: 10px;
+    width: calc((290px - 20px));
   }
   .presentation-name {
     max-width: calc(100vw - 240px);
@@ -327,11 +331,8 @@
     flex-wrap: nowrap;
     display: flex;
   }
-  @media (max-width: $screen-md) {
-    .save-status {
-      width: 100%;
-      text-align: left;
-    }
+  .save-status {
+  align-self: center;
   }
   @media (max-width: $screen-sm) {
     z-index: 100;
