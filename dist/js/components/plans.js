@@ -359,6 +359,10 @@ angular.module("risevision.common.components.plans", [
           return !_factory.isFree() && _factory.currentPlan.status === "Suspended";
         };
 
+        _factory.isCancelled = function () {
+          return !_factory.isFree() && _factory.currentPlan.status === "Cancelled";
+        };
+
         _factory.isProSubscribed = function () {
           return _factory.currentPlan.proStatus === "Active";
         };
