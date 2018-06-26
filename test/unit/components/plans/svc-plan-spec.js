@@ -501,6 +501,18 @@ describe("Services: plan", function() {
       expect(planFactory.isSuspended()).to.be.false;
     });
   });
+  
+  describe("Cancelled status: ", function() {
+    it("should return the subscription status is Cancelled", function() {
+      planFactory.currentPlan = { status: "Cancelled" };
+      expect(planFactory.isCancelled()).to.be.true;
+    });
+
+    it("should return the subscription status is not Cancelled", function() {
+      planFactory.currentPlan = { status: "Suspended" };
+      expect(planFactory.isCancelled()).to.be.false;
+    });
+  });
 
   describe("Pro Subscribed status: ", function() {
     it("should return the Pro subscription status is Subscribed", function() {
