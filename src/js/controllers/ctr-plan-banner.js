@@ -18,6 +18,7 @@ angular.module("risevision.common.header")
       $scope.isOnTrial = currentPlanFactory.isOnTrial;
       $scope.isTrialExpired = currentPlanFactory.isTrialExpired;
       $scope.isSuspended = currentPlanFactory.isSuspended;
+      $scope.isCancelled = currentPlanFactory.isCancelled;
       $scope.isProSubscribed = currentPlanFactory.isProSubscribed;
     }
   ]);

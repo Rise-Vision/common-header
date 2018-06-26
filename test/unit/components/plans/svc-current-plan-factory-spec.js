@@ -214,6 +214,18 @@ describe("Services: current plan factory", function() {
     });
   });
 
+  describe("Cancelled status: ", function() {
+    it("should return the subscription status is Cancelled", function() {
+      currentPlanFactory.currentPlan = { status: "Cancelled" };
+      expect(currentPlanFactory.isCancelled()).to.be.true;
+    });
+
+    it("should return the subscription status is not Cancelled", function() {
+      currentPlanFactory.currentPlan = { status: "Suspended" };
+      expect(currentPlanFactory.isCancelled()).to.be.false;
+    });
+  });
+
   describe("Pro Subscribed status: ", function() {
     it("should return the Pro subscription status is Subscribed", function() {
       currentPlanFactory.currentPlan = { proStatus: "Active" };

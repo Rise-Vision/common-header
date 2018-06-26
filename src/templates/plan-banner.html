@@ -1,6 +1,6 @@
 <!-- Common Header Plan Info -->
 
-  <div id="free-plan-banner" class="alert alert-plan plan-active text-right" ng-show="isFree()">
+  <div id="free-plan-banner" class="alert alert-plan plan-active text-right" ng-show="isFree() || isCancelled()">
     <div class="u_margin-right">
       <strong>Get more out of Rise Vision!</strong>
       <a href="#" ng-click="showPlans()" class="u_margin-left">See Our Plans</a>
@@ -35,4 +35,3 @@
       <a href="{{storeAccountUrl}}" target="_blank" class="u_margin-left">Update Billing</a>
     </div>
   </div>
-
