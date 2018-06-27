@@ -242,6 +242,7 @@
 
     <div ng-include="'plans/checkout-subscriptions.html'"></div>
     <div ng-include="'plans/checkout-billing-address.html'"></div>
+    <div ng-include="'plans/checkout-billing-address-error.html'"></div>
     <div ng-include="'plans/checkout-shipping-address.html'"></div>
     <div ng-include="'plans/checkout-payment-methods.html'"></div>
     <div ng-include="'plans/checkout-review-purchase.html'"></div>
@@ -257,7 +258,7 @@
     $(".prototype-show").hide();
     $(".prototype-show-ready").show();
 
-    //SPINNER doesnt work
+    //INCREMENT SPINNER doesnt work
     (function ($) {
       $('.spinner .btn:first-of-type').on('click', function () {
         $('.spinner input').val(parseInt($('.spinner input').val(), 10) + 1);
@@ -323,6 +324,10 @@
   $(document).on("click", "#toggleMatchBillingAddress", function () {
     this.checked ? $('#targetCCAddress').hide(400) : $('#targetCCAddress').show(400);
   });
-
-  
+ 
+//SHOW ERROR STATE content-two-error
+$(document).on("click", "#reveal-billing-error", function () {
+  $(".prototype-show").hide();
+  $("#content-two-error").show();
+});
 </script>

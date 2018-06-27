@@ -1,27 +1,4 @@
-<div id="content-four" class="prototype-show" style="display: none;">
-  <form id="companyForm" role="form" class="u_margin-md-top" name="forms.companyForm" novalidate="">
-
-    <div class="row ng-scope">
-      <div class="col-md-6">
-        <div class="form-group">
-          <select class="form-control selectpicker">
-                    <option value="Credit Card">Credit Card</option>
-                    <option value="Invoice Me">Invoice Me</option>
-        </select>
-        </div>
-      </div>
-      <div class="col-md-6 text-center">
-        <small>
-                <i class="fa fa-plus"></i>
-                <i class="fa fa-plus"></i>Secure Checkout from <br/>Chargebee and Stripe
-            </small>
-      </div>
-    </div>
-
-
-
-
-   <!-- FIRST TIME CREDIT CARD -->
+<!-- FIRST TIME CREDIT CARD -->
 <div id="firstTimeCC" style="display:none">
         <div class="row ng-scope">
           <div class="col-md-12">
@@ -46,7 +23,7 @@
           </div>
         </div>
     
-        <!-- <div class="checkbox"><label><input type="checkbox" checked="true" checked> Set as default Payment Method for all recurring charges</label></div> -->
+        <div class="checkbox"><label><input type="checkbox" checked="true" checked> Set as default Payment Method for all recurring charges</label></div>
     
         <div class="checkbox"><label>
               <input type="checkbox" id="toggleMatchBillingAddress" checked> Matches Billing Address </label></div>
@@ -160,68 +137,3 @@
           </div>
         </div> <!--  END CUSTOM CC ADDRESS -->
      </div> <!-- END FIRST TIME CC -->
-
-
-
-
-
-<!-- EXISTING CREDIT CARD -->
-<div id="existingCardCC">
- <br/>
-  <div class="row ng-scope">
-    <div class="col-md-12">
-      <div class="form-group">
-        <select class="form-control selectpicker">
-                          <option value="">Mastercard ****-4242</option>
-                          <option value="">Visa ****-9292</option>
-                          <option value="">Add New Credit Card</option>
-                </select>
-      </div>
-    </div>
-  </div>
-
-  <div class="row ng-scope">
-    <div class="col-md-12">
-      <div class="form-group"><label class="control-label"> Cardholder Name </label>
-        <input type="text" class="form-control" placeholder="Joan Abbott" disabled="disabled">
-      </div>
-    </div>
-</div>
-
-    <div class="row ng-scope">
-      <div class="col-xs-12 col-sm-6">
-        <div class="form-group"><label class="control-label"> Card Number </label>
-          <input id="cc" type="text" class="form-control" placeholder="****-4242" disabled="disabled" />
-        </div>
-      </div>
-      <div class="col-xs-6 col-sm-3">
-        <div class="form-group"><label class="control-label"> Expiry Date </label>
-          <input id="ccexp" type="text" placeholder="MM/YY" class="form-control masked" pattern="(1[0-2]|0[1-9])\/(1[5-9]|2\d)" data-valid-example="05/18"
-            disabled="disabled" />
-        </div>
-      </div>
-      <div class="col-xs-6 col-sm-3">
-        <div class="form-group"><label for="company-settings-unit" class="control-label"> CVV </label> <input id="company-settings-unit" type="text"
-            class="form-control" disabled="disabled">
-        </div>
-      </div>
-    </div>
-
-    <div class="checkbox"><label><input type="checkbox" checked="true" checked> Set as default Payment Method for all recurring charges</label></div>
-
-    <!-- <div class="checkbox"><label>
-              <input type="checkbox" id="toggleMatchBillingAddress" checked> Matches Billing Address </label></div> -->
-
-  </div> <!-- END EXISTING CC -->
-
-
-
-
-  </form>
-
-  <hr>
-  <div class="col-xs-12">
-    <button id="" class="btn btn-default btn-lg pull-left"> Back </button>
-    <button id="addThisCard" class="btn btn-primary btn-lg pull-right"> Next </button>
-  </div>
-</div>
