@@ -14158,7 +14158,7 @@ tr.blocked-file {
   --sidebar-width: 290px;
   --toolbar-height: 53px;
   --footer-height: 50px;
-  --header-height: 60px;
+  --header-height: 90px;
   --sidebar-displace: calc(var(--sidebar-width)*-1);
   --total-height:  calc(var(--toolbar-height) + var(--footer-height) + var(--header-height));
   height: calc(100vh - var(--total-height)); }
