@@ -246,6 +246,7 @@
     <div ng-include="'plans/checkout-shipping-address.html'"></div>
     <div ng-include="'plans/checkout-payment-methods.html'"></div>
     <div ng-include="'plans/checkout-review-purchase.html'"></div>
+    <div ng-include="'plans/tax-exemption.html'"></div>
   </div>
   <!-- //Checkout End -->
 
@@ -325,9 +326,15 @@
     this.checked ? $('#targetCCAddress').hide(400) : $('#targetCCAddress').show(400);
   });
  
-//SHOW ERROR STATE content-two-error
+//SHOW ERROR STATE 
 $(document).on("click", "#reveal-billing-error", function () {
   $(".prototype-show").hide();
   $("#content-two-error").show();
+});
+
+//SHOW TAX EXEMPTION
+$(document).on("click", "#showTaxExempt", function () {
+  $(".prototype-show").hide();
+  $("#tax-exemption-form").show();
 });
 </script>
