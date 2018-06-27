@@ -9543,57 +9543,57 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plans/checkout-subscriptions.html',
-    '<div id="content-one" class="prototype-show prototype-show-ready"><h3>Basic Plan</h3><div class="row"><div class="col-sm-4 col-xs-6"><div class="panel text-center u_padding-md"><p style="font-size: 62px;line-height: 1;">$10</p><span>per Display<br>per Month</span></div></div><div class="col-sm-4 col-xs-6 bordered-right"><div class="text-center u_padding-md"><p style="font-size: 62px;line-height: 1;">1</p><span>Display Included</span></div></div><div class="col-sm-4 hidden-xs text-center u_margin-md-top"><p>All Free & Paid<br>Features Included</p><a href="#">View Plan Details</a></div></div><hr><style>\n' +
-    '  .spinner {\n' +
-    '    /* width: 100px; */\n' +
-    '  }\n' +
+    '<div id="content-one" class="prototype-show prototype-show-ready"><h3>Basic Plan</h3><div class="row"><div class="col-sm-4 col-xs-6"><div class="text-center u_padding-md"><p style="font-size: 62px;line-height: 1;">$10</p><span>per Display<br>per Month</span></div></div><div class="col-sm-1 col-xs-1" style="display: flex; height: 110px; /* position: relative; */"><b style="font-size: 33px; align-self: center;">x</b></div><div class="col-sm-3 col-xs-5 bordered-right"><div class="text-center u_padding-md"><p style="font-size: 62px;line-height: 1;">1</p><span>Display Included</span></div></div><div class="col-sm-4 hidden-xs text-center u_margin-md-top"><p>All Free & Paid<br>Features Included</p><a href="#">View Plan Details</a></div></div><hr style="margin-bottom: 0"><style>\n' +
+    '    .spinner {\n' +
+    '      /* width: 100px; */\n' +
+    '    }\n' +
     '\n' +
-    '  .spinner input {\n' +
-    '    text-align: right;\n' +
-    '  }\n' +
+    '    .spinner input {\n' +
+    '      text-align: right;\n' +
+    '    }\n' +
     '\n' +
-    '  .input-group-btn-vertical {\n' +
-    '    position: relative;\n' +
-    '    white-space: nowrap;\n' +
-    '    width: 1%;\n' +
-    '    vertical-align: middle;\n' +
-    '    display: table-cell;\n' +
-    '  }\n' +
+    '    .input-group-btn-vertical {\n' +
+    '      position: relative;\n' +
+    '      white-space: nowrap;\n' +
+    '      width: 1%;\n' +
+    '      vertical-align: middle;\n' +
+    '      display: table-cell;\n' +
+    '    }\n' +
     '\n' +
-    '  .input-group-btn-vertical>.btn {\n' +
-    '    display: block;\n' +
-    '    float: none;\n' +
-    '    width: 100%;\n' +
-    '    max-width: 100%;\n' +
-    '    padding: 8px;\n' +
-    '    margin-left: -1px;\n' +
-    '    position: relative;\n' +
-    '    border-radius: 0;\n' +
-    '  }\n' +
+    '    .input-group-btn-vertical>.btn {\n' +
+    '      display: block;\n' +
+    '      float: none;\n' +
+    '      width: 100%;\n' +
+    '      max-width: 100%;\n' +
+    '      padding: 8px;\n' +
+    '      margin-left: -1px;\n' +
+    '      position: relative;\n' +
+    '      border-radius: 0;\n' +
+    '    }\n' +
     '\n' +
-    '  .input-group-btn-vertical>.btn:first-child {\n' +
-    '    border-top-left-radius: 4px;\n' +
-    '  }\n' +
+    '    .input-group-btn-vertical>.btn:first-child {\n' +
+    '      border-top-left-radius: 4px;\n' +
+    '    }\n' +
     '\n' +
-    '  .input-group-btn-vertical>.btn:last-child {\n' +
-    '    margin-top: -2px;\n' +
-    '    border-bottom-left-radius: 4px;\n' +
-    '  }\n' +
+    '    .input-group-btn-vertical>.btn:last-child {\n' +
+    '      margin-top: -2px;\n' +
+    '      border-bottom-left-radius: 4px;\n' +
+    '    }\n' +
     '\n' +
-    '  .input-group-btn-vertical i {\n' +
-    '    position: absolute;\n' +
-    '    top: 0;\n' +
-    '    left: 4px;\n' +
-    '  }\n' +
+    '    .input-group-btn-vertical i {\n' +
+    '      position: absolute;\n' +
+    '      top: 0;\n' +
+    '      left: 4px;\n' +
+    '    }\n' +
     '\n' +
-    '  .radio label {\n' +
-    '    padding: 5px 0 5px 30px;\n' +
-    '  }\n' +
+    '    .radio label {\n' +
+    '      padding: 5px 0 5px 30px;\n' +
+    '    }\n' +
     '\n' +
-    '  .form-group {\n' +
-    '    margin-bottom: 8px;\n' +
-    '  }\n' +
-    '</style><div class="row"><div class="col-xs-12">Need more Displays than Basic Plan offers?<label class="label" style="color: #020622;">($9 per Display)</label><br><br></div><div class="col-xs-12"><div class="input-group spinner" style="border-radius: 4px !important;"><div class="input-group-btn-vertical"><button class="btn btn-white" type="button"><i class="fa fa-caret-up"></i></button> <button class="btn btn-white" type="button"><i class="fa fa-caret-down"></i></button></div><input type="text" class="form-control" value="2" style="width: 50px; font-size: 18px; border-radius: 4px; text-align: center;"> <span class="icon-right u_margin-md-top" style="vertical-align: -webkit-baseline-middle;">additional Display licenses added to your purchase.</span></div></div><div class="col-xs-12"><hr></div><div class="col-xs-12"><div class="text-right"><div class="label" style="color: #020622;">Pay yearly, get one month free!</div></div><div class="panel u_padding-md" style="padding: 0 26px;"><div class="radio" style="background: aliceblue"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> $27 billed monthly</label></div><div class="radio"><label><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> $267 billed yearly</label> <label style="border: 1px solid #1fbc52; padding: 0px 12px; float: right; color: #1fbc52; cursor: default; top: 3px; position: relative;">Save $54!</label></div></div></div></div><hr><div class="col-xs-12"><button id="" class="btn btn-primary btn-lg pull-right">Next</button></div></div>');
+    '    .form-group {\n' +
+    '      margin-bottom: 8px;\n' +
+    '    }\n' +
+    '  </style><div class="text-center"><b style="font-size: 33px;">+</b></div><div class="row"><div class="col-xs-12">Need more Displays than Basic Plan offers?<label class="label" style="color: #020622;">($9 per Display)</label><br><br></div><div class="col-xs-12"><div class="input-group spinner" style="border-radius: 4px !important;"><div class="input-group-btn-vertical"><button class="btn btn-white" type="button"><i class="fa fa-caret-up"></i></button> <button class="btn btn-white" type="button"><i class="fa fa-caret-down"></i></button></div><input type="text" class="form-control" value="2" style="width: 50px; font-size: 18px; border-radius: 4px; text-align: center;"> <span class="icon-right u_margin-md-top" style="vertical-align: -webkit-baseline-middle;">additional Display licenses added to your purchase.</span></div></div><div class="col-xs-12"><hr></div><div class="col-xs-12"><div class="text-right"><div class="label" style="color: #020622;"><b class="pull-left">TOTAL</b> Pay yearly, get one month free!</div></div><div class="panel u_padding-md" style="padding: 0 26px;"><div class="radio" style="background: aliceblue"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> $27 billed monthly</label></div><div class="radio"><label><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> $267 billed yearly</label> <label style="border: 1px solid #1fbc52; padding: 0px 12px; float: right; color: #1fbc52; cursor: default; top: 3px; position: relative;">Save $54!</label></div></div></div></div><hr><div class="col-xs-12"><button id="" class="btn btn-primary btn-lg pull-right">Next</button></div></div>');
 }]);
 })();
 
