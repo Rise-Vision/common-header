@@ -14,7 +14,18 @@
     </div>
 
 
-
+    <br/>
+    <div class="row ng-scope">
+      <div class="col-md-12">
+        <div class="form-group">
+          <select id="paymentMethodSelector" class="form-control selectpicker">
+                        <option value="">Mastercard ****-4242</option>
+                        <option value="">Visa ****-9292</option>
+                        <option value="">Add New Credit Card</option>
+              </select>
+        </div>
+      </div>
+    </div>
 
     <!-- FIRST TIME CREDIT CARD -->
     <div id="firstTimeCC" style="display:none">
@@ -44,7 +55,7 @@
       <!-- <div class="checkbox"><label><input type="checkbox" checked="true" checked> Set as default Payment Method for all recurring charges</label></div> -->
 
       <div class="checkbox"><label>
-              <input type="checkbox" id="toggleMatchBillingAddress" checked> Matches Billing Address </label></div>
+              <input type="checkbox" id="toggleMatchBillingAddress" checked> Same As Billing Address </label></div>
 
       <!-- CUSTOM CC ADDRESS -->
       <div id="targetCCAddress" style="display: none">
@@ -164,20 +175,8 @@
 
     <!-- EXISTING CREDIT CARD -->
     <div id="existingCardCC">
-      <br/>
-      <div class="row ng-scope">
-        <div class="col-md-12">
-          <div class="form-group">
-            <select class="form-control selectpicker">
-                          <option value="">Mastercard ****-4242</option>
-                          <option value="">Visa ****-9292</option>
-                          <option value="">Add New Credit Card</option>
-                </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="row ng-scope">
+    
+      <div class="row">
         <div class="col-md-12">
           <div class="form-group"><label class="control-label"> Cardholder Name </label>
             <input type="text" class="form-control" placeholder="Joan Abbott" disabled="disabled">

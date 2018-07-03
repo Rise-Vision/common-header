@@ -475,7 +475,11 @@
       }
     });
 
-
+    //PAYMENT METHOD DROPDOWN
+    $(document).on('change', '#paymentMethodSelector', function () {
+      $("#existingCardCC").hide();
+      $("#firstTimeCC").show();
+    });
 
     //CONTROL MODAL
     $(document).on("click", "#subscribe-plan", function () {
@@ -496,7 +500,15 @@
     //SHOW ERROR STATE 
     $(document).on("click", "#reveal-billing-error", function () {
       $(".prototype-show").hide();
+      $(".sized-container").hide();
       $("#content-two-error").show();
+    });
+
+    //CLEAR ERROR STATE 
+    $(document).on("click", "#hide-billing-error", function () {
+      $(".prototype-show").hide();
+      $("#content-two").show();
+      $(".sized-container").show();
     });
 
     //SHOW TAX EXEMPTION
