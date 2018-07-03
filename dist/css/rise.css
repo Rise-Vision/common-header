@@ -7664,6 +7664,9 @@ input::-webkit-contacts-auto-fill-button {
 input[type=number] {
   -moz-appearance: textfield; }
 
+input[type=radio] {
+  margin: 3px 0 0; }
+
 ::-webkit-inner-spin-button {
   -webkit-appearance: none; }
 

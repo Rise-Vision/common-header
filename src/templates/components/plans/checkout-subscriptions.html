@@ -1,30 +1,31 @@
 <div id="content-one" class="prototype-show prototype-show-ready">
 
-  <h3>Basic Plan</h3>
+  <h3>Enterprise Plan</h3>
 
 
-  <div class="row">
-    <div class="col-sm-4 col-xs-6">
+  <div class="flex-horizontal">
+    <!-- FLEXBOX THIS COMPONENT? -->
+    <div>
       <div class="text-center u_padding-md">
-        <p style="font-size: 62px;line-height: 1;">$10</p><span>per Display <br>per Month</span></div>
+        <p style="font-size: 62px;line-height: 1;">$7</p><span>per Display <br>per Month</span></div>
     </div>
-    <div class="col-sm-1 col-xs-1" style="
+    <div style="
     display: flex;
     height: 110px;
-    /* position: relative; */
+    justify-content: center;
 "><b style="
     font-size: 33px;
     align-self: center;
 ">x</b></div>
-    <div class="col-sm-3 col-xs-5 bordered-right">
+    <div>
       <div class="text-center u_padding-md">
-        <p style="font-size: 62px;line-height: 1;">1</p><span> Display Included</span></div>
+        <p style="font-size: 62px;line-height: 1;">70</p><span> Displays Included</span></div>
     </div>
-    <div class="col-sm-4 hidden-xs text-center u_margin-md-top">
+    <!-- <div class="col-sm-4 hidden-xs text-center u_margin-md-top">
       <p>All Free & Paid
         <br/> Features Included </p>
       <a href="#">View Plan Details</a>
-    </div>
+    </div> -->
   </div>
 
   <hr style="margin-bottom: 0">
@@ -81,16 +82,14 @@
   </style>
 
 
-  <div class="text-center">
-    <b style="
-      font-size: 33px;
-  ">+</b>
+  <div class="text-center" style="height: 32px;">
+    <b style="font-size: 33px;position: relative;top: -28px;background: #fcfcfc;border: 10px solid #fcfcfc;">+</b>
   </div>
   <div class="row">
     <div class="col-xs-12">
-      Need more Displays than Basic Plan offers?<label class="label" style="
+      Need more Displays than Enterprise Plan offers?<label class="label" style="
       color: #020622;
-      ">($9 per Display)</label>
+      ">($7 per Display)</label>
       <br/>
       <br/>
     </div>
@@ -117,19 +116,28 @@
       <div class="text-right">
         <div class="label" style="
       color: #020622;
-      "><b class="pull-left">TOTAL</b>
-      Pay yearly, get one month free!</div>
+      "><b class="pull-left">TOTAL</b> Pay yearly, get one month free!</div>
       </div>
       <div class="panel u_padding-md" style="padding: 0 26px;">
-        <div class="radio" style="background: aliceblue"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> $27 billed monthly</label></div>
-        <div class="radio"><label><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> $267 billed yearly</label>
+        <div class="radio" style="background: aliceblue">
+          <label>
+            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> 
+            $27 billed monthly
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> 
+            $267 billed yearly
+          </label>
           <label style="border: 1px solid #1fbc52;
           padding: 0px 12px;
           float: right;
           color: #1fbc52;
           cursor: default;
-          top: 3px;
-          position: relative;">Save $54!</label>
+          top: 4px;
+          position: relative;">Save $54!
+        </label>
         </div>
       </div>
 
@@ -138,9 +146,10 @@
   </div>
 
   <hr>
+  <div class="row">
   <div class="col-xs-12">
     <!-- <button id="" class="btn btn-default btn-lg pull-left"> Back </button> -->
-    <button id="" class="btn btn-primary btn-lg pull-right"> Next </button>
+    <button id="" class="btn btn-primary btn-lg pull-right"> Continue </button>
   </div>
-
+</div>
 </div>

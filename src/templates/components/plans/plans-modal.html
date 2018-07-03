@@ -153,52 +153,52 @@
   </div>
   <!-- //Modal Body -->
 
-<style>
-  .progress-bar-step {
-    cursor: pointer;
-  }
-  
-  .progress-bar-step p {
-    text-align: center;
-    position: relative;
-    top: -39px;
-    margin: 0;
-    font-size: 13px;
-    color: #5b5b5b;
-    word-spacing: 100vw;
-  }
+  <style>
+    /* .progress-bar-step {
+      cursor: pointer;
+    }
 
-  .progress-bar-step--active p {
-    color: #4ab766;
-  }
+    .progress-bar-step p {
+      text-align: center;
+      position: relative;
+      top: -39px;
+      margin: 0;
+      font-size: 13px;
+      color: #5b5b5b;
+      word-spacing: 100vw;
+    }
 
-  .progress-bar-step--complete {
-    background-color: #a4dbff !important;
-  }
+    .progress-bar-step--active p {
+      color: #4ab766;
+    }
 
-  .progress-bar-step--complete p {
-    color: #a4dbff;
-  }
+    .progress-bar-step--complete {
+      background-color: #a4dbff !important;
+    }
 
-  .progress-bar-step--complete p::before {
-    content: "\f00c";
-    margin-right: 4px;
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: inherit;
-  }
+    .progress-bar-step--complete p {
+      color: #a4dbff;
+    }
 
-  .bordered-right {
-    border-right: 1px solid #DDD;
-    
-  }
-  @media (max-width: 768px) {
+    .progress-bar-step--complete p::before {
+      content: "\f00c";
+      margin-right: 4px;
+      font-family: FontAwesome;
+      font-style: normal;
+      font-weight: normal;
+      text-decoration: inherit;
+    } */
+
     .bordered-right {
-      border-right: 0;
+      border-right: 1px solid #DDD;
     }
+
+    @media (max-width: 768px) {
+      .bordered-right {
+        border-right: 0;
+      }
     }
-    
+
     .lead {
       margin-bottom: 10px;
     }
@@ -210,9 +210,124 @@
     small {
       color: #5b5b5b;
     }
-</style>
+
+    #security-branding {
+      margin-bottom: 0;
+      background: #f2f2f2;
+      overflow: hidden;
+      border-radius: 0 0 4px 4px;
+      border-top: 1px solid #e5e5e5;
+      min-height: 16.43px;
+      width: 100%;
+    }
+
+    #security-branding img {
+      width: 25px;
+      height: 14px;
+      position: relative;
+      top: -2px;
+      margin-right: 10px;
+    }
+
+    .flex-horizontal {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .flex-horizontal>div:nth-of-type(even) {
+      flex: 1;
+    }
+
+    .flex-horizontal>div:nth-of-type(odd) {
+      flex: 5;
+    }
+
+    .pagination-container {
+      margin-top: 120px;
+    }
+
+    /* RENAME THIS */
+
+    .pagination {
+      width: 100%;
+      text-align: center;
+      padding: 0;
+      display: inline-block;
+      margin: 30px 0 0 0;
+    }
+
+    .indicator {
+      width: 15px;
+      height: 15px;
+      border: 4px solid #dddddd;
+      border-radius: 50%;
+      display: inline-block;
+      position: relative;
+    }
+
+    .indicator .tag {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #dddddd;
+      font-size: 12px;
+      cursor: default;
+    }
+
+    .indicator.active,
+    .indicator.complete {
+      border-color: #4ab767;
+    }
+
+    .indicator.active .tag,
+    .indicator.complete .tag {
+      color: #4ab767;
+    }
+
+    .indicator.complete .tag:before {
+      content: "\f00c";
+      margin-right: 4px;
+      font-family: FontAwesome;
+      font-style: normal;
+      font-weight: normal;
+      text-decoration: inherit;
+      color: #4ab767;
+      font-size: 14px;
+    }
+
+    .progress-bar-container {
+      width: 17%;
+      height: 2px;
+      display: inline-block;
+      background-color: #dddddd;
+      position: relative;
+      top: -6px;
+    }
+
+    .progress-bar-container:last-of-type {
+      display: none;
+    }
+
+    .progress-bar-container .progress-bar {
+      width: 0;
+      height: 100%;
+      background-color: #4ab767;
+    }
+
+    .indicator.complete+.progress-bar-container.complete {
+      background-color: #4ab767;
+    }
+
+    /* .progress-step {
+      display: inline;
+    } */
+  </style>
+
   <!-- //Checkout Start -->
-  <div id="checkout-modal" class="modal-body u_padding-lg" stop-event="touchend">
+  <div id="checkout-modal" class="modal-body" style="padding: 16px 32px" stop-event="touchend">
     <!-- <div style="display:flex;">
       <div class="text-center" style="flex: 1; display: inline-block;">Subscriptions</div>
       <div class="text-center" style="flex: 1; display: inline-block;">Billing Address</div>
@@ -221,24 +336,73 @@
       <div class="text-center" style="flex: 1; display: inline-block;">Review Purchase</div>
     </div> -->
 
-    <div class="app-launcher-wizard_progress-bar hidden-sm hidden-xs" style="padding-top: 32px;" >
+    <!-- <div class="app-launcher-wizard_progress-bar hidden-sm hidden-xs" style="padding-top: 32px;">
       <div id="step-one" class="progress-bar-step progress-bar-step--active">
         <p>Subscription Details</p>
       </div>
       <div id="step-two" class="progress-bar-step">
-          <p>Billing Address</p>
+        <p>Billing Address</p>
       </div>
       <div id="step-three" class="progress-bar-step">
-          <p>Shipping Address</p>
+        <p>Shipping Address</p>
       </div>
       <div id="step-four" class="progress-bar-step">
-          <p>Payment Method</p>
+        <p>Payment Method</p>
       </div>
       <div id="step-five" class="progress-bar-step">
-          <p>Purchase Review</p>
+        <p>Purchase Review</p>
+      </div>
+    </div> -->
+
+    <div class="sized-container">
+      <div class="pagination">
+
+        <div class="indicator active" id="step-one">
+          <div class="tag">Subscription Details</div>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar"></div>
+        </div>
+
+
+
+        <div class="indicator" id="step-two">
+          <div class="tag">Billing Address</div>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar"></div>
+        </div>
+
+
+
+        <div class="indicator" id="step-three">
+          <div class="tag">Shipping Address</div>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar"></div>
+        </div>
+
+
+
+        <div class="indicator" id="step-four">
+          <div class="tag">Payment Method</div>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar"></div>
+        </div>
+
+
+
+        <div class="indicator" id="step-five">
+          <div class="tag">Purchase Review</div>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar"></div>
+        </div>
+
+
       </div>
     </div>
-
 
     <div ng-include="'plans/checkout-subscriptions.html'"></div>
     <div ng-include="'plans/checkout-billing-address.html'"></div>
@@ -250,91 +414,102 @@
   </div>
   <!-- //Checkout End -->
 
-<div class="modal-footer">
-  
-</div>
-<script>
-  //SETUP
-  $(document).ready(function () {
-    $(".prototype-show").hide();
-    $(".prototype-show-ready").show();
+  <script>
+    //SETUP
+    $(document).ready(function () {
+      $(".prototype-show").hide();
+      $(".prototype-show-ready").show();
 
-    //INCREMENT SPINNER doesnt work
-    (function ($) {
-      $('.spinner .btn:first-of-type').on('click', function () {
-        $('.spinner input').val(parseInt($('.spinner input').val(), 10) + 1);
-      });
-      $('.spinner .btn:last-of-type').on('click', function () {
-        $('.spinner input').val(parseInt($('.spinner input').val(), 10) - 1);
-      });
-    })(jQuery);
-  });
+      //INCREMENT SPINNER doesnt work
+      (function ($) {
+        $('.spinner .btn:first-of-type').on('click', function () {
+          $('.spinner input').val(parseInt($('.spinner input').val(), 10) + 1);
+        });
+        $('.spinner .btn:last-of-type').on('click', function () {
+          $('.spinner input').val(parseInt($('.spinner input').val(), 10) - 1);
+        });
+      })(jQuery);
+    });
 
-  //CYCLE
-  $(document).on("click", "#step-one", function () {
-    $(".prototype-show").hide();
-    $("#content-one").show();
-  });
-  $(document).on("click", "#step-two", function () {
-    $(".prototype-show").hide();
-    $("#content-two").show();
-  });
-  $(document).on("click", "#step-three", function () {
-    $(".prototype-show").hide();
-    $("#content-three").show();
-  });
-  $(document).on("click", "#step-four", function () {
-    $(".prototype-show").hide();
-    $("#content-four").show();
-  });
-  $(document).on("click", "#step-five", function () {
-    $(".prototype-show").hide();
-    $("#content-five").show();
-  });
+    //CYCLE
+    $(document).on("click", "#step-one", function () {
+      $(".prototype-show").hide();
+      $("#content-one").show();
+    });
+    $(document).on("click", "#step-two", function () {
+      $(".prototype-show").hide();
+      $("#content-two").show();
+    });
+    $(document).on("click", "#step-three", function () {
+      $(".prototype-show").hide();
+      $("#content-three").show();
+    });
+    $(document).on("click", "#step-four", function () {
+      $(".prototype-show").hide();
+      $("#content-four").show();
+      $("#security-branding").show();
+    });
+    $(document).on("click", "#step-five", function () {
+      $(".prototype-show").hide();
+      $("#content-five").show();
+      $("#security-branding").show();
+    });
 
-  // STEP THROUGH CHECKOUT NAV 
-  $(document).on("click", ".progress-bar-step", function () {
-    var target = $(this);
-    $(".progress-bar-step").removeClass("progress-bar-step--active");
-    $(this).removeClass("progress-bar-step--complete");
-    $(this).addClass("progress-bar-step--active");
-    $(this).prevAll().addClass("progress-bar-step--complete");
-  });
+    // STEP THROUGH CHECKOUT NAV 
+    $(document).on("click", ".indicator", function () {
+      var target = $(this);
+      $(".indicator").removeClass("active");
+      $(this).removeClass("complete");
+      $(this).addClass("active");
+      $(this).prevAll().addClass("complete");
+    });
 
-  $('input:radio[name="optionsRadios"]').change(
-    function () {
-      if ($(this).is(':checked')) {
-        $(this).parent(".radio").css("background", "aliceblue");
-      } else {
-        $(this).parent(".radio").css("background", "white");
+    // HIGHLIGHT PAYMENT CYCLE
+    $(document).on('change', 'input[type=radio][name=optionsRadios]', function () {
+      if (this.value == 'option1') {
+        $(".radio").css("background", "white");
+        $("#optionsRadios1").closest(".radio").css("background", "aliceblue");
+      } else if (this.value == 'option2') {
+        $(".radio").css("background", "white");
+        $("#optionsRadios2").closest(".radio").css("background", "aliceblue");
       }
     });
 
-  //CONTROL MODAL
-  $(document).on("click", "#subscribe-plan", function () {
-    $("#plans-modal").hide();
-    $("#checkout-modal").show();
 
-    $("h3#modalTitle").text("Checkout");
 
-    $(".modal-dialog").removeClass("modal-lg");
-    $(".modal-dialog").addClass("modal-md");
-  });
+    //CONTROL MODAL
+    $(document).on("click", "#subscribe-plan", function () {
+      $("#plans-modal").hide();
+      $("#checkout-modal").show();
 
-  //HIDE CC ADDRESS
-  $(document).on("click", "#toggleMatchBillingAddress", function () {
-    this.checked ? $('#targetCCAddress').hide(400) : $('#targetCCAddress').show(400);
-  });
- 
-//SHOW ERROR STATE 
-$(document).on("click", "#reveal-billing-error", function () {
-  $(".prototype-show").hide();
-  $("#content-two-error").show();
-});
+      $("h3#modalTitle").text("Checkout");
 
-//SHOW TAX EXEMPTION
-$(document).on("click", "#showTaxExempt", function () {
-  $(".prototype-show").hide();
-  $("#tax-exemption-form").show();
-});
-</script>
+      $(".modal-dialog").removeClass("modal-lg");
+      $(".modal-dialog").addClass("modal-md");
+    });
+
+    //HIDE CC ADDRESS
+    $(document).on("click", "#toggleMatchBillingAddress", function () {
+      this.checked ? $('#targetCCAddress').hide(400) : $('#targetCCAddress').show(400);
+    });
+
+    //SHOW ERROR STATE 
+    $(document).on("click", "#reveal-billing-error", function () {
+      $(".prototype-show").hide();
+      $("#content-two-error").show();
+    });
+
+    //SHOW TAX EXEMPTION
+    $(document).on("click", "#showTaxExempt", function () {
+      $(".prototype-show").hide();
+      $("#tax-exemption-form").show();
+    });
+  </script>
+
+  <div id="security-branding" class="text-center prototype-show">
+    <small>
+    <img src="https://s3.amazonaws.com/Rise-Images/UI/chargebee-icon.svg">
+    <img src="https://s3.amazonaws.com/Rise-Images/UI/stripe-icon.svg">
+    Secure Checkout from Chargebee and Stripe 
+  </small>
+  </div>
