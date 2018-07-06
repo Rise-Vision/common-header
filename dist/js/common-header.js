@@ -9519,7 +9519,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plans/checkout-review-purchase.html',
-    '<div id="content-five" class="prototype-show" style="display: none;"><div class="row"><div class="col-md-6 u_padding-md-vertical"><p class="lead">Company Account</p><div class="text-block"><b>Acme Co Inc.</b><br>Email: user@domain.com<br>Company ID: ce4684a1-e8b3-4e02-9798-c4517b43cf7a</div></div><div class="col-md-6 u_padding-md-vertical"><p class="lead">Payment Method <button class="btn btn-link btn-xs">Edit</button></p><div class="text-block"><b>VISA</b><br>4242-0000-4242-0000<br>Exp: 07/18</div></div></div><div class="row"><div class="col-md-6 u_padding-md-vertical"><p class="lead">Billing Address <button class="btn btn-link btn-xs">Edit</button></p><div class="text-block">Gob Bluth<br>user@risevision.com<br>Rise Vision Inc.<br>545 King Street West<br>Toronto, ON, M5V 1M1<br>Canada</div></div><div class="col-md-6 u_padding-md-vertical"><p class="lead">Shipping Address <button class="btn btn-link btn-xs">Edit</button></p><div class="text-block">Rise Vision Inc.<br>545 King Street West<br>Toronto, ON, M5V 1M1<br>Canada</div></div></div><hr style="margin-top: 5px; margin-bottom: 5px;"><div class="row"><div class="col-xs-12"><p class="lead">Subscription Details <button class="btn btn-link btn-xs">Edit</button></p></div></div><div class="row"><div class="col-sm-4 col-xs-6 text-right text-block"><p>Basic Plan (Yearly)<br>2 Additional Displays<br>GST<br>PST<br>Total Tax:</p><span class="order-total">Order Total:</span></div><div class="col-sm-4 col-xs-6 text-right text-block"><p>$85<br>$19<br>$1.70<br>$2.20<br>$4.70</p><span class="order-total">$122.34 <small class="u_margin-left">CAD</small></span></div><div class="col-sm-4 col-xs-12 text-right text-block"><button id="showTaxExempt" class="btn btn-link btn-xs">Submit Tax Exemption</button></div></div><div class="row"><hr></div><div class="row"><div class="col-xs-12 text-center"><button id="" class="btn btn-primary btn-hg">Pay $122.34 Now</button><br></div></div></div>');
+    '<div id="content-five" class="prototype-show" style="display: none;"><div class="row"><div class="col-md-6 u_padding-md-vertical"><p class="lead">Company Account</p><div class="text-block"><b>Acme Co Inc.</b><br>Email: user@domain.com<br>Company ID: ce4684a1-e8b3-4e02-9798-c4517b43cf7a</div></div><div class="col-md-6 u_padding-md-vertical"><p class="lead">Payment Method <button class="btn btn-link btn-xs">Edit</button></p><div class="text-block"><b>VISA</b><br>4242-0000-4242-0000<br>Exp: 07/18</div></div></div><div class="row"><div class="col-md-6 u_padding-md-vertical"><p class="lead">Billing Address <button class="btn btn-link btn-xs">Edit</button></p><div class="text-block">Gob Bluth<br>user@risevision.com<br>Rise Vision Inc.<br>545 King Street West<br>Toronto, ON, M5V 1M1<br>Canada</div></div><div class="col-md-6 u_padding-md-vertical"><p class="lead">Shipping Address <button class="btn btn-link btn-xs">Edit</button></p><div class="text-block">Rise Vision Inc.<br>545 King Street West<br>Toronto, ON, M5V 1M1<br>Canada</div></div></div><hr style="margin-top: 5px; margin-bottom: 5px;"><div class="row"><div class="col-xs-12"><p class="lead">Subscription Details <button class="btn btn-link btn-xs">Edit</button></p></div></div><div class="row"><div class="col-sm-4 col-xs-6 text-right text-block"><p>Basic Plan (Yearly)<br>2 Additional Displays<br>GST<br>PST<br>Total Tax:</p><span class="order-total">Order Total:</span></div><div class="col-sm-4 col-xs-6 text-right text-block"><p>$85<br>$19<br>$1.70<br>$2.20<br>$4.70</p><span class="order-total">$122.34 <small class="u_margin-left">CAD</small></span></div><div class="col-sm-4 col-xs-12 text-right text-block"><button id="showTaxExempt" class="btn btn-link btn-xs">Submit Tax Exemption</button></div></div><div class="row"><hr></div><div class="row"><div class="col-xs-12 text-center"><button id="payButton" class="btn btn-primary btn-hg btn-block"><span id="payLabel">Pay $122.34 Now</span> <i id="loadSpinner" class="fa fa-spinner fa-spin fa-fw fa-inverse u_padding-lg-horizontal" style="display:none"></i></button><br></div></div></div>');
 }]);
 })();
 
@@ -9593,7 +9593,19 @@ module.run(['$templateCache', function($templateCache) {
     '    .form-group {\n' +
     '      margin-bottom: 8px;\n' +
     '    }\n' +
-    '  </style><div class="text-center" style="height: 32px;"><b style="font-size: 33px;position: relative;top: -28px;background: #fcfcfc;border: 10px solid #fcfcfc;">+</b></div><div class="row"><div class="col-xs-12">Need more Displays than Enterprise Plan offers?<label class="label" style="color: #020622;">($7 per Display)</label><br><br></div><div class="col-xs-12"><div class="input-group spinner" style="border-radius: 4px !important;"><div class="input-group-btn-vertical"><button class="btn btn-white" type="button"><i class="fa fa-caret-up"></i></button> <button class="btn btn-white" type="button"><i class="fa fa-caret-down"></i></button></div><input type="text" class="form-control" value="2" style="width: 50px; font-size: 18px; border-radius: 4px; text-align: center;"> <span class="icon-right u_margin-md-top" style="vertical-align: -webkit-baseline-middle;">additional Display licenses added to your purchase.</span></div></div><div class="col-xs-12"><hr></div><div class="col-xs-12"><div class="text-right"><div class="label" style="color: #020622;"><b class="pull-left">TOTAL</b> Pay yearly, get one month free!</div></div><div class="panel u_padding-md" style="padding: 0 26px;"><div class="radio" style="background: aliceblue"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> $27 billed monthly</label></div><div class="radio"><label><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> $267 billed yearly</label> <label style="border: 1px solid #1fbc52; padding: 0px 12px; float: right; color: #1fbc52; cursor: default; top: 4px; position: relative;">Save $54!</label></div></div></div></div><hr><div class="row"><div class="col-xs-12"><button id="" class="btn btn-primary btn-lg pull-right">Continue</button></div></div></div>');
+    '  </style><div class="text-center" style="height: 32px;"><b style="font-size: 33px;position: relative;top: -28px;background: #fcfcfc;border: 10px solid #fcfcfc;">+</b></div><div class="row"><div class="col-xs-12">Need more Displays than Enterprise Plan offers?<label class="label" style="color: #020622;">($7 per Display)</label><br><br></div><div class="col-xs-12"><div class="input-group spinner" style="border-radius: 4px !important;"><div class="input-group-btn-vertical"><button class="btn btn-white" type="button"><i class="fa fa-caret-up"></i></button> <button class="btn btn-white" type="button"><i class="fa fa-caret-down"></i></button></div><input type="text" class="form-control" value="2" style="width: 50px; font-size: 18px; border-radius: 4px; text-align: center;"> <span class="icon-right u_margin-md-top" style="vertical-align: -webkit-baseline-middle;">additional Display licenses added to your purchase.</span></div></div><div class="col-xs-12"><hr></div><div class="col-xs-12"><div class="text-right"><div class="label" style="color: #020622;"><b class="pull-left">TOTAL</b> <b class="pull-right">Pay yearly, get one month free!</b></div></div><div class="panel payment-recurrence-selector" style="padding: 0;"><div class="radio" style="background: aliceblue"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> $27 billed monthly</label></div><div class="radio"><label><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> $267 billed yearly</label> <label style="border: 1px solid #1fbc52; padding: 0px 12px; float: right; color: #1fbc52; cursor: default; top: 4px; position: relative; right: 5px;">Save $54!</label></div></div></div></div><hr><div class="row"><div class="col-xs-12"><button id="" class="btn btn-primary btn-lg pull-right">Continue</button></div></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.components.plans');
+} catch (e) {
+  module = angular.module('risevision.common.components.plans', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('plans/checkout-success.html',
+    '<div id="content-success" class="prototype-show" style="display: none"><h3>Payment Successful!</h3><div class="flex-horizontal"><div><div class="text-center u_padding-md"><img src="https://s3.amazonaws.com/Rise-Images/Icons/online.svg" alt="Payment Successful"></div></div><hr><div class="row"><div class="col-xs-12"><button id="" class="btn btn-primary btn-lg pull-right">Done</button></div></div></div></div>');
 }]);
 })();
 
@@ -9606,41 +9618,6 @@ try {
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plans/plans-modal.html',
     '<div rv-spinner="" rv-spinner-key="plans-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 id="modalTitle" class="modal-title" translate="">common-header.plans.choose-plan</h3></div><div id="plans-modal" class="modal-body u_padding-lg" stop-event="touchend"><div class="text-center"><div class="btn-group" role="group" aria-label="..."><button ng-click="monthlyPrices = true" type="button" class="btn btn-default" ng-class="{ active: monthlyPrices }">Monthly</button> <button ng-click="monthlyPrices = false" type="button" class="btn btn-default" ng-class="{ active: !monthlyPrices }">Yearly</button></div><p class="u_padding-sm-vertical">Pay yearly, get one month free!</p></div><div class="pricing-table"><div id="planHeader" class="monthly"><div class="planColumn" ng-class="{ currentPlan: currentPlanLabelVisible(plan) }" ng-repeat="plan in plans"><div id="current-plan" class="currentPlanLabel" ng-show="currentPlanLabelVisible(plan)" translate="">common-header.plans.current</div><h2>{{plan.name}}</h2><h3 class="planColumnPrice" ng-show="!isFree(plan) && !isStarter(plan)"><span>$10</span>${{ monthlyPrices ? plan.monthly.priceDisplayMonth : plan.yearly.priceDisplayMonth }}</h3><h3 class="planColumnPrice" ng-show="isStarter(plan)">${{ monthlyPrices ? plan.monthly.priceDisplayMonth : plan.yearly.priceDisplayMonth }}</h3><p ng-show="!isFree(plan) && monthlyPrices" class="text-muted" translate="" translate-values="{ price: plan.monthly.billAmount }">common-header.plans.perDisplayBilledMonthly</p><p ng-show="!isFree(plan) && !monthlyPrices" class="text-muted" translate="" translate-values="{ price: plan.yearly.billAmount }">common-header.plans.perDisplayBilledYearly</p><div ng-show="!isFree(plan)"><h3>{{plan.proLicenseCount}}</h3><span ng-show="plan.proLicenseCount === 1" translate="">common-header.plans.displayIncluded</span> <span ng-show="plan.proLicenseCount > 1" translate="">common-header.plans.displaysIncluded</span></div><p ng-show="showSavings(plan)" class="planSavings" translate="" translate-values="{ save: (monthlyPrices ? plan.monthly.save : plan.yearly.save) }">common-header.plans.saveEachYear</p><p ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan)" translate="">common-header.plans.needMoreDisplays</p><a ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan)" href="https://www.risevision.com/purchaseadditionaldisplaylicenses" target="_blank" translate="">common-header.plans.individual-licenses</a><p id="trial-days-remaining" class="small u_margin-sm-bottom" ng-show="isCurrentPlan(plan) && isOnTrial(plan)" translate="" translate-values="{ count: currentPlan.trialPeriod }">common-header.plans.days-left-trial</p><p class="small u_margin-sm-bottom text-danger" ng-show="isCurrentPlan(plan) && isTrialExpired(plan)" translate="">common-header.plans.trial-expired</p><a id="subscribe-plan" ng-show="getVisibleAction(plan) === \'subscribe\'" x="" class="btn btn-primary btn-block" translate="">common-header.plans.subscribe</a> <a id="downgrade-plan" ng-show="getVisibleAction(plan) === \'downgrade\'" target="_blank" href="https://www.risevision.com/downgradeplan" class="btn btn-default btn-block" translate="">common-header.plans.downgrade</a> <a id="start-trial-plan" ng-show="getVisibleAction(plan) === \'start-trial\'" target="_blank" ng-click="startTrial(plan)" class="btn btn-primary btn-block" translate="">common-header.plans.start-trial</a></div></div><div id="planFeatures"><div class="planFeatureColumn" id="planFreeFeatures"><h4 id="planFeatures" class="planFeatureColumnTitle" style="column-span: all;">You can use the following features for free on any of your displays!</h4><div class="planFeature"><p class="featureTitle">Text</p></div><div class="planFeature"><p class="featureTitle">Image by URL</p></div><div class="planFeature"><p class="featureTitle">Video by URL</p></div><div class="planFeature"><p class="featureTitle">RSS</p></div><div class="planFeature"><p class="featureTitle">Time & Date</p></div><div class="planFeature"><p class="featureTitle">HTML</p></div></div><div class="planFeatureColumn" id="planPaidFeatures"><h4 class="planFeatureColumnTitle" style="column-span: all;">Key Features Included With All Paid Plans <span class="u_padding-sm-vertical">Everything in \'Free\' +</span></h4><div class="planFeature"><p class="featureTitle">Image Slideshows</p></div><div class="planFeature"><p class="featureTitle">Video Playlists</p></div><div class="planFeature"><p class="featureTitle">Unlimited Image & Video File Storage</p></div><div class="planFeature"><p class="featureTitle">Pre-made Templates</p></div><div class="planFeature"><p class="featureTitle">Centralized Content Control</p></div><div class="planFeature"><p class="featureTitle">Scheduling</p></div><div class="planFeature"><p class="featureTitle">Google Calendar</p></div><div class="planFeature"><p class="featureTitle">Google Spreadsheet</p></div><div class="planFeature"><p class="featureTitle">Twitter</p></div><div class="planFeature"><p class="featureTitle">Web Pages</p></div><div class="planFeature"><p class="featureTitle">Google Reliability & Security</p></div><div class="planFeature"><p class="featureTitle">Account / Sub-Account Hierarchy</p></div><div class="planFeature"><p class="featureTitle">User Role Permissioning</p></div><div class="planFeature"><p class="featureTitle">Display Monitoring Notifications</p></div><div class="planFeature"><p class="featureTitle">Content Shows Offline</p></div><div class="planFeature"><p class="featureTitle">Alert Integration</p></div><div class="planFeature"><p class="featureTitle">Display On/Off Control</p></div><h4 class="text-center" style="column-span: all;"><a href="https://www.risevision.com/pricing" target="_blank">Learn More About Key Features</a></h4></div></div><div id="planFooter"></div></div><div class="text-center u_padding-sm-vertical"><h3><a href="https://www.risevision.com/contact-us" target="_blank">Questions? We can help!</a></h3><h3><a href="https://www.risevision.com/licensesubcompany" target="_blank">Need to license your Sub-Company?</a></h3></div></div><style>\n' +
-    '    /* .progress-bar-step {\n' +
-    '      cursor: pointer;\n' +
-    '    }\n' +
-    '\n' +
-    '    .progress-bar-step p {\n' +
-    '      text-align: center;\n' +
-    '      position: relative;\n' +
-    '      top: -39px;\n' +
-    '      margin: 0;\n' +
-    '      font-size: 13px;\n' +
-    '      color: #5b5b5b;\n' +
-    '      word-spacing: 100vw;\n' +
-    '    }\n' +
-    '\n' +
-    '    .progress-bar-step--active p {\n' +
-    '      color: #4ab766;\n' +
-    '    }\n' +
-    '\n' +
-    '    .progress-bar-step--complete {\n' +
-    '      background-color: #a4dbff !important;\n' +
-    '    }\n' +
-    '\n' +
-    '    .progress-bar-step--complete p {\n' +
-    '      color: #a4dbff;\n' +
-    '    }\n' +
-    '\n' +
-    '    .progress-bar-step--complete p::before {\n' +
-    '      content: "\\f00c";\n' +
-    '      margin-right: 4px;\n' +
-    '      font-family: FontAwesome;\n' +
-    '      font-style: normal;\n' +
-    '      font-weight: normal;\n' +
-    '      text-decoration: inherit;\n' +
-    '    } */\n' +
-    '\n' +
     '    .bordered-right {\n' +
     '      border-right: 1px solid #DDD;\n' +
     '    }\n' +
@@ -9674,11 +9651,11 @@ module.run(['$templateCache', function($templateCache) {
     '    }\n' +
     '\n' +
     '    #security-branding img {\n' +
-    '      width: 25px;\n' +
-    '      height: 14px;\n' +
+    '      width: auto;\n' +
+    '      height: 16px;\n' +
     '      position: relative;\n' +
     '      top: -2px;\n' +
-    '      margin-right: 10px;\n' +
+    '      margin-right: 5px;\n' +
     '    }\n' +
     '\n' +
     '    .flex-horizontal {\n' +
@@ -9707,7 +9684,7 @@ module.run(['$templateCache', function($templateCache) {
     '      text-align: center;\n' +
     '      padding: 0;\n' +
     '      display: inline-block;\n' +
-    '      margin: 30px 0 0 0;\n' +
+    '      margin: 30px 0 0 8px;\n' +
     '    }\n' +
     '\n' +
     '    .indicator {\n' +
@@ -9773,27 +9750,31 @@ module.run(['$templateCache', function($templateCache) {
     '      background-color: #4ab767;\n' +
     '    }\n' +
     '\n' +
-    '    /* .progress-step {\n' +
-    '      display: inline;\n' +
-    '    } */\n' +
-    '  </style><div id="checkout-modal" class="modal-body" style="padding: 16px 32px" stop-event="touchend"><div class="sized-container"><div class="pagination"><div class="indicator active" id="step-one"><div class="tag">Subscription Details</div></div><div class="progress-bar-container"><div class="progress-bar"></div></div><div class="indicator" id="step-two"><div class="tag">Billing Address</div></div><div class="progress-bar-container"><div class="progress-bar"></div></div><div class="indicator" id="step-three"><div class="tag">Shipping Address</div></div><div class="progress-bar-container"><div class="progress-bar"></div></div><div class="indicator" id="step-four"><div class="tag">Payment Method</div></div><div class="progress-bar-container"><div class="progress-bar"></div></div><div class="indicator" id="step-five"><div class="tag">Purchase Review</div></div><div class="progress-bar-container"><div class="progress-bar"></div></div></div></div><div ng-include="\'plans/checkout-subscriptions.html\'"></div><div ng-include="\'plans/checkout-billing-address.html\'"></div><div ng-include="\'plans/checkout-billing-address-error.html\'"></div><div ng-include="\'plans/checkout-shipping-address.html\'"></div><div ng-include="\'plans/checkout-payment-methods.html\'"></div><div ng-include="\'plans/checkout-review-purchase.html\'"></div><div ng-include="\'plans/tax-exemption.html\'"></div></div><script>\n' +
+    '    .payment-recurrence-selector .radio {\n' +
+    '      position: relative;\n' +
+    '      display: block;\n' +
+    '      min-height: 20px;\n' +
+    '      padding: 9px;\n' +
+    '      margin: 0;\n' +
+    '    }\n' +
+    '\n' +
+    '  </style><div id="checkout-modal" class="modal-body" style="padding: 16px 32px" stop-event="touchend"><div class="sized-container"><div class="pagination"><div class="indicator active" id="step-one"><div class="tag">Subscription Details</div></div><div class="progress-bar-container"><div class="progress-bar"></div></div><div class="indicator" id="step-two"><div class="tag">Billing Address</div></div><div class="progress-bar-container"><div class="progress-bar"></div></div><div class="indicator" id="step-three"><div class="tag">Shipping Address</div></div><div class="progress-bar-container"><div class="progress-bar"></div></div><div class="indicator" id="step-four"><div class="tag">Payment Method</div></div><div class="progress-bar-container"><div class="progress-bar"></div></div><div class="indicator" id="step-five"><div class="tag">Purchase Review</div></div><div class="progress-bar-container"><div class="progress-bar"></div></div></div></div><div ng-include="\'plans/checkout-subscriptions.html\'"></div><div ng-include="\'plans/checkout-billing-address.html\'"></div><div ng-include="\'plans/checkout-billing-address-error.html\'"></div><div ng-include="\'plans/checkout-shipping-address.html\'"></div><div ng-include="\'plans/checkout-payment-methods.html\'"></div><div ng-include="\'plans/checkout-review-purchase.html\'"></div><div ng-include="\'plans/checkout-success.html\'"></div><div ng-include="\'plans/tax-exemption.html\'"></div></div><script>\n' +
     '    //SETUP\n' +
     '    $(document).ready(function () {\n' +
     '      $(".prototype-show").hide();\n' +
     '      $(".prototype-show-ready").show();\n' +
-    '\n' +
-    '      //INCREMENT SPINNER doesnt work\n' +
-    '      (function ($) {\n' +
-    '        $(\'.spinner .btn:first-of-type\').on(\'click\', function () {\n' +
-    '          $(\'.spinner input\').val(parseInt($(\'.spinner input\').val(), 10) + 1);\n' +
-    '        });\n' +
-    '        $(\'.spinner .btn:last-of-type\').on(\'click\', function () {\n' +
-    '          $(\'.spinner input\').val(parseInt($(\'.spinner input\').val(), 10) - 1);\n' +
-    '        });\n' +
-    '      })(jQuery);\n' +
     '    });\n' +
     '\n' +
-    '    //CYCLE\n' +
+    '    //INCREMENT SPINNER\n' +
+    '    $(document).on("click", ".spinner .btn:first-of-type", function () {\n' +
+    '      $(\'.spinner input\').val(parseInt($(\'.spinner input\').val(), 10) + 1);\n' +
+    '    });\n' +
+    '    $(document).on("click", ".spinner .btn:last-of-type", function () {\n' +
+    '      $(\'.spinner input\').val(parseInt($(\'.spinner input\').val(), 10) - 1);\n' +
+    '    });\n' +
+    '\n' +
+    '\n' +
+    '    //CYCLE STEPS\n' +
     '    $(document).on("click", "#step-one", function () {\n' +
     '      $(".prototype-show").hide();\n' +
     '      $("#content-one").show();\n' +
@@ -9878,7 +9859,23 @@ module.run(['$templateCache', function($templateCache) {
     '      $(".prototype-show").hide();\n' +
     '      $("#tax-exemption-form").show();\n' +
     '    });\n' +
-    '  </script><div id="security-branding" class="text-center prototype-show"><small><img src="https://s3.amazonaws.com/Rise-Images/UI/chargebee-icon.svg"> <img src="https://s3.amazonaws.com/Rise-Images/UI/stripe-icon.svg"> Secure Checkout from Chargebee and Stripe</small></div></div>');
+    '\n' +
+    '    // LOAD SUCCESS SCREEN\n' +
+    '    function showSuccess() {\n' +
+    '      $(".prototype-show").hide();\n' +
+    '      $("#content-success").show();\n' +
+    '      $("#security-branding").hide();\n' +
+    '    }\n' +
+    '\n' +
+    '    //TIMER LOADING BUTTON\n' +
+    '    $(document).on("click", "#payButton", function () {\n' +
+    '      $("#payLabel").hide();\n' +
+    '      $("#loadSpinner").show();\n' +
+    '      setTimeout(function () {\n' +
+    '        showSuccess();\n' +
+    '      }, 5000);\n' +
+    '    });\n' +
+    '  </script><div id="security-branding" class="text-center u_padding-xs prototype-show"><small><i class="fa fa-lock icon-left"></i> Secure Checkout from <img src="https://s3.amazonaws.com/Rise-Images/UI/chargebee-icon.svg"> Chargebee and <img alt="powered by Stripe" src="https://s3.amazonaws.com/Rise-Images/UI/powered_by_stripe.svg"></small></div></div>');
 }]);
 })();
 

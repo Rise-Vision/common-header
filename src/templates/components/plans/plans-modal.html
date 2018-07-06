@@ -154,41 +154,6 @@
   <!-- //Modal Body -->
 
   <style>
-    /* .progress-bar-step {
-      cursor: pointer;
-    }
-
-    .progress-bar-step p {
-      text-align: center;
-      position: relative;
-      top: -39px;
-      margin: 0;
-      font-size: 13px;
-      color: #5b5b5b;
-      word-spacing: 100vw;
-    }
-
-    .progress-bar-step--active p {
-      color: #4ab766;
-    }
-
-    .progress-bar-step--complete {
-      background-color: #a4dbff !important;
-    }
-
-    .progress-bar-step--complete p {
-      color: #a4dbff;
-    }
-
-    .progress-bar-step--complete p::before {
-      content: "\f00c";
-      margin-right: 4px;
-      font-family: FontAwesome;
-      font-style: normal;
-      font-weight: normal;
-      text-decoration: inherit;
-    } */
-
     .bordered-right {
       border-right: 1px solid #DDD;
     }
@@ -222,11 +187,11 @@
     }
 
     #security-branding img {
-      width: 25px;
-      height: 14px;
+      width: auto;
+      height: 16px;
       position: relative;
       top: -2px;
-      margin-right: 10px;
+      margin-right: 5px;
     }
 
     .flex-horizontal {
@@ -255,7 +220,7 @@
       text-align: center;
       padding: 0;
       display: inline-block;
-      margin: 30px 0 0 0;
+      margin: 30px 0 0 8px;
     }
 
     .indicator {
@@ -321,38 +286,18 @@
       background-color: #4ab767;
     }
 
-    /* .progress-step {
-      display: inline;
-    } */
+    .payment-recurrence-selector .radio {
+      position: relative;
+      display: block;
+      min-height: 20px;
+      padding: 9px;
+      margin: 0;
+    }
+
   </style>
 
   <!-- //Checkout Start -->
   <div id="checkout-modal" class="modal-body" style="padding: 16px 32px" stop-event="touchend">
-    <!-- <div style="display:flex;">
-      <div class="text-center" style="flex: 1; display: inline-block;">Subscriptions</div>
-      <div class="text-center" style="flex: 1; display: inline-block;">Billing Address</div>
-      <div class="text-center" style="flex: 1; display: inline-block;">Shipping Address</div>
-      <div class="text-center" style="flex: 1; display: inline-block;">Payment Methods</div>
-      <div class="text-center" style="flex: 1; display: inline-block;">Review Purchase</div>
-    </div> -->
-
-    <!-- <div class="app-launcher-wizard_progress-bar hidden-sm hidden-xs" style="padding-top: 32px;">
-      <div id="step-one" class="progress-bar-step progress-bar-step--active">
-        <p>Subscription Details</p>
-      </div>
-      <div id="step-two" class="progress-bar-step">
-        <p>Billing Address</p>
-      </div>
-      <div id="step-three" class="progress-bar-step">
-        <p>Shipping Address</p>
-      </div>
-      <div id="step-four" class="progress-bar-step">
-        <p>Payment Method</p>
-      </div>
-      <div id="step-five" class="progress-bar-step">
-        <p>Purchase Review</p>
-      </div>
-    </div> -->
 
     <div class="sized-container">
       <div class="pagination">
@@ -410,6 +355,7 @@
     <div ng-include="'plans/checkout-shipping-address.html'"></div>
     <div ng-include="'plans/checkout-payment-methods.html'"></div>
     <div ng-include="'plans/checkout-review-purchase.html'"></div>
+    <div ng-include="'plans/checkout-success.html'"></div>
     <div ng-include="'plans/tax-exemption.html'"></div>
   </div>
   <!-- //Checkout End -->
@@ -419,19 +365,18 @@
     $(document).ready(function () {
       $(".prototype-show").hide();
       $(".prototype-show-ready").show();
-
-      //INCREMENT SPINNER doesnt work
-      (function ($) {
-        $('.spinner .btn:first-of-type').on('click', function () {
-          $('.spinner input').val(parseInt($('.spinner input').val(), 10) + 1);
-        });
-        $('.spinner .btn:last-of-type').on('click', function () {
-          $('.spinner input').val(parseInt($('.spinner input').val(), 10) - 1);
-        });
-      })(jQuery);
     });
 
-    //CYCLE
+    //INCREMENT SPINNER
+    $(document).on("click", ".spinner .btn:first-of-type", function () {
+      $('.spinner input').val(parseInt($('.spinner input').val(), 10) + 1);
+    });
+    $(document).on("click", ".spinner .btn:last-of-type", function () {
+      $('.spinner input').val(parseInt($('.spinner input').val(), 10) - 1);
+    });
+
+
+    //CYCLE STEPS
     $(document).on("click", "#step-one", function () {
       $(".prototype-show").hide();
       $("#content-one").show();
@@ -516,12 +461,28 @@
       $(".prototype-show").hide();
       $("#tax-exemption-form").show();
     });
+
+    // LOAD SUCCESS SCREEN
+    function showSuccess() {
+      $(".prototype-show").hide();
+      $("#content-success").show();
+      $("#security-branding").hide();
+    }
+
+    //TIMER LOADING BUTTON
+    $(document).on("click", "#payButton", function () {
+      $("#payLabel").hide();
+      $("#loadSpinner").show();
+      setTimeout(function () {
+        showSuccess();
+      }, 5000);
+    });
   </script>
 
-  <div id="security-branding" class="text-center prototype-show">
+  <div id="security-branding" class="text-center u_padding-xs prototype-show">
     <small>
-    <img src="https://s3.amazonaws.com/Rise-Images/UI/chargebee-icon.svg">
-    <img src="https://s3.amazonaws.com/Rise-Images/UI/stripe-icon.svg">
-    Secure Checkout from Chargebee and Stripe 
+    <i class="fa fa-lock icon-left"></i>
+    Secure Checkout from <img src="https://s3.amazonaws.com/Rise-Images/UI/chargebee-icon.svg"> 
+    Chargebee and <img alt="powered by Stripe" src="https://s3.amazonaws.com/Rise-Images/UI/powered_by_stripe.svg">
   </small>
   </div>
