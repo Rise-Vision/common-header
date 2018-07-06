@@ -9605,7 +9605,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plans/checkout-success.html',
-    '<div id="content-success" class="prototype-show" style="display: none"><h3>Payment Successful!</h3><div class="flex-horizontal"><div><div class="text-center u_padding-md"><img src="https://s3.amazonaws.com/Rise-Images/Icons/online.svg" alt="Payment Successful"></div></div><hr><div class="row"><div class="col-xs-12"><button id="" class="btn btn-primary btn-lg pull-right">Done</button></div></div></div></div>');
+    '<div id="content-success" class="prototype-show" style="display: none"><h3 class="text-center u_margin-md-top">Payment Successful!</h3><div class="flex-horizontal"><div><div class="text-center u_padding-md"><img src="https://s3.amazonaws.com/Rise-Images/Icons/online.svg" style="width:72px" alt="Payment Successful"><p>Your payment to Rise Vision was successful. You can view details of this payment <a href="#">here</a>.</p><br></div></div></div><hr><div class="row text-center"><div class="col-xs-12"><button id="" class="btn btn-primary btn-lg pull-right">Done</button></div></div></div>');
 }]);
 })();
 
