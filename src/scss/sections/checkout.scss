@@ -1,0 +1,35 @@
+.flex-pricing-summary {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 100%;
+  p {
+    font-size: 62px;
+    line-height: 1;
+  }
+  b {
+    font-size: 33px;
+    align-self: center;
+  }
+  .connector-column {
+    font-size: 33px;
+    align-self: center;
+  }
+  &>div:nth-of-type(even) {
+    flex: 1;
+  }
+  &>div:nth-of-type(odd) {
+    flex: 5;
+  }
+}
+
+.flex-additive-rule {
+  height: 32px;
+  b {
+    font-size: 33px;
+    position: relative;
+    top: -28px;
+    background: #fcfcfc;
+    border: 10px solid #fcfcfc;
+  }
+}

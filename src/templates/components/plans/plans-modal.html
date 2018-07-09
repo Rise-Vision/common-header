@@ -6,6 +6,9 @@
     <h3 id="modalTitle" class="modal-title" translate>common-header.plans.choose-plan</h3>
   </div>
 
+  <div id="protoSpinner" rv-spinner="spinnerOptions" rv-spinner-key="user-settings-modal" rv-spinner-start-active="1" style="display:none;">
+  </div>
+
   <div id="plans-modal" class="modal-body u_padding-lg" stop-event="touchend">
     <div class="text-center">
       <div class="btn-group" role="group" aria-label="...">
@@ -14,7 +17,6 @@
       </div>
       <p class="u_padding-sm-vertical">Pay yearly, get one month free!</p>
     </div>
-
     <div class="pricing-table">
       <div id="planHeader" class="monthly">
         <div class="planColumn" ng-class="{ currentPlan: currentPlanLabelVisible(plan) }" ng-repeat="plan in plans">
@@ -52,7 +54,7 @@
             </a>
 
           <!-- Trial remaining days -->
-          <p id="trial-days-remaining" class="small u_margin-sm-bottom" ng-show="isCurrentPlan(plan) && isOnTrial(plan)" translate
+          <p id="trial-days-remaining" class="small u_margin-sm-bottom text-subtle" ng-show="isCurrentPlan(plan) && isOnTrial(plan)" translate
             translate-values="{ count: currentPlan.trialPeriod }">common-header.plans.days-left-trial</p>
           <!-- Trial expired notice -->
           <p class="small u_margin-sm-bottom text-danger" ng-show="isCurrentPlan(plan) && isTrialExpired(plan)" translate>common-header.plans.trial-expired</p>
@@ -64,7 +66,6 @@
             translate>common-header.plans.start-trial</a>
         </div>
         <!--plan-column-->
-
       </div>
       <div id="planFeatures">
         <div class="planFeatureColumn" id="planFreeFeatures">
@@ -151,204 +152,44 @@
       <h3><a href="https://www.risevision.com/licensesubcompany" target="_blank">Need to license your Sub-Company?</a></h3>
     </div>
   </div>
-  <!-- //Modal Body -->
-
-  <style>
-    .bordered-right {
-      border-right: 1px solid #DDD;
-    }
-
-    @media (max-width: 768px) {
-      .bordered-right {
-        border-right: 0;
-      }
-    }
-
-    .lead {
-      margin-bottom: 10px;
-    }
-
-    .text-block {
-      font-size: 12px;
-    }
-
-    small {
-      color: #5b5b5b;
-    }
-
-    #security-branding {
-      margin-bottom: 0;
-      background: #f2f2f2;
-      overflow: hidden;
-      border-radius: 0 0 4px 4px;
-      border-top: 1px solid #e5e5e5;
-      min-height: 16.43px;
-      width: 100%;
-    }
-
-    #security-branding img {
-      width: auto;
-      height: 16px;
-      position: relative;
-      top: -2px;
-      margin-left: 5px;
-    }
-
-    .flex-horizontal {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      height: 100%;
-    }
-
-    .flex-horizontal>div:nth-of-type(even) {
-      flex: 1;
-    }
-
-    .flex-horizontal>div:nth-of-type(odd) {
-      flex: 5;
-    }
-
-    .pagination-container {
-      margin-top: 120px;
-    }
-
-    /* RENAME THIS */
-
-    .pagination {
-      width: 100%;
-      text-align: center;
-      padding: 0;
-      display: inline-block;
-      margin: 30px 0 0 8px;
-    }
-
-    .indicator {
-      width: 15px;
-      height: 15px;
-      border: 4px solid #dddddd;
-      border-radius: 50%;
-      display: inline-block;
-      position: relative;
-    }
-
-    .indicator .tag {
-      position: absolute;
-      top: -40px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: #dddddd;
-      font-size: 12px;
-      cursor: default;
-    }
-
-    .indicator.active,
-    .indicator.complete {
-      border-color: #4ab767;
-    }
-
-    .indicator.active .tag,
-    .indicator.complete .tag {
-      color: #4ab767;
-    }
-
-    .indicator.complete .tag:before {
-      content: "\f00c";
-      margin-right: 4px;
-      font-family: FontAwesome;
-      font-style: normal;
-      font-weight: normal;
-      text-decoration: inherit;
-      color: #4ab767;
-      font-size: 14px;
-    }
-
-    .progress-bar-container {
-      width: 17%;
-      height: 2px;
-      display: inline-block;
-      background-color: #dddddd;
-      position: relative;
-      top: -6px;
-    }
-
-    .progress-bar-container:last-of-type {
-      display: none;
-    }
-
-    .progress-bar-container .progress-bar {
-      width: 0;
-      height: 100%;
-      background-color: #4ab767;
-    }
-
-    .indicator.complete+.progress-bar-container.complete {
-      background-color: #4ab767;
-    }
-
-    .payment-recurrence-selector .radio {
-      position: relative;
-      display: block;
-      min-height: 20px;
-      padding: 9px;
-      margin: 0;
-    }
-
-  </style>
-
-  <!-- //Checkout Start -->
-  <div id="checkout-modal" class="modal-body" style="padding: 16px 32px" stop-event="touchend">
-
-    <div class="sized-container">
-      <div class="pagination">
-
+  <!-- //Modal Body End -->
+  
+  <!-- //Modal Body - Checkout Start -->
+  <div id="checkout-modal" class="modal-body checkout-modal"  stop-event="touchend">
+    <div id="prototypeProgressIndicator">
+      <div class="progress-indicator">
         <div class="indicator active" id="step-one">
           <div class="tag">Subscription Details</div>
         </div>
         <div class="progress-bar-container">
           <div class="progress-bar"></div>
         </div>
-
-
-
         <div class="indicator" id="step-two">
           <div class="tag">Billing Address</div>
         </div>
         <div class="progress-bar-container">
           <div class="progress-bar"></div>
         </div>
-
-
-
         <div class="indicator" id="step-three">
           <div class="tag">Shipping Address</div>
         </div>
         <div class="progress-bar-container">
           <div class="progress-bar"></div>
         </div>
-
-
-
         <div class="indicator" id="step-four">
           <div class="tag">Payment Method</div>
         </div>
         <div class="progress-bar-container">
           <div class="progress-bar"></div>
         </div>
-
-
-
         <div class="indicator" id="step-five">
           <div class="tag">Purchase Review</div>
         </div>
         <div class="progress-bar-container">
           <div class="progress-bar"></div>
         </div>
-
-
       </div>
     </div>
-
     <div ng-include="'plans/checkout-subscriptions.html'"></div>
     <div ng-include="'plans/checkout-billing-address.html'"></div>
     <div ng-include="'plans/checkout-billing-address-error.html'"></div>
@@ -358,131 +199,12 @@
     <div ng-include="'plans/checkout-success.html'"></div>
     <div ng-include="'plans/tax-exemption.html'"></div>
   </div>
-  <!-- //Checkout End -->
+  <!-- //Modal Body Checkout End -->
 
-  <script>
-    //SETUP
-    $(document).ready(function () {
-      $(".prototype-show").hide();
-      $(".prototype-show-ready").show();
-    });
+  <div ng-include="'plans/prototype-code.html'"></div>
 
-    //INCREMENT SPINNER
-    $(document).on("click", ".spinner .btn:first-of-type", function () {
-      $('.spinner input').val(parseInt($('.spinner input').val(), 10) + 1);
-    });
-    $(document).on("click", ".spinner .btn:last-of-type", function () {
-      $('.spinner input').val(parseInt($('.spinner input').val(), 10) - 1);
-    });
-
-
-    //CYCLE STEPS
-    $(document).on("click", "#step-one", function () {
-      $(".prototype-show").hide();
-      $("#content-one").show();
-    });
-    $(document).on("click", "#step-two", function () {
-      $(".prototype-show").hide();
-      $("#content-two").show();
-    });
-    $(document).on("click", "#step-three", function () {
-      $(".prototype-show").hide();
-      $("#content-three").show();
-    });
-    $(document).on("click", "#step-four", function () {
-      $(".prototype-show").hide();
-      $("#content-four").show();
-      $("#security-branding").show();
-    });
-    $(document).on("click", "#step-five", function () {
-      $(".prototype-show").hide();
-      $("#content-five").show();
-      $("#security-branding").show();
-    });
-
-    // STEP THROUGH CHECKOUT NAV 
-    $(document).on("click", ".indicator", function () {
-      var target = $(this);
-      $(".indicator").removeClass("active");
-      $(this).removeClass("complete");
-      $(this).addClass("active");
-      $(this).prevAll().addClass("complete");
-    });
-
-    // HIGHLIGHT PAYMENT CYCLE
-    $(document).on('change', 'input[type=radio][name=optionsRadios]', function () {
-      if (this.value == 'option1') {
-        $(".radio").css("background", "white");
-        $("#optionsRadios1").closest(".radio").css("background", "aliceblue");
-      } else if (this.value == 'option2') {
-        $(".radio").css("background", "white");
-        $("#optionsRadios2").closest(".radio").css("background", "aliceblue");
-      }
-    });
-
-    //PAYMENT METHOD DROPDOWN
-    $(document).on('change', '#paymentMethodSelector', function () {
-      $("#existingCardCC").hide();
-      $("#firstTimeCC").show();
-    });
-
-    //CONTROL MODAL
-    $(document).on("click", "#subscribe-plan", function () {
-      $("#plans-modal").hide();
-      $("#checkout-modal").show();
-
-      $("h3#modalTitle").text("Checkout");
-
-      $(".modal-dialog").removeClass("modal-lg");
-      $(".modal-dialog").addClass("modal-md");
-    });
-
-    //HIDE CC ADDRESS
-    $(document).on("click", "#toggleMatchBillingAddress", function () {
-      this.checked ? $('#targetCCAddress').hide(400) : $('#targetCCAddress').show(400);
-    });
-
-    //SHOW ERROR STATE 
-    $(document).on("click", "#reveal-billing-error", function () {
-      $(".prototype-show").hide();
-      $(".sized-container").hide();
-      $("#content-two-error").show();
-    });
-
-    //CLEAR ERROR STATE 
-    $(document).on("click", "#hide-billing-error", function () {
-      $(".prototype-show").hide();
-      $("#content-two").show();
-      $(".sized-container").show();
-    });
-
-    //SHOW TAX EXEMPTION
-    $(document).on("click", "#showTaxExempt", function () {
-      $(".prototype-show").hide();
-      $("#tax-exemption-form").show();
-    });
-
-    // LOAD SUCCESS SCREEN
-    function showSuccess() {
-      $(".prototype-show").hide();
-      $("#content-success").show();
-      $("#security-branding").hide();
-      $(".indicator").removeClass("active"); //NEEDED?
-      $(".indicator").addClass("complete");
-    }
-
-    //TIMER LOADING BUTTON
-    $(document).on("click", "#payButton", function () {
-      $("#payLabel").hide();
-      $("#loadSpinner").show();
-      setTimeout(function () {
-        showSuccess();
-      }, 5000);
-    });
-  </script>
-
-  <div id="security-branding" class="text-center u_padding-xs prototype-show">
-    <small>
+  <div id="security-branding" class="modal-small-footer text-center u_padding-xs prototype-show">
+    <small class="text-subtle">
     <i class="fa fa-lock icon-left"></i>
     Secure Checkout from <img src="https://s3.amazonaws.com/Rise-Images/UI/chargebee-icon.svg"> 
     Chargebee and <img alt="powered by Stripe" src="https://s3.amazonaws.com/Rise-Images/UI/powered_by_stripe.svg">
