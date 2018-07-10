@@ -3,7 +3,7 @@
   --toolbar-height : 53px;
   --footer-height : 50px;
   --header-height : 90px;
-  --sidebar-displace : calc(var(--sidebar-width)*-1);
+  --sidebar-displace : -290px;
   &.active-banner-mode {--header-height : 111px;}
   &.active-banner-mode-double {--header-height : 132px;}
   &.hide-sidebar {--sidebar-width: 0px;}
