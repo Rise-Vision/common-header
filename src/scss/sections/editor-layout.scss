@@ -4,6 +4,8 @@
   --footer-height : 50px;
   --header-height : 90px;
   --sidebar-displace : -290px;
+  // Edge currently has issues using calculated variables in transitions
+  // --sidebar-displace : calc(var(--sidebar-width)*-1);
   &.active-banner-mode {--header-height : 111px;}
   &.active-banner-mode-double {--header-height : 132px;}
   &.hide-sidebar {--sidebar-width: 0px;}
