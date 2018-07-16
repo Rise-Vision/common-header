@@ -24,6 +24,8 @@ angular.module("risevision.common.components.purchase-flow")
     PURCHASE_STEPS) {
 
     $scope.plan = plan;
+    $scope.plan.additionalDisplayLicenses = 0;
+
     $scope.PURCHASE_STEPS = PURCHASE_STEPS;
     $scope.currentStep = 0;
 

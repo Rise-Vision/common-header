@@ -1,0 +1,73 @@
+<!-- Step 1 -->
+<div id="checkout-review-subscription" data-ng-controller="ReviewSubcriptionCtrl" data-ng-init="init(plan)">
+  <h3>{{plan.name}} Plan</h3>
+  <div class="flex-pricing-summary">
+    <div class="text-center u_padding-md">
+      <p>${{plan.monthly.priceDisplayMonth}}</p>
+      <span>per Display <br>per Month</span>
+    </div>
+    <div class="connector-column text-center">
+      <b>x</b>
+    </div>
+    <div class="text-center u_padding-md">
+      <p>{{plan.proLicenseCount}}</p>
+      <span ng-show="plan.proLicenseCount === 1" translate>Display Included</span>
+      <span ng-show="plan.proLicenseCount > 1" translate>Displays Included</span>
+    </div>
+  </div>
+  <hr class="u_remove-margin">
+  <div class="text-center flex-additive-rule">
+    <b>+</b>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      Need more Displays than <b>{{plan.name}} Plan</b> offers? Add more at only <b>${{plan.monthly.priceDisplayMonth}} per Display</b>!
+      <br/>
+      <br/>
+    </div>
+    <div class="col-xs-12">
+      <div class="input-group spinner">
+        <div class="input-group-btn-vertical">
+          <button class="btn btn-white" type="button" ng-click="incrementLicenses()">
+            <i class="fa fa-caret-up"></i>
+          </button>
+          <button class="btn btn-white" type="button" ng-click="decrementLicenses()">
+            <i class="fa fa-caret-down"></i>
+          </button>
+        </div>
+        <input type="text" class="form-control" ng-model="plan.additionalDisplayLicenses">
+        <span class="icon-right u_margin-md-top u_align-middle">additional Display licenses added to your purchase.</span>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      <hr>
+    </div>
+    <div class="col-xs-12 u_margin-sm-bottom">
+      <b class="pull-left">TOTAL</b>
+      <b class="pull-right">Pay yearly, get one month free!</b>
+    </div>
+    <div class="col-xs-12">
+      <div class="panel payment-recurrence-selector">
+        <div class="radio" ng-class="{ active: plan.monthlyPrices }">
+          <label>
+            <input type="radio" name="billingPeriod" id="monthlyBilling" ng-value="true" ng-model="plan.monthlyPrices">
+            ${{getMonthlyPrice()}} billed monthly
+          </label>
+        </div>
+        <div class="radio" ng-class="{ active: !plan.monthlyPrices }">
+          <label>
+            <input type="radio" name="billingPeriod" id="yearlyBilling" ng-value="false" ng-model="plan.monthlyPrices">
+            ${{getYearlyPrice()}} billed yearly
+          </label>
+          <label class="highlight">Save ${{plan.yearly.save}}!</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-xs-12">
+      <button id="continueButton" class="btn btn-primary btn-lg pull-right">Continue</button>
+    </div>
+  </div>
+</div>

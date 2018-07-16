@@ -6,25 +6,6 @@
           $(".prototype-show-ready").show();
         });
     
-        //INCREMENT SPINNER
-        $(document).on("click", ".spinner .btn:first-of-type", function () {
-          $('.spinner input').val(parseInt($('.spinner input').val(), 10) + 1);
-        });
-        $(document).on("click", ".spinner .btn:last-of-type", function () {
-          $('.spinner input').val(parseInt($('.spinner input').val(), 10) - 1);
-        });
-    
-        // HIGHLIGHT PAYMENT CYCLE
-        $(document).on('change', 'input[type=radio][name=optionsRadios]', function () {
-          if (this.value == 'option1') {
-            $(".radio").css("background", "white");
-            $("#optionsRadios1").closest(".radio").css("background", "aliceblue");
-          } else if (this.value == 'option2') {
-            $(".radio").css("background", "white");
-            $("#optionsRadios2").closest(".radio").css("background", "aliceblue");
-          }
-        });
-    
         //PAYMENT METHOD DROPDOWN
         $(document).on('change', '#paymentMethodSelector', function () {
           $("#existingCardCC").hide();
