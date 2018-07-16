@@ -296,13 +296,13 @@ gulp.task("test:e2e:core", ["test:webdrive_update"], factory.testE2EAngular({
   testFiles: process.env.TEST_FILES || ["./test/e2e/**/*.scenarios.js"]
 }));
 gulp.task("test:e2e", function (cb) {
-  runSequence("server", "server-close", cb);
+  runSequence("server", "test:e2e:core", "server-close", cb);
 });
 
 gulp.task("coveralls", factory.coveralls());
 
 gulp.task("test", function (cb) {
-  runSequence("html2js", "coveralls", cb);
+  runSequence("html2js", "test:unit", "test:e2e", "coveralls", cb);
 });
 
 // End - Testing
