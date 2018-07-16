@@ -2,64 +2,33 @@ angular.module("risevision.common.components.purchase-flow")
 
 .value("PURCHASE_STEPS", [{
   name: "Subscription Details",
-  index: 0,
-  count: "one"
+  index: 0
 }, {
   name: "Billing Address",
-  index: 1,
-  count: "two"
+  index: 1
 }, {
   name: "Shipping Address",
-  index: 2,
-  count: "three"
+  index: 2
 }, {
   name: "Payment Method",
-  index: 3,
-  count: "four"
+  index: 3
 }, {
   name: "Purchase Review",
-  index: 4,
-  count: "five"
+  index: 4
 }])
 
 .controller("PurchaseModalCtrl", [
-  "$scope", "$modalInstance", "$log", "$loading", "currentPlanFactory", "plan",
+  "$scope", "$modalInstance", "$log", "$loading", "plan",
   "PURCHASE_STEPS",
-  function ($scope, $modalInstance, $log, $loading, currentPlanFactory, plan,
+  function ($scope, $modalInstance, $log, $loading, plan,
     PURCHASE_STEPS) {
 
     $scope.plan = plan;
     $scope.PURCHASE_STEPS = PURCHASE_STEPS;
+    $scope.currentStep = 0;
 
-    $scope.getVisibleAction = function (plan) {
-      // Has a Plan?
-      if (currentPlanFactory.isPlanActive()) {
-        // Is this that Plan?
-        if ($scope.isCurrentPlan(plan)) {
-          // Can buy Subscription?
-          if ($scope.isOnTrial(plan)) {
-            return "subscribe";
-          } else {
-            return "";
-          }
-        } else { // This is a different Plan
-          // Is lower Plan?
-          if ($scope.currentPlan.order > plan.order) {
-            return "downgrade";
-          } else { // Higher Plan
-            return "subscribe";
-          }
-        }
-      } else { // Were on Free Plan
-        // Is there a Trial?
-        if ($scope.isFree(plan)) {
-          return "";
-        } else if ($scope.isTrialAvailable(plan)) {
-          return "start-trial";
-        } else { // Subscribe
-          return "subscribe";
-        }
-      }
+    $scope.setCurrentStep = function (step) {
+      $scope.currentStep = step.index;
     };
 
     $scope.dismiss = function () {

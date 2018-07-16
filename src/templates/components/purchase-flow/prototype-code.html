@@ -14,41 +14,6 @@
           $('.spinner input').val(parseInt($('.spinner input').val(), 10) - 1);
         });
     
-    
-        //CYCLE STEPS
-        $(document).on("click", "#step-one", function () {
-          $(".prototype-show").hide();
-          $("#content-one").show();
-        });
-        $(document).on("click", "#step-two", function () {
-          $(".prototype-show").hide();
-          $("#content-two").show();
-        });
-        $(document).on("click", "#step-three", function () {
-          $(".prototype-show").hide();
-          $("#content-three").show();
-        });
-        $(document).on("click", "#step-four", function () {
-          $(".prototype-show").hide();
-          $("#content-four").show();
-          $("#security-branding").show();
-        });
-        $(document).on("click", "#step-five", function () {
-          $(".prototype-show").hide();
-          $("#content-five").show();
-          $("#security-branding").show();
-        });
-    
-        // STEP THROUGH CHECKOUT NAV 
-        $(document).on("click", ".indicator", function () {
-          var target = $(this);
-          $(".indicator").removeClass("active");
-          $(this).removeClass("complete");
-          $(this).siblings().removeClass("complete");
-          $(this).addClass("active");
-          $(this).prevAll().addClass("complete");
-        });
-    
         // HIGHLIGHT PAYMENT CYCLE
         $(document).on('change', 'input[type=radio][name=optionsRadios]', function () {
           if (this.value == 'option1') {
@@ -73,7 +38,7 @@
     
         //SHOW ERROR STATE 
         $(document).on("click", "#reveal-billing-error", function () {
-          $(".prototype-show").hide();
+          $("#checkout-billing-address").hide();
           $("#prototypeProgressIndicator").hide();
           $("#content-two-error").show();
         });
@@ -81,19 +46,25 @@
         //CLEAR ERROR STATE 
         $(document).on("click", "#hide-billing-error", function () {
           $(".prototype-show").hide();
-          $("#content-two").show();
+          $("#checkout-billing-address").show();
           $("#prototypeProgressIndicator").show();
         });
     
         //SHOW TAX EXEMPTION
         $(document).on("click", "#showTaxExempt", function () {
-          $(".prototype-show").hide();
+          $("#checkout-review-purchase").hide();
           $("#tax-exemption-form").show();
         });
     
+        //Hide TAX EXEMPTION
+        $(document).on("click", "#submit-tax-exemption", function () {
+          $("#checkout-review-purchase").show();
+          $("#tax-exemption-form").hide();
+        });
+
         // LOAD SUCCESS SCREEN
         function showSuccess() {
-          $(".prototype-show").hide();
+          $("#checkout-review-purchase").hide();
           $("#protoSpinner").hide();
           $("#content-success").show();
           $("#security-branding").hide();
