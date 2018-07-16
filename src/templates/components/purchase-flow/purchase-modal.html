@@ -7,38 +7,13 @@
   </div>
 
   <div id="purchase-modal" class="modal-body checkout-modal" stop-event="touchend">
-    <div id="prototypeProgressIndicator">
-      <div class="progress-indicator">
-        <div class="indicator active" id="step-one">
-          <div class="tag">Subscription Details</div>
-        </div>
-        <div class="progress-bar-container">
-          <div class="progress-bar"></div>
-        </div>
-        <div class="indicator" id="step-two">
-          <div class="tag">Billing Address</div>
-        </div>
-        <div class="progress-bar-container">
-          <div class="progress-bar"></div>
-        </div>
-        <div class="indicator" id="step-three">
-          <div class="tag">Shipping Address</div>
-        </div>
-        <div class="progress-bar-container">
-          <div class="progress-bar"></div>
-        </div>
-        <div class="indicator" id="step-four">
-          <div class="tag">Payment Method</div>
-        </div>
-        <div class="progress-bar-container">
-          <div class="progress-bar"></div>
-        </div>
-        <div class="indicator" id="step-five">
-          <div class="tag">Purchase Review</div>
-        </div>
-        <div class="progress-bar-container">
-          <div class="progress-bar"></div>
-        </div>
+
+    <div id="prototypeProgressIndicator" class="progress-indicator">
+      <div ng-repeat-start="step in PURCHASE_STEPS" class="indicator active" id="step-{{step.count}}">
+        <div class="tag">{{step.name}}</div>
+      </div>
+      <div ng-repeat-end class="progress-bar-container">
+        <div class="progress-bar"></div>
       </div>
     </div>
 
@@ -53,7 +28,7 @@
 
   </div> <!-- //Modal Body -->
 
-  <div ng-include="'plans/prototype-code.html'"></div>
+  <div ng-include="'purchase-flow/prototype-code.html'"></div>
 
   <div id="security-branding" class="modal-small-footer text-center u_padding-xs">
     <small class="text-subtle">

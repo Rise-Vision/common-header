@@ -9530,11 +9530,36 @@ angular.module("risevision.common.components.purchase-flow", [
 
 angular.module("risevision.common.components.purchase-flow")
 
+.value("PURCHASE_STEPS", [{
+  name: "Subscription Details",
+  index: 0,
+  count: "one"
+}, {
+  name: "Billing Address",
+  index: 1,
+  count: "two"
+}, {
+  name: "Shipping Address",
+  index: 2,
+  count: "three"
+}, {
+  name: "Payment Method",
+  index: 3,
+  count: "four"
+}, {
+  name: "Purchase Review",
+  index: 4,
+  count: "five"
+}])
+
 .controller("PurchaseModalCtrl", [
   "$scope", "$modalInstance", "$log", "$loading", "currentPlanFactory", "plan",
-  function ($scope, $modalInstance, $log, $loading, currentPlanFactory, plan) {
+  "PURCHASE_STEPS",
+  function ($scope, $modalInstance, $log, $loading, currentPlanFactory, plan,
+    PURCHASE_STEPS) {
 
     $scope.plan = plan;
+    $scope.PURCHASE_STEPS = PURCHASE_STEPS;
 
     $scope.getVisibleAction = function (plan) {
       // Has a Plan?
@@ -9802,7 +9827,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/purchase-modal.html',
-    '<div rv-spinner="" rv-spinner-key="purchase-modal" rv-spinner-start-active="0"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title" translate="">Checkout</h3></div><div id="purchase-modal" class="modal-body checkout-modal" stop-event="touchend"><div id="prototypeProgressIndicator"><div class="progress-indicator"><div class="indicator active" id="step-one"><div class="tag">Subscription Details</div></div><div class="progress-bar-container"><div class="progress-bar"></div></div><div class="indicator" id="step-two"><div class="tag">Billing Address</div></div><div class="progress-bar-container"><div class="progress-bar"></div></div><div class="indicator" id="step-three"><div class="tag">Shipping Address</div></div><div class="progress-bar-container"><div class="progress-bar"></div></div><div class="indicator" id="step-four"><div class="tag">Payment Method</div></div><div class="progress-bar-container"><div class="progress-bar"></div></div><div class="indicator" id="step-five"><div class="tag">Purchase Review</div></div><div class="progress-bar-container"><div class="progress-bar"></div></div></div></div><div ng-include="\'purchase-flow/checkout-subscriptions.html\'"></div><div ng-include="\'purchase-flow/checkout-billing-address.html\'"></div><div ng-include="\'purchase-flow/checkout-billing-address-error.html\'"></div><div ng-include="\'purchase-flow/checkout-shipping-address.html\'"></div><div ng-include="\'purchase-flow/checkout-payment-methods.html\'"></div><div ng-include="\'purchase-flow/checkout-review-purchase.html\'"></div><div ng-include="\'purchase-flow/checkout-success.html\'"></div><div ng-include="\'purchase-flow/tax-exemption.html\'"></div></div><div ng-include="\'plans/prototype-code.html\'"></div><div id="security-branding" class="modal-small-footer text-center u_padding-xs"><small class="text-subtle"><i class="fa fa-lock icon-left"></i> Secure Checkout from <img src="https://s3.amazonaws.com/Rise-Images/UI/chargebee-icon.svg"> Chargebee and <img alt="powered by Stripe" src="https://s3.amazonaws.com/Rise-Images/UI/powered_by_stripe.svg"></small></div></div>');
+    '<div rv-spinner="" rv-spinner-key="purchase-modal" rv-spinner-start-active="0"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title" translate="">Checkout</h3></div><div id="purchase-modal" class="modal-body checkout-modal" stop-event="touchend"><div id="prototypeProgressIndicator" class="progress-indicator"><div ng-repeat-start="step in PURCHASE_STEPS" class="indicator active" id="step-{{step.count}}"><div class="tag">{{step.name}}</div></div><div ng-repeat-end="" class="progress-bar-container"><div class="progress-bar"></div></div></div><div ng-include="\'purchase-flow/checkout-subscriptions.html\'"></div><div ng-include="\'purchase-flow/checkout-billing-address.html\'"></div><div ng-include="\'purchase-flow/checkout-billing-address-error.html\'"></div><div ng-include="\'purchase-flow/checkout-shipping-address.html\'"></div><div ng-include="\'purchase-flow/checkout-payment-methods.html\'"></div><div ng-include="\'purchase-flow/checkout-review-purchase.html\'"></div><div ng-include="\'purchase-flow/checkout-success.html\'"></div><div ng-include="\'purchase-flow/tax-exemption.html\'"></div></div><div ng-include="\'purchase-flow/prototype-code.html\'"></div><div id="security-branding" class="modal-small-footer text-center u_padding-xs"><small class="text-subtle"><i class="fa fa-lock icon-left"></i> Secure Checkout from <img src="https://s3.amazonaws.com/Rise-Images/UI/chargebee-icon.svg"> Chargebee and <img alt="powered by Stripe" src="https://s3.amazonaws.com/Rise-Images/UI/powered_by_stripe.svg"></small></div></div>');
 }]);
 })();
 
