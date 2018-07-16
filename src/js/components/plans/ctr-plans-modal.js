@@ -2,13 +2,16 @@ angular.module("risevision.common.components.plans")
 
 .controller("PlansModalCtrl", [
   "$scope", "$rootScope", "$modalInstance", "$log", "$loading", "$timeout",
-  "plansFactory", "currentPlanFactory", "userState",
+  "plansFactory", "currentPlanFactory", "userState", "purchaseFactory",
   function ($scope, $rootScope, $modalInstance, $log, $loading, $timeout,
-    plansFactory, currentPlanFactory, userState) {
+    plansFactory, currentPlanFactory, userState, purchaseFactory) {
 
     $scope.currentPlan = currentPlanFactory.currentPlan;
+    $scope.purchaseFactory = purchaseFactory;
     $scope.startTrialError = null;
     $scope.monthlyPrices = true;
+
+    $scope.origin = userState.getCopyOfSelectedCompany().origin;
 
     function _getPlansDetails() {
       $loading.start("plans-modal");
