@@ -4,6 +4,10 @@
     "interactive": "Allow Interaction",
     "scrollbars": "Scrollbars Enabled"
   },
+  "offline": {
+    "anchor": "these instructions.",
+    "message": "To use the Web Page Widget offline you will need to build an Offline Play compatible Web Page by following "
+  },
   "refresh": {
     "label": "Refresh Interval",
     "none": "Never Refresh"
@@ -20,12 +24,11 @@
     "label": "Unload Web Page when not visible in Presentation (recommended)"
   },
   "warning": {
-    "anchor": "X-Frame-Options",
-    "message": "The owner of the Web Page at the URL provided does not allow the page to be embedded within an iFrame. If possible, please contact the Web Page owner to discuss"
-  },
-  "offline": {
-    "anchor": "these instructions.",
-    "message": "To use the Web Page Widget offline you will need to build an Offline Play compatible Web Page by following "
+    "preview": "Using Preview URLs in the Web Page Widget is not supported. You can place one Presentation into another using Embedded Presentations.",
+    "xframe": {
+      "anchor": "X-Frame-Options",
+      "message": "The owner of the Web Page at the URL provided does not allow the page to be embedded within an iFrame. If possible, please contact the Web Page owner to discuss."
+    }
   },
   "zoom": {
     "heading": "Zoom"

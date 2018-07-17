@@ -40,11 +40,14 @@ msgstr "Web Page Settings"
 msgid "unload.label"
 msgstr "Unload Web Page when not visible in Presentation (recommended)"
 
-msgid "warning.anchor"
+msgid "warning.preview"
+msgstr "Using Preview URLs in the Web Page Widget is not supported. You can place one Presentation into another using Embedded Presentations."
+
+msgid "warning.xframe.anchor"
 msgstr "X-Frame-Options"
 
-msgid "warning.message"
-msgstr "The owner of the Web Page at the URL provided does not allow the page to be embedded within an iFrame. If possible, please contact the Web Page owner to discuss"
+msgid "warning.xframe.message"
+msgstr "The owner of the Web Page at the URL provided does not allow the page to be embedded within an iFrame. If possible, please contact the Web Page owner to discuss."
 
 msgid "zoom.heading"
 msgstr "Zoom"
