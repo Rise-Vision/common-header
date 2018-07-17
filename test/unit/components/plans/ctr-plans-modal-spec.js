@@ -43,7 +43,12 @@ describe("controller: plans modal", function() {
     });
     $provide.factory("userState", function() {
       return {
-        reloadSelectedCompany: function() {}
+        reloadSelectedCompany: function() {},
+        getCopyOfSelectedCompany: function() {
+          return {
+            origin: "Rise"
+          };
+        }
       };
     });
     $provide.service("$modal", function() {
@@ -118,6 +123,7 @@ describe("controller: plans modal", function() {
 
   it("should initialize",function() {
     expect($scope.currentPlan).to.be.ok;
+    expect($scope.origin).to.equal("Rise");
 
     expect($scope.isCurrentPlan).to.be.a("function");
     expect($scope.isCurrentPlanSubscribed).to.be.a("function");
