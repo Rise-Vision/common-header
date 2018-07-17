@@ -58,6 +58,7 @@ describe("controller: purchase modal", function() {
 
     expect($scope.init).to.be.a("function");
     expect($scope.setCurrentStep).to.be.a("function");
+    expect($scope.setNextStep).to.be.a("function");
 
     expect($scope.dismiss).to.be.a("function");
   });
@@ -70,7 +71,14 @@ describe("controller: purchase modal", function() {
     expect($scope.currentStep).to.equal(2);
   });
 
-  it("setCurrentStep: ", function() {
+  it("setNextStep: ", function() {
+    $scope.setNextStep();
+
+    expect($scope.currentStep).to.equal(1);
+  });
+
+
+  it("dismiss: ", function() {
     $scope.dismiss();
 
     $modalInstance.dismiss.should.have.been.called;

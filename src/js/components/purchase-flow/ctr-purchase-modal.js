@@ -33,6 +33,10 @@ angular.module("risevision.common.components.purchase-flow")
       $scope.currentStep = step.index;
     };
 
+    $scope.setNextStep = function () {
+      $scope.currentStep++;
+    };
+
     $scope.dismiss = function () {
       $modalInstance.dismiss("cancel");
     };

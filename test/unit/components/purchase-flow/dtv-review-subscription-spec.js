@@ -3,43 +3,30 @@
 describe("controller: review subscription", function() {
   beforeEach(module("risevision.common.components.purchase-flow"));
 
-  var $scope;
+  var $scope, element;
 
-  beforeEach(function() {
-    inject(function($injector, $rootScope, $controller) {
-      $scope = $rootScope.$new();
+  beforeEach(inject(function($compile, $rootScope, $templateCache){
+    $templateCache.put("purchase-flow/checkout-review-subscription.html", "<p>mock</p>");
+    $scope = $rootScope.$new();
 
-      $controller("ReviewSubcriptionCtrl", {
-        $scope: $scope,
-      });
+    element = $compile("<review-subscription></review-subscription>")($scope);
+  }));
 
-      $scope.$digest();
-    });
+  it("should replace the element with the appropriate content", function() {
+    expect(element.html()).to.equal("<p>mock</p>");
   });
 
   it("should exist", function() {
-    expect($scope.init).to.be.a("function");
     expect($scope.incrementLicenses).to.be.a("function");
     expect($scope.decrementLicenses).to.be.a("function");
     expect($scope.getMonthlyPrice).to.be.a("function");
     expect($scope.getYearlyPrice).to.be.a("function");
   });
 
-  it("should initialize",function() {
-    expect($scope.plan).to.not.be.ok;
-
-    $scope.init({
-      name: "PlanA",
-      additionalDisplayLicenses: 0
-    });
-
-    expect($scope.plan).to.be.a("object");
-  });
-
   it("incrementLicenses: ", function() {
-    $scope.init({
+    $scope.plan = {
       additionalDisplayLicenses: 0
-    });
+    };
 
     $scope.incrementLicenses();
 
@@ -47,9 +34,9 @@ describe("controller: review subscription", function() {
   });
 
   it("decrementLicenses: ", function() {
-    $scope.init({
+    $scope.plan = {
       additionalDisplayLicenses: 2
-    });
+    };
 
     $scope.decrementLicenses();
 
@@ -57,25 +44,25 @@ describe("controller: review subscription", function() {
   });
 
   it("getMonthlyPrice: ", function() {
-    $scope.init({
+    $scope.plan = {
       monthly: {
         billAmount: 10,
         priceDisplayMonth: 3
       },
       additionalDisplayLicenses: 2
-    });
+    };
 
     expect($scope.getMonthlyPrice()).to.equal(16);
   });
 
   it("getYearlyPrice: ", function() {
-    $scope.init({
+    $scope.plan = {
       yearly: {
         billAmount: 100,
         priceDisplayMonth: 3
       },
       additionalDisplayLicenses: 2
-    });
+    };
 
     expect($scope.getYearlyPrice()).to.equal(172);
   });

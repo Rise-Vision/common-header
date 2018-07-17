@@ -1,5 +1,5 @@
 <!-- Step 1 -->
-<div id="checkout-review-subscription" data-ng-controller="ReviewSubcriptionCtrl" data-ng-init="init(plan)">
+<div id="checkout-review-subscription">
   <h3>{{plan.name}} Plan</h3>
   <div class="flex-pricing-summary">
     <div class="text-center u_padding-md">
@@ -67,7 +67,7 @@
   <hr>
   <div class="row">
     <div class="col-xs-12">
-      <button id="continueButton" class="btn btn-primary btn-lg pull-right">Continue</button>
+      <button id="continueButton" class="btn btn-primary btn-lg pull-right" ng-click="setNextStep()">Continue</button>
     </div>
   </div>
 </div>

@@ -39,6 +39,37 @@ angular.module("risevision.common.components.purchase-flow", [
 })(angular);
 
 angular.module("risevision.common.components.purchase-flow")
+  .directive("reviewSubscription", ["$templateCache",
+    function ($templateCache) {
+      return {
+        restrict: "E",
+        template: $templateCache.get(
+          "purchase-flow/checkout-review-subscription.html"),
+        link: function ($scope) {
+          $scope.incrementLicenses = function () {
+            $scope.plan.additionalDisplayLicenses++;
+          };
+
+          $scope.decrementLicenses = function () {
+            $scope.plan.additionalDisplayLicenses--;
+          };
+
+          $scope.getMonthlyPrice = function () {
+            return $scope.plan.monthly.billAmount +
+              ($scope.plan.additionalDisplayLicenses * $scope.plan.monthly.priceDisplayMonth);
+          };
+
+          $scope.getYearlyPrice = function () {
+            return $scope.plan.yearly.billAmount +
+              ($scope.plan.additionalDisplayLicenses * $scope.plan.yearly.priceDisplayMonth * 12);
+          };
+
+        }
+      };
+    }
+  ]);
+
+angular.module("risevision.common.components.purchase-flow")
 
 .value("PURCHASE_STEPS", [{
   name: "Subscription Details",
@@ -73,6 +104,10 @@ angular.module("risevision.common.components.purchase-flow")
       $scope.currentStep = step.index;
     };
 
+    $scope.setNextStep = function () {
+      $scope.currentStep++;
+    };
+
     $scope.dismiss = function () {
       $modalInstance.dismiss("cancel");
     };
@@ -82,35 +117,6 @@ angular.module("risevision.common.components.purchase-flow")
     };
 
     $scope.init();
-  }
-
-]);
-
-angular.module("risevision.common.components.purchase-flow")
-
-.controller("ReviewSubcriptionCtrl", ["$scope",
-  function ($scope) {
-    $scope.init = function (plan) {
-      $scope.plan = plan;
-    };
-
-    $scope.incrementLicenses = function () {
-      $scope.plan.additionalDisplayLicenses++;
-    };
-
-    $scope.decrementLicenses = function () {
-      $scope.plan.additionalDisplayLicenses--;
-    };
-
-    $scope.getMonthlyPrice = function () {
-      return $scope.plan.monthly.billAmount +
-        ($scope.plan.additionalDisplayLicenses * $scope.plan.monthly.priceDisplayMonth);
-    };
-
-    $scope.getYearlyPrice = function () {
-      return $scope.plan.yearly.billAmount +
-        ($scope.plan.additionalDisplayLicenses * $scope.plan.yearly.priceDisplayMonth * 12);
-    };
   }
 
 ]);
@@ -171,7 +177,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/checkout-review-subscription.html',
-    '<div id="checkout-review-subscription" data-ng-controller="ReviewSubcriptionCtrl" data-ng-init="init(plan)"><h3>{{plan.name}} Plan</h3><div class="flex-pricing-summary"><div class="text-center u_padding-md"><p>${{plan.monthly.priceDisplayMonth}}</p><span>per Display<br>per Month</span></div><div class="connector-column text-center"><b>x</b></div><div class="text-center u_padding-md"><p>{{plan.proLicenseCount}}</p><span ng-show="plan.proLicenseCount === 1" translate="">Display Included</span> <span ng-show="plan.proLicenseCount > 1" translate="">Displays Included</span></div></div><hr class="u_remove-margin"><div class="text-center flex-additive-rule"><b>+</b></div><div class="row"><div class="col-xs-12">Need more Displays than <b>{{plan.name}} Plan</b> offers? Add more at only <b>${{plan.monthly.priceDisplayMonth}} per Display</b>!<br><br></div><div class="col-xs-12"><div class="input-group spinner"><div class="input-group-btn-vertical"><button class="btn btn-white" type="button" ng-click="incrementLicenses()"><i class="fa fa-caret-up"></i></button> <button class="btn btn-white" type="button" ng-click="decrementLicenses()"><i class="fa fa-caret-down"></i></button></div><input type="text" class="form-control" ng-model="plan.additionalDisplayLicenses"> <span class="icon-right u_margin-md-top u_align-middle">additional Display licenses added to your purchase.</span></div></div><div class="col-xs-12"><hr></div><div class="col-xs-12 u_margin-sm-bottom"><b class="pull-left">TOTAL</b> <b class="pull-right">Pay yearly, get one month free!</b></div><div class="col-xs-12"><div class="panel payment-recurrence-selector"><div class="radio" ng-class="{ active: plan.monthlyPrices }"><label><input type="radio" name="billingPeriod" id="monthlyBilling" ng-value="true" ng-model="plan.monthlyPrices"> ${{getMonthlyPrice()}} billed monthly</label></div><div class="radio" ng-class="{ active: !plan.monthlyPrices }"><label><input type="radio" name="billingPeriod" id="yearlyBilling" ng-value="false" ng-model="plan.monthlyPrices"> ${{getYearlyPrice()}} billed yearly</label> <label class="highlight">Save ${{plan.yearly.save}}!</label></div></div></div></div><hr><div class="row"><div class="col-xs-12"><button id="continueButton" class="btn btn-primary btn-lg pull-right">Continue</button></div></div></div>');
+    '<div id="checkout-review-subscription"><h3>{{plan.name}} Plan</h3><div class="flex-pricing-summary"><div class="text-center u_padding-md"><p>${{plan.monthly.priceDisplayMonth}}</p><span>per Display<br>per Month</span></div><div class="connector-column text-center"><b>x</b></div><div class="text-center u_padding-md"><p>{{plan.proLicenseCount}}</p><span ng-show="plan.proLicenseCount === 1" translate="">Display Included</span> <span ng-show="plan.proLicenseCount > 1" translate="">Displays Included</span></div></div><hr class="u_remove-margin"><div class="text-center flex-additive-rule"><b>+</b></div><div class="row"><div class="col-xs-12">Need more Displays than <b>{{plan.name}} Plan</b> offers? Add more at only <b>${{plan.monthly.priceDisplayMonth}} per Display</b>!<br><br></div><div class="col-xs-12"><div class="input-group spinner"><div class="input-group-btn-vertical"><button class="btn btn-white" type="button" ng-click="incrementLicenses()"><i class="fa fa-caret-up"></i></button> <button class="btn btn-white" type="button" ng-click="decrementLicenses()"><i class="fa fa-caret-down"></i></button></div><input type="text" class="form-control" ng-model="plan.additionalDisplayLicenses"> <span class="icon-right u_margin-md-top u_align-middle">additional Display licenses added to your purchase.</span></div></div><div class="col-xs-12"><hr></div><div class="col-xs-12 u_margin-sm-bottom"><b class="pull-left">TOTAL</b> <b class="pull-right">Pay yearly, get one month free!</b></div><div class="col-xs-12"><div class="panel payment-recurrence-selector"><div class="radio" ng-class="{ active: plan.monthlyPrices }"><label><input type="radio" name="billingPeriod" id="monthlyBilling" ng-value="true" ng-model="plan.monthlyPrices"> ${{getMonthlyPrice()}} billed monthly</label></div><div class="radio" ng-class="{ active: !plan.monthlyPrices }"><label><input type="radio" name="billingPeriod" id="yearlyBilling" ng-value="false" ng-model="plan.monthlyPrices"> ${{getYearlyPrice()}} billed yearly</label> <label class="highlight">Save ${{plan.yearly.save}}!</label></div></div></div></div><hr><div class="row"><div class="col-xs-12"><button id="continueButton" class="btn btn-primary btn-lg pull-right" ng-click="setNextStep()">Continue</button></div></div></div>');
 }]);
 })();
 
@@ -289,7 +295,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/purchase-modal.html',
-    '<div rv-spinner="" rv-spinner-key="purchase-modal" rv-spinner-start-active="0"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title" translate="">Checkout</h3></div><div id="purchase-modal" class="modal-body checkout-modal" stop-event="touchend"><div id="prototypeProgressIndicator" class="progress-indicator"><div ng-repeat-start="step in PURCHASE_STEPS" class="indicator" ng-class="{ active: currentStep === step.index, complete: currentStep > step.index }" ng-click="setCurrentStep(step)"><div class="tag">{{step.name}}</div></div><div ng-repeat-end="" class="progress-bar-container" ng-class="{ complete: currentStep > step.index }"><div class="progress-bar"></div></div></div><div ng-include="\'purchase-flow/checkout-review-subscription.html\'" ng-show="currentStep === 0"></div><div ng-include="\'purchase-flow/checkout-billing-address.html\'" ng-show="currentStep === 1"></div><div ng-include="\'purchase-flow/checkout-billing-address-error.html\'"></div><div ng-include="\'purchase-flow/checkout-shipping-address.html\'" ng-show="currentStep === 2"></div><div ng-include="\'purchase-flow/checkout-payment-methods.html\'" ng-show="currentStep === 3"></div><div ng-include="\'purchase-flow/checkout-review-purchase.html\'" ng-show="currentStep === 4"></div><div ng-include="\'purchase-flow/checkout-success.html\'"></div><div ng-include="\'purchase-flow/tax-exemption.html\'"></div></div><div ng-include="\'purchase-flow/prototype-code.html\'"></div><div id="security-branding" class="modal-small-footer text-center u_padding-xs" ng-show="currentStep > 2"><small class="text-subtle"><i class="fa fa-lock icon-left"></i> Secure Checkout from <img src="https://s3.amazonaws.com/Rise-Images/UI/chargebee-icon.svg"> Chargebee and <img alt="powered by Stripe" src="https://s3.amazonaws.com/Rise-Images/UI/powered_by_stripe.svg"></small></div></div>');
+    '<div rv-spinner="" rv-spinner-key="purchase-modal" rv-spinner-start-active="0"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title" translate="">Checkout</h3></div><div id="purchase-modal" class="modal-body checkout-modal" stop-event="touchend"><div id="prototypeProgressIndicator" class="progress-indicator"><div ng-repeat-start="step in PURCHASE_STEPS" class="indicator" ng-class="{ active: currentStep === step.index, complete: currentStep > step.index }" ng-click="setCurrentStep(step)"><div class="tag">{{step.name}}</div></div><div ng-repeat-end="" class="progress-bar-container" ng-class="{ complete: currentStep > step.index }"><div class="progress-bar"></div></div></div><review-subscription ng-show="currentStep === 0"></review-subscription><div ng-include="\'purchase-flow/checkout-billing-address.html\'" ng-show="currentStep === 1"></div><div ng-include="\'purchase-flow/checkout-billing-address-error.html\'"></div><div ng-include="\'purchase-flow/checkout-shipping-address.html\'" ng-show="currentStep === 2"></div><div ng-include="\'purchase-flow/checkout-payment-methods.html\'" ng-show="currentStep === 3"></div><div ng-include="\'purchase-flow/checkout-review-purchase.html\'" ng-show="currentStep === 4"></div><div ng-include="\'purchase-flow/checkout-success.html\'"></div><div ng-include="\'purchase-flow/tax-exemption.html\'"></div></div><div ng-include="\'purchase-flow/prototype-code.html\'"></div><div id="security-branding" class="modal-small-footer text-center u_padding-xs" ng-show="currentStep > 2"><small class="text-subtle"><i class="fa fa-lock icon-left"></i> Secure Checkout from <img src="https://s3.amazonaws.com/Rise-Images/UI/chargebee-icon.svg"> Chargebee and <img alt="powered by Stripe" src="https://s3.amazonaws.com/Rise-Images/UI/powered_by_stripe.svg"></small></div></div>');
 }]);
 })();
 
