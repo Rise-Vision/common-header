@@ -25,6 +25,9 @@ msgstr "Close"
 msgid "completeRegistration"
 msgstr "Complete Registration"
 
+msgid "continue"
+msgstr "Continue"
+
 msgid "contribute"
 msgstr "Contribute"
 

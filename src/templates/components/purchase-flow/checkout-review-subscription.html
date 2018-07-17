@@ -1,18 +1,20 @@
 <!-- Step 1 -->
 <div id="checkout-review-subscription">
-  <h3>{{plan.name}} Plan</h3>
+  <h3 translate translate-values="{ planName: plan.name }">common-header.purchase.review-subscription.plan-name</h3>
   <div class="flex-pricing-summary">
     <div class="text-center u_padding-md">
       <p>${{plan.monthly.priceDisplayMonth}}</p>
-      <span>per Display <br>per Month</span>
+      <span>{{ 'common-header.purchase.review-subscription.per-display' | translate}} <br>
+        {{ 'common-header.purchase.review-subscription.per-month' | translate}}
+      </span>
     </div>
     <div class="connector-column text-center">
       <b>x</b>
     </div>
     <div class="text-center u_padding-md">
       <p>{{plan.proLicenseCount}}</p>
-      <span ng-show="plan.proLicenseCount === 1" translate>Display Included</span>
-      <span ng-show="plan.proLicenseCount > 1" translate>Displays Included</span>
+      <span ng-show="plan.proLicenseCount === 1" translate>common-header.purchase.review-subscription.display-included</span>
+      <span ng-show="plan.proLicenseCount > 1" translate>common-header.purchase.review-subscription.displays-included</span>
     </div>
   </div>
   <hr class="u_remove-margin">
@@ -20,10 +22,8 @@
     <b>+</b>
   </div>
   <div class="row">
-    <div class="col-xs-12">
-      Need more Displays than <b>{{plan.name}} Plan</b> offers? Add more at only <b>${{plan.monthly.priceDisplayMonth}} per Display</b>!
-      <br/>
-      <br/>
+    <div class="col-xs-12 u_margin-md-bottom" translate translate-values="{ planName: plan.name, priceDisplayMonth: plan.monthly.priceDisplayMonth }">
+      common-header.purchase.review-subscription.need-more-displays
     </div>
     <div class="col-xs-12">
       <div class="input-group spinner">
@@ -36,30 +36,30 @@
           </button>
         </div>
         <input type="text" class="form-control" ng-model="plan.additionalDisplayLicenses">
-        <span class="icon-right u_margin-md-top u_align-middle">additional Display licenses added to your purchase.</span>
+        <span class="icon-right u_margin-md-top u_align-middle" translate>common-header.purchase.review-subscription.additional-licenses</span>
       </div>
     </div>
     <div class="col-xs-12">
       <hr>
     </div>
     <div class="col-xs-12 u_margin-sm-bottom">
-      <b class="pull-left">TOTAL</b>
-      <b class="pull-right">Pay yearly, get one month free!</b>
+      <b class="pull-left" translate>common-header.purchase.review-subscription.total</b>
+      <b class="pull-right" translate>common-header.purchase.review-subscription.pay-yearly</b>
     </div>
     <div class="col-xs-12">
       <div class="panel payment-recurrence-selector">
         <div class="radio" ng-class="{ active: plan.monthlyPrices }">
           <label>
             <input type="radio" name="billingPeriod" id="monthlyBilling" ng-value="true" ng-model="plan.monthlyPrices">
-            ${{getMonthlyPrice()}} billed monthly
+            <span translate translate-values="{ monthlyPrice: getMonthlyPrice() }">common-header.purchase.review-subscription.billed-monthly</span>
           </label>
         </div>
         <div class="radio" ng-class="{ active: !plan.monthlyPrices }">
           <label>
             <input type="radio" name="billingPeriod" id="yearlyBilling" ng-value="false" ng-model="plan.monthlyPrices">
-            ${{getYearlyPrice()}} billed yearly
+            <span translate translate-values="{ yearlyPrice: getYearlyPrice() }">common-header.purchase.review-subscription.billed-yearly</span>
           </label>
-          <label class="highlight">Save ${{plan.yearly.save}}!</label>
+          <label class="highlight" translate translate-values="{ saveYearly: plan.yearly.save }">common-header.purchase.review-subscription.save-yearly</label>
         </div>
       </div>
     </div>
@@ -67,7 +67,7 @@
   <hr>
   <div class="row">
     <div class="col-xs-12">
-      <button id="continueButton" class="btn btn-primary btn-lg pull-right" ng-click="setNextStep()">Continue</button>
+      <button id="continueButton" class="btn btn-primary btn-lg pull-right" ng-click="setNextStep()" translate>common.continue</button>
     </div>
   </div>
 </div>
