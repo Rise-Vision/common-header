@@ -4,6 +4,8 @@
 /*global sinon*/
 
 describe("controller: user add", function() {
+  var sandbox = sinon.sandbox.create();
+
   beforeEach(module("risevision.common.header"));
   beforeEach(module(function ($provide, $translateProvider) {
     $provide.service("userState",userState);
@@ -83,6 +85,12 @@ describe("controller: user add", function() {
         },
         isRiseVisionUser: function() {
           return isRiseVisionUser;
+        },
+        isSubcompanySelected: function () {
+          return false;
+        },
+        isSelectedCompanyChargebee: function () {
+          return false;
         }
       };
     };
@@ -198,6 +206,59 @@ describe("controller: user add", function() {
     $scope.closeModal();
     expect($modalInstance._dismissed).to.be.true;
   });
-    
+
+  describe("editRoleVisible: ", function () {
+    it("should handle isRiseAdmin", function () {
+      sandbox.stub(userState, "isRiseAdmin").returns(true);
+      sandbox.stub(userState, "isSubcompanySelected").returns(false);
+
+      expect($scope.editRoleVisible({ key: "sa"})).to.be.true;
+      expect($scope.editRoleVisible({ key: "ba"})).to.be.true;
+      expect($scope.editRoleVisible({ key: "pu"})).to.be.true;
+
+      sandbox.stub(userState, "isSelectedCompanyChargebee").returns(true);
+
+      expect($scope.editRoleVisible({ key: "pu"})).to.be.false;
+    });
+
+    it("should handle isRiseAdmin with subcompany selected", function () {
+      sandbox.stub(userState, "isRiseAdmin").returns(true);
+      sandbox.stub(userState, "isSubcompanySelected").returns(true);
+
+      expect($scope.editRoleVisible({ key: "sa"})).to.be.false;
+      expect($scope.editRoleVisible({ key: "ba"})).to.be.false;
+      expect($scope.editRoleVisible({ key: "pu"})).to.be.true;
+
+      sandbox.stub(userState, "isSelectedCompanyChargebee").returns(true);
+
+      expect($scope.editRoleVisible({ key: "pu"})).to.be.false;
+    });
+
+    it("should handle isUserAdmin", function () {
+      sandbox.stub(userState, "isRiseAdmin").returns(false);
+      sandbox.stub(userState, "isUserAdmin").returns(true);
+
+      expect($scope.editRoleVisible({ key: "sa"})).to.be.false;
+      expect($scope.editRoleVisible({ key: "ba"})).to.be.false;
+      expect($scope.editRoleVisible({ key: "pu"})).to.be.true;
+
+      sandbox.stub(userState, "isSelectedCompanyChargebee").returns(true);
+
+      expect($scope.editRoleVisible({ key: "pu"})).to.be.false;
+    });
+
+    it("should handle isRiseVisionUser", function () {
+      sandbox.stub(userState, "isRiseAdmin").returns(false);
+      sandbox.stub(userState, "isRiseVisionUser").returns(true);
+
+      expect($scope.editRoleVisible({ key: "sa"})).to.be.false;
+      expect($scope.editRoleVisible({ key: "ba"})).to.be.false;
+      expect($scope.editRoleVisible({ key: "pu"})).to.be.true;
+
+      sandbox.stub(userState, "isSelectedCompanyChargebee").returns(true);
+
+      expect($scope.editRoleVisible({ key: "pu"})).to.be.false;
+    });
+  });
 });
   

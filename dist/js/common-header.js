@@ -1937,7 +1937,9 @@ angular.module("risevision.common.header")
     };
 
     $scope.editRoleVisible = function (role) {
-      if (userState.isRiseAdmin()) {
+      if (userState.isSelectedCompanyChargebee() && role.key === "pu") {
+        return false;
+      } else if (userState.isRiseAdmin()) {
         if (userState.isSubcompanySelected() && (role.key === "sa" || role.key ===
           "ba")) {
           return false;
@@ -2129,7 +2131,9 @@ angular.module("risevision.common.header")
     };
 
     $scope.editRoleVisible = function (role) {
-      if (userState.isRiseAdmin()) {
+      if (userState.isSelectedCompanyChargebee() && role.key === "pu") {
+        return false;
+      } else if (userState.isRiseAdmin()) {
         if (userState.isSubcompanySelected() && (role.key === "sa" || role.key ===
           "ba")) {
           return false;
