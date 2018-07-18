@@ -9,7 +9,7 @@ angular.module("risevision.common.components.plans")
     $scope.currentPlan = currentPlanFactory.currentPlan;
     $scope.purchaseFactory = purchaseFactory;
     $scope.startTrialError = null;
-    $scope.monthlyPrices = true;
+    $scope.isMonthly = true;
 
     $scope.origin = userState.getCopyOfSelectedCompany().origin;
 
@@ -58,7 +58,7 @@ angular.module("risevision.common.components.plans")
     };
 
     $scope.showSavings = function (plan) {
-      return !$scope.isFree(plan) && (!$scope.isStarter(plan) || !$scope.monthlyPrices);
+      return !$scope.isFree(plan) && (!$scope.isStarter(plan) || !$scope.isMonthly);
     };
 
     $scope.currentPlanLabelVisible = function (plan) {

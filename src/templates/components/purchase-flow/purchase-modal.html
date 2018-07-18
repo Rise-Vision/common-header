@@ -9,7 +9,7 @@
   <div id="purchase-modal" class="modal-body checkout-modal" stop-event="touchend">
 
     <div id="prototypeProgressIndicator" class="progress-indicator">
-      <div ng-repeat-start="step in PURCHASE_STEPS" class="indicator" ng-class="{ active: currentStep === step.index, complete: currentStep > step.index }" ng-click="setCurrentStep(step)">
+      <div ng-repeat-start="step in PURCHASE_STEPS" class="indicator" ng-class="{ active: currentStep === step.index, complete: currentStep > step.index }">
         <div class="tag">{{step.name}}</div>
       </div>
       <div ng-repeat-end class="progress-bar-container" ng-class="{ complete: currentStep > step.index }">

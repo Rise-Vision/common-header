@@ -50,10 +50,6 @@ angular.module("risevision.common.components.purchase-flow")
       $scope.currentStep = index;
     };
 
-    $scope.setCurrentStep = function (step) {
-      _setStep(step.index);
-    };
-
     $scope.setNextStep = function () {
       _setStep($scope.currentStep + 1);
     };

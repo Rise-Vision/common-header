@@ -6,7 +6,7 @@
       function ($modal, $templateCache) {
         var _factory = {};
 
-        _factory.showPurchaseModal = function (plan, monthlyPrices) {
+        _factory.showPurchaseModal = function (plan, isMonthly) {
           $modal.open({
             template: $templateCache.get("purchase-flow/purchase-modal.html"),
             controller: "PurchaseModalCtrl",
@@ -14,7 +14,7 @@
             resolve: {
               plan: function () {
                 var selectedPlan = angular.copy(plan);
-                selectedPlan.monthlyPrices = monthlyPrices;
+                selectedPlan.isMonthly = isMonthly;
 
                 return selectedPlan;
               }

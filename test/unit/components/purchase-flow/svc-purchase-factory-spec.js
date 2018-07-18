@@ -44,7 +44,7 @@ describe("Services: purchase factory", function() {
       expect(resolveObj).to.be.ok;
       expect(resolveObj).to.deep.equal({
         name: "PlanA",
-        monthlyPrices: true
+        isMonthly: true
       });
       expect(resolveObj).to.not.equal(plan);
       
