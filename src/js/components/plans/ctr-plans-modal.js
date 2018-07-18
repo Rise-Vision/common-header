@@ -132,6 +132,10 @@ angular.module("risevision.common.components.plans")
       storeFactory.openPortal(userState.getSelectedCompanyId());
     };
 
+    $scope.purchaseAdditionalLicenses = function () {
+      storeFactory.openPortal(userState.getSelectedCompanyId());
+    };
+
     $scope.isChargebee = function () {
       return userState.isSelectedCompanyChargebee();
     };

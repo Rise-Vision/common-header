@@ -47,8 +47,12 @@
             <p ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan)" translate>
               common-header.plans.needMoreDisplays
             </p>
-            <a ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan)"
+            <a ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan) && !isChargebee()"
                href="https://www.risevision.com/purchaseadditionaldisplaylicenses" target="_blank" translate>
+              common-header.plans.individual-licenses
+            </a>
+            <a ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan) && isChargebee()"
+               href="#" ng-click="purchaseAdditionalLicenses(plan)" translate>
               common-header.plans.individual-licenses
             </a>
 
