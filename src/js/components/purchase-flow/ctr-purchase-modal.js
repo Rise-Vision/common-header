@@ -42,20 +42,26 @@ angular.module("risevision.common.components.purchase-flow")
       return formValid;
     };
 
-    $scope.setCurrentStep = function (step) {
+    var _setStep = function (index) {
       if (!_isFormValid()) {
         return;
       }
 
-      $scope.currentStep = step.index;
+      $scope.currentStep = index;
+    };
+
+    $scope.setCurrentStep = function (step) {
+      _setStep(step.index);
     };
 
     $scope.setNextStep = function () {
-      if (!_isFormValid()) {
-        return;
-      }
+      _setStep($scope.currentStep + 1);
+    };
 
-      $scope.currentStep++;
+    $scope.setPreviousStep = function () {
+      if ($scope.currentStep > 0) {
+        _setStep($scope.currentStep - 1);
+      }
     };
 
     $scope.dismiss = function () {

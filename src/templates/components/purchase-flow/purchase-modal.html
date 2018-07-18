@@ -18,7 +18,7 @@
     </div>
 
     <review-subscription ng-show="currentStep === 0"></review-subscription>
-    <div ng-include="'purchase-flow/checkout-billing-address.html'" ng-show="currentStep === 1"></div>
+    <billing-address ng-show="currentStep === 1"></billing-address>
     <div ng-include="'purchase-flow/checkout-billing-address-error.html'"></div>
     <div ng-include="'purchase-flow/checkout-shipping-address.html'" ng-show="currentStep === 2"></div>
     <div ng-include="'purchase-flow/checkout-payment-methods.html'" ng-show="currentStep === 3"></div>
