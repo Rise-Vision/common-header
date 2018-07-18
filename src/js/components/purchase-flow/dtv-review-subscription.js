@@ -6,22 +6,41 @@ angular.module("risevision.common.components.purchase-flow")
         template: $templateCache.get(
           "purchase-flow/checkout-review-subscription.html"),
         link: function ($scope) {
+          var _getAdditionalDisplayLicenses = function () {
+            var licenses = $scope.plan.additionalDisplayLicenses;
+
+            // Workaround for checking Integer value
+            // Using Number.isInteger(licenses) causes unit tests to fail
+            // if (Number.isInteger(licenses) && licenses >= 0) {
+            // if (_.isInteger(licenses) && licenses >= 0) {
+            if (!isNaN(licenses) && (licenses % 1 === 0) && licenses >= 0) {
+              return licenses;
+            }
+
+            return 0;
+          };
+
           $scope.incrementLicenses = function () {
-            $scope.plan.additionalDisplayLicenses++;
+            $scope.plan.additionalDisplayLicenses = _getAdditionalDisplayLicenses() + 1;
           };
 
           $scope.decrementLicenses = function () {
-            $scope.plan.additionalDisplayLicenses--;
+            if (_getAdditionalDisplayLicenses() === 0) {
+              $scope.plan.additionalDisplayLicenses = 0;
+            }
+            if ($scope.plan.additionalDisplayLicenses > 0) {
+              $scope.plan.additionalDisplayLicenses--;
+            }
           };
 
           $scope.getMonthlyPrice = function () {
             return $scope.plan.monthly.billAmount +
-              ($scope.plan.additionalDisplayLicenses * $scope.plan.monthly.priceDisplayMonth);
+              (_getAdditionalDisplayLicenses() * $scope.plan.monthly.priceDisplayMonth);
           };
 
           $scope.getYearlyPrice = function () {
             return $scope.plan.yearly.billAmount +
-              ($scope.plan.additionalDisplayLicenses * $scope.plan.yearly.priceDisplayMonth * 12);
+              (_getAdditionalDisplayLicenses() * $scope.plan.yearly.priceDisplayMonth * 12);
           };
 
         }

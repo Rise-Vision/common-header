@@ -9540,22 +9540,41 @@ angular.module("risevision.common.components.purchase-flow")
         template: $templateCache.get(
           "purchase-flow/checkout-review-subscription.html"),
         link: function ($scope) {
+          var _getAdditionalDisplayLicenses = function () {
+            var licenses = $scope.plan.additionalDisplayLicenses;
+
+            // Workaround for checking Integer value
+            // Using Number.isInteger(licenses) causes unit tests to fail
+            // if (Number.isInteger(licenses) && licenses >= 0) {
+            // if (_.isInteger(licenses) && licenses >= 0) {
+            if (!isNaN(licenses) && (licenses % 1 === 0) && licenses >= 0) {
+              return licenses;
+            }
+
+            return 0;
+          };
+
           $scope.incrementLicenses = function () {
-            $scope.plan.additionalDisplayLicenses++;
+            $scope.plan.additionalDisplayLicenses = _getAdditionalDisplayLicenses() + 1;
           };
 
           $scope.decrementLicenses = function () {
-            $scope.plan.additionalDisplayLicenses--;
+            if (_getAdditionalDisplayLicenses() === 0) {
+              $scope.plan.additionalDisplayLicenses = 0;
+            }
+            if ($scope.plan.additionalDisplayLicenses > 0) {
+              $scope.plan.additionalDisplayLicenses--;
+            }
           };
 
           $scope.getMonthlyPrice = function () {
             return $scope.plan.monthly.billAmount +
-              ($scope.plan.additionalDisplayLicenses * $scope.plan.monthly.priceDisplayMonth);
+              (_getAdditionalDisplayLicenses() * $scope.plan.monthly.priceDisplayMonth);
           };
 
           $scope.getYearlyPrice = function () {
             return $scope.plan.yearly.billAmount +
-              ($scope.plan.additionalDisplayLicenses * $scope.plan.yearly.priceDisplayMonth * 12);
+              (_getAdditionalDisplayLicenses() * $scope.plan.yearly.priceDisplayMonth * 12);
           };
 
         }
@@ -9588,17 +9607,38 @@ angular.module("risevision.common.components.purchase-flow")
   function ($scope, $modalInstance, $log, $loading, plan,
     PURCHASE_STEPS) {
 
+    $scope.form = {};
     $scope.plan = plan;
     $scope.plan.additionalDisplayLicenses = 0;
 
     $scope.PURCHASE_STEPS = PURCHASE_STEPS;
     $scope.currentStep = 0;
 
+    var _isFormValid = function () {
+      var formValid = true;
+
+      _.forIn($scope.form, function (form) {
+        if (form.$invalid) {
+          formValid = false;
+        }
+      });
+
+      return formValid;
+    };
+
     $scope.setCurrentStep = function (step) {
+      if (!_isFormValid()) {
+        return;
+      }
+
       $scope.currentStep = step.index;
     };
 
     $scope.setNextStep = function () {
+      if (!_isFormValid()) {
+        return;
+      }
+
       $scope.currentStep++;
     };
 
@@ -9671,7 +9711,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/checkout-review-subscription.html',
-    '<div id="checkout-review-subscription"><h3 translate="" translate-values="{ planName: plan.name }">common-header.purchase.review-subscription.plan-name</h3><div class="flex-pricing-summary"><div class="text-center u_padding-md"><p>${{plan.monthly.priceDisplayMonth}}</p><span>{{ \'common-header.purchase.review-subscription.per-display\' | translate}}<br>{{ \'common-header.purchase.review-subscription.per-month\' | translate}}</span></div><div class="connector-column text-center"><b>x</b></div><div class="text-center u_padding-md"><p>{{plan.proLicenseCount}}</p><span ng-show="plan.proLicenseCount === 1" translate="">common-header.purchase.review-subscription.display-included</span> <span ng-show="plan.proLicenseCount > 1" translate="">common-header.purchase.review-subscription.displays-included</span></div></div><hr class="u_remove-margin"><div class="text-center flex-additive-rule"><b>+</b></div><div class="row"><div class="col-xs-12 u_margin-md-bottom" translate="" translate-values="{ planName: plan.name, priceDisplayMonth: plan.monthly.priceDisplayMonth }">common-header.purchase.review-subscription.need-more-displays</div><div class="col-xs-12"><div class="input-group spinner"><div class="input-group-btn-vertical"><button class="btn btn-white" type="button" ng-click="incrementLicenses()"><i class="fa fa-caret-up"></i></button> <button class="btn btn-white" type="button" ng-click="decrementLicenses()"><i class="fa fa-caret-down"></i></button></div><input type="text" class="form-control" ng-model="plan.additionalDisplayLicenses"> <span class="icon-right u_margin-md-top u_align-middle" translate="">common-header.purchase.review-subscription.additional-licenses</span></div></div><div class="col-xs-12"><hr></div><div class="col-xs-12 u_margin-sm-bottom"><b class="pull-left" translate="">common-header.purchase.review-subscription.total</b> <b class="pull-right" translate="">common-header.purchase.review-subscription.pay-yearly</b></div><div class="col-xs-12"><div class="panel payment-recurrence-selector"><div class="radio" ng-class="{ active: plan.monthlyPrices }"><label><input type="radio" name="billingPeriod" id="monthlyBilling" ng-value="true" ng-model="plan.monthlyPrices"> <span translate="" translate-values="{ monthlyPrice: getMonthlyPrice() }">common-header.purchase.review-subscription.billed-monthly</span></label></div><div class="radio" ng-class="{ active: !plan.monthlyPrices }"><label><input type="radio" name="billingPeriod" id="yearlyBilling" ng-value="false" ng-model="plan.monthlyPrices"> <span translate="" translate-values="{ yearlyPrice: getYearlyPrice() }">common-header.purchase.review-subscription.billed-yearly</span></label> <label class="highlight" translate="" translate-values="{ saveYearly: plan.yearly.save }">common-header.purchase.review-subscription.save-yearly</label></div></div></div></div><hr><div class="row"><div class="col-xs-12"><button id="continueButton" class="btn btn-primary btn-lg pull-right" ng-click="setNextStep()" translate="">common.continue</button></div></div></div>');
+    '<div id="checkout-review-subscription"><form id="reviewSubscriptionForm" role="form" name="form.reviewSubscriptionForm" autocomplete="on" novalidate=""><h3 translate="" translate-values="{ planName: plan.name }">common-header.purchase.review-subscription.plan-name</h3><div class="flex-pricing-summary"><div class="text-center u_padding-md"><p>${{plan.monthly.priceDisplayMonth}}</p><span>{{ \'common-header.purchase.review-subscription.per-display\' | translate}}<br>{{ \'common-header.purchase.review-subscription.per-month\' | translate}}</span></div><div class="connector-column text-center"><b>x</b></div><div class="text-center u_padding-md"><p>{{plan.proLicenseCount}}</p><span ng-show="plan.proLicenseCount === 1" translate="">common-header.purchase.review-subscription.display-included</span> <span ng-show="plan.proLicenseCount > 1" translate="">common-header.purchase.review-subscription.displays-included</span></div></div><hr class="u_remove-margin"><div class="text-center flex-additive-rule"><b>+</b></div><div class="row"><div class="col-xs-12 u_margin-md-bottom" translate="" translate-values="{ planName: plan.name, priceDisplayMonth: plan.monthly.priceDisplayMonth }">common-header.purchase.review-subscription.need-more-displays</div><div class="col-xs-12"><div class="input-group spinner" ng-class="{ \'has-error\': form.reviewSubscriptionForm.additionalLicenses.$invalid }"><div class="input-group-btn-vertical"><button class="btn btn-white" type="button" ng-click="incrementLicenses()"><i class="fa fa-caret-up"></i></button> <button class="btn btn-white" type="button" ng-click="decrementLicenses()"><i class="fa fa-caret-down"></i></button></div><input id="additionalLicenses" name="additionalLicenses" type="number" class="form-control" ng-model="plan.additionalDisplayLicenses" min="0" max="999" pattern="[0-9]{1,3}" required=""> <span class="icon-right u_margin-md-top u_align-middle" translate="">common-header.purchase.review-subscription.additional-licenses</span></div></div><div class="col-xs-12"><hr></div><div class="col-xs-12 u_margin-sm-bottom"><b class="pull-left" translate="">common-header.purchase.review-subscription.total</b> <b class="pull-right" translate="">common-header.purchase.review-subscription.pay-yearly</b></div><div class="col-xs-12"><div class="panel payment-recurrence-selector"><div class="radio" ng-class="{ active: plan.monthlyPrices }"><label><input type="radio" name="billingPeriod" id="monthlyBilling" ng-value="true" ng-model="plan.monthlyPrices"> <span translate="" translate-values="{ monthlyPrice: getMonthlyPrice() }">common-header.purchase.review-subscription.billed-monthly</span></label></div><div class="radio" ng-class="{ active: !plan.monthlyPrices }"><label><input type="radio" name="billingPeriod" id="yearlyBilling" ng-value="false" ng-model="plan.monthlyPrices"> <span translate="" translate-values="{ yearlyPrice: getYearlyPrice() }">common-header.purchase.review-subscription.billed-yearly</span></label> <label class="highlight" translate="" translate-values="{ saveYearly: plan.yearly.save }">common-header.purchase.review-subscription.save-yearly</label></div></div></div></div><hr><div class="row"><div class="col-xs-12"><button id="continueButton" class="btn btn-primary btn-lg pull-right" ng-click="setNextStep()" ng-disabled="form.reviewSubscriptionForm.$invalid" translate="">common.continue</button></div></div></form></div>');
 }]);
 })();
 

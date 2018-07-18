@@ -8,6 +8,7 @@ describe("controller: review subscription", function() {
   beforeEach(inject(function($compile, $rootScope, $templateCache){
     $templateCache.put("purchase-flow/checkout-review-subscription.html", "<p>mock</p>");
     $scope = $rootScope.$new();
+    $scope.plan = {};
 
     element = $compile("<review-subscription></review-subscription>")($scope);
   }));
@@ -23,48 +24,101 @@ describe("controller: review subscription", function() {
     expect($scope.getYearlyPrice).to.be.a("function");
   });
 
-  it("incrementLicenses: ", function() {
-    $scope.plan = {
-      additionalDisplayLicenses: 0
-    };
+  describe("incrementLicenses: ", function() {
+    it("should increment licenses", function() {
+      $scope.plan.additionalDisplayLicenses = 0;
 
-    $scope.incrementLicenses();
+      $scope.incrementLicenses();
 
-    expect($scope.plan.additionalDisplayLicenses).to.equal(1);
+      expect($scope.plan.additionalDisplayLicenses).to.equal(1);      
+    });
+
+    it("should handle invalid number entry", function() {
+      $scope.plan.additionalDisplayLicenses = "invalid";
+
+      $scope.incrementLicenses();
+
+      expect($scope.plan.additionalDisplayLicenses).to.equal(1);      
+    });
   });
 
-  it("decrementLicenses: ", function() {
-    $scope.plan = {
-      additionalDisplayLicenses: 2
-    };
+  describe("decrementLicenses: ", function() {
+    it("should decrement licenses", function() {
+      $scope.plan.additionalDisplayLicenses = 2;
 
-    $scope.decrementLicenses();
+      $scope.decrementLicenses();
+      expect($scope.plan.additionalDisplayLicenses).to.equal(1);
+    });
 
-    expect($scope.plan.additionalDisplayLicenses).to.equal(1);
+    it("should stop at 0", function() {
+      $scope.plan.additionalDisplayLicenses = 1;
+
+      $scope.decrementLicenses();
+      $scope.decrementLicenses();
+      expect($scope.plan.additionalDisplayLicenses).to.equal(0);
+    });
+
+    it("should handle invalid number entry", function() {
+      $scope.plan.additionalDisplayLicenses = "invalid";
+
+      $scope.decrementLicenses();
+
+      expect($scope.plan.additionalDisplayLicenses).to.equal(0);      
+    });
+
   });
 
-  it("getMonthlyPrice: ", function() {
-    $scope.plan = {
-      monthly: {
-        billAmount: 10,
-        priceDisplayMonth: 3
-      },
-      additionalDisplayLicenses: 2
-    };
+  describe("getMonthlyPrice: ", function() {
+    it("should return price based on license number", function() {
+      $scope.plan = {
+        monthly: {
+          billAmount: 10,
+          priceDisplayMonth: 3
+        },
+        additionalDisplayLicenses: 2
+      };
 
-    expect($scope.getMonthlyPrice()).to.equal(16);
+      expect($scope.getMonthlyPrice()).to.equal(16);
+    });
+
+    it("should handle invalid license entry", function() {
+      $scope.plan = {
+        monthly: {
+          billAmount: 10,
+          priceDisplayMonth: 3
+        },
+        additionalDisplayLicenses: "invalid"
+      };
+
+      expect($scope.getMonthlyPrice()).to.equal(10);
+    });
+
   });
 
-  it("getYearlyPrice: ", function() {
-    $scope.plan = {
-      yearly: {
-        billAmount: 100,
-        priceDisplayMonth: 3
-      },
-      additionalDisplayLicenses: 2
-    };
+  describe("getYearlyPrice: ", function() {
+    it("should return price based on license number", function() {
+      $scope.plan = {
+        yearly: {
+          billAmount: 100,
+          priceDisplayMonth: 3
+        },
+        additionalDisplayLicenses: 2
+      };
 
-    expect($scope.getYearlyPrice()).to.equal(172);
+      expect($scope.getYearlyPrice()).to.equal(172);
+    });
+
+    it("should handle invalid license entry", function() {
+      $scope.plan = {
+        yearly: {
+          billAmount: 100,
+          priceDisplayMonth: 3
+        },
+        additionalDisplayLicenses: "invalid"
+      };
+
+      expect($scope.getYearlyPrice()).to.equal(100);
+    });
   });
 
 });

@@ -23,17 +23,38 @@ angular.module("risevision.common.components.purchase-flow")
   function ($scope, $modalInstance, $log, $loading, plan,
     PURCHASE_STEPS) {
 
+    $scope.form = {};
     $scope.plan = plan;
     $scope.plan.additionalDisplayLicenses = 0;
 
     $scope.PURCHASE_STEPS = PURCHASE_STEPS;
     $scope.currentStep = 0;
 
+    var _isFormValid = function () {
+      var formValid = true;
+
+      _.forIn($scope.form, function (form) {
+        if (form.$invalid) {
+          formValid = false;
+        }
+      });
+
+      return formValid;
+    };
+
     $scope.setCurrentStep = function (step) {
+      if (!_isFormValid()) {
+        return;
+      }
+
       $scope.currentStep = step.index;
     };
 
     $scope.setNextStep = function () {
+      if (!_isFormValid()) {
+        return;
+      }
+
       $scope.currentStep++;
     };
 

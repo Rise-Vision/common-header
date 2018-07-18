@@ -63,18 +63,45 @@ describe("controller: purchase modal", function() {
     expect($scope.dismiss).to.be.a("function");
   });
 
-  it("setCurrentStep: ", function() {
-    $scope.setCurrentStep({
-      index: 2
+  describe("setCurrentStep: ", function() {
+    it("should set step", function() {
+      $scope.setCurrentStep({
+        index: 2
+      });
+
+      expect($scope.currentStep).to.equal(2);
     });
 
-    expect($scope.currentStep).to.equal(2);
+    it("should not set step if form is invalid", function() {
+      $scope.form.form1 = {
+        $invalid: true
+      };
+
+      $scope.setCurrentStep({
+        index: 2
+      });
+
+      expect($scope.currentStep).to.equal(0);
+    });
   });
 
-  it("setNextStep: ", function() {
-    $scope.setNextStep();
+  describe("setNextStep: ", function() {
+    it("should increment step", function() {
+      $scope.setNextStep();
 
-    expect($scope.currentStep).to.equal(1);
+      expect($scope.currentStep).to.equal(1);
+    });
+
+    it("should not increment step if form is invalid", function() {
+      $scope.form.form1 = {
+        $invalid: true
+      };
+
+      $scope.setNextStep();
+
+      expect($scope.currentStep).to.equal(0);
+    });
+
   });
 
 
