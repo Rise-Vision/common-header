@@ -3,62 +3,62 @@
   <form id="billingAddressForm" role="form" class="u_margin-md-top" name="form.billingAddressForm" autocomplete="on" novalidate>
     <div class="row">
       <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group" ng-class="{ 'has-error': form.billingAddressForm.firstName.$invalid && !form.billingAddressForm.firstName.$pristine }">
           <label for="billing-address-firstName" class="control-label">First Name</label>
-          <input id="billing-address-firstName" type="text" class="form-control" name="fname" ng-model="plan.contact.firstName" autocomplete="given-name">
+          <input id="billing-address-firstName" type="text" class="form-control" name="firstName" ng-model="plan.contact.firstName" autocomplete="given-name" required>
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group" ng-class="{ 'has-error': form.billingAddressForm.lastName.$invalid && !form.billingAddressForm.lastName.$pristine }">
           <label for="billing-address-lastName" class="control-label">Last Name</label>
-          <input id="billing-address-lastName" type="text" class="form-control" name="lname" ng-model="plan.contact.lastName" autocomplete="family-name">
+          <input id="billing-address-lastName" type="text" class="form-control" name="lastName" ng-model="plan.contact.lastName" autocomplete="family-name" required>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group" ng-class="{ 'has-error': form.billingAddressForm.email.$invalid && !form.billingAddressForm.email.$pristine }">
           <label for="billing-address-email" class="control-label">Email</label>
-          <input id="billing-address-email" type="email" class="form-control" name="email" ng-model="plan.contact.email" autocomplete="email">
+          <input id="billing-address-email" type="email" class="form-control" name="email" ng-model="plan.contact.email" autocomplete="email" required>
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group" ng-class="{ 'has-error': form.billingAddressForm.tel.$invalid && !form.billingAddressForm.tel.$pristine }">
           <label for="billing-address-phone" class="control-label">Telephone</label>
-          <input id="billing-address-phone" name="tel" type="tel" class="form-control" ng-model="plan.contact.telephone" placeholder="000 000 0000" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" autocomplete="tel">
+          <input id="billing-address-phone" name="tel" type="tel" class="form-control" ng-model="plan.contact.telephone" autocomplete="tel" required>
         </div>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error': form.billingAddressForm.companyName.$invalid && !form.billingAddressForm.companyName.$pristine }">
       <label for="billing-address-companyName" class="control-label">Company Name</label>
-      <input id="billing-address-companyName" name="company" type="text" class="form-control" ng-model="plan.billingAddress.name" autocomplete="org">
+      <input id="billing-address-companyName" name="companyName" type="text" class="form-control" ng-model="plan.billingAddress.name" autocomplete="org" required>
     </div>
     <div class="row">
       <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group" ng-class="{ 'has-error': form.billingAddressForm.street.$invalid && !form.billingAddressForm.street.$pristine }">
           <label for="billing-address-streetAddress" class="control-label">Street Address</label>
-          <input id="billing-address-streetAddress" name="address" type="text" class="form-control" ng-model="plan.billingAddress.street" autocomplete="street-address">
+          <input id="billing-address-streetAddress" name="street" type="text" class="form-control" ng-model="plan.billingAddress.street" autocomplete="street-address" required>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="billing-address-unit" class="control-label">Unit</label>
-          <input id="billing-address-unit" type="text" name="address" class="form-control" ng-model="plan.billingAddress.unit" autocomplete="address-line2">
+          <input id="billing-address-unit" type="text" name="unit" class="form-control" ng-model="plan.billingAddress.unit" autocomplete="address-line2">
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group" ng-class="{ 'has-error': form.billingAddressForm.city.$invalid && !form.billingAddressForm.city.$pristine }">
           <label for="billing-address-city" class="control-label">City</label>
-          <input id="billing-address-city" name="city" type="text" class="form-control" ng-model="plan.billingAddress.city" autocomplete="city">
+          <input id="billing-address-city" name="city" type="text" class="form-control" ng-model="plan.billingAddress.city" autocomplete="city" required>
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group" ng-class="{ 'has-error': form.billingAddressForm.country.$invalid && !form.billingAddressForm.country.$pristine }">
           <label for="billing-address-country" class="control-label">Country</label>
           <select id="billing-address-country" name="country" autocomplete="country" class="form-control"
-            ng-model="plan.billingAddress.country" ng-options="c.code as c.name for c in countries" empty-select-parser>
+            ng-model="plan.billingAddress.country" ng-options="c.code as c.name for c in countries" empty-select-parser required>
             <option ng-show="false" value="">&lt; Select Country &gt;</option>
           </select>
         </div>
@@ -66,10 +66,10 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group" ng-class="{ 'has-error': form.billingAddressForm.province.$invalid && !form.billingAddressForm.province.$pristine }">
           <label for="billing-address-region" class="control-label">State/Province/Region</label>
 
-          <input type="text" class="form-control" ng-model="plan.billingAddress.province" autcomplete="province" ng-hide="plan.billingAddress.country === 'US' || plan.billingAddress.country === 'CA'" />
+          <input name="province" type="text" class="form-control" ng-model="plan.billingAddress.province" autcomplete="province" ng-hide="plan.billingAddress.country === 'US' || plan.billingAddress.country === 'CA'" required>
           <select class="form-control selectpicker" ng-model="plan.billingAddress.province" ng-options="c[1] as c[0] for c in regionsCA" ng-show="plan.billingAddress.country === 'CA'" empty-select-parser>
             <option ng-show="false" value="">&lt; Select Province &gt;</option>
           </select>
@@ -80,9 +80,9 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-group">
-          <label for="billing-address-zip" class="control-label">ZIP/Postal Code</label>
-          <input id="billing-address-zip" name="zip" type="text" class="form-control" ng-model="plan.billingAddress.postalCode" autocomplete="postal-code">
+        <div class="form-group" ng-class="{ 'has-error': form.billingAddressForm.postalCode.$invalid && !form.billingAddressForm.postalCode.$pristine }">
+          <label for="billing-address-postalCode" class="control-label">ZIP/Postal Code</label>
+          <input id="billing-address-postalCode" name="postalCode" type="text" class="form-control" ng-model="plan.billingAddress.postalCode" autocomplete="postal-code" required>
         </div>
       </div>
     </div>

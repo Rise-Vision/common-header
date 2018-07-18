@@ -70,14 +70,24 @@ describe("controller: purchase modal", function() {
       expect($scope.currentStep).to.equal(1);
     });
 
-    it("should not increment step if form is invalid", function() {
-      $scope.form.form1 = {
+    it("should not increment step if the corresponding form is invalid", function() {
+      $scope.form.reviewSubscriptionForm = {
         $invalid: true
       };
 
       $scope.setNextStep();
 
       expect($scope.currentStep).to.equal(0);
+    });
+
+    it("should increment step if other forms are invalid", function() {
+      $scope.form.billingAddressForm = {
+        $invalid: true
+      };
+
+      $scope.setNextStep();
+
+      expect($scope.currentStep).to.equal(1);
     });
 
   });
@@ -98,15 +108,15 @@ describe("controller: purchase modal", function() {
       expect($scope.currentStep).to.equal(0);
     });
 
-    it("should not increment step if form is invalid", function() {
-      $scope.currentStep = 2;
-      $scope.form.form1 = {
+    it("should not increment step if the corresponding form is invalid", function() {
+      $scope.currentStep = 1;
+      $scope.form.billingAddressForm = {
         $invalid: true
       };
 
       $scope.setPreviousStep();
 
-      expect($scope.currentStep).to.equal(2);
+      expect($scope.currentStep).to.equal(1);
     });
 
   });
