@@ -46,6 +46,11 @@ describe("controller: plans modal", function() {
         reloadSelectedCompany: function() {}
       };
     });
+    $provide.factory("storeFactory", function() {
+      return {
+        openPortal: function() {}
+      };
+    });
     $provide.service("$modal", function() {
       return {
         open: sinon.stub()
