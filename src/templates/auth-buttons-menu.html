@@ -19,9 +19,13 @@
   </li>
 
   <li ng-show="isRiseVisionUser">
-    <a href="https://store.risevision.com/account" target="_blank" class="store-account-button action" link-cid >
+    <a href="https://store.risevision.com/account" target="_blank" class="store-account-button action" link-cid ng-show="!isChargebee()">
       <i class="fa fa-shopping-cart"></i>
-      <span class="item-name">Store Account</span>
+      <span class="item-name">Account & Billing</span>
+    </a>
+    <a href="#" class="store-account-button action" ng-click="showAccountAndBilling()" ng-show="isChargebee()">
+      <i class="fa fa-shopping-cart"></i>
+      <span class="item-name">Account & Billing</span>
     </a>
   </li>
 

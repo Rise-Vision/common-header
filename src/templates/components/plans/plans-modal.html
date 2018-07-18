@@ -63,8 +63,11 @@
             <a id="subscribe-plan" ng-show="getVisibleAction(plan) === 'subscribe'"
                 target="_blank" href="https://store.risevision.com/product/{{plan.productId}}"
                 class="btn btn-primary btn-block" translate>common-header.plans.subscribe</a>
-            <a id="downgrade-plan" ng-show="getVisibleAction(plan) === 'downgrade'"
+            <a id="downgrade-plan" ng-show="getVisibleAction(plan) === 'downgrade' && !isChargebee()"
                 target="_blank" href="https://www.risevision.com/downgradeplan"
+                class="btn btn-default btn-block" translate>common-header.plans.downgrade</a>
+            <a id="downgrade-plan-cb" ng-show="getVisibleAction(plan) === 'downgrade' && isChargebee()"
+                ng-click="downgradePlan(plan)"
                 class="btn btn-default btn-block" translate>common-header.plans.downgrade</a>
             <a id="start-trial-plan" ng-show="getVisibleAction(plan) === 'start-trial'"
                 target="_blank" ng-click="startTrial(plan)"

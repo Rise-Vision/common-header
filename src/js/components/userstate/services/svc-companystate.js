@@ -167,6 +167,9 @@
           },
           isRootCompany: function () {
             return _state.userCompany && !_state.userCompany.parentId;
+          },
+          isSelectedCompanyChargebee: function () {
+            return _state.selectedCompany && _state.selectedCompany.origin === "Chargebee";
           }
         };
 
