@@ -59,6 +59,7 @@ describe("controller: purchase modal", function() {
     expect($scope.init).to.be.a("function");
     expect($scope.setCurrentStep).to.be.a("function");
     expect($scope.setNextStep).to.be.a("function");
+    expect($scope.setPreviousStep).to.be.a("function");
 
     expect($scope.dismiss).to.be.a("function");
   });
@@ -104,6 +105,34 @@ describe("controller: purchase modal", function() {
 
   });
 
+  describe("setPreviousStep: ", function() {
+    it("should decrement step", function() {
+      $scope.currentStep = 2;
+      $scope.setPreviousStep();
+
+      expect($scope.currentStep).to.equal(1);
+    });
+
+    it("should stop at 0", function() {
+      $scope.currentStep = 1;
+      $scope.setPreviousStep();
+      $scope.setPreviousStep();
+
+      expect($scope.currentStep).to.equal(0);
+    });
+
+    it("should not increment step if form is invalid", function() {
+      $scope.currentStep = 2;
+      $scope.form.form1 = {
+        $invalid: true
+      };
+
+      $scope.setPreviousStep();
+
+      expect($scope.currentStep).to.equal(2);
+    });
+
+  });
 
   it("dismiss: ", function() {
     $scope.dismiss();
