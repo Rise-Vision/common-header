@@ -26,6 +26,53 @@ describe("controller: billing address", function() {
     expect($scope.countries).to.be.ok;
     expect($scope.regionsCA).to.be.ok;
     expect($scope.regionsUS).to.be.ok;
+
+    expect($scope.isFieldInvalid).to.be.a("function");
   });
 
+  describe("isFieldInvalid: ", function() {
+    beforeEach(function() {
+      $scope.form = {
+        billingAddressForm: {
+          field1: {
+            $dirty: true,
+            $invalid: true
+          },
+          $submitted: true
+        }
+      };
+      
+    });
+    it("should return true if invalid, submitted and dirty", function() {
+      expect($scope.isFieldInvalid("field1")).to.equal.false;
+    });
+
+    it("should return true if not submitted or drity", function() {
+      $scope.form.billingAddressForm.$submitted = false;
+      $scope.form.billingAddressForm.field1.$dirty = false;
+
+      expect($scope.isFieldInvalid("field1")).to.equal.true;
+    });
+
+    it("should return false if submitted but not dirty", function() {
+      $scope.form.billingAddressForm.$submitted = true;
+      $scope.form.billingAddressForm.field1.$dirty = false;
+
+      expect($scope.isFieldInvalid("field1")).to.equal.false;
+    });
+
+    it("should return false if not submitted but dirty", function() {
+      $scope.form.billingAddressForm.$submitted = false;
+      $scope.form.billingAddressForm.field1.$dirty = true;
+
+      expect($scope.isFieldInvalid("field1")).to.equal.false;
+    });
+
+    it("should return false if valid", function() {
+      $scope.form.billingAddressForm.field1.$invalid = false;
+
+      expect($scope.isFieldInvalid("field1")).to.equal.false;
+    });
+
+  });
 });
