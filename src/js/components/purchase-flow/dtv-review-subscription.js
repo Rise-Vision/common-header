@@ -40,7 +40,7 @@ angular.module("risevision.common.components.purchase-flow")
 
           $scope.getYearlyPrice = function () {
             return $scope.plan.yearly.billAmount +
-              (_getAdditionalDisplayLicenses() * $scope.plan.yearly.priceDisplayMonth * 12);
+              (_getAdditionalDisplayLicenses() * $scope.plan.yearly.priceDisplayYear);
           };
 
         }

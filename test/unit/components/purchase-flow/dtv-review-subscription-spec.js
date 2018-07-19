@@ -100,19 +100,19 @@ describe("controller: review subscription", function() {
       $scope.plan = {
         yearly: {
           billAmount: 100,
-          priceDisplayMonth: 3
+          priceDisplayYear: 30
         },
         additionalDisplayLicenses: 2
       };
 
-      expect($scope.getYearlyPrice()).to.equal(172);
+      expect($scope.getYearlyPrice()).to.equal(160);
     });
 
     it("should handle invalid license entry", function() {
       $scope.plan = {
         yearly: {
           billAmount: 100,
-          priceDisplayMonth: 3
+          priceDisplayYear: 30
         },
         additionalDisplayLicenses: "invalid"
       };
