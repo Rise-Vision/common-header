@@ -108,17 +108,6 @@ describe("controller: purchase modal", function() {
       expect($scope.currentStep).to.equal(0);
     });
 
-    it("should not increment step if the corresponding form is invalid", function() {
-      $scope.currentStep = 1;
-      $scope.form.billingAddressForm = {
-        $invalid: true
-      };
-
-      $scope.setPreviousStep();
-
-      expect($scope.currentStep).to.equal(1);
-    });
-
   });
 
   it("dismiss: ", function() {
