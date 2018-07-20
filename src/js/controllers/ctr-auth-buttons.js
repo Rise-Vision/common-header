@@ -1,11 +1,11 @@
 angular.module("risevision.common.header")
   .controller("AuthButtonsCtr", ["$scope", "$modal", "$templateCache",
-    "userState", "userAuthFactory", "storeFactory", "canAccessApps",
+    "userState", "userAuthFactory", "chargebeeFactory", "canAccessApps",
     "$loading", "cookieStore",
     "$log", "uiFlowManager", "oauth2APILoader", "bindToScopeWithWatch",
     "$window", "APPS_URL",
     function ($scope, $modal, $templateCache, userState, userAuthFactory,
-      storeFactory, canAccessApps,
+      chargebeeFactory, canAccessApps,
       $loading, cookieStore, $log, uiFlowManager, oauth2APILoader,
       bindToScopeWithWatch, $window, APPS_URL) {
 
@@ -151,7 +151,8 @@ angular.module("risevision.common.header")
       };
 
       $scope.showAccountAndBilling = function () {
-        storeFactory.openPortal(userState.getSelectedCompanyId());
+        chargebeeFactory.openSubscriptionDetails("c82d2596-4e67-4ff8-b407-f28992d1ca64");
+        //chargebeeFactory.openPortal(userState.getSelectedCompanyId());
       };
 
       $scope.isChargebee = function () {

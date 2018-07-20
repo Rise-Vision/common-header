@@ -663,12 +663,12 @@ angular.module("risevision.common.header.directives")
 
 angular.module("risevision.common.header")
   .controller("AuthButtonsCtr", ["$scope", "$modal", "$templateCache",
-    "userState", "userAuthFactory", "storeFactory", "canAccessApps",
+    "userState", "userAuthFactory", "chargebeeFactory", "canAccessApps",
     "$loading", "cookieStore",
     "$log", "uiFlowManager", "oauth2APILoader", "bindToScopeWithWatch",
     "$window", "APPS_URL",
     function ($scope, $modal, $templateCache, userState, userAuthFactory,
-      storeFactory, canAccessApps,
+      chargebeeFactory, canAccessApps,
       $loading, cookieStore, $log, uiFlowManager, oauth2APILoader,
       bindToScopeWithWatch, $window, APPS_URL) {
 
@@ -814,7 +814,8 @@ angular.module("risevision.common.header")
       };
 
       $scope.showAccountAndBilling = function () {
-        storeFactory.openPortal(userState.getSelectedCompanyId());
+        chargebeeFactory.openSubscriptionDetails("c82d2596-4e67-4ff8-b407-f28992d1ca64");
+        //chargebeeFactory.openPortal(userState.getSelectedCompanyId());
       };
 
       $scope.isChargebee = function () {
@@ -2448,6 +2449,114 @@ angular.module("risevision.common.header")
 
 "use strict";
 
+angular.module("risevision.store.services")
+  .factory("chargebeeInstance", ["$rootScope", "$q", "storeService", "userState",
+    function ($rootScope, $q, storeService, userState) {
+      var factory = {
+        instance: null,
+        portal: null
+      };
+
+      Chargebee.init({
+        site: "risevision-test"
+      });
+
+      factory.instance = Chargebee.getInstance();
+
+      $rootScope.$on("risevision.company.selectedCompanyChanged", function () {
+        console.log("Loading Chargebee Portal session");
+
+        storeService.createSession(userState.getSelectedCompanyId())
+          .then(function (session) {
+            console.log("Chargebee session is", session);
+
+            return factory.instance.setPortalSession(function () {
+              return $q.resolve(session);
+            });
+          })
+          .then(function () {
+            factory.portal = factory.instance.createChargebeePortal();
+          })
+          .catch(function (err) {
+            console.log("Error creating Customer Portal session", err);
+          });
+      });
+
+      return factory;
+    }
+  ])
+  .factory("chargebeeFactory", ["$log", "chargebeeInstance",
+    function ($log, chargebeeInstance) {
+      var factory = {};
+
+      factory.openPortal = function () {
+        chargebeeInstance.portal.open({
+          loaded: function () {
+            $log.debug("Chargebee loaded event");
+          },
+          close: function () {
+            $log.debug("Chargebee close event");
+          },
+          visit: function (sectionName) {
+            $log.debug("Chargebee visit event", sectionName);
+          },
+          paymentSourceAdd: function () {
+            $log.debug("Chargebee paymentSourceAdd event");
+          },
+          paymentSourceUpdate: function () {
+            $log.debug("Chargebee paymentSourceUpdate event");
+          },
+          paymentSourceRemove: function () {
+            $log.debug("Chargebee paymentSourceRemove event");
+          },
+          subscriptionChanged: function (data) {
+            $log.debug("Chargebee subscriptionChanged event", data);
+          },
+          subscriptionCancelled: function (data) {
+            $log.debug("Chargebee subscrpitionCancelled event", data);
+          }
+        });
+      };
+
+      factory.openAccountDetails = function () {
+        chargebeeInstance.portal.openSection({
+          sectionType: Chargebee.getPortalSections().ACCOUNT_DETAILS
+        });
+      };
+
+      factory.openAddress = function () {
+        chargebeeInstance.portal.openSection({
+          sectionType: Chargebee.getPortalSections().ADDRESS
+        });
+      };
+
+      factory.openBillingHistory = function () {
+        chargebeeInstance.portal.openSection({
+          sectionType: Chargebee.getPortalSections().BILLING_HISTORY
+        });
+      };
+
+      factory.openPaymentSources = function () {
+        chargebeeInstance.portal.openSection({
+          sectionType: Chargebee.getPortalSections().PAYMENT_SOURCES
+        });
+      };
+
+      factory.openSubscriptionDetails = function (subscriptionId) {
+        chargebeeInstance.portal.openSection({
+          sectionType: Chargebee.getPortalSections().SUBSCRIPTION_DETAILS,
+          params: {
+            subscriptionId: subscriptionId
+          }
+        });
+      };
+
+      return factory;
+    }
+  ]);
+
+"use strict";
+
 angular.module("risevision.common.header")
   .value("COMPANY_ROLE_FIELDS", [
     ["IT/Network Administrator", "it_network_administrator"],
@@ -3364,6 +3473,26 @@ angular.module("risevision.store.services")
               })
               .then(null, function (e) {
                 console.error("Failed to get portal URL.", e);
+                deferred.reject(e);
+              });
+            return deferred.promise;
+          },
+          createSession: function (companyId) {
+            var deferred = $q.defer();
+
+            var obj = {
+              "companyId": companyId
+            };
+
+            storeAPILoader().then(function (storeApi) {
+              return storeApi.customer_portal.createSession(obj);
+            })
+              .then(function (resp) {
+                $log.debug("customer_portal.createSession resp", resp);
+                deferred.resolve(JSON.parse(resp.result.result));
+              })
+              .then(null, function (e) {
+                console.error("Failed to create Customer Portal Session.", e);
                 deferred.reject(e);
               });
             return deferred.promise;
