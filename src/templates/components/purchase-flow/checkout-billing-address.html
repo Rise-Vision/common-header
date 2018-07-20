@@ -70,11 +70,11 @@
         <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('province') }">
           <label for="billing-address-region" class="control-label">State/Province/Region</label>
 
-          <input name="province" type="text" class="form-control" ng-model="plan.billingAddress.province" autcomplete="address-level1" ng-show="plan.billingAddress.country !== 'US' && plan.billingAddress.country !== 'CA'" province-validator="plan.billingAddress.country">
-          <select class="form-control selectpicker" ng-model="plan.billingAddress.province" ng-options="c[1] as c[0] for c in regionsCA" ng-show="plan.billingAddress.country === 'CA'" empty-select-parser>
+          <input name="province" type="text" class="form-control" ng-model="plan.billingAddress.province" autocomplete="address-level1" ng-show="plan.billingAddress.country !== 'US' && plan.billingAddress.country !== 'CA'" province-validator="plan.billingAddress.country">
+          <select class="form-control selectpicker" ng-model="plan.billingAddress.province" ng-options="c[1] as c[0] for c in regionsCA" autocomplete="address-level1" ng-show="plan.billingAddress.country === 'CA'" empty-select-parser>
             <option ng-show="false" value="">&lt; Select Province &gt;</option>
           </select>
-          <select class="form-control selectpicker" ng-model="plan.billingAddress.province" ng-options="c[1] as c[0] for c in regionsUS" ng-show="plan.billingAddress.country === 'US'" empty-select-parser>
+          <select class="form-control selectpicker" ng-model="plan.billingAddress.province" ng-options="c[1] as c[0] for c in regionsUS" autocomplete="address-level1" ng-show="plan.billingAddress.country === 'US'" empty-select-parser>
             <option ng-show="false" value="">&lt; Select State &gt;</option>
           </select>
 
