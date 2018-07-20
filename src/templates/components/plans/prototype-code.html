@@ -147,4 +147,19 @@
           $("#security-branding").show();
         });
 
+    //IF GENERATE INVOICE SELECTED
+    //     if ($("# option").val() == 'Invoice Me' ) {
+    //  alert('ddd';)
+    // });
+    $('#paymentMethodSelection').change(function(){
+      $("#generateInvoice").show();
+      $("#paymentDetailsForm").hide();
+      $("#addThisCard").prop('disabled', false);
+    });
+
+    $(document).on("click", "#triggerOverdue", function () {
+      $("#generateInvoice").hide();
+      $("#generateInvoiceOverdue").show();
+      $("#addThisCard").prop('disabled', true);
+    });
       </script>
