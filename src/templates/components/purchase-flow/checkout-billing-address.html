@@ -26,7 +26,7 @@
       <div class="col-md-6">
         <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('tel') }">
           <label for="billing-address-phone" class="control-label">Telephone</label>
-          <input id="billing-address-phone" name="tel" type="tel" class="form-control" ng-model="plan.contact.telephone" autocomplete="tel" required>
+          <input id="billing-address-phone" name="tel" type="tel" class="form-control" ng-model="plan.contact.telephone" autocomplete="tel">
         </div>
       </div>
     </div>
@@ -70,11 +70,11 @@
         <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('province') }">
           <label for="billing-address-region" class="control-label">State/Province/Region</label>
 
-          <input name="province" type="text" class="form-control" ng-model="plan.billingAddress.province" autcomplete="address-level1" ng-hide="plan.billingAddress.country === 'US' || plan.billingAddress.country === 'CA'" required>
-          <select class="form-control selectpicker" ng-model="plan.billingAddress.province" ng-options="c[1] as c[0] for c in regionsCA" ng-show="plan.billingAddress.country === 'CA'" empty-select-parser>
+          <input name="province" type="text" class="form-control" ng-model="plan.billingAddress.province" autcomplete="address-level1" ng-if="plan.billingAddress.country !== 'US' && plan.billingAddress.country !== 'CA'" ng-init="plan.billingAddress.province = ''">
+          <select class="form-control selectpicker" ng-model="plan.billingAddress.province" ng-options="c[1] as c[0] for c in regionsCA" ng-if="plan.billingAddress.country === 'CA'" ng-init="plan.billingAddress.province = ''" empty-select-parser required>
             <option ng-show="false" value="">&lt; Select Province &gt;</option>
           </select>
-          <select class="form-control selectpicker" ng-model="plan.billingAddress.province" ng-options="c[1] as c[0] for c in regionsUS" ng-show="plan.billingAddress.country === 'US'" empty-select-parser>
+          <select class="form-control selectpicker" ng-model="plan.billingAddress.province" ng-options="c[1] as c[0] for c in regionsUS" ng-if="plan.billingAddress.country === 'US'" ng-init="plan.billingAddress.province = ''" empty-select-parser required>
             <option ng-show="false" value="">&lt; Select State &gt;</option>
           </select>
 
