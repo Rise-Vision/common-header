@@ -7664,68 +7664,11 @@ input::-webkit-contacts-auto-fill-button {
 input[type=number] {
   -moz-appearance: textfield; }
 
-input[type=radio] {
-  margin: 3px 0 0; }
-
-.payment-recurrence-selector {
-  padding: 0; }
-  .payment-recurrence-selector .radio {
-    position: relative;
-    display: block;
-    min-height: 20px;
-    padding: 9px;
-    margin: 0; }
-    .payment-recurrence-selector .radio label {
-      padding: 5px 0 5px 30px; }
-    .payment-recurrence-selector .radio.active {
-      background: aliceblue; }
-    .payment-recurrence-selector .radio .highlight {
-      border: 1px solid #1fbc52;
-      padding: 0px 12px;
-      float: right;
-      color: #1fbc52;
-      cursor: default;
-      top: 4px;
-      position: relative;
-      right: 5px; }
-
 ::-webkit-inner-spin-button {
   -webkit-appearance: none; }
 
 ::-webkit-outer-spin-button {
   -webkit-appearance: none; }
-
-.spinner {
-  border-radius: 4px; }
-  .spinner input {
-    width: 50px !important;
-    font-size: 18px;
-    border-radius: 4px !important;
-    text-align: center; }
-  .spinner .input-group-btn-vertical {
-    position: relative;
-    white-space: nowrap;
-    width: 1%;
-    vertical-align: middle;
-    display: table-cell; }
-    .spinner .input-group-btn-vertical > .btn, .spinner .icon-nav .input-group-btn-vertical > label, .icon-nav .spinner .input-group-btn-vertical > label {
-      display: block;
-      float: none;
-      width: 100%;
-      max-width: 100%;
-      padding: 8px;
-      margin-left: -1px;
-      position: relative;
-      border-radius: 0; }
-      .spinner .input-group-btn-vertical > .btn:first-child, .spinner .icon-nav .input-group-btn-vertical > label:first-child, .icon-nav .spinner .input-group-btn-vertical > label:first-child {
-        border-top-left-radius: 4px; }
-      .spinner .input-group-btn-vertical > .btn:last-child, .spinner .icon-nav .input-group-btn-vertical > label:last-child, .icon-nav .spinner .input-group-btn-vertical > label:last-child {
-        margin-top: -2px;
-        border-bottom-left-radius: 4px; }
-    .spinner .input-group-btn-vertical i {
-      position: absolute;
-      top: 0;
-      left: 4px; }
 
 /* ==========================================================================
    Modals
@@ -7781,21 +7724,6 @@ input[type=radio] {
   margin-top: 0; }
   .modal-footer input[type="checkbox"] {
     float: none; }
-
-.modal-small-footer {
-  margin-bottom: 0;
-  background: #f2f2f2;
-  overflow: hidden;
-  border-radius: 0 0 4px 4px;
-  border-top: 1px solid #e5e5e5;
-  min-height: 16.43px;
-  width: 100%; }
-  .modal-small-footer img {
-    width: auto;
-    height: 16px;
-    position: relative;
-    top: -2px;
-    margin-left: 5px; }
 
 .modal-dialog.modal-lg {
   width: auto; }
@@ -10892,6 +10820,21 @@ iframe.modal-dialog {
     height: 100vh;
     overflow: hidden;
     margin: 0; }
+
+.modal-small-footer {
+  margin-bottom: 0;
+  background: #f2f2f2;
+  overflow: hidden;
+  border-radius: 0 0 4px 4px;
+  border-top: 1px solid #e5e5e5;
+  min-height: 16.43px;
+  width: 100%; }
+  .modal-small-footer img {
+    width: auto;
+    height: 16px;
+    position: relative;
+    top: -2px;
+    margin-left: 5px; }
 
 .storage-modal {
   padding: 15px; }
@@ -16641,6 +16584,60 @@ a.mfp-iframe:hover:after {
     top: -28px;
     background: #fcfcfc;
     border: 10px solid #fcfcfc; }
+
+.payment-recurrence-selector {
+  padding: 0; }
+  .payment-recurrence-selector .radio {
+    position: relative;
+    display: block;
+    min-height: 20px;
+    padding: 9px;
+    margin: 0; }
+    .payment-recurrence-selector .radio label {
+      padding: 5px 0 5px 30px; }
+    .payment-recurrence-selector .radio.active {
+      background: aliceblue; }
+    .payment-recurrence-selector .radio .highlight {
+      border: 1px solid #1fbc52;
+      padding: 0px 12px;
+      float: right;
+      color: #1fbc52;
+      cursor: default;
+      top: 4px;
+      position: relative;
+      right: 5px; }
+
+.spinner {
+  border-radius: 4px; }
+  .spinner input {
+    width: 50px !important;
+    font-size: 18px;
+    border-radius: 4px !important;
+    text-align: center; }
+  .spinner .input-group-btn-vertical {
+    position: relative;
+    white-space: nowrap;
+    width: 1%;
+    vertical-align: middle;
+    display: table-cell; }
+    .spinner .input-group-btn-vertical > .btn, .spinner .icon-nav .input-group-btn-vertical > label, .icon-nav .spinner .input-group-btn-vertical > label {
+      display: block;
+      float: none;
+      width: 100%;
+      max-width: 100%;
+      padding: 8px;
+      margin-left: -1px;
+      position: relative;
+      border-radius: 0; }
+      .spinner .input-group-btn-vertical > .btn:first-child, .spinner .icon-nav .input-group-btn-vertical > label:first-child, .icon-nav .spinner .input-group-btn-vertical > label:first-child {
+        border-top-left-radius: 4px; }
+      .spinner .input-group-btn-vertical > .btn:last-child, .spinner .icon-nav .input-group-btn-vertical > label:last-child, .icon-nav .spinner .input-group-btn-vertical > label:last-child {
+        margin-top: -2px;
+        border-bottom-left-radius: 4px; }
+    .spinner .input-group-btn-vertical i {
+      position: absolute;
+      top: 0;
+      left: 4px; }
 
 .app-launcher-wizard .panel-body {
   height: 70vh;
