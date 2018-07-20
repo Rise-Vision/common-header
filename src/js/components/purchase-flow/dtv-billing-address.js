@@ -9,6 +9,12 @@ angular.module("risevision.common.components.purchase-flow")
           $scope.regionsCA = REGIONS_CA;
           $scope.regionsUS = REGIONS_US;
 
+          $scope.isFieldInvalid = function (fieldName) {
+            var form = $scope.form.billingAddressForm;
+            var field = $scope.form.billingAddressForm[fieldName];
+
+            return (field.$dirty || form.$submitted) && field.$invalid;
+          };
         }
       };
     }

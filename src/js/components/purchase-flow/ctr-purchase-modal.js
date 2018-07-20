@@ -2,10 +2,12 @@ angular.module("risevision.common.components.purchase-flow")
 
 .value("PURCHASE_STEPS", [{
   name: "Subscription Details",
-  index: 0
+  index: 0,
+  formName: "reviewSubscriptionForm"
 }, {
   name: "Billing Address",
-  index: 1
+  index: 1,
+  formName: "billingAddressForm"
 }, {
   name: "Shipping Address",
   index: 2
@@ -31,32 +33,24 @@ angular.module("risevision.common.components.purchase-flow")
     $scope.currentStep = 0;
 
     var _isFormValid = function () {
-      var formValid = true;
+      var step = PURCHASE_STEPS[$scope.currentStep];
+      var formName = step.formName;
+      var form = $scope.form[formName];
 
-      _.forIn($scope.form, function (form) {
-        if (form.$invalid) {
-          formValid = false;
-        }
-      });
-
-      return formValid;
+      return !form || form.$valid;
     };
 
-    var _setStep = function (index) {
+    $scope.setNextStep = function () {
       if (!_isFormValid()) {
         return;
       }
 
-      $scope.currentStep = index;
-    };
-
-    $scope.setNextStep = function () {
-      _setStep($scope.currentStep + 1);
+      $scope.currentStep++;
     };
 
     $scope.setPreviousStep = function () {
       if ($scope.currentStep > 0) {
-        _setStep($scope.currentStep - 1);
+        $scope.currentStep--;
       }
     };
 
