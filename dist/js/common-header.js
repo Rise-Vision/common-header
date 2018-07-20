@@ -9123,6 +9123,7 @@ angular.module("risevision.common.components.plans", [
       },
       yearly: {
         priceDisplayMonth: 0,
+        priceDisplayYear: 0,
         billAmount: 0,
         save: 0
       }
@@ -9140,6 +9141,7 @@ angular.module("risevision.common.components.plans", [
       },
       yearly: {
         priceDisplayMonth: 10,
+        priceDisplayYear: 110,
         billAmount: 110,
         save: 10
       },
@@ -9158,6 +9160,7 @@ angular.module("risevision.common.components.plans", [
       },
       yearly: {
         priceDisplayMonth: 9,
+        priceDisplayYear: 99,
         billAmount: 297,
         save: 63
       },
@@ -9176,6 +9179,7 @@ angular.module("risevision.common.components.plans", [
       },
       yearly: {
         priceDisplayMonth: 8,
+        priceDisplayYear: 88,
         billAmount: 968,
         save: 352
       },
@@ -9194,6 +9198,7 @@ angular.module("risevision.common.components.plans", [
       },
       yearly: {
         priceDisplayMonth: 7,
+        priceDisplayYear: 77,
         billAmount: 5390,
         save: 3010
       }
@@ -9642,7 +9647,7 @@ angular.module("risevision.common.components.purchase-flow")
 
           $scope.getYearlyPrice = function () {
             return $scope.plan.yearly.billAmount +
-              (_getAdditionalDisplayLicenses() * $scope.plan.yearly.priceDisplayMonth * 12);
+              (_getAdditionalDisplayLicenses() * $scope.plan.yearly.priceDisplayYear);
           };
 
         }
