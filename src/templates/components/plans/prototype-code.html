@@ -128,4 +128,23 @@
             showSuccess();
           }, 5000);
         });
+
+        //TRIGGER VALIDATION
+        $(document).on("click", "#triggerAddrValidation", function () {
+          $("#content-three").hide();
+          $("#ValidationPopup").show();
+        });
+
+         $(document).on("click", "#triggerShippingShow", function () {
+          $("#content-three").show();
+          $("#ValidationPopup").hide();
+        });
+        
+        $(document).on("click", "#triggerNext", function () {
+          $("#ValidationPopup").hide();
+          $(".prototype-show").hide();
+          $("#content-four").show();
+          $("#security-branding").show();
+        });
+
       </script>

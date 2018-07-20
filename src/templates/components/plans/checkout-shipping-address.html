@@ -149,11 +149,61 @@
       </div>
     </div>
   </form>
+
+
   <hr>
-  <div class="row">
+  <div class="row" id="buttonset_Addr">
     <div class="col-xs-12">
       <button id="" class="btn btn-default btn-lg pull-left"> Back </button>
-      <button id="" class="btn btn-primary btn-lg pull-right"> Continue </button>
+      <button id="triggerAddrValidation" class="btn btn-primary btn-lg pull-right"> Continue </button>
     </div>
   </div>
+
+  
 </div>
+
+<div id="ValidationPopup" style="display:none">
+    <p class="validation-notice u_margin-lg-top">
+      We’ve validated your address below. Please review and click <b>Save</b> to use the suggested address,
+      or go <b>Back</b> to make updates and try again.</p>
+    <p class="validation-notice">Please ensure <b>full</b> address details are entered (ie. 'Street', 'Lane', 'Road').</p>
+    <div class="alert alert-info">
+      <div class="form-group">
+        <table>
+          <tbody>
+            <tr>
+              <td class="addr-label"><b>Address (Line 1):</b></td>
+              <td class="addr-value ng-binding"> 545 King Street West</td>
+            </tr>
+            <tr>
+              <td class="addr-label"><b>Address (Line 2):</b></td>
+              <td class="addr-value ng-binding"> &nbsp;</td>
+            </tr>
+            <tr>
+              <td class="addr-label"><b>City:</b></td>
+              <td class="addr-value ng-binding"> &nbsp;Toronto</td>
+            </tr>
+            <tr>
+              <td class="addr-label"><b>Country:</b></td>
+              <td class="addr-value ng-binding">&nbsp; CA</td>
+            </tr>
+            <tr>
+              <td class="addr-label"><b>State / Province:</b></td>
+              <td class="addr-value ng-binding"> &nbsp;ON</td>
+            </tr>
+            <tr>
+              <td class="addr-label"><b>ZIP / Postal Code:</b></td>
+              <td class="addr-value ng-binding">&nbsp;M5V 1M2</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  <div class="row">
+      <div class="col-xs-12">
+        <button id="triggerShippingShow" class="btn btn-default btn-lg pull-left"> Edit </button>
+        <button id="triggerNext" class="btn btn-primary btn-lg pull-right"> Save </button>
+      </div>
+    </div>
+  </div>
