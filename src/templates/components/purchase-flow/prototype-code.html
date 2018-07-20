@@ -17,20 +17,6 @@
           this.checked ? $('#targetCCAddress').hide(400) : $('#targetCCAddress').show(400);
         });
     
-        //SHOW ERROR STATE 
-        $(document).on("click", "#reveal-billing-error", function () {
-          $("#checkout-billing-address").hide();
-          $("#prototypeProgressIndicator").hide();
-          $("#content-two-error").show();
-        });
-    
-        //CLEAR ERROR STATE 
-        $(document).on("click", "#hide-billing-error", function () {
-          $(".prototype-show").hide();
-          $("#checkout-billing-address").show();
-          $("#prototypeProgressIndicator").show();
-        });
-    
         //SHOW TAX EXEMPTION
         $(document).on("click", "#showTaxExempt", function () {
           $("#checkout-review-purchase").hide();
