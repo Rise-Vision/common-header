@@ -46,7 +46,7 @@ describe("controller: plans modal", function() {
         reloadSelectedCompany: function() {}
       };
     });
-    $provide.factory("storeFactory", function() {
+    $provide.factory("chargebeeFactory", function() {
       return {
         openPortal: function() {}
       };

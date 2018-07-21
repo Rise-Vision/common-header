@@ -151,7 +151,8 @@ angular.module("risevision.common.header")
       };
 
       $scope.showAccountAndBilling = function () {
-        chargebeeFactory.openSubscriptionDetails("c82d2596-4e67-4ff8-b407-f28992d1ca64");
+        chargebeeFactory.openSubscriptionDetails("94b47745-faff-4c7e-8c82-51a56c732aba",
+          "c82d2596-4e67-4ff8-b407-f28992d1ca64");
         //chargebeeFactory.openPortal(userState.getSelectedCompanyId());
       };
 

@@ -425,9 +425,9 @@ angular.module("risevision.common.components.plans")
 
 .controller("PlansModalCtrl", [
   "$scope", "$rootScope", "$modalInstance", "$log", "$loading", "$timeout",
-  "plansFactory", "currentPlanFactory", "storeFactory", "userState",
+  "plansFactory", "currentPlanFactory", "chargebeeFactory", "userState",
   function ($scope, $rootScope, $modalInstance, $log, $loading, $timeout,
-    plansFactory, currentPlanFactory, storeFactory, userState) {
+    plansFactory, currentPlanFactory, chargebeeFactory, userState) {
 
     $scope.currentPlan = currentPlanFactory.currentPlan;
     $scope.startTrialError = null;
@@ -552,11 +552,11 @@ angular.module("risevision.common.components.plans")
     };
 
     $scope.downgradePlan = function () {
-      storeFactory.openPortal(userState.getSelectedCompanyId());
+      chargebeeFactory.openPortal(userState.getSelectedCompanyId());
     };
 
     $scope.purchaseAdditionalLicenses = function () {
-      storeFactory.openPortal(userState.getSelectedCompanyId());
+      chargebeeFactory.openPortal(userState.getSelectedCompanyId());
     };
 
     $scope.isChargebee = function () {
