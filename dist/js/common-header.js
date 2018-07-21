@@ -2453,33 +2453,27 @@ angular.module("risevision.common.header")
 angular.module("risevision.store.services")
   .factory("getChargebeeInstance", ["$q", "storeService",
     function ($q, storeService) {
-      var sessions = {}; // Sessions keyed by companyId
       var currentCompanyId = null;
       var currentInstance = null;
 
-      function _createChargebeeInstance(companyId) {
-        if (currentCompanyId !== companyId) {
-          var cbInstance = {};
+      function _createChargebeeInstance(companyId, session) {
+        var cbInstance = {};
 
-          cbInstance.instance = Chargebee.init({
-            site: "risevision-test"
-          });
-          cbInstance.instance.logout();
-          cbInstance.instance.setPortalSession(function () {
-            return $q.resolve(sessions[companyId]);
-          });
-          cbInstance.portal = cbInstance.instance.createChargebeePortal();
+        cbInstance.instance = Chargebee.init({
+          site: "risevision-test"
+        });
+        cbInstance.instance.logout();
+        cbInstance.instance.setPortalSession(function () {
+          return $q.resolve(session);
+        });
+        cbInstance.portal = cbInstance.instance.createChargebeePortal();
 
-          currentCompanyId = companyId;
-          currentInstance = cbInstance;
-        }
-
-        return currentInstance;
+        return cbInstance;
       }
 
       return function (companyId) {
-        if (sessions[companyId]) {
-          return $q.resolve(_createChargebeeInstance(companyId));
+        if (currentCompanyId === companyId) {
+          return $q.resolve(currentInstance);
         } else {
           var deferred = $q.defer();
 
@@ -2487,8 +2481,10 @@ angular.module("risevision.store.services")
             .then(function (session) {
               console.log("Chargebee session for companyId", companyId, "is", session);
 
-              sessions[companyId] = session;
-              deferred.resolve(_createChargebeeInstance(companyId));
+              currentInstance = _createChargebeeInstance(companyId, session);
+              currentCompanyId = companyId;
+
+              deferred.resolve(currentInstance);
             })
             .catch(function (err) {
               console.log("Error creating Customer Portal session for company id", companyId, err);
