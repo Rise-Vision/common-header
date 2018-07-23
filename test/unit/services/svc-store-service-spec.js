@@ -1,4 +1,3 @@
-/*jshint expr:true */
 "use strict";
 
 describe("Services: storeService", function() {
@@ -14,7 +13,7 @@ describe("Services: storeService", function() {
     $provide.service("storeAPILoader", function () {
       return function() {
         var deferred = Q.defer();
-        
+
         var storeApiResponse = function() {
           if (storeApiFailure) {
             return Q.reject({
@@ -30,27 +29,27 @@ describe("Services: storeService", function() {
             });
           }
         };
-        
+
         deferred.resolve({
           customer_portal: {
             getUrl: storeApiResponse,
             createSession: storeApiResponse
           }
         });
-        
+
         return deferred.promise;
       };
     });
   }));
 
-  beforeEach(function() {      
+  beforeEach(function() {
     inject(function($injector){
       storeService = $injector.get("storeService");
     });
   });
 
   describe("openPortal: ", function() {
-    it("should exist", function() {      
+    it("should exist", function() {
       expect(storeService.openPortal).to.be.ok;
       expect(storeService.openPortal).to.be.a("function");
     });
@@ -61,7 +60,7 @@ describe("Services: storeService", function() {
       })
       .then(null, done);
     });
-    
+
     it("should fail", function(done) {
       storeApiFailure = true;
       storeService.openPortal().then(function() {
@@ -73,7 +72,7 @@ describe("Services: storeService", function() {
   });
 
   describe("createSession: ", function() {
-    it("should exist", function() {      
+    it("should exist", function() {
       expect(storeService.createSession).to.be.ok;
       expect(storeService.createSession).to.be.a("function");
     });
@@ -84,7 +83,7 @@ describe("Services: storeService", function() {
       })
       .then(null, done);
     });
-    
+
     it("should fail", function(done) {
       storeApiFailure = true;
       storeService.createSession().then(function() {
