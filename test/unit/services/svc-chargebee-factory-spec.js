@@ -35,7 +35,11 @@ describe("Services: chargebeeFactory", function() {
         },
         getPortalSections: function () {
           return {
-            ACCOUNT_DETAILS: "ACCOUNT_DETAILS"
+            ACCOUNT_DETAILS: "ACCOUNT_DETAILS",
+            ADDRESS: "ADDRESS",
+            BILLING_HISTORY: "BILLING_HISTORY",
+            PAYMENT_SOURCES: "PAYMENT_SOURCES",
+            SUBSCRIPTION_DETAILS: "SUBSCRIPTION_DETAILS"
           };
         }
       };
