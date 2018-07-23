@@ -436,8 +436,7 @@ angular.module("risevision.common.components.logging")
             return _state.userCompany && !_state.userCompany.parentId;
           },
           isSelectedCompanyChargebee: function () {
-            return true;
-            //return _state.selectedCompany && _state.selectedCompany.origin === "Chargebee";
+            return _state.selectedCompany && _state.selectedCompany.origin === "Chargebee";
           }
         };
 
