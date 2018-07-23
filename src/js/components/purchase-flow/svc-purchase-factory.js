@@ -2,9 +2,19 @@
 
   "use strict";
   angular.module("risevision.common.components.purchase-flow")
-    .factory("purchaseFactory", ["$modal", "$templateCache",
-      function ($modal, $templateCache) {
+    .factory("purchaseFactory", ["$modal", "$templateCache", "userState",
+      function ($modal, $templateCache, userState) {
         var _factory = {};
+
+        var _cleanContactObj = function (c) {
+          return {
+            username: c.username,
+            firstName: c.firstName,
+            lastName: c.lastName,
+            email: c.email,
+            telephone: c.telephone
+          };
+        };
 
         _factory.showPurchaseModal = function (plan, isMonthly) {
           $modal.open({
@@ -14,7 +24,12 @@
             resolve: {
               plan: function () {
                 var selectedPlan = angular.copy(plan);
+
                 selectedPlan.isMonthly = isMonthly;
+
+                selectedPlan.billingAddress = userState.getCopyOfUserCompany();
+                selectedPlan.shippingAddress = userState.getCopyOfSelectedCompany();
+                selectedPlan.contact = _cleanContactObj(userState.getCopyOfProfile());
 
                 return selectedPlan;
               }
