@@ -14,6 +14,16 @@ describe("Services: purchase factory", function() {
         })
       };
     });
+    $provide.service("userState", function() {
+      return {
+        getCopyOfUserCompany: sinon.stub().returns("userCompany"),
+        getCopyOfSelectedCompany: sinon.stub().returns("selectedCompany"),
+        getCopyOfProfile: sinon.stub().returns({
+          username: "username",
+          uselessProperty: "value"
+        })
+      };
+    });
   }));
 
   var $modal, resolveObj, purchaseFactory;
@@ -36,16 +46,21 @@ describe("Services: purchase factory", function() {
     expect($modal.open).to.have.been.called;
   });
 
-  it("should resolve selected plan", function(done) {
+  it("should resolve selected plan, attach addresses and clean contact info", function(done) {
     var plan = { name: "PlanA"};
     purchaseFactory.showPurchaseModal(plan, true);
     
     setTimeout(function() {
       expect(resolveObj).to.be.ok;
-      expect(resolveObj).to.deep.equal({
-        name: "PlanA",
-        isMonthly: true
-      });
+
+      expect(resolveObj.name).to.equal("PlanA");
+      expect(resolveObj.isMonthly).to.be.true;
+      expect(resolveObj.billingAddress).to.equal("userCompany");
+      expect(resolveObj.shippingAddress).to.equal("selectedCompany");
+      expect(resolveObj.contact).to.be.an("object");
+      expect(resolveObj.contact).to.have.property("username");
+      expect(resolveObj.contact).to.not.have.property("uselessProperty");
+
       expect(resolveObj).to.not.equal(plan);
       
       done();
