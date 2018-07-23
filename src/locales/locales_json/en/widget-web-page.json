@@ -1,4 +1,7 @@
 {
+  "cacheBuster": {
+    "label": "Enable cache buster (recommended)"
+  },
   "interactivity": {
     "heading": "Interactivity",
     "interactive": "Allow Interaction",
