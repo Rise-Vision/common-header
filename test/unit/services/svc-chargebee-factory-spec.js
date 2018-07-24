@@ -2,7 +2,7 @@
 
 describe("Services: chargebeeFactory", function() {
   var sandbox = sinon.sandbox.create();
-  var $window, storeService, chargebeePortal;
+  var clock, $window, storeService, chargebeePortal;
 
   beforeEach(module("risevision.store.services"));
 
@@ -55,6 +55,8 @@ describe("Services: chargebeeFactory", function() {
     var getChargebeeInstance;
 
     beforeEach(function() {
+      clock = sandbox.useFakeTimers(Date.now());
+
       inject(function($injector) {
         getChargebeeInstance = $injector.get("getChargebeeInstance");
       });
@@ -84,6 +86,21 @@ describe("Services: chargebeeFactory", function() {
       getChargebeeInstance("companyId1").then(function() {
         getChargebeeInstance("companyId1").then(function() {
           expect(storeService.createSession).to.have.been.calledOnce;
+          done();
+        });
+      });
+    });
+
+    it("should return a new session when requesting the same companyId but current session has expired", function(done) {
+      sandbox.stub(storeService, "createSession").returns(Q.resolve({
+        id: "sessionId1"
+      }));
+
+      getChargebeeInstance("companyId1").then(function() {
+        clock.tick(2 * 60 * 60 * 1000);
+
+        getChargebeeInstance("companyId1").then(function() {
+          expect(storeService.createSession).to.have.been.calledTwice;
           done();
         });
       });
