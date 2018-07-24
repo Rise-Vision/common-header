@@ -2,7 +2,7 @@
 
 describe("Services: chargebeeFactory", function() {
   var sandbox = sinon.sandbox.create();
-  var storeService, chargebeePortal;
+  var $window, storeService, chargebeePortal;
 
   beforeEach(module("risevision.store.services"));
 
@@ -17,13 +17,14 @@ describe("Services: chargebeeFactory", function() {
 
   beforeEach(function() {
     inject(function($injector) {
+      $window = $injector.get("$window");
       storeService = $injector.get("storeService");
 
       chargebeePortal = {
         open: sandbox.stub(),
         openSection: sandbox.stub()
       };
-      window.Chargebee = {
+      $window.Chargebee = {
         init: function () {
           return {
             createChargebeePortal: function () {
@@ -118,7 +119,7 @@ describe("Services: chargebeeFactory", function() {
     beforeEach(function() {
       inject(function($injector) {
         chargebeeFactory = $injector.get("chargebeeFactory");
-        chargebeeSections = window.Chargebee.getPortalSections();
+        chargebeeSections = $window.Chargebee.getPortalSections();
 
         sandbox.stub(storeService, "createSession").returns(Q.resolve({
           id: "sessionId1"

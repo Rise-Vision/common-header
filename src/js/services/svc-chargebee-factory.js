@@ -1,15 +1,15 @@
 "use strict";
 
 angular.module("risevision.store.services")
-  .factory("getChargebeeInstance", ["$q", "storeService",
-    function ($q, storeService) {
+  .factory("getChargebeeInstance", ["$q", "$window", "storeService",
+    function ($q, $window, storeService) {
       var currentCompanyId = null;
       var currentInstance = null;
 
       function _createChargebeeInstance(session) {
         var cbInstance = {};
 
-        cbInstance.instance = Chargebee.init({
+        cbInstance.instance = $window.Chargebee.init({
           site: "risevision-test"
         });
         cbInstance.instance.logout();
