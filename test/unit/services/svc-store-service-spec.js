@@ -48,29 +48,6 @@ describe("Services: storeService", function() {
     });
   });
 
-  describe("openPortal: ", function() {
-    it("should exist", function() {
-      expect(storeService.openPortal).to.be.ok;
-      expect(storeService.openPortal).to.be.a("function");
-    });
-
-    it("should succeed", function(done) {
-      storeService.openPortal().then(function() {
-        done();
-      })
-      .then(null, done);
-    });
-
-    it("should fail", function(done) {
-      storeApiFailure = true;
-      storeService.openPortal().then(function() {
-        done("success");
-      }, function() {
-        done();
-      });
-    });
-  });
-
   describe("createSession: ", function() {
     it("should exist", function() {
       expect(storeService.createSession).to.be.ok;
