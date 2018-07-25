@@ -52,8 +52,8 @@ angular.module("risevision.store.services")
       };
     }
   ])
-  .factory("chargebeeFactory", ["$log", "getChargebeeInstance",
-    function ($log, getChargebeeInstance) {
+  .factory("chargebeeFactory", ["$window", "$log", "getChargebeeInstance",
+    function ($window, $log, getChargebeeInstance) {
       var factory = {};
 
       function _getChargebeePortal(companyId) {
@@ -97,7 +97,7 @@ angular.module("risevision.store.services")
       factory.openAccountDetails = function (companyId) {
         _getChargebeePortal(companyId).then(function (portal) {
           portal.openSection({
-            sectionType: Chargebee.getPortalSections().ACCOUNT_DETAILS
+            sectionType: $window.Chargebee.getPortalSections().ACCOUNT_DETAILS
           });
         });
       };
@@ -105,7 +105,7 @@ angular.module("risevision.store.services")
       factory.openAddress = function (companyId) {
         _getChargebeePortal(companyId).then(function (portal) {
           portal.openSection({
-            sectionType: Chargebee.getPortalSections().ADDRESS
+            sectionType: $window.Chargebee.getPortalSections().ADDRESS
           });
         });
       };
@@ -113,7 +113,7 @@ angular.module("risevision.store.services")
       factory.openBillingHistory = function (companyId) {
         _getChargebeePortal(companyId).then(function (portal) {
           portal.openSection({
-            sectionType: Chargebee.getPortalSections().BILLING_HISTORY
+            sectionType: $window.Chargebee.getPortalSections().BILLING_HISTORY
           });
         });
       };
@@ -121,7 +121,7 @@ angular.module("risevision.store.services")
       factory.openPaymentSources = function (companyId) {
         _getChargebeePortal(companyId).then(function (portal) {
           portal.openSection({
-            sectionType: Chargebee.getPortalSections().PAYMENT_SOURCES
+            sectionType: $window.Chargebee.getPortalSections().PAYMENT_SOURCES
           });
         });
       };
@@ -129,7 +129,7 @@ angular.module("risevision.store.services")
       factory.openSubscriptionDetails = function (companyId, subscriptionId) {
         _getChargebeePortal(companyId).then(function (portal) {
           portal.openSection({
-            sectionType: Chargebee.getPortalSections().SUBSCRIPTION_DETAILS,
+            sectionType: $window.Chargebee.getPortalSections().SUBSCRIPTION_DETAILS,
             params: {
               subscriptionId: subscriptionId
             }

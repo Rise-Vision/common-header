@@ -77,7 +77,6 @@
     "Stripe": false,
     "Spinner": false,
     "SignInBaseCtr": false,
-    "Chargebee": false,
     /* ------------------- */
 
     /* auto/injector.js */
