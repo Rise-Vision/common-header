@@ -3,6 +3,11 @@
 describe("controller: billing address", function() {
   beforeEach(module("risevision.common.components.purchase-flow"));
   beforeEach(module(function ($provide) {
+    $provide.service("validateAddress", function() {
+      return function() {
+        
+      };
+    });
     $provide.value("COUNTRIES", []);
     $provide.value("REGIONS_CA", []);
     $provide.value("REGIONS_US", []);
