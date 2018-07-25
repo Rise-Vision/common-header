@@ -1,0 +1,46 @@
+<!-- Confirm Billing/Shipping Address -->
+<div id="checkout-confirm-address">
+  <p class="validation-notice u_margin-lg-top">
+    We’ve validated your address below. Please review and click <b>Continue</b> to use the suggested address,
+    or go <b>Back</b> to make updates and try again.</p>
+  <p class="validation-notice">Please ensure <b>full</b> address details are entered (ie. 'Street', 'Lane', 'Road').</p>
+  <div class="alert alert-info">
+    <div class="form-group">
+      <table>
+        <tbody>
+          <tr>
+            <td class="addr-label">Street Address:</td>
+            <td class="addr-value">{{normalizedAddress.street}}</td>
+          </tr>
+          <tr>
+            <td class="addr-label">Unit:</td>
+            <td class="addr-value">{{normalizedAddress.unit}}</td>
+          </tr>
+          <tr>
+            <td class="addr-label">City:</td>
+            <td class="addr-value">{{normalizedAddress.city}}</td>
+          </tr>
+          <tr>
+            <td class="addr-label">Country:</td>
+            <td class="addr-value">{{normalizedAddress.country}}</td>
+          </tr>
+          <tr>
+            <td class="addr-label">State / Province:</td>
+            <td class="addr-value">{{normalizedAddress.province}}</td>
+          </tr>
+          <tr>
+            <td class="addr-label">ZIP / Postal Code:</td>
+            <td class="addr-value">{{normalizedAddress.postalCode}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <button class="btn btn-default btn-lg pull-left" ng-click="setConfirmAddress(false)" translate>common.back</button>
+      <button id="continueButton" class="btn btn-primary btn-lg pull-right" ng-click="updateConfirmedAddress()" translate>common.continue</button>
+    </div>
+  </div>
+</div>

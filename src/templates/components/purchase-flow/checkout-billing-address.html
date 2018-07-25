@@ -1,32 +1,38 @@
 <!-- Step 2 -->
-<div id="checkout-billing-address">
-  <form id="form.billingAddressForm" role="form" class="u_margin-md-top" name="form.billingAddressForm" autocomplete="on" novalidate>
-    <div class="alert alert-danger" ng-show="form.billingAddressForm.$submitted && form.billingAddressForm.$invalid">Please complete the missing information below.</div>
+<div id="checkout-billing-address" class="address-editor">
+  <form id="form.billingAddressForm" role="form" class="u_margin-md-top" name="form.billingAddressForm" autocomplete="on" novalidate ng-hide="confirmAddress">
+    <div class="alert alert-danger" ng-show="form.billingAddressForm.$submitted && form.billingAddressForm.$invalid">
+      Please complete the missing information below.
+    </div>
+    <div id="errorBox" ng-show="error" class="alert alert-danger" role="alert">
+      <strong>Address Validation Error</strong> {{error}}
+    </div>
+
     <div class="row">
       <div class="col-md-6">
         <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('firstName') }">
-          <label for="billing-address-firstName" class="control-label">First Name</label>
-          <input id="billing-address-firstName" type="text" class="form-control" name="firstName" ng-model="plan.contact.firstName" autocomplete="given-name" required>
+          <label for="contact-firstName" class="control-label">First Name</label>
+          <input id="contact-firstName" type="text" class="form-control" name="firstName" ng-model="plan.contact.firstName" autocomplete="given-name" required>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('lastName') }">
-          <label for="billing-address-lastName" class="control-label">Last Name</label>
-          <input id="billing-address-lastName" type="text" class="form-control" name="lastName" ng-model="plan.contact.lastName" autocomplete="family-name" required>
+          <label for="contact-lastName" class="control-label">Last Name</label>
+          <input id="contact-lastName" type="text" class="form-control" name="lastName" ng-model="plan.contact.lastName" autocomplete="family-name" required>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('email') }">
-          <label for="billing-address-email" class="control-label">Email</label>
-          <input id="billing-address-email" type="email" class="form-control" name="email" ng-model="plan.contact.email" autocomplete="email" required>
+          <label for="contact-email" class="control-label">Email</label>
+          <input id="contact-email" type="email" class="form-control" name="email" ng-model="plan.contact.email" autocomplete="email" required>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('tel') }">
-          <label for="billing-address-phone" class="control-label">Telephone</label>
-          <input id="billing-address-phone" name="tel" type="tel" class="form-control" ng-model="plan.contact.telephone" autocomplete="tel">
+          <label for="contact-phone" class="control-label">Telephone</label>
+          <input id="contact-phone" name="tel" type="tel" class="form-control" ng-model="plan.contact.telephone" autocomplete="tel">
         </div>
       </div>
     </div>
@@ -87,13 +93,16 @@
         </div>
       </div>
     </div>
+
     <hr>
     <div class="row">
       <div class="col-xs-12">
         <button class="btn btn-default btn-lg pull-left" ng-click="setPreviousStep()" translate>common.back</button>
-        <button id="continueButton" type="submit" form="form.billingAddressForm" class="btn btn-primary btn-lg pull-right" ng-click="setNextStep()" translate>common.continue</button>
+        <button id="continueButton" type="submit" form="form.billingAddressForm" class="btn btn-primary btn-lg pull-right" ng-click="validateAddress()" translate>common.continue</button>
       </div>
     </div>
   </form>
+
+  <confirm-address ng-show="confirmAddress"></confirm-address>
 
 </div>
