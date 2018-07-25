@@ -2453,10 +2453,10 @@ angular.module("risevision.store.services")
     function ($q, $window, storeService) {
       var currentCompanyId = null;
       var currentInstance = null;
-      var currentSessionTs = 0;
+      var currentSessionExpiration = 0;
 
       function _isSessionExpired() {
-        return Date.now() - currentSessionTs > 60 * 60 * 1000;
+        return currentSessionExpiration - Date.now() < 10000;
       }
 
       function _createChargebeeInstance(session) {
@@ -2486,7 +2486,7 @@ angular.module("risevision.store.services")
 
               currentInstance = _createChargebeeInstance(session);
               currentCompanyId = companyId;
-              currentSessionTs = Date.now();
+              currentSessionExpiration = Number(session.expires_at);
 
               deferred.resolve(currentInstance);
             })

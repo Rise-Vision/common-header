@@ -92,12 +92,15 @@ describe("Services: chargebeeFactory", function() {
     });
 
     it("should return a new session when requesting the same companyId but current session has expired", function(done) {
+      var sessionExpiration = String(Date.now() + 60 * 60 * 1000);
+
       sandbox.stub(storeService, "createSession").returns(Q.resolve({
-        id: "sessionId1"
+        id: "sessionId1",
+        expires_at: sessionExpiration
       }));
 
       getChargebeeInstance("companyId1").then(function() {
-        clock.tick(2 * 60 * 60 * 1000);
+        clock.tick(60 * 60 * 1000 - 5000);
 
         getChargebeeInstance("companyId1").then(function() {
           expect(storeService.createSession).to.have.been.calledTwice;
