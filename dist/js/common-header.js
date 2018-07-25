@@ -2456,7 +2456,8 @@ angular.module("risevision.store.services")
       var currentSessionExpiration = 0;
 
       function _isSessionExpired() {
-        return currentSessionExpiration - Date.now() < 10000;
+        // Leaves a 1 minute buffer to avoid expiration on call
+        return currentSessionExpiration - Date.now() < 60000;
       }
 
       function _createChargebeeInstance(session) {
@@ -2486,7 +2487,9 @@ angular.module("risevision.store.services")
 
               currentInstance = _createChargebeeInstance(session);
               currentCompanyId = companyId;
-              currentSessionExpiration = Date.now() + (Number(session.expires_at) - Number(session.created_at));
+              // Chargebee expiration fields are expressed in seconds, while Date.now() is in milliseconds
+              var sessionDuration = (Number(session.expires_at) - Number(session.created_at)) * 1000;
+              currentSessionExpiration = Date.now() + sessionDuration;
 
               deferred.resolve(currentInstance);
             })

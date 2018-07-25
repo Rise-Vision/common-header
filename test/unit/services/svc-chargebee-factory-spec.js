@@ -7,6 +7,7 @@ describe("Services: chargebeeFactory", function() {
   beforeEach(module("risevision.store.services"));
 
   beforeEach(module(function ($provide) {
+    $provide.value("CHARGEBEE_INSTANCE", "risevision-test");
     $provide.service("$q", function() {return Q;});
     $provide.service("storeService", function() {
       return {
@@ -92,8 +93,8 @@ describe("Services: chargebeeFactory", function() {
     });
 
     it("should return a new session when requesting the same companyId but current session has expired", function(done) {
-      var sessionStart = String(Date.now());
-      var sessionExpiration = String(Date.now() + 60 * 60 * 1000);
+      var sessionStart = String(Date.now() / 1000);
+      var sessionExpiration = String(Date.now() / 1000 + 60 * 60);
 
       sandbox.stub(storeService, "createSession").returns(Q.resolve({
         id: "sessionId1",
@@ -102,7 +103,7 @@ describe("Services: chargebeeFactory", function() {
       }));
 
       getChargebeeInstance("companyId1").then(function() {
-        clock.tick(60 * 60 * 1000 - 5000);
+        clock.tick(60 * 60 * 1000 - 30000);
 
         getChargebeeInstance("companyId1").then(function() {
           expect(storeService.createSession).to.have.been.calledTwice;
