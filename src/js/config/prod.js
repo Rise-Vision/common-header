@@ -37,5 +37,6 @@
     .value("SUPPORT_PRODUCT_ID", "14")
     .value("SUPPORT_PRODUCT_URL",
       "https://store.risevision.com/products/?cat=compareSupport")
-    .value("APPS_URL", "https://apps.risevision.com");
+    .value("APPS_URL", "https://apps.risevision.com")
+    .value("CHARGEBEE_INSTANCE", "risevision");
 })(angular);

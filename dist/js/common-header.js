@@ -2449,8 +2449,8 @@ angular.module("risevision.common.header")
 "use strict";
 
 angular.module("risevision.store.services")
-  .factory("getChargebeeInstance", ["$q", "$window", "storeService",
-    function ($q, $window, storeService) {
+  .factory("getChargebeeInstance", ["$q", "$window", "storeService", "CHARGEBEE_INSTANCE",
+    function ($q, $window, storeService, CHARGEBEE_INSTANCE) {
       var currentCompanyId = null;
       var currentInstance = null;
       var currentSessionExpiration = 0;
@@ -2463,7 +2463,7 @@ angular.module("risevision.store.services")
         var cbInstance = {};
 
         cbInstance.instance = $window.Chargebee.init({
-          site: "risevision-test"
+          site: CHARGEBEE_INSTANCE
         });
         cbInstance.instance.logout();
         cbInstance.instance.setPortalSession(function () {
@@ -9733,5 +9733,6 @@ module.run(['$templateCache', function($templateCache) {
     .value("SUPPORT_PRODUCT_ID", "14")
     .value("SUPPORT_PRODUCT_URL",
       "https://store.risevision.com/products/?cat=compareSupport")
-    .value("APPS_URL", "https://apps.risevision.com");
+    .value("APPS_URL", "https://apps.risevision.com")
+    .value("CHARGEBEE_INSTANCE", "risevision");
 })(angular);
