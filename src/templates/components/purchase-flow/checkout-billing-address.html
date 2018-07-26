@@ -4,8 +4,8 @@
     <div class="alert alert-danger" ng-show="form.billingAddressForm.$submitted && form.billingAddressForm.$invalid">
       Please complete the missing information below.
     </div>
-    <div id="errorBox" ng-show="error" class="alert alert-danger" role="alert">
-      <strong>Address Validation Error</strong> {{error}}
+    <div id="errorBox" class="alert alert-danger" role="alert" ng-show="plan.billingAddress.validationError">
+      <strong>Address Validation Error</strong> {{plan.billingAddress.validationError}}
     </div>
 
     <div class="row">
@@ -36,69 +36,14 @@
         </div>
       </div>
     </div>
-    <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('companyName') }">
-      <label for="billing-address-companyName" class="control-label">Company Name</label>
-      <input id="billing-address-companyName" name="companyName" type="text" class="form-control" ng-model="plan.billingAddress.name" autocomplete="organization" required>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('street') }">
-          <label for="billing-address-streetAddress" class="control-label">Street Address</label>
-          <input id="billing-address-streetAddress" name="street" type="text" class="form-control" ng-model="plan.billingAddress.street" autocomplete="address-line1" pattern=".{0,50}" required>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="billing-address-unit" class="control-label">Unit</label>
-          <input id="billing-address-unit" type="text" name="unit" class="form-control" ng-model="plan.billingAddress.unit" autocomplete="address-line2" pattern=".{0,100}">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('city') }">
-          <label for="billing-address-city" class="control-label">City</label>
-          <input id="billing-address-city" name="city" type="text" class="form-control" ng-model="plan.billingAddress.city" autocomplete="address-level2" required>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('country') }">
-          <label for="billing-address-country" class="control-label">Country</label>
-          <select id="billing-address-country" name="country" autocomplete="country" class="form-control"
-            ng-model="plan.billingAddress.country" ng-options="c.code as c.name for c in countries" empty-select-parser required>
-            <option ng-show="false" value="">&lt; Select Country &gt;</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('province') }">
-          <label for="billing-address-region" class="control-label">State/Province/Region</label>
 
-          <input name="province" type="text" class="form-control" ng-model="plan.billingAddress.province" autocomplete="address-level1" ng-show="plan.billingAddress.country !== 'US' && plan.billingAddress.country !== 'CA'" province-validator="plan.billingAddress.country">
-          <select class="form-control selectpicker" ng-model="plan.billingAddress.province" ng-options="c[1] as c[0] for c in regionsCA" autocomplete="address-level1" ng-show="plan.billingAddress.country === 'CA'" empty-select-parser>
-            <option ng-show="false" value="">&lt; Select Province &gt;</option>
-          </select>
-          <select class="form-control selectpicker" ng-model="plan.billingAddress.province" ng-options="c[1] as c[0] for c in regionsUS" autocomplete="address-level1" ng-show="plan.billingAddress.country === 'US'" empty-select-parser>
-            <option ng-show="false" value="">&lt; Select State &gt;</option>
-          </select>
-
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('postalCode') }">
-          <label for="billing-address-postalCode" class="control-label">ZIP/Postal Code</label>
-          <input id="billing-address-postalCode" name="postalCode" type="text" class="form-control" ng-model="plan.billingAddress.postalCode" autocomplete="postal-code" pattern=".{0,11}" required>
-        </div>
-      </div>
-    </div>
+    <address-form form-object="form.billingAddressForm" address-object="plan.billingAddress"></address-form>
 
     <hr>
     <div class="row">
       <div class="col-xs-12">
         <button class="btn btn-default btn-lg pull-left" ng-click="setPreviousStep()" translate>common.back</button>
-        <button id="continueButton" type="submit" form="form.billingAddressForm" class="btn btn-primary btn-lg pull-right" ng-click="validateAddress()" translate>common.continue</button>
+        <button id="continueButton" type="submit" form="form.billingAddressForm" class="btn btn-primary btn-lg pull-right" ng-click="validateAddress(plan.billingAddress)" translate>common.continue</button>
       </div>
     </div>
   </form>

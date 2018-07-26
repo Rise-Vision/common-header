@@ -20,9 +20,9 @@ angular.module("risevision.common.components.purchase-flow")
 }])
 
 .controller("PurchaseModalCtrl", [
-  "$scope", "$modalInstance", "$log", "$loading", "plan",
+  "$scope", "$modalInstance", "$log", "$loading", "plan", "addressFactory",
   "PURCHASE_STEPS",
-  function ($scope, $modalInstance, $log, $loading, plan,
+  function ($scope, $modalInstance, $log, $loading, plan, addressFactory,
     PURCHASE_STEPS) {
 
     $scope.form = {};
@@ -38,6 +38,20 @@ angular.module("risevision.common.components.purchase-flow")
       var form = $scope.form[formName];
 
       return !form || form.$valid;
+    };
+
+    $scope.validateAddress = function (addressObject) {
+      $loading.start("purchase-modal");
+
+      addressFactory.validateAddress(addressObject)
+        .then(function () {
+          if (!addressObject.validationError) {
+            $scope.setNextStep();
+          }
+        })
+        .finally(function () {
+          $loading.stop("purchase-modal");
+        });
     };
 
     $scope.setNextStep = function () {
