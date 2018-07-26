@@ -18,7 +18,7 @@ describe("Services: chargebeeFactory", function() {
     $provide.service("userState", function() {
       return {
         isTestCompanySelected: function() {
-          return false;
+          return true;
         }
       };
     });
