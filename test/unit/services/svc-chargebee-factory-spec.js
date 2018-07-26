@@ -7,8 +7,8 @@ describe("Services: chargebeeFactory", function() {
   beforeEach(module("risevision.store.services"));
 
   beforeEach(module(function ($provide) {
-    $provide.value("CHARGEBEE_TEST_INSTANCE", "risevision-test");
-    $provide.value("CHARGEBEE_PROD_INSTANCE", "risevision");
+    $provide.value("CHARGEBEE_TEST_SITE", "risevision-test");
+    $provide.value("CHARGEBEE_PROD_SITE", "risevision");
     $provide.service("$q", function() {return Q;});
     $provide.service("storeService", function() {
       return {
