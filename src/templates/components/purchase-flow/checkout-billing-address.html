@@ -1,6 +1,6 @@
 <!-- Step 2 -->
 <div id="checkout-billing-address" class="address-editor">
-  <form id="form.billingAddressForm" role="form" class="u_margin-md-top" name="form.billingAddressForm" autocomplete="on" novalidate ng-hide="confirmAddress">
+  <form id="form.billingAddressForm" role="form" class="u_margin-md-top" name="form.billingAddressForm" autocomplete="on" novalidate>
     <div class="alert alert-danger" ng-show="form.billingAddressForm.$submitted && form.billingAddressForm.$invalid">
       Please complete the missing information below.
     </div>
@@ -102,7 +102,4 @@
       </div>
     </div>
   </form>
-
-  <confirm-address ng-show="confirmAddress"></confirm-address>
-
 </div>

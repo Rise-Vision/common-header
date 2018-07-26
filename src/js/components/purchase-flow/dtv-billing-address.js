@@ -1,7 +1,7 @@
 angular.module("risevision.common.components.purchase-flow")
-  .directive("billingAddress", ["$templateCache", "$loading", "validateAddress",
+  .directive("billingAddress", ["$log", "$templateCache", "$loading", "validateAddress",
     "COUNTRIES", "REGIONS_CA", "REGIONS_US",
-    function ($templateCache, $loading, validateAddress, COUNTRIES, REGIONS_CA, REGIONS_US) {
+    function ($log, $templateCache, $loading, validateAddress, COUNTRIES, REGIONS_CA, REGIONS_US) {
       return {
         restrict: "E",
         template: $templateCache.get("purchase-flow/checkout-billing-address.html"),
@@ -17,8 +17,25 @@ angular.module("risevision.common.components.purchase-flow")
             return (field.$dirty || form.$submitted) && field.$invalid;
           };
 
-          $scope.setConfirmAddress = function (confirm) {
-            $scope.confirmAddress = confirm;
+          var _addressesAreIdentical = function (src, result) {
+            var dest = {
+              street: result.line1,
+              unit: result.line2 && result.line2.length ? result.line2 : "",
+              city: result.city,
+              postalCode: result.postalCode,
+              province: result.region,
+              country: result.country
+            };
+
+            if (dest.street === src.street &&
+              dest.unit === src.unit &&
+              dest.city === src.city &&
+              dest.country === src.country &&
+              dest.postalCode === src.postalCode &&
+              dest.province === src.province) {
+              return true;
+            }
+            return false;
           };
 
           $scope.validateAddress = function () {
@@ -27,16 +44,11 @@ angular.module("risevision.common.components.purchase-flow")
 
             validateAddress($scope.plan.billingAddress)
               .then(function (result) {
-                $scope.normalizedAddress = {
-                  street: result.line1,
-                  unit: result.line2 && result.line2.length ? result.line2 : "",
-                  city: result.city,
-                  postalCode: result.postalCode,
-                  province: result.region,
-                  country: result.country
-                };
+                if (!_addressesAreIdentical($scope.plan.billingAddress, result)) {
+                  $log.error("Unexpected Address Difference received: ", result);
+                }
 
-                $scope.setConfirmAddress(true);
+                $scope.setNextStep();
               })
               .catch(function (result) {
                 $scope.validationError = result.message ? result.message : "Unknown Error";
@@ -46,28 +58,6 @@ angular.module("risevision.common.components.purchase-flow")
               });
           };
 
-          var _copyAddress = function (src, dest) {
-            if (!dest) {
-              dest = {};
-            }
-
-            dest.street = src.street;
-            dest.unit = src.unit;
-            dest.city = src.city;
-            dest.country = src.country;
-            dest.postalCode = src.postalCode;
-            dest.province = src.province;
-
-            return dest;
-          };
-
-
-          $scope.updateConfirmedAddress = function () {
-            _copyAddress($scope.normalizedAddress, $scope.plan.billingAddress);
-
-            $scope.setConfirmAddress(false);
-            $scope.setNextStep();
-          };
         }
       };
     }

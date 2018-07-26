@@ -9625,9 +9625,9 @@ angular.module("risevision.common.components.purchase-flow")
   ]);
 
 angular.module("risevision.common.components.purchase-flow")
-  .directive("billingAddress", ["$templateCache", "$loading", "validateAddress",
+  .directive("billingAddress", ["$log", "$templateCache", "$loading", "validateAddress",
     "COUNTRIES", "REGIONS_CA", "REGIONS_US",
-    function ($templateCache, $loading, validateAddress, COUNTRIES, REGIONS_CA, REGIONS_US) {
+    function ($log, $templateCache, $loading, validateAddress, COUNTRIES, REGIONS_CA, REGIONS_US) {
       return {
         restrict: "E",
         template: $templateCache.get("purchase-flow/checkout-billing-address.html"),
@@ -9643,8 +9643,25 @@ angular.module("risevision.common.components.purchase-flow")
             return (field.$dirty || form.$submitted) && field.$invalid;
           };
 
-          $scope.setConfirmAddress = function (confirm) {
-            $scope.confirmAddress = confirm;
+          var _addressesAreIdentical = function (src, result) {
+            var dest = {
+              street: result.line1,
+              unit: result.line2 && result.line2.length ? result.line2 : "",
+              city: result.city,
+              postalCode: result.postalCode,
+              province: result.region,
+              country: result.country
+            };
+
+            if (dest.street === src.street &&
+              dest.unit === src.unit &&
+              dest.city === src.city &&
+              dest.country === src.country &&
+              dest.postalCode === src.postalCode &&
+              dest.province === src.province) {
+              return true;
+            }
+            return false;
           };
 
           $scope.validateAddress = function () {
@@ -9653,16 +9670,11 @@ angular.module("risevision.common.components.purchase-flow")
 
             validateAddress($scope.plan.billingAddress)
               .then(function (result) {
-                $scope.normalizedAddress = {
-                  street: result.line1,
-                  unit: result.line2 && result.line2.length ? result.line2 : "",
-                  city: result.city,
-                  postalCode: result.postalCode,
-                  province: result.region,
-                  country: result.country
-                };
+                if (!_addressesAreIdentical($scope.plan.billingAddress, result)) {
+                  $log.error("Unexpected Address Difference received: ", result);
+                }
 
-                $scope.setConfirmAddress(true);
+                $scope.setNextStep();
               })
               .catch(function (result) {
                 $scope.validationError = result.message ? result.message : "Unknown Error";
@@ -9671,41 +9683,6 @@ angular.module("risevision.common.components.purchase-flow")
                 $loading.stop("purchase-modal");
               });
           };
-
-          var _copyAddress = function (src, dest) {
-            if (!dest) {
-              dest = {};
-            }
-
-            dest.street = src.street;
-            dest.unit = src.unit;
-            dest.city = src.city;
-            dest.country = src.country;
-            dest.postalCode = src.postalCode;
-            dest.province = src.province;
-
-            return dest;
-          };
-
-
-          $scope.updateConfirmedAddress = function () {
-            _copyAddress($scope.normalizedAddress, $scope.plan.billingAddress);
-
-            $scope.setConfirmAddress(false);
-            $scope.setNextStep();
-          };
-        }
-      };
-    }
-  ]);
-
-angular.module("risevision.common.components.purchase-flow")
-  .directive("confirmAddress", ["$templateCache",
-    function ($templateCache) {
-      return {
-        restrict: "E",
-        template: $templateCache.get("purchase-flow/checkout-confirm-address.html"),
-        link: function () {
 
         }
       };
@@ -9883,19 +9860,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/checkout-billing-address.html',
-    '<div id="checkout-billing-address" class="address-editor"><form id="form.billingAddressForm" role="form" class="u_margin-md-top" name="form.billingAddressForm" autocomplete="on" novalidate="" ng-hide="confirmAddress"><div class="alert alert-danger" ng-show="form.billingAddressForm.$submitted && form.billingAddressForm.$invalid">Please complete the missing information below.</div><div id="errorBox" ng-show="error" class="alert alert-danger" role="alert"><strong>Address Validation Error</strong> {{error}}</div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'firstName\') }"><label for="contact-firstName" class="control-label">First Name</label> <input id="contact-firstName" type="text" class="form-control" name="firstName" ng-model="plan.contact.firstName" autocomplete="given-name" required=""></div></div><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'lastName\') }"><label for="contact-lastName" class="control-label">Last Name</label> <input id="contact-lastName" type="text" class="form-control" name="lastName" ng-model="plan.contact.lastName" autocomplete="family-name" required=""></div></div></div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'email\') }"><label for="contact-email" class="control-label">Email</label> <input id="contact-email" type="email" class="form-control" name="email" ng-model="plan.contact.email" autocomplete="email" required=""></div></div><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'tel\') }"><label for="contact-phone" class="control-label">Telephone</label> <input id="contact-phone" name="tel" type="tel" class="form-control" ng-model="plan.contact.telephone" autocomplete="tel"></div></div></div><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'companyName\') }"><label for="billing-address-companyName" class="control-label">Company Name</label> <input id="billing-address-companyName" name="companyName" type="text" class="form-control" ng-model="plan.billingAddress.name" autocomplete="organization" required=""></div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'street\') }"><label for="billing-address-streetAddress" class="control-label">Street Address</label> <input id="billing-address-streetAddress" name="street" type="text" class="form-control" ng-model="plan.billingAddress.street" autocomplete="address-line1" pattern=".{0,50}" required=""></div></div><div class="col-md-6"><div class="form-group"><label for="billing-address-unit" class="control-label">Unit</label> <input id="billing-address-unit" type="text" name="unit" class="form-control" ng-model="plan.billingAddress.unit" autocomplete="address-line2" pattern=".{0,100}"></div></div></div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'city\') }"><label for="billing-address-city" class="control-label">City</label> <input id="billing-address-city" name="city" type="text" class="form-control" ng-model="plan.billingAddress.city" autocomplete="address-level2" required=""></div></div><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'country\') }"><label for="billing-address-country" class="control-label">Country</label><select id="billing-address-country" name="country" autocomplete="country" class="form-control" ng-model="plan.billingAddress.country" ng-options="c.code as c.name for c in countries" empty-select-parser="" required=""><option ng-show="false" value="">&lt; Select Country &gt;</option></select></div></div></div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'province\') }"><label for="billing-address-region" class="control-label">State/Province/Region</label> <input name="province" type="text" class="form-control" ng-model="plan.billingAddress.province" autocomplete="address-level1" ng-show="plan.billingAddress.country !== \'US\' && plan.billingAddress.country !== \'CA\'" province-validator="plan.billingAddress.country"><select class="form-control selectpicker" ng-model="plan.billingAddress.province" ng-options="c[1] as c[0] for c in regionsCA" autocomplete="address-level1" ng-show="plan.billingAddress.country === \'CA\'" empty-select-parser=""><option ng-show="false" value="">&lt; Select Province &gt;</option></select><select class="form-control selectpicker" ng-model="plan.billingAddress.province" ng-options="c[1] as c[0] for c in regionsUS" autocomplete="address-level1" ng-show="plan.billingAddress.country === \'US\'" empty-select-parser=""><option ng-show="false" value="">&lt; Select State &gt;</option></select></div></div><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'postalCode\') }"><label for="billing-address-postalCode" class="control-label">ZIP/Postal Code</label> <input id="billing-address-postalCode" name="postalCode" type="text" class="form-control" ng-model="plan.billingAddress.postalCode" autocomplete="postal-code" pattern=".{0,11}" required=""></div></div></div><hr><div class="row"><div class="col-xs-12"><button class="btn btn-default btn-lg pull-left" ng-click="setPreviousStep()" translate="">common.back</button> <button id="continueButton" type="submit" form="form.billingAddressForm" class="btn btn-primary btn-lg pull-right" ng-click="validateAddress()" translate="">common.continue</button></div></div></form><confirm-address ng-show="confirmAddress"></confirm-address></div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('risevision.common.components.purchase-flow');
-} catch (e) {
-  module = angular.module('risevision.common.components.purchase-flow', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('purchase-flow/checkout-confirm-address.html',
-    '<div id="checkout-confirm-address"><p class="validation-notice u_margin-lg-top">We’ve validated your address below. Please review and click <b>Continue</b> to use the suggested address, or go <b>Back</b> to make updates and try again.</p><p class="validation-notice">Please ensure <b>full</b> address details are entered (ie. \'Street\', \'Lane\', \'Road\').</p><div class="alert alert-info"><div class="form-group"><table><tbody><tr><td class="addr-label">Street Address:</td><td class="addr-value">{{normalizedAddress.street}}</td></tr><tr><td class="addr-label">Unit:</td><td class="addr-value">{{normalizedAddress.unit}}</td></tr><tr><td class="addr-label">City:</td><td class="addr-value">{{normalizedAddress.city}}</td></tr><tr><td class="addr-label">Country:</td><td class="addr-value">{{normalizedAddress.country}}</td></tr><tr><td class="addr-label">State / Province:</td><td class="addr-value">{{normalizedAddress.province}}</td></tr><tr><td class="addr-label">ZIP / Postal Code:</td><td class="addr-value">{{normalizedAddress.postalCode}}</td></tr></tbody></table></div></div><div class="row"><div class="col-xs-12"><button class="btn btn-default btn-lg pull-left" ng-click="setConfirmAddress(false)" translate="">common.back</button> <button id="continueButton" class="btn btn-primary btn-lg pull-right" ng-click="updateConfirmedAddress()" translate="">common.continue</button></div></div></div>');
+    '<div id="checkout-billing-address" class="address-editor"><form id="form.billingAddressForm" role="form" class="u_margin-md-top" name="form.billingAddressForm" autocomplete="on" novalidate=""><div class="alert alert-danger" ng-show="form.billingAddressForm.$submitted && form.billingAddressForm.$invalid">Please complete the missing information below.</div><div id="errorBox" ng-show="error" class="alert alert-danger" role="alert"><strong>Address Validation Error</strong> {{error}}</div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'firstName\') }"><label for="contact-firstName" class="control-label">First Name</label> <input id="contact-firstName" type="text" class="form-control" name="firstName" ng-model="plan.contact.firstName" autocomplete="given-name" required=""></div></div><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'lastName\') }"><label for="contact-lastName" class="control-label">Last Name</label> <input id="contact-lastName" type="text" class="form-control" name="lastName" ng-model="plan.contact.lastName" autocomplete="family-name" required=""></div></div></div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'email\') }"><label for="contact-email" class="control-label">Email</label> <input id="contact-email" type="email" class="form-control" name="email" ng-model="plan.contact.email" autocomplete="email" required=""></div></div><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'tel\') }"><label for="contact-phone" class="control-label">Telephone</label> <input id="contact-phone" name="tel" type="tel" class="form-control" ng-model="plan.contact.telephone" autocomplete="tel"></div></div></div><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'companyName\') }"><label for="billing-address-companyName" class="control-label">Company Name</label> <input id="billing-address-companyName" name="companyName" type="text" class="form-control" ng-model="plan.billingAddress.name" autocomplete="organization" required=""></div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'street\') }"><label for="billing-address-streetAddress" class="control-label">Street Address</label> <input id="billing-address-streetAddress" name="street" type="text" class="form-control" ng-model="plan.billingAddress.street" autocomplete="address-line1" pattern=".{0,50}" required=""></div></div><div class="col-md-6"><div class="form-group"><label for="billing-address-unit" class="control-label">Unit</label> <input id="billing-address-unit" type="text" name="unit" class="form-control" ng-model="plan.billingAddress.unit" autocomplete="address-line2" pattern=".{0,100}"></div></div></div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'city\') }"><label for="billing-address-city" class="control-label">City</label> <input id="billing-address-city" name="city" type="text" class="form-control" ng-model="plan.billingAddress.city" autocomplete="address-level2" required=""></div></div><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'country\') }"><label for="billing-address-country" class="control-label">Country</label><select id="billing-address-country" name="country" autocomplete="country" class="form-control" ng-model="plan.billingAddress.country" ng-options="c.code as c.name for c in countries" empty-select-parser="" required=""><option ng-show="false" value="">&lt; Select Country &gt;</option></select></div></div></div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'province\') }"><label for="billing-address-region" class="control-label">State/Province/Region</label> <input name="province" type="text" class="form-control" ng-model="plan.billingAddress.province" autocomplete="address-level1" ng-show="plan.billingAddress.country !== \'US\' && plan.billingAddress.country !== \'CA\'" province-validator="plan.billingAddress.country"><select class="form-control selectpicker" ng-model="plan.billingAddress.province" ng-options="c[1] as c[0] for c in regionsCA" autocomplete="address-level1" ng-show="plan.billingAddress.country === \'CA\'" empty-select-parser=""><option ng-show="false" value="">&lt; Select Province &gt;</option></select><select class="form-control selectpicker" ng-model="plan.billingAddress.province" ng-options="c[1] as c[0] for c in regionsUS" autocomplete="address-level1" ng-show="plan.billingAddress.country === \'US\'" empty-select-parser=""><option ng-show="false" value="">&lt; Select State &gt;</option></select></div></div><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'postalCode\') }"><label for="billing-address-postalCode" class="control-label">ZIP/Postal Code</label> <input id="billing-address-postalCode" name="postalCode" type="text" class="form-control" ng-model="plan.billingAddress.postalCode" autocomplete="postal-code" pattern=".{0,11}" required=""></div></div></div><hr><div class="row"><div class="col-xs-12"><button class="btn btn-default btn-lg pull-left" ng-click="setPreviousStep()" translate="">common.back</button> <button id="continueButton" type="submit" form="form.billingAddressForm" class="btn btn-primary btn-lg pull-right" ng-click="validateAddress()" translate="">common.continue</button></div></div></form></div>');
 }]);
 })();
 
