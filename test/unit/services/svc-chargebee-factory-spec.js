@@ -2,16 +2,24 @@
 
 describe("Services: chargebeeFactory", function() {
   var sandbox = sinon.sandbox.create();
-  var clock, $window, storeService, chargebeePortal;
+  var clock, $window, userState, storeService, chargebeePortal;
 
   beforeEach(module("risevision.store.services"));
 
   beforeEach(module(function ($provide) {
-    $provide.value("CHARGEBEE_INSTANCE", "risevision-test");
+    $provide.value("CHARGEBEE_TEST_INSTANCE", "risevision-test");
+    $provide.value("CHARGEBEE_PROD_INSTANCE", "risevision");
     $provide.service("$q", function() {return Q;});
     $provide.service("storeService", function() {
       return {
         createSession: function() {}
+      };
+    });
+    $provide.service("userState", function() {
+      return {
+        isTestCompanySelected: function() {
+          return false;
+        }
       };
     });
   }));
@@ -19,6 +27,7 @@ describe("Services: chargebeeFactory", function() {
   beforeEach(function() {
     inject(function($injector) {
       $window = $injector.get("$window");
+      userState = $injector.get("userState");
       storeService = $injector.get("storeService");
 
       chargebeePortal = {
@@ -155,10 +164,27 @@ describe("Services: chargebeeFactory", function() {
       expect(chargebeeFactory.openPortal).to.be.a("function");
     });
 
-    it("should open Customer Portal", function(done) {
+    it("should open Customer Portal for a Test company", function(done) {
+      sandbox.spy($window.Chargebee, "init");
+      sandbox.stub(userState, "isTestCompanySelected").returns(true);
+
       chargebeeFactory.openPortal("companyId1");
 
       setTimeout(function () {
+        expect($window.Chargebee.init.getCall(0).args[0].site).to.equal("risevision-test");
+        expect(chargebeePortal.open).to.have.been.calledOnce;
+        done();
+      });
+    });
+
+    it("should open Customer Portal for a Prod company", function(done) {
+      sandbox.spy($window.Chargebee, "init");
+      sandbox.stub(userState, "isTestCompanySelected").returns(false);
+
+      chargebeeFactory.openPortal("companyId1");
+
+      setTimeout(function () {
+        expect($window.Chargebee.init.getCall(0).args[0].site).to.equal("risevision");
         expect(chargebeePortal.open).to.have.been.calledOnce;
         done();
       });

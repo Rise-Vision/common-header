@@ -2449,8 +2449,9 @@ angular.module("risevision.common.header")
 "use strict";
 
 angular.module("risevision.store.services")
-  .factory("getChargebeeInstance", ["$q", "$window", "storeService", "CHARGEBEE_INSTANCE",
-    function ($q, $window, storeService, CHARGEBEE_INSTANCE) {
+  .factory("getChargebeeInstance", ["$q", "$window", "storeService", "userState",
+    "CHARGEBEE_TEST_INSTANCE", "CHARGEBEE_PROD_INSTANCE",
+    function ($q, $window, storeService, userState, CHARGEBEE_TEST_INSTANCE, CHARGEBEE_PROD_INSTANCE) {
       var currentCompanyId = null;
       var currentInstance = null;
       var currentSessionExpiration = 0;
@@ -2464,7 +2465,7 @@ angular.module("risevision.store.services")
         var cbInstance = {};
 
         cbInstance.instance = $window.Chargebee.init({
-          site: CHARGEBEE_INSTANCE
+          site: userState.isTestCompanySelected() ? CHARGEBEE_TEST_INSTANCE : CHARGEBEE_PROD_INSTANCE
         });
         cbInstance.instance.logout();
         cbInstance.instance.setPortalSession(function () {
@@ -9737,5 +9738,6 @@ module.run(['$templateCache', function($templateCache) {
     .value("SUPPORT_PRODUCT_URL",
       "https://store.risevision.com/products/?cat=compareSupport")
     .value("APPS_URL", "https://apps.risevision.com")
-    .value("CHARGEBEE_INSTANCE", "risevision");
+    .value("CHARGEBEE_TEST_INSTANCE", "risevision-test")
+    .value("CHARGEBEE_PROD_INSTANCE", "risevision");
 })(angular);

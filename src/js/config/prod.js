@@ -38,5 +38,6 @@
     .value("SUPPORT_PRODUCT_URL",
       "https://store.risevision.com/products/?cat=compareSupport")
     .value("APPS_URL", "https://apps.risevision.com")
-    .value("CHARGEBEE_INSTANCE", "risevision");
+    .value("CHARGEBEE_TEST_INSTANCE", "risevision-test")
+    .value("CHARGEBEE_PROD_INSTANCE", "risevision");
 })(angular);
