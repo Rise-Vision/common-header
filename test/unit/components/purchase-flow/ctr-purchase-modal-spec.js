@@ -15,16 +15,26 @@ describe("controller: purchase modal", function() {
         stop: sinon.stub()
       };
     });
-    $provide.factory("plan", function() {
+    $provide.service("addressFactory", function() {
       return {
-        name: "PlanA"
+        validateAddress: function(addressObject) {
+          if (!validate) {
+            addressObject.validationError = true;
+          }
+
+          return Q.resolve();
+        }
       };
+    });
+    $provide.value("plan", {
+      name: "PlanA"
     });
   }));
 
-  var sandbox, $scope, $modalInstance, $loading;
+  var sandbox, $scope, $modalInstance, $loading, validate;
 
   beforeEach(function() {
+    validate = true;
     sandbox = sinon.sandbox.create();
 
     inject(function($injector, $rootScope, $controller) {
@@ -57,10 +67,51 @@ describe("controller: purchase modal", function() {
     expect($scope.currentStep).to.equal(0);
 
     expect($scope.init).to.be.a("function");
+    expect($scope.validateAddress).to.be.a("function");
     expect($scope.setNextStep).to.be.a("function");
     expect($scope.setPreviousStep).to.be.a("function");
 
     expect($scope.dismiss).to.be.a("function");
+  });
+
+  describe("validateAddress: ", function() {
+    beforeEach(function() {
+      sinon.spy($scope, "setNextStep");
+    });
+
+    it("should validate and proceed to next step", function(done) {
+      $scope.validateAddress({});
+
+      setTimeout(function() {
+        $scope.setNextStep.should.have.been.called;
+
+        done();
+      }, 10);
+    });
+
+    it("should validate and not proceed if there are errors", function(done) {
+      validate = false;
+      $scope.validateAddress({});
+
+      setTimeout(function() {
+        $scope.setNextStep.should.not.have.been.called;
+
+        done();
+      }, 10);
+    });
+
+    it("should start and stop spinner", function(done) {
+      $scope.validateAddress({});
+
+      $loading.start.should.have.been.calledWith("purchase-modal");
+      $loading.stop.should.not.have.been.called;
+
+      setTimeout(function() {
+        $loading.stop.should.have.been.calledWith("purchase-modal");
+
+        done();
+      }, 10);
+    });
   });
 
   describe("setNextStep: ", function() {

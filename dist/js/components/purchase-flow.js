@@ -42,7 +42,7 @@ angular.module("risevision.common.components.purchase-flow")
         return validateAddress(addressObject)
           .then(function (result) {
             if (!_addressesAreIdentical(addressObject, result)) {
-              $log.error("Unexpected Address Difference received: ", result);
+              $log.error("Validated address differs from entered address: ", addressObject, result);
             }
           })
           .catch(function (result) {
@@ -100,55 +100,26 @@ angular.module("risevision.common.components.purchase-flow")
 })(angular);
 
 angular.module("risevision.common.components.purchase-flow")
-  .factory("responseHelper", [
-
-    function () {
-      var factory = {};
-
-      factory.getResult = function (resp) {
-        if (resp.result !== null && typeof resp.result === "object") {
-          return resp.result;
-        } else {
-          return resp;
-        }
-      };
-      /*
-       * @desc extracts error messages from from the object
-       * @param object error: object with errors
-       * @return string[]: array of error messages
-       */
-      factory.getErrors = function (objError) {
-        var result = [];
-        if (objError.data && objError.data instanceof Array) {
-          for (var i = 0; i < objError.data.length; i++) {
-            result = result.concat(factory.getErrors(objError.data[i]));
-          }
-        } else if (objError.message) {
-          result.push(objError.message);
-        } else {
-          result.push(JSON.stringify(objError));
-        }
-        return result;
-      };
-
-      return factory;
-
-    }
-  ]);
-
-angular.module("risevision.common.components.purchase-flow")
-  .service("validateAddress", ["$q", "storeAPILoader", "$log", "responseHelper",
-    function ($q, storeAPILoader, $log, responseHelper) {
-      return function (company) {
-        $log.debug("validateAddress called", company);
+  .service("validateAddress", ["$q", "$log", "storeAPILoader",
+    function ($q, $log, storeAPILoader) {
+      return function (addressObject) {
+        $log.debug("validateAddress called", addressObject);
 
         var obj = {
-          "street": company.street,
-          "unit": company.unit,
-          "city": company.city,
-          "country": company.country,
-          "postalCode": company.postalCode,
-          "province": company.province,
+          "street": addressObject.street,
+          "unit": addressObject.unit,
+          "city": addressObject.city,
+          "country": addressObject.country,
+          "postalCode": addressObject.postalCode,
+          "province": addressObject.province,
+        };
+
+        var _getResult = function (resp) {
+          if (resp.result !== null && typeof resp.result === "object") {
+            return resp.result;
+          } else {
+            return resp;
+          }
         };
 
         return storeAPILoader()
@@ -156,13 +127,13 @@ angular.module("risevision.common.components.purchase-flow")
             return storeApi.company.validateAddress(obj);
           })
           .then(function (resp) {
-            resp = responseHelper.getResult(resp);
-            $log.debug("validateAddress resp", resp);
+            var result = _getResult(resp);
+            $log.debug("validateAddress result: ", result);
 
-            if (resp.code !== -1) {
-              return $q.resolve(resp);
+            if (result.code !== -1) {
+              return $q.resolve(result);
             } else {
-              return $q.reject(resp);
+              return $q.reject(result);
             }
           });
       };
@@ -333,9 +304,9 @@ angular.module("risevision.common.components.purchase-flow")
 }])
 
 .controller("PurchaseModalCtrl", [
-  "$scope", "$modalInstance", "$log", "$loading", "plan", "addressFactory",
+  "$scope", "$modalInstance", "$log", "$loading", "addressFactory", "plan",
   "PURCHASE_STEPS",
-  function ($scope, $modalInstance, $log, $loading, plan, addressFactory,
+  function ($scope, $modalInstance, $log, $loading, addressFactory, plan,
     PURCHASE_STEPS) {
 
     $scope.form = {};

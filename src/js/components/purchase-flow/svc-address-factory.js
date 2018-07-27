@@ -30,7 +30,7 @@ angular.module("risevision.common.components.purchase-flow")
         return validateAddress(addressObject)
           .then(function (result) {
             if (!_addressesAreIdentical(addressObject, result)) {
-              $log.error("Unexpected Address Difference received: ", result);
+              $log.error("Validated address differs from entered address: ", addressObject, result);
             }
           })
           .catch(function (result) {
