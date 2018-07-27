@@ -9824,6 +9824,10 @@ angular.module("risevision.common.components.purchase-flow")
     };
 
     $scope.validateAddress = function (addressObject) {
+      if (!_isFormValid()) {
+        return;
+      }
+
       $loading.start("purchase-modal");
 
       addressFactory.validateAddress(addressObject)

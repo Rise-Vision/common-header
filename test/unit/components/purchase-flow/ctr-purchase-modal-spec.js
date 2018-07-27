@@ -79,6 +79,24 @@ describe("controller: purchase modal", function() {
       sinon.spy($scope, "setNextStep");
     });
 
+    it("should not validate if the corresponding form is invalid", function(done) {
+      $scope.form.reviewSubscriptionForm = {
+        $invalid: true
+      };
+
+      $scope.validateAddress({});
+
+      $loading.start.should.not.have.been.called;
+
+      setTimeout(function() {
+        $loading.stop.should.not.have.been.called;
+
+        $scope.setNextStep.should.not.have.been.called;
+
+        done();
+      }, 10);
+    });
+
     it("should validate and proceed to next step", function(done) {
       $scope.validateAddress({});
 
