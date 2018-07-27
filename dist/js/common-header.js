@@ -9815,6 +9815,17 @@ angular.module("risevision.common.components.purchase-flow")
     $scope.PURCHASE_STEPS = PURCHASE_STEPS;
     $scope.currentStep = 0;
 
+    $scope.$watch("loading", function (loading) {
+      if (loading) {
+        $loading.start("purchase-modal");
+      } else {
+        $loading.stop("purchase-modal");
+      }
+    });
+
+    // Stop spinner - workaround for spinner not rendering
+    $scope.loading = false;
+
     var _isFormValid = function () {
       var step = PURCHASE_STEPS[$scope.currentStep];
       var formName = step.formName;
@@ -9828,7 +9839,7 @@ angular.module("risevision.common.components.purchase-flow")
         return;
       }
 
-      $loading.start("purchase-modal");
+      $scope.loading = true;
 
       addressFactory.validateAddress(addressObject)
         .then(function () {
@@ -9837,7 +9848,7 @@ angular.module("risevision.common.components.purchase-flow")
           }
         })
         .finally(function () {
-          $loading.stop("purchase-modal");
+          $scope.loading = false;
         });
     };
 
@@ -10028,7 +10039,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/purchase-modal.html',
-    '<div rv-spinner="" rv-spinner-key="purchase-modal" rv-spinner-start-active="0"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title" translate="">Checkout</h3></div><div id="purchase-modal" class="modal-body checkout-modal" stop-event="touchend"><div id="prototypeProgressIndicator" class="progress-indicator"><div ng-repeat-start="step in PURCHASE_STEPS" class="indicator" ng-class="{ active: currentStep === step.index, complete: currentStep > step.index }"><div class="tag">{{step.name}}</div></div><div ng-repeat-end="" class="progress-bar-container" ng-class="{ complete: currentStep > step.index }"><div class="progress-bar"></div></div></div><review-subscription ng-show="currentStep === 0"></review-subscription><billing-address ng-show="currentStep === 1"></billing-address><shipping-address ng-show="currentStep === 2"></shipping-address><div ng-include="\'purchase-flow/checkout-payment-methods.html\'" ng-show="currentStep === 3"></div><div ng-include="\'purchase-flow/checkout-review-purchase.html\'" ng-show="currentStep === 4"></div><div ng-include="\'purchase-flow/checkout-success.html\'"></div><div ng-include="\'purchase-flow/tax-exemption.html\'"></div></div><div ng-include="\'purchase-flow/prototype-code.html\'"></div><div id="security-branding" class="modal-small-footer text-center u_padding-xs" ng-show="currentStep > 2"><small class="text-subtle"><i class="fa fa-lock icon-left"></i> Secure Checkout from <img src="https://s3.amazonaws.com/Rise-Images/UI/chargebee-icon.svg"> Chargebee and <img alt="powered by Stripe" src="https://s3.amazonaws.com/Rise-Images/UI/powered_by_stripe.svg"></small></div></div>');
+    '<div rv-spinner="" rv-spinner-key="purchase-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title" translate="">Checkout</h3></div><div id="purchase-modal" class="modal-body checkout-modal" stop-event="touchend"><div id="prototypeProgressIndicator" class="progress-indicator"><div ng-repeat-start="step in PURCHASE_STEPS" class="indicator" ng-class="{ active: currentStep === step.index, complete: currentStep > step.index }"><div class="tag">{{step.name}}</div></div><div ng-repeat-end="" class="progress-bar-container" ng-class="{ complete: currentStep > step.index }"><div class="progress-bar"></div></div></div><review-subscription ng-show="currentStep === 0"></review-subscription><billing-address ng-show="currentStep === 1"></billing-address><shipping-address ng-show="currentStep === 2"></shipping-address><div ng-include="\'purchase-flow/checkout-payment-methods.html\'" ng-show="currentStep === 3"></div><div ng-include="\'purchase-flow/checkout-review-purchase.html\'" ng-show="currentStep === 4"></div><div ng-include="\'purchase-flow/checkout-success.html\'"></div><div ng-include="\'purchase-flow/tax-exemption.html\'"></div></div><div ng-include="\'purchase-flow/prototype-code.html\'"></div><div id="security-branding" class="modal-small-footer text-center u_padding-xs" ng-show="currentStep > 2"><small class="text-subtle"><i class="fa fa-lock icon-left"></i> Secure Checkout from <img src="https://s3.amazonaws.com/Rise-Images/UI/chargebee-icon.svg"> Chargebee and <img alt="powered by Stripe" src="https://s3.amazonaws.com/Rise-Images/UI/powered_by_stripe.svg"></small></div></div>');
 }]);
 })();
 

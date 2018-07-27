@@ -71,7 +71,27 @@ describe("controller: purchase modal", function() {
     expect($scope.setNextStep).to.be.a("function");
     expect($scope.setPreviousStep).to.be.a("function");
 
-    expect($scope.dismiss).to.be.a("function");
+    expect($scope.dismiss).to.be.a("function");  
+  });
+
+  describe("$loading spinner: ", function() {
+    it("should stop spinner on load", function() {
+      expect($scope.loading).to.be.false;
+
+      $loading.stop.should.have.been.calledWith("purchase-modal");
+    });
+
+    it("should start and stop spinner", function() {
+      $scope.loading = true;
+      $scope.$digest();
+
+      $loading.start.should.have.been.calledWith("purchase-modal");
+
+      $scope.loading = false;
+      $scope.$digest();
+
+      $loading.stop.should.have.been.calledTwice;
+    });
   });
 
   describe("validateAddress: ", function() {
@@ -86,10 +106,10 @@ describe("controller: purchase modal", function() {
 
       $scope.validateAddress({});
 
-      $loading.start.should.not.have.been.called;
+      expect($scope.loading).to.be.false;
 
       setTimeout(function() {
-        $loading.stop.should.not.have.been.called;
+        expect($scope.loading).to.be.false;
 
         $scope.setNextStep.should.not.have.been.called;
 
@@ -121,11 +141,10 @@ describe("controller: purchase modal", function() {
     it("should start and stop spinner", function(done) {
       $scope.validateAddress({});
 
-      $loading.start.should.have.been.calledWith("purchase-modal");
-      $loading.stop.should.not.have.been.called;
+      expect($scope.loading).to.be.true;
 
       setTimeout(function() {
-        $loading.stop.should.have.been.calledWith("purchase-modal");
+        expect($scope.loading).to.be.false;
 
         done();
       }, 10);

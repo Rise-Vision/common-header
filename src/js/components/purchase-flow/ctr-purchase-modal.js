@@ -32,6 +32,17 @@ angular.module("risevision.common.components.purchase-flow")
     $scope.PURCHASE_STEPS = PURCHASE_STEPS;
     $scope.currentStep = 0;
 
+    $scope.$watch("loading", function (loading) {
+      if (loading) {
+        $loading.start("purchase-modal");
+      } else {
+        $loading.stop("purchase-modal");
+      }
+    });
+
+    // Stop spinner - workaround for spinner not rendering
+    $scope.loading = false;
+
     var _isFormValid = function () {
       var step = PURCHASE_STEPS[$scope.currentStep];
       var formName = step.formName;
@@ -45,7 +56,7 @@ angular.module("risevision.common.components.purchase-flow")
         return;
       }
 
-      $loading.start("purchase-modal");
+      $scope.loading = true;
 
       addressFactory.validateAddress(addressObject)
         .then(function () {
@@ -54,7 +65,7 @@ angular.module("risevision.common.components.purchase-flow")
           }
         })
         .finally(function () {
-          $loading.stop("purchase-modal");
+          $scope.loading = false;
         });
     };
 
