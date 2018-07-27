@@ -10,13 +10,13 @@
 
     <div class="row">
       <div class="col-md-6">
-        <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('firstName') }">
+        <div class="form-group" ng-class="{ 'has-error': (form.billingAddressForm.firstName.$dirty || form.billingAddressForm.$submitted) && form.billingAddressForm.firstName.$invalid }">
           <label for="contact-firstName" class="control-label">First Name</label>
           <input id="contact-firstName" type="text" class="form-control" name="firstName" ng-model="plan.contact.firstName" autocomplete="given-name" required>
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('lastName') }">
+        <div class="form-group" ng-class="{ 'has-error': (form.billingAddressForm.lastName.$dirty || form.billingAddressForm.$submitted) && form.billingAddressForm.lastName.$invalid }">
           <label for="contact-lastName" class="control-label">Last Name</label>
           <input id="contact-lastName" type="text" class="form-control" name="lastName" ng-model="plan.contact.lastName" autocomplete="family-name" required>
         </div>
@@ -24,13 +24,13 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('email') }">
+        <div class="form-group" ng-class="{ 'has-error': (form.billingAddressForm.email.$dirty || form.billingAddressForm.$submitted) && form.billingAddressForm.email.$invalid }">
           <label for="contact-email" class="control-label">Email</label>
           <input id="contact-email" type="email" class="form-control" name="email" ng-model="plan.contact.email" autocomplete="email" required>
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('tel') }">
+        <div class="form-group">
           <label for="contact-phone" class="control-label">Telephone</label>
           <input id="contact-phone" name="tel" type="tel" class="form-control" ng-model="plan.contact.telephone" autocomplete="tel">
         </div>
