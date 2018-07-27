@@ -10,7 +10,8 @@ angular.module("risevision.common.components.purchase-flow")
   formName: "billingAddressForm"
 }, {
   name: "Shipping Address",
-  index: 2
+  index: 2,
+  formName: "shippingAddressForm"
 }, {
   name: "Payment Method",
   index: 3
