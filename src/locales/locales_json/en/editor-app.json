@@ -157,7 +157,8 @@
     "content": {
       "search": "Search for Widget",
       "title": "Add Widget",
-      "otherWidgets": "For All Displays"
+      "otherWidgets": "For All Displays",
+      "noResults": "Your search didn't return any results"
     },
     "professional": {
       "title": "For Licensed Displays Only",
@@ -168,7 +169,8 @@
       "promotionTrial": "Unlock the power of Widgets for Licensed Displays with a Paid Plan.",
       "promotionTrialButton": "View Plans",
       "promotionPlan": "Unlock the power of Widgets for Licensed Displays. Assign your included Display Licenses.",
-      "promotionDisplaysButton": "View Displays"
+      "promotionDisplaysButton": "View Displays",
+      "noResults": "Your search didn't return any results"
     },
     "details": "Details",
     "viewInStore": "View in Store",

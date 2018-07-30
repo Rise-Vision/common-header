@@ -1,3 +1,6 @@
+msgid "cacheBuster.label"
+msgstr "Enable cache buster (recommended)"
+
 msgid "interactivity.heading"
 msgstr "Interactivity"
 
