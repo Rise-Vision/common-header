@@ -1,7 +1,7 @@
 /*jshint expr:true */
 "use strict";
 
-describe("Services: address factory", function() {
+describe("Services: validate address", function() {
   beforeEach(module("risevision.common.components.purchase-flow"));
   beforeEach(module(function ($provide) {
     $provide.service("$q", function() {return Q;});
