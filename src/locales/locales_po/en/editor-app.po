@@ -322,6 +322,9 @@ msgstr "For Licensed Displays"
 msgid "storeProduct.category.subscription"
 msgstr "For Licensed Displays"
 
+msgid "storeProduct.content.noResults"
+msgstr "Your search didn't return any results"
+
 msgid "storeProduct.content.otherWidgets"
 msgstr "For All Displays"
 
@@ -363,6 +366,9 @@ msgstr "Worship"
 
 msgid "storeProduct.professional.learnMore"
 msgstr "Learn More"
+
+msgid "storeProduct.professional.noResults"
+msgstr "Your search didn't return any results"
 
 msgid "storeProduct.professional.promotion"
 msgstr "Add power and functionality to your Presentations with Widgets for Licensed Displays"
