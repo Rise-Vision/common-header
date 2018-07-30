@@ -7,21 +7,22 @@ describe("Services: address factory", function() {
     $provide.service("$q", function() {return Q;});
     $provide.service("$log", function() {
       return {
-        error: sinon.stub()
+        error: sinon.stub(),
+        debug: sinon.stub()
       };
     });
     $provide.service("validateAddress", function() {
-      return function(obj) {
+      return validateAddress = sinon.spy(function(obj) {
         if (obj.resolve) {
           return Q.resolve(obj.resolve);
         } else {
           return Q.reject(obj.reject);
         }
-      };
+      });
     });
   }));
 
-  var $log, addressObject, addressFactory;
+  var $log, addressObject, addressFactory, validateAddress;
 
   beforeEach(function() {
     addressObject = {
@@ -29,7 +30,7 @@ describe("Services: address factory", function() {
       unit: "unit",
       city: "city",
       province: "province",
-      country: "country",
+      country: "CA",
       postalCode: "postalCode"
     };
 
@@ -50,12 +51,42 @@ describe("Services: address factory", function() {
     expect(addressObject.validationError).to.be.false;
   });
 
-  it("should resolve if validation passes", function(done) {
+  it("should resolve and skip validation if Country is not US/CA", function(done) {
+    addressObject.resolve = false;
+    addressObject.country = "BR";
+    
+    addressFactory.validateAddress(addressObject)
+      .then(function() {
+        expect(addressObject.validationError).to.be.false;
+        validateAddress.should.not.have.been.called;
+        $log.debug.should.have.been.called;
+
+        done();
+      })
+      .then(null, done);
+  });
+
+  it("should resolve if validation passes for CA", function(done) {
     addressObject.resolve = true;
 
     addressFactory.validateAddress(addressObject)
       .then(function() {
         expect(addressObject.validationError).to.be.false;
+        validateAddress.should.have.been.called;
+
+        done();
+      })
+      .then(null, done);
+  });
+
+  it("should resolve if validation passes for US", function(done) {
+    addressObject.resolve = true;
+    addressObject.country = "US";
+
+    addressFactory.validateAddress(addressObject)
+      .then(function() {
+        expect(addressObject.validationError).to.be.false;
+        validateAddress.should.have.been.called;
 
         done();
       })
@@ -68,7 +99,7 @@ describe("Services: address factory", function() {
       line2: "unit",
       city: "city",
       region: "province",
-      country: "country",
+      country: "CA",
       postalCode: "postalCode"
     };
 
@@ -88,7 +119,7 @@ describe("Services: address factory", function() {
       line2: "unit1",
       city: "city1",
       region: "province1",
-      country: "country1",
+      country: "US",
       postalCode: "postalCode1"
     };
 
