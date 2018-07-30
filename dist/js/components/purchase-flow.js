@@ -11,8 +11,8 @@ angular.module("risevision.common.components.purchase-flow", [
 ]);
 
 angular.module("risevision.common.components.purchase-flow")
-  .service("addressFactory", ["$log", "validateAddress",
-    function ($log, validateAddress) {
+  .service("addressFactory", ["$q", "$log", "validateAddress",
+    function ($q, $log, validateAddress) {
       var factory = {};
 
       var _addressesAreIdentical = function (src, result) {
@@ -39,15 +39,21 @@ angular.module("risevision.common.components.purchase-flow")
       factory.validateAddress = function (addressObject) {
         addressObject.validationError = false;
 
-        return validateAddress(addressObject)
-          .then(function (result) {
-            if (!_addressesAreIdentical(addressObject, result)) {
-              $log.error("Validated address differs from entered address: ", addressObject, result);
-            }
-          })
-          .catch(function (result) {
-            addressObject.validationError = result.message ? result.message : "Unknown Error";
-          });
+        if (addressObject.country !== "CA" && addressObject.country !== "US") {
+          $log.debug("Address Validation skipped for country: ", addressObject.country);
+
+          return $q.resolve();
+        } else {
+          return validateAddress(addressObject)
+            .then(function (result) {
+              if (!_addressesAreIdentical(addressObject, result)) {
+                $log.error("Validated address differs from entered address: ", addressObject, result);
+              }
+            })
+            .catch(function (result) {
+              addressObject.validationError = result.message ? result.message : "Unknown Error";
+            });
+        }
       };
 
       return factory;
