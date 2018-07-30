@@ -1,9 +1,9 @@
 angular.module("risevision.common.components.purchase-flow")
-  .directive("billingAddress", ["$templateCache",
+  .directive("shippingAddress", ["$templateCache",
     function ($templateCache) {
       return {
         restrict: "E",
-        template: $templateCache.get("purchase-flow/checkout-billing-address.html"),
+        template: $templateCache.get("purchase-flow/checkout-shipping-address.html"),
         link: function () {}
       };
     }

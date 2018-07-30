@@ -1,6 +1,6 @@
 "use strict";
 
-describe("controller: review subscription", function() {
+describe("directive: review subscription", function() {
   beforeEach(module("risevision.common.components.purchase-flow"));
 
   var $scope, element;
