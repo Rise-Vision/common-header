@@ -7,6 +7,8 @@ describe("Services: chargebeeFactory", function() {
   beforeEach(module("risevision.store.services"));
 
   beforeEach(module(function ($provide) {
+    $provide.value("STORE_URL", "https://store.risevision.com/");
+    $provide.value("ACCOUNT_PATH", "account?cid=companyId");
     $provide.value("CHARGEBEE_TEST_SITE", "risevision-test");
     $provide.value("CHARGEBEE_PROD_SITE", "risevision");
     $provide.service("$q", function() {return Q;});
@@ -166,6 +168,7 @@ describe("Services: chargebeeFactory", function() {
 
     it("should open Customer Portal for a Test company", function(done) {
       sandbox.spy($window.Chargebee, "init");
+      sandbox.stub($window, "open");
       sandbox.stub(userState, "isTestCompanySelected").returns(true);
 
       chargebeeFactory.openPortal("companyId1");
@@ -173,12 +176,14 @@ describe("Services: chargebeeFactory", function() {
       setTimeout(function () {
         expect($window.Chargebee.init.getCall(0).args[0].site).to.equal("risevision-test");
         expect(chargebeePortal.open).to.have.been.calledOnce;
+        expect($window.open).to.not.have.been.called;
         done();
       });
     });
 
     it("should open Customer Portal for a Prod company", function(done) {
       sandbox.spy($window.Chargebee, "init");
+      sandbox.stub($window, "open");
       sandbox.stub(userState, "isTestCompanySelected").returns(false);
 
       chargebeeFactory.openPortal("companyId1");
@@ -186,6 +191,7 @@ describe("Services: chargebeeFactory", function() {
       setTimeout(function () {
         expect($window.Chargebee.init.getCall(0).args[0].site).to.equal("risevision");
         expect(chargebeePortal.open).to.have.been.calledOnce;
+        expect($window.open).to.not.have.been.called;
         done();
       });
     });
@@ -238,6 +244,91 @@ describe("Services: chargebeeFactory", function() {
         expect(chargebeePortal.openSection.getCall(0).args[0].sectionType).to.equal(chargebeeSections.SUBSCRIPTION_DETAILS);
         expect(chargebeePortal.openSection.getCall(0).args[0].params.subscriptionId).to.equal("subs1");
         done();
+      });
+    });
+
+    describe("companies with origin=chargebee without Chargebee account", function () {
+      beforeEach(function() {
+        storeService.createSession.restore(); // Method was already mocked
+
+        sandbox.stub(storeService, "createSession").returns(Q.reject({
+          status: 404
+        }));
+      });
+
+      it("should show Store Account for companies with origin=chargebee without Chargebee account", function(done) {
+        sandbox.stub(userState, "isTestCompanySelected").returns(true);
+        sandbox.stub($window, "open");
+
+        chargebeeFactory.openPortal("companyId1");
+
+        setTimeout(function () {
+          expect(chargebeePortal.open).to.not.have.been.called;
+          expect($window.open).to.have.been.calledOnce;
+          expect($window.open.getCall(0).args[0]).to.equal("https://store.risevision.com/account?cid=companyId1");
+
+          done();
+        });
+      });
+
+      it("should open Store Account instead of Customer Portal Account Details", function(done) {
+        sandbox.stub($window, "open");
+
+        chargebeeFactory.openAccountDetails("companyId1");
+
+        setTimeout(function () {
+          expect(chargebeePortal.openSection).to.not.have.been.called;
+          expect($window.open).to.have.been.calledOnce;
+          done();
+        });
+      });
+
+      it("should open Store Account instead of Customer Portal Address", function(done) {
+        sandbox.stub($window, "open");
+
+        chargebeeFactory.openAddress("companyId1");
+
+        setTimeout(function () {
+          expect(chargebeePortal.openSection).to.not.have.been.called;
+          expect($window.open).to.have.been.calledOnce;
+          done();
+        });
+      });
+
+      it("should open Store Account instead of Customer Billing History", function(done) {
+        sandbox.stub($window, "open");
+
+        chargebeeFactory.openBillingHistory("companyId1");
+
+        setTimeout(function () {
+          expect(chargebeePortal.openSection).to.not.have.been.called;
+          expect($window.open).to.have.been.calledOnce;
+          done();
+        });
+      });
+
+      it("should open Store Account instead of Customer Portal Billing Sources", function(done) {
+        sandbox.stub($window, "open");
+
+        chargebeeFactory.openPaymentSources("companyId1");
+
+        setTimeout(function () {
+          expect(chargebeePortal.openSection).to.not.have.been.called;
+          expect($window.open).to.have.been.calledOnce;
+          done();
+        });
+      });
+
+      it("should open Store Account instead of Customer Portal Subscription Details", function(done) {
+        sandbox.stub($window, "open");
+
+        chargebeeFactory.openSubscriptionDetails("companyId1");
+
+        setTimeout(function () {
+          expect(chargebeePortal.openSection).to.not.have.been.called;
+          expect($window.open).to.have.been.calledOnce;
+          done();
+        });
       });
     });
   });
