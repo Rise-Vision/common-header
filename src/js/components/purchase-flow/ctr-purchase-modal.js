@@ -31,7 +31,7 @@ angular.module("risevision.common.components.purchase-flow")
     $scope.plan.additionalDisplayLicenses = 0;
 
     $scope.PURCHASE_STEPS = PURCHASE_STEPS;
-    $scope.currentStep = 0;
+    $scope.currentStep = 3;
 
     $scope.$watch("loading", function (loading) {
       if (loading) {

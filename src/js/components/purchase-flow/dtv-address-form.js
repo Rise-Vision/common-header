@@ -5,7 +5,8 @@ angular.module("risevision.common.components.purchase-flow")
         restrict: "E",
         scope: {
           formObject: "=",
-          addressObject: "="
+          addressObject: "=",
+          hideCompanyName: "="
         },
         template: $templateCache.get("purchase-flow/address-form.html"),
         link: function ($scope) {
