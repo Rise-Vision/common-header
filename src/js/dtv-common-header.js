@@ -14,6 +14,7 @@ angular.module("risevision.common.header", [
   "risevision.core.countries",
   "risevision.core.oauth2",
   "risevision.store.authorization",
+  "risevision.store.services",
   "risevision.common.geodata",
   "risevision.store.data-gadgets",
   "risevision.core.userprofile",
@@ -185,3 +186,4 @@ angular.module("risevision.common.header", [
 
 angular.module("risevision.common.header.directives", []);
 angular.module("risevision.common.header.filters", []);
+angular.module("risevision.store.services", []);

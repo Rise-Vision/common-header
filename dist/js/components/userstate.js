@@ -434,6 +434,9 @@ angular.module("risevision.common.components.logging")
           },
           isRootCompany: function () {
             return _state.userCompany && !_state.userCompany.parentId;
+          },
+          isSelectedCompanyChargebee: function () {
+            return _state.selectedCompany && _state.selectedCompany.origin === "Chargebee";
           }
         };
 
@@ -1653,6 +1656,7 @@ angular.module("risevision.common.components.logging")
           isSubcompanySelected: companyState.isSubcompanySelected,
           isTestCompanySelected: companyState.isTestCompanySelected,
           isRootCompany: companyState.isRootCompany,
+          isSelectedCompanyChargebee: companyState.isSelectedCompanyChargebee,
           // company functions
           updateCompanySettings: companyState.updateCompanySettings,
           updateUserCompanySettings: companyState.updateUserCompanySettings,

@@ -51,6 +51,11 @@ describe("controller: plans modal", function() {
         }
       };
     });
+    $provide.factory("chargebeeFactory", function() {
+      return {
+        openPortal: function() {}
+      };
+    });
     $provide.service("$modal", function() {
       return {
         open: sinon.stub()
