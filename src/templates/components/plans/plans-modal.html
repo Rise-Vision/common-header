@@ -9,8 +9,8 @@
   <div id="plans-modal" class="modal-body u_padding-lg" stop-event="touchend">
     <div class="text-center">
       <div class="btn-group" role="group" aria-label="...">
-        <button ng-click="monthlyPrices = true" type="button" class="btn btn-default" ng-class="{  active: monthlyPrices }">Monthly</button>
-        <button ng-click="monthlyPrices = false" type="button" class="btn btn-default" ng-class="{  active: !monthlyPrices }">Yearly</button>
+        <button ng-click="isMonthly = true" type="button" class="btn btn-default" ng-class="{  active: isMonthly }">Monthly</button>
+        <button ng-click="isMonthly = false" type="button" class="btn btn-default" ng-class="{  active: !isMonthly }">Yearly</button>
       </div>
       <p class="u_padding-sm-vertical">Pay yearly, get one month free!</p>
     </div>
@@ -23,15 +23,15 @@
 
           <h2>{{plan.name}}</h2>
           <h3 class="planColumnPrice" ng-show="!isFree(plan) && !isStarter(plan)">
-            <span>$10</span>${{ monthlyPrices ? plan.monthly.priceDisplayMonth : plan.yearly.priceDisplayMonth }}
+            <span>$10</span>${{ isMonthly ? plan.monthly.priceDisplayMonth : plan.yearly.priceDisplayMonth }}
           </h3>
           <h3 class="planColumnPrice" ng-show="isStarter(plan)">
-            ${{ monthlyPrices ? plan.monthly.priceDisplayMonth : plan.yearly.priceDisplayMonth }}
+            ${{ isMonthly ? plan.monthly.priceDisplayMonth : plan.yearly.priceDisplayMonth }}
           </h3>
-          <p ng-show="!isFree(plan) && monthlyPrices" class="text-muted" translate translate-values="{ price: plan.monthly.billAmount }">
+          <p ng-show="!isFree(plan) && isMonthly" class="text-muted" translate translate-values="{ price: plan.monthly.billAmount }">
             common-header.plans.perDisplayBilledMonthly
           </p>
-          <p ng-show="!isFree(plan) && !monthlyPrices" class="text-muted" translate translate-values="{ price: plan.yearly.billAmount }">
+          <p ng-show="!isFree(plan) && !isMonthly" class="text-muted" translate translate-values="{ price: plan.yearly.billAmount }">
             common-header.plans.perDisplayBilledYearly
           </p>
           <div ng-show="!isFree(plan)">
@@ -40,7 +40,7 @@
             <span ng-show="plan.proLicenseCount > 1" translate>common-header.plans.displaysIncluded</span>
           </div>
           <p ng-show="showSavings(plan)" class="planSavings"
-             translate translate-values="{ save: (monthlyPrices ? plan.monthly.save : plan.yearly.save) }">
+             translate translate-values="{ save: (isMonthly ? plan.monthly.save : plan.yearly.save) }">
             common-header.plans.saveEachYear
           </p>
           <p ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan)" translate>
@@ -65,7 +65,7 @@
               target="_blank" href="https://store.risevision.com/product/{{plan.productId}}"
               class="btn btn-primary btn-block" translate>common-header.plans.subscribe</a>
           <a id="subscribe-plan" ng-if="origin !== 'rise'" ng-show="getVisibleAction(plan) === 'subscribe'"
-              ng-click="purchaseFactory.showPurchaseModal(plan, monthlyPrices)"
+              ng-click="purchaseFactory.showPurchaseModal(plan, isMonthly)"
               class="btn btn-primary btn-block" translate>common-header.plans.subscribe</a>
 
           <a id="downgrade-plan" ng-show="getVisibleAction(plan) === 'downgrade' && !isChargebee()"
