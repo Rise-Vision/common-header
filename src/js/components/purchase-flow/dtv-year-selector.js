@@ -8,17 +8,17 @@ angular.module("risevision.common.components.purchase-flow")
         template: $templateCache.get("purchase-flow/year-selector.html"),
         replace: "true",
         scope: {
-          ngModel: "="
+          ngModel: "=?"
         },
         controller: ["$scope",
           function ($scope) {
             var baseYear = new Date().getFullYear();
             var MAX_COUNT = 20;
-            $scope.years = [];
 
             $scope.init = function () {
+              $scope.years = [];
 
-              if ($scope.ngModel < baseYear) {
+              if ($scope.ngModel && $scope.ngModel < baseYear) {
                 $scope.years.push($scope.ngModel);
               }
 

@@ -23,7 +23,7 @@ describe("directive: address form", function() {
       }
     };
 
-    element = angular.element("<address-form form-object=\"form.addressForm\" address-object=\"address\"></address-form>");
+    element = angular.element("<address-form form-object=\"form.addressForm\" address-object=\"address\" hide-company-name=\"true\"></address-form>");
     $compile(element)($rootScope);
 
     $rootScope.$digest();
@@ -42,6 +42,7 @@ describe("directive: address form", function() {
 
     expect($scope.formObject).to.be.a("object");
     expect($scope.addressObject).to.be.a("object");
+    expect($scope.hideCompanyName).to.be.true;
 
     expect($scope.isFieldInvalid).to.be.a("function");
   });
