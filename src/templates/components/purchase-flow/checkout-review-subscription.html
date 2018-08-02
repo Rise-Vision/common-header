@@ -48,16 +48,16 @@
         <b class="pull-right" translate>common-header.purchase.review-subscription.pay-yearly</b>
       </div>
       <div class="col-xs-12">
-        <div class="panel payment-recurrence-selector">
+        <div class="panel payment-recurrence-selector" ng-class="{ 'has-error': form.reviewSubscriptionForm.billingPeriod.$invalid }">
           <div class="radio" ng-class="{ active: plan.isMonthly }">
             <label>
-              <input type="radio" name="billingPeriod" id="monthlyBilling" ng-value="true" ng-model="plan.isMonthly">
+              <input type="radio" name="billingPeriod" id="monthlyBilling" ng-value="true" ng-model="plan.isMonthly" required>
               <span translate translate-values="{ monthlyPrice: getMonthlyPrice() }">common-header.purchase.review-subscription.billed-monthly</span>
             </label>
           </div>
           <div class="radio" ng-class="{ active: !plan.isMonthly }">
             <label>
-              <input type="radio" name="billingPeriod" id="yearlyBilling" ng-value="false" ng-model="plan.isMonthly">
+              <input type="radio" name="billingPeriod" id="yearlyBilling" ng-value="false" ng-model="plan.isMonthly" required>
               <span translate translate-values="{ yearlyPrice: getYearlyPrice() }">common-header.purchase.review-subscription.billed-yearly</span>
             </label>
             <label class="highlight" translate translate-values="{ saveYearly: plan.yearly.save }">common-header.purchase.review-subscription.save-yearly</label>
