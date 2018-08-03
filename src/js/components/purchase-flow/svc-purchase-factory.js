@@ -53,7 +53,7 @@
                   ],
                   newCreditCard: {
                     address: {},
-                    useBillingAddress: false
+                    useBillingAddress: true
                   }
                 };
                 // Alpha Release - Select New Card by default

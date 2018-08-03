@@ -115,7 +115,7 @@ angular.module("risevision.common.components.purchase-flow")
                   ],
                   newCreditCard: {
                     address: {},
-                    useBillingAddress: false
+                    useBillingAddress: true
                   }
                 };
                 // Alpha Release - Select New Card by default
