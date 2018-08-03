@@ -17,6 +17,7 @@
       },
       yearly: {
         priceDisplayMonth: 0,
+        priceDisplayYear: 0,
         billAmount: 0,
         save: 0
       }
@@ -34,6 +35,7 @@
       },
       yearly: {
         priceDisplayMonth: 10,
+        priceDisplayYear: 110,
         billAmount: 110,
         save: 10
       },
@@ -52,6 +54,7 @@
       },
       yearly: {
         priceDisplayMonth: 9,
+        priceDisplayYear: 99,
         billAmount: 297,
         save: 63
       },
@@ -70,6 +73,7 @@
       },
       yearly: {
         priceDisplayMonth: 8,
+        priceDisplayYear: 88,
         billAmount: 968,
         save: 352
       },
@@ -88,6 +92,7 @@
       },
       yearly: {
         priceDisplayMonth: 7,
+        priceDisplayYear: 77,
         billAmount: 5390,
         save: 3010
       }

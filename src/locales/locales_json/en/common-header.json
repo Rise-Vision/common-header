@@ -33,6 +33,22 @@
     "subscribe": "Subscribe",
     "trial-expired": "Trial Expired"
   },
+  "purchase": {
+    "review-subscription": {
+      "plan-name": "{{planName}} Plan",
+      "display-included": "Display Included",
+      "displays-included": "Displays Included",
+      "per-display": "per Display",
+      "per-month": "per Month",
+      "need-more-displays": "Need more Displays than <b>{{planName}} Plan</b> offers? Add more at only <b>${{priceDisplayMonth}} per Display</b>!",
+      "additional-licenses": "additional Display licenses added to your purchase.",
+      "pay-yearly": "Pay yearly, get one month free!",
+      "total": "TOTAL",
+      "save-yearly": "Save ${{saveYearly}}!",
+      "billed-monthly": "${{monthlyPrice}} billed monthly",
+      "billed-yearly": "${{yearlyPrice}} billed yearly"
+    }
+  },
   "user": {
     "error": {
       "add-user": "User could not be added",

@@ -8,6 +8,7 @@ angular.module("risevision.common.components.plans.services", [
 
 angular.module("risevision.common.components.plans", [
   "risevision.common.components.plans.services",
+  "risevision.common.components.purchase-flow",
   "risevision.common.components.scrolling-list",
   "risevision.common.components.loading",
   "ui.bootstrap"

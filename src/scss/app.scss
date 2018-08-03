@@ -93,6 +93,7 @@
 @import "ui-components/onboarding";
 @import "ui-components/toggle-switch";
 @import "ui-components/email-tags";
+@import "ui-components/progress-indicator";
 
 /* Sections/Views
    ========================================================================== */
@@ -112,4 +113,6 @@
 @import "sections/store-product-details";
 @import "sections/store-cart";
 @import "sections/schedules";
+@import "sections/checkout";
 @import "sections/apps";
+
