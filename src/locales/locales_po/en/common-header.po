@@ -88,42 +88,6 @@ msgstr "Subscribe"
 msgid "plans.trial-expired"
 msgstr "Trial Expired"
 
-msgid "purchase.review-subscription.additional-licenses"
-msgstr "additional Display licenses added to your purchase."
-
-msgid "purchase.review-subscription.billed-monthly"
-msgstr "${{monthlyPrice}} billed monthly"
-
-msgid "purchase.review-subscription.billed-yearly"
-msgstr "${{yearlyPrice}} billed yearly"
-
-msgid "purchase.review-subscription.display-included"
-msgstr "Display Included"
-
-msgid "purchase.review-subscription.displays-included"
-msgstr "Displays Included"
-
-msgid "purchase.review-subscription.need-more-displays"
-msgstr "Need more Displays than <b>{{planName}} Plan</b> offers? Add more at only <b>${{priceDisplayMonth}} per Display</b>!"
-
-msgid "purchase.review-subscription.pay-yearly"
-msgstr "Pay yearly, get one month free!"
-
-msgid "purchase.review-subscription.per-display"
-msgstr "per Display"
-
-msgid "purchase.review-subscription.per-month"
-msgstr "per Month"
-
-msgid "purchase.review-subscription.plan-name"
-msgstr "{{planName}} Plan"
-
-msgid "purchase.review-subscription.save-yearly"
-msgstr "Save ${{saveYearly}}!"
-
-msgid "purchase.review-subscription.total"
-msgstr "TOTAL"
-
 msgid "user.error.add-user"
 msgstr "User could not be added"
 
