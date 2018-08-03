@@ -1,104 +1,117 @@
 <!-- Step 4 -->
 <div id="checkout-payment-methods">
-  <form id="form.paymentDetailsForm" role="form" class="u_margin-md-top" name="form.paymentDetailsForm" novalidate>
-    <div class="row u_margin-md-top">
+  <form id="form.paymentMethodsForm" role="form" class="u_margin-md-top" name="form.paymentMethodsForm" novalidate>
+    <!-- Alpha Release - Select New Card by default -->
+    <div class="row u_margin-md-top" ng-if="false">
       <div class="col-md-8 col-xs-12 form-inline">
         <div class="form-group">
           <label for="payment-method-select" class="u_margin-right">Payment Method</label>
-          <select id="payment-method-select" class="form-control selectpicker" ng-model="plan.paymentDetails.paymentMethod">
+          <select id="payment-method-select" class="form-control selectpicker" ng-model="plan.paymentMethods.paymentMethod">
             <option value="card">Credit Card</option>
             <option value="invoice">Invoice Me</option>
           </select>
         </div>
       </div>
     </div>
-    <hr/>
+    <hr ng-if="false" />
 
-    <div id="credit-card-form" ng-show="plan.paymentDetails.paymentMethod === 'card'">
-      <div class="row">
+    <div id="credit-card-form" ng-if="plan.paymentMethods.paymentMethod === 'card'">
+      <!-- Alpha Release - Select New Card by default -->
+      <div class="row" ng-if="false">
         <div class="col-md-12">
           <div class="form-group">
-            <select id="credit-card-select" class="form-control selectpicker" ng-model="plan.paymentDetails.selectedCard" ng-options="c as getCardDescription(c) for c in plan.paymentDetails.existingCreditCards track by c.id">
+            <select id="credit-card-select" class="form-control selectpicker" ng-model="plan.paymentMethods.selectedCard" ng-options="c as getCardDescription(c) for c in plan.paymentMethods.existingCreditCards track by c.id">
               <option value="">Add New Credit Card</option>
             </select>
           </div>
         </div>
       </div>
 
-      <!-- FIRST TIME CREDIT CARD -->
-      <div id="new-credit-card-form" ng-show="!plan.paymentDetails.selectedCard">
+      <!-- NEW CREDIT CARD -->
+      <div id="new-credit-card-form" ng-if="!plan.paymentMethods.selectedCard">
+        <div class="alert alert-danger" ng-show="form.paymentMethodsForm.$submitted && form.paymentMethodsForm.$invalid">
+          Please complete the missing information below.
+        </div>
+        <div id="errorBox" class="alert alert-danger" role="alert" ng-show="plan.paymentMethods.newCreditCard.validationError">
+          <strong>Card Validation Error</strong> {{plan.paymentMethods.newCreditCard.validationError}}
+        </div>
+
         <div class="row">
           <div class="col-md-12">
-            <div class="form-group">
+            <div class="form-group" ng-class="{ 'has-error': (form.paymentMethodsForm.cardholderName.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardholderName.$invalid }">
               <label for="new-card-name" lass="control-label">Cardholder Name</label>
-              <input id="new-card-name" type="text" class="form-control" name="card-name" data-stripe="name" ng-model="plan.paymentDetails.newCreditCard.name" autocomplete="cc-name" required>
+              <input id="new-card-name" type="text" class="form-control" name="cardholderName" data-stripe="name" ng-model="plan.paymentMethods.newCreditCard.name" autocomplete="cc-name" required>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <div class="form-group">
+            <div class="form-group" ng-class="{ 'has-error': (form.paymentMethodsForm.cardNumber.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardNumber.$invalid }">
               <label for="new-card-number" class="control-label">Card Number</label>
-              <input id="new-card-number" type="text" class="form-control" placeholder="0000 0000 0000 0000" name="card-number"  data-stripe="number" ng-model="plan.paymentDetails.newCreditCard.number" autocomplete="cc-number" required>
+              <input id="new-card-number" type="text" class="form-control" placeholder="0000 0000 0000 0000" name="cardNumber"  data-stripe="number" ng-model="plan.paymentMethods.newCreditCard.number" autocomplete="cc-number" required>
             </div>
           </div>
         </div>
-        <div class="row form-group">
+        <div class="row">
           <div class="col-md-4">
-            <label for="new-card-expiry-month" class="control-label">Expiry Month</label>
-            <select id="new-card-expiry-month" data-stripe="exp-month" class="form-control" ng-model="plan.paymentDetails.newCreditCard.expMonth" autocomplete="cc-exp-month" integer-parser required>
-              <option ng-show="false" value="">&lt; Select Month &gt;</option>
-              <option value="1">01</option>
-              <option value="2">02</option>
-              <option value="3">03</option>
-              <option value="4">04</option>
-              <option value="5">05</option>
-              <option value="6">06</option>
-              <option value="7">07</option>
-              <option value="8">08</option>
-              <option value="9">09</option>
-              <option value="10">10</option>
-              <option value="11">11</option>
-              <option value="12">12</option>
-            </select>
+            <div class="form-group" ng-class="{ 'has-error': (form.paymentMethodsForm.cardExpiryMonth.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardExpiryMonth.$invalid }">
+              <label for="new-card-expiry-month" class="control-label">Expiry Month</label>
+              <select id="new-card-expiry-month" class="form-control" name="cardExpiryMonth" data-stripe="exp-month" ng-model="plan.paymentMethods.newCreditCard.expMonth" autocomplete="cc-exp-month" integer-parser required>
+                <option ng-show="false" value="">&lt; Select Month &gt;</option>
+                <option value="1">01</option>
+                <option value="2">02</option>
+                <option value="3">03</option>
+                <option value="4">04</option>
+                <option value="5">05</option>
+                <option value="6">06</option>
+                <option value="7">07</option>
+                <option value="8">08</option>
+                <option value="9">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+              </select>
+            </div>
           </div>
           <div class="col-md-4">
-            <label for="expiry-year" class="control-label">Expiry Year</label>
-            <year-selector id="new-card-expiry-year" data-stripe="exp-year" class="form-control" ng-model="plan.paymentDetails.newCreditCard.expYear" autocomplete="cc-exp-month" integer-parser required>
-            </year-selector>
+            <div class="form-group" ng-class="{ 'has-error': (form.paymentMethodsForm.cardExpiryYear.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardExpiryYear.$invalid }">
+              <label for="expiry-year" class="control-label">Expiry Year</label>
+              <year-selector id="new-card-expiry-year" class="form-control" name="cardExpiryYear" data-stripe="exp-year" ng-model="plan.paymentMethods.newCreditCard.expYear" autocomplete="cc-exp-month" integer-parser required>
+              </year-selector>
+            </div>
           </div>
           <div class="col-md-4">
-            <div class="form-group">
+            <div class="form-group" ng-class="{ 'has-error': (form.paymentMethodsForm.cardCvc.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardCvc.$invalid }">
               <label for="new-card-cvc" class="control-label">Security Code</label>
-              <input id="new-card-cvc" type="text" class="form-control" name="cvc" data-stripe="cvc" size="4" ng-model="plan.paymentDetails.newCreditCard.cvc" autocomplete="cc-csc" required>
+              <input id="new-card-cvc" type="number" class="form-control" name="cardCvc" data-stripe="cvc" ng-model="plan.paymentMethods.newCreditCard.cvc" autocomplete="cc-csc" maxlength="4" required>
             </div>
           </div>
         </div>
 
         <div class="checkbox">
           <label>
-            <input type="checkbox" id="toggleMatchBillingAddress" checked>
+            <input type="checkbox" id="toggleMatchBillingAddress" ng-model="plan.paymentMethods.newCreditCard.useBillingAddress">
             Same As Billing Address
           </label>
         </div>
 
-        <!-- CUSTOM CC ADDRESS -->
-        <div id="targetCCAddress">
+        <!-- NEW CC ADDRESS -->
+        <div id="new-card-address">
 
-          <address-form form-object="form.paymentDetailsForm" address-object="plan.paymentDetails.cardAddress" hide-company-name="true"></address-form>
+          <address-form form-object="form.paymentMethodsForm" address-object="plan.paymentMethods.newCreditCard.address" hide-company-name="true" ng-if="!plan.paymentMethods.newCreditCard.useBillingAddress"></address-form>
 
         </div>
-        <!--  END CUSTOM CC ADDRESS -->
+        <!--  END NEW CC ADDRESS -->
       </div>
-      <!-- END FIRST TIME CC -->
+      <!-- END NEW CC -->
 
       <!-- EXISTING CREDIT CARD -->
-      <div id="existing-credit-card-form" ng-show="plan.paymentDetails.selectedCard">
+      <div id="existing-credit-card-form" ng-if="plan.paymentMethods.selectedCard">
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
               <label for="existing-card-name" class="control-label">Cardholder Name</label>
-              <input id="existing-card-name" type="text" class="form-control" placeholder="{{plan.paymentDetails.selectedCard.name}}" disabled="disabled">
+              <input id="existing-card-name" type="text" class="form-control" placeholder="{{plan.paymentMethods.selectedCard.name}}" disabled="disabled">
             </div>
           </div>
         </div>
@@ -106,7 +119,7 @@
           <div class="col-md-12">
             <div class="form-group">
               <label for="existing-card-number" class="control-label">Card Number</label>
-              <input id="existing-card-number" type="text" class="form-control" placeholder="{{'***-' + plan.paymentDetails.selectedCard.last4}}" disabled="disabled" />
+              <input id="existing-card-number" type="text" class="form-control" placeholder="{{'***-' + plan.paymentMethods.selectedCard.last4}}" disabled="disabled" />
             </div>
           </div>
         </div>
@@ -114,13 +127,13 @@
           <div class="col-md-4">
             <div class="form-group">
               <label for="existing-card-expiry-month" class="control-label">Expiry Month</label>
-              <input id="existing-card-expiry-month" type="text" class="form-control masked"  placeholder="{{getPaddedMonth(plan.paymentDetails.selectedCard.expMonth)}}" disabled="disabled" />
+              <input id="existing-card-expiry-month" type="text" class="form-control masked"  placeholder="{{getPaddedMonth(plan.paymentMethods.selectedCard.expMonth)}}" disabled="disabled" />
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
               <label for="existing-card-expiry-year" class="control-label">Expiry Year</label>
-              <input id="existing-card-expiry-year" type="text" class="form-control masked"  placeholder="{{plan.paymentDetails.selectedCard.expYear}}" disabled="disabled" />
+              <input id="existing-card-expiry-year" type="text" class="form-control masked"  placeholder="{{plan.paymentMethods.selectedCard.expYear}}" disabled="disabled" />
             </div>
           </div>          
         </div>
@@ -129,7 +142,7 @@
     </div>
 
     <!-- //GENERATE INVOICE FORM -->
-    <div id="generateInvoice" ng-show="plan.paymentDetails.paymentMethod === 'invoice'">
+    <div id="generateInvoice" ng-if="plan.paymentMethods.paymentMethod === 'invoice'">
       <p>If you'd like to be invoiced for your purchase (rather than paying now by credit card), please enter a <b>Purchase Order</b> number
         and continue with checkout.</p>
       <p>You will receive an invoice for this purchase total at <b>user@domain.com</b>. Invoices are due within 30 days of creation, payable by check, wire transfer, or credit card.</p>
@@ -152,8 +165,8 @@
     <hr>
     <div class="row">
       <div class="col-xs-12">
-        <button class="btn btn-default btn-lg pull-left" ng-click="setPreviousStep()" translate>common.back</button>
-        <button id="continueButton" type="submit" form="form.paymentDetailsForm" class="btn btn-primary btn-lg pull-right" ng-click="setNextStep()" translate>common.continue</button>
+        <button id="backButton" type="button" class="btn btn-default btn-lg pull-left" ng-click="setPreviousStep()" translate>common.back</button>
+        <button id="continueButton" type="submit" form="form.paymentMethodsForm" class="btn btn-primary btn-lg pull-right" ng-click="validatePaymentMethod(plan.paymentMethods)" translate>common.continue</button>
       </div>
     </div>
   </form>
