@@ -1,4 +1,4 @@
-<div class="form-group" ng-class="{ 'has-error': isFieldInvalid('companyName') }">
+<div class="form-group" ng-if="hideCompanyName !== true" ng-class="{ 'has-error': isFieldInvalid('companyName') }">
   <label for="address-form-companyName" class="control-label">Company Name</label>
   <input id="address-form-companyName" name="companyName" type="text" class="form-control" ng-model="addressObject.name" autocomplete="organization" required>
 </div>

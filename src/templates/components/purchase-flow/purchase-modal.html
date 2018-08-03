@@ -20,14 +20,12 @@
     <review-subscription ng-show="currentStep === 0"></review-subscription>
     <billing-address ng-show="currentStep === 1"></billing-address>
     <shipping-address ng-show="currentStep === 2"></shipping-address>
-    <div ng-include="'purchase-flow/checkout-payment-methods.html'" ng-show="currentStep === 3"></div>
+    <payment-methods ng-show="currentStep === 3"></payment-methods>
     <div ng-include="'purchase-flow/checkout-review-purchase.html'" ng-show="currentStep === 4"></div>
     <div ng-include="'purchase-flow/checkout-success.html'"></div>
     <div ng-include="'purchase-flow/tax-exemption.html'"></div>
 
   </div> <!-- //Modal Body -->
-
-  <div ng-include="'purchase-flow/prototype-code.html'"></div>
 
   <div id="security-branding" class="modal-small-footer text-center u_padding-xs" ng-show="currentStep > 2">
     <small class="text-subtle">
