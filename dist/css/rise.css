@@ -7544,9 +7544,6 @@ button.close {
     background-color: #fcf8e3;
     border-color: #faebcc; }
 
-.label {
-  font-size: 12px; }
-
 .label-primary {
   background-color: #0081BA; }
   .label-primary[href]:hover, .label-primary[href]:focus {
@@ -8376,6 +8373,12 @@ All utilities have a prefix u_ added to them
 
 .aligner-item--bottom {
   align-self: flex-end; }
+
+.font-weight-bold {
+  font-weight: bold; }
+
+.text-nowrap {
+  white-space: nowrap; }
 
 /* ==========================================================================
    font awesome
