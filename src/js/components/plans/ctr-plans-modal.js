@@ -2,16 +2,13 @@ angular.module("risevision.common.components.plans")
 
 .controller("PlansModalCtrl", [
   "$scope", "$rootScope", "$modalInstance", "$log", "$loading", "$timeout",
-  "plansFactory", "currentPlanFactory", "chargebeeFactory", "userState", "purchaseFactory",
+  "plansFactory", "currentPlanFactory", "chargebeeFactory", "userState",
   function ($scope, $rootScope, $modalInstance, $log, $loading, $timeout,
-    plansFactory, currentPlanFactory, chargebeeFactory, userState, purchaseFactory) {
+    plansFactory, currentPlanFactory, chargebeeFactory, userState) {
 
     $scope.currentPlan = currentPlanFactory.currentPlan;
-    $scope.purchaseFactory = purchaseFactory;
     $scope.startTrialError = null;
-    $scope.isMonthly = true;
-
-    $scope.origin = userState.getCopyOfSelectedCompany().origin;
+    $scope.monthlyPrices = true;
 
     function _getPlansDetails() {
       $loading.start("plans-modal");
@@ -58,7 +55,7 @@ angular.module("risevision.common.components.plans")
     };
 
     $scope.showSavings = function (plan) {
-      return !$scope.isFree(plan) && (!$scope.isStarter(plan) || !$scope.isMonthly);
+      return !$scope.isFree(plan) && (!$scope.isStarter(plan) || !$scope.monthlyPrices);
     };
 
     $scope.currentPlanLabelVisible = function (plan) {

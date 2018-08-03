@@ -146,10 +146,6 @@ All utilities have a prefix u_ added to them
   padding: 8px;
 }
 
-.u_padding-xs {
-  padding: 4px;
-}
-
 .u_padding-lg-horizontal {
   padding-left: 32px;
   padding-right: 32px;
@@ -360,4 +356,12 @@ All utilities have a prefix u_ added to them
 
 .aligner-item--bottom {
   align-self: flex-end;
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}
+
+.text-nowrap {
+  white-space: nowrap;
 }
