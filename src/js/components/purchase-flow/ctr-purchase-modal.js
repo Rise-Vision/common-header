@@ -14,7 +14,8 @@ angular.module("risevision.common.components.purchase-flow")
   formName: "shippingAddressForm"
 }, {
   name: "Payment Method",
-  index: 3
+  index: 3,
+  formName: "paymentMethodsForm"
 }, {
   name: "Purchase Review",
   index: 4
@@ -68,6 +69,25 @@ angular.module("risevision.common.components.purchase-flow")
         .finally(function () {
           $scope.loading = false;
         });
+    };
+
+    $scope.validatePaymentMethod = function (paymentMethods) {
+      if (!_isFormValid()) {
+        return;
+      }
+
+      if (paymentMethods.paymentMethod === "invoice") {
+        // TODO: Check Invoice credit (?)
+        $scope.setNextStep();
+      } else if (paymentMethods.paymentMethod === "card") {
+        if (paymentMethods.selectedCard) {
+          // Existing Card selected
+          $scope.setNextStep();
+        } else {
+          // New Card selected
+          $scope.setNextStep();
+        }
+      }
     };
 
     $scope.setNextStep = function () {

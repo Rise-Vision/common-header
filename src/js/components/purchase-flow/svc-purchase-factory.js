@@ -30,30 +30,34 @@
                 selectedPlan.billingAddress = userState.getCopyOfUserCompany();
                 selectedPlan.shippingAddress = userState.getCopyOfSelectedCompany();
                 selectedPlan.contact = _cleanContactObj(userState.getCopyOfProfile());
-                selectedPlan.paymentDetails = {
+                selectedPlan.paymentMethods = {
                   paymentMethod: "card",
-                  existingCreditCards: [{
-                    "id": "card_8IyABkWcUwz0W9",
-                    "last4": "4242",
-                    "expMonth": 1,
-                    "expYear": 2019,
-                    "name": "Alex",
-                    "cardType": "Visa",
-                    "isDefault": true
-                  }, {
-                    "id": "card_asdfw4ewrds",
-                    "last4": "9292",
-                    "expMonth": 1,
-                    "expYear": 2019,
-                    "name": "Alex",
-                    "cardType": "Mastercard",
-                    "isDefault": false
-                  }],
+                  existingCreditCards: [
+                    // {
+                    //   "id": "card_asdfwrdsfs",
+                    //   "last4": "4242",
+                    //   "expMonth": 1,
+                    //   "expYear": 2019,
+                    //   "name": "Alex",
+                    //   "cardType": "Visa",
+                    //   "isDefault": true
+                    // }, {
+                    //   "id": "card_asdfw4ewrds",
+                    //   "last4": "9292",
+                    //   "expMonth": 1,
+                    //   "expYear": 2019,
+                    //   "name": "Alex",
+                    //   "cardType": "Mastercard",
+                    //   "isDefault": false
+                    // }
+                  ],
                   newCreditCard: {
-                    id: "new"
+                    address: {},
+                    useBillingAddress: false
                   }
                 };
-                selectedPlan.paymentDetails.selectedCard = selectedPlan.paymentDetails.existingCreditCards[0];
+                // Alpha Release - Select New Card by default
+                selectedPlan.paymentMethods.selectedCard = null;
 
                 return selectedPlan;
               }

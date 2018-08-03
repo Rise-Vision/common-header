@@ -17,11 +17,11 @@
       </div>
     </div>
 
-    <review-subscription ng-show="currentStep === 0"></review-subscription>
-    <billing-address ng-show="currentStep === 1"></billing-address>
-    <shipping-address ng-show="currentStep === 2"></shipping-address>
-    <payment-methods ng-show="currentStep === 3"></payment-methods>
-    <div ng-include="'purchase-flow/checkout-review-purchase.html'" ng-show="currentStep === 4"></div>
+    <review-subscription ng-if="currentStep === 0"></review-subscription>
+    <billing-address ng-if="currentStep === 1"></billing-address>
+    <shipping-address ng-if="currentStep === 2"></shipping-address>
+    <payment-methods ng-if="currentStep === 3"></payment-methods>
+    <div ng-include="'purchase-flow/checkout-review-purchase.html'" ng-if="currentStep === 4"></div>
     <div ng-include="'purchase-flow/checkout-success.html'"></div>
     <div ng-include="'purchase-flow/tax-exemption.html'"></div>
 
