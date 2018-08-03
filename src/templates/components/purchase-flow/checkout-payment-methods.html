@@ -7,7 +7,7 @@
           <label for="payment-method-select" class="u_margin-right">Payment Method</label>
           <select id="payment-method-select" class="form-control selectpicker" ng-model="plan.paymentDetails.paymentMethod">
             <option value="card">Credit Card</option>
-            <option value="invoice">Generate Invoice</option>
+            <option value="invoice">Invoice Me</option>
           </select>
         </div>
       </div>
@@ -123,12 +123,6 @@
               <input id="existing-card-expiry-year" type="text" class="form-control masked"  placeholder="{{plan.paymentDetails.selectedCard.expYear}}" disabled="disabled" />
             </div>
           </div>          
-          <div class="col-md-4">
-            <div class="form-group">
-              <label for="existing-card-cvc" class="control-label">Security Code</label>
-              <input id="existing-card-cvc" type="text" class="form-control" placeholder="***" disabled="disabled">
-            </div>
-          </div>
         </div>
       </div>
       <!-- END EXISTING CC -->
