@@ -552,11 +552,15 @@ angular.module("risevision.common.components.plans")
     };
 
     $scope.downgradePlan = function () {
-      chargebeeFactory.openPortal(userState.getSelectedCompanyId());
+      var company = userState.getCopyOfSelectedCompany();
+
+      chargebeeFactory.openSubscriptionDetails(company.id, company.planSubscriptionId);
     };
 
     $scope.purchaseAdditionalLicenses = function () {
-      chargebeeFactory.openPortal(userState.getSelectedCompanyId());
+      var company = userState.getCopyOfSelectedCompany();
+
+      chargebeeFactory.openSubscriptionDetails(company.id, company.playerProSubscriptionId);
     };
 
     $scope.isChargebee = function () {

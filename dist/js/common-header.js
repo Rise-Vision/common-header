@@ -664,13 +664,13 @@ angular.module("risevision.common.header.directives")
 angular.module("risevision.common.header")
   .controller("AuthButtonsCtr", ["$scope", "$modal", "$templateCache",
     "userState", "userAuthFactory", "chargebeeFactory", "canAccessApps",
-    "$loading", "cookieStore",
+    "$loading", "cookieStore", "plansFactory", "currentPlanFactory",
     "$log", "uiFlowManager", "oauth2APILoader", "bindToScopeWithWatch",
-    "$window", "APPS_URL",
+    "$window", "$state", "APPS_URL",
     function ($scope, $modal, $templateCache, userState, userAuthFactory,
       chargebeeFactory, canAccessApps,
-      $loading, cookieStore, $log, uiFlowManager, oauth2APILoader,
-      bindToScopeWithWatch, $window, APPS_URL) {
+      $loading, cookieStore, plansFactory, currentPlanFactory, $log, uiFlowManager, oauth2APILoader,
+      bindToScopeWithWatch, $window, $state, APPS_URL) {
 
       window.$loading = $loading; //DEBUG
 
@@ -814,7 +814,11 @@ angular.module("risevision.common.header")
       };
 
       $scope.showAccountAndBilling = function () {
-        chargebeeFactory.openPortal(userState.getSelectedCompanyId());
+        if (currentPlanFactory.isPlanActive()) {
+          $state.go("apps.billing");
+        } else {
+          plansFactory.showPlansModal();
+        }
       };
 
       $scope.isChargebee = function () {
@@ -2504,8 +2508,8 @@ angular.module("risevision.store.services")
       };
     }
   ])
-  .factory("chargebeeFactory", ["$window", "$log", "getChargebeeInstance", "STORE_URL", "ACCOUNT_PATH",
-    function ($window, $log, getChargebeeInstance, STORE_URL, ACCOUNT_PATH) {
+  .factory("chargebeeFactory", ["$window", "$log", "getChargebeeInstance", "plansFactory",
+    function ($window, $log, getChargebeeInstance, plansFactory) {
       var factory = {};
 
       function _getChargebeePortal(companyId) {
@@ -2517,7 +2521,7 @@ angular.module("risevision.store.services")
 
       function _handleChargebeeAccountNotFound(err, companyId) {
         if (err.status === 404) {
-          $window.open(STORE_URL + ACCOUNT_PATH.replace("companyId", companyId), "_blank");
+          plansFactory.showPlansModal();
         } else {
           // What should we do when an unexpected error happens? Still show the Store Account page?
           console.log("Failed to retrieve session for companyId", companyId, err);
@@ -9689,11 +9693,15 @@ angular.module("risevision.common.components.plans")
     };
 
     $scope.downgradePlan = function () {
-      chargebeeFactory.openPortal(userState.getSelectedCompanyId());
+      var company = userState.getCopyOfSelectedCompany();
+
+      chargebeeFactory.openSubscriptionDetails(company.id, company.planSubscriptionId);
     };
 
     $scope.purchaseAdditionalLicenses = function () {
-      chargebeeFactory.openPortal(userState.getSelectedCompanyId());
+      var company = userState.getCopyOfSelectedCompany();
+
+      chargebeeFactory.openSubscriptionDetails(company.id, company.playerProSubscriptionId);
     };
 
     $scope.isChargebee = function () {

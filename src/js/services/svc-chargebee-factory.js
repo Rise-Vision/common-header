@@ -56,8 +56,8 @@ angular.module("risevision.store.services")
       };
     }
   ])
-  .factory("chargebeeFactory", ["$window", "$log", "getChargebeeInstance", "STORE_URL", "ACCOUNT_PATH",
-    function ($window, $log, getChargebeeInstance, STORE_URL, ACCOUNT_PATH) {
+  .factory("chargebeeFactory", ["$window", "$log", "getChargebeeInstance", "plansFactory",
+    function ($window, $log, getChargebeeInstance, plansFactory) {
       var factory = {};
 
       function _getChargebeePortal(companyId) {
@@ -69,7 +69,7 @@ angular.module("risevision.store.services")
 
       function _handleChargebeeAccountNotFound(err, companyId) {
         if (err.status === 404) {
-          $window.open(STORE_URL + ACCOUNT_PATH.replace("companyId", companyId), "_blank");
+          plansFactory.showPlansModal();
         } else {
           // What should we do when an unexpected error happens? Still show the Store Account page?
           console.log("Failed to retrieve session for companyId", companyId, err);
