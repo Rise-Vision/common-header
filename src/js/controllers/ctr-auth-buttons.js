@@ -1,11 +1,11 @@
 angular.module("risevision.common.header")
   .controller("AuthButtonsCtr", ["$scope", "$modal", "$templateCache",
-    "userState", "userAuthFactory", "chargebeeFactory", "canAccessApps",
+    "userState", "userAuthFactory", "canAccessApps",
     "$loading", "cookieStore", "plansFactory", "currentPlanFactory",
     "$log", "uiFlowManager", "oauth2APILoader", "bindToScopeWithWatch",
     "$window", "$state", "APPS_URL",
     function ($scope, $modal, $templateCache, userState, userAuthFactory,
-      chargebeeFactory, canAccessApps,
+      canAccessApps,
       $loading, cookieStore, plansFactory, currentPlanFactory, $log, uiFlowManager, oauth2APILoader,
       bindToScopeWithWatch, $window, $state, APPS_URL) {
 
@@ -152,7 +152,7 @@ angular.module("risevision.common.header")
 
       $scope.showAccountAndBilling = function () {
         if (currentPlanFactory.isPlanActive()) {
-          $state.go("apps.billing");
+          $state.go("apps.billing.home");
         } else {
           plansFactory.showPlansModal();
         }

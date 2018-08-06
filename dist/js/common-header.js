@@ -815,7 +815,7 @@ angular.module("risevision.common.header")
 
       $scope.showAccountAndBilling = function () {
         if (currentPlanFactory.isPlanActive()) {
-          $state.go("apps.billing");
+          $state.go("apps.billing.home");
         } else {
           plansFactory.showPlansModal();
         }
@@ -2523,7 +2523,7 @@ angular.module("risevision.store.services")
         if (err.status === 404) {
           plansFactory.showPlansModal();
         } else {
-          // What should we do when an unexpected error happens? Still show the Store Account page?
+          // What should we do when an unexpected error happens?
           console.log("Failed to retrieve session for companyId", companyId, err);
         }
       }
