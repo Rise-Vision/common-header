@@ -663,12 +663,12 @@ angular.module("risevision.common.header.directives")
 
 angular.module("risevision.common.header")
   .controller("AuthButtonsCtr", ["$scope", "$modal", "$templateCache",
-    "userState", "userAuthFactory", "chargebeeFactory", "canAccessApps",
+    "userState", "userAuthFactory", "canAccessApps",
     "$loading", "cookieStore", "plansFactory", "currentPlanFactory",
     "$log", "uiFlowManager", "oauth2APILoader", "bindToScopeWithWatch",
     "$window", "$state", "APPS_URL",
     function ($scope, $modal, $templateCache, userState, userAuthFactory,
-      chargebeeFactory, canAccessApps,
+      canAccessApps,
       $loading, cookieStore, plansFactory, currentPlanFactory, $log, uiFlowManager, oauth2APILoader,
       bindToScopeWithWatch, $window, $state, APPS_URL) {
 
@@ -9586,6 +9586,12 @@ angular.module("risevision.common.components.plans")
         });
     }
 
+    function _showSubscriptionDetails() {
+      var company = userState.getCopyOfSelectedCompany();
+
+      chargebeeFactory.openSubscriptionDetails(company.id, company.planSubscriptionId);
+    }
+
     $scope.isCurrentPlan = function (plan) {
       return $scope.currentPlan.type === plan.type;
     };
@@ -9692,17 +9698,9 @@ angular.module("risevision.common.components.plans")
         });
     };
 
-    $scope.downgradePlan = function () {
-      var company = userState.getCopyOfSelectedCompany();
+    $scope.downgradePlan = _showSubscriptionDetails;
 
-      chargebeeFactory.openSubscriptionDetails(company.id, company.planSubscriptionId);
-    };
-
-    $scope.purchaseAdditionalLicenses = function () {
-      var company = userState.getCopyOfSelectedCompany();
-
-      chargebeeFactory.openSubscriptionDetails(company.id, company.playerProSubscriptionId);
-    };
+    $scope.purchaseAdditionalLicenses = _showSubscriptionDetails;
 
     $scope.isChargebee = function () {
       return userState.isSelectedCompanyChargebee();
