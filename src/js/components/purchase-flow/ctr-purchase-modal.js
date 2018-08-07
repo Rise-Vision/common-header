@@ -22,10 +22,10 @@ angular.module("risevision.common.components.purchase-flow")
 }])
 
 .controller("PurchaseModalCtrl", [
-  "$scope", "$modalInstance", "$log", "$loading", "addressFactory", "plan",
-  "PURCHASE_STEPS",
-  function ($scope, $modalInstance, $log, $loading, addressFactory, plan,
-    PURCHASE_STEPS) {
+  "$scope", "$modalInstance", "$log", "$loading", "addressFactory", "stripeService",
+  "plan", "PURCHASE_STEPS",
+  function ($scope, $modalInstance, $log, $loading, addressFactory, stripeService,
+    plan, PURCHASE_STEPS) {
 
     $scope.form = {};
     $scope.plan = plan;
@@ -71,6 +71,16 @@ angular.module("risevision.common.components.purchase-flow")
         });
     };
 
+    var _validateCard = function (card, isNew) {
+      card.validationErrors = stripeService.validateCard(card, isNew);
+
+      if (!card.validationErrors || card.validationErrors.length > 0) {
+        return false;
+      }
+
+      return true;
+    };
+
     $scope.validatePaymentMethod = function (paymentMethods) {
       if (!_isFormValid()) {
         return;
@@ -81,11 +91,28 @@ angular.module("risevision.common.components.purchase-flow")
         $scope.setNextStep();
       } else if (paymentMethods.paymentMethod === "card") {
         if (paymentMethods.selectedCard) {
-          // Existing Card selected
-          $scope.setNextStep();
+          if (_validateCard(paymentMethods.selectedCard, false)) {
+            // Existing Card selected
+            $scope.setNextStep();
+          }
         } else {
-          // New Card selected
-          $scope.setNextStep();
+          if (_validateCard(paymentMethods.newCreditCard, true)) {
+            var address = paymentMethods.newCreditCard.address;
+            if (paymentMethods.newCreditCard.useBillingAddress) {
+              address = paymentMethods.newCreditCard.billingAddress;
+            }
+
+            $scope.loading = true;
+
+            stripeService.createToken(paymentMethods.newCreditCard, address)
+              .then(function () {
+                // New Card selected
+                $scope.setNextStep();
+              })
+              .finally(function () {
+                $scope.loading = false;
+              });
+          }
         }
       }
     };

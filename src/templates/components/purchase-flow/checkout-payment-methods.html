@@ -32,8 +32,14 @@
         <div class="alert alert-danger" ng-show="form.paymentMethodsForm.$submitted && form.paymentMethodsForm.$invalid">
           Please complete the missing information below.
         </div>
-        <div id="errorBox" class="alert alert-danger" role="alert" ng-show="plan.paymentMethods.newCreditCard.validationError">
-          <strong>Card Validation Error</strong> {{plan.paymentMethods.newCreditCard.validationError}}
+        <div id="errorBox" class="alert alert-danger" role="alert" ng-show="plan.paymentMethods.newCreditCard.validationErrors.length">
+          <strong>Card Validation Error(s)</strong>
+          <ul>
+            <li ng-repeat="error in plan.paymentMethods.newCreditCard.validationErrors">{{error}}</li>
+          </ul>
+        </div>
+        <div id="errorBox" class="alert alert-danger" role="alert" ng-show="plan.paymentMethods.selectedCard.tokenError">
+          <strong>Card Processing Error</strong> {{plan.paymentMethods.newCreditCard.tokenError}}
         </div>
 
         <div class="row">
@@ -107,6 +113,10 @@
 
       <!-- EXISTING CREDIT CARD -->
       <div id="existing-credit-card-form" ng-if="plan.paymentMethods.selectedCard">
+        <div id="errorBox" class="alert alert-danger" role="alert" ng-show="plan.paymentMethods.selectedCard.validationErrors.length">
+          <strong>Card Validation Error</strong> {{plan.paymentMethods.newCreditCard.validationErrors[0]}}
+        </div>
+
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">

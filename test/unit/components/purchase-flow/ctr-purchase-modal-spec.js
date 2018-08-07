@@ -26,12 +26,24 @@ describe("controller: purchase modal", function() {
         }
       };
     });
+    $provide.service("stripeService", function() {
+      return stripeService = {
+        validateCard: sinon.stub().returns(true),
+        createToken: sinon.spy(function() {
+          if (validate) {
+            return Q.resolve();
+          } else {
+            return Q.reject();
+          }
+        })
+      };
+    });
     $provide.value("plan", {
       name: "PlanA"
     });
   }));
 
-  var sandbox, $scope, $modalInstance, $loading, validate;
+  var sandbox, $scope, $modalInstance, $loading, validate, stripeService;
 
   beforeEach(function() {
     validate = true;
@@ -68,6 +80,7 @@ describe("controller: purchase modal", function() {
 
     expect($scope.init).to.be.a("function");
     expect($scope.validateAddress).to.be.a("function");
+    expect($scope.validatePaymentMethod).to.be.a("function");
     expect($scope.setNextStep).to.be.a("function");
     expect($scope.setPreviousStep).to.be.a("function");
 
@@ -150,6 +163,152 @@ describe("controller: purchase modal", function() {
       }, 10);
     });
   });
+
+  describe("validatePaymentMethod: ", function() {
+    beforeEach(function() {
+      sinon.spy($scope, "setNextStep");
+    });
+
+    it("should not validate if the corresponding form is invalid", function() {
+      $scope.form.reviewSubscriptionForm = {
+        $invalid: true
+      };
+
+      $scope.validatePaymentMethod({});
+
+      $scope.setNextStep.should.not.have.been.called;
+    });
+
+    it("should validate and proceed to next step for invoice", function() {
+      $scope.validatePaymentMethod({
+        paymentMethod: "invoice"
+      });
+
+      $scope.setNextStep.should.have.been.called;
+    });
+
+    describe("existing card: ", function() {
+      var card = {
+        number: "123"
+      };
+
+      it("should validate card and proceed to next step", function() {
+        $scope.validatePaymentMethod({
+          paymentMethod: "card",
+          selectedCard: card
+        });
+
+        stripeService.validateCard.should.have.been.calledWith(card, false);
+        $scope.setNextStep.should.have.been.called;
+      });
+
+      it("should validate and not proceed if there are errors", function() {
+        stripeService.validateCard.returns(false);
+
+        $scope.validatePaymentMethod({
+          paymentMethod: "card",
+          selectedCard: card
+        });
+
+        stripeService.validateCard.should.have.been.calledWith(card, false);
+        $scope.setNextStep.should.not.have.been.called;
+      });
+      
+    });
+
+    describe("new card: ", function() {
+      var card;
+
+      beforeEach(function() {
+        card = {
+          number: "123",
+          address: {},
+          billingAddress: {}
+        };
+      });
+
+      it("should validate card", function() {
+        $scope.validatePaymentMethod({
+          paymentMethod: "card",
+          newCreditCard: card
+        });
+
+        stripeService.validateCard.should.have.been.calledWith(card, true);
+      });
+
+      it("should validate and not proceed if there are errors", function() {
+        stripeService.validateCard.returns(false);
+
+        $scope.validatePaymentMethod({
+          paymentMethod: "card",
+          newCreditCard: card
+        });
+
+        stripeService.validateCard.should.have.been.calledWith(card, true);
+        $scope.setNextStep.should.not.have.been.called;
+      });
+
+      it("should create card token and proceed to next step", function(done) {
+        $scope.validatePaymentMethod({
+          paymentMethod: "card",
+          newCreditCard: card
+        });
+
+        setTimeout(function() {
+          stripeService.createToken.should.have.been.called;
+          $scope.setNextStep.should.have.been.called;
+
+          done();
+        }, 10);
+      });
+
+      it("should use card address", function(done) {
+        $scope.validatePaymentMethod({
+          paymentMethod: "card",
+          newCreditCard: card
+        });
+
+        setTimeout(function() {
+          stripeService.createToken.should.have.been.calledWith(card, card.address);
+
+          done();
+        }, 10);
+      });
+
+      it("should use billing address if selected", function(done) {
+        card.useBillingAddress = true;
+
+        $scope.validatePaymentMethod({
+          paymentMethod: "card",
+          newCreditCard: card
+        });
+
+        setTimeout(function() {
+          stripeService.createToken.should.have.been.calledWith(card, card.billingAddress);
+
+          done();
+        }, 10);
+      });
+
+      it("should start and stop spinner", function(done) {
+        $scope.validatePaymentMethod({
+          paymentMethod: "card",
+          newCreditCard: card
+        });
+
+        expect($scope.loading).to.be.true;
+
+        setTimeout(function() {
+          expect($scope.loading).to.be.false;
+
+          done();
+        }, 10);
+      });
+
+    });
+
+  });
+
 
   describe("setNextStep: ", function() {
     it("should increment step", function() {
