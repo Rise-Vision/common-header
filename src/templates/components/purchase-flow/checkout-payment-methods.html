@@ -38,7 +38,7 @@
             <li ng-repeat="error in plan.paymentMethods.newCreditCard.validationErrors">{{error}}</li>
           </ul>
         </div>
-        <div id="errorBox" class="alert alert-danger" role="alert" ng-show="plan.paymentMethods.selectedCard.tokenError">
+        <div id="errorBox" class="alert alert-danger" role="alert" ng-show="plan.paymentMethods.newCreditCard.tokenError">
           <strong>Card Processing Error</strong> {{plan.paymentMethods.newCreditCard.tokenError}}
         </div>
 
@@ -114,7 +114,7 @@
       <!-- EXISTING CREDIT CARD -->
       <div id="existing-credit-card-form" ng-if="plan.paymentMethods.selectedCard">
         <div id="errorBox" class="alert alert-danger" role="alert" ng-show="plan.paymentMethods.selectedCard.validationErrors.length">
-          <strong>Card Validation Error</strong> {{plan.paymentMethods.newCreditCard.validationErrors[0]}}
+          <strong>Card Validation Error</strong> {{plan.paymentMethods.selectedCard.validationErrors[0]}}
         </div>
 
         <div class="row">
