@@ -7,8 +7,10 @@ describe("Services: stripe loader", function() {
     $provide.service("$q", function() {return Q;});
     $provide.service("userState",function () {
       return {
-        isTestCompanySelected: function() {
-          return true;
+        getCopyOfUserCompany: function() {
+          return {
+            isTest: true
+          };
         }
       };
     });

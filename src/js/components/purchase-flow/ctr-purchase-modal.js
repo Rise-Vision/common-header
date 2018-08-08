@@ -21,8 +21,6 @@ angular.module("risevision.common.components.purchase-flow")
   index: 4
 }])
 
-.constant("RPP_ADDON_ID", "c4b368be86245bf9501baaa6e0b00df9719869fd")
-
 .controller("PurchaseModalCtrl", [
   "$scope", "$modalInstance", "$loading", "purchaseFactory", "addressFactory",
   "PURCHASE_STEPS",
@@ -33,7 +31,7 @@ angular.module("risevision.common.components.purchase-flow")
     $scope.factory = purchaseFactory;
 
     $scope.PURCHASE_STEPS = PURCHASE_STEPS;
-    $scope.currentStep = 3;
+    $scope.currentStep = 0;
     var finalStep = false;
 
     $scope.$watch("factory.loading", function (loading) {
@@ -79,25 +77,22 @@ angular.module("risevision.common.components.purchase-flow")
         .then($scope.setNextStep);
     };
 
-    $scope.setCurrentStep = function (index) {
-      $scope.currentStep = index;
-    };
-
     $scope.setNextStep = function () {
       if (!_isFormValid()) {
         return;
       }
 
-      if (finalStep) {
-        $scope.currentStep = 4;
+      if (finalStep || $scope.currentStep >= 3) {
+        // TODO: Handle failure to get estimate
+        purchaseFactory.getEstimate()
+          .finally(function () {
+            $scope.currentStep = 4;
+
+            finalStep = true;
+          });
+
       } else {
         $scope.currentStep++;
-      }
-
-      if ($scope.currentStep === 4) {
-        purchaseFactory.calculateTaxes();
-
-        finalStep = true;
       }
 
     };
@@ -108,15 +103,14 @@ angular.module("risevision.common.components.purchase-flow")
       }
     };
 
+    $scope.setCurrentStep = function (index) {
+      $scope.currentStep = index;
+    };
+
     $scope.dismiss = function () {
       $modalInstance.dismiss("cancel");
     };
 
-    $scope.init = function () {
-
-    };
-
-    $scope.init();
   }
 
 ]);

@@ -26,24 +26,23 @@ describe("controller: purchase modal", function() {
         }
       };
     });
-    $provide.service("stripeService", function() {
-      return stripeService = {
-        validateCard: sinon.stub().returns(true),
-        createToken: sinon.spy(function() {
+    $provide.service("purchaseFactory", function() {
+      return purchaseFactory = {
+        validatePaymentMethod: sinon.spy(function() {
           if (validate) {
             return Q.resolve();
           } else {
             return Q.reject();
           }
+        }),
+        getEstimate: sinon.spy(function() {
+          return Q.resolve();
         })
       };
     });
-    $provide.value("plan", {
-      name: "PlanA"
-    });
   }));
 
-  var sandbox, $scope, $modalInstance, $loading, validate, stripeService;
+  var sandbox, $scope, $modalInstance, $loading, validate, purchaseFactory;
 
   beforeEach(function() {
     validate = true;
@@ -69,38 +68,29 @@ describe("controller: purchase modal", function() {
   });
 
   it("should initialize",function() {
-    expect($scope.plan).to.be.ok;
-    expect($scope.plan).to.deep.equal({
-      name: "PlanA",
-      additionalDisplayLicenses: 0
-    });
+    expect($scope.form).to.be.an("object");
+    expect($scope.factory).to.equal(purchaseFactory);
 
     expect($scope.PURCHASE_STEPS).to.be.ok;
     expect($scope.currentStep).to.equal(0);
 
-    expect($scope.init).to.be.a("function");
     expect($scope.validateAddress).to.be.a("function");
     expect($scope.validatePaymentMethod).to.be.a("function");
     expect($scope.setNextStep).to.be.a("function");
     expect($scope.setPreviousStep).to.be.a("function");
+    expect($scope.setCurrentStep).to.be.a("function");
 
     expect($scope.dismiss).to.be.a("function");  
   });
 
   describe("$loading spinner: ", function() {
-    it("should stop spinner on load", function() {
-      expect($scope.loading).to.be.false;
-
-      $loading.stop.should.have.been.calledWith("purchase-modal");
-    });
-
     it("should start and stop spinner", function() {
-      $scope.loading = true;
+      purchaseFactory.loading = true;
       $scope.$digest();
 
       $loading.start.should.have.been.calledWith("purchase-modal");
 
-      $scope.loading = false;
+      purchaseFactory.loading = false;
       $scope.$digest();
 
       $loading.stop.should.have.been.calledTwice;
@@ -119,11 +109,7 @@ describe("controller: purchase modal", function() {
 
       $scope.validateAddress({});
 
-      expect($scope.loading).to.be.false;
-
       setTimeout(function() {
-        expect($scope.loading).to.be.false;
-
         $scope.setNextStep.should.not.have.been.called;
 
         done();
@@ -151,17 +137,6 @@ describe("controller: purchase modal", function() {
       }, 10);
     });
 
-    it("should start and stop spinner", function(done) {
-      $scope.validateAddress({});
-
-      expect($scope.loading).to.be.true;
-
-      setTimeout(function() {
-        expect($scope.loading).to.be.false;
-
-        done();
-      }, 10);
-    });
   });
 
   describe("validatePaymentMethod: ", function() {
@@ -169,150 +144,41 @@ describe("controller: purchase modal", function() {
       sinon.spy($scope, "setNextStep");
     });
 
-    it("should not validate if the corresponding form is invalid", function() {
+    it("should not validate if the corresponding form is invalid", function(done) {
       $scope.form.reviewSubscriptionForm = {
         $invalid: true
       };
 
       $scope.validatePaymentMethod({});
 
-      $scope.setNextStep.should.not.have.been.called;
+      setTimeout(function() {
+        $scope.setNextStep.should.not.have.been.called;
+
+        done();
+      }, 10);
     });
 
-    it("should validate and proceed to next step for invoice", function() {
-      $scope.validatePaymentMethod({
-        paymentMethod: "invoice"
-      });
+    it("should validate and proceed to next step", function(done) {
+      $scope.validatePaymentMethod({});
 
-      $scope.setNextStep.should.have.been.called;
-    });
-
-    describe("existing card: ", function() {
-      var card = {
-        number: "123"
-      };
-
-      it("should validate card and proceed to next step", function() {
-        $scope.validatePaymentMethod({
-          paymentMethod: "card",
-          selectedCard: card
-        });
-
-        stripeService.validateCard.should.have.been.calledWith(card, false);
+      setTimeout(function() {
         $scope.setNextStep.should.have.been.called;
-      });
 
-      it("should validate and not proceed if there are errors", function() {
-        stripeService.validateCard.returns(false);
-
-        $scope.validatePaymentMethod({
-          paymentMethod: "card",
-          selectedCard: card
-        });
-
-        stripeService.validateCard.should.have.been.calledWith(card, false);
-        $scope.setNextStep.should.not.have.been.called;
-      });
-      
+        done();
+      }, 10);
     });
 
-    describe("new card: ", function() {
-      var card;
+    it("should validate and not proceed if there are errors", function(done) {
+      validate = false;
+      $scope.validatePaymentMethod({});
 
-      beforeEach(function() {
-        card = {
-          number: "123",
-          address: {},
-          billingAddress: {}
-        };
-      });
-
-      it("should validate card", function() {
-        $scope.validatePaymentMethod({
-          paymentMethod: "card",
-          newCreditCard: card
-        });
-
-        stripeService.validateCard.should.have.been.calledWith(card, true);
-      });
-
-      it("should validate and not proceed if there are errors", function() {
-        stripeService.validateCard.returns(false);
-
-        $scope.validatePaymentMethod({
-          paymentMethod: "card",
-          newCreditCard: card
-        });
-
-        stripeService.validateCard.should.have.been.calledWith(card, true);
+      setTimeout(function() {
         $scope.setNextStep.should.not.have.been.called;
-      });
 
-      it("should create card token and proceed to next step", function(done) {
-        $scope.validatePaymentMethod({
-          paymentMethod: "card",
-          newCreditCard: card
-        });
-
-        setTimeout(function() {
-          stripeService.createToken.should.have.been.called;
-          $scope.setNextStep.should.have.been.called;
-
-          done();
-        }, 10);
-      });
-
-      it("should use card address", function(done) {
-        $scope.validatePaymentMethod({
-          paymentMethod: "card",
-          newCreditCard: card
-        });
-
-        setTimeout(function() {
-          stripeService.createToken.should.have.been.calledWith(card, card.address);
-
-          done();
-        }, 10);
-      });
-
-      it("should use billing address if selected", function(done) {
-        card.useBillingAddress = true;
-
-        $scope.validatePaymentMethod({
-          paymentMethod: "card",
-          newCreditCard: card
-        });
-
-        setTimeout(function() {
-          stripeService.createToken.should.have.been.calledWith(card, card.billingAddress);
-
-          done();
-        }, 10);
-      });
-
-      it("should start and stop spinner", function(done) {
-        $scope.validatePaymentMethod({
-          paymentMethod: "card",
-          newCreditCard: card
-        });
-
-        expect($scope.loading).to.be.true;
-
-        setTimeout(function() {
-          expect($scope.loading).to.be.false;
-
-          done();
-        }, 10);
-      });
-
+        done();
+      }, 10);
     });
 
-  });
-
-  it("setCurrentStep: ", function() {
-    $scope.setCurrentStep(2);
-
-    expect($scope.currentStep).to.equal(2);
   });
 
   describe("setNextStep: ", function() {
@@ -342,6 +208,47 @@ describe("controller: purchase modal", function() {
       expect($scope.currentStep).to.equal(1);
     });
 
+    it("should get estimate for the last step", function(done) {
+      $scope.setCurrentStep(3);
+
+      $scope.setNextStep();
+
+      expect($scope.currentStep).to.equal(3);
+
+      setTimeout(function() {
+        purchaseFactory.getEstimate.should.have.been.called;
+
+        expect($scope.currentStep).to.equal(4);
+
+        done();
+      }, 10);
+    });
+
+    it("should always set last step and get estimate if form was completed once", function(done) {
+      $scope.setCurrentStep(3);
+
+      $scope.setNextStep();
+
+      setTimeout(function() {
+        purchaseFactory.getEstimate.should.have.been.called;
+
+        expect($scope.currentStep).to.equal(4);
+
+        $scope.setCurrentStep(0);
+
+        $scope.setNextStep();
+
+        setTimeout(function() {
+          purchaseFactory.getEstimate.should.have.been.calledTwice;
+
+          expect($scope.currentStep).to.equal(4);
+
+          done();
+        }, 10);
+
+      }, 10);
+    });
+
   });
 
   describe("setPreviousStep: ", function() {
@@ -360,6 +267,12 @@ describe("controller: purchase modal", function() {
       expect($scope.currentStep).to.equal(0);
     });
 
+  });
+
+  it("setCurrentStep: ", function() {
+    $scope.setCurrentStep(2);
+
+    expect($scope.currentStep).to.equal(2);
   });
 
   it("dismiss: ", function() {

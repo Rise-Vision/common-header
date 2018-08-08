@@ -11,18 +11,20 @@ describe("Services: address factory", function() {
         debug: sinon.stub()
       };
     });
-    $provide.service("validateAddress", function() {
-      return validateAddress = sinon.spy(function(obj) {
-        if (obj.resolve) {
-          return Q.resolve(obj.resolve);
-        } else {
-          return Q.reject(obj.reject);
-        }
-      });
+    $provide.service("storeService", function() {
+      return storeService = {
+        validateAddress: sinon.spy(function(obj) {
+          if (obj.resolve) {
+            return Q.resolve(obj.resolve);
+          } else {
+            return Q.reject(obj.reject);
+          }
+        })
+      };
     });
   }));
 
-  var $log, addressObject, addressFactory, validateAddress;
+  var $log, addressObject, addressFactory, storeService;
 
   beforeEach(function() {
     addressObject = {
@@ -58,7 +60,7 @@ describe("Services: address factory", function() {
     addressFactory.validateAddress(addressObject)
       .then(function() {
         expect(addressObject.validationError).to.be.false;
-        validateAddress.should.not.have.been.called;
+        storeService.validateAddress.should.not.have.been.called;
         $log.debug.should.have.been.called;
 
         done();
@@ -72,7 +74,7 @@ describe("Services: address factory", function() {
     addressFactory.validateAddress(addressObject)
       .then(function() {
         expect(addressObject.validationError).to.be.false;
-        validateAddress.should.have.been.called;
+        storeService.validateAddress.should.have.been.called;
 
         done();
       })
@@ -86,7 +88,7 @@ describe("Services: address factory", function() {
     addressFactory.validateAddress(addressObject)
       .then(function() {
         expect(addressObject.validationError).to.be.false;
-        validateAddress.should.have.been.called;
+        storeService.validateAddress.should.have.been.called;
 
         done();
       })

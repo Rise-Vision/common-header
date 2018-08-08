@@ -162,12 +162,29 @@ describe("Services: stripe service", function() {
       }, 10);
     });
 
-    it("should resolve if call succeeds", function(done) {
-      createTokenResponse = "success";
+    it("should reject if no card is received", function(done) {
+      createTokenResponse = {};
 
       stripeService.createToken(card, address)
-      .then(function(result) {
-        expect(result).to.equal("success");
+      .then(done, function() {
+        expect(card.tokenError).to.be.ok;
+        expect(card.tokenError).to.equal(STRIPE_ERRORS.processing_error);
+
+        done();
+      })
+      .then(null,done);
+
+    });
+
+    it("should resolve if call succeeds", function(done) {
+      createTokenResponse = {
+        card: {}
+      };
+
+      stripeService.createToken(card, address)
+      .then(function(newCard) {
+        expect(newCard).to.be.ok;
+        expect(card.tokenError).to.not.be.ok;
 
         done();
       })

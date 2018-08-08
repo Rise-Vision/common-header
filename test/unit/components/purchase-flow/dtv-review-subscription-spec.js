@@ -3,6 +3,14 @@
 describe("directive: review subscription", function() {
   beforeEach(module("risevision.common.components.purchase-flow"));
 
+  beforeEach(module(function ($provide) {
+    $provide.value("purchaseFactory", {
+      purchase: {
+        plan: {}
+      }
+    });
+  }));
+
   var $scope, element;
 
   beforeEach(inject(function($compile, $rootScope, $templateCache){
@@ -18,6 +26,8 @@ describe("directive: review subscription", function() {
   });
 
   it("should exist", function() {
+    expect($scope.plan).to.be.an("object");
+
     expect($scope.incrementLicenses).to.be.a("function");
     expect($scope.decrementLicenses).to.be.a("function");
     expect($scope.getMonthlyPrice).to.be.a("function");

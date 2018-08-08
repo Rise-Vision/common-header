@@ -65,9 +65,10 @@ angular.module("risevision.common.components.purchase-flow")
 
   "use strict";
   angular.module("risevision.common.components.purchase-flow")
-    .factory("purchaseFactory", ["$q", "$log", "$modal", "$templateCache", "userState", "storeService",
+    .constant("RPP_ADDON_ID", "c4b368be86245bf9501baaa6e0b00df9719869fd")
+    .factory("purchaseFactory", ["$q", "$modal", "$templateCache", "userState", "storeService",
       "stripeService", "RPP_ADDON_ID",
-      function ($q, $log, $modal, $templateCache, userState, storeService, stripeService,
+      function ($q, $modal, $templateCache, userState, storeService, stripeService,
         RPP_ADDON_ID) {
         var factory = {};
 
@@ -84,6 +85,14 @@ angular.module("risevision.common.components.purchase-flow")
           };
         };
 
+        var _resetNewCreditCard = function () {
+          factory.purchase.paymentMethods.newCreditCard = {
+            address: {},
+            useBillingAddress: true,
+            billingAddress: factory.purchase.billingAddress
+          };
+        };
+
         var _init = function (plan, isMonthly) {
           factory.purchase = {};
 
@@ -96,13 +105,9 @@ angular.module("risevision.common.components.purchase-flow")
           factory.purchase.contact = _cleanContactObj(userState.getCopyOfProfile());
           factory.purchase.paymentMethods = {
             paymentMethod: "card",
-            existingCreditCards: [],
-            newCreditCard: {
-              address: {},
-              useBillingAddress: true,
-              billingAddress: factory.purchase.billingAddress
-            }
+            existingCreditCards: []
           };
+          _resetNewCreditCard();
           // Alpha Release - Select New Card by default
           factory.purchase.paymentMethods.selectedCard = null;
           factory.purchase.estimate = {};
@@ -129,7 +134,8 @@ angular.module("risevision.common.components.purchase-flow")
           return true;
         };
 
-        factory.validatePaymentMethod = function (paymentMethods) {
+        factory.validatePaymentMethod = function () {
+          var paymentMethods = factory.purchase.paymentMethods;
           var deferred = $q.defer();
 
           if (paymentMethods.paymentMethod === "invoice") {
@@ -153,24 +159,26 @@ angular.module("risevision.common.components.purchase-flow")
                 factory.loading = true;
 
                 return stripeService.createToken(paymentMethods.newCreditCard, address)
-                  .then(function (resp) {
-                    if (resp && resp.card) {
-                      var newCard = {
-                        "id": resp.card.id,
-                        "last4": resp.card.last4,
-                        "expMonth": resp.card.exp_month,
-                        "expYear": resp.card.exp_year,
-                        "name": resp.card.name,
-                        "cardType": resp.card.type
-                      };
+                  .then(function (response) {
+                    var newCard = {
+                      "id": response.id,
+                      "last4": response.last4,
+                      "expMonth": response.exp_month,
+                      "expYear": response.exp_year,
+                      "name": response.name,
+                      "cardType": response.type
+                    };
 
-                      paymentMethods.existingCreditCards.push(newCard);
-                      paymentMethods.selectedCard = newCard;
-                    }
+                    paymentMethods.existingCreditCards.push(newCard);
+                    paymentMethods.selectedCard = newCard;
+
+                    _resetNewCreditCard();
                   })
                   .finally(function () {
                     factory.loading = false;
                   });
+              } else {
+                deferred.reject();
               }
             }
           }
@@ -193,28 +201,25 @@ angular.module("risevision.common.components.purchase-flow")
           return RPP_ADDON_ID + "-" + _getCurrency() + _getBillingPeriod();
         };
 
-        factory.calculateTaxes = function () {
+        factory.getEstimate = function () {
           factory.purchase.estimate = {
             currency: _getCurrency()
           };
 
           factory.loading = true;
 
-          storeService.calculateTaxes(factory.purchase.billingAddress.id, _getChargebeePlanId(),
-            _getChargebeeAddonId(),
-            factory.purchase.plan.additionalDisplayLicenses, factory.purchase.shippingAddress)
+          return storeService.calculateTaxes(factory.purchase.billingAddress.id, _getChargebeePlanId(),
+              _getChargebeeAddonId(),
+              factory.purchase.plan.additionalDisplayLicenses, factory.purchase.shippingAddress)
             .then(function (result) {
-              $log.info(result);
               if (!result.error && result.result === true) {
-                factory.purchase.estimate = {
-                  taxesCalculated: true,
-                  taxes: result.taxes || [],
-                  total: result.total,
-                  totalTax: result.totalTax,
-                  shippingTotal: result.shippingTotal
-                };
-              } else {
-                $log.error(result);
+                var estimate = factory.purchase.estimate;
+
+                estimate.taxesCalculated = true;
+                estimate.taxes = result.taxes || [];
+                estimate.total = result.total;
+                estimate.totalTax = result.totalTax;
+                estimate.shippingTotal = result.shippingTotal;
               }
             })
             .finally(function () {
@@ -335,12 +340,12 @@ angular.module("risevision.common.components.purchase-flow")
 
         stripeLoader().then(function (stripeClient) {
           stripeClient.card.createToken(cardObject, function (status, response) {
-            if (response.error) {
-              card.tokenError = _processStripeError(response.error.code);
+            if (response && response.card && !response.error) {
+              deferred.resolve(response.card);
+            } else {
+              card.tokenError = _processStripeError(response.error && response.error.code);
 
               deferred.reject();
-            } else {
-              deferred.resolve(response);
             }
           });
         });
@@ -612,8 +617,6 @@ angular.module("risevision.common.components.purchase-flow")
   index: 4
 }])
 
-.constant("RPP_ADDON_ID", "c4b368be86245bf9501baaa6e0b00df9719869fd")
-
 .controller("PurchaseModalCtrl", [
   "$scope", "$modalInstance", "$loading", "purchaseFactory", "addressFactory",
   "PURCHASE_STEPS",
@@ -624,7 +627,7 @@ angular.module("risevision.common.components.purchase-flow")
     $scope.factory = purchaseFactory;
 
     $scope.PURCHASE_STEPS = PURCHASE_STEPS;
-    $scope.currentStep = 3;
+    $scope.currentStep = 0;
     var finalStep = false;
 
     $scope.$watch("factory.loading", function (loading) {
@@ -670,25 +673,22 @@ angular.module("risevision.common.components.purchase-flow")
         .then($scope.setNextStep);
     };
 
-    $scope.setCurrentStep = function (index) {
-      $scope.currentStep = index;
-    };
-
     $scope.setNextStep = function () {
       if (!_isFormValid()) {
         return;
       }
 
-      if (finalStep) {
-        $scope.currentStep = 4;
+      if (finalStep || $scope.currentStep >= 3) {
+        // TODO: Handle failure to get estimate
+        purchaseFactory.getEstimate()
+          .finally(function () {
+            $scope.currentStep = 4;
+
+            finalStep = true;
+          });
+
       } else {
         $scope.currentStep++;
-      }
-
-      if ($scope.currentStep === 4) {
-        purchaseFactory.calculateTaxes();
-
-        finalStep = true;
       }
 
     };
@@ -699,15 +699,14 @@ angular.module("risevision.common.components.purchase-flow")
       }
     };
 
+    $scope.setCurrentStep = function (index) {
+      $scope.currentStep = index;
+    };
+
     $scope.dismiss = function () {
       $modalInstance.dismiss("cancel");
     };
 
-    $scope.init = function () {
-
-    };
-
-    $scope.init();
   }
 
 ]);

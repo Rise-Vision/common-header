@@ -3,6 +3,7 @@
 describe("Services: storeService", function() {
   var storeService;
   var storeApiFailure;
+  var addressObject, response;
 
   beforeEach(module("risevision.store.services"));
 
@@ -34,6 +35,13 @@ describe("Services: storeService", function() {
           customer_portal: {
             getUrl: storeApiResponse,
             createSession: storeApiResponse
+          },
+          company: {
+            validateAddress: function(obj){
+              expect(obj).to.not.have.property("junkProperty");
+
+              return Q.resolve(response);
+            }
           }
         });
 
@@ -69,5 +77,71 @@ describe("Services: storeService", function() {
         done();
       });
     });
+  });
+  
+  describe("validateAddress: ", function() {
+    beforeEach(function() {
+      response = {
+        result: {
+          code: 1
+        }
+      };
+      addressObject = {
+        street: "street",
+        unit: "unit",
+        city: "city",
+        province: "province",
+        country: "country",
+        postalCode: "postalCode",
+        junkProperty: "junkValue"
+      };
+    });
+
+    it("should exist", function() {
+      expect(storeService.validateAddress).to.be.ok;
+      expect(storeService.validateAddress).to.be.a("function");
+    });
+    
+    it("should return a promise", function() {
+      expect(storeService.validateAddress(addressObject).then).to.be.a("function");
+    });
+
+    it("should resolve if code is not -1", function(done) {
+      storeService.validateAddress(addressObject)
+      .then(function(result) {
+        expect(result).to.be.ok;
+        
+        done();
+      })
+      .then(null,done);
+    });
+    
+    it("should reject if code is -1", function(done) {
+      response.result.code = -1;
+
+      storeService.validateAddress(addressObject)
+      .then(function(result) {
+        done(result);
+      })
+      .then(null, function(error) {
+        expect(error).to.be.ok;
+
+        done();
+      })
+      .then(null,done);
+    });
+
+    it("should return response if response.result doesn't exist", function(done) {
+      response = response.result;
+
+      storeService.validateAddress(addressObject)
+      .then(function(result) {
+        expect(result).to.be.ok;
+        
+        done();
+      })
+      .then(null,done);
+    });
+
   });
 });

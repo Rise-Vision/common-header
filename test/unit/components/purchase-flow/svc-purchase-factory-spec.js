@@ -7,11 +7,7 @@ describe("Services: purchase factory", function() {
     $provide.service("$q", function() {return Q;});
     $provide.service("$modal", function() {
       return {
-        open: sinon.spy(function(modalObject) {
-          resolveObj = modalObject.resolve.plan();
-
-          return Q.resolve();
-        })
+        open: sinon.spy()
       };
     });
     $provide.service("userState", function() {
@@ -24,12 +20,51 @@ describe("Services: purchase factory", function() {
         })
       };
     });
+    $provide.service("storeService", function() {
+      return storeService = {
+        calculateTaxes: sinon.spy(function() {
+          if (validate) {
+            return Q.resolve({
+              result: true,
+              taxes: [],
+              total: "total",
+              totalTax: "totalTax",
+              shippingTotal: "shippingTotal"
+            });
+          } else {
+            return Q.reject();
+          }
+        })
+      };
+    });
+
+    $provide.service("stripeService", function() {
+      return stripeService = {
+        validateCard: sinon.stub().returns(true),
+        createToken: sinon.spy(function() {
+          if (validate) {
+            return Q.resolve({
+              id: "id",
+              last4: "last4",
+              exp_month: "expMonth",
+              exp_year: "expYear",
+              name: "name",
+              type: "cardType"
+            });
+          } else {
+            return Q.reject();
+          }
+        })
+      };
+    });
+
   }));
 
-  var $modal, resolveObj, purchaseFactory;
+  var $modal, purchaseFactory, stripeService, storeService, validate, RPP_ADDON_ID;
 
   beforeEach(function() {
     inject(function($injector) {
+      RPP_ADDON_ID = $injector.get("RPP_ADDON_ID");
       $modal = $injector.get("$modal");
       purchaseFactory = $injector.get("purchaseFactory");
     });
@@ -38,33 +73,359 @@ describe("Services: purchase factory", function() {
   it("should exist", function() {
     expect(purchaseFactory).to.be.ok;
     expect(purchaseFactory.showPurchaseModal).to.be.a("function");
+    expect(purchaseFactory.validatePaymentMethod).to.be.a("function");
+    expect(purchaseFactory.getEstimate).to.be.a("function");
   });
 
-  it("should show plans modal", function() {
-    purchaseFactory.showPurchaseModal({});
-
-    expect($modal.open).to.have.been.called;
+  it("should stop spinner on load", function() {
+    expect(purchaseFactory.loading).to.be.false;
   });
 
-  it("should resolve selected plan, attach addresses and clean contact info", function(done) {
-    var plan = { name: "PlanA"};
-    purchaseFactory.showPurchaseModal(plan, true);
-    
-    setTimeout(function() {
-      expect(resolveObj).to.be.ok;
+  describe("showPurchaseModal: ", function() {
+    it("should show purchase modal", function() {
+      purchaseFactory.showPurchaseModal({});
 
-      expect(resolveObj.name).to.equal("PlanA");
-      expect(resolveObj.isMonthly).to.be.true;
-      expect(resolveObj.billingAddress).to.equal("userCompany");
-      expect(resolveObj.shippingAddress).to.equal("selectedCompany");
-      expect(resolveObj.contact).to.be.an("object");
-      expect(resolveObj.contact).to.have.property("username");
-      expect(resolveObj.contact).to.not.have.property("uselessProperty");
+      expect($modal.open).to.have.been.called;
+    });
 
-      expect(resolveObj).to.not.equal(plan);
+    it("should initialize selected plan, attach addresses and clean contact info", function() {
+      var plan = { name: "PlanA"};
+      purchaseFactory.showPurchaseModal(plan, true);
       
-      done();
-    }, 10);
+      expect(purchaseFactory.purchase).to.be.ok;
+
+      expect(purchaseFactory.purchase.plan).to.be.ok;
+      expect(purchaseFactory.purchase.plan.name).to.equal("PlanA");
+      expect(purchaseFactory.purchase.plan.isMonthly).to.be.true;
+      expect(purchaseFactory.purchase.plan).to.not.equal(plan);        
+
+      expect(purchaseFactory.purchase.billingAddress).to.equal("userCompany");
+      expect(purchaseFactory.purchase.shippingAddress).to.equal("selectedCompany");
+      expect(purchaseFactory.purchase.contact).to.be.an("object");
+      expect(purchaseFactory.purchase.contact).to.have.property("username");
+      expect(purchaseFactory.purchase.contact).to.not.have.property("uselessProperty");
+    });
+
+    it("should initialize payment methods", function() {
+      var plan = { name: "PlanA"};
+      purchaseFactory.showPurchaseModal(plan, true);
+      
+      expect(purchaseFactory.purchase).to.be.ok;
+      expect(purchaseFactory.purchase.paymentMethods).to.be.ok;
+      expect(purchaseFactory.purchase.paymentMethods.paymentMethod).to.equal("card");
+      expect(purchaseFactory.purchase.paymentMethods.existingCreditCards).to.deep.equal([]);
+
+      expect(purchaseFactory.purchase.paymentMethods.selectedCard).to.be.null;
+
+      expect(purchaseFactory.purchase.paymentMethods.newCreditCard).to.deep.equal({
+        address: {},
+        useBillingAddress: true,
+        billingAddress: purchaseFactory.purchase.billingAddress
+      });
+
+      expect(purchaseFactory.purchase.estimate).to.deep.equal({});
+    });
   });
+
+  describe("validatePaymentMethod: ", function() {
+    it("should validate and resolve", function(done) {
+      purchaseFactory.purchase = {
+        paymentMethods: {
+          paymentMethod: "invoice"
+        }
+      };
+
+      purchaseFactory.validatePaymentMethod()
+      .then(function() {
+        done();
+      })
+      .then(null, function() {
+        done("error");
+      });
+
+    });
+
+    describe("existing card: ", function() {
+      var card;
+      beforeEach(function() {
+        purchaseFactory.purchase = {
+          paymentMethods: {
+            paymentMethod: "card",
+            selectedCard: card = {
+              number: "123"
+            }
+          }
+        };
+      });
+
+      it("should validate card and proceed to next step", function(done) {
+        purchaseFactory.validatePaymentMethod()
+        .then(function() {
+          stripeService.validateCard.should.have.been.calledWith(card, false);
+
+          done();
+        })
+        .then(null,function() {
+          done("error");
+        });
+      });
+
+      it("should validate and not proceed if there are errors", function(done) {
+        stripeService.validateCard.returns(false);
+
+        purchaseFactory.validatePaymentMethod()
+        .then(null, function() {
+          stripeService.validateCard.should.have.been.calledWith(card, false);
+
+          done();
+        })
+        .then(null, function() {
+          done("error");
+        });
+      });
+      
+    });
+
+    describe("new card: ", function() {
+      var card;
+
+      beforeEach(function() {
+        validate = true;
+
+        purchaseFactory.purchase = {
+          paymentMethods: {
+            paymentMethod: "card",
+            existingCreditCards: [],
+            newCreditCard: card = {
+              number: "123",
+              address: {},
+              billingAddress: {}
+            }
+          }
+        };
+      });
+
+      it("should validate card", function() {
+        purchaseFactory.validatePaymentMethod();
+
+        stripeService.validateCard.should.have.been.calledWith(card, true);
+      });
+
+      it("should validate and not proceed if there are errors", function(done) {
+        stripeService.validateCard.returns(false);
+
+        purchaseFactory.validatePaymentMethod()
+        .then(null, function() {
+          stripeService.validateCard.should.have.been.calledWith(card, true);
+
+          done();
+        })
+        .then(null,function() {
+          done("error");
+        });
+      });
+
+      it("should create card token and proceed to next step", function() {
+        purchaseFactory.validatePaymentMethod();
+
+        stripeService.createToken.should.have.been.called;
+      });
+
+      it("should use card address", function() {
+        purchaseFactory.validatePaymentMethod();
+
+        stripeService.createToken.should.have.been.calledWith(card, card.address);
+      });
+
+      it("should use billing address if selected", function() {
+        card.useBillingAddress = true;
+
+        purchaseFactory.validatePaymentMethod();
+
+        stripeService.createToken.should.have.been.calledWith(card, card.billingAddress);
+      });
+
+      it("should resolve if token is received", function(done) {
+        purchaseFactory.validatePaymentMethod()
+        .then(function() {
+          done();
+        })
+        .then(null,function() {
+          done("error");
+        });
+      });
+
+      it("should add card to existing cards and set it as selected", function(done) {
+        purchaseFactory.validatePaymentMethod()
+        .then(function() {
+          expect(purchaseFactory.purchase.paymentMethods.existingCreditCards).to.have.length(1);
+          expect(purchaseFactory.purchase.paymentMethods.existingCreditCards[0]).to.deep.equal({
+            id: "id",
+            last4: "last4",
+            expMonth: "expMonth",
+            expYear: "expYear",
+            name: "name",
+            cardType: "cardType"
+          });
+          expect(purchaseFactory.purchase.paymentMethods.selectedCard).to.equal(purchaseFactory.purchase.paymentMethods.existingCreditCards[0]);
+
+          done();
+        })
+        .then(null,function() {
+          done("error");
+        });
+      });
+
+      it("should reset new credit card", function(done) {
+        purchaseFactory.validatePaymentMethod()
+        .then(function() {
+          expect(purchaseFactory.purchase.paymentMethods.newCreditCard).to.not.equal(card);
+          expect(purchaseFactory.purchase.paymentMethods.newCreditCard).to.deep.equal({
+            address: {},
+            useBillingAddress: true,
+            billingAddress: purchaseFactory.purchase.billingAddress
+          });
+
+          done();
+        })
+        .then(null,function() {
+          done("error");
+        });
+      });
+
+      it("should reject if token creation fails", function(done) {
+        validate = false;
+
+        purchaseFactory.validatePaymentMethod()
+        .then(function() {
+          done("error");
+        })
+        .then(null,function() {
+          done();
+        });
+      });
+
+      it("should start and stop spinner", function(done) {
+        purchaseFactory.validatePaymentMethod();
+
+        expect(purchaseFactory.loading).to.be.true;
+
+        setTimeout(function() {
+          expect(purchaseFactory.loading).to.be.false;
+
+          done();
+        }, 10);
+      });
+
+    });
+
+    describe("getEstimate: ", function() {
+      beforeEach(function() {
+        validate = true;
+
+        purchaseFactory.purchase = {
+          billingAddress: {
+            id: "id"
+          },
+          shippingAddress: "shippingAddress",
+          plan: {
+            isMonthly: true,
+            productCode: "productCode",
+            monthly: {
+              billAmount: 27
+            },
+            yearly: {
+              priceDisplayYear: 99
+            },
+            additionalDisplayLicenses: 3
+          }
+        };
+      });
+
+      it("should initialize estimate object based on currency", function() {
+        purchaseFactory.getEstimate();
+
+        expect(purchaseFactory.purchase.estimate).to.be.ok;
+        expect(purchaseFactory.purchase.estimate).to.be.an("object");
+        expect(purchaseFactory.purchase.estimate.currency).to.equal("usd");
+
+        purchaseFactory.purchase.billingAddress.country = "CA";
+
+        purchaseFactory.getEstimate();
+
+        expect(purchaseFactory.purchase.estimate.currency).to.equal("cad");
+      });
+
+      it("should call calculateTaxes api and return a promise", function() {
+        expect(purchaseFactory.getEstimate().then).to.be.a("function");
+
+        storeService.calculateTaxes.should.have.been.called;
+        storeService.calculateTaxes.should.have.been.calledWith("id", sinon.match.string, sinon.match.string, 3, "shippingAddress");
+      });
+
+      it("should call set correct currency & billing period values", function() {
+        purchaseFactory.getEstimate();
+
+        storeService.calculateTaxes.should.have.been.calledWith("id", "productCode-" + "usd" + "01m", RPP_ADDON_ID + "-" + "usd" + "01m", 3, "shippingAddress");
+
+        purchaseFactory.purchase.billingAddress.country = "CA";
+        purchaseFactory.purchase.plan.isMonthly = false;
+
+        purchaseFactory.getEstimate();
+
+        storeService.calculateTaxes.should.have.been.calledWith("id", "productCode-" + "cad" + "01y", RPP_ADDON_ID + "-" + "cad" + "01y", 3, "shippingAddress");
+      });
+
+      it("should populate estimate object if call succeeds", function(done) {
+        purchaseFactory.getEstimate()
+        .then(function() {
+          expect(purchaseFactory.purchase.estimate).to.deep.equal({
+            currency: "usd",
+            taxesCalculated: true,
+            taxes: [],
+            total: "total",
+            totalTax: "totalTax",
+            shippingTotal: "shippingTotal"
+          });
+
+          done();
+        })
+        .then(null,function() {
+          done("error");
+        });
+      });
+
+      it("should not populate estimate object if call fails", function(done) {
+        validate = false;
+
+        purchaseFactory.getEstimate()
+        .then(function() {
+          done("error");
+        })
+        .then(null,function() {
+          expect(purchaseFactory.purchase.estimate).to.deep.equal({
+            currency: "usd"
+          });
+        
+          done();
+        });
+      });
+
+      it("should start and stop spinner", function(done) {
+        purchaseFactory.getEstimate();
+
+        expect(purchaseFactory.loading).to.be.true;
+
+        setTimeout(function() {
+          expect(purchaseFactory.loading).to.be.false;
+
+          done();
+        }, 10);
+      });
+
+    });
+
+  });
+
 
 });
