@@ -7,7 +7,6 @@ angular.module("risevision.common.components.purchase-flow")
         link: function ($scope) {
           $scope.purchase = purchaseFactory.purchase;
 
-          $scope.userEmail = userState.getUserEmail();
           $scope.selectedCompany = userState.getCopyOfSelectedCompany();
 
           $scope.getPlanPrice = function () {
