@@ -39,5 +39,7 @@
       "https://store.risevision.com/products/?cat=compareSupport")
     .value("APPS_URL", "https://apps.risevision.com")
     .value("CHARGEBEE_TEST_SITE", "risevision-test")
-    .value("CHARGEBEE_PROD_SITE", "risevision");
+    .value("CHARGEBEE_PROD_SITE", "risevision")
+    .value("STRIPE_PROD_KEY", "pk_live_31dWkTWQU125m2RcWpK4HQBR")
+    .value("STRIPE_TEST_KEY", "pk_test_GrMIAHSoqhaik4tcHepsxjOR");
 })(angular);
