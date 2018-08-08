@@ -9838,9 +9838,14 @@ angular.module("risevision.common.components.purchase-flow")
 
   "use strict";
   angular.module("risevision.common.components.purchase-flow")
-    .factory("purchaseFactory", ["$modal", "$templateCache", "userState",
-      function ($modal, $templateCache, userState) {
-        var _factory = {};
+    .factory("purchaseFactory", ["$q", "$log", "$modal", "$templateCache", "userState", "storeService",
+      "stripeService", "RPP_ADDON_ID",
+      function ($q, $log, $modal, $templateCache, userState, storeService, stripeService,
+        RPP_ADDON_ID) {
+        var factory = {};
+
+        // Stop spinner - workaround for spinner not rendering
+        factory.loading = false;
 
         var _cleanContactObj = function (c) {
           return {
@@ -9852,39 +9857,145 @@ angular.module("risevision.common.components.purchase-flow")
           };
         };
 
-        _factory.showPurchaseModal = function (plan, isMonthly) {
+        var _init = function (plan, isMonthly) {
+          factory.purchase = {};
+
+          factory.purchase.plan = angular.copy(plan);
+          factory.purchase.plan.additionalDisplayLicenses = 0;
+          factory.purchase.plan.isMonthly = isMonthly;
+
+          factory.purchase.billingAddress = userState.getCopyOfUserCompany();
+          factory.purchase.shippingAddress = userState.getCopyOfSelectedCompany();
+          factory.purchase.contact = _cleanContactObj(userState.getCopyOfProfile());
+          factory.purchase.paymentMethods = {
+            paymentMethod: "card",
+            existingCreditCards: [],
+            newCreditCard: {
+              address: {},
+              useBillingAddress: true,
+              billingAddress: factory.purchase.billingAddress
+            }
+          };
+          // Alpha Release - Select New Card by default
+          factory.purchase.paymentMethods.selectedCard = null;
+          factory.purchase.estimate = {};
+
+        };
+
+        factory.showPurchaseModal = function (plan, isMonthly) {
+          _init(plan, isMonthly);
+
           $modal.open({
             template: $templateCache.get("purchase-flow/purchase-modal.html"),
             controller: "PurchaseModalCtrl",
-            size: "md",
-            resolve: {
-              plan: function () {
-                var selectedPlan = angular.copy(plan);
-
-                selectedPlan.isMonthly = isMonthly;
-
-                selectedPlan.billingAddress = userState.getCopyOfUserCompany();
-                selectedPlan.shippingAddress = userState.getCopyOfSelectedCompany();
-                selectedPlan.contact = _cleanContactObj(userState.getCopyOfProfile());
-                selectedPlan.paymentMethods = {
-                  paymentMethod: "card",
-                  existingCreditCards: [],
-                  newCreditCard: {
-                    address: {},
-                    useBillingAddress: true,
-                    billingAddress: selectedPlan.billingAddress
-                  }
-                };
-                // Alpha Release - Select New Card by default
-                selectedPlan.paymentMethods.selectedCard = null;
-
-                return selectedPlan;
-              }
-            }
+            size: "md"
           });
         };
 
-        return _factory;
+        var _validateCard = function (card, isNew) {
+          card.validationErrors = stripeService.validateCard(card, isNew);
+
+          if (!card.validationErrors || card.validationErrors.length > 0) {
+            return false;
+          }
+
+          return true;
+        };
+
+        factory.validatePaymentMethod = function (paymentMethods) {
+          var deferred = $q.defer();
+
+          if (paymentMethods.paymentMethod === "invoice") {
+            // TODO: Check Invoice credit (?)
+            deferred.resolve();
+          } else if (paymentMethods.paymentMethod === "card") {
+            if (paymentMethods.selectedCard) {
+              if (_validateCard(paymentMethods.selectedCard, false)) {
+                // Existing Card selected
+                deferred.resolve();
+              } else {
+                deferred.reject();
+              }
+            } else {
+              if (_validateCard(paymentMethods.newCreditCard, true)) {
+                var address = paymentMethods.newCreditCard.address;
+                if (paymentMethods.newCreditCard.useBillingAddress) {
+                  address = paymentMethods.newCreditCard.billingAddress;
+                }
+
+                factory.loading = true;
+
+                return stripeService.createToken(paymentMethods.newCreditCard, address)
+                  .then(function (resp) {
+                    if (resp && resp.card) {
+                      var newCard = {
+                        "id": resp.card.id,
+                        "last4": resp.card.last4,
+                        "expMonth": resp.card.exp_month,
+                        "expYear": resp.card.exp_year,
+                        "name": resp.card.name,
+                        "cardType": resp.card.type
+                      };
+
+                      paymentMethods.existingCreditCards.push(newCard);
+                      paymentMethods.selectedCard = newCard;
+                    }
+                  })
+                  .finally(function () {
+                    factory.loading = false;
+                  });
+              }
+            }
+          }
+          return deferred.promise;
+        };
+
+        var _getBillingPeriod = function () {
+          return factory.purchase.plan.isMonthly ? "01m" : "01y";
+        };
+
+        var _getCurrency = function () {
+          return (factory.purchase.billingAddress.country === "CA") ? "cad" : "usd";
+        };
+
+        var _getChargebeePlanId = function () {
+          return factory.purchase.plan.productCode + "-" + _getCurrency() + _getBillingPeriod();
+        };
+
+        var _getChargebeeAddonId = function () {
+          return RPP_ADDON_ID + "-" + _getCurrency() + _getBillingPeriod();
+        };
+
+        factory.calculateTaxes = function () {
+          factory.purchase.estimate = {
+            currency: _getCurrency()
+          };
+
+          factory.loading = true;
+
+          storeService.calculateTaxes(factory.purchase.billingAddress.id, _getChargebeePlanId(),
+            _getChargebeeAddonId(),
+            factory.purchase.plan.additionalDisplayLicenses, factory.purchase.shippingAddress)
+            .then(function (result) {
+              $log.info(result);
+              if (!result.error && result.result === true) {
+                factory.purchase.estimate = {
+                  taxesCalculated: true,
+                  taxes: result.taxes || [],
+                  total: result.total,
+                  totalTax: result.totalTax,
+                  shippingTotal: result.shippingTotal
+                };
+              } else {
+                $log.error(result);
+              }
+            })
+            .finally(function () {
+              factory.loading = false;
+            });
+        };
+
+        return factory;
       }
     ]);
 
@@ -10040,23 +10151,28 @@ angular.module("risevision.common.components.purchase-flow")
   ]);
 
 angular.module("risevision.common.components.purchase-flow")
-  .directive("billingAddress", ["$templateCache",
-    function ($templateCache) {
+  .directive("billingAddress", ["$templateCache", "purchaseFactory",
+    function ($templateCache, purchaseFactory) {
       return {
         restrict: "E",
         template: $templateCache.get("purchase-flow/checkout-billing-address.html"),
-        link: function () {}
+        link: function ($scope) {
+          $scope.billingAddress = purchaseFactory.purchase.billingAddress;
+          $scope.contact = purchaseFactory.purchase.contact;
+        }
       };
     }
   ]);
 
 angular.module("risevision.common.components.purchase-flow")
-  .directive("paymentMethods", ["$templateCache",
-    function ($templateCache) {
+  .directive("paymentMethods", ["$templateCache", "purchaseFactory",
+    function ($templateCache, purchaseFactory) {
       return {
         restrict: "E",
         template: $templateCache.get("purchase-flow/checkout-payment-methods.html"),
         link: function ($scope) {
+          $scope.paymentMethods = purchaseFactory.purchase.paymentMethods;
+
           $scope.getCardDescription = function (card) {
             return "***-" + card.last4 + ", " + card.cardType + (card.isDefault ? " (default)" : "");
           };
@@ -10111,28 +10227,32 @@ angular.module("risevision.common.components.purchase-flow")
   ]);
 
 angular.module("risevision.common.components.purchase-flow")
-  .directive("reviewPurchase", ["$templateCache", "userState",
-    function ($templateCache, userState) {
+  .directive("reviewPurchase", ["$templateCache", "userState", "purchaseFactory",
+    function ($templateCache, userState, purchaseFactory) {
       return {
         restrict: "E",
         template: $templateCache.get("purchase-flow/checkout-review-purchase.html"),
         link: function ($scope) {
+          $scope.purchase = purchaseFactory.purchase;
+
           $scope.userEmail = userState.getUserEmail();
           $scope.selectedCompany = userState.getCopyOfSelectedCompany();
 
           $scope.getPlanPrice = function () {
-            if ($scope.plan.isMonthly) {
-              return $scope.plan.monthly.billAmount;
+            var plan = $scope.purchase.plan;
+            if (plan.isMonthly) {
+              return plan.monthly.billAmount;
             } else {
-              return $scope.plan.yearly.billAmount;
+              return plan.yearly.billAmount;
             }
           };
 
           $scope.getAdditionalDisplaysPrice = function () {
-            if ($scope.plan.isMonthly) {
-              return ($scope.plan.additionalDisplayLicenses * $scope.plan.monthly.priceDisplayMonth);
+            var plan = $scope.purchase.plan;
+            if (plan.isMonthly) {
+              return (plan.additionalDisplayLicenses * plan.monthly.priceDisplayMonth);
             } else {
-              return ($scope.plan.additionalDisplayLicenses * $scope.plan.yearly.priceDisplayYear);
+              return (plan.additionalDisplayLicenses * plan.yearly.priceDisplayYear);
             }
           };
 
@@ -10142,13 +10262,15 @@ angular.module("risevision.common.components.purchase-flow")
   ]);
 
 angular.module("risevision.common.components.purchase-flow")
-  .directive("reviewSubscription", ["$templateCache",
-    function ($templateCache) {
+  .directive("reviewSubscription", ["$templateCache", "purchaseFactory",
+    function ($templateCache, purchaseFactory) {
       return {
         restrict: "E",
         template: $templateCache.get(
           "purchase-flow/checkout-review-subscription.html"),
         link: function ($scope) {
+          $scope.plan = purchaseFactory.purchase.plan;
+
           var _getAdditionalDisplayLicenses = function () {
             var licenses = $scope.plan.additionalDisplayLicenses;
 
@@ -10192,12 +10314,14 @@ angular.module("risevision.common.components.purchase-flow")
   ]);
 
 angular.module("risevision.common.components.purchase-flow")
-  .directive("shippingAddress", ["$templateCache",
-    function ($templateCache) {
+  .directive("shippingAddress", ["$templateCache", "purchaseFactory",
+    function ($templateCache, purchaseFactory) {
       return {
         restrict: "E",
         template: $templateCache.get("purchase-flow/checkout-shipping-address.html"),
-        link: function () {}
+        link: function ($scope) {
+          $scope.shippingAddress = purchaseFactory.purchase.shippingAddress;
+        }
       };
     }
   ]);
@@ -10265,29 +10389,25 @@ angular.module("risevision.common.components.purchase-flow")
 .constant("RPP_ADDON_ID", "c4b368be86245bf9501baaa6e0b00df9719869fd")
 
 .controller("PurchaseModalCtrl", [
-  "$scope", "$modalInstance", "$log", "$loading", "storeService", "addressFactory", "stripeService",
-  "plan", "PURCHASE_STEPS", "RPP_ADDON_ID",
-  function ($scope, $modalInstance, $log, $loading, storeService, addressFactory, stripeService,
-    plan, PURCHASE_STEPS, RPP_ADDON_ID) {
+  "$scope", "$modalInstance", "$loading", "purchaseFactory", "addressFactory",
+  "PURCHASE_STEPS",
+  function ($scope, $modalInstance, $loading, purchaseFactory, addressFactory,
+    PURCHASE_STEPS) {
 
     $scope.form = {};
-    $scope.plan = plan;
-    $scope.plan.additionalDisplayLicenses = 0;
+    $scope.factory = purchaseFactory;
 
     $scope.PURCHASE_STEPS = PURCHASE_STEPS;
     $scope.currentStep = 3;
     var finalStep = false;
 
-    $scope.$watch("loading", function (loading) {
+    $scope.$watch("factory.loading", function (loading) {
       if (loading) {
         $loading.start("purchase-modal");
       } else {
         $loading.stop("purchase-modal");
       }
     });
-
-    // Stop spinner - workaround for spinner not rendering
-    $scope.loading = false;
 
     var _isFormValid = function () {
       var step = PURCHASE_STEPS[$scope.currentStep];
@@ -10302,7 +10422,7 @@ angular.module("risevision.common.components.purchase-flow")
         return;
       }
 
-      $scope.loading = true;
+      $scope.factory.loading = true;
 
       addressFactory.validateAddress(addressObject)
         .then(function () {
@@ -10311,18 +10431,8 @@ angular.module("risevision.common.components.purchase-flow")
           }
         })
         .finally(function () {
-          $scope.loading = false;
+          $scope.factory.loading = false;
         });
-    };
-
-    var _validateCard = function (card, isNew) {
-      card.validationErrors = stripeService.validateCard(card, isNew);
-
-      if (!card.validationErrors || card.validationErrors.length > 0) {
-        return false;
-      }
-
-      return true;
     };
 
     $scope.validatePaymentMethod = function (paymentMethods) {
@@ -10330,85 +10440,12 @@ angular.module("risevision.common.components.purchase-flow")
         return;
       }
 
-      if (paymentMethods.paymentMethod === "invoice") {
-        // TODO: Check Invoice credit (?)
-        $scope.setNextStep();
-      } else if (paymentMethods.paymentMethod === "card") {
-        if (paymentMethods.selectedCard) {
-          if (_validateCard(paymentMethods.selectedCard, false)) {
-            // Existing Card selected
-            $scope.setNextStep();
-          }
-        } else {
-          if (_validateCard(paymentMethods.newCreditCard, true)) {
-            var address = paymentMethods.newCreditCard.address;
-            if (paymentMethods.newCreditCard.useBillingAddress) {
-              address = paymentMethods.newCreditCard.billingAddress;
-            }
-
-            $scope.loading = true;
-
-            stripeService.createToken(paymentMethods.newCreditCard, address)
-              .then(function (resp) {
-                if (resp && resp.card) {
-                  var newCard = {
-                    "id": resp.card.id,
-                    "last4": resp.card.last4,
-                    "expMonth": resp.card.exp_month,
-                    "expYear": resp.card.exp_year,
-                    "name": resp.card.name,
-                    "cardType": resp.card.type
-                  };
-
-                  paymentMethods.existingCreditCards.push(newCard);
-                  paymentMethods.selectedCard = newCard;
-                }
-                // New Card selected
-                $scope.setNextStep();
-              })
-              .finally(function () {
-                $scope.loading = false;
-              });
-          }
-        }
-      }
+      purchaseFactory.validatePaymentMethod(paymentMethods)
+        .then($scope.setNextStep);
     };
 
     $scope.setCurrentStep = function (index) {
       $scope.currentStep = index;
-    };
-
-    var _getBillingPeriod = function () {
-      return plan.isMonthly ? "01m" : "01y";
-    };
-
-    var _getCurrency = function () {
-      return (plan.billingAddress.country === "CA") ? "cad" : "usd";
-    };
-
-    var _getChargebeePlanId = function () {
-      return plan.productCode + "-" + _getCurrency() + _getBillingPeriod();
-    };
-
-    var _getChargebeeAddonId = function () {
-      return RPP_ADDON_ID + "-" + _getCurrency() + _getBillingPeriod();
-    };
-
-    $scope.calculateTaxes = function () {
-      storeService.calculateTaxes(plan.billingAddress.id, _getChargebeePlanId(), _getChargebeeAddonId(),
-        plan.additionalDisplayLicenses, plan.shippingAddress)
-        .then(function (result) {
-          $log.info(result);
-          if (!result.error && result.result === true) {
-            $scope.taxesCalculated = true;
-            $scope.taxes = result.taxes || [];
-            $scope.total = result.total;
-            $scope.totalTax = result.totalTax;
-            $scope.shippingTotal = result.shippingTotal;
-          } else {
-            $log.error(result);
-          }
-        });
     };
 
     $scope.setNextStep = function () {
@@ -10423,7 +10460,7 @@ angular.module("risevision.common.components.purchase-flow")
       }
 
       if ($scope.currentStep === 4) {
-        $scope.calculateTaxes();
+        purchaseFactory.calculateTaxes();
 
         finalStep = true;
       }
@@ -10516,7 +10553,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/checkout-billing-address.html',
-    '<div id="checkout-billing-address" class="address-editor"><form id="form.billingAddressForm" role="form" class="u_margin-md-top" name="form.billingAddressForm" autocomplete="on" novalidate=""><div class="alert alert-danger" ng-show="form.billingAddressForm.$submitted && form.billingAddressForm.$invalid">Please complete the missing information below.</div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="plan.billingAddress.validationError"><strong>Address Validation Error</strong> {{plan.billingAddress.validationError}}</div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': (form.billingAddressForm.firstName.$dirty || form.billingAddressForm.$submitted) && form.billingAddressForm.firstName.$invalid }"><label for="contact-firstName" class="control-label">First Name</label> <input id="contact-firstName" type="text" class="form-control" name="firstName" ng-model="plan.contact.firstName" autocomplete="given-name" required=""></div></div><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': (form.billingAddressForm.lastName.$dirty || form.billingAddressForm.$submitted) && form.billingAddressForm.lastName.$invalid }"><label for="contact-lastName" class="control-label">Last Name</label> <input id="contact-lastName" type="text" class="form-control" name="lastName" ng-model="plan.contact.lastName" autocomplete="family-name" required=""></div></div></div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': (form.billingAddressForm.email.$dirty || form.billingAddressForm.$submitted) && form.billingAddressForm.email.$invalid }"><label for="contact-email" class="control-label">Email</label> <input id="contact-email" type="email" class="form-control" name="email" ng-model="plan.contact.email" autocomplete="email" required=""></div></div><div class="col-md-6"><div class="form-group"><label for="contact-phone" class="control-label">Telephone</label> <input id="contact-phone" name="tel" type="tel" class="form-control" ng-model="plan.contact.telephone" autocomplete="tel"></div></div></div><address-form form-object="form.billingAddressForm" address-object="plan.billingAddress"></address-form><hr><div class="row"><div class="col-xs-12"><button id="backButton" type="button" class="btn btn-default btn-lg pull-left" ng-click="setPreviousStep()" translate="">common.back</button> <button id="continueButton" type="submit" form="form.billingAddressForm" class="btn btn-primary btn-lg pull-right" ng-click="validateAddress(plan.billingAddress)" translate="">common.continue</button></div></div></form></div>');
+    '<div id="checkout-billing-address" class="address-editor"><form id="form.billingAddressForm" role="form" class="u_margin-md-top" name="form.billingAddressForm" autocomplete="on" novalidate=""><div class="alert alert-danger" ng-show="form.billingAddressForm.$submitted && form.billingAddressForm.$invalid">Please complete the missing information below.</div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="billingAddress.validationError"><strong>Address Validation Error</strong> {{billingAddress.validationError}}</div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': (form.billingAddressForm.firstName.$dirty || form.billingAddressForm.$submitted) && form.billingAddressForm.firstName.$invalid }"><label for="contact-firstName" class="control-label">First Name</label> <input id="contact-firstName" type="text" class="form-control" name="firstName" ng-model="contact.firstName" autocomplete="given-name" required=""></div></div><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': (form.billingAddressForm.lastName.$dirty || form.billingAddressForm.$submitted) && form.billingAddressForm.lastName.$invalid }"><label for="contact-lastName" class="control-label">Last Name</label> <input id="contact-lastName" type="text" class="form-control" name="lastName" ng-model="contact.lastName" autocomplete="family-name" required=""></div></div></div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': (form.billingAddressForm.email.$dirty || form.billingAddressForm.$submitted) && form.billingAddressForm.email.$invalid }"><label for="contact-email" class="control-label">Email</label> <input id="contact-email" type="email" class="form-control" name="email" ng-model="contact.email" autocomplete="email" required=""></div></div><div class="col-md-6"><div class="form-group"><label for="contact-phone" class="control-label">Telephone</label> <input id="contact-phone" name="tel" type="tel" class="form-control" ng-model="contact.telephone" autocomplete="tel"></div></div></div><address-form form-object="form.billingAddressForm" address-object="billingAddress"></address-form><hr><div class="row"><div class="col-xs-12"><button id="backButton" type="button" class="btn btn-default btn-lg pull-left" ng-click="setPreviousStep()" translate="">common.back</button> <button id="continueButton" type="submit" form="form.billingAddressForm" class="btn btn-primary btn-lg pull-right" ng-click="validateAddress(billingAddress)" translate="">common.continue</button></div></div></form></div>');
 }]);
 })();
 
@@ -10528,7 +10565,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/checkout-payment-methods.html',
-    '<div id="checkout-payment-methods"><form id="form.paymentMethodsForm" role="form" class="u_margin-md-top" name="form.paymentMethodsForm" novalidate=""><div class="row u_margin-md-top" ng-if="false"><div class="col-md-8 col-xs-12 form-inline"><div class="form-group"><label for="payment-method-select" class="u_margin-right">Payment Method</label><select id="payment-method-select" class="form-control selectpicker" ng-model="plan.paymentMethods.paymentMethod"><option value="card">Credit Card</option><option value="invoice">Invoice Me</option></select></div></div></div><hr ng-if="false"><div id="credit-card-form" ng-if="plan.paymentMethods.paymentMethod === \'card\'"><div class="row" ng-if="false"><div class="col-md-12"><div class="form-group"><select id="credit-card-select" class="form-control selectpicker" ng-model="plan.paymentMethods.selectedCard" ng-options="c as getCardDescription(c) for c in plan.paymentMethods.existingCreditCards track by c.id"><option value="">Add New Credit Card</option></select></div></div></div><div id="new-credit-card-form" ng-if="!plan.paymentMethods.selectedCard"><div class="alert alert-danger" ng-show="form.paymentMethodsForm.$submitted && form.paymentMethodsForm.$invalid">Please complete the missing information below.</div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="plan.paymentMethods.newCreditCard.validationErrors.length"><strong>Card Validation Error(s)</strong><ul><li ng-repeat="error in plan.paymentMethods.newCreditCard.validationErrors">{{error}}</li></ul></div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="plan.paymentMethods.newCreditCard.tokenError"><strong>Card Processing Error</strong> {{plan.paymentMethods.newCreditCard.tokenError}}</div><div class="row"><div class="col-md-12"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardholderName.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardholderName.$invalid }"><label for="new-card-name" lass="control-label">Cardholder Name</label> <input id="new-card-name" type="text" class="form-control" name="cardholderName" data-stripe="name" ng-model="plan.paymentMethods.newCreditCard.name" autocomplete="cc-name" required=""></div></div></div><div class="row"><div class="col-md-12"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardNumber.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardNumber.$invalid }"><label for="new-card-number" class="control-label">Card Number</label> <input id="new-card-number" type="text" class="form-control" placeholder="0000 0000 0000 0000" name="cardNumber" data-stripe="number" ng-model="plan.paymentMethods.newCreditCard.number" autocomplete="cc-number" required=""></div></div></div><div class="row"><div class="col-md-4"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardExpiryMonth.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardExpiryMonth.$invalid }"><label for="new-card-expiry-month" class="control-label">Expiry Month</label><select id="new-card-expiry-month" class="form-control" name="cardExpiryMonth" data-stripe="exp-month" ng-model="plan.paymentMethods.newCreditCard.expMonth" autocomplete="cc-exp-month" integer-parser="" required=""><option ng-show="false" value="">&lt; Select Month &gt;</option><option value="1">01</option><option value="2">02</option><option value="3">03</option><option value="4">04</option><option value="5">05</option><option value="6">06</option><option value="7">07</option><option value="8">08</option><option value="9">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select></div></div><div class="col-md-4"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardExpiryYear.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardExpiryYear.$invalid }"><label for="expiry-year" class="control-label">Expiry Year</label><year-selector id="new-card-expiry-year" class="form-control" name="cardExpiryYear" data-stripe="exp-year" ng-model="plan.paymentMethods.newCreditCard.expYear" autocomplete="cc-exp-month" integer-parser="" required=""></year-selector></div></div><div class="col-md-4"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardCvc.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardCvc.$invalid }"><label for="new-card-cvc" class="control-label">Security Code</label> <input id="new-card-cvc" type="number" class="form-control" name="cardCvc" data-stripe="cvc" ng-model="plan.paymentMethods.newCreditCard.cvc" autocomplete="cc-csc" maxlength="4" required=""></div></div></div><div class="checkbox"><label><input type="checkbox" id="toggleMatchBillingAddress" ng-model="plan.paymentMethods.newCreditCard.useBillingAddress"> Same As Billing Address</label></div><div id="new-card-address"><address-form form-object="form.paymentMethodsForm" address-object="plan.paymentMethods.newCreditCard.address" hide-company-name="true" ng-if="!plan.paymentMethods.newCreditCard.useBillingAddress"></address-form></div></div><div id="existing-credit-card-form" ng-if="plan.paymentMethods.selectedCard"><div id="errorBox" class="alert alert-danger" role="alert" ng-show="plan.paymentMethods.selectedCard.validationErrors.length"><strong>Card Validation Error</strong> {{plan.paymentMethods.selectedCard.validationErrors[0]}}</div><div class="row"><div class="col-md-12"><div class="form-group"><label for="existing-card-name" class="control-label">Cardholder Name</label> <input id="existing-card-name" type="text" class="form-control" placeholder="{{plan.paymentMethods.selectedCard.name}}" disabled="disabled"></div></div></div><div class="row"><div class="col-md-12"><div class="form-group"><label for="existing-card-number" class="control-label">Card Number</label> <input id="existing-card-number" type="text" class="form-control" placeholder="{{plan.paymentMethods.selectedCard.last4 | cardLastFour}}" disabled="disabled"></div></div></div><div class="row form-group"><div class="col-md-4"><div class="form-group"><label for="existing-card-expiry-month" class="control-label">Expiry Month</label> <input id="existing-card-expiry-month" type="text" class="form-control masked" placeholder="{{plan.paymentMethods.selectedCard.expMonth | paddedMonth}}" disabled="disabled"></div></div><div class="col-md-4"><div class="form-group"><label for="existing-card-expiry-year" class="control-label">Expiry Year</label> <input id="existing-card-expiry-year" type="text" class="form-control masked" placeholder="{{plan.paymentMethods.selectedCard.expYear}}" disabled="disabled"></div></div></div></div></div><div id="generateInvoice" ng-if="plan.paymentMethods.paymentMethod === \'invoice\'"><p>If you\'d like to be invoiced for your purchase (rather than paying now by credit card), please enter a <b>Purchase Order</b> number and continue with checkout.</p><p>You will receive an invoice for this purchase total at <b>user@domain.com</b>. Invoices are due within 30 days of creation, payable by check, wire transfer, or credit card.</p><p>Please note your invoice is generated only once this checkout is completed.</p><div class="row"><div class="col-xs-12 col-sm-6"><div class="form-group"><label class="control-label" id="triggerOverdue">Purchase Order Number</label> <input type="text" class="form-control" placeholder=""></div></div></div><div id="generateInvoiceOverdue" style="display:none"><p class="text-danger">You have overdue invoice payments on your account.</p><p>In order to complete this purchase by invoice, please pay your outstanding invoices <a href="#">here</a>.</p></div></div><hr><div class="row"><div class="col-xs-12"><button id="backButton" type="button" class="btn btn-default btn-lg pull-left" ng-click="setPreviousStep()" translate="">common.back</button> <button id="continueButton" type="submit" form="form.paymentMethodsForm" class="btn btn-primary btn-lg pull-right" ng-click="validatePaymentMethod(plan.paymentMethods)" translate="">common.continue</button></div></div></form></div>');
+    '<div id="checkout-payment-methods"><form id="form.paymentMethodsForm" role="form" class="u_margin-md-top" name="form.paymentMethodsForm" novalidate=""><div class="row u_margin-md-top" ng-if="false"><div class="col-md-8 col-xs-12 form-inline"><div class="form-group"><label for="payment-method-select" class="u_margin-right">Payment Method</label><select id="payment-method-select" class="form-control selectpicker" ng-model="paymentMethods.paymentMethod"><option value="card">Credit Card</option><option value="invoice">Invoice Me</option></select></div></div></div><hr ng-if="false"><div id="credit-card-form" ng-if="paymentMethods.paymentMethod === \'card\'"><div class="row" ng-if="false"><div class="col-md-12"><div class="form-group"><select id="credit-card-select" class="form-control selectpicker" ng-model="paymentMethods.selectedCard" ng-options="c as getCardDescription(c) for c in paymentMethods.existingCreditCards track by c.id"><option value="">Add New Credit Card</option></select></div></div></div><div id="new-credit-card-form" ng-if="!paymentMethods.selectedCard"><div class="alert alert-danger" ng-show="form.paymentMethodsForm.$submitted && form.paymentMethodsForm.$invalid">Please complete the missing information below.</div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="paymentMethods.newCreditCard.validationErrors.length"><strong>Card Validation Error(s)</strong><ul><li ng-repeat="error in paymentMethods.newCreditCard.validationErrors">{{error}}</li></ul></div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="paymentMethods.newCreditCard.tokenError"><strong>Card Processing Error</strong> {{paymentMethods.newCreditCard.tokenError}}</div><div class="row"><div class="col-md-12"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardholderName.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardholderName.$invalid }"><label for="new-card-name" lass="control-label">Cardholder Name</label> <input id="new-card-name" type="text" class="form-control" name="cardholderName" data-stripe="name" ng-model="paymentMethods.newCreditCard.name" autocomplete="cc-name" required=""></div></div></div><div class="row"><div class="col-md-12"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardNumber.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardNumber.$invalid }"><label for="new-card-number" class="control-label">Card Number</label> <input id="new-card-number" type="text" class="form-control" placeholder="0000 0000 0000 0000" name="cardNumber" data-stripe="number" ng-model="paymentMethods.newCreditCard.number" autocomplete="cc-number" required=""></div></div></div><div class="row"><div class="col-md-4"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardExpiryMonth.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardExpiryMonth.$invalid }"><label for="new-card-expiry-month" class="control-label">Expiry Month</label><select id="new-card-expiry-month" class="form-control" name="cardExpiryMonth" data-stripe="exp-month" ng-model="paymentMethods.newCreditCard.expMonth" autocomplete="cc-exp-month" integer-parser="" required=""><option ng-show="false" value="">&lt; Select Month &gt;</option><option value="1">01</option><option value="2">02</option><option value="3">03</option><option value="4">04</option><option value="5">05</option><option value="6">06</option><option value="7">07</option><option value="8">08</option><option value="9">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select></div></div><div class="col-md-4"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardExpiryYear.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardExpiryYear.$invalid }"><label for="expiry-year" class="control-label">Expiry Year</label><year-selector id="new-card-expiry-year" class="form-control" name="cardExpiryYear" data-stripe="exp-year" ng-model="paymentMethods.newCreditCard.expYear" autocomplete="cc-exp-month" integer-parser="" required=""></year-selector></div></div><div class="col-md-4"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardCvc.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardCvc.$invalid }"><label for="new-card-cvc" class="control-label">Security Code</label> <input id="new-card-cvc" type="number" class="form-control" name="cardCvc" data-stripe="cvc" ng-model="paymentMethods.newCreditCard.cvc" autocomplete="cc-csc" maxlength="4" required=""></div></div></div><div class="checkbox"><label><input type="checkbox" id="toggleMatchBillingAddress" ng-model="paymentMethods.newCreditCard.useBillingAddress"> Same As Billing Address</label></div><div id="new-card-address"><address-form form-object="form.paymentMethodsForm" address-object="paymentMethods.newCreditCard.address" hide-company-name="true" ng-if="!paymentMethods.newCreditCard.useBillingAddress"></address-form></div></div><div id="existing-credit-card-form" ng-if="paymentMethods.selectedCard"><div id="errorBox" class="alert alert-danger" role="alert" ng-show="paymentMethods.selectedCard.validationErrors.length"><strong>Card Validation Error</strong> {{paymentMethods.selectedCard.validationErrors[0]}}</div><div class="row"><div class="col-md-12"><div class="form-group"><label for="existing-card-name" class="control-label">Cardholder Name</label> <input id="existing-card-name" type="text" class="form-control" placeholder="{{paymentMethods.selectedCard.name}}" disabled="disabled"></div></div></div><div class="row"><div class="col-md-12"><div class="form-group"><label for="existing-card-number" class="control-label">Card Number</label> <input id="existing-card-number" type="text" class="form-control" placeholder="{{paymentMethods.selectedCard.last4 | cardLastFour}}" disabled="disabled"></div></div></div><div class="row form-group"><div class="col-md-4"><div class="form-group"><label for="existing-card-expiry-month" class="control-label">Expiry Month</label> <input id="existing-card-expiry-month" type="text" class="form-control masked" placeholder="{{paymentMethods.selectedCard.expMonth | paddedMonth}}" disabled="disabled"></div></div><div class="col-md-4"><div class="form-group"><label for="existing-card-expiry-year" class="control-label">Expiry Year</label> <input id="existing-card-expiry-year" type="text" class="form-control masked" placeholder="{{paymentMethods.selectedCard.expYear}}" disabled="disabled"></div></div></div></div></div><div id="generateInvoice" ng-if="paymentMethods.paymentMethod === \'invoice\'"><p>If you\'d like to be invoiced for your purchase (rather than paying now by credit card), please enter a <b>Purchase Order</b> number and continue with checkout.</p><p>You will receive an invoice for this purchase total at <b>user@domain.com</b>. Invoices are due within 30 days of creation, payable by check, wire transfer, or credit card.</p><p>Please note your invoice is generated only once this checkout is completed.</p><div class="row"><div class="col-xs-12 col-sm-6"><div class="form-group"><label class="control-label" id="triggerOverdue">Purchase Order Number</label> <input type="text" class="form-control" placeholder=""></div></div></div><div id="generateInvoiceOverdue" style="display:none"><p class="text-danger">You have overdue invoice payments on your account.</p><p>In order to complete this purchase by invoice, please pay your outstanding invoices <a href="#">here</a>.</p></div></div><hr><div class="row"><div class="col-xs-12"><button id="backButton" type="button" class="btn btn-default btn-lg pull-left" ng-click="setPreviousStep()" translate="">common.back</button> <button id="continueButton" type="submit" form="form.paymentMethodsForm" class="btn btn-primary btn-lg pull-right" ng-click="validatePaymentMethod(paymentMethods)" translate="">common.continue</button></div></div></form></div>');
 }]);
 })();
 
@@ -10540,7 +10577,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/checkout-review-purchase.html',
-    '<div id="checkout-review-purchase"><div class="row"><div class="col-md-6 u_margin-sm-top"><p class="lead u_margin-sm-bottom">Company Account</p><small><b>{{selectedCompany.name}}</b><br>Email: {{userEmail}}<br>Company ID: {{selectedCompany.id}}</small></div><div class="col-md-6 u_margin-sm-top"><p class="lead u_margin-sm-bottom">Payment Method <button class="btn btn-link btn-xs" ng-click="setCurrentStep(3)">Edit</button></p><small><b>{{plan.paymentMethods.selectedCard.cardType}}</b><br>{{plan.paymentMethods.selectedCard.last4 | cardLastFour}}<br>Exp: {{plan.paymentMethods.selectedCard.expMonth | paddedMonth}}/{{plan.paymentMethods.selectedCard.expYear}}</small></div></div><div class="row"><div class="col-md-6 u_margin-sm-top"><p class="lead u_margin-sm-bottom">Billing Address <button class="btn btn-link btn-xs" ng-click="setCurrentStep(1)">Edit</button></p><small>{{plan.contact.firstName}} {{plan.contact.lastName}}<br>{{plan.contact.email}}<br>{{plan.billingAddress.name}}<br>{{plan.billingAddress.street}}<br><span ng-show="plan.billingAddress.unit">{{plan.billingAddress.unit}}</span> {{plan.billingAddress.city}}, <span ng-show="plan.billingAddress.province">{{plan.billingAddress.province}},</span> {{plan.billingAddress.postalCode}}<br>{{plan.billingAddress.country | countryName}}</small></div><div class="col-md-6 u_margin-sm-top"><p class="lead u_margin-sm-bottom">Shipping Address <button class="btn btn-link btn-xs" ng-click="setCurrentStep(2)">Edit</button></p><small>{{plan.shippingAddress.name}}<br>{{plan.shippingAddress.street}}<br><span ng-show="plan.shippingAddress.unit">{{plan.shippingAddress.unit}}</span> {{plan.shippingAddress.city}}, <span ng-show="plan.shippingAddress.province">{{plan.shippingAddress.province}},</span> {{plan.shippingAddress.postalCode}}<br>{{plan.shippingAddress.country | countryName}}</small></div></div><br><hr class="u_margin-xs-top u_margin-xs-bottom"><div class="row"><div class="col-xs-12"><p class="lead u_margin-sm-bottom">Subscription Details <button class="btn btn-link btn-xs" ng-click="setCurrentStep(0)">Edit</button></p></div></div><div class="row"><div class="col-sm-4 col-xs-6 text-right"><p><small>{{plan.name}} ({{ plan.isMonthly ? \'Monthly\' : \'Yearly\' }})<br><span ng-show="plan.additionalDisplayLicenses">{{plan.additionalDisplayLicenses}} Additional Display<span ng-show="plan.additionalDisplayLicenses > 1">s</span><br></span> <span ng-repeat="tax in taxes">{{tax.taxName}}<br></span> Total Tax:</small></p><span class="order-total">Order Total:</span></div><div class="col-sm-4 col-xs-6 text-right"><p><small>${{getPlanPrice()}}<br><span ng-show="plan.additionalDisplayLicenses">${{getAdditionalDisplaysPrice()}}<br></span> <span ng-repeat="tax in taxes">${{tax.taxAmount | number:2}}<br></span> ${{totalTax | number:2}}</small></p><span class="order-total">${{total | number:2}} <small class="u_margin-left text-subtle">{{currency | uppercase}}</small></span></div><div class="col-sm-4 col-xs-12 text-right" ng-if="false"><button id="showTaxExempt" class="btn btn-link btn-xs">Submit Tax Exemption</button></div></div><div class="row"><hr class="u_margin-sm-top"></div><div class="col-xs-8 col-xs-offset-2 u_margin-md-bottom"><button id="payButton" class="btn btn-primary btn-hg btn-block"><span id="payLabel">Pay ${{total | number:2}} Now</span></button></div></div>');
+    '<div id="checkout-review-purchase"><div class="row"><div class="col-md-6 u_margin-sm-top"><p class="lead u_margin-sm-bottom">Company Account</p><small><b>{{selectedCompany.name}}</b><br>Email: {{userEmail}}<br>Company ID: {{selectedCompany.id}}</small></div><div class="col-md-6 u_margin-sm-top"><p class="lead u_margin-sm-bottom">Payment Method <button class="btn btn-link btn-xs" ng-click="setCurrentStep(3)">Edit</button></p><small><b>{{purchase.paymentMethods.selectedCard.cardType}}</b><br>{{purchase.paymentMethods.selectedCard.last4 | cardLastFour}}<br>Exp: {{purchase.paymentMethods.selectedCard.expMonth | paddedMonth}}/{{purchase.paymentMethods.selectedCard.expYear}}</small></div></div><div class="row"><div class="col-md-6 u_margin-sm-top"><p class="lead u_margin-sm-bottom">Billing Address <button class="btn btn-link btn-xs" ng-click="setCurrentStep(1)">Edit</button></p><small>{{purchase.contact.firstName}} {{purchase.contact.lastName}}<br>{{purchase.contact.email}}<br>{{purchase.billingAddress.name}}<br>{{purchase.billingAddress.street}}<br><span ng-show="purchase.billingAddress.unit">{{purchase.billingAddress.unit}}</span> {{purchase.billingAddress.city}}, <span ng-show="purchase.billingAddress.province">{{purchase.billingAddress.province}},</span> {{purchase.billingAddress.postalCode}}<br>{{purchase.billingAddress.country | countryName}}</small></div><div class="col-md-6 u_margin-sm-top"><p class="lead u_margin-sm-bottom">Shipping Address <button class="btn btn-link btn-xs" ng-click="setCurrentStep(2)">Edit</button></p><small>{{purchase.shippingAddress.name}}<br>{{purchase.shippingAddress.street}}<br><span ng-show="purchase.shippingAddress.unit">{{purchase.shippingAddress.unit}}</span> {{purchase.shippingAddress.city}}, <span ng-show="purchase.shippingAddress.province">{{purchase.shippingAddress.province}},</span> {{purchase.shippingAddress.postalCode}}<br>{{purchase.shippingAddress.country | countryName}}</small></div></div><br><hr class="u_margin-xs-top u_margin-xs-bottom"><div class="row"><div class="col-xs-12"><p class="lead u_margin-sm-bottom">Subscription Details <button class="btn btn-link btn-xs" ng-click="setCurrentStep(0)">Edit</button></p></div></div><div class="row"><div class="col-sm-4 col-xs-6 text-right"><p><small>{{purchase.plan.name}} ({{ purchase.plan.isMonthly ? \'Monthly\' : \'Yearly\' }})<br><span ng-show="purchase.plan.additionalDisplayLicenses">{{purchase.plan.additionalDisplayLicenses}} Additional Display<span ng-show="purchase.plan.additionalDisplayLicenses > 1">s</span><br></span> <span ng-repeat="tax in purchase.estimate.taxes">{{tax.taxName}}<br></span> Total Tax:</small></p><span class="order-total">Order Total:</span></div><div class="col-sm-4 col-xs-6 text-right"><p><small>${{getPlanPrice()}}<br><span ng-show="purchase.plan.additionalDisplayLicenses">${{getAdditionalDisplaysPrice()}}<br></span> <span ng-repeat="tax in purchase.estimate.taxes">${{tax.taxAmount | number:2}}<br></span> ${{purchase.estimate.totalTax | number:2}}</small></p><span class="order-total">${{purchase.estimate.total | number:2}} <small class="u_margin-left text-subtle">{{purchase.estimate.currency | uppercase}}</small></span></div><div class="col-sm-4 col-xs-12 text-right" ng-if="false"><button id="showTaxExempt" class="btn btn-link btn-xs">Submit Tax Exemption</button></div></div><div class="row"><hr class="u_margin-sm-top"></div><div class="col-xs-8 col-xs-offset-2 u_margin-md-bottom"><button id="payButton" class="btn btn-primary btn-hg btn-block"><span id="payLabel">Pay ${{purchase.estimate.total | number:2}} Now</span></button></div></div>');
 }]);
 })();
 
@@ -10564,7 +10601,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/checkout-shipping-address.html',
-    '<div id="checkout-shipping-address" class="address-editor"><form id="form.shippingAddressForm" role="form" class="u_margin-md-top" name="form.shippingAddressForm" autocomplete="on" novalidate=""><div class="alert alert-danger" ng-show="form.shippingAddressForm.$submitted && form.shippingAddressForm.$invalid">Please complete the missing information below.</div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="plan.shippingAddress.validationError"><strong>Address Validation Error</strong> {{plan.shippingAddress.validationError}}</div><address-form form-object="form.shippingAddressForm" address-object="plan.shippingAddress"></address-form><hr><div class="row"><div class="col-xs-12"><button id="backButton" type="button" class="btn btn-default btn-lg pull-left" ng-click="setPreviousStep()" translate="">common.back</button> <button id="continueButton" type="submit" form="form.shippingAddressForm" class="btn btn-primary btn-lg pull-right" ng-click="validateAddress(plan.shippingAddress)" translate="">common.continue</button></div></div></form></div>');
+    '<div id="checkout-shipping-address" class="address-editor"><form id="form.shippingAddressForm" role="form" class="u_margin-md-top" name="form.shippingAddressForm" autocomplete="on" novalidate=""><div class="alert alert-danger" ng-show="form.shippingAddressForm.$submitted && form.shippingAddressForm.$invalid">Please complete the missing information below.</div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="shippingAddress.validationError"><strong>Address Validation Error</strong> {{shippingAddress.validationError}}</div><address-form form-object="form.shippingAddressForm" address-object="shippingAddress"></address-form><hr><div class="row"><div class="col-xs-12"><button id="backButton" type="button" class="btn btn-default btn-lg pull-left" ng-click="setPreviousStep()" translate="">common.back</button> <button id="continueButton" type="submit" form="form.shippingAddressForm" class="btn btn-primary btn-lg pull-right" ng-click="validateAddress(shippingAddress)" translate="">common.continue</button></div></div></form></div>');
 }]);
 })();
 
