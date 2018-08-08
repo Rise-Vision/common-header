@@ -4,7 +4,70 @@
   angular.module("risevision.store.services")
     .service("storeService", ["$q", "$log", "storeAPILoader",
       function ($q, $log, storeAPILoader) {
+
+        var _getResult = function (resp) {
+          if (resp.result !== null && typeof resp.result === "object") {
+            return resp.result;
+          } else {
+            return resp;
+          }
+        };
+
         var service = {
+          validateAddress: function (addressObject) {
+            var obj = {
+              "street": addressObject.street,
+              "unit": addressObject.unit,
+              "city": addressObject.city,
+              "country": addressObject.country,
+              "postalCode": addressObject.postalCode,
+              "province": addressObject.province,
+            };
+
+            return storeAPILoader()
+              .then(function (storeApi) {
+                return storeApi.company.validateAddress(obj);
+              })
+              .then(function (resp) {
+                var result = _getResult(resp);
+                $log.debug("validateAddress result: ", result);
+
+                if (result.code !== -1) {
+                  return $q.resolve(result);
+                } else {
+                  return $q.reject(result);
+                }
+              });
+          },
+          calculateTaxes: function (companyId, planId, addonId, addonQty,
+            shippingAddress) {
+            var deferred = $q.defer();
+            var obj = {
+              "companyId": companyId,
+              "planId": planId,
+              "addonId": addonId,
+              "addonQty": addonQty,
+              "line1": shippingAddress.street,
+              "line2": shippingAddress.unit,
+              "city": shippingAddress.city,
+              "country": shippingAddress.country,
+              "state": shippingAddress.province,
+              "zip": shippingAddress.postalCode
+            };
+
+            storeAPILoader().then(function (storeApi) {
+              return storeApi.tax.estimate(obj);
+            })
+              .then(function (resp) {
+                $log.debug("tax estimate resp", resp);
+                deferred.resolve(resp.result);
+              })
+              .then(null, function (e) {
+                console.error("Failed to get tax estimate.", e);
+                deferred.reject(e);
+              });
+            return deferred.promise;
+          },
           createSession: function (companyId) {
             var deferred = $q.defer();
 

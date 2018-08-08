@@ -1,6 +1,6 @@
 angular.module("risevision.common.components.purchase-flow")
-  .service("addressFactory", ["$q", "$log", "validateAddress",
-    function ($q, $log, validateAddress) {
+  .service("addressFactory", ["$q", "$log", "storeService",
+    function ($q, $log, storeService) {
       var factory = {};
 
       var _addressesAreIdentical = function (src, result) {
@@ -32,7 +32,7 @@ angular.module("risevision.common.components.purchase-flow")
 
           return $q.resolve();
         } else {
-          return validateAddress(addressObject)
+          return storeService.validateAddress(addressObject)
             .then(function (result) {
               if (!_addressesAreIdentical(addressObject, result)) {
                 $log.error("Validated address differs from entered address: ", addressObject, result);

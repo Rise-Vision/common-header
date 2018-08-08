@@ -309,6 +309,11 @@ describe("controller: purchase modal", function() {
 
   });
 
+  it("setCurrentStep: ", function() {
+    $scope.setCurrentStep(2);
+
+    expect($scope.currentStep).to.equal(2);
+  });
 
   describe("setNextStep: ", function() {
     it("should increment step", function() {

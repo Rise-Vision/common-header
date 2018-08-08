@@ -2,41 +2,54 @@
 <div id="checkout-review-purchase">
   <div class="row">
     <div class="col-md-6 u_margin-sm-top">
-      <p class="lead u_margin-sm-bottom ">Company Account
+      <p class="lead u_margin-sm-bottom">
+        Company Account
       </p>
       <small>
-        <b>Acme Co Inc.</b>
-        <br> Email: user@domain.com
-        <br> Company ID: ce4684a1-e8b3-4e02-9798-c4517b43cf7a
+        <b>{{selectedCompany.name}}</b><br>
+        Email: {{userEmail}}<br>
+        Company ID: {{selectedCompany.id}}
       </small>
     </div>
     <div class="col-md-6 u_margin-sm-top">
-      <p class="lead u_margin-sm-bottom ">Payment Method
-        <button class="btn btn-link btn-xs">Edit</button>
+      <p class="lead u_margin-sm-bottom">
+        Payment Method
+        <button class="btn btn-link btn-xs" ng-click="setCurrentStep(3)">Edit</button>
       </p>
       <small>
-        <b>VISA</b>
-        <br> 4242-0000-4242-0000
-        <br> Exp: 07/18
+        <b>{{plan.paymentMethods.selectedCard.cardType}}</b>
+        <br>{{plan.paymentMethods.selectedCard.last4 | cardLastFour}}
+        <br>Exp: {{plan.paymentMethods.selectedCard.expMonth | paddedMonth}}/{{plan.paymentMethods.selectedCard.expYear}}
       </small>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6 u_margin-sm-top">
-      <p class="lead u_margin-sm-bottom ">Billing Address
-        <button class="btn btn-link btn-xs">Edit</button>
+      <p class="lead u_margin-sm-bottom">
+        Billing Address
+        <button class="btn btn-link btn-xs" ng-click="setCurrentStep(1)">Edit</button>
       </p>
       <small>
-        Gob Bluth<br> user@risevision.com
-        <br> Rise Vision Inc.<br> 545 King Street West<br> Toronto, ON, M5V 1M1<br> Canada
+        {{plan.contact.firstName}} {{plan.contact.lastName}}<br>
+        {{plan.contact.email}}<br>
+        {{plan.billingAddress.name}}<br>
+        {{plan.billingAddress.street}}<br> 
+        <span ng-show="plan.billingAddress.unit">{{plan.billingAddress.unit}}</span>
+        {{plan.billingAddress.city}}, <span ng-show="plan.billingAddress.province">{{plan.billingAddress.province}},</span> {{plan.billingAddress.postalCode}}<br> 
+        {{plan.billingAddress.country | countryName}}
       </small>
     </div>
     <div class="col-md-6 u_margin-sm-top">
-      <p class="lead u_margin-sm-bottom ">Shipping Address
-        <button class="btn btn-link btn-xs">Edit</button>
+      <p class="lead u_margin-sm-bottom">
+        Shipping Address
+        <button class="btn btn-link btn-xs" ng-click="setCurrentStep(2)">Edit</button>
       </p>
       <small>
-        Rise Vision Inc.<br> 545 King Street West<br> Toronto, ON, M5V 1M1<br> Canada
+        {{plan.shippingAddress.name}}<br>
+        {{plan.shippingAddress.street}}<br> 
+        <span ng-show="plan.shippingAddress.unit">{{plan.shippingAddress.unit}}</span>
+        {{plan.shippingAddress.city}}, <span ng-show="plan.shippingAddress.province">{{plan.shippingAddress.province}},</span> {{plan.shippingAddress.postalCode}}<br> 
+        {{plan.shippingAddress.country | countryName}}
       </small>
     </div>
   </div>
@@ -44,37 +57,51 @@
   <hr class="u_margin-xs-top u_margin-xs-bottom">
   <div class="row">
     <div class="col-xs-12">
-      <p class="lead u_margin-sm-bottom ">Subscription Details
-        <button class="btn btn-link btn-xs">Edit</button>
+      <p class="lead u_margin-sm-bottom">
+        Subscription Details
+        <button class="btn btn-link btn-xs" ng-click="setCurrentStep(0)">Edit</button>
       </p>
     </div>
   </div>
   <div class="row">
     <div class="col-sm-4 col-xs-6 text-right">
-      <p><small>Basic Plan (Yearly)<br/> 2 Additional Displays<br/> GST
-        <br/> PST
-        <br/> Total Tax:</small></p>
+      <p>
+        <small>{{plan.name}} ({{ plan.isMonthly ? 'Monthly' : 'Yearly' }})<br>
+          <span ng-show="plan.additionalDisplayLicenses">{{plan.additionalDisplayLicenses}} Additional Display<span ng-show="plan.additionalDisplayLicenses > 1">s</span><br></span>
+          <span ng-repeat="tax in taxes">
+            {{tax.taxName}}<br>
+          </span>
+          Total Tax:
+        </small>
+      </p>
       <span class="order-total">Order Total:</span>
     </div>
     <div class="col-sm-4 col-xs-6 text-right">
-      <p><small>$85<br/> $19
-        <br/> $1.70
-        <br/> $2.20
-        <br/> $4.70
-      </small></p>
-      <span class="order-total">$122.34 <small class="u_margin-left text-subtle">CAD</small></span>
+      <p>
+        <small>
+          ${{getPlanPrice()}}<br>
+          <span ng-show="plan.additionalDisplayLicenses">${{getAdditionalDisplaysPrice()}}<br></span>
+          <span ng-repeat="tax in taxes">
+            ${{tax.taxAmount | number:2}}<br>
+          </span>
+          ${{totalTax | number:2}}
+        </small>
+      </p>
+      <span class="order-total">
+        ${{total | number:2}}
+        <small class="u_margin-left text-subtle">{{currency | uppercase}}</small>
+      </span>
     </div>
-    <div class="col-sm-4 col-xs-12 text-right">
+    <div class="col-sm-4 col-xs-12 text-right" ng-if="false">
       <button id="showTaxExempt" class="btn btn-link btn-xs">Submit Tax Exemption</button>
     </div>
   </div>
   <div class="row">
     <hr class="u_margin-sm-top">
   </div>
-  <div class="col-xs-8 col-xs-offset-2">
+  <div class="col-xs-8 col-xs-offset-2 u_margin-md-bottom">
     <button id="payButton" class="btn btn-primary btn-hg btn-block">
-        <span id="payLabel">Pay $122.34 Now </span>
-        <!-- <i id="loadSpinner" class="fa fa-spinner fa-spin fa-fw fa-inverse u_padding-lg-horizontal" style="display:none" ></i> -->
-      </button> <br/>
+      <span id="payLabel">Pay ${{total | number:2}} Now</span>
+    </button> 
   </div>
 </div>

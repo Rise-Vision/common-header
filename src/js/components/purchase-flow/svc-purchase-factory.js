@@ -32,25 +32,7 @@
                 selectedPlan.contact = _cleanContactObj(userState.getCopyOfProfile());
                 selectedPlan.paymentMethods = {
                   paymentMethod: "card",
-                  existingCreditCards: [
-                    // {
-                    //   "id": "card_asdfwrdsfs",
-                    //   "last4": "4242",
-                    //   "expMonth": 1,
-                    //   "expYear": 2019,
-                    //   "name": "Alex",
-                    //   "cardType": "Visa",
-                    //   "isDefault": true
-                    // }, {
-                    //   "id": "card_asdfw4ewrds",
-                    //   "last4": "9292",
-                    //   "expMonth": 1,
-                    //   "expYear": 2019,
-                    //   "name": "Alex",
-                    //   "cardType": "Mastercard",
-                    //   "isDefault": false
-                    // }
-                  ],
+                  existingCreditCards: [],
                   newCreditCard: {
                     address: {},
                     useBillingAddress: true,

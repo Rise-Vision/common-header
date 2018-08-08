@@ -9,14 +9,6 @@ angular.module("risevision.common.components.purchase-flow")
             return "***-" + card.last4 + ", " + card.cardType + (card.isDefault ? " (default)" : "");
           };
 
-          $scope.getPaddedMonth = function (month) {
-            if (month < 10) {
-              month = "0" + month;
-            }
-
-            return month;
-          };
-
         }
       };
     }
