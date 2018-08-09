@@ -6,16 +6,13 @@
     <h3 class="modal-title" translate>Checkout</h3>
   </div>
 
-  <div id="purchase-modal" class="modal-body checkout-modal" stop-event="touchend">
-
-    <div id="prototypeProgressIndicator" class="progress-indicator">
-      <div ng-repeat-start="step in PURCHASE_STEPS" class="indicator" ng-class="{ active: currentStep === step.index, complete: currentStep > step.index }">
-        <div class="tag">{{step.name}}</div>
-      </div>
-      <div ng-repeat-end class="progress-bar-container" ng-class="{ complete: currentStep > step.index }">
-        <div class="progress-bar"></div>
-      </div>
+  <div class="steps">
+    <div ng-repeat="step in PURCHASE_STEPS" class="step-item" ng-class="{ active: currentStep === step.index, complete: currentStep > step.index }">
+      <span>{{step.name}}</span>
     </div>
+  </div>
+
+  <div id="purchase-modal" class="modal-body checkout-modal" stop-event="touchend">
 
     <review-subscription ng-if="currentStep === 0"></review-subscription>
     <billing-address ng-if="currentStep === 1"></billing-address>
@@ -27,12 +24,11 @@
 
   </div> <!-- //Modal Body -->
 
-  <div id="security-branding" class="modal-small-footer text-center u_padding-xs" ng-show="currentStep > 2">
-    <small class="text-subtle">
+  <div id="security-branding" class="modal-footer text-center" ng-show="currentStep > 2">
+    <span class="text-muted">
       <i class="fa fa-lock icon-left"></i>
-      Secure Checkout from <img src="https://s3.amazonaws.com/Rise-Images/UI/chargebee-icon.svg"> 
-      Chargebee and <img alt="powered by Stripe" src="https://s3.amazonaws.com/Rise-Images/UI/powered_by_stripe.svg">
-    </small>
+      ChargeBee Secure Payment
+    </span>
   </div>
 
 </div>
