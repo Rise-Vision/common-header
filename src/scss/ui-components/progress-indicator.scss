@@ -37,19 +37,24 @@
   display: block;
   content: '';
   position: absolute;
-  bottom: -7px;
+  bottom: -10px;
   left: 50%;
-  margin-left: -5px;
+  margin-left: -8px;
   border-radius: 50%;
-  width: 10px;
-  height: 10px;
+  width: 16px;
+  height: 16px;
   background-color: $white;
   border: 3px solid $light-gray;
   z-index: 100;
 }
 
-.step-item.complete:before, .step-item.active:before {
+.step-item.active:before {
   border: 3px solid $rise-green;
+}
+
+.step-item.complete:before {
+  border: 3px solid $rise-green;
+  background-color: $rise-green;
 }
 
 .step-item.complete:first-child:after {
