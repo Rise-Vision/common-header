@@ -121,13 +121,14 @@ describe("Services: purchase factory", function() {
       expect(purchaseFactory.purchase.paymentMethods.paymentMethod).to.equal("card");
       expect(purchaseFactory.purchase.paymentMethods.existingCreditCards).to.deep.equal([]);
 
-      expect(purchaseFactory.purchase.paymentMethods.selectedCard).to.be.null;
-
       expect(purchaseFactory.purchase.paymentMethods.newCreditCard).to.deep.equal({
+        isNew: true,
         address: {},
         useBillingAddress: true,
         billingAddress: purchaseFactory.purchase.billingAddress
       });
+
+      expect(purchaseFactory.purchase.paymentMethods.selectedCard).to.equal(purchaseFactory.purchase.paymentMethods.newCreditCard);
 
       expect(purchaseFactory.purchase.estimate).to.deep.equal({});
     });
@@ -203,12 +204,14 @@ describe("Services: purchase factory", function() {
             paymentMethod: "card",
             existingCreditCards: [],
             newCreditCard: card = {
+              isNew: true,
               number: "123",
               address: {},
               billingAddress: {}
             }
           }
         };
+        purchaseFactory.purchase.paymentMethods.selectedCard = purchaseFactory.purchase.paymentMethods.newCreditCard;
       });
 
       it("should validate card", function() {
@@ -261,36 +264,15 @@ describe("Services: purchase factory", function() {
         });
       });
 
-      it("should add card to existing cards and set it as selected", function(done) {
+      it("should update Card fields with API results", function(done) {
         purchaseFactory.validatePaymentMethod()
         .then(function() {
-          expect(purchaseFactory.purchase.paymentMethods.existingCreditCards).to.have.length(1);
-          expect(purchaseFactory.purchase.paymentMethods.existingCreditCards[0]).to.deep.equal({
-            id: "id",
-            last4: "last4",
-            expMonth: "expMonth",
-            expYear: "expYear",
-            name: "name",
-            cardType: "cardType"
-          });
-          expect(purchaseFactory.purchase.paymentMethods.selectedCard).to.equal(purchaseFactory.purchase.paymentMethods.existingCreditCards[0]);
+          expect(card.id).to.equal("id");
+          expect(card.last4).to.equal("last4");
+          expect(card.cardType).to.equal("cardType");
 
-          done();
-        })
-        .then(null,function() {
-          done("error");
-        });
-      });
-
-      it("should reset new credit card", function(done) {
-        purchaseFactory.validatePaymentMethod()
-        .then(function() {
-          expect(purchaseFactory.purchase.paymentMethods.newCreditCard).to.not.equal(card);
-          expect(purchaseFactory.purchase.paymentMethods.newCreditCard).to.deep.equal({
-            address: {},
-            useBillingAddress: true,
-            billingAddress: purchaseFactory.purchase.billingAddress
-          });
+          expect(purchaseFactory.purchase.paymentMethods.selectedCard).to.equal(card);
+          expect(purchaseFactory.purchase.paymentMethods.newCreditCard).to.equal(card);
 
           done();
         })

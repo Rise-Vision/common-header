@@ -73,6 +73,7 @@ describe("controller: purchase modal", function() {
 
     expect($scope.PURCHASE_STEPS).to.be.ok;
     expect($scope.currentStep).to.equal(0);
+    expect($scope.finalStep).to.be.false;
 
     expect($scope.validateAddress).to.be.a("function");
     expect($scope.validatePaymentMethod).to.be.a("function");
@@ -214,6 +215,7 @@ describe("controller: purchase modal", function() {
       $scope.setNextStep();
 
       expect($scope.currentStep).to.equal(4);
+      expect($scope.finalStep).to.be.true;
 
       purchaseFactory.getEstimate.should.have.been.called;
     });
@@ -224,6 +226,7 @@ describe("controller: purchase modal", function() {
       $scope.setNextStep();
 
       expect($scope.currentStep).to.equal(4);
+      expect($scope.finalStep).to.be.true;
 
       purchaseFactory.getEstimate.should.have.been.called;
 
@@ -235,6 +238,7 @@ describe("controller: purchase modal", function() {
         purchaseFactory.getEstimate.should.have.been.calledTwice;
 
         expect($scope.currentStep).to.equal(4);
+        expect($scope.finalStep).to.be.true;
 
         done();
       }, 10);

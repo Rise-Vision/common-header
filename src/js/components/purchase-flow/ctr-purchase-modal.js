@@ -32,7 +32,7 @@ angular.module("risevision.common.components.purchase-flow")
 
     $scope.PURCHASE_STEPS = PURCHASE_STEPS;
     $scope.currentStep = 0;
-    var finalStep = false;
+    $scope.finalStep = false;
 
     $scope.$watch("factory.loading", function (loading) {
       if (loading) {
@@ -81,10 +81,10 @@ angular.module("risevision.common.components.purchase-flow")
         return;
       }
 
-      if (finalStep || $scope.currentStep >= 3) {
+      if ($scope.finalStep || $scope.currentStep >= 3) {
         $scope.currentStep = 4;
 
-        finalStep = true;
+        $scope.finalStep = true;
 
         purchaseFactory.getEstimate();
       } else {

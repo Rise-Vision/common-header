@@ -1,10 +1,18 @@
 <!-- Step 5 -->
 <div id="checkout-review-purchase">
   <div id="errorBox" class="alert alert-danger" role="alert" ng-show="purchase.estimate.estimateError">
-    <strong>Tax Estimate Error</strong> {{purchase.estimate.estimateError}}
-    <a class="pull-right u_margin-right" href="#" ng-click="factory.getEstimate()">
-      Retry
-    </a>
+    <div class="row">
+      <div class="col-xs-9">
+        <p>
+          <strong>Tax Estimate Error</strong> {{purchase.estimate.estimateError}}
+        </p>
+      </div>
+      <div class="col-xs-3">
+        <a class="btn btn-default btn-block" href="#" ng-click="factory.getEstimate()">
+          Retry
+        </a>
+      </div>
+    </div>
   </div>
 
   <div class="row">

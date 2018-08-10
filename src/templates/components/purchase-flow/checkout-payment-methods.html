@@ -17,7 +17,7 @@
 
     <div id="credit-card-form" ng-if="paymentMethods.paymentMethod === 'card'">
       <!-- Alpha Release - Select New Card by default -->
-      <div class="row" ng-show="paymentMethods.existingCreditCards.length > 0">
+      <div class="row" ng-if="false">
         <div class="col-md-12">
           <div class="form-group">
             <select id="credit-card-select" class="form-control selectpicker" ng-model="paymentMethods.selectedCard" ng-options="c as getCardDescription(c) for c in paymentMethods.existingCreditCards track by c.id">
@@ -28,7 +28,7 @@
       </div>
 
       <!-- NEW CREDIT CARD -->
-      <div id="new-credit-card-form" ng-if="!paymentMethods.selectedCard">
+      <div id="new-credit-card-form" ng-if="paymentMethods.selectedCard.isNew">
         <div class="alert alert-danger" ng-show="form.paymentMethodsForm.$submitted && form.paymentMethodsForm.$invalid">
           Please complete the missing information below.
         </div>
@@ -112,7 +112,7 @@
       <!-- END NEW CC -->
 
       <!-- EXISTING CREDIT CARD -->
-      <div id="existing-credit-card-form" ng-if="paymentMethods.selectedCard">
+      <div id="existing-credit-card-form" ng-if="!paymentMethods.selectedCard.isNew">
         <div id="errorBox" class="alert alert-danger" role="alert" ng-show="paymentMethods.selectedCard.validationErrors.length">
           <strong>Card Validation Error</strong> {{paymentMethods.selectedCard.validationErrors[0]}}
         </div>
@@ -175,7 +175,7 @@
     <hr>
     <div class="row">
       <div class="col-xs-12">
-        <button id="backButton" type="button" class="btn btn-default pull-left" ng-click="setPreviousStep()" translate>common.back</button>
+        <button id="backButton" type="button" class="btn btn-default pull-left" ng-click="setPreviousStep()" ng-hide="finalStep" translate>common.back</button>
         <button id="continueButton" type="submit" form="form.paymentMethodsForm" class="btn btn-primary pull-right" ng-click="validatePaymentMethod()" translate>common.continue</button>
       </div>
     </div>

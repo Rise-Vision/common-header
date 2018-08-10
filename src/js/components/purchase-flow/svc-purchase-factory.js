@@ -22,14 +22,6 @@
           };
         };
 
-        var _resetNewCreditCard = function () {
-          factory.purchase.paymentMethods.newCreditCard = {
-            address: {},
-            useBillingAddress: true,
-            billingAddress: factory.purchase.billingAddress
-          };
-        };
-
         var _init = function (plan, isMonthly) {
           factory.purchase = {};
 
@@ -42,11 +34,17 @@
           factory.purchase.contact = _cleanContactObj(userState.getCopyOfProfile());
           factory.purchase.paymentMethods = {
             paymentMethod: "card",
-            existingCreditCards: []
+            existingCreditCards: [],
+            newCreditCard: {
+              isNew: true,
+              address: {},
+              useBillingAddress: true,
+              billingAddress: factory.purchase.billingAddress
+            }
           };
-          _resetNewCreditCard();
+
           // Alpha Release - Select New Card by default
-          factory.purchase.paymentMethods.selectedCard = null;
+          factory.purchase.paymentMethods.selectedCard = factory.purchase.paymentMethods.newCreditCard;
           factory.purchase.estimate = {};
 
         };
@@ -80,7 +78,7 @@
             // TODO: Check Invoice credit (?)
             deferred.resolve();
           } else if (paymentMethods.paymentMethod === "card") {
-            if (paymentMethods.selectedCard) {
+            if (!paymentMethods.selectedCard.isNew) {
               if (_validateCard(paymentMethods.selectedCard, false)) {
                 // Existing Card selected
                 deferred.resolve();
@@ -98,19 +96,9 @@
 
                 return stripeService.createToken(paymentMethods.newCreditCard, address)
                   .then(function (response) {
-                    var newCard = {
-                      "id": response.id,
-                      "last4": response.last4,
-                      "expMonth": response.exp_month,
-                      "expYear": response.exp_year,
-                      "name": response.name,
-                      "cardType": response.type
-                    };
-
-                    paymentMethods.existingCreditCards.push(newCard);
-                    paymentMethods.selectedCard = newCard;
-
-                    _resetNewCreditCard();
+                    paymentMethods.newCreditCard.id = response.id;
+                    paymentMethods.newCreditCard.last4 = response.last4;
+                    paymentMethods.newCreditCard.cardType = response.type;
                   })
                   .finally(function () {
                     factory.loading = false;
