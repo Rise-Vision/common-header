@@ -58,22 +58,21 @@ angular.module("risevision.common.components.purchase-flow")
       $scope.factory.loading = true;
 
       addressFactory.validateAddress(addressObject)
-        .then(function () {
+        .finally(function () {
+          $scope.factory.loading = false;
+
           if (!addressObject.validationError) {
             $scope.setNextStep();
           }
-        })
-        .finally(function () {
-          $scope.factory.loading = false;
         });
     };
 
-    $scope.validatePaymentMethod = function (paymentMethods) {
+    $scope.validatePaymentMethod = function () {
       if (!_isFormValid()) {
         return;
       }
 
-      purchaseFactory.validatePaymentMethod(paymentMethods)
+      purchaseFactory.validatePaymentMethod()
         .then($scope.setNextStep);
     };
 
