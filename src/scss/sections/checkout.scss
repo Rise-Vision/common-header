@@ -1,27 +1,27 @@
-.flex-pricing-summary {
+.subscription-summary {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  height: 100%;
-  p {
-    font-size: 62px;
-    line-height: 1;
-  }
-  b {
-    font-size: 33px;
-    align-self: center;
-  }
-  .connector-column {
-    font-size: 33px;
-    align-self: center;
-  }
-  &>div:nth-of-type(even) {
-    flex: 1;
-  }
-  &>div:nth-of-type(odd) {
-    flex: 5;
-  }
+  margin-bottom: 10px;
 }
+
+.subscription-summary-item {
+  flex-grow: 1;
+  width: 45%;
+}
+
+.subscription-summary-divider {
+  flex-grow: 0;
+  width: 10%;
+  align-self: center;
+  font-weight: 900;
+  font-size: 2em;
+}
+
+.stat-value {
+  font-size: 4em;
+}
+
+
 
 .flex-additive-rule {
   height: 32px;
@@ -38,26 +38,18 @@
 .payment-recurrence-selector {
   padding: 0;
   .radio {
+    display: flex;
+    flex-direction: row;
     position: relative;
-    display: block;
     min-height: 20px;
     padding: 9px;
     margin: 0;
-    label {
-      padding: 5px 0 5px 30px;
+    .label {
+      margin-left: auto;
+      font-size: 1em;
     }
     &.active {
       background: aliceblue;
-    }
-    .highlight {
-      border: 1px solid #1fbc52;
-      padding: 0px 12px;
-      float: right;
-      color: #1fbc52;
-      cursor: default;
-      top: 4px;
-      position: relative;
-      right: 5px;
     }
   }
 }
