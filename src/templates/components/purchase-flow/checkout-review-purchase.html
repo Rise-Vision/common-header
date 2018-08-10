@@ -1,7 +1,10 @@
 <!-- Step 5 -->
 <div id="checkout-review-purchase">
   <div id="errorBox" class="alert alert-danger" role="alert" ng-show="purchase.estimate.estimateError">
-    <strong>Payment Processing Error</strong> {{purchase.estimate.estimateError}}
+    <strong>Tax Estimate Error</strong> {{purchase.estimate.estimateError}}
+    <a class="pull-right u_margin-right" href="#" ng-click="factory.getEstimate()">
+      Retry
+    </a>
   </div>
 
   <div class="row">
