@@ -11,13 +11,13 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group" ng-class="{ 'has-error': (form.billingAddressForm.firstName.$dirty || form.billingAddressForm.$submitted) && form.billingAddressForm.firstName.$invalid }">
-          <label for="contact-firstName" class="control-label">First Name</label>
+          <label for="contact-firstName" class="control-label">First Name *</label>
           <input id="contact-firstName" type="text" class="form-control" name="firstName" ng-model="contact.firstName" autocomplete="given-name" required>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group" ng-class="{ 'has-error': (form.billingAddressForm.lastName.$dirty || form.billingAddressForm.$submitted) && form.billingAddressForm.lastName.$invalid }">
-          <label for="contact-lastName" class="control-label">Last Name</label>
+          <label for="contact-lastName" class="control-label">Last Name *</label>
           <input id="contact-lastName" type="text" class="form-control" name="lastName" ng-model="contact.lastName" autocomplete="family-name" required>
         </div>
       </div>
@@ -25,7 +25,7 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group" ng-class="{ 'has-error': (form.billingAddressForm.email.$dirty || form.billingAddressForm.$submitted) && form.billingAddressForm.email.$invalid }">
-          <label for="contact-email" class="control-label">Email</label>
+          <label for="contact-email" class="control-label">Email *</label>
           <input id="contact-email" type="email" class="form-control" name="email" ng-model="contact.email" autocomplete="email" required>
         </div>
       </div>
@@ -42,8 +42,8 @@
     <hr>
     <div class="row">
       <div class="col-xs-12">
-        <button id="backButton" type="button" class="btn btn-default btn-lg pull-left" ng-click="setPreviousStep()" translate>common.back</button>
-        <button id="continueButton" type="submit" form="form.billingAddressForm" class="btn btn-primary btn-lg pull-right" ng-click="validateAddress(billingAddress)" translate>common.continue</button>
+        <button id="backButton" type="button" class="btn btn-default pull-left" ng-click="setPreviousStep()" translate>common.back</button>
+        <button id="continueButton" type="submit" form="form.billingAddressForm" class="btn btn-primary pull-right" ng-click="validateAddress(plan.billingAddress)" translate>common.continue</button>
       </div>
     </div>
   </form>

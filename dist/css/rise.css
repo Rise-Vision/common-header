@@ -7639,37 +7639,6 @@ button.close {
   tr.visible-print {
     display: table-row !important; } }
 
-html input[disabled] {
-  cursor: not-allowed;
-  background-color: #EEE;
-  opacity: .5; }
-
-.form-control {
-  box-shadow: none; }
-
-input::-webkit-credentials-auto-fill-button {
-  visibility: hidden;
-  display: none !important;
-  pointer-events: none;
-  position: absolute;
-  right: 0; }
-
-input::-webkit-contacts-auto-fill-button {
-  visibility: hidden;
-  display: none !important;
-  pointer-events: none;
-  position: absolute;
-  right: 0; }
-
-input[type=number] {
-  -moz-appearance: textfield; }
-
-::-webkit-inner-spin-button {
-  -webkit-appearance: none; }
-
-::-webkit-outer-spin-button {
-  -webkit-appearance: none; }
-
 /* ==========================================================================
    Modals
    ========================================================================== */
@@ -7711,9 +7680,6 @@ input[type=number] {
 
 .modal-title + .header-nav {
   margin-top: -5px; }
-
-.modal-body {
-  padding: 15px; }
 
 .modal-header, .modal-footer {
   padding: 0; }
@@ -11772,11 +11738,6 @@ li.dropdown-header {
     .distribution-modal .list-group-item-danger .btn, .distribution-modal .list-group-item-danger .icon-nav label, .icon-nav .distribution-modal .list-group-item-danger label {
       width: 100px; } }
 
-.checkout-modal {
-  padding: 16px 32px; }
-  .checkout-modal .form-group {
-    margin-bottom: 8px; }
-
 .app-header {
   margin-left: -7.5px;
   margin-right: -7.5px;
@@ -13489,12 +13450,96 @@ ul.tree ul li:last-child:before {
   color: #262626;
   background-color: #ffff00; }
 
+.steps {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  position: relative;
+  margin-bottom: 10px; }
+
+.steps:after {
+  display: block;
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  width: 100%;
+  height: 4px;
+  background-color: #e6e6e6; }
+
+.step-item {
+  flex-grow: 1;
+  position: relative;
+  color: #5b5b5b; }
+
+.step-item span {
+  padding: 4px 0;
+  font-size: 0.9em;
+  display: block; }
+
+.step-item:after {
+  display: block;
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  width: 100%;
+  height: 4px;
+  background-color: #4ab767; }
+
+.step-item:before {
+  display: block;
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  margin-left: -8px;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border: 3px solid #e6e6e6;
+  z-index: 100; }
+
+.step-item.active:before {
+  border: 3px solid #4ab767; }
+
+.step-item.complete:before {
+  border: 3px solid #4ab767;
+  background-color: #4ab767; }
+
+.step-item.complete:first-child:after {
+  width: 50%;
+  right: 0; }
+
+.step-item.active:first-child:after {
+  width: 0; }
+
+.step-item.complete {
+  color: #4ab767;
+  z-index: 100; }
+
+.step-item.active {
+  color: #4ab767;
+  z-index: 100; }
+
+.step-item.active:after {
+  width: 50%; }
+
+/* ==========================================================================
+   Small devices (tablets, 768px and up)
+   ========================================================================== */
+@media (min-width: 768px) {
+  .step-item span {
+    padding: 8px;
+    display: block;
+    font-size: 1em; } }
+
 .progress-indicator {
+  background-color: red;
   width: 100%;
   text-align: center;
   padding: 0;
   display: inline-block;
-  margin: 30px 0 0 8px;
+  margin: 30px 0 0 0;
   cursor: default; }
   .progress-indicator .indicator {
     width: 15px;
@@ -13509,7 +13554,6 @@ ul.tree ul li:last-child:before {
       left: 50%;
       transform: translateX(-50%);
       color: #dddddd;
-      font-size: 12px;
       cursor: default; }
     .progress-indicator .indicator.complete {
       border-color: #4ab767; }
@@ -13522,8 +13566,7 @@ ul.tree ul li:last-child:before {
           font-style: normal;
           font-weight: normal;
           text-decoration: inherit;
-          color: #4ab767;
-          font-size: 14px; }
+          color: #4ab767; }
     .progress-indicator .indicator.active {
       border-color: #4ab767; }
       .progress-indicator .indicator.active .tag {
@@ -13535,8 +13578,7 @@ ul.tree ul li:last-child:before {
           font-style: normal;
           font-weight: normal;
           text-decoration: inherit;
-          color: #4ab767;
-          font-size: 14px; }
+          color: #4ab767; }
   .progress-indicator .progress-bar-container {
     width: 17%;
     height: 2px;
@@ -16557,24 +16599,24 @@ a.mfp-iframe:hover:after {
   max-width: 320px;
   line-height: 24px; }
 
-.flex-pricing-summary {
+.subscription-summary {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  height: 100%; }
-  .flex-pricing-summary p {
-    font-size: 62px;
-    line-height: 1; }
-  .flex-pricing-summary b {
-    font-size: 33px;
-    align-self: center; }
-  .flex-pricing-summary .connector-column {
-    font-size: 33px;
-    align-self: center; }
-  .flex-pricing-summary > div:nth-of-type(even) {
-    flex: 1; }
-  .flex-pricing-summary > div:nth-of-type(odd) {
-    flex: 5; }
+  margin-bottom: 10px; }
+
+.subscription-summary-item {
+  flex-grow: 1;
+  width: 45%; }
+
+.subscription-summary-divider {
+  flex-grow: 0;
+  width: 10%;
+  align-self: center;
+  font-weight: 900;
+  font-size: 2em; }
+
+.stat-value {
+  font-size: 4em; }
 
 .flex-additive-rule {
   height: 32px; }
@@ -16588,24 +16630,17 @@ a.mfp-iframe:hover:after {
 .payment-recurrence-selector {
   padding: 0; }
   .payment-recurrence-selector .radio {
+    display: flex;
+    flex-direction: row;
     position: relative;
-    display: block;
     min-height: 20px;
     padding: 9px;
     margin: 0; }
-    .payment-recurrence-selector .radio label {
-      padding: 5px 0 5px 30px; }
+    .payment-recurrence-selector .radio .label {
+      margin-left: auto;
+      font-size: 1em; }
     .payment-recurrence-selector .radio.active {
       background: aliceblue; }
-    .payment-recurrence-selector .radio .highlight {
-      border: 1px solid #1fbc52;
-      padding: 0px 12px;
-      float: right;
-      color: #1fbc52;
-      cursor: default;
-      top: 4px;
-      position: relative;
-      right: 5px; }
 
 .spinner {
   border-radius: 4px; }
@@ -16830,9 +16865,6 @@ a.mfp-iframe:hover:after {
       padding: 16px 48px; }
       .apps-launcher .apps-launcher-tour .image img {
         margin: 0 auto; }
-
-.app-launcher {
-  line-height: 1.6; }
 
 .app-launcher-header {
   padding: 48px 0; }

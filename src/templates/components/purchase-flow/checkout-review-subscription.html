@@ -1,23 +1,35 @@
 <!-- Step 1 -->
 <div id="checkout-review-subscription">
   <form id="reviewSubscriptionForm" role="form" name="form.reviewSubscriptionForm" autocomplete="on" novalidate>
-    <h3 translate translate-values="{ planName: plan.name }">common-header.purchase.review-subscription.plan-name</h3>
-    <div class="flex-pricing-summary">
-      <div class="text-center u_padding-md">
-        <p>${{plan.monthly.priceDisplayMonth}}</p>
-        <span>{{ 'common-header.purchase.review-subscription.per-display' | translate}} <br>
-          {{ 'common-header.purchase.review-subscription.per-month' | translate}}
-        </span>
-      </div>
-      <div class="connector-column text-center">
-        <b>x</b>
-      </div>
-      <div class="text-center u_padding-md">
-        <p>{{plan.proLicenseCount}}</p>
-        <span ng-show="plan.proLicenseCount === 1" translate>common-header.purchase.review-subscription.display-included</span>
-        <span ng-show="plan.proLicenseCount > 1" translate>common-header.purchase.review-subscription.displays-included</span>
-      </div>
-    </div>
+    <h3 class="text-center" translate translate-values="{ planName: plan.name }">common-header.purchase.review-subscription.plan-name</h3>
+
+    <div class="subscription-summary text-center">
+
+        <div class="subscription-summary-item">
+          <div class="stat">
+            <div class="stat-value">${{plan.monthly.priceDisplayMonth}}</div>
+            <div class="stat-legend">
+              {{ 'common-header.purchase.review-subscription.per-display' | translate}}
+              {{ 'common-header.purchase.review-subscription.per-month' | translate}}
+            </div>
+          </div><!--stat-->
+        </div>
+
+        <div class="subscription-summary-divider">x</div>
+    
+        <div class="subscription-summary-item">
+          <div class="stat">
+            <div class="stat-value">{{plan.proLicenseCount}}</div>
+            <div class="stat-legend">
+              <span ng-show="plan.proLicenseCount === 1" translate>common-header.purchase.review-subscription.display-included</span>
+              <span ng-show="plan.proLicenseCount > 1" translate>common-header.purchase.review-subscription.displays-included</span>
+            </div>
+          </div><!--stat-->
+        </div>
+      
+    </div><!--subcription-summary-->
+
+    
     <hr class="u_remove-margin">
     <div class="text-center flex-additive-rule">
       <b>+</b>
@@ -60,7 +72,7 @@
               <input type="radio" name="billingPeriod" id="yearlyBilling" ng-value="false" ng-model="plan.isMonthly" required>
               <span translate translate-values="{ yearlyPrice: getYearlyPrice() }">common-header.purchase.review-subscription.billed-yearly</span>
             </label>
-            <label class="highlight" translate translate-values="{ saveYearly: plan.yearly.save }">common-header.purchase.review-subscription.save-yearly</label>
+            <div class="label label-success" translate translate-values="{ saveYearly: plan.yearly.save }">common-header.purchase.review-subscription.save-yearly</div>
           </div>
         </div>
       </div>
@@ -68,7 +80,7 @@
     <hr>
     <div class="row">
       <div class="col-xs-12">
-        <button id="continueButton" type="submit" form="form.reviewSubscriptionForm" class="btn btn-primary btn-lg pull-right" ng-click="setNextStep()" translate>common.continue</button>
+        <button id="continueButton" type="submit" form="form.reviewSubscriptionForm" class="btn btn-primary pull-right" ng-click="setNextStep()" translate>common.continue</button>
       </div>
     </div>
   </form>
