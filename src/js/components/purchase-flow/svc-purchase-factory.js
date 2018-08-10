@@ -57,7 +57,8 @@
           $modal.open({
             template: $templateCache.get("purchase-flow/purchase-modal.html"),
             controller: "PurchaseModalCtrl",
-            size: "md"
+            size: "md",
+            backdrop: "static"
           });
         };
 
@@ -149,15 +150,17 @@
               _getChargebeeAddonId(),
               factory.purchase.plan.additionalDisplayLicenses, factory.purchase.shippingAddress)
             .then(function (result) {
-              if (!result.error && result.result === true) {
-                var estimate = factory.purchase.estimate;
+              var estimate = factory.purchase.estimate;
 
-                estimate.taxesCalculated = true;
-                estimate.taxes = result.taxes || [];
-                estimate.total = result.total;
-                estimate.totalTax = result.totalTax;
-                estimate.shippingTotal = result.shippingTotal;
-              }
+              estimate.taxesCalculated = true;
+              estimate.taxes = result.taxes || [];
+              estimate.total = result.total;
+              estimate.totalTax = result.totalTax;
+              estimate.shippingTotal = result.shippingTotal;
+            })
+            .catch(function (result) {
+              factory.purchase.estimate.estimateError = (result && result.error) ||
+                "An unexpected error has occurred. Please try again.";
             })
             .finally(function () {
               factory.loading = false;

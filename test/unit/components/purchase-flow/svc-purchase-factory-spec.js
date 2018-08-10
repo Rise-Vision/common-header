@@ -86,6 +86,12 @@ describe("Services: purchase factory", function() {
       purchaseFactory.showPurchaseModal({});
 
       expect($modal.open).to.have.been.called;
+      expect($modal.open).to.have.been.calledWith({
+        template: sinon.match.any,
+        controller: "PurchaseModalCtrl",
+        size: "md",
+        backdrop: "static"
+      });
     });
 
     it("should initialize selected plan, attach addresses and clean contact info", function() {
@@ -395,19 +401,17 @@ describe("Services: purchase factory", function() {
         });
       });
 
-      it("should not populate estimate object if call fails", function(done) {
+      it("should show estimate error if call fails", function(done) {
         validate = false;
 
         purchaseFactory.getEstimate()
         .then(function() {
-          done("error");
-        })
-        .then(null,function() {
-          expect(purchaseFactory.purchase.estimate).to.deep.equal({
-            currency: "usd"
-          });
+          expect(purchaseFactory.purchase.estimate.estimateError).to.equal("An unexpected error has occurred. Please try again.");
         
           done();
+        })
+        .then(null,function() {
+          done("error");
         });
       });
 

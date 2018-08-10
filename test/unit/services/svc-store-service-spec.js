@@ -3,7 +3,7 @@
 describe("Services: storeService", function() {
   var storeService;
   var storeApiFailure;
-  var addressObject, response;
+  var storeApi, addressObject, response;
 
   beforeEach(module("risevision.store.services"));
 
@@ -31,7 +31,7 @@ describe("Services: storeService", function() {
           }
         };
 
-        deferred.resolve({
+        deferred.resolve(storeApi = {
           customer_portal: {
             getUrl: storeApiResponse,
             createSession: storeApiResponse
@@ -42,6 +42,15 @@ describe("Services: storeService", function() {
 
               return Q.resolve(response);
             }
+          },
+          tax: {
+            estimate: sinon.spy(function(){
+              if (storeApiFailure) {
+                return Q.reject("some error");
+              } else {
+                return Q.resolve(response);
+              }
+            })
           }
         });
 
@@ -144,4 +153,117 @@ describe("Services: storeService", function() {
     });
 
   });
+
+  describe("calculateTaxes: ", function() {
+    beforeEach(function() {
+      response = {
+        result: {
+          result: true
+        }
+      };
+      addressObject = {
+        street: "street",
+        unit: "unit",
+        city: "city",
+        province: "province",
+        country: "country",
+        postalCode: "postalCode"
+      };
+    });
+
+    it("should exist", function() {
+      expect(storeService.calculateTaxes).to.be.ok;
+      expect(storeService.calculateTaxes).to.be.a("function");
+    });
+    
+    it("should return a promise", function() {
+      expect(storeService.calculateTaxes("companyId", "planId", "addonId", "addonQty", addressObject).then).to.be.a("function");
+    });
+
+    it("should create the request object", function(done) {
+      storeService.calculateTaxes("companyId", "planId", "addonId", "addonQty", addressObject)
+      .then(function() {
+        storeApi.tax.estimate.should.have.been.called;
+        storeApi.tax.estimate.should.have.been.calledWith({
+          companyId: "companyId",
+          planId: "planId",
+          addonId: "addonId",
+          addonQty: "addonQty",
+          line1: addressObject.street,
+          line2: addressObject.unit,
+          city: addressObject.city,
+          country: addressObject.country,
+          state: addressObject.province,
+          zip: addressObject.postalCode
+        });
+        done();
+      })
+      .then(null,done);
+
+    });
+
+    it("should resolve if result is true", function(done) {
+      storeService.calculateTaxes("companyId", "planId", "addonId", "addonQty", addressObject)
+      .then(function(result) {
+        expect(result).to.be.ok;
+        expect(result).to.deep.equal({
+          result: true
+        });
+        
+        done();
+      })
+      .then(null,done);
+    });
+    
+    it("should reject if result is not correct with no error message", function(done) {
+      response.result = {};
+
+      storeService.calculateTaxes("companyId", "planId", "addonId", "addonQty", addressObject)
+      .then(function(result) {
+        done(result);
+      })
+      .then(null, function(error) {
+        expect(error).to.deep.equal({});
+
+        done();
+      })
+      .then(null,done);
+    });
+
+    it("should return response if response.result doesn't exist", function(done) {
+      response.result.error = "Call Failed";
+
+      storeService.calculateTaxes("companyId", "planId", "addonId", "addonQty", addressObject)
+      .then(function(result) {
+        done(result);
+      })
+      .then(null, function(error) {
+        expect(error).to.deep.equal({
+          result: true,
+          error: "Call Failed"
+        });
+
+        done();
+      })
+      .then(null,done);
+    });
+
+    it("should return response if response.result doesn't exist", function(done) {
+      storeApiFailure = true;
+
+      storeService.calculateTaxes("companyId", "planId", "addonId", "addonQty", addressObject)
+      .then(function() {
+        done("error");
+      })
+      .then(null, function(error) {
+        expect(error).to.equal("some error");
+
+        done();
+      })
+      .then(null,done);
+    });
+
+
+  });
+
 });

@@ -43,24 +43,28 @@
             shippingAddress) {
             var deferred = $q.defer();
             var obj = {
-              "companyId": companyId,
-              "planId": planId,
-              "addonId": addonId,
-              "addonQty": addonQty,
-              "line1": shippingAddress.street,
-              "line2": shippingAddress.unit,
-              "city": shippingAddress.city,
-              "country": shippingAddress.country,
-              "state": shippingAddress.province,
-              "zip": shippingAddress.postalCode
+              companyId: companyId,
+              planId: planId,
+              addonId: addonId,
+              addonQty: addonQty,
+              line1: shippingAddress.street,
+              line2: shippingAddress.unit,
+              city: shippingAddress.city,
+              country: shippingAddress.country,
+              state: shippingAddress.province,
+              zip: shippingAddress.postalCode
             };
 
             storeAPILoader().then(function (storeApi) {
               return storeApi.tax.estimate(obj);
             })
               .then(function (resp) {
-                $log.debug("tax estimate resp", resp);
-                deferred.resolve(resp.result);
+                if (resp.result && !resp.result.error && resp.result.result === true) {
+                  $log.debug("tax estimate resp", resp);
+                  deferred.resolve(resp.result);
+                } else {
+                  deferred.reject(resp.result);
+                }
               })
               .then(null, function (e) {
                 console.error("Failed to get tax estimate.", e);

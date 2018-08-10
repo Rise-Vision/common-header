@@ -208,20 +208,14 @@ describe("controller: purchase modal", function() {
       expect($scope.currentStep).to.equal(1);
     });
 
-    it("should get estimate for the last step", function(done) {
+    it("should proceed to the last step and get estimate", function() {
       $scope.setCurrentStep(3);
 
       $scope.setNextStep();
 
-      expect($scope.currentStep).to.equal(3);
+      expect($scope.currentStep).to.equal(4);
 
-      setTimeout(function() {
-        purchaseFactory.getEstimate.should.have.been.called;
-
-        expect($scope.currentStep).to.equal(4);
-
-        done();
-      }, 10);
+      purchaseFactory.getEstimate.should.have.been.called;
     });
 
     it("should always set last step and get estimate if form was completed once", function(done) {
@@ -229,23 +223,20 @@ describe("controller: purchase modal", function() {
 
       $scope.setNextStep();
 
+      expect($scope.currentStep).to.equal(4);
+
+      purchaseFactory.getEstimate.should.have.been.called;
+
       setTimeout(function() {
-        purchaseFactory.getEstimate.should.have.been.called;
-
-        expect($scope.currentStep).to.equal(4);
-
         $scope.setCurrentStep(0);
 
         $scope.setNextStep();
 
-        setTimeout(function() {
-          purchaseFactory.getEstimate.should.have.been.calledTwice;
+        purchaseFactory.getEstimate.should.have.been.calledTwice;
 
-          expect($scope.currentStep).to.equal(4);
+        expect($scope.currentStep).to.equal(4);
 
-          done();
-        }, 10);
-
+        done();
       }, 10);
     });
 

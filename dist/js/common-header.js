@@ -3498,24 +3498,28 @@ angular.module("risevision.common.geodata", [])
             shippingAddress) {
             var deferred = $q.defer();
             var obj = {
-              "companyId": companyId,
-              "planId": planId,
-              "addonId": addonId,
-              "addonQty": addonQty,
-              "line1": shippingAddress.street,
-              "line2": shippingAddress.unit,
-              "city": shippingAddress.city,
-              "country": shippingAddress.country,
-              "state": shippingAddress.province,
-              "zip": shippingAddress.postalCode
+              companyId: companyId,
+              planId: planId,
+              addonId: addonId,
+              addonQty: addonQty,
+              line1: shippingAddress.street,
+              line2: shippingAddress.unit,
+              city: shippingAddress.city,
+              country: shippingAddress.country,
+              state: shippingAddress.province,
+              zip: shippingAddress.postalCode
             };
 
             storeAPILoader().then(function (storeApi) {
               return storeApi.tax.estimate(obj);
             })
               .then(function (resp) {
-                $log.debug("tax estimate resp", resp);
-                deferred.resolve(resp.result);
+                if (resp.result && !resp.result.error && resp.result.result === true) {
+                  $log.debug("tax estimate resp", resp);
+                  deferred.resolve(resp.result);
+                } else {
+                  deferred.reject(resp.result);
+                }
               })
               .then(null, function (e) {
                 console.error("Failed to get tax estimate.", e);
@@ -9893,7 +9897,8 @@ angular.module("risevision.common.components.purchase-flow")
           $modal.open({
             template: $templateCache.get("purchase-flow/purchase-modal.html"),
             controller: "PurchaseModalCtrl",
-            size: "md"
+            size: "md",
+            backdrop: "static"
           });
         };
 
@@ -9985,15 +9990,17 @@ angular.module("risevision.common.components.purchase-flow")
               _getChargebeeAddonId(),
               factory.purchase.plan.additionalDisplayLicenses, factory.purchase.shippingAddress)
             .then(function (result) {
-              if (!result.error && result.result === true) {
-                var estimate = factory.purchase.estimate;
+              var estimate = factory.purchase.estimate;
 
-                estimate.taxesCalculated = true;
-                estimate.taxes = result.taxes || [];
-                estimate.total = result.total;
-                estimate.totalTax = result.totalTax;
-                estimate.shippingTotal = result.shippingTotal;
-              }
+              estimate.taxesCalculated = true;
+              estimate.taxes = result.taxes || [];
+              estimate.total = result.total;
+              estimate.totalTax = result.totalTax;
+              estimate.shippingTotal = result.shippingTotal;
+            })
+            .catch(function (result) {
+              factory.purchase.estimate.estimateError = (result && result.error) ||
+                "An unexpected error has occurred. Please try again.";
             })
             .finally(function () {
               factory.loading = false;
@@ -10452,14 +10459,11 @@ angular.module("risevision.common.components.purchase-flow")
       }
 
       if (finalStep || $scope.currentStep >= 3) {
-        // TODO: Handle failure to get estimate
-        purchaseFactory.getEstimate()
-          .finally(function () {
-            $scope.currentStep = 4;
+        $scope.currentStep = 4;
 
-            finalStep = true;
-          });
+        finalStep = true;
 
+        purchaseFactory.getEstimate();
       } else {
         $scope.currentStep++;
       }
@@ -10575,7 +10579,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/checkout-review-purchase.html',
-    '<div id="checkout-review-purchase"><div class="row"><div class="col-md-6 u_margin-sm-top"><p class="lead u_margin-sm-bottom">Purchasing For</p><small><b>{{selectedCompany.name}}</b><br>Company ID: {{selectedCompany.id}}</small></div><div class="col-md-6 u_margin-sm-top"><p class="lead u_margin-sm-bottom">Payment Method <button class="btn btn-link btn-xs" ng-click="setCurrentStep(3)">Edit</button></p><small><b>{{purchase.paymentMethods.selectedCard.cardType}}</b><br>{{purchase.paymentMethods.selectedCard.last4 | cardLastFour}}<br>Exp: {{purchase.paymentMethods.selectedCard.expMonth | paddedMonth}}/{{purchase.paymentMethods.selectedCard.expYear}}</small></div></div><div class="row"><div class="col-md-6 u_margin-sm-top"><p class="lead u_margin-sm-bottom">Billing Address <button class="btn btn-link btn-xs" ng-click="setCurrentStep(1)">Edit</button></p><small>{{purchase.contact.firstName}} {{purchase.contact.lastName}}<br>{{purchase.contact.email}}<br>{{purchase.billingAddress.name}}<br>{{purchase.billingAddress.street}}<br><span ng-show="purchase.billingAddress.unit">{{purchase.billingAddress.unit}}</span> {{purchase.billingAddress.city}}, <span ng-show="purchase.billingAddress.province">{{purchase.billingAddress.province}},</span> {{purchase.billingAddress.postalCode}}<br>{{purchase.billingAddress.country | countryName}}</small></div><div class="col-md-6 u_margin-sm-top"><p class="lead u_margin-sm-bottom">Shipping Address <button class="btn btn-link btn-xs" ng-click="setCurrentStep(2)">Edit</button></p><small>{{purchase.shippingAddress.name}}<br>{{purchase.shippingAddress.street}}<br><span ng-show="purchase.shippingAddress.unit">{{purchase.shippingAddress.unit}}</span> {{purchase.shippingAddress.city}}, <span ng-show="purchase.shippingAddress.province">{{purchase.shippingAddress.province}},</span> {{purchase.shippingAddress.postalCode}}<br>{{purchase.shippingAddress.country | countryName}}</small></div></div><br><hr class="u_margin-xs-top u_margin-xs-bottom"><div class="row"><div class="col-xs-12"><p class="lead u_margin-sm-bottom">Subscription Details <button class="btn btn-link btn-xs" ng-click="setCurrentStep(0)">Edit</button></p></div></div><div class="row"><div class="col-sm-4 col-xs-6 text-right"><p><small>{{purchase.plan.name}} ({{ purchase.plan.isMonthly ? \'Monthly\' : \'Yearly\' }})<br><span ng-show="purchase.plan.additionalDisplayLicenses">{{purchase.plan.additionalDisplayLicenses}} Additional Display<span ng-show="purchase.plan.additionalDisplayLicenses > 1">s</span><br></span> <span ng-repeat="tax in purchase.estimate.taxes">{{tax.taxName}}<br></span> Total Tax:</small></p><span class="order-total">Order Total:</span></div><div class="col-sm-4 col-xs-6 text-right"><p><small>${{getPlanPrice()}}<br><span ng-show="purchase.plan.additionalDisplayLicenses">${{getAdditionalDisplaysPrice()}}<br></span> <span ng-repeat="tax in purchase.estimate.taxes">${{tax.taxAmount | number:2}}<br></span> ${{purchase.estimate.totalTax | number:2}}</small></p><span class="order-total">${{purchase.estimate.total | number:2}} <small class="u_margin-left text-subtle">{{purchase.estimate.currency | uppercase}}</small></span></div><div class="col-sm-4 col-xs-12 text-right" ng-if="false"><button id="showTaxExempt" class="btn btn-link btn-xs">Submit Tax Exemption</button></div></div><div class="row"><hr class="u_margin-sm-top"></div><div class="col-xs-8 col-xs-offset-2 u_margin-md-bottom"><button id="payButton" class="btn btn-primary btn-hg btn-block"><span id="payLabel">Pay ${{purchase.estimate.total | number:2}} Now</span></button></div></div>');
+    '<div id="checkout-review-purchase"><div id="errorBox" class="alert alert-danger" role="alert" ng-show="purchase.estimate.estimateError"><strong>Payment Processing Error</strong> {{purchase.estimate.estimateError}}</div><div class="row"><div class="col-md-6 u_margin-sm-top"><p class="lead u_margin-sm-bottom">Purchasing For</p><small><b>{{selectedCompany.name}}</b><br>Company ID: {{selectedCompany.id}}</small></div><div class="col-md-6 u_margin-sm-top"><p class="lead u_margin-sm-bottom">Payment Method <button class="btn btn-link btn-xs" ng-click="setCurrentStep(3)">Edit</button></p><small><b>{{purchase.paymentMethods.selectedCard.cardType}}</b><br>{{purchase.paymentMethods.selectedCard.last4 | cardLastFour}}<br>Exp: {{purchase.paymentMethods.selectedCard.expMonth | paddedMonth}}/{{purchase.paymentMethods.selectedCard.expYear}}</small></div></div><div class="row"><div class="col-md-6 u_margin-sm-top"><p class="lead u_margin-sm-bottom">Billing Address <button class="btn btn-link btn-xs" ng-click="setCurrentStep(1)">Edit</button></p><small>{{purchase.contact.firstName}} {{purchase.contact.lastName}}<br>{{purchase.contact.email}}<br>{{purchase.billingAddress.name}}<br>{{purchase.billingAddress.street}}<br><span ng-show="purchase.billingAddress.unit">{{purchase.billingAddress.unit}}</span> {{purchase.billingAddress.city}}, <span ng-show="purchase.billingAddress.province">{{purchase.billingAddress.province}},</span> {{purchase.billingAddress.postalCode}}<br>{{purchase.billingAddress.country | countryName}}</small></div><div class="col-md-6 u_margin-sm-top"><p class="lead u_margin-sm-bottom">Shipping Address <button class="btn btn-link btn-xs" ng-click="setCurrentStep(2)">Edit</button></p><small>{{purchase.shippingAddress.name}}<br>{{purchase.shippingAddress.street}}<br><span ng-show="purchase.shippingAddress.unit">{{purchase.shippingAddress.unit}}</span> {{purchase.shippingAddress.city}}, <span ng-show="purchase.shippingAddress.province">{{purchase.shippingAddress.province}},</span> {{purchase.shippingAddress.postalCode}}<br>{{purchase.shippingAddress.country | countryName}}</small></div></div><br><hr class="u_margin-xs-top u_margin-xs-bottom"><div class="row"><div class="col-xs-12"><p class="lead u_margin-sm-bottom">Subscription Details <button class="btn btn-link btn-xs" ng-click="setCurrentStep(0)">Edit</button></p></div></div><div class="row"><div class="col-sm-4 col-xs-6 text-right"><p><small>{{purchase.plan.name}} ({{ purchase.plan.isMonthly ? \'Monthly\' : \'Yearly\' }})<br><span ng-show="purchase.plan.additionalDisplayLicenses">{{purchase.plan.additionalDisplayLicenses}} Additional Display<span ng-show="purchase.plan.additionalDisplayLicenses > 1">s</span><br></span> <span ng-repeat="tax in purchase.estimate.taxes">{{tax.taxName}}<br></span> Total Tax:</small></p><span class="order-total">Order Total:</span></div><div class="col-sm-4 col-xs-6 text-right"><p><small>${{getPlanPrice()}}<br><span ng-show="purchase.plan.additionalDisplayLicenses">${{getAdditionalDisplaysPrice()}}<br></span> <span ng-repeat="tax in purchase.estimate.taxes">${{tax.taxAmount | number:2}}<br></span> ${{purchase.estimate.totalTax | number:2}}</small></p><span class="order-total">${{purchase.estimate.total | number:2}} <small class="u_margin-left text-subtle">{{purchase.estimate.currency | uppercase}}</small></span></div><div class="col-sm-4 col-xs-12 text-right" ng-if="false"><button id="showTaxExempt" class="btn btn-link btn-xs">Submit Tax Exemption</button></div></div><div class="row"><hr class="u_margin-sm-top"></div><div class="col-xs-8 col-xs-offset-2 u_margin-md-bottom"><button id="payButton" class="btn btn-primary btn-hg btn-block"><span id="payLabel">Pay ${{purchase.estimate.total | number:2}} Now</span></button></div></div>');
 }]);
 })();
 

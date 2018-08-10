@@ -83,14 +83,11 @@ angular.module("risevision.common.components.purchase-flow")
       }
 
       if (finalStep || $scope.currentStep >= 3) {
-        // TODO: Handle failure to get estimate
-        purchaseFactory.getEstimate()
-          .finally(function () {
-            $scope.currentStep = 4;
+        $scope.currentStep = 4;
 
-            finalStep = true;
-          });
+        finalStep = true;
 
+        purchaseFactory.getEstimate();
       } else {
         $scope.currentStep++;
       }

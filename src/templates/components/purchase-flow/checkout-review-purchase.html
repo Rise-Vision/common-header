@@ -1,5 +1,9 @@
 <!-- Step 5 -->
 <div id="checkout-review-purchase">
+  <div id="errorBox" class="alert alert-danger" role="alert" ng-show="purchase.estimate.estimateError">
+    <strong>Payment Processing Error</strong> {{purchase.estimate.estimateError}}
+  </div>
+
   <div class="row">
     <div class="col-md-6 u_margin-sm-top">
       <p class="lead u_margin-sm-bottom">
