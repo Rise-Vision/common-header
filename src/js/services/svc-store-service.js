@@ -72,6 +72,28 @@
               });
             return deferred.promise;
           },
+          purchase: function (jsonData) {
+            var deferred = $q.defer();
+            storeAPILoader().then(function (storeAPI) {
+              var obj = {
+                jsonData: jsonData
+              };
+              return storeAPI.purchase.put2(obj);
+            })
+              .then(function (resp) {
+                if (resp && resp.result && !resp.result.error) {
+                  $log.debug("purchase resp", resp);
+                  deferred.resolve(resp.result);
+                } else {
+                  deferred.reject(resp && resp.result);
+                }
+              })
+              .then(null, function (e) {
+                console.error("Failed to get Purchase.", e);
+                deferred.reject(e);
+              });
+            return deferred.promise;
+          },
           createSession: function (companyId) {
             var deferred = $q.defer();
 

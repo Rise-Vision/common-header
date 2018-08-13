@@ -34,7 +34,15 @@ describe("Services: purchase factory", function() {
           } else {
             return Q.reject();
           }
+        }),
+        purchase: sinon.spy(function() {
+          if (validate) {
+            return Q.resolve("success");
+          } else {
+            return Q.reject();
+          }
         })
+
       };
     });
 
@@ -75,6 +83,7 @@ describe("Services: purchase factory", function() {
     expect(purchaseFactory.showPurchaseModal).to.be.a("function");
     expect(purchaseFactory.validatePaymentMethod).to.be.a("function");
     expect(purchaseFactory.getEstimate).to.be.a("function");
+    expect(purchaseFactory.completePayment).to.be.a("function");
   });
 
   it("should stop spinner on load", function() {
@@ -307,111 +316,238 @@ describe("Services: purchase factory", function() {
 
     });
 
-    describe("getEstimate: ", function() {
-      beforeEach(function() {
-        validate = true;
+  });
+  
+  describe("getEstimate: ", function() {
+    beforeEach(function() {
+      validate = true;
 
-        purchaseFactory.purchase = {
-          billingAddress: {
-            id: "id"
+      purchaseFactory.purchase = {
+        billingAddress: {
+          id: "id"
+        },
+        shippingAddress: "shippingAddress",
+        plan: {
+          isMonthly: true,
+          productCode: "productCode",
+          monthly: {
+            billAmount: 27
           },
-          shippingAddress: "shippingAddress",
-          plan: {
-            isMonthly: true,
-            productCode: "productCode",
-            monthly: {
-              billAmount: 27
-            },
-            yearly: {
-              priceDisplayYear: 99
-            },
-            additionalDisplayLicenses: 3
-          }
-        };
-      });
+          yearly: {
+            priceDisplayYear: 99
+          },
+          additionalDisplayLicenses: 3
+        }
+      };
+    });
 
-      it("should initialize estimate object based on currency", function() {
-        purchaseFactory.getEstimate();
+    it("should initialize estimate object based on currency", function() {
+      purchaseFactory.getEstimate();
 
-        expect(purchaseFactory.purchase.estimate).to.be.ok;
-        expect(purchaseFactory.purchase.estimate).to.be.an("object");
-        expect(purchaseFactory.purchase.estimate.currency).to.equal("usd");
+      expect(purchaseFactory.purchase.estimate).to.be.ok;
+      expect(purchaseFactory.purchase.estimate).to.be.an("object");
+      expect(purchaseFactory.purchase.estimate.currency).to.equal("usd");
 
-        purchaseFactory.purchase.billingAddress.country = "CA";
+      purchaseFactory.purchase.billingAddress.country = "CA";
 
-        purchaseFactory.getEstimate();
+      purchaseFactory.getEstimate();
 
-        expect(purchaseFactory.purchase.estimate.currency).to.equal("cad");
-      });
+      expect(purchaseFactory.purchase.estimate.currency).to.equal("cad");
+    });
 
-      it("should call calculateTaxes api and return a promise", function() {
-        expect(purchaseFactory.getEstimate().then).to.be.a("function");
+    it("should call calculateTaxes api and return a promise", function() {
+      expect(purchaseFactory.getEstimate().then).to.be.a("function");
 
-        storeService.calculateTaxes.should.have.been.called;
-        storeService.calculateTaxes.should.have.been.calledWith("id", sinon.match.string, sinon.match.string, 3, "shippingAddress");
-      });
+      storeService.calculateTaxes.should.have.been.called;
+      storeService.calculateTaxes.should.have.been.calledWith("id", sinon.match.string, sinon.match.string, 3, "shippingAddress");
+    });
 
-      it("should call set correct currency & billing period values", function() {
-        purchaseFactory.getEstimate();
+    it("should call set correct currency & billing period values", function() {
+      purchaseFactory.getEstimate();
 
-        storeService.calculateTaxes.should.have.been.calledWith("id", "productCode-" + "usd" + "01m", RPP_ADDON_ID + "-" + "usd" + "01m", 3, "shippingAddress");
+      storeService.calculateTaxes.should.have.been.calledWith("id", "productCode-" + "usd" + "01m", RPP_ADDON_ID + "-" + "usd" + "01m", 3, "shippingAddress");
 
-        purchaseFactory.purchase.billingAddress.country = "CA";
-        purchaseFactory.purchase.plan.isMonthly = false;
+      purchaseFactory.purchase.billingAddress.country = "CA";
+      purchaseFactory.purchase.plan.isMonthly = false;
 
-        purchaseFactory.getEstimate();
+      purchaseFactory.getEstimate();
 
-        storeService.calculateTaxes.should.have.been.calledWith("id", "productCode-" + "cad" + "01y", RPP_ADDON_ID + "-" + "cad" + "01y", 3, "shippingAddress");
-      });
+      storeService.calculateTaxes.should.have.been.calledWith("id", "productCode-" + "cad" + "01y", RPP_ADDON_ID + "-" + "cad" + "01y", 3, "shippingAddress");
+    });
 
-      it("should populate estimate object if call succeeds", function(done) {
-        purchaseFactory.getEstimate()
-        .then(function() {
-          expect(purchaseFactory.purchase.estimate).to.deep.equal({
-            currency: "usd",
-            taxesCalculated: true,
-            taxes: [],
-            total: "total",
-            totalTax: "totalTax",
-            shippingTotal: "shippingTotal"
-          });
-
-          done();
-        })
-        .then(null,function() {
-          done("error");
+    it("should populate estimate object if call succeeds", function(done) {
+      purchaseFactory.getEstimate()
+      .then(function() {
+        expect(purchaseFactory.purchase.estimate).to.deep.equal({
+          currency: "usd",
+          taxesCalculated: true,
+          taxes: [],
+          total: "total",
+          totalTax: "totalTax",
+          shippingTotal: "shippingTotal"
         });
+
+        done();
+      })
+      .then(null,function() {
+        done("error");
       });
+    });
 
-      it("should show estimate error if call fails", function(done) {
-        validate = false;
+    it("should show estimate error if call fails", function(done) {
+      validate = false;
 
-        purchaseFactory.getEstimate()
-        .then(function() {
-          expect(purchaseFactory.purchase.estimate.estimateError).to.equal("An unexpected error has occurred. Please try again.");
-        
-          done();
-        })
-        .then(null,function() {
-          done("error");
-        });
+      purchaseFactory.getEstimate()
+      .then(function() {
+        expect(purchaseFactory.purchase.estimate.estimateError).to.equal("An unexpected error has occurred. Please try again.");
+      
+        done();
+      })
+      .then(null,function() {
+        done("error");
       });
+    });
 
-      it("should start and stop spinner", function(done) {
-        purchaseFactory.getEstimate();
+    it("should start and stop spinner", function(done) {
+      purchaseFactory.getEstimate();
 
-        expect(purchaseFactory.loading).to.be.true;
+      expect(purchaseFactory.loading).to.be.true;
 
-        setTimeout(function() {
-          expect(purchaseFactory.loading).to.be.false;
+      setTimeout(function() {
+        expect(purchaseFactory.loading).to.be.false;
 
-          done();
-        }, 10);
-      });
-
+        done();
+      }, 10);
     });
 
   });
 
+  describe("completePayment: ", function() {
+    beforeEach(function() {
+      validate = true;
+
+      purchaseFactory.purchase = {
+        billingAddress: {
+          id: "id",
+          street: "billingStreet",
+          country: "CA"
+        },
+        shippingAddress: {
+          id: "id",
+          street: "shippingStreet",
+          junkProperty: "junkValue"
+        },
+        plan: {
+          isMonthly: true,
+          productCode: "productCode",
+          monthly: {
+            billAmount: 27
+          },
+          yearly: {
+            priceDisplayYear: 99
+          },
+          additionalDisplayLicenses: 3
+        },
+        paymentMethods: {
+          selectedCard: {
+            id: "cardId",
+            isDefault: "default",
+            junkProperty: "junkValue"
+          },
+          purchaseOrderNumber: "purchaseOrderNumber"
+        }
+      };
+    });
+
+    it("should initialize checkout object", function() {
+      purchaseFactory.completePayment();
+
+      expect(purchaseFactory.purchase.checkout).to.be.ok;
+      expect(purchaseFactory.purchase.checkout).to.be.an("object");
+      expect(purchaseFactory.purchase.checkout.checkoutErrors).to.be.an("array");
+    });
+
+    it("should call purchase api and return a promise", function() {
+      expect(purchaseFactory.completePayment().then).to.be.a("function");
+
+      storeService.purchase.should.have.been.called;
+      storeService.purchase.should.have.been.calledWith(sinon.match.string);
+    });
+
+    it("should call purchase with a JSON string", function() {
+      purchaseFactory.completePayment();
+
+      storeService.purchase.should.have.been.called;
+      storeService.purchase.should.have.been.calledWith(JSON.stringify({
+        billTo: {
+          street: "billingStreet",
+          country: "CA",
+          id: "id"
+        },
+        shipTo: {
+          street: "shippingStreet",
+          id: "id"
+        },
+        items: [{
+          id: "productCode-cad01m"
+        } , {
+          id: "c4b368be86245bf9501baaa6e0b00df9719869fd-cad01m",
+          qty: 3
+        }],
+        purchaseOrderNumber: "purchaseOrderNumber",
+        card: {
+          cardId: "cardId",
+          isDefault: "default"
+        }
+      }));
+
+    });
+
+    it("should not add card for onAccount", function() {
+      purchaseFactory.purchase.paymentMethods.isOnAccount = true;
+      purchaseFactory.completePayment();
+
+      expect(storeService.purchase.getCall(0).args[0]).to.contain("\"card\":null");
+    });
+
+    it("should populate checkout succes object if call succeeds", function(done) {
+      purchaseFactory.completePayment()
+      .then(function() {
+        expect(purchaseFactory.purchase.checkout.success).to.equal("success");
+
+        done();
+      })
+      .then(null,function() {
+        done("error");
+      });
+    });
+
+    it("should show payment error if call fails", function(done) {
+      validate = false;
+
+      purchaseFactory.completePayment()
+      .then(function() {
+        expect(purchaseFactory.purchase.checkout.checkoutErrors[0]).to.equal("There was an unknown error with the payment.");
+
+        done();
+      })
+      .then(null,function() {
+        done("error");
+      });
+    });
+
+    it("should start and stop spinner", function(done) {
+      purchaseFactory.completePayment();
+
+      expect(purchaseFactory.loading).to.be.true;
+
+      setTimeout(function() {
+        expect(purchaseFactory.loading).to.be.false;
+
+        done();
+      }, 10);
+    });
+
+  });
 
 });

@@ -155,6 +155,72 @@
             });
         };
 
+        var _copyAddress = function (src) {
+          var dest = {};
+
+          dest.street = src.street;
+          dest.unit = src.unit;
+          dest.city = src.city;
+          dest.country = src.country;
+          dest.postalCode = src.postalCode;
+          dest.province = src.province;
+
+          return dest;
+        };
+
+        var _getOrderAsJson = function () {
+          //clean up items
+          var newItems = [{
+            id: _getChargebeePlanId()
+          }, {
+            id: _getChargebeeAddonId(),
+            qty: factory.purchase.plan.additionalDisplayLicenses
+          }];
+
+          var billTo = _copyAddress(factory.purchase.billingAddress);
+          billTo.id = factory.purchase.billingAddress.id;
+
+          var shipTo = _copyAddress(factory.purchase.shippingAddress);
+          shipTo.id = factory.purchase.shippingAddress.id;
+
+          var card = factory.purchase.paymentMethods.selectedCard;
+          var cardData = factory.purchase.paymentMethods.isOnAccount ? null : {
+            cardId: card.id,
+            isDefault: card.isDefault
+          };
+
+          var obj = {
+            billTo: billTo,
+            shipTo: shipTo,
+            items: newItems,
+            purchaseOrderNumber: factory.purchase.paymentMethods.purchaseOrderNumber,
+            card: cardData
+          };
+
+          return JSON.stringify(obj);
+        };
+
+        factory.completePayment = function () {
+          var jsonData = _getOrderAsJson();
+
+          factory.purchase.checkout = {
+            checkoutErrors: []
+          };
+          factory.loading = true;
+
+          return storeService.purchase(jsonData)
+            .then(function (result) {
+              factory.purchase.checkout.success = result;
+            })
+            .catch(function (result) {
+              factory.purchase.checkout.checkoutErrors.push(result && result.message ? result.message :
+                "There was an unknown error with the payment.");
+            })
+            .finally(function () {
+              factory.loading = false;
+            });
+        };
+
         return factory;
       }
     ]);

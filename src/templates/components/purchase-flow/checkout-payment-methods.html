@@ -33,7 +33,7 @@
           Please complete the missing information below.
         </div>
         <div id="errorBox" class="alert alert-danger" role="alert" ng-show="paymentMethods.newCreditCard.validationErrors.length">
-          <strong>Card Validation Error(s)</strong>
+          <strong>Card Validation Error<span ng-show="paymentMethods.newCreditCard.validationErrors.length > 1">s</span></strong>
           <ul>
             <li ng-repeat="error in paymentMethods.newCreditCard.validationErrors">{{error}}</li>
           </ul>
