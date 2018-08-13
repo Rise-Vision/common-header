@@ -56,8 +56,8 @@ angular.module("risevision.store.services")
       };
     }
   ])
-  .factory("chargebeeFactory", ["$window", "$log", "getChargebeeInstance",
-    function ($window, $log, getChargebeeInstance) {
+  .factory("chargebeeFactory", ["$window", "$log", "getChargebeeInstance", "plansFactory",
+    function ($window, $log, getChargebeeInstance, plansFactory) {
       var factory = {};
 
       function _getChargebeePortal(companyId) {
@@ -65,6 +65,15 @@ angular.module("risevision.store.services")
           .then(function (instance) {
             return instance.portal;
           });
+      }
+
+      function _handleChargebeeAccountNotFound(err, companyId) {
+        if (err.status === 404) {
+          plansFactory.showPlansModal();
+        } else {
+          // What should we do when an unexpected error happens?
+          console.log("Failed to retrieve session for companyId", companyId, err);
+        }
       }
 
       factory.openPortal = function (companyId) {
@@ -95,7 +104,10 @@ angular.module("risevision.store.services")
               $log.debug("Chargebee subscrpitionCancelled event", data);
             }
           });
-        });
+        })
+          .catch(function (err) {
+            _handleChargebeeAccountNotFound(err, companyId);
+          });
       };
 
       factory.openAccountDetails = function (companyId) {
@@ -103,7 +115,10 @@ angular.module("risevision.store.services")
           portal.openSection({
             sectionType: $window.Chargebee.getPortalSections().ACCOUNT_DETAILS
           });
-        });
+        })
+          .catch(function (err) {
+            _handleChargebeeAccountNotFound(err, companyId);
+          });
       };
 
       factory.openAddress = function (companyId) {
@@ -111,7 +126,10 @@ angular.module("risevision.store.services")
           portal.openSection({
             sectionType: $window.Chargebee.getPortalSections().ADDRESS
           });
-        });
+        })
+          .catch(function (err) {
+            _handleChargebeeAccountNotFound(err, companyId);
+          });
       };
 
       factory.openBillingHistory = function (companyId) {
@@ -119,7 +137,10 @@ angular.module("risevision.store.services")
           portal.openSection({
             sectionType: $window.Chargebee.getPortalSections().BILLING_HISTORY
           });
-        });
+        })
+          .catch(function (err) {
+            _handleChargebeeAccountNotFound(err, companyId);
+          });
       };
 
       factory.openPaymentSources = function (companyId) {
@@ -127,7 +148,10 @@ angular.module("risevision.store.services")
           portal.openSection({
             sectionType: $window.Chargebee.getPortalSections().PAYMENT_SOURCES
           });
-        });
+        })
+          .catch(function (err) {
+            _handleChargebeeAccountNotFound(err, companyId);
+          });
       };
 
       factory.openSubscriptionDetails = function (companyId, subscriptionId) {
@@ -138,7 +162,10 @@ angular.module("risevision.store.services")
               subscriptionId: subscriptionId
             }
           });
-        });
+        })
+          .catch(function (err) {
+            _handleChargebeeAccountNotFound(err, companyId);
+          });
       };
 
       return factory;
