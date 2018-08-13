@@ -10111,7 +10111,7 @@ angular.module("risevision.common.components.purchase-flow")
             if (response && response.card && !response.error) {
               deferred.resolve(response.card);
             } else {
-              card.tokenError = _processStripeError(response.error && response.error.code);
+              card.tokenError = _processStripeError(response && response.error && response.error.code);
 
               deferred.reject();
             }
@@ -10482,6 +10482,10 @@ angular.module("risevision.common.components.purchase-flow")
 
     function () {
       return function (last4) {
+        last4 = last4 ? last4 : "****";
+        last4 = last4.length < 4 ? ("****".substr(last4.length) + last4) : last4;
+        last4 = last4.length > 4 ? last4.substr(last4.length - 4) : last4;
+
         return "***-" + last4;
       };
     }

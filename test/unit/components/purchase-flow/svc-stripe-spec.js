@@ -162,6 +162,20 @@ describe("Services: stripe service", function() {
       }, 10);
     });
 
+    it("should reject on undefined response", function(done) {
+      createTokenResponse = null;
+
+      stripeService.createToken(card, address)
+      .then(done, function() {
+        expect(card.tokenError).to.be.ok;
+        expect(card.tokenError).to.equal(STRIPE_ERRORS.processing_error);
+
+        done();
+      })
+      .then(null,done);
+
+    });
+
     it("should reject if no card is received", function(done) {
       createTokenResponse = {};
 

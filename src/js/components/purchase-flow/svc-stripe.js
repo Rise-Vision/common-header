@@ -80,7 +80,7 @@ angular.module("risevision.common.components.purchase-flow")
             if (response && response.card && !response.error) {
               deferred.resolve(response.card);
             } else {
-              card.tokenError = _processStripeError(response.error && response.error.code);
+              card.tokenError = _processStripeError(response && response.error && response.error.code);
 
               deferred.reject();
             }
