@@ -58,9 +58,13 @@ angular.module("risevision.store.services")
   ])
   .factory("chargebeeFactory", ["$window", "$log", "getChargebeeInstance", "plansFactory",
     function ($window, $log, getChargebeeInstance, plansFactory) {
-      var factory = {};
+      var factory = {
+        apiError: null
+      };
 
       function _getChargebeePortal(companyId) {
+        factory.apiError = null;
+
         return getChargebeeInstance(companyId)
           .then(function (instance) {
             return instance.portal;
@@ -71,7 +75,7 @@ angular.module("risevision.store.services")
         if (err.status === 404) {
           plansFactory.showPlansModal();
         } else {
-          // What should we do when an unexpected error happens?
+          factory.apiError = err;
           console.log("Failed to retrieve session for companyId", companyId, err);
         }
       }

@@ -181,6 +181,7 @@ describe("Services: chargebeeFactory", function() {
         expect($window.Chargebee.init.getCall(0).args[0].site).to.equal("risevision-test");
         expect(chargebeePortal.open).to.have.been.calledOnce;
         expect(plansFactory.showPlansModal).to.not.have.been.called;
+        expect(plansFactory.apiError).to.not.be.ok;
         done();
       });
     });
@@ -195,6 +196,24 @@ describe("Services: chargebeeFactory", function() {
         expect($window.Chargebee.init.getCall(0).args[0].site).to.equal("risevision");
         expect(chargebeePortal.open).to.have.been.calledOnce;
         expect(plansFactory.showPlansModal).to.not.have.been.called;
+        expect(plansFactory.apiError).to.not.be.ok;
+        done();
+      });
+    });
+
+    it("should fail to create a Customer Portal session", function(done) {
+      storeService.createSession.restore();
+
+      sandbox.spy($window.Chargebee, "init");
+      sandbox.stub(userState, "isTestCompanySelected").returns(true);
+      sandbox.stub(storeService, "createSession").returns(Q.reject("API error"));
+
+      chargebeeFactory.openPortal("companyId1");
+
+      setTimeout(function () {
+        expect(chargebeePortal.open).to.not.have.been.called;
+        expect(plansFactory.showPlansModal).to.not.have.been.called;
+        expect(plansFactory.apiError).to.be.not.null;
         done();
       });
     });
@@ -205,6 +224,7 @@ describe("Services: chargebeeFactory", function() {
       setTimeout(function () {
         expect(chargebeePortal.openSection).to.have.been.calledOnce;
         expect(chargebeePortal.openSection.getCall(0).args[0].sectionType).to.equal(chargebeeSections.ACCOUNT_DETAILS);
+        expect(plansFactory.apiError).to.not.be.ok;
         done();
       });
     });
@@ -215,6 +235,7 @@ describe("Services: chargebeeFactory", function() {
       setTimeout(function () {
         expect(chargebeePortal.openSection).to.have.been.calledOnce;
         expect(chargebeePortal.openSection.getCall(0).args[0].sectionType).to.equal(chargebeeSections.ADDRESS);
+        expect(plansFactory.apiError).to.not.be.ok;
         done();
       });
     });
@@ -225,6 +246,7 @@ describe("Services: chargebeeFactory", function() {
       setTimeout(function () {
         expect(chargebeePortal.openSection).to.have.been.calledOnce;
         expect(chargebeePortal.openSection.getCall(0).args[0].sectionType).to.equal(chargebeeSections.BILLING_HISTORY);
+        expect(plansFactory.apiError).to.not.be.ok;
         done();
       });
     });
@@ -235,6 +257,7 @@ describe("Services: chargebeeFactory", function() {
       setTimeout(function () {
         expect(chargebeePortal.openSection).to.have.been.calledOnce;
         expect(chargebeePortal.openSection.getCall(0).args[0].sectionType).to.equal(chargebeeSections.PAYMENT_SOURCES);
+        expect(plansFactory.apiError).to.not.be.ok;
         done();
       });
     });
@@ -246,6 +269,7 @@ describe("Services: chargebeeFactory", function() {
         expect(chargebeePortal.openSection).to.have.been.calledOnce;
         expect(chargebeePortal.openSection.getCall(0).args[0].sectionType).to.equal(chargebeeSections.SUBSCRIPTION_DETAILS);
         expect(chargebeePortal.openSection.getCall(0).args[0].params.subscriptionId).to.equal("subs1");
+        expect(plansFactory.apiError).to.not.be.ok;
         done();
       });
     });
