@@ -77,12 +77,12 @@ angular.module("risevision.common.components.purchase-flow")
 
         stripeLoader().then(function (stripeClient) {
           stripeClient.card.createToken(cardObject, function (status, response) {
-            if (response.error) {
-              card.tokenError = _processStripeError(response.error.code);
+            if (response && response.card && !response.error) {
+              deferred.resolve(response.card);
+            } else {
+              card.tokenError = _processStripeError(response && response.error && response.error.code);
 
               deferred.reject();
-            } else {
-              deferred.resolve(response);
             }
           });
         });

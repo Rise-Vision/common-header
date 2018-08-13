@@ -18,7 +18,7 @@
     <billing-address ng-if="currentStep === 1"></billing-address>
     <shipping-address ng-if="currentStep === 2"></shipping-address>
     <payment-methods ng-if="currentStep === 3"></payment-methods>
-    <div ng-include="'purchase-flow/checkout-review-purchase.html'" ng-if="currentStep === 4"></div>
+    <review-purchase ng-if="currentStep === 4"></review-purchase>
     <div ng-include="'purchase-flow/checkout-success.html'"></div>
     <div ng-include="'purchase-flow/tax-exemption.html'"></div>
 

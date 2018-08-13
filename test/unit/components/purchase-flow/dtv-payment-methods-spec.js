@@ -3,6 +3,14 @@
 describe("directive: payment methods", function() {
   beforeEach(module("risevision.common.components.purchase-flow"));
 
+  beforeEach(module(function ($provide) {
+    $provide.value("purchaseFactory", {
+      purchase: {
+        paymentMethods: "paymentMethods"
+      }
+    });
+  }));
+
   var $scope, element;
 
   beforeEach(inject(function($compile, $rootScope, $templateCache){
@@ -18,8 +26,10 @@ describe("directive: payment methods", function() {
 
   it("should initialize scope", function() {
     expect($scope).to.be.an("object");
+
+    expect($scope.paymentMethods).to.equal("paymentMethods");
+
     expect($scope.getCardDescription).to.be.a("function");
-    expect($scope.getPaddedMonth).to.be.a("function");
   });
 
   it("getCardDescription: ", function() {
@@ -36,8 +46,4 @@ describe("directive: payment methods", function() {
     expect($scope.getCardDescription(card)).to.equal("***-2345, Visa (default)");
   });
 
-  it("getPaddedMonth: ", function() {
-    expect($scope.getPaddedMonth(1)).to.equal("01");
-    expect($scope.getPaddedMonth(12)).to.equal(12);
-  });
 });

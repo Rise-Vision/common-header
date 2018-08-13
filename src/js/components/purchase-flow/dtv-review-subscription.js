@@ -1,11 +1,13 @@
 angular.module("risevision.common.components.purchase-flow")
-  .directive("reviewSubscription", ["$templateCache",
-    function ($templateCache) {
+  .directive("reviewSubscription", ["$templateCache", "purchaseFactory",
+    function ($templateCache, purchaseFactory) {
       return {
         restrict: "E",
         template: $templateCache.get(
           "purchase-flow/checkout-review-subscription.html"),
         link: function ($scope) {
+          $scope.plan = purchaseFactory.purchase.plan;
+
           var _getAdditionalDisplayLicenses = function () {
             var licenses = $scope.plan.additionalDisplayLicenses;
 

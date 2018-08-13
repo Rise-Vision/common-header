@@ -16,7 +16,7 @@ angular.module("risevision.common.components.purchase-flow")
 
       return function () {
         return deferred.promise.then(function (stripeClient) {
-          var isTest = userState.isTestCompanySelected();
+          var isTest = userState.getCopyOfUserCompany().isTest;
 
           stripeClient.setPublishableKey(isTest ? STRIPE_TEST_KEY : STRIPE_PROD_KEY);
 

@@ -22,28 +22,25 @@ angular.module("risevision.common.components.purchase-flow")
 }])
 
 .controller("PurchaseModalCtrl", [
-  "$scope", "$modalInstance", "$log", "$loading", "addressFactory", "stripeService",
-  "plan", "PURCHASE_STEPS",
-  function ($scope, $modalInstance, $log, $loading, addressFactory, stripeService,
-    plan, PURCHASE_STEPS) {
+  "$scope", "$modalInstance", "$loading", "purchaseFactory", "addressFactory",
+  "PURCHASE_STEPS",
+  function ($scope, $modalInstance, $loading, purchaseFactory, addressFactory,
+    PURCHASE_STEPS) {
 
     $scope.form = {};
-    $scope.plan = plan;
-    $scope.plan.additionalDisplayLicenses = 0;
+    $scope.factory = purchaseFactory;
 
     $scope.PURCHASE_STEPS = PURCHASE_STEPS;
     $scope.currentStep = 0;
+    $scope.finalStep = false;
 
-    $scope.$watch("loading", function (loading) {
+    $scope.$watch("factory.loading", function (loading) {
       if (loading) {
         $loading.start("purchase-modal");
       } else {
         $loading.stop("purchase-modal");
       }
     });
-
-    // Stop spinner - workaround for spinner not rendering
-    $scope.loading = false;
 
     var _isFormValid = function () {
       var step = PURCHASE_STEPS[$scope.currentStep];
@@ -58,63 +55,25 @@ angular.module("risevision.common.components.purchase-flow")
         return;
       }
 
-      $scope.loading = true;
+      $scope.factory.loading = true;
 
       addressFactory.validateAddress(addressObject)
-        .then(function () {
+        .finally(function () {
+          $scope.factory.loading = false;
+
           if (!addressObject.validationError) {
             $scope.setNextStep();
           }
-        })
-        .finally(function () {
-          $scope.loading = false;
         });
     };
 
-    var _validateCard = function (card, isNew) {
-      card.validationErrors = stripeService.validateCard(card, isNew);
-
-      if (!card.validationErrors || card.validationErrors.length > 0) {
-        return false;
-      }
-
-      return true;
-    };
-
-    $scope.validatePaymentMethod = function (paymentMethods) {
+    $scope.validatePaymentMethod = function () {
       if (!_isFormValid()) {
         return;
       }
 
-      if (paymentMethods.paymentMethod === "invoice") {
-        // TODO: Check Invoice credit (?)
-        $scope.setNextStep();
-      } else if (paymentMethods.paymentMethod === "card") {
-        if (paymentMethods.selectedCard) {
-          if (_validateCard(paymentMethods.selectedCard, false)) {
-            // Existing Card selected
-            $scope.setNextStep();
-          }
-        } else {
-          if (_validateCard(paymentMethods.newCreditCard, true)) {
-            var address = paymentMethods.newCreditCard.address;
-            if (paymentMethods.newCreditCard.useBillingAddress) {
-              address = paymentMethods.newCreditCard.billingAddress;
-            }
-
-            $scope.loading = true;
-
-            stripeService.createToken(paymentMethods.newCreditCard, address)
-              .then(function () {
-                // New Card selected
-                $scope.setNextStep();
-              })
-              .finally(function () {
-                $scope.loading = false;
-              });
-          }
-        }
-      }
+      purchaseFactory.validatePaymentMethod()
+        .then($scope.setNextStep);
     };
 
     $scope.setNextStep = function () {
@@ -122,7 +81,16 @@ angular.module("risevision.common.components.purchase-flow")
         return;
       }
 
-      $scope.currentStep++;
+      if ($scope.finalStep || $scope.currentStep >= 3) {
+        $scope.currentStep = 4;
+
+        $scope.finalStep = true;
+
+        purchaseFactory.getEstimate();
+      } else {
+        $scope.currentStep++;
+      }
+
     };
 
     $scope.setPreviousStep = function () {
@@ -131,15 +99,14 @@ angular.module("risevision.common.components.purchase-flow")
       }
     };
 
+    $scope.setCurrentStep = function (index) {
+      $scope.currentStep = index;
+    };
+
     $scope.dismiss = function () {
       $modalInstance.dismiss("cancel");
     };
 
-    $scope.init = function () {
-
-    };
-
-    $scope.init();
   }
 
 ]);

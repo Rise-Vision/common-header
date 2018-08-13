@@ -56,6 +56,9 @@ describe("controller: plans modal", function() {
         openPortal: function() {}
       };
     });
+    $provide.factory("purchaseFactory", function() {
+      return {};
+    });
     $provide.service("$modal", function() {
       return {
         open: sinon.stub()
