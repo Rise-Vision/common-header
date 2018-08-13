@@ -90,7 +90,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('company-fields.html',
-    '<div class="form-group" ng-class="{\'has-error\': forms.companyForm.name.$invalid && !forms.companyForm.name.$pristine}"><label for="company-settings-name">Company Name *</label> <input required="" id="company-settings-name" type="text" class="form-control" ng-model="company.name" name="name"><p ng-show="forms.companyForm.name.$invalid && !forms.companyForm.name.$pristine" class="help-block validation-error-message-name">Company Name is required.</p></div><div class="row"><div class="col-md-6"><div class="form-group"><label for="company-size" class="control-label">Company Size</label><select id="company-size" class="form-control" ng-model="company.companySize"><option value="" ng-show="false">&lt; Select Size &gt;</option><option ng-repeat="size in COMPANY_SIZE_FIELDS" value="{{size[1]}}">{{size[0]}}</option></select></div></div><div class="col-md-6"><div class="form-group"><label for="company-industry" class="control-label">Industry</label><select id="company-industry" class="form-control selectpicker" ng-model="company.companyIndustry"><option value="" ng-show="false">&lt; Select Industry &gt;</option><option ng-repeat="industry in COMPANY_INDUSTRY_FIELDS | orderBy:industry[0]" value="{{industry[1]}}">{{industry[0]}}</option></select></div></div></div><div class="row"><div class="col-md-6"><div class="form-group"><label for="company-settings-street" class="control-label">Street</label> <input id="company-settings-street" type="text" class="form-control" ng-model="company.street"></div></div><div class="col-md-6"><div class="form-group"><label for="company-settings-unit" class="control-label">Unit</label> <input id="company-settings-unit" type="text" class="form-control" ng-model="company.unit"></div></div></div><div class="row"><div class="col-md-3"><div class="form-group"><label for="company-settings-city" class="control-label">City</label> <input id="company-settings-city" type="text" class="form-control" ng-model="company.city"></div></div><div class="col-md-3"><div class="form-group"><label for="company-settings-country" class="control-label">Country</label><select id="company-settings-country" class="form-control selectpicker" ng-model="company.country" ng-options="c.code as c.name for c in countries" empty-select-parser=""><option ng-show="false" value="">&lt; Select Country &gt;</option></select></div></div><div class="col-md-3"><div class="form-group"><label for="company-settings-state" class="control-label">State/Province/Region</label> <input id="company-settings-state" type="text" class="form-control" ng-model="company.province" ng-hide="company.country == \'US\' || company.country == \'CA\'"><select class="form-control selectpicker" ng-model="company.province" ng-options="c[1] as c[0] for c in regionsCA" ng-show="company.country == \'CA\'" empty-select-parser=""><option ng-show="false" value="">&lt; Select Province &gt;</option></select><select class="form-control selectpicker" ng-model="company.province" ng-options="c[1] as c[0] for c in regionsUS" ng-show="company.country == \'US\'" empty-select-parser=""><option ng-show="false" value="">&lt; Select State &gt;</option></select></div></div><div class="col-md-3"><div class="form-group"><label for="company-settings-zip" class="control-label">ZIP/Postal Code</label> <input id="company-settings-zip" type="text" class="form-control" ng-model="company.postalCode"></div></div></div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{\'has-error\': forms.companyForm.website.$error.website}"><label for="company-settings-website" class="control-label">Website</label> <input id="company-settings-website" name="website" type="text" placeholder="http://" class="form-control" ng-model="company.website" website-validator=""><p ng-show="forms.companyForm.website.$error.website" class="help-block validation-error-message-website">Please provide a valid URL.</p></div></div><div class="col-md-6"><div class="form-group"><label for="company-settings-phone" class="control-label">Phone</label> <input id="company-settings-phone" type="tel" class="form-control" ng-model="company.telephone"></div></div></div><div class="form-group"><label for="company-settings-timezone" class="control-label">Time Zone</label><select class="form-control" ng-model="company.timeZoneOffset" integer-parser=""><option ng-show="false" value="">&lt; Select Time Zone &gt;</option><option value="{{c[1]}}" ng-repeat="c in timezones">{{c[0]}}</option></select></div>');
+    '<div class="form-group" ng-class="{\'has-error\': forms.companyForm.name.$invalid && !forms.companyForm.name.$pristine}"><label for="company-settings-name">Company Name *</label> <input required="" id="company-settings-name" type="text" class="form-control" ng-model="company.name" name="name"><p ng-show="forms.companyForm.name.$invalid && !forms.companyForm.name.$pristine" class="help-block validation-error-message-name">Company Name is required.</p></div><div class="row"><div class="col-md-6"><div class="form-group"><label for="company-size" class="control-label">Company Size</label><select id="company-size" class="form-control" ng-model="company.companySize"><option value="" ng-show="false">&lt; Select Size &gt;</option><option ng-repeat="size in COMPANY_SIZE_FIELDS" value="{{size[1]}}">{{size[0]}}</option></select></div></div><div class="col-md-6"><div class="form-group"><label for="company-industry" class="control-label">Industry</label><select id="company-industry" class="form-control selectpicker" ng-model="company.companyIndustry"><option value="" ng-show="false">&lt; Select Industry &gt;</option><option ng-repeat="industry in COMPANY_INDUSTRY_FIELDS | orderBy:industry[0]" value="{{industry[1]}}">{{industry[0]}}</option></select></div></div></div><div class="row"><div class="col-md-6"><div class="form-group"><label for="company-settings-street" class="control-label">Street</label> <input id="company-settings-street" type="text" class="form-control" ng-model="company.street"></div></div><div class="col-md-6"><div class="form-group"><label for="company-settings-unit" class="control-label">Unit</label> <input id="company-settings-unit" type="text" class="form-control" ng-model="company.unit"></div></div></div><div class="row"><div class="col-md-3"><div class="form-group"><label for="company-settings-city" class="control-label">City</label> <input id="company-settings-city" type="text" class="form-control" ng-model="company.city"></div></div><div class="col-md-3"><div class="form-group"><label for="company-settings-country" class="control-label">Country</label><select id="company-settings-country" class="form-control selectpicker" ng-model="company.country" ng-options="c.code as c.name for c in countries" empty-select-parser=""><option ng-show="false" value="">&lt; Select Country &gt;</option></select></div></div><div class="col-md-3"><div class="form-group"><label for="company-settings-state" class="control-label">State/Province/Region</label> <input id="company-settings-state" type="text" class="form-control" ng-model="company.province" ng-hide="company.country == \'US\' || company.country == \'CA\'"><select class="form-control selectpicker" ng-model="company.province" ng-options="c[1] as c[0] for c in regionsCA" ng-show="company.country == \'CA\'" empty-select-parser=""><option ng-show="false" value="">&lt; Select Province &gt;</option></select><select class="form-control selectpicker" ng-model="company.province" ng-options="c[1] as c[0] for c in regionsUS" ng-show="company.country == \'US\'" empty-select-parser=""><option ng-show="false" value="">&lt; Select State &gt;</option></select></div></div><div class="col-md-3"><div class="form-group"><label for="company-settings-zip" class="control-label">ZIP/Postal Code</label> <input id="company-settings-zip" type="text" class="form-control" ng-model="company.postalCode"></div></div></div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{\'has-error\': forms.companyForm.website.$error.website}"><label for="company-settings-website" class="control-label">Website</label> <input id="company-settings-website" name="website" type="text" placeholder="http://" class="form-control" ng-model="company.website" website-validator=""><p ng-show="forms.companyForm.website.$error.website" class="help-block validation-error-message-website">Please provide a valid URL.</p></div></div><div class="col-md-6"><div class="form-group"><label for="company-settings-phone" class="control-label">Phone</label> <input id="company-settings-phone" type="tel" class="form-control" ng-model="company.telephone"></div></div></div><div class="form-group"><label for="company-settings-timezone" class="control-label">Time Zone</label><select class="form-control" ng-model="company.timeZoneOffset" integer-parser=""><option ng-show="false" value="">&lt; Select Time Zone &gt;</option><option value="{{c[1]}}" ng-repeat="c in timezones">{{c[0]}}</option></select></div><div class="form-group" style="display: none"><label class="form-control-label">Billing Notifications Email</label> <input type="text" class="form-control" name="" value="user@companyabc.com"></div>');
 }]);
 })();
 
@@ -664,14 +664,14 @@ angular.module("risevision.common.header.directives")
 
 angular.module("risevision.common.header")
   .controller("AuthButtonsCtr", ["$scope", "$modal", "$templateCache",
-    "userState", "userAuthFactory", "chargebeeFactory", "canAccessApps",
-    "$loading", "cookieStore",
+    "userState", "userAuthFactory", "canAccessApps",
+    "$loading", "cookieStore", "plansFactory", "currentPlanFactory",
     "$log", "uiFlowManager", "oauth2APILoader", "bindToScopeWithWatch",
-    "$window", "APPS_URL",
+    "$window", "$state", "APPS_URL",
     function ($scope, $modal, $templateCache, userState, userAuthFactory,
-      chargebeeFactory, canAccessApps,
-      $loading, cookieStore, $log, uiFlowManager, oauth2APILoader,
-      bindToScopeWithWatch, $window, APPS_URL) {
+      canAccessApps,
+      $loading, cookieStore, plansFactory, currentPlanFactory, $log, uiFlowManager, oauth2APILoader,
+      bindToScopeWithWatch, $window, $state, APPS_URL) {
 
       window.$loading = $loading; //DEBUG
 
@@ -815,7 +815,11 @@ angular.module("risevision.common.header")
       };
 
       $scope.showAccountAndBilling = function () {
-        chargebeeFactory.openPortal(userState.getSelectedCompanyId());
+        if (currentPlanFactory.isPlanActive()) {
+          $state.go("apps.billing.home");
+        } else {
+          plansFactory.showPlansModal();
+        }
       };
 
       $scope.isChargebee = function () {
@@ -2505,8 +2509,8 @@ angular.module("risevision.store.services")
       };
     }
   ])
-  .factory("chargebeeFactory", ["$window", "$log", "getChargebeeInstance",
-    function ($window, $log, getChargebeeInstance) {
+  .factory("chargebeeFactory", ["$window", "$log", "getChargebeeInstance", "plansFactory",
+    function ($window, $log, getChargebeeInstance, plansFactory) {
       var factory = {};
 
       function _getChargebeePortal(companyId) {
@@ -2514,6 +2518,15 @@ angular.module("risevision.store.services")
           .then(function (instance) {
             return instance.portal;
           });
+      }
+
+      function _handleChargebeeAccountNotFound(err, companyId) {
+        if (err.status === 404) {
+          plansFactory.showPlansModal();
+        } else {
+          // What should we do when an unexpected error happens?
+          console.log("Failed to retrieve session for companyId", companyId, err);
+        }
       }
 
       factory.openPortal = function (companyId) {
@@ -2544,7 +2557,10 @@ angular.module("risevision.store.services")
               $log.debug("Chargebee subscrpitionCancelled event", data);
             }
           });
-        });
+        })
+          .catch(function (err) {
+            _handleChargebeeAccountNotFound(err, companyId);
+          });
       };
 
       factory.openAccountDetails = function (companyId) {
@@ -2552,7 +2568,10 @@ angular.module("risevision.store.services")
           portal.openSection({
             sectionType: $window.Chargebee.getPortalSections().ACCOUNT_DETAILS
           });
-        });
+        })
+          .catch(function (err) {
+            _handleChargebeeAccountNotFound(err, companyId);
+          });
       };
 
       factory.openAddress = function (companyId) {
@@ -2560,7 +2579,10 @@ angular.module("risevision.store.services")
           portal.openSection({
             sectionType: $window.Chargebee.getPortalSections().ADDRESS
           });
-        });
+        })
+          .catch(function (err) {
+            _handleChargebeeAccountNotFound(err, companyId);
+          });
       };
 
       factory.openBillingHistory = function (companyId) {
@@ -2568,7 +2590,10 @@ angular.module("risevision.store.services")
           portal.openSection({
             sectionType: $window.Chargebee.getPortalSections().BILLING_HISTORY
           });
-        });
+        })
+          .catch(function (err) {
+            _handleChargebeeAccountNotFound(err, companyId);
+          });
       };
 
       factory.openPaymentSources = function (companyId) {
@@ -2576,7 +2601,10 @@ angular.module("risevision.store.services")
           portal.openSection({
             sectionType: $window.Chargebee.getPortalSections().PAYMENT_SOURCES
           });
-        });
+        })
+          .catch(function (err) {
+            _handleChargebeeAccountNotFound(err, companyId);
+          });
       };
 
       factory.openSubscriptionDetails = function (companyId, subscriptionId) {
@@ -2587,7 +2615,10 @@ angular.module("risevision.store.services")
               subscriptionId: subscriptionId
             }
           });
-        });
+        })
+          .catch(function (err) {
+            _handleChargebeeAccountNotFound(err, companyId);
+          });
       };
 
       return factory;
@@ -9632,6 +9663,12 @@ angular.module("risevision.common.components.plans")
         });
     }
 
+    function _showSubscriptionDetails() {
+      var company = userState.getCopyOfSelectedCompany();
+
+      chargebeeFactory.openSubscriptionDetails(company.id, company.planSubscriptionId);
+    }
+
     $scope.isCurrentPlan = function (plan) {
       return $scope.currentPlan.type === plan.type;
     };
@@ -9738,13 +9775,9 @@ angular.module("risevision.common.components.plans")
         });
     };
 
-    $scope.downgradePlan = function () {
-      chargebeeFactory.openPortal(userState.getSelectedCompanyId());
-    };
+    $scope.downgradePlan = _showSubscriptionDetails;
 
-    $scope.purchaseAdditionalLicenses = function () {
-      chargebeeFactory.openPortal(userState.getSelectedCompanyId());
-    };
+    $scope.purchaseAdditionalLicenses = _showSubscriptionDetails;
 
     $scope.isChargebee = function () {
       return userState.isSelectedCompanyChargebee();

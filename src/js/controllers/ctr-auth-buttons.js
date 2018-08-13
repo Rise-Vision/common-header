@@ -1,13 +1,13 @@
 angular.module("risevision.common.header")
   .controller("AuthButtonsCtr", ["$scope", "$modal", "$templateCache",
-    "userState", "userAuthFactory", "chargebeeFactory", "canAccessApps",
-    "$loading", "cookieStore",
+    "userState", "userAuthFactory", "canAccessApps",
+    "$loading", "cookieStore", "plansFactory", "currentPlanFactory",
     "$log", "uiFlowManager", "oauth2APILoader", "bindToScopeWithWatch",
-    "$window", "APPS_URL",
+    "$window", "$state", "APPS_URL",
     function ($scope, $modal, $templateCache, userState, userAuthFactory,
-      chargebeeFactory, canAccessApps,
-      $loading, cookieStore, $log, uiFlowManager, oauth2APILoader,
-      bindToScopeWithWatch, $window, APPS_URL) {
+      canAccessApps,
+      $loading, cookieStore, plansFactory, currentPlanFactory, $log, uiFlowManager, oauth2APILoader,
+      bindToScopeWithWatch, $window, $state, APPS_URL) {
 
       window.$loading = $loading; //DEBUG
 
@@ -151,7 +151,11 @@ angular.module("risevision.common.header")
       };
 
       $scope.showAccountAndBilling = function () {
-        chargebeeFactory.openPortal(userState.getSelectedCompanyId());
+        if (currentPlanFactory.isPlanActive()) {
+          $state.go("apps.billing.home");
+        } else {
+          plansFactory.showPlansModal();
+        }
       };
 
       $scope.isChargebee = function () {

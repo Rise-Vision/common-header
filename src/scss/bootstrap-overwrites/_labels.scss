@@ -1,7 +1,3 @@
-.label {
-	font-size: 12px;
-}
-
 .label-primary {
   @include label-variant($label-primary-bg, $label-primary-color-hover);
 }
