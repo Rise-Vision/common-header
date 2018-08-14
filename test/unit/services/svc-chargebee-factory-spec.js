@@ -2,7 +2,7 @@
 
 describe("Services: chargebeeFactory", function() {
   var sandbox = sinon.sandbox.create();
-  var clock, $window, userState, storeService, plansFactory, chargebeePortal;
+  var clock, $rootScope, $window, $loading, userState, storeService, plansFactory, chargebeePortal;
 
   beforeEach(module("risevision.store.services"));
 
@@ -15,6 +15,12 @@ describe("Services: chargebeeFactory", function() {
       };
     });
     $provide.service("$q", function() {return Q;});
+    $provide.service("$loading", function() {
+      return {
+        startGlobal: sandbox.stub(),
+        stopGlobal: sandbox.stub()
+      };
+    });
     $provide.service("storeService", function() {
       return {
         createSession: function() {}
@@ -35,8 +41,10 @@ describe("Services: chargebeeFactory", function() {
   }));
 
   beforeEach(function() {
-    inject(function($injector) {
+    inject(function($injector, _$rootScope_) {
+      $rootScope = _$rootScope_;
       $window = $injector.get("$window");
+      $loading = $injector.get("$loading");
       userState = $injector.get("userState");
       storeService = $injector.get("storeService");
       plansFactory = $injector.get("plansFactory");
@@ -94,6 +102,8 @@ describe("Services: chargebeeFactory", function() {
 
       getChargebeeInstance("companyId1").then(function() {
         expect(storeService.createSession).to.have.been.calledOnce;
+        expect($loading.startGlobal).to.have.been.calledOnce;
+        expect($loading.stopGlobal).to.have.been.calledOnce;
         done();
       });
     });

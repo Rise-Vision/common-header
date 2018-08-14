@@ -1,9 +1,9 @@
 "use strict";
 
 angular.module("risevision.store.services")
-  .factory("getChargebeeInstance", ["$q", "$window", "storeService", "userState",
+  .factory("getChargebeeInstance", ["$q", "$window", "$loading", "storeService", "userState",
     "CHARGEBEE_TEST_SITE", "CHARGEBEE_PROD_SITE",
-    function ($q, $window, storeService, userState, CHARGEBEE_TEST_SITE, CHARGEBEE_PROD_SITE) {
+    function ($q, $window, $loading, storeService, userState, CHARGEBEE_TEST_SITE, CHARGEBEE_PROD_SITE) {
       var currentCompanyId = null;
       var currentInstance = null;
       var currentSessionExpiration = 0;
@@ -34,6 +34,8 @@ angular.module("risevision.store.services")
         } else {
           var deferred = $q.defer();
 
+          $loading.startGlobal("chargebee-session");
+
           storeService.createSession(companyId)
             .then(function (session) {
               console.log("Chargebee session for companyId", companyId, "is", session);
@@ -44,10 +46,12 @@ angular.module("risevision.store.services")
               var sessionDuration = (Number(session.expires_at) - Number(session.created_at)) * 1000;
               currentSessionExpiration = Date.now() + sessionDuration;
 
+              $loading.stopGlobal("chargebee-session");
               deferred.resolve(currentInstance);
             })
             .catch(function (err) {
               console.log("Error creating Customer Portal session for company id", companyId, err);
+              $loading.stopGlobal("chargebee-session");
               deferred.reject(err);
             });
 
