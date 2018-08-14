@@ -75,6 +75,18 @@
           purchase: function (jsonData) {
             var deferred = $q.defer();
             storeAPILoader().then(function (storeAPI) {
+              storeAPI = {
+                purchase: {
+                  put2: function () {
+                    return $q.resolve({
+                      result: {
+                        error: false
+                      }
+                    });
+                  }
+                }
+              };
+
               var obj = {
                 jsonData: jsonData
               };
