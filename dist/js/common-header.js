@@ -10747,7 +10747,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/checkout-success.html',
-    '<div id="checkout-success"><h3 class="text-center u_margin-md-top">Payment Successful</h3><div class="text-center u_padding-md"><img src="https://s3.amazonaws.com/Rise-Images/Icons/online.svg" width="72px" alt="Payment Successful"><br><br><p>Your payment to Rise Vision was successful. You can keep track of your billing information in the <a href="#">Billing</a> section of your account.</p><br></div><hr><div class="row"><div class="col-xs-12 text-center"><button id="" class="btn btn-default">Done</button></div></div></div>');
+    '<div id="checkout-success"><h3 class="text-center u_margin-md-top">Payment Successful</h3><div class="text-center u_padding-md"><img src="https://s3.amazonaws.com/Rise-Images/Icons/online.svg" width="72px" alt="Payment Successful"><br><br><p>Your payment to Rise Vision was successful. You can keep track of your billing information in the <a ui-sref="apps.billing.home">Billing</a> section of your account.</p><br></div><hr><div class="row"><div class="col-xs-12 text-center"><button id="doneButton" class="btn btn-default" ng-click="dismiss()">Done</button></div></div></div>');
 }]);
 })();
 
