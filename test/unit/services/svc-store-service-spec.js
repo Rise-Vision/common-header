@@ -51,6 +51,15 @@ describe("Services: storeService", function() {
                 return Q.resolve(response);
               }
             })
+          },
+          purchase: {
+            put2: sinon.spy(function() {
+              if (storeApiFailure) {
+                return Q.reject(response);
+              } else {
+                return Q.resolve(response);
+              }              
+            })
           }
         });
 
@@ -248,7 +257,7 @@ describe("Services: storeService", function() {
       .then(null,done);
     });
 
-    it("should return response if response.result doesn't exist", function(done) {
+    it("should reject on API failure", function(done) {
       storeApiFailure = true;
 
       storeService.calculateTaxes("companyId", "planId", "addonId", "addonQty", addressObject)
@@ -263,6 +272,93 @@ describe("Services: storeService", function() {
       .then(null,done);
     });
 
+  });
+
+  describe("purchase: ", function() {
+    beforeEach(function() {
+      response = {
+        result: {}
+      };
+    });
+
+    it("should exist", function() {
+      expect(storeService.purchase).to.be.ok;
+      expect(storeService.purchase).to.be.a("function");
+    });
+    
+    it("should return a promise", function() {
+      expect(storeService.purchase("jsonData").then).to.be.a("function");
+    });
+
+    it("should pass the parameter and call the purchase put2 api", function(done) {
+      storeService.purchase("jsonData")
+      .then(function() {
+        storeApi.purchase.put2.should.have.been.called;
+        storeApi.purchase.put2.should.have.been.calledWith({
+          jsonData: "jsonData"
+        });
+        done();
+      })
+      .then(null,done);
+
+    });
+
+    it("should resolve if result is received", function(done) {
+      storeService.purchase("jsonData")
+      .then(function(result) {
+        expect(result).to.be.ok;
+        expect(result).to.deep.equal({});
+        
+        done();
+      })
+      .then(null,done);
+    });
+    
+    it("should reject if no result is received", function(done) {
+      response = {};
+
+      storeService.purchase("jsonData")
+      .then(function(result) {
+        done(result);
+      })
+      .then(null, function(error) {
+        expect(error).to.not.be.ok;
+
+        done();
+      })
+      .then(null,done);
+    });
+
+    it("should return error response", function(done) {
+      response.result.error = "Call Failed";
+
+      storeService.purchase("jsonData")
+      .then(function(result) {
+        done(result);
+      })
+      .then(null, function(error) {
+        expect(error).to.equal("Call Failed");
+
+        done();
+      })
+      .then(null,done);
+    });
+
+    it("should reject on API failure", function(done) {
+      storeApiFailure = true;
+      response.result.error = "Call Failed";
+
+      storeService.purchase("jsonData")
+      .then(function() {
+        done("error");
+      })
+      .then(null, function(error) {
+        expect(error).to.equal("Call Failed");
+
+        done();
+      })
+      .then(null,done);
+    });
 
   });
 

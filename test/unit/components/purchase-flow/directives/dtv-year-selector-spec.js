@@ -30,7 +30,7 @@ describe("directive: year selector", function() {
   describe("should populate years: ", function() {
     it("should add selected year to list", function() {
       expect($scope.years).to.have.length(21);
-      expect($scope.years[0]).to.equal(2012);
+      expect($scope.years[0]).to.equal("2012");
     });
 
     it("should not add year if larger than current", function() {
@@ -40,7 +40,7 @@ describe("directive: year selector", function() {
       $scope.init();
 
       expect($scope.years).to.have.length(20);
-      expect($scope.years[0]).to.not.equal(2100);
+      expect($scope.years[0]).to.not.equal("2100");
     });
 
   });

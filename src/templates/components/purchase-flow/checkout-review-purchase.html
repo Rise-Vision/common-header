@@ -14,6 +14,9 @@
       </div>
     </div>
   </div>
+  <div id="errorBox" class="alert alert-danger" role="alert" ng-show="purchase.checkoutError">
+    <strong>Payment Error</strong> {{purchase.checkoutError}}
+  </div>
 
   <div class="row">
     <div class="col-md-6 u_margin-sm-top">
@@ -115,7 +118,7 @@
   </div>
   <div class="row">
     <div class="col-xs-8 col-xs-offset-2 u_margin-md-bottom">
-      <button id="payButton" class="btn btn-primary btn-hg btn-block">
+      <button id="payButton" class="btn btn-primary btn-hg btn-block" ng-click="completePayment()">
         <span id="payLabel">Pay ${{purchase.estimate.total | number:2}} Now</span>
       </button>
     </div>

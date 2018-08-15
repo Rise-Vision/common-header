@@ -37,6 +37,13 @@ describe("controller: purchase modal", function() {
         }),
         getEstimate: sinon.spy(function() {
           return Q.resolve();
+        }),
+        completePayment: sinon.spy(function() {
+          if (validate) {
+            return Q.resolve();
+          } else {
+            return Q.reject();
+          }          
         })
       };
     });
@@ -77,6 +84,7 @@ describe("controller: purchase modal", function() {
 
     expect($scope.validateAddress).to.be.a("function");
     expect($scope.validatePaymentMethod).to.be.a("function");
+    expect($scope.completePayment).to.be.a("function");
     expect($scope.setNextStep).to.be.a("function");
     expect($scope.setPreviousStep).to.be.a("function");
     expect($scope.setCurrentStep).to.be.a("function");
@@ -182,6 +190,50 @@ describe("controller: purchase modal", function() {
 
   });
 
+  describe("completePayment: ", function() {
+    beforeEach(function() {
+      sinon.spy($scope, "setNextStep");
+    });
+
+    it("should complete payment and proceed to next step", function(done) {
+      purchaseFactory.purchase = {};
+      $scope.completePayment({});
+
+      purchaseFactory.completePayment.should.have.been.called;
+
+      setTimeout(function() {
+        $scope.setNextStep.should.have.been.called;
+
+        done();
+      }, 10);
+    });
+
+    it("should not proceed if there are errors", function(done) {
+      purchaseFactory.purchase = {
+        checkoutError: "error"
+      };
+      $scope.completePayment({});
+
+      setTimeout(function() {
+        $scope.setNextStep.should.not.have.been.called;
+
+        done();
+      }, 10);
+    });
+
+    it("should not proceed if an error is thrown", function(done) {
+      validate = false;
+      $scope.completePayment({});
+
+      setTimeout(function() {
+        $scope.setNextStep.should.not.have.been.called;
+
+        done();
+      }, 10);
+    });
+
+  });
+
   describe("setNextStep: ", function() {
     it("should increment step", function() {
       $scope.setNextStep();
@@ -209,7 +261,7 @@ describe("controller: purchase modal", function() {
       expect($scope.currentStep).to.equal(1);
     });
 
-    it("should proceed to the last step and get estimate", function() {
+    it("should proceed to the 4th step and get estimate", function() {
       $scope.setCurrentStep(3);
 
       $scope.setNextStep();
@@ -220,7 +272,7 @@ describe("controller: purchase modal", function() {
       purchaseFactory.getEstimate.should.have.been.called;
     });
 
-    it("should always set last step and get estimate if form was completed once", function(done) {
+    it("should always set 4th step and get estimate if form was completed once", function(done) {
       $scope.setCurrentStep(3);
 
       $scope.setNextStep();
@@ -242,6 +294,14 @@ describe("controller: purchase modal", function() {
 
         done();
       }, 10);
+    });
+
+    it("should proceed past 4th step", function() {
+      $scope.setCurrentStep(4);
+
+      $scope.setNextStep();
+
+      expect($scope.currentStep).to.equal(5);
     });
 
   });

@@ -55,11 +55,11 @@ angular.module("risevision.common.components.purchase-flow")
         return;
       }
 
-      $scope.factory.loading = true;
+      purchaseFactory.loading = true;
 
       addressFactory.validateAddress(addressObject)
         .finally(function () {
-          $scope.factory.loading = false;
+          purchaseFactory.loading = false;
 
           if (!addressObject.validationError) {
             $scope.setNextStep();
@@ -76,12 +76,21 @@ angular.module("risevision.common.components.purchase-flow")
         .then($scope.setNextStep);
     };
 
+    $scope.completePayment = function () {
+      purchaseFactory.completePayment()
+        .then(function () {
+          if (!purchaseFactory.purchase.checkoutError) {
+            $scope.setNextStep();
+          }
+        });
+    };
+
     $scope.setNextStep = function () {
       if (!_isFormValid()) {
         return;
       }
 
-      if ($scope.finalStep || $scope.currentStep >= 3) {
+      if (($scope.finalStep && $scope.currentStep < 3) || $scope.currentStep === 3) {
         $scope.currentStep = 4;
 
         $scope.finalStep = true;

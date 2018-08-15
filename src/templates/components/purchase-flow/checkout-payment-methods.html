@@ -33,7 +33,7 @@
           Please complete the missing information below.
         </div>
         <div id="errorBox" class="alert alert-danger" role="alert" ng-show="paymentMethods.newCreditCard.validationErrors.length">
-          <strong>Card Validation Error(s)</strong>
+          <strong>Card Validation Error<span ng-show="paymentMethods.newCreditCard.validationErrors.length > 1">s</span></strong>
           <ul>
             <li ng-repeat="error in paymentMethods.newCreditCard.validationErrors">{{error}}</li>
           </ul>
@@ -82,7 +82,7 @@
           <div class="col-md-4">
             <div class="form-group" ng-class="{ 'has-error': (form.paymentMethodsForm.cardExpiryYear.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardExpiryYear.$invalid }">
               <label for="expiry-year" class="control-label">Expiry Year *</label>
-              <year-selector id="new-card-expiry-year" class="form-control" name="cardExpiryYear" data-stripe="exp-year" ng-model="paymentMethods.newCreditCard.expYear" autocomplete="cc-exp-month" integer-parser required>
+              <year-selector id="new-card-expiry-year" class="form-control" name="cardExpiryYear" data-stripe="exp-year" ng-model="paymentMethods.newCreditCard.expYear" autocomplete="cc-exp-year" integer-parser required>
               </year-selector>
             </div>
           </div>

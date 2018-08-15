@@ -13513,6 +13513,10 @@ ul.tree ul li:last-child:before {
   width: 50%;
   right: 0; }
 
+.step-item.complete:last-child:after {
+  width: 50%;
+  left: 0; }
+
 .step-item.active:first-child:after {
   width: 0; }
 
