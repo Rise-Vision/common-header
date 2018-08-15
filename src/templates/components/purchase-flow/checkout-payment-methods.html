@@ -82,7 +82,7 @@
           <div class="col-md-4">
             <div class="form-group" ng-class="{ 'has-error': (form.paymentMethodsForm.cardExpiryYear.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardExpiryYear.$invalid }">
               <label for="expiry-year" class="control-label">Expiry Year *</label>
-              <year-selector id="new-card-expiry-year" class="form-control" name="cardExpiryYear" data-stripe="exp-year" ng-model="paymentMethods.newCreditCard.expYear" autocomplete="cc-exp-month" integer-parser required>
+              <year-selector id="new-card-expiry-year" class="form-control" name="cardExpiryYear" data-stripe="exp-year" ng-model="paymentMethods.newCreditCard.expYear" autocomplete="cc-exp-year" integer-parser required>
               </year-selector>
             </div>
           </div>

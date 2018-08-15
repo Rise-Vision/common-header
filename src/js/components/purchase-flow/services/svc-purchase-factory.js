@@ -97,8 +97,8 @@
                 return stripeService.createToken(paymentMethods.newCreditCard, address)
                   .then(function (response) {
                     paymentMethods.newCreditCard.id = response.id;
-                    paymentMethods.newCreditCard.last4 = response.last4;
-                    paymentMethods.newCreditCard.cardType = response.type;
+                    paymentMethods.newCreditCard.last4 = response.card.last4;
+                    paymentMethods.newCreditCard.cardType = response.card.type;
                   })
                   .finally(function () {
                     factory.loading = false;
@@ -186,7 +186,7 @@
           var card = factory.purchase.paymentMethods.selectedCard;
           var cardData = factory.purchase.paymentMethods.isOnAccount ? null : {
             cardId: card.id,
-            isDefault: card.isDefault
+            isDefault: card.isDefault ? true : false
           };
 
           var obj = {
@@ -203,18 +203,13 @@
         factory.completePayment = function () {
           var jsonData = _getOrderAsJson();
 
-          factory.purchase.checkout = {
-            checkoutErrors: []
-          };
+          factory.purchase.checkoutError = null;
           factory.loading = true;
 
           return storeService.purchase(jsonData)
-            .then(function (result) {
-              factory.purchase.checkout.success = result;
-            })
             .catch(function (result) {
-              factory.purchase.checkout.checkoutErrors.push(result && result.message ? result.message :
-                "There was an unknown error with the payment.");
+              factory.purchase.checkoutError = result && result.message ? result.message :
+                "There was an unknown error with the payment.";
             })
             .finally(function () {
               factory.loading = false;

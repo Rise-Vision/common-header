@@ -1,6 +1,6 @@
 "use strict";
 
-describe.only("Services: storeService", function() {
+describe("Services: storeService", function() {
   var storeService;
   var storeApiFailure;
   var storeApi, addressObject, response;
@@ -55,7 +55,7 @@ describe.only("Services: storeService", function() {
           purchase: {
             put2: sinon.spy(function() {
               if (storeApiFailure) {
-                return Q.reject("some error");
+                return Q.reject(response);
               } else {
                 return Q.resolve(response);
               }              
@@ -337,9 +337,7 @@ describe.only("Services: storeService", function() {
         done(result);
       })
       .then(null, function(error) {
-        expect(error).to.deep.equal({
-          error: "Call Failed"
-        });
+        expect(error).to.equal("Call Failed");
 
         done();
       })
@@ -348,13 +346,14 @@ describe.only("Services: storeService", function() {
 
     it("should reject on API failure", function(done) {
       storeApiFailure = true;
+      response.result.error = "Call Failed";
 
       storeService.purchase("jsonData")
       .then(function() {
         done("error");
       })
       .then(null, function(error) {
-        expect(error).to.equal("some error");
+        expect(error).to.equal("Call Failed");
 
         done();
       })

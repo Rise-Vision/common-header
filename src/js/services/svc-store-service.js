@@ -75,18 +75,6 @@
           purchase: function (jsonData) {
             var deferred = $q.defer();
             storeAPILoader().then(function (storeAPI) {
-              storeAPI = {
-                purchase: {
-                  put2: function () {
-                    return $q.resolve({
-                      result: {
-                        error: false
-                      }
-                    });
-                  }
-                }
-              };
-
               var obj = {
                 jsonData: jsonData
               };
@@ -97,12 +85,13 @@
                   $log.debug("purchase resp", resp);
                   deferred.resolve(resp.result);
                 } else {
-                  deferred.reject(resp && resp.result);
+                  deferred.reject(resp && resp.result && resp.result.error);
                 }
               })
-              .then(null, function (e) {
-                console.error("Failed to get Purchase.", e);
-                deferred.reject(e);
+              .then(null, function (resp) {
+                console.error("Failed to get Purchase.", resp);
+
+                deferred.reject(resp && resp.result && resp.result.error);
               });
             return deferred.promise;
           },

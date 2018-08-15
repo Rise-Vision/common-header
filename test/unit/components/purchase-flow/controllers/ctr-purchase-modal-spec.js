@@ -196,6 +196,7 @@ describe("controller: purchase modal", function() {
     });
 
     it("should complete payment and proceed to next step", function(done) {
+      purchaseFactory.purchase = {};
       $scope.completePayment({});
 
       purchaseFactory.completePayment.should.have.been.called;
@@ -208,6 +209,19 @@ describe("controller: purchase modal", function() {
     });
 
     it("should not proceed if there are errors", function(done) {
+      purchaseFactory.purchase = {
+        checkoutError: "error"
+      };
+      $scope.completePayment({});
+
+      setTimeout(function() {
+        $scope.setNextStep.should.not.have.been.called;
+
+        done();
+      }, 10);
+    });
+
+    it("should not proceed if an error is thrown", function(done) {
       validate = false;
       $scope.completePayment({});
 

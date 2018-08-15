@@ -19,11 +19,11 @@ angular.module("risevision.common.components.purchase-flow")
               $scope.years = [];
 
               if ($scope.ngModel && $scope.ngModel < baseYear) {
-                $scope.years.push($scope.ngModel);
+                $scope.years.push(($scope.ngModel).toString());
               }
 
               for (var i = 0; i < MAX_COUNT; i++) {
-                $scope.years.push(baseYear + i);
+                $scope.years.push((baseYear + i).toString());
               }
             };
 

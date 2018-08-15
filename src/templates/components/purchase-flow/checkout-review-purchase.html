@@ -14,11 +14,8 @@
       </div>
     </div>
   </div>
-  <div id="errorBox" class="alert alert-danger" role="alert" ng-show="purchase.checkout.checkoutErrors.length">
-    <strong>Payment Error<span ng-show="purchase.checkout.checkoutErrors.length > 1">s</span></strong>
-    <ul>
-      <li ng-repeat="error in purchase.checkout.checkoutErrors">{{error}}</li>
-    </ul>
+  <div id="errorBox" class="alert alert-danger" role="alert" ng-show="purchase.checkoutError">
+    <strong>Payment Error</strong> {{purchase.checkoutError}}
   </div>
 
   <div class="row">

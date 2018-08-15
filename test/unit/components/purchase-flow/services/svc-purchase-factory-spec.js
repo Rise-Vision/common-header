@@ -53,11 +53,11 @@ describe("Services: purchase factory", function() {
           if (validate) {
             return Q.resolve({
               id: "id",
-              last4: "last4",
-              exp_month: "expMonth",
-              exp_year: "expYear",
-              name: "name",
-              type: "cardType"
+              card: {
+                id: "wrongId",
+                last4: "last4",
+                type: "cardType"
+              }
             });
           } else {
             return Q.reject();
@@ -451,7 +451,7 @@ describe("Services: purchase factory", function() {
         paymentMethods: {
           selectedCard: {
             id: "cardId",
-            isDefault: "default",
+            isDefault: true,
             junkProperty: "junkValue"
           },
           purchaseOrderNumber: "purchaseOrderNumber"
@@ -459,12 +459,11 @@ describe("Services: purchase factory", function() {
       };
     });
 
-    it("should initialize checkout object", function() {
+    it("should clear checkout errors", function() {
+      purchaseFactory.purchase.checkoutError = "error";
       purchaseFactory.completePayment();
 
-      expect(purchaseFactory.purchase.checkout).to.be.ok;
-      expect(purchaseFactory.purchase.checkout).to.be.an("object");
-      expect(purchaseFactory.purchase.checkout.checkoutErrors).to.be.an("array");
+      expect(purchaseFactory.purchase.checkoutError).to.not.be.ok;
     });
 
     it("should call purchase api and return a promise", function() {
@@ -497,10 +496,17 @@ describe("Services: purchase factory", function() {
         purchaseOrderNumber: "purchaseOrderNumber",
         card: {
           cardId: "cardId",
-          isDefault: "default"
+          isDefault: true
         }
       }));
 
+    });
+
+    it("should populate card isDefault value if missing", function() {
+      delete purchaseFactory.purchase.paymentMethods.selectedCard.isDefault;
+      purchaseFactory.completePayment();
+
+      expect(storeService.purchase.getCall(0).args[0]).to.contain("\"isDefault\":false");
     });
 
     it("should not add card for onAccount", function() {
@@ -510,10 +516,10 @@ describe("Services: purchase factory", function() {
       expect(storeService.purchase.getCall(0).args[0]).to.contain("\"card\":null");
     });
 
-    it("should populate checkout succes object if call succeeds", function(done) {
+    it("should populate checkout success object if call succeeds", function(done) {
       purchaseFactory.completePayment()
       .then(function() {
-        expect(purchaseFactory.purchase.checkout.success).to.equal("success");
+        expect(purchaseFactory.purchase.checkoutError).to.not.be.ok;
 
         done();
       })
@@ -527,7 +533,7 @@ describe("Services: purchase factory", function() {
 
       purchaseFactory.completePayment()
       .then(function() {
-        expect(purchaseFactory.purchase.checkout.checkoutErrors[0]).to.equal("There was an unknown error with the payment.");
+        expect(purchaseFactory.purchase.checkoutError).to.equal("There was an unknown error with the payment.");
 
         done();
       })

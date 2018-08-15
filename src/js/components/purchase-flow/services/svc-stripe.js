@@ -16,8 +16,8 @@ angular.module("risevision.common.components.purchase-flow")
     missing: "No card associated with the account.",
     processing_error: "An unexpected error has occurred. Please try again."
   })
-  .service("stripeService", ["$q", "$window", "stripeLoader", "STRIPE_ERRORS",
-    function ($q, $window, stripeLoader, STRIPE_ERRORS) {
+  .service("stripeService", ["$q", "$log", "$window", "stripeLoader", "STRIPE_ERRORS",
+    function ($q, $log, $window, stripeLoader, STRIPE_ERRORS) {
 
       this.validateCard = function (card, isNew) {
         var errors = [];
@@ -78,8 +78,12 @@ angular.module("risevision.common.components.purchase-flow")
         stripeLoader().then(function (stripeClient) {
           stripeClient.card.createToken(cardObject, function (status, response) {
             if (response && response.card && !response.error) {
-              deferred.resolve(response.card);
+              $log.debug("Create Token response: ", response);
+
+              deferred.resolve(response);
             } else {
+              console.error("Failed to get Card Token: ", response);
+
               card.tokenError = _processStripeError(response && response.error && response.error.code);
 
               deferred.reject();

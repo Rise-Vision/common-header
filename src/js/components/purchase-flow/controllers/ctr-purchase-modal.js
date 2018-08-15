@@ -78,7 +78,11 @@ angular.module("risevision.common.components.purchase-flow")
 
     $scope.completePayment = function () {
       purchaseFactory.completePayment()
-        .then($scope.setNextStep);
+        .then(function () {
+          if (!purchaseFactory.purchase.checkoutError) {
+            $scope.setNextStep();
+          }
+        });
     };
 
     $scope.setNextStep = function () {
