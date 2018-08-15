@@ -61,9 +61,14 @@
   width: 50%;
   right: 0;
 }
+.step-item.complete:last-child:after {
+  width: 50%;
+  left: 0;
+}
 .step-item.active:first-child:after {
   width: 0;
 }
+
 .step-item.complete {
   color: $rise-green;
   z-index: 100;
