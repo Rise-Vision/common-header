@@ -11,8 +11,6 @@ angular.module("risevision.common.components.plans")
     $scope.startTrialError = null;
     $scope.isMonthly = true;
 
-    $scope.origin = userState.getCopyOfSelectedCompany().origin;
-
     function _getPlansDetails() {
       $loading.start("plans-modal");
 

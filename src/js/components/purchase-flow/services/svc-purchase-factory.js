@@ -12,6 +12,34 @@
         // Stop spinner - workaround for spinner not rendering
         factory.loading = false;
 
+        var _copyAddress = function (src) {
+          var dest = {};
+
+          dest.id = src.id;
+          dest.street = src.street;
+          dest.unit = src.unit;
+          dest.city = src.city;
+          dest.country = src.country;
+          dest.postalCode = src.postalCode;
+          dest.province = src.province;
+
+          return dest;
+        };
+
+        function _copyShipToAddress(src) {
+          var dest = {};
+
+          dest.id = src.id;
+          dest.street = src.shipToStreet;
+          dest.unit = src.shipToUnit;
+          dest.city = src.shipToCity;
+          dest.country = src.shipToCountry;
+          dest.postalCode = src.shipToPostalCode;
+          dest.province = src.shipToProvince;
+
+          return dest;
+        }
+
         var _cleanContactObj = function (c) {
           return {
             username: c.username,
@@ -29,8 +57,9 @@
           factory.purchase.plan.additionalDisplayLicenses = 0;
           factory.purchase.plan.isMonthly = isMonthly;
 
-          factory.purchase.billingAddress = userState.getCopyOfUserCompany();
-          factory.purchase.shippingAddress = userState.getCopyOfSelectedCompany();
+          factory.purchase.billingAddress = _copyAddress(userState.getCopyOfUserCompany());
+          factory.purchase.shippingAddress = _copyShipToAddress(userState.getCopyOfSelectedCompany());
+
           factory.purchase.contact = _cleanContactObj(userState.getCopyOfProfile());
           factory.purchase.paymentMethods = {
             paymentMethod: "card",
@@ -155,19 +184,6 @@
             });
         };
 
-        var _copyAddress = function (src) {
-          var dest = {};
-
-          dest.street = src.street;
-          dest.unit = src.unit;
-          dest.city = src.city;
-          dest.country = src.country;
-          dest.postalCode = src.postalCode;
-          dest.province = src.province;
-
-          return dest;
-        };
-
         var _getOrderAsJson = function () {
           //clean up items
           var newItems = [{
@@ -177,12 +193,6 @@
             qty: factory.purchase.plan.additionalDisplayLicenses
           }];
 
-          var billTo = _copyAddress(factory.purchase.billingAddress);
-          billTo.id = factory.purchase.billingAddress.id;
-
-          var shipTo = _copyAddress(factory.purchase.shippingAddress);
-          shipTo.id = factory.purchase.shippingAddress.id;
-
           var card = factory.purchase.paymentMethods.selectedCard;
           var cardData = factory.purchase.paymentMethods.isOnAccount ? null : {
             cardId: card.id,
@@ -190,8 +200,8 @@
           };
 
           var obj = {
-            billTo: billTo,
-            shipTo: shipTo,
+            billTo: _copyAddress(factory.purchase.billingAddress),
+            shipTo: _copyAddress(factory.purchase.shippingAddress),
             items: newItems,
             purchaseOrderNumber: factory.purchase.paymentMethods.purchaseOrderNumber,
             card: cardData

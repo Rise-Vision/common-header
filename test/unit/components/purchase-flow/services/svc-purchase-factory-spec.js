@@ -12,8 +12,16 @@ describe("Services: purchase factory", function() {
     });
     $provide.service("userState", function() {
       return {
-        getCopyOfUserCompany: sinon.stub().returns("userCompany"),
-        getCopyOfSelectedCompany: sinon.stub().returns("selectedCompany"),
+        getCopyOfUserCompany: sinon.stub().returns({
+          id: "id",
+          street: "billingStreet",
+          junkProperty: "junkValue"
+        }),
+        getCopyOfSelectedCompany: sinon.stub().returns({
+          id: "id",
+          street: "wrongStreet",
+          shipToStreet: "shippingStreet"
+        }),
         getCopyOfProfile: sinon.stub().returns({
           username: "username",
           uselessProperty: "value"
@@ -114,8 +122,24 @@ describe("Services: purchase factory", function() {
       expect(purchaseFactory.purchase.plan.isMonthly).to.be.true;
       expect(purchaseFactory.purchase.plan).to.not.equal(plan);        
 
-      expect(purchaseFactory.purchase.billingAddress).to.equal("userCompany");
-      expect(purchaseFactory.purchase.shippingAddress).to.equal("selectedCompany");
+      expect(purchaseFactory.purchase.billingAddress).to.deep.equal({
+        id: "id",
+        street: "billingStreet",
+        unit: undefined,
+        city: undefined,
+        country: undefined,
+        postalCode: undefined,
+        province: undefined
+      });
+      expect(purchaseFactory.purchase.shippingAddress).to.deep.equal({
+        id: "id",
+        street: "shippingStreet",
+        unit: undefined,
+        city: undefined,
+        country: undefined,
+        postalCode: undefined,
+        province: undefined
+      });
       expect(purchaseFactory.purchase.contact).to.be.an("object");
       expect(purchaseFactory.purchase.contact).to.have.property("username");
       expect(purchaseFactory.purchase.contact).to.not.have.property("uselessProperty");
@@ -479,13 +503,13 @@ describe("Services: purchase factory", function() {
       storeService.purchase.should.have.been.called;
       storeService.purchase.should.have.been.calledWith(JSON.stringify({
         billTo: {
+          id: "id",
           street: "billingStreet",
-          country: "CA",
-          id: "id"
+          country: "CA"
         },
         shipTo: {
-          street: "shippingStreet",
-          id: "id"
+          id: "id",
+          street: "shippingStreet"
         },
         items: [{
           id: "productCode-cad01m"
