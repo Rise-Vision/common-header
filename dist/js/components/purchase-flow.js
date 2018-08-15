@@ -79,6 +79,7 @@ angular.module("risevision.common.components.purchase-flow")
           var dest = {};
 
           dest.id = src.id;
+          dest.name = src.name;
           dest.street = src.street;
           dest.unit = src.unit;
           dest.city = src.city;
@@ -93,6 +94,7 @@ angular.module("risevision.common.components.purchase-flow")
           var dest = {};
 
           dest.id = src.id;
+          dest.name = src.name;
           dest.street = src.shipToStreet;
           dest.unit = src.shipToUnit;
           dest.city = src.shipToCity;

@@ -16,6 +16,7 @@
           var dest = {};
 
           dest.id = src.id;
+          dest.name = src.name;
           dest.street = src.street;
           dest.unit = src.unit;
           dest.city = src.city;
@@ -30,6 +31,7 @@
           var dest = {};
 
           dest.id = src.id;
+          dest.name = src.name;
           dest.street = src.shipToStreet;
           dest.unit = src.shipToUnit;
           dest.city = src.shipToCity;

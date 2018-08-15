@@ -124,6 +124,7 @@ describe("Services: purchase factory", function() {
 
       expect(purchaseFactory.purchase.billingAddress).to.deep.equal({
         id: "id",
+        name: undefined,
         street: "billingStreet",
         unit: undefined,
         city: undefined,
@@ -133,6 +134,7 @@ describe("Services: purchase factory", function() {
       });
       expect(purchaseFactory.purchase.shippingAddress).to.deep.equal({
         id: "id",
+        name: undefined,
         street: "shippingStreet",
         unit: undefined,
         city: undefined,
