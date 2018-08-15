@@ -45,9 +45,7 @@ describe("controller: plans modal", function() {
       return {
         reloadSelectedCompany: function() {},
         getCopyOfSelectedCompany: function() {
-          return {
-            origin: "Rise"
-          };
+          return {};
         }
       };
     });
@@ -131,7 +129,6 @@ describe("controller: plans modal", function() {
 
   it("should initialize",function() {
     expect($scope.currentPlan).to.be.ok;
-    expect($scope.origin).to.equal("Rise");
 
     expect($scope.isCurrentPlan).to.be.a("function");
     expect($scope.isCurrentPlanSubscribed).to.be.a("function");
