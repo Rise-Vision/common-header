@@ -2,14 +2,25 @@
 
 describe("Services: chargebeeFactory", function() {
   var sandbox = sinon.sandbox.create();
-  var clock, $window, userState, storeService, plansFactory, chargebeePortal;
+  var clock, $rootScope, $window, $loading, userState, storeService, plansFactory, chargebeePortal;
 
   beforeEach(module("risevision.store.services"));
 
   beforeEach(module(function ($provide) {
     $provide.value("CHARGEBEE_TEST_SITE", "risevision-test");
     $provide.value("CHARGEBEE_PROD_SITE", "risevision");
+    $provide.service("$rootScope", function() {
+      return {
+        $emit: function() {}
+      };
+    });
     $provide.service("$q", function() {return Q;});
+    $provide.service("$loading", function() {
+      return {
+        startGlobal: sandbox.stub(),
+        stopGlobal: sandbox.stub()
+      };
+    });
     $provide.service("storeService", function() {
       return {
         createSession: function() {}
@@ -30,15 +41,16 @@ describe("Services: chargebeeFactory", function() {
   }));
 
   beforeEach(function() {
-    inject(function($injector) {
+    inject(function($injector, _$rootScope_) {
+      $rootScope = _$rootScope_;
       $window = $injector.get("$window");
+      $loading = $injector.get("$loading");
       userState = $injector.get("userState");
       storeService = $injector.get("storeService");
       plansFactory = $injector.get("plansFactory");
 
       chargebeePortal = {
-        open: sandbox.stub(),
-        openSection: sandbox.stub()
+        open: sandbox.stub()
       };
       $window.Chargebee = {
         init: function () {
@@ -90,6 +102,8 @@ describe("Services: chargebeeFactory", function() {
 
       getChargebeeInstance("companyId1").then(function() {
         expect(storeService.createSession).to.have.been.calledOnce;
+        expect($loading.startGlobal).to.have.been.calledOnce;
+        expect($loading.stopGlobal).to.have.been.calledOnce;
         done();
       });
     });
@@ -181,6 +195,7 @@ describe("Services: chargebeeFactory", function() {
         expect($window.Chargebee.init.getCall(0).args[0].site).to.equal("risevision-test");
         expect(chargebeePortal.open).to.have.been.calledOnce;
         expect(plansFactory.showPlansModal).to.not.have.been.called;
+        expect(plansFactory.apiError).to.not.be.ok;
         done();
       });
     });
@@ -195,6 +210,24 @@ describe("Services: chargebeeFactory", function() {
         expect($window.Chargebee.init.getCall(0).args[0].site).to.equal("risevision");
         expect(chargebeePortal.open).to.have.been.calledOnce;
         expect(plansFactory.showPlansModal).to.not.have.been.called;
+        expect(plansFactory.apiError).to.not.be.ok;
+        done();
+      });
+    });
+
+    it("should fail to create a Customer Portal session", function(done) {
+      storeService.createSession.restore();
+
+      sandbox.spy($window.Chargebee, "init");
+      sandbox.stub(userState, "isTestCompanySelected").returns(true);
+      sandbox.stub(storeService, "createSession").returns(Q.reject("API error"));
+
+      chargebeeFactory.openPortal("companyId1");
+
+      setTimeout(function () {
+        expect(chargebeePortal.open).to.not.have.been.called;
+        expect(plansFactory.showPlansModal).to.not.have.been.called;
+        expect(plansFactory.apiError).to.be.not.null;
         done();
       });
     });
@@ -203,8 +236,9 @@ describe("Services: chargebeeFactory", function() {
       chargebeeFactory.openAccountDetails("companyId1");
 
       setTimeout(function () {
-        expect(chargebeePortal.openSection).to.have.been.calledOnce;
-        expect(chargebeePortal.openSection.getCall(0).args[0].sectionType).to.equal(chargebeeSections.ACCOUNT_DETAILS);
+        expect(chargebeePortal.open).to.have.been.calledOnce;
+        expect(chargebeePortal.open.getCall(0).args[1].sectionType).to.equal(chargebeeSections.ACCOUNT_DETAILS);
+        expect(plansFactory.apiError).to.not.be.ok;
         done();
       });
     });
@@ -213,8 +247,9 @@ describe("Services: chargebeeFactory", function() {
       chargebeeFactory.openAddress("companyId1");
 
       setTimeout(function () {
-        expect(chargebeePortal.openSection).to.have.been.calledOnce;
-        expect(chargebeePortal.openSection.getCall(0).args[0].sectionType).to.equal(chargebeeSections.ADDRESS);
+        expect(chargebeePortal.open).to.have.been.calledOnce;
+        expect(chargebeePortal.open.getCall(0).args[1].sectionType).to.equal(chargebeeSections.ADDRESS);
+        expect(plansFactory.apiError).to.not.be.ok;
         done();
       });
     });
@@ -223,8 +258,9 @@ describe("Services: chargebeeFactory", function() {
       chargebeeFactory.openBillingHistory("companyId1");
 
       setTimeout(function () {
-        expect(chargebeePortal.openSection).to.have.been.calledOnce;
-        expect(chargebeePortal.openSection.getCall(0).args[0].sectionType).to.equal(chargebeeSections.BILLING_HISTORY);
+        expect(chargebeePortal.open).to.have.been.calledOnce;
+        expect(chargebeePortal.open.getCall(0).args[1].sectionType).to.equal(chargebeeSections.BILLING_HISTORY);
+        expect(plansFactory.apiError).to.not.be.ok;
         done();
       });
     });
@@ -233,8 +269,9 @@ describe("Services: chargebeeFactory", function() {
       chargebeeFactory.openPaymentSources("companyId1");
 
       setTimeout(function () {
-        expect(chargebeePortal.openSection).to.have.been.calledOnce;
-        expect(chargebeePortal.openSection.getCall(0).args[0].sectionType).to.equal(chargebeeSections.PAYMENT_SOURCES);
+        expect(chargebeePortal.open).to.have.been.calledOnce;
+        expect(chargebeePortal.open.getCall(0).args[1].sectionType).to.equal(chargebeeSections.PAYMENT_SOURCES);
+        expect(plansFactory.apiError).to.not.be.ok;
         done();
       });
     });
@@ -243,9 +280,10 @@ describe("Services: chargebeeFactory", function() {
       chargebeeFactory.openSubscriptionDetails("companyId1", "subs1");
 
       setTimeout(function () {
-        expect(chargebeePortal.openSection).to.have.been.calledOnce;
-        expect(chargebeePortal.openSection.getCall(0).args[0].sectionType).to.equal(chargebeeSections.SUBSCRIPTION_DETAILS);
-        expect(chargebeePortal.openSection.getCall(0).args[0].params.subscriptionId).to.equal("subs1");
+        expect(chargebeePortal.open).to.have.been.calledOnce;
+        expect(chargebeePortal.open.getCall(0).args[1].sectionType).to.equal(chargebeeSections.SUBSCRIPTION_DETAILS);
+        expect(chargebeePortal.open.getCall(0).args[1].params.subscriptionId).to.equal("subs1");
+        expect(plansFactory.apiError).to.not.be.ok;
         done();
       });
     });
@@ -276,7 +314,7 @@ describe("Services: chargebeeFactory", function() {
         chargebeeFactory.openAccountDetails("companyId1");
 
         setTimeout(function () {
-          expect(chargebeePortal.openSection).to.not.have.been.called;
+          expect(chargebeePortal.open).to.not.have.been.called;
           expect(plansFactory.showPlansModal).to.have.been.calledOnce;
           done();
         });
@@ -286,7 +324,7 @@ describe("Services: chargebeeFactory", function() {
         chargebeeFactory.openAddress("companyId1");
 
         setTimeout(function () {
-          expect(chargebeePortal.openSection).to.not.have.been.called;
+          expect(chargebeePortal.open).to.not.have.been.called;
           expect(plansFactory.showPlansModal).to.have.been.calledOnce;
           done();
         });
@@ -296,7 +334,7 @@ describe("Services: chargebeeFactory", function() {
         chargebeeFactory.openBillingHistory("companyId1");
 
         setTimeout(function () {
-          expect(chargebeePortal.openSection).to.not.have.been.called;
+          expect(chargebeePortal.open).to.not.have.been.called;
           expect(plansFactory.showPlansModal).to.have.been.calledOnce;
           done();
         });
@@ -306,7 +344,7 @@ describe("Services: chargebeeFactory", function() {
         chargebeeFactory.openPaymentSources("companyId1");
 
         setTimeout(function () {
-          expect(chargebeePortal.openSection).to.not.have.been.called;
+          expect(chargebeePortal.open).to.not.have.been.called;
           expect(plansFactory.showPlansModal).to.have.been.calledOnce;
           done();
         });
@@ -316,7 +354,7 @@ describe("Services: chargebeeFactory", function() {
         chargebeeFactory.openSubscriptionDetails("companyId1");
 
         setTimeout(function () {
-          expect(chargebeePortal.openSection).to.not.have.been.called;
+          expect(chargebeePortal.open).to.not.have.been.called;
           expect(plansFactory.showPlansModal).to.have.been.calledOnce;
           done();
         });
