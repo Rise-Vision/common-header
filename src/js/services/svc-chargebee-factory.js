@@ -114,7 +114,7 @@ angular.module("risevision.store.services")
           $rootScope.$emit("chargebee.subscriptionChanged", data);
         },
         subscriptionCancelled: function (data) {
-          $log.debug("Chargebee subscrpitionCancelled event", data);
+          $log.debug("Chargebee subscriptionCancelled event", data);
           $rootScope.$emit("chargebee.subscriptionCancelled", data);
         }
       };
