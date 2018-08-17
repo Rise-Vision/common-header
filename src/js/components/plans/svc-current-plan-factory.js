@@ -29,6 +29,7 @@
         };
 
         _factory.isPlanActive = function () {
+          console.log("isPlanActive", "status", _factory.currentPlan.status);
           return _factory.isSubscribed() || _factory.isOnTrial();
         };
 
