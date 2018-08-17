@@ -136,7 +136,6 @@ angular.module("risevision.common.components.plans", [
         };
 
         _factory.isPlanActive = function () {
-          console.log("isPlanActive", "status", _factory.currentPlan.status);
           return _factory.isSubscribed() || _factory.isOnTrial();
         };
 
