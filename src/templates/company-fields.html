@@ -123,5 +123,16 @@
 </div>
 <div class="form-group" ng-show="company.isChargebee">
   <label class="form-control-label">Billing Notifications Email</label>
-  <input type="text" class="form-control" ng-model="company.billingContactEmails">
+  <tags-input name="billingContactEmails"
+              type="email"
+              placeholder="Add an email"
+              class="email-tags"
+              ng-model="billingContactEmailsList"
+              add-on-enter="true"
+              add-on-space="true"
+              add-on-comma="true"
+              add-on-blur="true"
+              add-on-paste="true"
+              on-tag-adding="isValidEmail($tag)">
+  </tags-input>
 </div>
