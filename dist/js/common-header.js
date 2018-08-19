@@ -333,7 +333,7 @@ angular.module("risevision.common.header", [
   "risevision.common.registration",
   "risevision.common.shoppingcart",
   "checklist-model",
-  "ui.bootstrap", "ngSanitize", "ngCsv", "ngTouch",
+  "ui.bootstrap", "ngSanitize", "ngCsv", "ngTouch", "ngTagsInput",
   "risevision.common.components.userstate",
   "risevision.common.components.last-modified",
   "risevision.common.components.loading",
@@ -1030,6 +1030,10 @@ angular.module("risevision.common.header")
 ]);
 
 angular.module("risevision.common.header")
+
+.value("EMAIL_REGEX",
+  /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+)
 
 .controller("CompanySettingsModalCtrl", ["$scope", "$modalInstance",
   "updateCompany", "companyId", "countries", "REGIONS_CA", "REGIONS_US",
