@@ -16,14 +16,16 @@ describe("controller: purchase modal", function() {
       };
     });
     $provide.service("addressFactory", function() {
-      return {
+      return addressFactory = {
         validateAddress: function(addressObject) {
           if (!validate) {
             addressObject.validationError = true;
           }
 
           return Q.resolve();
-        }
+        },
+        updateContact: sinon.stub(),
+        updateAddress: sinon.stub()
       };
     });
     $provide.service("purchaseFactory", function() {
@@ -49,7 +51,7 @@ describe("controller: purchase modal", function() {
     });
   }));
 
-  var sandbox, $scope, $modalInstance, $loading, validate, purchaseFactory;
+  var sandbox, $scope, $modalInstance, $loading, validate, purchaseFactory, addressFactory;
 
   beforeEach(function() {
     validate = true;
@@ -126,9 +128,11 @@ describe("controller: purchase modal", function() {
     });
 
     it("should validate and proceed to next step", function(done) {
-      $scope.validateAddress({});
+      $scope.validateAddress({}, "contact", "shipping");
 
       setTimeout(function() {
+        addressFactory.updateContact.should.have.been.calledWith("contact");
+        addressFactory.updateAddress.should.have.been.calledWith({}, "shipping");
         $scope.setNextStep.should.have.been.called;
 
         done();

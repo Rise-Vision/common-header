@@ -9861,12 +9861,15 @@ angular.module("risevision.common.components.purchase-flow", [
 ]);
 
 angular.module("risevision.common.components.purchase-flow")
-  .service("addressFactory", ["$q", "$log", "storeService",
-    function ($q, $log, storeService) {
+  .service("addressFactory", ["$q", "$log", "userState", "storeService", "updateCompany", "updateUser",
+    "addressService", "contactService",
+    function ($q, $log, userState, storeService, updateCompany, updateUser, addressService, contactService) {
       var factory = {};
 
       var _addressesAreIdentical = function (src, result) {
         var dest = {
+          // Use Current Name for Comparison
+          name: src.name,
           street: result.line1,
           unit: result.line2 && result.line2.length ? result.line2 : "",
           city: result.city,
@@ -9875,15 +9878,7 @@ angular.module("risevision.common.components.purchase-flow")
           country: result.country
         };
 
-        if (dest.street === src.street &&
-          dest.unit === src.unit &&
-          dest.city === src.city &&
-          dest.country === src.country &&
-          dest.postalCode === src.postalCode &&
-          dest.province === src.province) {
-          return true;
-        }
-        return false;
+        return addressService.addressesAreIdentical(src, dest);
       };
 
       factory.validateAddress = function (addressObject) {
@@ -9906,7 +9901,210 @@ angular.module("risevision.common.components.purchase-flow")
         }
       };
 
+      var _updateCompanySettings = function (company, isShipping) {
+        if (isShipping) {
+          // update Selected company saved in userState
+          var shipToCopyNoFollow = userState.getCopyOfSelectedCompany(true);
+          addressService.copyAddressToShipTo(company, shipToCopyNoFollow);
+
+          // this will fire "risevision.company.updated" event
+          userState.updateCompanySettings(shipToCopyNoFollow);
+
+        } else {
+          // only proceed if currently selected BillTo company is the User company
+          if (company.id === userState.getUserCompanyId()) {
+            // update User company saved in userState
+            var billToCopyNoFollow = userState.getCopyOfUserCompany(true);
+            addressService.copyAddress(company, billToCopyNoFollow);
+
+            // this will fire "risevision.company.updated" event
+            userState.updateCompanySettings(billToCopyNoFollow);
+          }
+        }
+      };
+
+      factory.updateAddress = function (addressObject, isShipping) {
+        var deferred = $q.defer();
+        var currentAddress = isShipping ? addressService.copyAddressFromShipTo(userState.getCopyOfSelectedCompany()) :
+          userState.getCopyOfUserCompany();
+
+        if (addressObject && !addressService.addressesAreIdentical(addressObject, currentAddress)) {
+
+          $log.info("Address changed. Saving...");
+
+          var addressFields = isShipping ? addressService.copyAddressToShipTo(addressObject) :
+            addressService.copyAddress(addressObject);
+
+          updateCompany(addressObject.id, addressFields)
+            .then(function () {
+              _updateCompanySettings(addressObject, isShipping);
+
+              $log.info("Address saved.");
+
+              deferred.resolve();
+            })
+            .catch(function () {
+              $log.info("Error saving Address.");
+              deferred.reject("Error saving Address.");
+            });
+        } else {
+          deferred.resolve();
+        }
+
+        return deferred.promise;
+      };
+
+      factory.updateContact = function (contact) {
+        var deferred = $q.defer();
+        var currentContact = userState.getCopyOfProfile();
+
+        if (contact && !contactService.contactsAreIdentical(contact, currentContact)) {
+          $log.info("Contact information changed. Saving...");
+
+          updateUser(userState.getUsername(), contact)
+            .then(function () {
+              var profileCopyNoFollow = userState.getCopyOfProfile(true);
+              contactService.copyContactObj(contact, profileCopyNoFollow);
+
+              // this fires "risevision.company.updated" event
+              userState.updateUserProfile(profileCopyNoFollow);
+
+              $log.info("Contact information saved.");
+              deferred.resolve();
+            })
+            .catch(function () {
+              $log.info("Error saving Contact information.");
+              deferred.reject("Error saving Contact information.");
+            });
+        } else {
+          deferred.resolve();
+        }
+
+        return deferred.promise;
+      };
+
       return factory;
+    }
+  ]);
+
+angular.module("risevision.common.components.purchase-flow")
+  .service("addressService", [
+
+    function () {
+      this.copyAddress = function (src, dest) {
+        if (!dest) {
+          dest = {};
+        }
+
+        dest.id = src.id;
+        dest.name = src.name;
+
+        dest.street = src.street;
+        dest.unit = src.unit;
+        dest.city = src.city;
+        dest.country = src.country;
+        dest.postalCode = src.postalCode;
+        dest.province = src.province;
+
+        return dest;
+      };
+
+      this.copyAddressFromShipTo = function (src, dest) {
+        // Do not copy shipToUseCompanyAddress.
+        // It should not be updated from the Cart.
+
+        if (!dest) {
+          dest = {};
+        }
+
+        dest.id = src.id;
+        dest.name = src.shipToName;
+
+        dest.street = src.shipToStreet;
+        dest.unit = src.shipToUnit;
+        dest.city = src.shipToCity;
+        dest.country = src.shipToCountry;
+        dest.postalCode = src.shipToPostalCode;
+        dest.province = src.shipToProvince;
+
+        return dest;
+      };
+
+      this.copyAddressToShipTo = function (src, dest) {
+        // Do not copy shipToUseCompanyAddress.
+        // It should not be updated from the Cart.
+
+        if (!dest) {
+          dest = {};
+        }
+
+        dest.id = src.id;
+        dest.shipToName = src.name;
+
+        dest.shipToStreet = src.street;
+        dest.shipToUnit = src.unit;
+        dest.shipToCity = src.city;
+        dest.shipToCountry = src.country;
+        dest.shipToPostalCode = src.postalCode;
+        dest.shipToProvince = src.province;
+
+        return dest;
+      };
+
+      this.addressesAreIdentical = function (src, dest) {
+        if (dest.name === src.name &&
+          dest.street === src.street &&
+          dest.unit === src.unit &&
+          dest.city === src.city &&
+          dest.country === src.country &&
+          dest.postalCode === src.postalCode &&
+          dest.province === src.province) {
+          return true;
+        }
+        return false;
+      };
+
+    }
+  ]);
+
+"use strict";
+
+angular.module("risevision.common.components.purchase-flow")
+  .service("contactService", [
+
+    function () {
+
+      this.contactsAreIdentical = function (c1, c2) {
+        return (
+          c1.firstName === c2.firstName &&
+          c1.lastName === c2.lastName &&
+          c1.email === c2.email &&
+          c1.telephone === c2.telephone);
+      };
+
+      this.cleanContactObj = function (c) {
+        return {
+          username: c.username,
+          firstName: c.firstName,
+          lastName: c.lastName,
+          email: c.email,
+          telephone: c.telephone
+        };
+      };
+
+      this.copyContactObj = function (src, dest) {
+        if (!dest) {
+          dest = {};
+        }
+
+        dest.firstName = src.firstName;
+        dest.lastName = src.lastName;
+        dest.email = src.email;
+        dest.telephone = src.telephone;
+
+        return dest;
+      };
+
     }
   ]);
 
@@ -9916,53 +10114,13 @@ angular.module("risevision.common.components.purchase-flow")
   angular.module("risevision.common.components.purchase-flow")
     .constant("RPP_ADDON_ID", "c4b368be86245bf9501baaa6e0b00df9719869fd")
     .factory("purchaseFactory", ["$q", "$modal", "$templateCache", "userState", "storeService",
-      "stripeService", "RPP_ADDON_ID",
-      function ($q, $modal, $templateCache, userState, storeService, stripeService,
-        RPP_ADDON_ID) {
+      "stripeService", "addressService", "contactService", "RPP_ADDON_ID",
+      function ($q, $modal, $templateCache, userState, storeService, stripeService, addressService,
+        contactService, RPP_ADDON_ID) {
         var factory = {};
 
         // Stop spinner - workaround for spinner not rendering
         factory.loading = false;
-
-        var _copyAddress = function (src) {
-          var dest = {};
-
-          dest.id = src.id;
-          dest.name = src.name;
-          dest.street = src.street;
-          dest.unit = src.unit;
-          dest.city = src.city;
-          dest.country = src.country;
-          dest.postalCode = src.postalCode;
-          dest.province = src.province;
-
-          return dest;
-        };
-
-        function _copyShipToAddress(src) {
-          var dest = {};
-
-          dest.id = src.id;
-          dest.name = src.name;
-          dest.street = src.shipToStreet;
-          dest.unit = src.shipToUnit;
-          dest.city = src.shipToCity;
-          dest.country = src.shipToCountry;
-          dest.postalCode = src.shipToPostalCode;
-          dest.province = src.shipToProvince;
-
-          return dest;
-        }
-
-        var _cleanContactObj = function (c) {
-          return {
-            username: c.username,
-            firstName: c.firstName,
-            lastName: c.lastName,
-            email: c.email,
-            telephone: c.telephone
-          };
-        };
 
         var _init = function (plan, isMonthly) {
           factory.purchase = {};
@@ -9971,10 +10129,10 @@ angular.module("risevision.common.components.purchase-flow")
           factory.purchase.plan.additionalDisplayLicenses = 0;
           factory.purchase.plan.isMonthly = isMonthly;
 
-          factory.purchase.billingAddress = _copyAddress(userState.getCopyOfUserCompany());
-          factory.purchase.shippingAddress = _copyShipToAddress(userState.getCopyOfSelectedCompany());
+          factory.purchase.billingAddress = addressService.copyAddress(userState.getCopyOfUserCompany());
+          factory.purchase.shippingAddress = addressService.copyAddressFromShipTo(userState.getCopyOfSelectedCompany());
 
-          factory.purchase.contact = _cleanContactObj(userState.getCopyOfProfile());
+          factory.purchase.contact = contactService.cleanContactObj(userState.getCopyOfProfile());
           factory.purchase.paymentMethods = {
             paymentMethod: "card",
             existingCreditCards: [],
@@ -10114,8 +10272,8 @@ angular.module("risevision.common.components.purchase-flow")
           };
 
           var obj = {
-            billTo: _copyAddress(factory.purchase.billingAddress),
-            shipTo: _copyAddress(factory.purchase.shippingAddress),
+            billTo: addressService.copyAddress(factory.purchase.billingAddress),
+            shipTo: addressService.copyAddress(factory.purchase.shippingAddress),
             items: newItems,
             purchaseOrderNumber: factory.purchase.paymentMethods.purchaseOrderNumber,
             card: cardData
@@ -10574,7 +10732,7 @@ angular.module("risevision.common.components.purchase-flow")
       return !form || form.$valid;
     };
 
-    $scope.validateAddress = function (addressObject) {
+    $scope.validateAddress = function (addressObject, contactObject, isShipping) {
       if (!_isFormValid()) {
         return;
       }
@@ -10586,6 +10744,9 @@ angular.module("risevision.common.components.purchase-flow")
           purchaseFactory.loading = false;
 
           if (!addressObject.validationError) {
+            addressFactory.updateContact(contactObject);
+            addressFactory.updateAddress(addressObject, isShipping);
+
             $scope.setNextStep();
           }
         });
@@ -10715,7 +10876,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/checkout-billing-address.html',
-    '<div id="checkout-billing-address" class="address-editor"><form id="form.billingAddressForm" role="form" class="u_margin-md-top" name="form.billingAddressForm" autocomplete="on" novalidate=""><div class="alert alert-danger" ng-show="form.billingAddressForm.$submitted && form.billingAddressForm.$invalid">Please complete the missing information below.</div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="billingAddress.validationError"><strong>Address Validation Error</strong> {{billingAddress.validationError}}</div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': (form.billingAddressForm.firstName.$dirty || form.billingAddressForm.$submitted) && form.billingAddressForm.firstName.$invalid }"><label for="contact-firstName" class="control-label">First Name *</label> <input id="contact-firstName" type="text" class="form-control" name="firstName" ng-model="contact.firstName" autocomplete="given-name" aria-required="true" tabindex="1" required=""></div></div><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': (form.billingAddressForm.lastName.$dirty || form.billingAddressForm.$submitted) && form.billingAddressForm.lastName.$invalid }"><label for="contact-lastName" class="control-label">Last Name *</label> <input id="contact-lastName" type="text" class="form-control" name="lastName" ng-model="contact.lastName" autocomplete="family-name" aria-required="true" tabindex="1" required=""></div></div></div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': (form.billingAddressForm.email.$dirty || form.billingAddressForm.$submitted) && form.billingAddressForm.email.$invalid }"><label for="contact-email" class="control-label">Email *</label> <input id="contact-email" type="email" class="form-control" name="email" ng-model="contact.email" autocomplete="email" aria-required="true" tabindex="1" required=""></div></div><div class="col-md-6"><div class="form-group"><label for="contact-phone" class="control-label">Telephone</label> <input id="contact-phone" name="tel" type="tel" class="form-control" ng-model="contact.telephone" autocomplete="tel" tabindex="1"></div></div></div><address-form form-object="form.billingAddressForm" address-object="billingAddress"></address-form><hr><div class="row"><div class="col-xs-12"><button id="backButton" type="button" class="btn btn-default pull-left" ng-click="setPreviousStep()" ng-hide="finalStep" aria-label="Go back to Subscription Details" translate="" tabindex="2">common.back</button> <button id="continueButton" aria-label="Continue to Shipping Address" type="submit" form="form.billingAddressForm" class="btn btn-primary pull-right" ng-click="validateAddress(billingAddress)" translate="" tabindex="1">common.continue</button></div></div></form></div>');
+    '<div id="checkout-billing-address" class="address-editor"><form id="form.billingAddressForm" role="form" class="u_margin-md-top" name="form.billingAddressForm" autocomplete="on" novalidate=""><div class="alert alert-danger" ng-show="form.billingAddressForm.$submitted && form.billingAddressForm.$invalid">Please complete the missing information below.</div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="billingAddress.validationError"><strong>Address Validation Error</strong> {{billingAddress.validationError}}</div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': (form.billingAddressForm.firstName.$dirty || form.billingAddressForm.$submitted) && form.billingAddressForm.firstName.$invalid }"><label for="contact-firstName" class="control-label">First Name *</label> <input id="contact-firstName" type="text" class="form-control" name="firstName" ng-model="contact.firstName" autocomplete="given-name" aria-required="true" tabindex="1" required=""></div></div><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': (form.billingAddressForm.lastName.$dirty || form.billingAddressForm.$submitted) && form.billingAddressForm.lastName.$invalid }"><label for="contact-lastName" class="control-label">Last Name *</label> <input id="contact-lastName" type="text" class="form-control" name="lastName" ng-model="contact.lastName" autocomplete="family-name" aria-required="true" tabindex="1" required=""></div></div></div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': (form.billingAddressForm.email.$dirty || form.billingAddressForm.$submitted) && form.billingAddressForm.email.$invalid }"><label for="contact-email" class="control-label">Email *</label> <input id="contact-email" type="email" class="form-control" name="email" ng-model="contact.email" autocomplete="email" aria-required="true" tabindex="1" required=""></div></div><div class="col-md-6"><div class="form-group"><label for="contact-phone" class="control-label">Telephone</label> <input id="contact-phone" name="tel" type="tel" class="form-control" ng-model="contact.telephone" autocomplete="tel" tabindex="1"></div></div></div><address-form form-object="form.billingAddressForm" address-object="billingAddress"></address-form><hr><div class="row"><div class="col-xs-12"><button id="backButton" type="button" class="btn btn-default pull-left" ng-click="setPreviousStep()" ng-hide="finalStep" aria-label="Go back to Subscription Details" translate="" tabindex="2">common.back</button> <button id="continueButton" aria-label="Continue to Shipping Address" type="submit" form="form.billingAddressForm" class="btn btn-primary pull-right" ng-click="validateAddress(billingAddress, contact, false)" translate="" tabindex="1">common.continue</button></div></div></form></div>');
 }]);
 })();
 
@@ -10763,7 +10924,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/checkout-shipping-address.html',
-    '<div id="checkout-shipping-address" class="address-editor"><form id="form.shippingAddressForm" role="form" class="u_margin-md-top" name="form.shippingAddressForm" autocomplete="on" novalidate=""><div class="alert alert-danger" ng-show="form.shippingAddressForm.$submitted && form.shippingAddressForm.$invalid">Please complete the missing information below.</div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="shippingAddress.validationError"><strong>Address Validation Error</strong> {{shippingAddress.validationError}}</div><address-form form-object="form.shippingAddressForm" address-object="shippingAddress"></address-form><hr><div class="row"><div class="col-xs-12"><button id="backButton" aria-label="Go back to Billing Address" type="button" class="btn btn-default pull-left" ng-click="setPreviousStep()" ng-hide="finalStep" tabindex="2" translate="">common.back</button> <button id="continueButton" type="submit" form="form.shippingAddressForm" class="btn btn-primary pull-right" aria-label="Continue to Payment Method" ng-click="validateAddress(shippingAddress)" tabindex="1" translate="">common.continue</button></div></div></form></div>');
+    '<div id="checkout-shipping-address" class="address-editor"><form id="form.shippingAddressForm" role="form" class="u_margin-md-top" name="form.shippingAddressForm" autocomplete="on" novalidate=""><div class="alert alert-danger" ng-show="form.shippingAddressForm.$submitted && form.shippingAddressForm.$invalid">Please complete the missing information below.</div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="shippingAddress.validationError"><strong>Address Validation Error</strong> {{shippingAddress.validationError}}</div><address-form form-object="form.shippingAddressForm" address-object="shippingAddress"></address-form><hr><div class="row"><div class="col-xs-12"><button id="backButton" aria-label="Go back to Billing Address" type="button" class="btn btn-default pull-left" ng-click="setPreviousStep()" ng-hide="finalStep" tabindex="2" translate="">common.back</button> <button id="continueButton" type="submit" form="form.shippingAddressForm" class="btn btn-primary pull-right" aria-label="Continue to Payment Method" ng-click="validateAddress(shippingAddress, null, true)" tabindex="1" translate="">common.continue</button></div></div></form></div>');
 }]);
 })();
 

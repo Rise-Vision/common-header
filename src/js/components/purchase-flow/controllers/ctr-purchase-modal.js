@@ -50,7 +50,7 @@ angular.module("risevision.common.components.purchase-flow")
       return !form || form.$valid;
     };
 
-    $scope.validateAddress = function (addressObject) {
+    $scope.validateAddress = function (addressObject, contactObject, isShipping) {
       if (!_isFormValid()) {
         return;
       }
@@ -62,6 +62,9 @@ angular.module("risevision.common.components.purchase-flow")
           purchaseFactory.loading = false;
 
           if (!addressObject.validationError) {
+            addressFactory.updateContact(contactObject);
+            addressFactory.updateAddress(addressObject, isShipping);
+
             $scope.setNextStep();
           }
         });

@@ -7,6 +7,7 @@ describe("Services: address factory", function() {
     $provide.service("$q", function() {return Q;});
     $provide.service("$log", function() {
       return {
+        info: sinon.stub(),
         error: sinon.stub(),
         debug: sinon.stub()
       };
@@ -22,11 +23,45 @@ describe("Services: address factory", function() {
         })
       };
     });
+    $provide.service("updateCompany", function() {
+      return updateCompany = sinon.spy(function() {
+        if (updateSuccess) {
+          return Q.resolve("success");
+        } else {
+          return Q.reject("failure");
+        }
+      });
+    });
+    $provide.service("updateUser", function() {
+      return updateUser = sinon.spy(function() {
+        if (updateSuccess) {
+          return Q.resolve("success");
+        } else {
+          return Q.reject("failure");
+        }
+      });
+    });
+
+    $provide.service("userState",function() {
+      return userState = {
+        getCopyOfUserCompany: sinon.stub().returns({}),
+        getCopyOfSelectedCompany: sinon.stub().returns({}),
+        getUserCompanyId: sinon.stub().returns("id"),
+        updateCompanySettings: sinon.spy(),
+        updateUserProfile: sinon.spy(),
+        getUsername: function() {
+          return "some username";
+        },
+        getCopyOfProfile: sinon.stub().returns({})
+      };
+    });
+
   }));
 
-  var $log, addressObject, addressFactory, storeService;
+  var $log, addressObject, addressFactory, storeService, addressService, userState, updateCompany, updateUser, updateSuccess;
 
   beforeEach(function() {
+    updateSuccess = true;
     addressObject = {
       street: "street",
       unit: "unit",
@@ -38,6 +73,7 @@ describe("Services: address factory", function() {
 
     inject(function($injector) {
       $log = $injector.get("$log");
+      addressService = $injector.get("addressService");
       addressFactory = $injector.get("addressFactory");
     });
   });
@@ -45,121 +81,334 @@ describe("Services: address factory", function() {
   it("should exist", function() {
     expect(addressFactory).to.be.ok;
     expect(addressFactory.validateAddress).to.be.a("function");
+    expect(addressFactory.updateAddress).to.be.a("function");
+    expect(addressFactory.updateContact).to.be.a("function");
   });
 
-  it("should reset validationError to false", function() {
-    addressFactory.validateAddress(addressObject);
+  describe("validateAddress: ", function() {
+    it("should reset validationError to false", function() {
+      addressFactory.validateAddress(addressObject);
 
-    expect(addressObject.validationError).to.be.false;
-  });
+      expect(addressObject.validationError).to.be.false;
+    });
 
-  it("should resolve and skip validation if Country is not US/CA", function(done) {
-    addressObject.resolve = false;
-    addressObject.country = "BR";
+    it("should resolve and skip validation if Country is not US/CA", function(done) {
+      addressObject.resolve = false;
+      addressObject.country = "BR";
+      
+      addressFactory.validateAddress(addressObject)
+        .then(function() {
+          expect(addressObject.validationError).to.be.false;
+          storeService.validateAddress.should.not.have.been.called;
+          $log.debug.should.have.been.called;
+
+          done();
+        })
+        .then(null, done);
+    });
+
+    it("should resolve if validation passes for CA", function(done) {
+      addressObject.resolve = true;
+
+      addressFactory.validateAddress(addressObject)
+        .then(function() {
+          expect(addressObject.validationError).to.be.false;
+          storeService.validateAddress.should.have.been.called;
+
+          done();
+        })
+        .then(null, done);
+    });
+
+    it("should resolve if validation passes for US", function(done) {
+      addressObject.resolve = true;
+      addressObject.country = "US";
+
+      addressFactory.validateAddress(addressObject)
+        .then(function() {
+          expect(addressObject.validationError).to.be.false;
+          storeService.validateAddress.should.have.been.called;
+
+          done();
+        })
+        .then(null, done);
+    });
+
+    it("should not log error if addresses match", function(done) {
+      addressObject.resolve = {
+        line1: "street",
+        line2: "unit",
+        city: "city",
+        region: "province",
+        country: "CA",
+        postalCode: "postalCode"
+      };
+
+      addressFactory.validateAddress(addressObject)
+        .then(function() {
+          $log.error.should.not.have.been.called;
+          expect(addressObject.validationError).to.be.false;
+
+          done();
+        })
+        .then(null, done);
+    });
+
+    it("should log error if addresses do not match", function(done) {
+      addressObject.resolve = {
+        line1: "street1",
+        line2: "unit1",
+        city: "city1",
+        region: "province1",
+        country: "US",
+        postalCode: "postalCode1"
+      };
+
+      addressFactory.validateAddress(addressObject)
+        .then(function() {
+          $log.error.should.have.been.called;
+          expect(addressObject.validationError).to.be.false;
+
+          done();
+        })
+        .then(null, done);
+    });
+
+    it("should reject with a message", function(done) {
+      addressObject.reject = {
+        message: "Validation Message"
+      };
+
+      addressFactory.validateAddress(addressObject)
+        .then(function() {
+          expect(addressObject.validationError).to.equal("Validation Message");
+
+          done();
+        })
+        .then(null, done);
+    });
+
+    it("should reject with a generic message if none provided", function(done) {
+      addressObject.reject = {};
+
+      addressFactory.validateAddress(addressObject)
+        .then(function() {
+          expect(addressObject.validationError).to.equal("Unknown Error");
+
+          done();
+        })
+        .then(null, done);
+    });
     
-    addressFactory.validateAddress(addressObject)
-      .then(function() {
-        expect(addressObject.validationError).to.be.false;
-        storeService.validateAddress.should.not.have.been.called;
-        $log.debug.should.have.been.called;
-
-        done();
-      })
-      .then(null, done);
   });
 
-  it("should resolve if validation passes for CA", function(done) {
-    addressObject.resolve = true;
+  describe("updateAddress: ", function() {
+    var address;
 
-    addressFactory.validateAddress(addressObject)
-      .then(function() {
-        expect(addressObject.validationError).to.be.false;
-        storeService.validateAddress.should.have.been.called;
+    beforeEach(function() {
+      address = {
+        id: "id",
+        name: "dummy Name",
+        street: "dummy Street",
+        unit: "dummy unit",
+        city: "dummy city",
+        province: "dummy province",
+        country: "dummy country",
+        postalCode: "dummy code"
+      };
 
-        done();
-      })
-      .then(null, done);
+      userState.getCopyOfUserCompany.returns(angular.copy(address));
+      userState.getCopyOfSelectedCompany.returns(addressService.copyAddressToShipTo(address));
+    });
+
+    describe("Billing Address: ", function() {
+      it("should not update if address is not given", function(done) {
+        addressFactory.updateAddress()
+          .then(function() {
+            updateCompany.should.not.have.been.called;
+
+            done();
+          })
+          .then(null, done);
+      });
+
+      it("should not update if address is not changed", function(done) {
+        addressFactory.updateAddress(address)
+          .then(function() {
+            updateCompany.should.not.have.been.called;
+
+            done();
+          })
+          .then(null, done);
+      });
+
+      it("should update if address requires update", function(done) {
+        var updatedAddress = angular.copy(address);
+        updatedAddress.name = "updated Name";
+
+        addressFactory.updateAddress(updatedAddress)
+          .then(function() {
+            updateCompany.should.have.been.calledWith("id", updatedAddress);
+
+            userState.getCopyOfUserCompany.should.have.been.calledTwice;
+            expect(userState.getCopyOfUserCompany.getCall(0).args[0]).to.be.undefined;
+            expect(userState.getCopyOfUserCompany.getCall(1).args[0]).to.be.true;
+
+            userState.updateCompanySettings.should.have.been.calledWith(sinon.match.object);
+            expect(userState.updateCompanySettings.getCall(0).args[0]).to.deep.equal(updatedAddress);
+
+            done();
+          })
+          .then(null, done);
+      });
+
+      it("should not update company settings if ids don't match", function(done) {
+        userState.getUserCompanyId.returns("other id");
+        var updatedAddress = angular.copy(address);
+        updatedAddress.name = "updated Name";
+
+        addressFactory.updateAddress(updatedAddress)
+          .then(function() {
+            updateCompany.should.have.been.calledWith("id", updatedAddress);
+
+            userState.getCopyOfUserCompany.should.have.been.calledOnce;
+
+            userState.updateCompanySettings.should.not.have.been.called;
+
+            done();
+          })
+          .then(null, done);
+      });
+
+      it("should handle failure to update company settings", function(done) {
+        updateSuccess = false;
+        var updatedAddress = angular.copy(address);
+        updatedAddress.name = "updated Name";
+
+        addressFactory.updateAddress(updatedAddress)
+          .then(done)
+          .then(null, function() {
+            updateCompany.should.have.been.called;
+
+            userState.getCopyOfUserCompany.should.have.been.calledOnce;
+
+            userState.updateCompanySettings.should.not.have.been.called;
+
+            done();
+          })
+          .then(null, done);
+      });
+
+    });
+
+    describe("Shipping Address: ", function() {
+      it("should not update if address is not changed", function(done) {
+        addressFactory.updateAddress(address, true)
+          .then(function() {
+            updateCompany.should.not.have.been.called;
+
+            done();
+          })
+          .then(null, done);
+      });
+
+      it("should update if address requires update", function(done) {
+        var updatedAddress = angular.copy(address);
+        updatedAddress.name = "updated Name";
+
+        addressFactory.updateAddress(updatedAddress, true)
+          .then(function() {
+            updateCompany.should.have.been.calledWith("id", addressService.copyAddressToShipTo(updatedAddress));
+
+            userState.getCopyOfSelectedCompany.should.have.been.calledTwice;
+            expect(userState.getCopyOfSelectedCompany.getCall(0).args[0]).to.be.undefined;
+            expect(userState.getCopyOfSelectedCompany.getCall(1).args[0]).to.be.true;
+
+            userState.updateCompanySettings.should.have.been.calledWith(sinon.match.object);
+            expect(userState.updateCompanySettings.getCall(0).args[0]).to.deep.equal(addressService.copyAddressToShipTo(updatedAddress));
+
+            done();
+          })
+          .then(null, done);
+      });
+
+    });
+
   });
 
-  it("should resolve if validation passes for US", function(done) {
-    addressObject.resolve = true;
-    addressObject.country = "US";
+  describe("updateContact: ", function() {
+    var contact;
 
-    addressFactory.validateAddress(addressObject)
-      .then(function() {
-        expect(addressObject.validationError).to.be.false;
-        storeService.validateAddress.should.have.been.called;
+    beforeEach(function() {
+      contact = {
+        username: "dummy Username",
+        firstName: "dummy First Name",
+        lastName: "dummy Last Name",
+        email: "email@sample.com",
+        telephone: "dummy Telephone"
+      };
+      userState.getCopyOfProfile.returns(angular.copy(contact));
 
-        done();
-      })
-      .then(null, done);
+    });
+
+    it("should not update if contact is not given", function(done) {
+      addressFactory.updateContact()
+        .then(function() {
+          updateUser.should.not.have.been.called;
+
+          done();
+        })
+        .then(null, done);
+    });
+
+    it("should not update if contact is not changed", function(done) {
+      addressFactory.updateContact(contact)
+        .then(function() {
+          updateUser.should.not.have.been.called;
+
+          done();
+        })
+        .then(null, done);
+    });
+
+    it("should update if contact requires update", function(done) {
+      var updatedContact = angular.copy(contact);
+      updatedContact.firstName = "updated First Name";
+
+      addressFactory.updateContact(updatedContact)
+        .then(function() {
+          updateUser.should.have.been.calledWith("some username", updatedContact);
+
+          userState.getCopyOfProfile.should.have.been.calledTwice;
+          expect(userState.getCopyOfProfile.getCall(0).args[0]).to.be.undefined;
+          expect(userState.getCopyOfProfile.getCall(1).args[0]).to.be.true;
+
+          userState.updateUserProfile.should.have.been.calledWith(sinon.match.object);
+          expect(userState.updateUserProfile.getCall(0).args[0]).to.deep.equal(updatedContact);
+
+          done();
+        })
+        .then(null, done);
+    });
+
+    it("should handle failure to update contact", function(done) {
+      updateSuccess = false;
+      var updatedContact = angular.copy(contact);
+      updatedContact.firstName = "updated First Name";
+
+      addressFactory.updateContact(updatedContact)
+        .then(done)
+        .then(null, function() {
+          updateUser.should.have.been.called;
+
+          userState.getCopyOfProfile.should.have.been.calledOnce;
+
+          userState.updateUserProfile.should.not.have.been.called;
+
+          done();
+        })
+        .then(null, done);
+    });
+
   });
-
-  it("should not log error if addresses match", function(done) {
-    addressObject.resolve = {
-      line1: "street",
-      line2: "unit",
-      city: "city",
-      region: "province",
-      country: "CA",
-      postalCode: "postalCode"
-    };
-
-    addressFactory.validateAddress(addressObject)
-      .then(function() {
-        $log.error.should.not.have.been.called;
-        expect(addressObject.validationError).to.be.false;
-
-        done();
-      })
-      .then(null, done);
-  });
-
-  it("should log error if addresses do not match", function(done) {
-    addressObject.resolve = {
-      line1: "street1",
-      line2: "unit1",
-      city: "city1",
-      region: "province1",
-      country: "US",
-      postalCode: "postalCode1"
-    };
-
-    addressFactory.validateAddress(addressObject)
-      .then(function() {
-        $log.error.should.have.been.called;
-        expect(addressObject.validationError).to.be.false;
-
-        done();
-      })
-      .then(null, done);
-  });
-
-  it("should reject with a message", function(done) {
-    addressObject.reject = {
-      message: "Validation Message"
-    };
-
-    addressFactory.validateAddress(addressObject)
-      .then(function() {
-        expect(addressObject.validationError).to.equal("Validation Message");
-
-        done();
-      })
-      .then(null, done);
-  });
-
-  it("should reject with a generic message if none provided", function(done) {
-    addressObject.reject = {};
-
-    addressFactory.validateAddress(addressObject)
-      .then(function() {
-        expect(addressObject.validationError).to.equal("Unknown Error");
-
-        done();
-      })
-      .then(null, done);
-  });
-
-
 });
