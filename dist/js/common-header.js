@@ -90,7 +90,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('company-fields.html',
-    '<div class="form-group" ng-class="{\'has-error\': forms.companyForm.name.$invalid && !forms.companyForm.name.$pristine}"><label for="company-settings-name">Company Name *</label> <input required="" id="company-settings-name" type="text" class="form-control" ng-model="company.name" name="name"><p ng-show="forms.companyForm.name.$invalid && !forms.companyForm.name.$pristine" class="help-block validation-error-message-name">Company Name is required.</p></div><div class="row"><div class="col-md-6"><div class="form-group"><label for="company-size" class="control-label">Company Size</label><select id="company-size" class="form-control" ng-model="company.companySize"><option value="" ng-show="false">&lt; Select Size &gt;</option><option ng-repeat="size in COMPANY_SIZE_FIELDS" value="{{size[1]}}">{{size[0]}}</option></select></div></div><div class="col-md-6"><div class="form-group"><label for="company-industry" class="control-label">Industry</label><select id="company-industry" class="form-control selectpicker" ng-model="company.companyIndustry"><option value="" ng-show="false">&lt; Select Industry &gt;</option><option ng-repeat="industry in COMPANY_INDUSTRY_FIELDS | orderBy:industry[0]" value="{{industry[1]}}">{{industry[0]}}</option></select></div></div></div><div class="row"><div class="col-md-6"><div class="form-group"><label for="company-settings-street" class="control-label">Street</label> <input id="company-settings-street" type="text" class="form-control" ng-model="company.street"></div></div><div class="col-md-6"><div class="form-group"><label for="company-settings-unit" class="control-label">Unit</label> <input id="company-settings-unit" type="text" class="form-control" ng-model="company.unit"></div></div></div><div class="row"><div class="col-md-3"><div class="form-group"><label for="company-settings-city" class="control-label">City</label> <input id="company-settings-city" type="text" class="form-control" ng-model="company.city"></div></div><div class="col-md-3"><div class="form-group"><label for="company-settings-country" class="control-label">Country</label><select id="company-settings-country" class="form-control selectpicker" ng-model="company.country" ng-options="c.code as c.name for c in countries" empty-select-parser=""><option ng-show="false" value="">&lt; Select Country &gt;</option></select></div></div><div class="col-md-3"><div class="form-group"><label for="company-settings-state" class="control-label">State/Province/Region</label> <input id="company-settings-state" type="text" class="form-control" ng-model="company.province" ng-hide="company.country == \'US\' || company.country == \'CA\'"><select class="form-control selectpicker" ng-model="company.province" ng-options="c[1] as c[0] for c in regionsCA" ng-show="company.country == \'CA\'" empty-select-parser=""><option ng-show="false" value="">&lt; Select Province &gt;</option></select><select class="form-control selectpicker" ng-model="company.province" ng-options="c[1] as c[0] for c in regionsUS" ng-show="company.country == \'US\'" empty-select-parser=""><option ng-show="false" value="">&lt; Select State &gt;</option></select></div></div><div class="col-md-3"><div class="form-group"><label for="company-settings-zip" class="control-label">ZIP/Postal Code</label> <input id="company-settings-zip" type="text" class="form-control" ng-model="company.postalCode"></div></div></div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{\'has-error\': forms.companyForm.website.$error.website}"><label for="company-settings-website" class="control-label">Website</label> <input id="company-settings-website" name="website" type="text" placeholder="http://" class="form-control" ng-model="company.website" website-validator=""><p ng-show="forms.companyForm.website.$error.website" class="help-block validation-error-message-website">Please provide a valid URL.</p></div></div><div class="col-md-6"><div class="form-group"><label for="company-settings-phone" class="control-label">Phone</label> <input id="company-settings-phone" type="tel" class="form-control" ng-model="company.telephone"></div></div></div><div class="form-group"><label for="company-settings-timezone" class="control-label">Time Zone</label><select class="form-control" ng-model="company.timeZoneOffset" integer-parser=""><option ng-show="false" value="">&lt; Select Time Zone &gt;</option><option value="{{c[1]}}" ng-repeat="c in timezones">{{c[0]}}</option></select></div><div class="form-group" ng-show="company.isChargebee"><label class="form-control-label">Billing Notifications Email</label><tags-input name="billingContactEmails" type="email" placeholder="Add an email" class="email-tags" ng-model="billingContactEmailsList" add-on-enter="true" add-on-space="true" add-on-comma="true" add-on-blur="true" add-on-paste="true" on-tag-adding="isValidEmail($tag)"></tags-input></div>');
+    '<div class="form-group" ng-class="{\'has-error\': forms.companyForm.name.$invalid && !forms.companyForm.name.$pristine}"><label for="company-settings-name">Company Name *</label> <input required="" id="company-settings-name" type="text" class="form-control" ng-model="company.name" name="name"><p ng-show="forms.companyForm.name.$invalid && !forms.companyForm.name.$pristine" class="help-block validation-error-message-name">Company Name is required.</p></div><div class="row"><div class="col-md-6"><div class="form-group"><label for="company-size" class="control-label">Company Size</label><select id="company-size" class="form-control" ng-model="company.companySize"><option value="" ng-show="false">&lt; Select Size &gt;</option><option ng-repeat="size in COMPANY_SIZE_FIELDS" value="{{size[1]}}">{{size[0]}}</option></select></div></div><div class="col-md-6"><div class="form-group"><label for="company-industry" class="control-label">Industry</label><select id="company-industry" class="form-control selectpicker" ng-model="company.companyIndustry"><option value="" ng-show="false">&lt; Select Industry &gt;</option><option ng-repeat="industry in COMPANY_INDUSTRY_FIELDS | orderBy:industry[0]" value="{{industry[1]}}">{{industry[0]}}</option></select></div></div></div><div class="row"><div class="col-md-6"><div class="form-group"><label for="company-settings-street" class="control-label">Street</label> <input id="company-settings-street" type="text" class="form-control" ng-model="company.street"></div></div><div class="col-md-6"><div class="form-group"><label for="company-settings-unit" class="control-label">Unit</label> <input id="company-settings-unit" type="text" class="form-control" ng-model="company.unit"></div></div></div><div class="row"><div class="col-md-3"><div class="form-group"><label for="company-settings-city" class="control-label">City</label> <input id="company-settings-city" type="text" class="form-control" ng-model="company.city"></div></div><div class="col-md-3"><div class="form-group"><label for="company-settings-country" class="control-label">Country</label><select id="company-settings-country" class="form-control selectpicker" ng-model="company.country" ng-options="c.code as c.name for c in countries" empty-select-parser=""><option ng-show="false" value="">&lt; Select Country &gt;</option></select></div></div><div class="col-md-3"><div class="form-group"><label for="company-settings-state" class="control-label">State/Province/Region</label> <input id="company-settings-state" type="text" class="form-control" ng-model="company.province" ng-hide="company.country == \'US\' || company.country == \'CA\'"><select class="form-control selectpicker" ng-model="company.province" ng-options="c[1] as c[0] for c in regionsCA" ng-show="company.country == \'CA\'" empty-select-parser=""><option ng-show="false" value="">&lt; Select Province &gt;</option></select><select class="form-control selectpicker" ng-model="company.province" ng-options="c[1] as c[0] for c in regionsUS" ng-show="company.country == \'US\'" empty-select-parser=""><option ng-show="false" value="">&lt; Select State &gt;</option></select></div></div><div class="col-md-3"><div class="form-group"><label for="company-settings-zip" class="control-label">ZIP/Postal Code</label> <input id="company-settings-zip" type="text" class="form-control" ng-model="company.postalCode"></div></div></div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{\'has-error\': forms.companyForm.website.$error.website}"><label for="company-settings-website" class="control-label">Website</label> <input id="company-settings-website" name="website" type="text" placeholder="http://" class="form-control" ng-model="company.website" website-validator=""><p ng-show="forms.companyForm.website.$error.website" class="help-block validation-error-message-website">Please provide a valid URL.</p></div></div><div class="col-md-6"><div class="form-group"><label for="company-settings-phone" class="control-label">Phone</label> <input id="company-settings-phone" type="tel" class="form-control" ng-model="company.telephone"></div></div></div><div class="form-group"><label for="company-settings-timezone" class="control-label">Time Zone</label><select class="form-control" ng-model="company.timeZoneOffset" integer-parser=""><option ng-show="false" value="">&lt; Select Time Zone &gt;</option><option value="{{c[1]}}" ng-repeat="c in timezones">{{c[0]}}</option></select></div><div class="form-group" ng-show="company.isChargebee"><label class="form-control-label">Billing Notifications Email</label><emails-field emails="company.billingContactEmails"></emails-field></div>');
 }]);
 })();
 
@@ -139,6 +139,18 @@ try {
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('company-users-modal.html',
     '<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 id="company-users-label" class="modal-title">Company Users</h2></div><div class="modal-body company-users-modal" stop-event="touchend"><search-filter filter-config="filterConfig" search="search" do-search="doSearch"></search-filter><div class="panel panel-default scrollable-list company-users-list u_margin-sm-top" rv-spinner="" rv-spinner-key="company-users-list" rv-spinner-start-active="1"><div class="list-group-item company-users-list-item" ng-repeat="user in users | orderBy:sort.field:sort.descending | filter:userSearchString" ng-click="editUser(user.username)"><p class="list-group-item-text"><strong>{{user.firstName}} {{user.lastName}}</strong> <small class="text-muted">{{user.email}}</small></p></div></div></div><div class="modal-footer"><button type="button" class="btn btn-success add-company-user-button" ng-click="addUser()">Add User <i class="fa fa-white fa-plus icon-right"></i></button> <button type="button" class="btn btn-default close-company-users-button" data-dismiss="modal" ng-click="closeModal()">Cancel <i class="fa fa-white fa-times icon-right"></i></button></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.header.templates');
+} catch (e) {
+  module = angular.module('risevision.common.header.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('emails-field.html',
+    '<tags-input name="emails" type="email" placeholder="Add an email" class="email-tags" ng-model="emailsList" add-on-enter="true" add-on-space="true" add-on-comma="true" add-on-blur="true" add-on-paste="true" on-tag-adding="isValidEmail($tag)" on-tag-added="updateModel()" on-tag-removed="updateModel()"></tags-input>');
 }]);
 })();
 
@@ -510,6 +522,49 @@ angular.module("risevision.common.header.directives")
         replace: true,
         template: $templateCache.get("company-buttons-menu.html"),
         link: function () {} //link()
+      };
+    }
+  ]);
+
+"use strict";
+
+angular.module("risevision.common.header.directives")
+  .directive("emailsField", ["$templateCache",
+    function ($templateCache) {
+      return {
+        restrict: "E",
+        scope: {
+          emails: "="
+        },
+        template: $templateCache.get("emails-field.html"),
+        link: function ($scope) {
+          var EMAIL_REGEX =
+            /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+          var updatingEmails = false;
+
+          $scope.$watch("emails", function () {
+            if (!updatingEmails) {
+              $scope.emailsList = ($scope.emails || []).map(function (e) {
+                return {
+                  text: e
+                };
+              });
+            }
+
+            updatingEmails = false;
+          });
+
+          $scope.updateModel = function () {
+            updatingEmails = true;
+            $scope.emails = $scope.emailsList.map(function (t) {
+              return t.text;
+            });
+          };
+
+          $scope.isValidEmail = function (email) {
+            return !!(email && email.text && EMAIL_REGEX.test(email.text));
+          };
+        }
       };
     }
   ]);
@@ -1031,21 +1086,18 @@ angular.module("risevision.common.header")
 
 angular.module("risevision.common.header")
 
-.value("EMAIL_REGEX",
-  /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
-)
 
 .controller("CompanySettingsModalCtrl", ["$scope", "$modalInstance",
   "updateCompany", "companyId", "countries", "REGIONS_CA", "REGIONS_US",
   "TIMEZONES", "getCompany", "regenerateCompanyField", "$window", "$loading",
   "humanReadableError", "userState", "userAuthFactory", "deleteCompany",
   "segmentAnalytics", "$modal", "$templateCache",
-  "COMPANY_INDUSTRY_FIELDS", "COMPANY_SIZE_FIELDS", "EMAIL_REGEX",
+  "COMPANY_INDUSTRY_FIELDS", "COMPANY_SIZE_FIELDS",
   function ($scope, $modalInstance, updateCompany, companyId,
     countries, REGIONS_CA, REGIONS_US, TIMEZONES, getCompany,
     regenerateCompanyField, $window, $loading, humanReadableError,
     userState, userAuthFactory, deleteCompany, segmentAnalytics,
-    $modal, $templateCache, COMPANY_INDUSTRY_FIELDS, COMPANY_SIZE_FIELDS, EMAIL_REGEX) {
+    $modal, $templateCache, COMPANY_INDUSTRY_FIELDS, COMPANY_SIZE_FIELDS) {
 
     $scope.company = {
       id: companyId
@@ -1057,7 +1109,6 @@ angular.module("risevision.common.header")
     $scope.COMPANY_INDUSTRY_FIELDS = COMPANY_INDUSTRY_FIELDS;
     $scope.COMPANY_SIZE_FIELDS = COMPANY_SIZE_FIELDS;
     $scope.isRiseStoreAdmin = userState.isRiseStoreAdmin();
-    $scope.billingContactEmailsList = [];
 
     $scope.$watch("loading", function (loading) {
       if (loading) {
@@ -1078,11 +1129,6 @@ angular.module("risevision.common.header")
           $scope.company = company;
           $scope.company.isSeller = company && company.sellerId ? true : false;
           $scope.company.isChargebee = company && company.origin === "Chargebee";
-          $scope.billingContactEmailsList = (company.billingContactEmails || []).map(function (e) {
-            return {
-              text: e
-            };
-          });
         },
         function (resp) {
           $window.alert("An error has occurred. " + humanReadableError(resp));
@@ -1094,9 +1140,6 @@ angular.module("risevision.common.header")
       $modalInstance.dismiss("cancel");
     };
     $scope.save = function () {
-      $scope.company.billingContactEmails = $scope.billingContactEmailsList.map(function (t) {
-        return t.text;
-      });
       $scope.loading = true;
 
       var company = angular.copy($scope.company);
@@ -1190,9 +1233,6 @@ angular.module("risevision.common.header")
             $loading.stop("company-settings-modal");
           });
       }
-    };
-    $scope.isValidEmail = function (email) {
-      return !!(email && email.text && EMAIL_REGEX.test(email.text));
     };
 
     function verifyAdmin(company) {

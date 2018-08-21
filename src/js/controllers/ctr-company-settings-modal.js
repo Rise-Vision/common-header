@@ -1,20 +1,17 @@
 angular.module("risevision.common.header")
 
-.value("EMAIL_REGEX",
-  /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
-)
 
 .controller("CompanySettingsModalCtrl", ["$scope", "$modalInstance",
   "updateCompany", "companyId", "countries", "REGIONS_CA", "REGIONS_US",
   "TIMEZONES", "getCompany", "regenerateCompanyField", "$window", "$loading",
   "humanReadableError", "userState", "userAuthFactory", "deleteCompany",
   "segmentAnalytics", "$modal", "$templateCache",
-  "COMPANY_INDUSTRY_FIELDS", "COMPANY_SIZE_FIELDS", "EMAIL_REGEX",
+  "COMPANY_INDUSTRY_FIELDS", "COMPANY_SIZE_FIELDS",
   function ($scope, $modalInstance, updateCompany, companyId,
     countries, REGIONS_CA, REGIONS_US, TIMEZONES, getCompany,
     regenerateCompanyField, $window, $loading, humanReadableError,
     userState, userAuthFactory, deleteCompany, segmentAnalytics,
-    $modal, $templateCache, COMPANY_INDUSTRY_FIELDS, COMPANY_SIZE_FIELDS, EMAIL_REGEX) {
+    $modal, $templateCache, COMPANY_INDUSTRY_FIELDS, COMPANY_SIZE_FIELDS) {
 
     $scope.company = {
       id: companyId
@@ -26,7 +23,6 @@ angular.module("risevision.common.header")
     $scope.COMPANY_INDUSTRY_FIELDS = COMPANY_INDUSTRY_FIELDS;
     $scope.COMPANY_SIZE_FIELDS = COMPANY_SIZE_FIELDS;
     $scope.isRiseStoreAdmin = userState.isRiseStoreAdmin();
-    $scope.billingContactEmailsList = [];
 
     $scope.$watch("loading", function (loading) {
       if (loading) {
@@ -47,11 +43,6 @@ angular.module("risevision.common.header")
           $scope.company = company;
           $scope.company.isSeller = company && company.sellerId ? true : false;
           $scope.company.isChargebee = company && company.origin === "Chargebee";
-          $scope.billingContactEmailsList = (company.billingContactEmails || []).map(function (e) {
-            return {
-              text: e
-            };
-          });
         },
         function (resp) {
           $window.alert("An error has occurred. " + humanReadableError(resp));
@@ -63,9 +54,6 @@ angular.module("risevision.common.header")
       $modalInstance.dismiss("cancel");
     };
     $scope.save = function () {
-      $scope.company.billingContactEmails = $scope.billingContactEmailsList.map(function (t) {
-        return t.text;
-      });
       $scope.loading = true;
 
       var company = angular.copy($scope.company);
@@ -159,9 +147,6 @@ angular.module("risevision.common.header")
             $loading.stop("company-settings-modal");
           });
       }
-    };
-    $scope.isValidEmail = function (email) {
-      return !!(email && email.text && EMAIL_REGEX.test(email.text));
     };
 
     function verifyAdmin(company) {
