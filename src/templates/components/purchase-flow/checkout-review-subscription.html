@@ -48,8 +48,10 @@
               <i class="fa fa-caret-down"></i>
             </button>
           </div>
-          <input id="additionalLicenses" name="additionalLicenses" type="number" class="form-control" ng-model="plan.additionalDisplayLicenses" min="0" max="999" pattern="[0-9]{1,3}" required>
-          <span class="icon-right u_margin-md-top u_align-middle" translate>common-header.purchase.review-subscription.additional-licenses</span>
+          <label for="additionalLicenses">
+            <input id="additionalLicenses" name="additionalLicenses" type="number" class="form-control" ng-model="plan.additionalDisplayLicenses" min="0" max="999" pattern="[0-9]{1,3}" tabindex="1" aria-required="true" required>
+            <span class="icon-right u_align-middle" translate>common-header.purchase.review-subscription.additional-licenses</span>
+          </label>
         </div>
       </div>
       <div class="col-xs-12">
@@ -62,14 +64,14 @@
       <div class="col-xs-12">
         <div class="panel payment-recurrence-selector" ng-class="{ 'has-error': form.reviewSubscriptionForm.billingPeriod.$invalid }">
           <div class="radio" ng-class="{ active: plan.isMonthly }">
-            <label>
-              <input type="radio" name="billingPeriod" id="monthlyBilling" ng-value="true" ng-model="plan.isMonthly" required>
+            <label for="monthlyBilling">
+              <input type="radio" name="billingPeriod" id="monthlyBilling" ng-value="true" ng-model="plan.isMonthly" aria-required="true" tabindex="1" required>
               <span translate translate-values="{ monthlyPrice: getMonthlyPrice() }">common-header.purchase.review-subscription.billed-monthly</span>
             </label>
           </div>
           <div class="radio" ng-class="{ active: !plan.isMonthly }">
-            <label>
-              <input type="radio" name="billingPeriod" id="yearlyBilling" ng-value="false" ng-model="plan.isMonthly" required>
+            <label for="yearlyBilling">
+              <input type="radio" name="billingPeriod" id="yearlyBilling" ng-value="false" ng-model="plan.isMonthly" aria-required="true" tabindex="1" required>
               <span translate translate-values="{ yearlyPrice: getYearlyPrice() }">common-header.purchase.review-subscription.billed-yearly</span>
             </label>
             <div class="label label-success" translate translate-values="{ saveYearly: plan.yearly.save }">common-header.purchase.review-subscription.save-yearly</div>
@@ -80,7 +82,7 @@
     <hr>
     <div class="row">
       <div class="col-xs-12">
-        <button id="continueButton" type="submit" form="form.reviewSubscriptionForm" class="btn btn-primary pull-right" ng-click="setNextStep()" translate>common.continue</button>
+        <button id="continueButton" type="submit" aria-label="Continue to Billing Address" tabindex="1" form="form.reviewSubscriptionForm" class="btn btn-primary pull-right" ng-click="setNextStep()" translate>common.continue</button>
       </div>
     </div>
   </form>
