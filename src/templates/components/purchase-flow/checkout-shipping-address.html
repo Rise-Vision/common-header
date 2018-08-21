@@ -17,8 +17,8 @@
     <hr>
     <div class="row">
       <div class="col-xs-12">
-        <button id="backButton" type="button" class="btn btn-default pull-left" ng-click="setPreviousStep()" ng-hide="finalStep" translate>common.back</button>
-        <button id="continueButton" type="submit" form="form.shippingAddressForm" class="btn btn-primary pull-right" ng-click="validateAddress(shippingAddress)" translate>common.continue</button>
+        <button id="backButton" aria-label="Go back to Billing Address" type="button" class="btn btn-default pull-left" ng-click="setPreviousStep()" ng-hide="finalStep" tabindex="1" translate>common.back</button>
+        <button id="continueButton" type="submit" form="form.shippingAddressForm" class="btn btn-primary pull-right" aria-label="Continue to Payment Method" ng-click="validateAddress(shippingAddress)" tabindex="1" translate>common.continue</button>
       </div>
     </div>
   </form>
