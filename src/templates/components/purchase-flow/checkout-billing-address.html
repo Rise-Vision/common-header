@@ -11,7 +11,7 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group" ng-class="{ 'has-error': (form.billingAddressForm.firstName.$dirty || form.billingAddressForm.$submitted) && form.billingAddressForm.firstName.$invalid }">
-          <label for="contact-firstName" class="control-label">First Name <span>*</span></label>
+          <label for="contact-firstName" class="control-label">First Name *</label>
           <input id="contact-firstName" type="text" class="form-control" name="firstName" ng-model="contact.firstName" autocomplete="given-name" aria-required="true" tabindex="1" required>
         </div>
       </div>
@@ -42,7 +42,7 @@
     <hr>          
     <div class="row">
       <div class="col-xs-12">
-        <button id="backButton" type="button" class="btn btn-default pull-left" ng-click="setPreviousStep()" ng-hide="finalStep" aria-label="Go back to Subscription Details" translate tabindex="1">common.back</button>
+        <button id="backButton" type="button" class="btn btn-default pull-left" ng-click="setPreviousStep()" ng-hide="finalStep" aria-label="Go back to Subscription Details" translate tabindex="2">common.back</button>
         <button id="continueButton" aria-label="Continue to Shipping Address" type="submit" form="form.billingAddressForm" class="btn btn-primary pull-right" ng-click="validateAddress(billingAddress)" translate tabindex="1">common.continue</button>
       </div>
     </div>

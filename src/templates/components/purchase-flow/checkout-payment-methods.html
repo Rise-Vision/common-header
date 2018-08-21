@@ -82,14 +82,14 @@
           </div>
           <div class="col-md-4">
             <div class="form-group" ng-class="{ 'has-error': (form.paymentMethodsForm.cardExpiryYear.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardExpiryYear.$invalid }">
-              <label for="expiry-year" class="control-label">Expiry Year <span>*</span></label>
+              <label for="expiry-year" class="control-label">Expiry Year *</label>
               <year-selector id="new-card-expiry-year" class="form-control" name="cardExpiryYear" data-stripe="exp-year" ng-model="paymentMethods.newCreditCard.expYear" tabindex="1" autocomplete="cc-exp-year" integer-parser required>
               </year-selector>
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group" ng-class="{ 'has-error': (form.paymentMethodsForm.cardCvc.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardCvc.$invalid }">
-              <label for="new-card-cvc" class="control-label">Security Code <span>*</span></label>
+              <label for="new-card-cvc" class="control-label">Security Code *</label>
               <input id="new-card-cvc" aria-required="true" tabindex="1" type="number" class="form-control" name="cardCvc" data-stripe="cvc" ng-model="paymentMethods.newCreditCard.cvc" autocomplete="cc-csc" maxlength="4" required>
             </div>
           </div>
@@ -176,7 +176,7 @@
     <hr>
     <div class="row">
       <div class="col-xs-12">
-        <button id="backButton" type="button" aria-label="Go back to Shipping Address" class="btn btn-default pull-left" ng-click="setPreviousStep()" ng-hide="finalStep" tabindex="1" translate>common.back</button>
+        <button id="backButton" type="button" aria-label="Go back to Shipping Address" class="btn btn-default pull-left" ng-click="setPreviousStep()" ng-hide="finalStep" tabindex="2" translate>common.back</button>
         <button id="continueButton" type="submit" aria-label="Continue to Purchase Review" form="form.paymentMethodsForm" class="btn btn-primary pull-right" ng-click="validatePaymentMethod()" tabindex="1" translate>common.continue</button>
       </div>
     </div>
