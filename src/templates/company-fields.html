@@ -123,5 +123,5 @@
 </div>
 <div class="form-group" ng-show="company.isChargebee">
   <label class="form-control-label">Billing Notifications Email</label>
-  <emails-field emails="company.billingContactEmails" />
+  <emails-field ng-model="company.billingContactEmails" />
 </div>
