@@ -1,7 +1,7 @@
 /*jshint expr:true */
 
 "use strict";
-describe.only("directive: emails field", function() {
+describe("directive: emails field", function() {
   beforeEach(module("risevision.common.header.directives"));
 
   var $scope, form, elem, elemScope;
