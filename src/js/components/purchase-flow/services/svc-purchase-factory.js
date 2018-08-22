@@ -4,53 +4,13 @@
   angular.module("risevision.common.components.purchase-flow")
     .constant("RPP_ADDON_ID", "c4b368be86245bf9501baaa6e0b00df9719869fd")
     .factory("purchaseFactory", ["$q", "$modal", "$templateCache", "userState", "storeService",
-      "stripeService", "RPP_ADDON_ID",
-      function ($q, $modal, $templateCache, userState, storeService, stripeService,
-        RPP_ADDON_ID) {
+      "stripeService", "addressService", "contactService", "RPP_ADDON_ID",
+      function ($q, $modal, $templateCache, userState, storeService, stripeService, addressService,
+        contactService, RPP_ADDON_ID) {
         var factory = {};
 
         // Stop spinner - workaround for spinner not rendering
         factory.loading = false;
-
-        var _copyAddress = function (src) {
-          var dest = {};
-
-          dest.id = src.id;
-          dest.name = src.name;
-          dest.street = src.street;
-          dest.unit = src.unit;
-          dest.city = src.city;
-          dest.country = src.country;
-          dest.postalCode = src.postalCode;
-          dest.province = src.province;
-
-          return dest;
-        };
-
-        function _copyShipToAddress(src) {
-          var dest = {};
-
-          dest.id = src.id;
-          dest.name = src.name;
-          dest.street = src.shipToStreet;
-          dest.unit = src.shipToUnit;
-          dest.city = src.shipToCity;
-          dest.country = src.shipToCountry;
-          dest.postalCode = src.shipToPostalCode;
-          dest.province = src.shipToProvince;
-
-          return dest;
-        }
-
-        var _cleanContactObj = function (c) {
-          return {
-            username: c.username,
-            firstName: c.firstName,
-            lastName: c.lastName,
-            email: c.email,
-            telephone: c.telephone
-          };
-        };
 
         var _init = function (plan, isMonthly) {
           factory.purchase = {};
@@ -59,10 +19,10 @@
           factory.purchase.plan.additionalDisplayLicenses = 0;
           factory.purchase.plan.isMonthly = isMonthly;
 
-          factory.purchase.billingAddress = _copyAddress(userState.getCopyOfUserCompany());
-          factory.purchase.shippingAddress = _copyShipToAddress(userState.getCopyOfSelectedCompany());
+          factory.purchase.billingAddress = addressService.copyAddress(userState.getCopyOfUserCompany());
+          factory.purchase.shippingAddress = addressService.copyAddressFromShipTo(userState.getCopyOfSelectedCompany());
 
-          factory.purchase.contact = _cleanContactObj(userState.getCopyOfProfile());
+          factory.purchase.contact = contactService.copyContactObj(userState.getCopyOfProfile());
           factory.purchase.paymentMethods = {
             paymentMethod: "card",
             existingCreditCards: [],
@@ -202,8 +162,8 @@
           };
 
           var obj = {
-            billTo: _copyAddress(factory.purchase.billingAddress),
-            shipTo: _copyAddress(factory.purchase.shippingAddress),
+            billTo: addressService.copyAddress(factory.purchase.billingAddress),
+            shipTo: addressService.copyAddress(factory.purchase.shippingAddress),
             items: newItems,
             purchaseOrderNumber: factory.purchase.paymentMethods.purchaseOrderNumber,
             card: cardData
