@@ -63,7 +63,7 @@ angular.module("risevision.common.components.purchase-flow")
 
           if (!addressObject.validationError) {
             addressFactory.updateContact(contactObject);
-            addressFactory.updateAddress(addressObject, isShipping);
+            addressFactory.updateAddress(addressObject, contactObject, isShipping);
 
             $scope.setNextStep();
           }

@@ -132,7 +132,7 @@ describe("controller: purchase modal", function() {
 
       setTimeout(function() {
         addressFactory.updateContact.should.have.been.calledWith("contact");
-        addressFactory.updateAddress.should.have.been.calledWith({}, "shipping");
+        addressFactory.updateAddress.should.have.been.calledWith({}, "contact", "shipping");
         $scope.setNextStep.should.have.been.called;
 
         done();

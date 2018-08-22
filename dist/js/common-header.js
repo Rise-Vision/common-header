@@ -4685,7 +4685,7 @@ angular.module("risevision.common.core.endpoint", [
     "mailSyncEnabled", "sellerId", "isTest", "shipToUseCompanyAddress",
     "shipToName", "shipToStreet", "shipToUnit", "shipToCity",
     "shipToProvince", "shipToPostalCode", "shipToCountry", "website",
-    "companySize", "companyIndustry"
+    "companySize", "companyIndustry", "billingContactEmails"
   ])
 
   .constant("ALERTS_WRITABLE_FIELDS", [
@@ -9903,49 +9903,60 @@ angular.module("risevision.common.components.purchase-flow")
 
       var _updateCompanySettings = function (company, isShipping) {
         if (isShipping) {
-          // update Selected company saved in userState
-          var shipToCopyNoFollow = userState.getCopyOfSelectedCompany(true);
-          addressService.copyAddressToShipTo(company, shipToCopyNoFollow);
-
           // this will fire "risevision.company.updated" event
-          userState.updateCompanySettings(shipToCopyNoFollow);
-
-        } else {
-          // only proceed if currently selected BillTo company is the User company
-          if (company.id === userState.getUserCompanyId()) {
-            // update User company saved in userState
-            var billToCopyNoFollow = userState.getCopyOfUserCompany(true);
-            addressService.copyAddress(company, billToCopyNoFollow);
-
-            // this will fire "risevision.company.updated" event
-            userState.updateCompanySettings(billToCopyNoFollow);
-          }
+          userState.updateCompanySettings(company);
+        }
+        // only proceed if currently selected BillTo company is the User company
+        else if (company.id === userState.getUserCompanyId()) {
+          // this will fire "risevision.company.updated" event
+          userState.updateCompanySettings(company);
         }
       };
 
-      factory.updateAddress = function (addressObject, isShipping) {
+      factory.updateAddress = function (addressObject, contact, isShipping) {
         var deferred = $q.defer();
         var currentAddress = isShipping ? addressService.copyAddressFromShipTo(userState.getCopyOfSelectedCompany()) :
           userState.getCopyOfUserCompany();
 
-        if (addressObject && !addressService.addressesAreIdentical(addressObject, currentAddress)) {
+        var addressFields = {};
+        var requiresUpdate = false;
 
-          $log.info("Address changed. Saving...");
+        if (!isShipping) {
+          var billingContactEmails = currentAddress.billingContactEmails || [];
+          var email = contact && contact.email;
 
-          var addressFields = isShipping ? addressService.copyAddressToShipTo(addressObject) :
-            addressService.copyAddress(addressObject);
+          if (email && billingContactEmails.indexOf(email) === -1) {
+            billingContactEmails.unshift(email);
+
+            addressFields.billingContactEmails = billingContactEmails;
+            currentAddress.billingContactEmails = billingContactEmails;
+
+            requiresUpdate = true;
+          }
+        }
+
+        if (addressObject && !addressService.addressesAreIdentical(addressObject, currentAddress) || requiresUpdate) {
+          if (isShipping) {
+            addressService.copyAddressToShipTo(addressObject, addressFields);
+          } else {
+            addressService.copyAddress(addressObject, addressFields);
+          }
+
+          $log.info("Company Fields changed. Saving...");
 
           updateCompany(addressObject.id, addressFields)
-            .then(function () {
-              _updateCompanySettings(addressObject, isShipping);
+            .then(function (response) {
+              if (response && response.result && response.result.item) {
+                _updateCompanySettings(response.result.item, isShipping);
+              }
 
-              $log.info("Address saved.");
+              $log.info("Company Fields saved.");
 
               deferred.resolve();
             })
             .catch(function () {
-              $log.info("Error saving Address.");
-              deferred.reject("Error saving Address.");
+              $log.info("Error saving Company Fields.");
+              deferred.reject("Error saving Company Fields.");
             });
         } else {
           deferred.resolve();
@@ -10736,7 +10747,7 @@ angular.module("risevision.common.components.purchase-flow")
 
           if (!addressObject.validationError) {
             addressFactory.updateContact(contactObject);
-            addressFactory.updateAddress(addressObject, isShipping);
+            addressFactory.updateAddress(addressObject, contactObject, isShipping);
 
             $scope.setNextStep();
           }
