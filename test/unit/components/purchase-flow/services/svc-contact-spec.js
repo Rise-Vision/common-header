@@ -23,7 +23,6 @@ describe("Services: contact service", function() {
   it("should exist", function() {
     expect(contactService).to.be.ok;
     expect(contactService.contactsAreIdentical).to.be.a("function");
-    expect(contactService.cleanContactObj).to.be.a("function");
     expect(contactService.copyContactObj).to.be.a("function");
   });
 
@@ -48,15 +47,6 @@ describe("Services: contact service", function() {
 
   });
 
-  it("cleanContactObj: ", function () {
-    var contact1 = angular.copy(validContact);
-    contact1.junkProperty = "junkValue";
-
-    expect(contactService.cleanContactObj(contact1)).to.not.equal(contact1);
-    expect(contactService.cleanContactObj(contact1)).to.deep.equal(validContact);
-
-  });
-
   describe("copyContactObj: ", function () {
     it("should create new object and not copy username property", function() {
       var contact1 = angular.copy(validContact);
@@ -64,6 +54,7 @@ describe("Services: contact service", function() {
 
       expect(contactService.copyContactObj(contact1)).to.not.equal(contact1);
       expect(contactService.copyContactObj(contact1)).to.deep.equal({
+        username: "dummy Username",
         firstName: "dummy First Name",
         lastName: "dummy Last Name",
         email: "email@sample.com",
@@ -79,6 +70,7 @@ describe("Services: contact service", function() {
 
       expect(contactService.copyContactObj(contact1, contact2)).to.equal(contact2);
       expect(contactService.copyContactObj(contact1, contact2)).to.deep.equal({
+        username: "dummy Username",
         firstName: "dummy First Name",
         lastName: "dummy Last Name",
         email: "email@sample.com",

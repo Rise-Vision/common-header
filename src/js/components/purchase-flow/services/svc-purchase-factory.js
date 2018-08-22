@@ -22,7 +22,7 @@
           factory.purchase.billingAddress = addressService.copyAddress(userState.getCopyOfUserCompany());
           factory.purchase.shippingAddress = addressService.copyAddressFromShipTo(userState.getCopyOfSelectedCompany());
 
-          factory.purchase.contact = contactService.cleanContactObj(userState.getCopyOfProfile());
+          factory.purchase.contact = contactService.copyContactObj(userState.getCopyOfProfile());
           factory.purchase.paymentMethods = {
             paymentMethod: "card",
             existingCreditCards: [],

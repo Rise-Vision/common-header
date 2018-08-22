@@ -233,21 +233,12 @@ angular.module("risevision.common.components.purchase-flow")
           c1.telephone === c2.telephone);
       };
 
-      this.cleanContactObj = function (c) {
-        return {
-          username: c.username,
-          firstName: c.firstName,
-          lastName: c.lastName,
-          email: c.email,
-          telephone: c.telephone
-        };
-      };
-
       this.copyContactObj = function (src, dest) {
         if (!dest) {
           dest = {};
         }
 
+        dest.username = src.username;
         dest.firstName = src.firstName;
         dest.lastName = src.lastName;
         dest.email = src.email;
@@ -283,7 +274,7 @@ angular.module("risevision.common.components.purchase-flow")
           factory.purchase.billingAddress = addressService.copyAddress(userState.getCopyOfUserCompany());
           factory.purchase.shippingAddress = addressService.copyAddressFromShipTo(userState.getCopyOfSelectedCompany());
 
-          factory.purchase.contact = contactService.cleanContactObj(userState.getCopyOfProfile());
+          factory.purchase.contact = contactService.copyContactObj(userState.getCopyOfProfile());
           factory.purchase.paymentMethods = {
             paymentMethod: "card",
             existingCreditCards: [],

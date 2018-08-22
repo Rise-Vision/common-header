@@ -13,21 +13,12 @@ angular.module("risevision.common.components.purchase-flow")
           c1.telephone === c2.telephone);
       };
 
-      this.cleanContactObj = function (c) {
-        return {
-          username: c.username,
-          firstName: c.firstName,
-          lastName: c.lastName,
-          email: c.email,
-          telephone: c.telephone
-        };
-      };
-
       this.copyContactObj = function (src, dest) {
         if (!dest) {
           dest = {};
         }
 
+        dest.username = src.username;
         dest.firstName = src.firstName;
         dest.lastName = src.lastName;
         dest.email = src.email;
