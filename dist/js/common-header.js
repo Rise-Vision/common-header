@@ -529,8 +529,11 @@ angular.module("risevision.common.header.directives")
 "use strict";
 
 angular.module("risevision.common.header.directives")
-  .directive("emailsField", ["$templateCache", "$timeout",
-    function ($templateCache, $timeout) {
+  .value("EMAIL_REGEX",
+    /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+)
+  .directive("emailsField", ["$templateCache", "$timeout", "EMAIL_REGEX",
+    function ($templateCache, $timeout, EMAIL_REGEX) {
       return {
         restrict: "E",
         require: "ngModel",
@@ -539,8 +542,6 @@ angular.module("risevision.common.header.directives")
         },
         template: $templateCache.get("emails-field.html"),
         link: function ($scope, elem, attr, ngModel) {
-          var EMAIL_REGEX =
-            /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
           var updatingEmails = false;
           var validationError = false;
 

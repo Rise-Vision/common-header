@@ -5,7 +5,6 @@
 describe("controller: company settings", function() {
   beforeEach(module("risevision.common.header"));
   beforeEach(module(function ($provide, $translateProvider) {
-    $provide.value("EMAIL_REGEX", "");
     $provide.service("userState",userState);
     $provide.service("$modalInstance",function(){
       return {
