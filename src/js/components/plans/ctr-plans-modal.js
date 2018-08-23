@@ -92,7 +92,7 @@ angular.module("risevision.common.components.plans")
           if ($scope.currentPlan.order > plan.order) {
             return "downgrade";
           } else { // Higher Plan
-            return "subscribe";
+            return "subscribe-higher";
           }
         }
       } else { // Were on Free Plan
@@ -136,6 +136,8 @@ angular.module("risevision.common.components.plans")
     };
 
     $scope.downgradePlan = _showSubscriptionDetails;
+
+    $scope.subscribeHigher = _showSubscriptionDetails;
 
     $scope.purchaseAdditionalLicenses = _showSubscriptionDetails;
 

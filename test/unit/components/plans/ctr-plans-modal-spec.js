@@ -183,7 +183,7 @@ describe("controller: plans modal", function() {
         sandbox.stub(currentPlanFactory, "isPlanActive").returns(true);        
       });
 
-      it("should show the Subscribe button if active plan is on trial", function() {
+      it("should show the Subscribe button (Purchase Flow version) if active plan is on trial", function() {
         currentPlanFactory.currentPlan.type = "advanced";
         currentPlanFactory.currentPlan.order = 3;
         expect($scope.getVisibleAction({ type: "advanced", order: 3, statusCode: "on-trial" })).equal("subscribe");        
@@ -195,10 +195,10 @@ describe("controller: plans modal", function() {
         expect($scope.getVisibleAction({ type: "advanced", order: 3, statusCode: "subscribed" })).equal("");        
       });
 
-      it("should show the Subscribed button if it is a higher plan", function() {
+      it("should show the Subscribed button (Chargebee Portal version) if it is a higher plan", function() {
         currentPlanFactory.currentPlan.type = "basic";
         currentPlanFactory.currentPlan.order = 2;
-        expect($scope.getVisibleAction({ type: "advanced", order: 3 })).equal("subscribe");
+        expect($scope.getVisibleAction({ type: "advanced", order: 3 })).equal("subscribe-higher");
       });
 
       it("should show the Downgrade button if it is a lower plan", function() {
@@ -222,7 +222,7 @@ describe("controller: plans modal", function() {
         expect($scope.getVisibleAction({ type: "advanced", statusCode: "trial-available" })).equal("start-trial");        
       });
 
-      it("should show the Subscribe button if plan has no trial available", function() {
+      it("should show the Subscribe button (Purchase Flow version) if plan has no trial available", function() {
         expect($scope.getVisibleAction({ type: "advanced", statusCode: "trial-expired" })).equal("subscribe");        
       });
 
