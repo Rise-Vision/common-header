@@ -6,7 +6,10 @@
     "connectedText": "Twitter account succesfully connected.",
     "revokeLinkText": "Revoke Access"
   },
-  "screenNameText": "Enter a @handle to display Tweets from any public account",
-  "previewLable": "Preview",
+  "screenName": {
+    "error": "Error: you must specify a handle before you can save.",
+    "text": "Enter a handle to display Tweets from any public account"
+  },
+  "previewLabel": "Preview",
   "previewText": "The Twitter Widget uses sample content in Preview, your Tweets will only show on a Licensed Display."
 }

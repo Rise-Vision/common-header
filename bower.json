@@ -43,6 +43,7 @@
     "ngstorage": "0.3.0",
     "ng-biscuit": "~0.2.1",
     "ng-csv": "~0.2.3",
+    "ng-tags-input": "^3.2.0",
     "widget-settings-ui-components": "https://github.com/Rise-Vision/widget-settings-ui-components.git"
   },
   "resolutions": {

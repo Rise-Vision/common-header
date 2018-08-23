@@ -32,7 +32,7 @@
     });
     
     var registrationScenarios = new RegistrationScenarios();
-    
+
     var authenticationScenarios = new AuthenticationScenarios();
     var navMenuScenarios = new NavMenuScenarios();
     var shoppingCartScenarios = new ShoppingCartScenarios();

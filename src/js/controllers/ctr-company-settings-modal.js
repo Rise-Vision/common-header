@@ -1,5 +1,6 @@
 angular.module("risevision.common.header")
 
+
 .controller("CompanySettingsModalCtrl", ["$scope", "$modalInstance",
   "updateCompany", "companyId", "countries", "REGIONS_CA", "REGIONS_US",
   "TIMEZONES", "getCompany", "regenerateCompanyField", "$window", "$loading",
@@ -40,8 +41,8 @@ angular.module("risevision.common.header")
       getCompany(companyId).then(
         function (company) {
           $scope.company = company;
-          $scope.company.isSeller = company && company.sellerId ? true :
-            false;
+          $scope.company.isSeller = company && company.sellerId ? true : false;
+          $scope.company.isChargebee = company && company.origin === "Chargebee";
         },
         function (resp) {
           $window.alert("An error has occurred. " + humanReadableError(resp));
