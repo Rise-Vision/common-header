@@ -301,9 +301,90 @@ describe("Services: address factory", function() {
 
     });
 
+    describe("billingContactEmails: ", function() {
+      it("should not update field if email already exists in the array", function(done) {
+        var updatedAddress = angular.copy(address);
+
+        address.billingContactEmails = ["contactEmail", "otherEmail"];
+        userState.getCopyOfUserCompany.returns(angular.copy(address));
+
+        addressFactory.updateAddress(updatedAddress, {
+          email: "contactEmail"
+        })
+          .then(function() {
+            updateCompany.should.not.have.been.called;
+
+            done();
+          })
+          .then(null, done);
+      });
+
+      it("should add contact email to the beginning of the array", function(done) {
+        var updatedAddress = angular.copy(address);
+
+        address.billingContactEmails = ["email1", "email2"];
+        userState.getCopyOfUserCompany.returns(angular.copy(address));
+
+        addressFactory.updateAddress(updatedAddress, {
+          email: "contactEmail"
+        })
+          .then(function() {
+            updateCompany.should.have.been.called;
+
+            expect(updateCompany.getCall(0).args[1].billingContactEmails).to.be.an("array");
+            expect(updateCompany.getCall(0).args[1].billingContactEmails).to.have.length(3);
+            expect(updateCompany.getCall(0).args[1].billingContactEmails[0]).to.equal("contactEmail");
+
+            expect(userState.updateCompanySettings.getCall(0).args[0].billingContactEmails).to.be.ok;
+            expect(userState.updateCompanySettings.getCall(0).args[0].billingContactEmails).to.have.length(3);
+            expect(userState.updateCompanySettings.getCall(0).args[0].billingContactEmails[0]).to.equal("contactEmail");
+
+            done();
+          })
+          .then(null, done);
+      });
+
+      it("should create array and add contact email", function(done) {
+        var updatedAddress = angular.copy(address);
+
+        addressFactory.updateAddress(updatedAddress, {
+          email: "contactEmail"
+        })
+          .then(function() {
+            updateCompany.should.have.been.called;
+
+            expect(updateCompany.getCall(0).args[1].billingContactEmails).to.be.an("array");
+            expect(updateCompany.getCall(0).args[1].billingContactEmails).to.have.length(1);
+            expect(updateCompany.getCall(0).args[1].billingContactEmails[0]).to.equal("contactEmail");
+
+            expect(userState.updateCompanySettings.getCall(0).args[0].billingContactEmails).to.be.ok;
+            expect(userState.updateCompanySettings.getCall(0).args[0].billingContactEmails).to.have.length(1);
+            expect(userState.updateCompanySettings.getCall(0).args[0].billingContactEmails[0]).to.equal("contactEmail");
+
+            done();
+          })
+          .then(null, done);
+      });
+
+      it("should ignore contact email for the shipping company", function(done) {
+        var updatedAddress = angular.copy(address);
+
+        addressFactory.updateAddress(updatedAddress, {
+          email: "contactEmail"
+        }, true)
+          .then(function() {
+            updateCompany.should.not.have.been.called;
+
+            done();
+          })
+          .then(null, done);
+      });
+
+    });
+
     describe("Shipping Address: ", function() {
       it("should not update if address is not changed", function(done) {
-        addressFactory.updateAddress(address, true)
+        addressFactory.updateAddress(address, null, true)
           .then(function() {
             updateCompany.should.not.have.been.called;
 
@@ -316,7 +397,7 @@ describe("Services: address factory", function() {
         var updatedAddress = angular.copy(address);
         updatedAddress.name = "updated Name";
 
-        addressFactory.updateAddress(updatedAddress, true)
+        addressFactory.updateAddress(updatedAddress, null, true)
           .then(function() {
             updateCompany.should.have.been.calledWith("id", addressService.copyAddressToShipTo(updatedAddress));
 
