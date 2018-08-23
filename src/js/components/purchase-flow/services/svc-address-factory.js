@@ -43,16 +43,16 @@ angular.module("risevision.common.components.purchase-flow")
         if (isShipping) {
           // update Selected company saved in userState
           var shipToCopyNoFollow = userState.getCopyOfSelectedCompany(true);
-          angular.copy(company, shipToCopyNoFollow)
+          angular.copy(company, shipToCopyNoFollow);
 
           // this will fire "risevision.company.updated" event
           userState.updateCompanySettings(shipToCopyNoFollow);
-        } 
+        }
         // only proceed if currently selected BillTo company is the User company
         else if (company.id === userState.getUserCompanyId()) {
           // update User company saved in userState
           var billToCopyNoFollow = userState.getCopyOfUserCompany(true);
-          angular.copy(company, billToCopyNoFollow)
+          angular.copy(company, billToCopyNoFollow);
 
           // this will fire "risevision.company.updated" event
           userState.updateCompanySettings(billToCopyNoFollow);

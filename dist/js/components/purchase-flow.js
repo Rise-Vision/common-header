@@ -54,13 +54,21 @@ angular.module("risevision.common.components.purchase-flow")
 
       var _updateCompanySettings = function (company, isShipping) {
         if (isShipping) {
+          // update Selected company saved in userState
+          var shipToCopyNoFollow = userState.getCopyOfSelectedCompany(true);
+          angular.copy(company, shipToCopyNoFollow);
+
           // this will fire "risevision.company.updated" event
-          userState.updateCompanySettings(company);
+          userState.updateCompanySettings(shipToCopyNoFollow);
         }
         // only proceed if currently selected BillTo company is the User company
         else if (company.id === userState.getUserCompanyId()) {
+          // update User company saved in userState
+          var billToCopyNoFollow = userState.getCopyOfUserCompany(true);
+          angular.copy(company, billToCopyNoFollow);
+
           // this will fire "risevision.company.updated" event
-          userState.updateCompanySettings(company);
+          userState.updateCompanySettings(billToCopyNoFollow);
         }
       };
 
@@ -80,7 +88,6 @@ angular.module("risevision.common.components.purchase-flow")
             billingContactEmails.unshift(email);
 
             addressFields.billingContactEmails = billingContactEmails;
-            currentAddress.billingContactEmails = billingContactEmails;
 
             requiresUpdate = true;
           }
@@ -95,11 +102,9 @@ angular.module("risevision.common.components.purchase-flow")
 
           $log.info("Company Fields changed. Saving...");
 
-          updateCompany(addressObject.id, addressFields)
-            .then(function (response) {
-              if (response && response.result && response.result.item) {
-                _updateCompanySettings(response.result.item, isShipping);
-              }
+          updateCompany(addressFields.id, addressFields)
+            .then(function () {
+              _updateCompanySettings(addressFields, isShipping);
 
               $log.info("Company Fields saved.");
 
