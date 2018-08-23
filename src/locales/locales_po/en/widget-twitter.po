@@ -10,14 +10,17 @@ msgstr "Twitter account succesfully connected."
 msgid "authentication.revokeLinkText"
 msgstr "Revoke Access"
 
-msgid "previewLable"
+msgid "previewLabel"
 msgstr "Preview"
 
 msgid "previewText"
 msgstr "The Twitter Widget uses sample content in Preview, your Tweets will only show on a Licensed Display."
 
-msgid "screenNameText"
-msgstr "Enter a @handle to display Tweets from any public account"
+msgid "screenName.error"
+msgstr "Error: you must specify a handle before you can save."
+
+msgid "screenName.text"
+msgstr "Enter a handle to display Tweets from any public account"
 
 msgid "settings"
 msgstr "Twitter Widget Settings"
