@@ -139,7 +139,7 @@ angular.module("risevision.common.components.plans")
 
     $scope.downgradePlan = _showSubscriptionDetails;
 
-    $scope.subscribeHigher = _showSubscriptionDetails;
+    $scope.subscribePortal = _showSubscriptionDetails;
 
     $scope.purchaseAdditionalLicenses = _showSubscriptionDetails;
 
