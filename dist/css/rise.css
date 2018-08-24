@@ -12711,13 +12711,13 @@ li.dropdown-header {
 .app-header-title {
   margin: 0;
   text-align: left;
-  background-color: red;
   width: 100%; }
 
 @media (min-width: 768px) {
   .app-header {
-    background-color: blue;
-    flex-direction: row; } }
+    flex-direction: row; }
+  .app-header-title {
+    width: auto; } }
 
 .toolbar {
   overflow: hidden;
