@@ -30,11 +30,6 @@ body.modal-open {
     overflow: hidden;
 }    
 
-a:focus, button:focus {
-  outline: 0 !important;
-  text-decoration: none !important;
-}
-
 /* Resets */
 ul {
   list-style: none;
@@ -351,20 +346,6 @@ ul.social {
 .list-separator {
   border-bottom: 1px solid #eee;
   width: auto;
-}
-
-.error {
-  font-weight: bold;
-}
-
-.checkbox-primary {
-  > label {
-    font-weight: bold;
-  }
-}
-
-.label-disabled {
-  color: $light-gray;
 }
 
 .btn-google-drive,
