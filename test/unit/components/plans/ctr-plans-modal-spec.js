@@ -213,9 +213,17 @@ describe("controller: plans modal", function() {
       });
 
       it("should show the Downgrade button if it is a lower plan", function() {
+        sandbox.stub(currentPlanFactory, "isOnTrial").returns(false);
         currentPlanFactory.currentPlan.type = "advanced";
         currentPlanFactory.currentPlan.order = 3;
         expect($scope.getVisibleAction({ type: "basic", order: 2 })).equal("downgrade");
+      });
+
+      it("should show the Downgrade button (Purchase Flow version) if it is a lower plan and it is a trial", function() {
+        sandbox.stub(currentPlanFactory, "isOnTrial").returns(true);
+        currentPlanFactory.currentPlan.type = "advanced";
+        currentPlanFactory.currentPlan.order = 3;
+        expect($scope.getVisibleAction({ type: "basic", order: 2 })).equal("downgrade-trial");
       });
       
     });

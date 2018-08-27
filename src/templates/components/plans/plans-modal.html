@@ -64,18 +64,21 @@
           <a id="subscribe-plan" ng-if="!isChargebee()" ng-show="getVisibleAction(plan).indexOf('subscribe') === 0"
               target="_blank" href="https://store.risevision.com/product/{{plan.productId}}"
               class="btn btn-primary btn-block" translate>common-header.plans.subscribe</a>
-          <a id="subscribe-plan" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'subscribe'"
+          <a id="subscribe-plan-cb" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'subscribe'"
               ng-click="purchaseFactory.showPurchaseModal(plan, isMonthly)"
               class="btn btn-primary btn-block" translate>common-header.plans.subscribe</a>
-          <a id="subscribe-plan" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'subscribe-portal'"
+          <a id="subscribe-plan-cbp" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'subscribe-portal'"
               ng-click="subscribePortal(plan)"
               class="btn btn-primary btn-block" translate>common-header.plans.subscribe</a>
 
-          <a id="downgrade-plan" ng-show="getVisibleAction(plan) === 'downgrade' && !isChargebee()"
+          <a id="downgrade-plan" ng-if="!isChargebee()" ng-show="getVisibleAction(plan).indexOf('downgrade') === 0"
               target="_blank" href="https://www.risevision.com/downgradeplan"
               class="btn btn-default btn-block" translate>common-header.plans.downgrade</a>
-          <a id="downgrade-plan-cb" ng-show="getVisibleAction(plan) === 'downgrade' && isChargebee()"
+          <a id="downgrade-plan-cb" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'downgrade'"
               ng-click="downgradePlan(plan)"
+              class="btn btn-default btn-block" translate>common-header.plans.downgrade</a>
+          <a id="downgrade-plan-cbt" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'downgrade-trial'"
+              ng-click="purchaseFactory.showPurchaseModal(currentPlan, isMonthly)"
               class="btn btn-default btn-block" translate>common-header.plans.downgrade</a>
           <a id="start-trial-plan" ng-show="getVisibleAction(plan) === 'start-trial'"
               target="_blank" ng-click="startTrial(plan)"
