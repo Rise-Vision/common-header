@@ -75,7 +75,7 @@
               target="_blank" href="https://www.risevision.com/downgradeplan"
               class="btn btn-default btn-block" translate>common-header.plans.downgrade</a>
           <a id="downgrade-plan-cbt" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'downgrade'"
-              ng-click="purchaseFactory.showPurchaseModal(currentPlan, isMonthly)"
+              ng-click="purchaseFactory.showPurchaseModal(plan, isMonthly)"
               class="btn btn-default btn-block" translate>common-header.plans.downgrade</a>
           <a id="downgrade-plan-cb" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'downgrade-portal'"
               ng-click="downgradePortal(plan)"
