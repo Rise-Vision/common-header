@@ -186,44 +186,38 @@ describe("controller: plans modal", function() {
         sandbox.stub(currentPlanFactory, "isPlanActive").returns(true);
       });
 
-      it("should show the Subscribe button (Purchase Flow version) if active plan is on trial", function() {
-        currentPlanFactory.currentPlan.type = "advanced";
-        currentPlanFactory.currentPlan.order = 3;
-        expect($scope.getVisibleAction({ type: "advanced", order: 3, statusCode: "on-trial" })).equal("subscribe");        
-      });
-
       it("should not show a button if active plan is subscribed", function() {
         currentPlanFactory.currentPlan.type = "advanced";
         currentPlanFactory.currentPlan.order = 3;
         expect($scope.getVisibleAction({ type: "advanced", order: 3, statusCode: "subscribed" })).equal("");        
       });
 
-      it("should show the Subscribed button (Chargebee Portal version) if it does not have a Chargebee account (currently On Trial)", function() {
+      it("should show the Subscribe button (Purchase Flow version) if active plan is on trial", function() {
         sandbox.stub(currentPlanFactory, "isOnTrial").returns(true);
-        currentPlanFactory.currentPlan.type = "basic";
-        currentPlanFactory.currentPlan.order = 2;
-        expect($scope.getVisibleAction({ type: "advanced", order: 3 })).equal("subscribe");
+        currentPlanFactory.currentPlan.type = "advanced";
+        currentPlanFactory.currentPlan.order = 3;
+        expect($scope.getVisibleAction({ type: "advanced", order: 3, statusCode: "on-trial" })).equal("subscribe");
       });
 
-      it("should show the Subscribed button (Chargebee Portal version) if already has a Chargebee account (already Subscribed to a plan)", function() {
+      it("should show the Subscribe button (Chargebee Portal version) if already has a Chargebee account (already Subscribed to a plan)", function() {
         sandbox.stub(currentPlanFactory, "isOnTrial").returns(false);
         currentPlanFactory.currentPlan.type = "basic";
         currentPlanFactory.currentPlan.order = 2;
         expect($scope.getVisibleAction({ type: "advanced", order: 3 })).equal("subscribe-portal");
       });
 
-      it("should show the Downgrade button if it is a lower plan", function() {
-        sandbox.stub(currentPlanFactory, "isOnTrial").returns(false);
+      it("should show the Downgrade button (Purchase Flow version) if it is a lower plan and it is a trial", function() {
+        sandbox.stub(currentPlanFactory, "isOnTrial").returns(true);
         currentPlanFactory.currentPlan.type = "advanced";
         currentPlanFactory.currentPlan.order = 3;
         expect($scope.getVisibleAction({ type: "basic", order: 2 })).equal("downgrade");
       });
 
-      it("should show the Downgrade button (Purchase Flow version) if it is a lower plan and it is a trial", function() {
-        sandbox.stub(currentPlanFactory, "isOnTrial").returns(true);
+      it("should show the Downgrade button if it is a lower plan", function() {
+        sandbox.stub(currentPlanFactory, "isOnTrial").returns(false);
         currentPlanFactory.currentPlan.type = "advanced";
         currentPlanFactory.currentPlan.order = 3;
-        expect($scope.getVisibleAction({ type: "basic", order: 2 })).equal("downgrade-trial");
+        expect($scope.getVisibleAction({ type: "basic", order: 2 })).equal("downgrade-portal");
       });
       
     });

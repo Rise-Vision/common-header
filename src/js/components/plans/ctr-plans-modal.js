@@ -90,10 +90,10 @@ angular.module("risevision.common.components.plans")
         } else { // This is a different Plan
           // Is lower Plan?
           if ($scope.currentPlan.order > plan.order) {
-            if (currentPlanFactory.isOnTrial()) {
-              return "downgrade-trial";
-            } else {
+            if (currentPlanFactory.isOnTrial()) { // Does not have Chargebee account, use Purchase Flow
               return "downgrade";
+            } else { // Already has Chargebee account, use Customer Portal
+              return "downgrade-portal";
             }
           } else if (currentPlanFactory.isOnTrial()) { // Does not have Chargebee account, use Purchase Flow
             return "subscribe";
@@ -107,7 +107,7 @@ angular.module("risevision.common.components.plans")
           return "";
         } else if ($scope.isTrialAvailable(plan)) {
           return "start-trial";
-        } else { // Subscribe
+        } else { // Subscribe using Purchase Flow
           return "subscribe";
         }
       }
@@ -141,7 +141,7 @@ angular.module("risevision.common.components.plans")
         });
     };
 
-    $scope.downgradePlan = _showSubscriptionDetails;
+    $scope.downgradePortal = _showSubscriptionDetails;
 
     $scope.subscribePortal = _showSubscriptionDetails;
 
