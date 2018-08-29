@@ -60,9 +60,9 @@
            userSettingsModalPage.getCeCheckbox().click();
         }
 
-        if ( userSettingsModalPage.getPuCheckbox().isSelected() )
+        if ( userSettingsModalPage.getCpCheckbox().isSelected() )
         {
-           userSettingsModalPage.getPuCheckbox().click();
+           userSettingsModalPage.getCpCheckbox().click();
         }
 
         if ( !userSettingsModalPage.getDaCheckbox().isSelected() )
@@ -89,7 +89,7 @@
         expect(userSettingsModalPage.getPhoneField().getAttribute('value')).to.eventually.equal("000-000-0000");
 
         expect(userSettingsModalPage.getCeCheckbox().isSelected()).to.eventually.equal.true;
-        expect(userSettingsModalPage.getPuCheckbox().isSelected()).to.eventually.equal.false;
+        expect(userSettingsModalPage.getCpCheckbox().isSelected()).to.eventually.equal.false;
         expect(userSettingsModalPage.getDaCheckbox().isSelected()).to.eventually.equal.true;
       });
 
