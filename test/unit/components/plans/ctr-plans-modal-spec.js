@@ -38,6 +38,9 @@ describe("controller: plans modal", function() {
         isPlanActive: function() {
           return true;
         },
+        isOnTrial: function (){
+          return true;
+        },
         currentPlan: {}
       };
     });
@@ -180,13 +183,7 @@ describe("controller: plans modal", function() {
   describe("getVisibleAction: ", function() {
     describe("active plan: ", function() {
       beforeEach(function() {
-        sandbox.stub(currentPlanFactory, "isPlanActive").returns(true);        
-      });
-
-      it("should show the Subscribe button if active plan is on trial", function() {
-        currentPlanFactory.currentPlan.type = "advanced";
-        currentPlanFactory.currentPlan.order = 3;
-        expect($scope.getVisibleAction({ type: "advanced", order: 3, statusCode: "on-trial" })).equal("subscribe");        
+        sandbox.stub(currentPlanFactory, "isPlanActive").returns(true);
       });
 
       it("should not show a button if active plan is subscribed", function() {
@@ -195,16 +192,39 @@ describe("controller: plans modal", function() {
         expect($scope.getVisibleAction({ type: "advanced", order: 3, statusCode: "subscribed" })).equal("");        
       });
 
-      it("should show the Subscribed button if it is a higher plan", function() {
-        currentPlanFactory.currentPlan.type = "basic";
-        currentPlanFactory.currentPlan.order = 2;
-        expect($scope.getVisibleAction({ type: "advanced", order: 3 })).equal("subscribe");
+      it("should show the Subscribe button (Purchase Flow version) if active plan is on trial", function() {
+        sandbox.stub(currentPlanFactory, "isOnTrial").returns(true);
+        currentPlanFactory.currentPlan.type = "advanced";
+        currentPlanFactory.currentPlan.order = 3;
+        expect($scope.getVisibleAction({ type: "advanced", order: 3, statusCode: "on-trial" })).equal("subscribe");
       });
 
-      it("should show the Downgrade button if it is a lower plan", function() {
+      it("should show the Subscribe button (Chargebee Portal version) if already has a Chargebee account (already Subscribed to a plan)", function() {
+        sandbox.stub(currentPlanFactory, "isOnTrial").returns(false);
+        currentPlanFactory.currentPlan.type = "basic";
+        currentPlanFactory.currentPlan.order = 2;
+        expect($scope.getVisibleAction({ type: "advanced", order: 3 })).equal("subscribe-portal");
+      });
+
+      it("should show the Downgrade button (Purchase Flow version) if it is a lower plan and it is a trial (except for Free)", function() {
+        sandbox.stub(currentPlanFactory, "isOnTrial").returns(true);
         currentPlanFactory.currentPlan.type = "advanced";
         currentPlanFactory.currentPlan.order = 3;
         expect($scope.getVisibleAction({ type: "basic", order: 2 })).equal("downgrade");
+      });
+
+      it("should show the Downgrade button (Chargebee Portal version) if it is Free plan and it is a trial", function() {
+        sandbox.stub(currentPlanFactory, "isOnTrial").returns(true);
+        currentPlanFactory.currentPlan.type = "advanced";
+        currentPlanFactory.currentPlan.order = 3;
+        expect($scope.getVisibleAction({ type: "free", order: 0 })).equal("downgrade-portal");
+      });
+
+      it("should show the Downgrade button if it is a lower plan", function() {
+        sandbox.stub(currentPlanFactory, "isOnTrial").returns(false);
+        currentPlanFactory.currentPlan.type = "advanced";
+        currentPlanFactory.currentPlan.order = 3;
+        expect($scope.getVisibleAction({ type: "basic", order: 2 })).equal("downgrade-portal");
       });
       
     });
@@ -222,7 +242,7 @@ describe("controller: plans modal", function() {
         expect($scope.getVisibleAction({ type: "advanced", statusCode: "trial-available" })).equal("start-trial");        
       });
 
-      it("should show the Subscribe button if plan has no trial available", function() {
+      it("should show the Subscribe button (Purchase Flow version) if plan has no trial available", function() {
         expect($scope.getVisibleAction({ type: "advanced", statusCode: "trial-expired" })).equal("subscribe");        
       });
 

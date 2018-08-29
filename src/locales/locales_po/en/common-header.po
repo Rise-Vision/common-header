@@ -88,6 +88,9 @@ msgstr "Subscribe"
 msgid "plans.trial-expired"
 msgstr "Trial Expired"
 
+msgid "plans.upgrade"
+msgstr "Upgrade"
+
 msgid "purchase.review-subscription.additional-licenses"
 msgstr "additional Display licenses added to your purchase."
 
