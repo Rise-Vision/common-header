@@ -21,7 +21,7 @@
     };
 
     this.getSubscribePlanButton = function(plan) {
-      return getButtonByPlan("subscribe-plan", plan);
+      return getButtonByPlan("subscribe-plan-cb", plan);
     };
 
     this.getDowngradePlanButton = function(plan) {
