@@ -31,7 +31,8 @@
     "saveEachYear": "Save ${{save | number:0}} each year",
     "start-trial": "Start Trial",
     "subscribe": "Subscribe",
-    "trial-expired": "Trial Expired"
+    "trial-expired": "Trial Expired",
+    "upgrade": "Upgrade"
   },
   "purchase": {
     "review-subscription": {
