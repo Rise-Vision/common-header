@@ -11,7 +11,7 @@
     var phoneField = element(by.id("user-settings-phone"));
     var emailField = element(by.id("user-settings-email"));
     var ceCheckbox = element(by.id("user-settings-ce"));
-    var puCheckbox = element(by.id("user-settings-pu"));
+    var cpCheckbox = element(by.id("user-settings-cp"));
     var daCheckbox = element(by.id("user-settings-da"));
     var saveButton = element(by.id("save-button"));
     var deleteButton = element(by.id("delete-button"));
@@ -48,8 +48,8 @@
       return ceCheckbox;
     };
     
-    this.getPuCheckbox = function() {
-      return puCheckbox;
+    this.getCpCheckbox = function() {
+      return cpCheckbox;
     };
     
     this.getDaCheckbox = function() {
