@@ -141,6 +141,11 @@ angular.module("risevision.common.components.plans")
         });
     };
 
+    $scope.showPurchaseModal = function (plan, isMonthly) {
+      purchaseFactory.showPurchaseModal(plan, isMonthly)
+        .then($scope.dismiss);
+    };
+
     $scope.downgradePortal = _showSubscriptionDetails;
 
     $scope.subscribePortal = _showSubscriptionDetails;

@@ -3,10 +3,10 @@
   "use strict";
   angular.module("risevision.common.components.purchase-flow")
     .constant("RPP_ADDON_ID", "c4b368be86245bf9501baaa6e0b00df9719869fd")
-    .factory("purchaseFactory", ["$q", "$modal", "$templateCache", "userState", "storeService",
-      "stripeService", "addressService", "contactService", "RPP_ADDON_ID",
-      function ($q, $modal, $templateCache, userState, storeService, stripeService, addressService,
-        contactService, RPP_ADDON_ID) {
+    .factory("purchaseFactory", ["$rootScope", "$q", "$log", "$modal", "$templateCache", "$timeout",
+      "userState", "storeService", "stripeService", "addressService", "contactService", "RPP_ADDON_ID",
+      function ($rootScope, $q, $log, $modal, $templateCache, $timeout, userState,
+        storeService, stripeService, addressService, contactService, RPP_ADDON_ID) {
         var factory = {};
 
         // Stop spinner - workaround for spinner not rendering
@@ -43,12 +43,14 @@
         factory.showPurchaseModal = function (plan, isMonthly) {
           _init(plan, isMonthly);
 
-          $modal.open({
+          var modalInstance = $modal.open({
             template: $templateCache.get("purchase-flow/purchase-modal.html"),
             controller: "PurchaseModalCtrl",
             size: "md",
             backdrop: "static"
           });
+
+          return modalInstance.result;
         };
 
         var _validateCard = function (card, isNew) {
@@ -180,6 +182,23 @@
           factory.loading = true;
 
           return storeService.purchase(jsonData)
+            .then(function () {
+              factory.purchase.reloadingCompany = true;
+
+              $timeout(5000)
+                .then(function () {
+                  return userState.reloadSelectedCompany();
+                })
+                .then(function () {
+                  $rootScope.$emit("risevision.company.trial.started");
+                })
+                .catch(function (err) {
+                  $log.debug("Failed to reload company", err);
+                })
+                .finally(function () {
+                  factory.purchase.reloadingCompany = false;
+                });
+            })
             .catch(function (result) {
               factory.purchase.checkoutError = result && result.message ? result.message :
                 "There was an unknown error with the payment.";

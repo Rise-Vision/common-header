@@ -115,6 +115,22 @@ angular.module("risevision.common.components.purchase-flow")
       $scope.currentStep = index;
     };
 
+    $scope.close = function () {
+      if (!purchaseFactory.purchase.reloadingCompany) {
+        $modalInstance.close("success");
+      } else {
+        purchaseFactory.loading = true;
+
+        $scope.$watch("factory.purchase.reloadingCompany", function (loading) {
+          if (!loading) {
+            purchaseFactory.loading = false;
+
+            $modalInstance.close("success");
+          }
+        });
+      }
+    };
+
     $scope.dismiss = function () {
       $modalInstance.dismiss("cancel");
     };

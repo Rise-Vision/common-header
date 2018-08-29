@@ -7,11 +7,13 @@ describe("Services: purchase factory", function() {
     $provide.service("$q", function() {return Q;});
     $provide.service("$modal", function() {
       return {
-        open: sinon.spy()
+        open: sinon.stub().returns({
+          result: "result"
+        })
       };
     });
     $provide.service("userState", function() {
-      return {
+      return userState = {
         getCopyOfUserCompany: sinon.stub().returns({
           id: "id",
           street: "billingStreet",
@@ -25,6 +27,13 @@ describe("Services: purchase factory", function() {
         getCopyOfProfile: sinon.stub().returns({
           username: "username",
           uselessProperty: "value"
+        }),
+        reloadSelectedCompany: sinon.spy(function() {
+          if (validate) {
+            return Q.resolve("success");
+          } else {
+            return Q.reject();
+          }
         })
       };
     });
@@ -76,12 +85,14 @@ describe("Services: purchase factory", function() {
 
   }));
 
-  var $modal, purchaseFactory, stripeService, storeService, validate, RPP_ADDON_ID;
+  var $rootScope, $modal, $timeout, purchaseFactory, userState, stripeService, storeService, validate, RPP_ADDON_ID;
 
   beforeEach(function() {
     inject(function($injector) {
       RPP_ADDON_ID = $injector.get("RPP_ADDON_ID");
+      $rootScope = $injector.get("$rootScope");
       $modal = $injector.get("$modal");
+      $timeout = $injector.get("$timeout");
       purchaseFactory = $injector.get("purchaseFactory");
     });
   });
@@ -109,6 +120,10 @@ describe("Services: purchase factory", function() {
         size: "md",
         backdrop: "static"
       });
+    });
+
+    it("should return modal result", function() {
+      expect(purchaseFactory.showPurchaseModal({})).to.equal("result");
     });
 
     it("should initialize selected plan, attach addresses and clean contact info", function() {
@@ -483,6 +498,9 @@ describe("Services: purchase factory", function() {
           purchaseOrderNumber: "purchaseOrderNumber"
         }
       };
+
+      sinon.spy($rootScope, "$emit");
+
     });
 
     it("should clear checkout errors", function() {
@@ -548,6 +566,53 @@ describe("Services: purchase factory", function() {
         expect(purchaseFactory.purchase.checkoutError).to.not.be.ok;
 
         done();
+      })
+      .then(null,function() {
+        done("error");
+      });
+    });
+
+    it("should reloadSelectedCompany on purchase", function(done) {
+      purchaseFactory.completePayment()
+      .then(function() {
+        expect(purchaseFactory.purchase.reloadingCompany).to.be.true;
+        userState.reloadSelectedCompany.should.not.have.been.called;
+
+        $timeout.flush(5000);
+        setTimeout(function() {
+          userState.reloadSelectedCompany.should.have.been.called;
+
+          setTimeout(function() {
+            $rootScope.$emit.should.have.been.calledWith("risevision.company.trial.started");
+            expect(purchaseFactory.purchase.reloadingCompany).to.be.false;
+
+            done();
+          }, 10);
+        }, 10);
+      })
+      .then(null,function() {
+        done("error");
+      });
+    });
+
+    it("should handle failure to reloadSelectedCompany", function(done) {
+      purchaseFactory.completePayment()
+      .then(function() {
+        expect(purchaseFactory.purchase.reloadingCompany).to.be.true;
+        userState.reloadSelectedCompany.should.not.have.been.called;
+
+        validate = false;
+        $timeout.flush(5000);
+        setTimeout(function() {
+          userState.reloadSelectedCompany.should.have.been.called;
+
+          setTimeout(function() {
+            $rootScope.$emit.should.not.have.been.called;
+            expect(purchaseFactory.purchase.reloadingCompany).to.be.false;
+
+            done();
+          }, 10);
+        }, 10);
       })
       .then(null,function() {
         done("error");

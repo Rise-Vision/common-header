@@ -91,7 +91,8 @@ describe("controller: purchase modal", function() {
     expect($scope.setPreviousStep).to.be.a("function");
     expect($scope.setCurrentStep).to.be.a("function");
 
-    expect($scope.dismiss).to.be.a("function");  
+    expect($scope.close).to.be.a("function");
+    expect($scope.dismiss).to.be.a("function");
   });
 
   describe("$loading spinner: ", function() {
@@ -332,6 +333,33 @@ describe("controller: purchase modal", function() {
     $scope.setCurrentStep(2);
 
     expect($scope.currentStep).to.equal(2);
+  });
+
+  describe("dismiss: ", function() {
+    beforeEach(function() {
+      purchaseFactory.purchase = {};
+    });
+
+    it("should close modal", function() {
+      $scope.close();
+
+      $modalInstance.close.should.have.been.called;      
+    });
+
+    it("should wait until Company is reloaded before closing modal", function() {
+      purchaseFactory.purchase.reloadingCompany = true;
+      $scope.close();
+
+      $modalInstance.close.should.not.have.been.called;
+      expect(purchaseFactory.loading).to.be.true;
+
+      purchaseFactory.purchase.reloadingCompany = false;
+      $scope.$digest();
+
+      $modalInstance.close.should.have.been.called;
+      expect(purchaseFactory.loading).to.be.false;
+    });
+
   });
 
   it("dismiss: ", function() {
