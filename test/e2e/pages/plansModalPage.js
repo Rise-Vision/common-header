@@ -25,7 +25,7 @@
     };
 
     this.getDowngradePlanButton = function(plan) {
-      return getButtonByPlan("downgrade-plan", plan);
+      return getButtonByPlan("downgrade-plan-cb", plan);
     };
 
     this.getStartTrialPlanButton = function(plan) {

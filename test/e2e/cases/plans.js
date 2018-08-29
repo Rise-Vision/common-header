@@ -47,26 +47,42 @@
           expect(plansModalPage.getPlansModal().isDisplayed()).to.eventually.be.true;
 
           helper.wait(plansModalPage.getTrialDaysRemaining("basic"), "Basic Plan Trial");
+        });
 
+        it("should show Free plan (Downgrade)", function () {
           expect(plansModalPage.getCurrentPlanButton("free").isDisplayed()).to.eventually.be.false;
           expect(plansModalPage.getSubscribePlanButton("free").isDisplayed()).to.eventually.be.false;
           expect(plansModalPage.getDowngradePlanButton("free").isDisplayed()).to.eventually.be.true;
+        });
 
+        it("should show Starter plan (Downgrade)", function () {
+          expect(plansModalPage.getCurrentPlanButton("starter").isDisplayed()).to.eventually.be.false;
+          expect(plansModalPage.getSubscribePlanButton("starter").isDisplayed()).to.eventually.be.false;
+          expect(plansModalPage.getStartTrialPlanButton("starter").isDisplayed()).to.eventually.be.false;
+          expect(plansModalPage.getDowngradePlanButton("starter").isDisplayed()).to.eventually.be.true;
+        });
+
+        it("should show Basic plan (Subscribe)", function () {
           expect(plansModalPage.getCurrentPlanButton("basic").isDisplayed()).to.eventually.be.true;
           expect(plansModalPage.getSubscribePlanButton("basic").isDisplayed()).to.eventually.be.true;
           expect(plansModalPage.getStartTrialPlanButton("basic").isDisplayed()).to.eventually.be.false;
           expect(plansModalPage.getDowngradePlanButton("basic").isDisplayed()).to.eventually.be.false;
+        });
 
+        it("should show Advanced plan (Subscribe)", function () {
           expect(plansModalPage.getCurrentPlanButton("advanced").isDisplayed()).to.eventually.be.false;
           expect(plansModalPage.getSubscribePlanButton("advanced").isDisplayed()).to.eventually.be.true;
           expect(plansModalPage.getStartTrialPlanButton("advanced").isDisplayed()).to.eventually.be.false;
           expect(plansModalPage.getDowngradePlanButton("advanced").isDisplayed()).to.eventually.be.false;
+        });
 
+        it("should show Enterprise plan (Subscribe)", function () {
           expect(plansModalPage.getCurrentPlanButton("enterprise").isDisplayed()).to.eventually.be.false;
           expect(plansModalPage.getSubscribePlanButton("enterprise").isDisplayed()).to.eventually.be.true;
           expect(plansModalPage.getStartTrialPlanButton("enterprise").isDisplayed()).to.eventually.be.false;
           expect(plansModalPage.getDowngradePlanButton("enterprise").isDisplayed()).to.eventually.be.false;
         });
+
       });
     });
   };
