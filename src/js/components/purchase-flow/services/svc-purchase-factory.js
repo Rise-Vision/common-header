@@ -115,7 +115,8 @@
         };
 
         var _getChargebeeAddonId = function () {
-          return RPP_ADDON_ID + "-" + _getCurrency() + _getBillingPeriod();
+          return RPP_ADDON_ID + "-" + _getCurrency() + _getBillingPeriod() + "-" +
+            factory.purchase.plan.productCode.substring(0, 3);
         };
 
         factory.getEstimate = function () {

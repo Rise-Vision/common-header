@@ -391,14 +391,14 @@ describe("Services: purchase factory", function() {
     it("should call set correct currency & billing period values", function() {
       purchaseFactory.getEstimate();
 
-      storeService.calculateTaxes.should.have.been.calledWith("id", "productCode-" + "usd" + "01m", RPP_ADDON_ID + "-" + "usd" + "01m", 3, "shippingAddress");
+      storeService.calculateTaxes.should.have.been.calledWith("id", "productCode-" + "usd" + "01m", RPP_ADDON_ID + "-" + "usd" + "01m" + "-" + "pro", 3, "shippingAddress");
 
       purchaseFactory.purchase.billingAddress.country = "CA";
       purchaseFactory.purchase.plan.isMonthly = false;
 
       purchaseFactory.getEstimate();
 
-      storeService.calculateTaxes.should.have.been.calledWith("id", "productCode-" + "cad" + "01y", RPP_ADDON_ID + "-" + "cad" + "01y", 3, "shippingAddress");
+      storeService.calculateTaxes.should.have.been.calledWith("id", "productCode-" + "cad" + "01y", RPP_ADDON_ID + "-" + "cad" + "01y" + "-" + "pro", 3, "shippingAddress");
     });
 
     it("should populate estimate object if call succeeds", function(done) {
@@ -516,7 +516,7 @@ describe("Services: purchase factory", function() {
         items: [{
           id: "productCode-cad01m"
         } , {
-          id: "c4b368be86245bf9501baaa6e0b00df9719869fd-cad01m",
+          id: "c4b368be86245bf9501baaa6e0b00df9719869fd-cad01m-pro",
           qty: 3
         }],
         purchaseOrderNumber: "purchaseOrderNumber",
