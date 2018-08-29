@@ -9456,8 +9456,8 @@ angular.module("risevision.common.components.plans", [
 
   "use strict";
   angular.module("risevision.common.components.plans")
-    .factory("currentPlanFactory", ["$log", "$rootScope", "userState", "PLANS_LIST",
-      function ($log, $rootScope, userState, PLANS_LIST) {
+    .factory("currentPlanFactory", ["$log", "$rootScope", "$timeout", "userState", "PLANS_LIST",
+      function ($log, $rootScope, $timeout, userState, PLANS_LIST) {
         var _factory = {};
         var _plansByType = _.keyBy(PLANS_LIST, "type");
         var _plansByCode = _.keyBy(PLANS_LIST, "productCode");
@@ -9480,6 +9480,21 @@ angular.module("risevision.common.components.plans", [
           _factory.currentPlan = plan;
           $log.debug("Current plan", plan);
           $rootScope.$emit("risevision.plan.loaded", plan);
+        };
+
+        var _reloadCurrentPlan = function () {
+          $log.debug("Reloading current plan");
+
+          $timeout(function () {
+            userState.reloadSelectedCompany()
+              .then(_loadCurrentPlan)
+              .catch(function (err) {
+                $log.error("Error reloading plan information", err);
+              })
+              .finally(function () {
+                $log.debug("Finished reloading current plan");
+              });
+          }, 10000);
         };
 
         _factory.isPlanActive = function () {
@@ -9530,6 +9545,14 @@ angular.module("risevision.common.components.plans", [
 
         $rootScope.$on("risevision.company.updated", function () {
           _loadCurrentPlan();
+        });
+
+        $rootScope.$on("chargebee.subscriptionChanged", function () {
+          _reloadCurrentPlan();
+        });
+
+        $rootScope.$on("chargebee.subscriptionCancelled", function () {
+          _reloadCurrentPlan();
         });
 
         return _factory;
