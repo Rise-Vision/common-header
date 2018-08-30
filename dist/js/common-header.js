@@ -9939,6 +9939,11 @@ angular.module("risevision.common.components.plans")
         });
     };
 
+    $scope.showPurchaseModal = function (plan, isMonthly) {
+      purchaseFactory.showPurchaseModal(plan, isMonthly)
+        .then($scope.dismiss);
+    };
+
     $scope.downgradePortal = _showSubscriptionDetails;
 
     $scope.subscribePortal = _showSubscriptionDetails;
@@ -9970,7 +9975,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plans/plans-modal.html',
-    '<div rv-spinner="" rv-spinner-key="plans-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title" translate="">common-header.plans.choose-plan</h3></div><div id="plans-modal" class="modal-body u_padding-lg" stop-event="touchend"><div class="text-center"><div class="btn-group" role="group" aria-label="..."><button ng-click="isMonthly = true" type="button" class="btn btn-default" ng-class="{ active: isMonthly }">Monthly</button> <button ng-click="isMonthly = false" type="button" class="btn btn-default" ng-class="{ active: !isMonthly }">Yearly</button></div><p class="u_padding-sm-vertical">Pay yearly, get one month free!</p></div><div class="pricing-table"><div id="planHeader" class="monthly"><div class="planColumn" ng-class="{ currentPlan: currentPlanLabelVisible(plan) }" ng-repeat="plan in plans"><div id="current-plan" class="currentPlanLabel" ng-show="currentPlanLabelVisible(plan)" translate="">common-header.plans.current</div><h2>{{plan.name}}</h2><h3 class="planColumnPrice" ng-show="!isFree(plan) && !isStarter(plan)"><span>$10</span>${{ isMonthly ? plan.monthly.priceDisplayMonth : plan.yearly.priceDisplayMonth }}</h3><h3 class="planColumnPrice" ng-show="isStarter(plan)">${{ isMonthly ? plan.monthly.priceDisplayMonth : plan.yearly.priceDisplayMonth }}</h3><p ng-show="!isFree(plan) && isMonthly" class="text-muted" translate="" translate-values="{ price: plan.monthly.billAmount }">common-header.plans.perDisplayBilledMonthly</p><p ng-show="!isFree(plan) && !isMonthly" class="text-muted" translate="" translate-values="{ price: plan.yearly.billAmount }">common-header.plans.perDisplayBilledYearly</p><div ng-show="!isFree(plan)"><h3>{{plan.proLicenseCount}}</h3><span ng-show="plan.proLicenseCount === 1" translate="">common-header.plans.displayIncluded</span> <span ng-show="plan.proLicenseCount > 1" translate="">common-header.plans.displaysIncluded</span></div><p ng-show="showSavings(plan)" class="planSavings" translate="" translate-values="{ save: (isMonthly ? plan.monthly.save : plan.yearly.save) }">common-header.plans.saveEachYear</p><p ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan)" translate="">common-header.plans.needMoreDisplays</p><a ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan) && !isChargebee()" href="https://www.risevision.com/purchaseadditionaldisplaylicenses" target="_blank" translate="">common-header.plans.individual-licenses</a><a ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan) && isChargebee()" href="https://www.risevision.com/purchaseadditionaldisplaylicenses" target="_blank" translate="">common-header.plans.individual-licenses</a><p id="trial-days-remaining" class="small u_margin-sm-bottom text-subtle" ng-show="isCurrentPlan(plan) && isOnTrial(plan)" translate="" translate-values="{ count: currentPlan.trialPeriod }">common-header.plans.days-left-trial</p><p class="small u_margin-sm-bottom text-danger" ng-show="isCurrentPlan(plan) && isTrialExpired(plan)" translate="">common-header.plans.trial-expired</p><a id="subscribe-plan" ng-if="!isChargebee()" ng-show="getVisibleAction(plan).indexOf(\'subscribe\') === 0" target="_blank" href="https://store.risevision.com/product/{{plan.productId}}" class="btn btn-primary btn-block" translate="">common-header.plans.subscribe</a><a id="subscribe-plan-cb" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === \'subscribe\'" ng-click="purchaseFactory.showPurchaseModal(plan, isMonthly)" class="btn btn-primary btn-block" translate="">common-header.plans.subscribe</a> <a id="subscribe-plan-cbp" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === \'subscribe-portal\'" target="_blank" href="https://www.risevision.com/downgradeplan" class="btn btn-primary btn-block" translate="">common-header.plans.upgrade</a><a id="downgrade-plan" ng-if="!isChargebee()" ng-show="getVisibleAction(plan).indexOf(\'downgrade\') === 0" target="_blank" href="https://www.risevision.com/downgradeplan" class="btn btn-default btn-block" translate="">common-header.plans.downgrade</a><a id="downgrade-plan-cb" ng-if="isChargebee()" ng-show="getVisibleAction(plan).indexOf(\'downgrade\') === 0" target="_blank" href="https://www.risevision.com/downgradeplan" class="btn btn-default btn-block" translate="">common-header.plans.downgrade</a><a id="start-trial-plan" ng-show="getVisibleAction(plan) === \'start-trial\'" target="_blank" ng-click="startTrial(plan)" class="btn btn-primary btn-block" translate="">common-header.plans.start-trial</a></div></div><div id="planFeatures"><div class="planFeatureColumn" id="planFreeFeatures"><h4 id="planFeatures" class="planFeatureColumnTitle" style="column-span: all;">You can use the following features for free on any of your displays!</h4><div class="planFeature"><p class="featureTitle">Text</p></div><div class="planFeature"><p class="featureTitle">Image by URL</p></div><div class="planFeature"><p class="featureTitle">Video by URL</p></div><div class="planFeature"><p class="featureTitle">RSS</p></div><div class="planFeature"><p class="featureTitle">Time & Date</p></div><div class="planFeature"><p class="featureTitle">HTML</p></div></div><div class="planFeatureColumn" id="planPaidFeatures"><h4 class="planFeatureColumnTitle" style="column-span: all;">Key Features Included With All Paid Plans <span class="u_padding-sm-vertical">Everything in \'Free\' +</span></h4><div class="planFeature"><p class="featureTitle">Image Slideshows</p></div><div class="planFeature"><p class="featureTitle">Video Playlists</p></div><div class="planFeature"><p class="featureTitle">Unlimited Image & Video File Storage</p></div><div class="planFeature"><p class="featureTitle">Pre-made Templates</p></div><div class="planFeature"><p class="featureTitle">Centralized Content Control</p></div><div class="planFeature"><p class="featureTitle">Scheduling</p></div><div class="planFeature"><p class="featureTitle">Google Calendar</p></div><div class="planFeature"><p class="featureTitle">Google Spreadsheet</p></div><div class="planFeature"><p class="featureTitle">Twitter</p></div><div class="planFeature"><p class="featureTitle">Web Pages</p></div><div class="planFeature"><p class="featureTitle">Google Reliability & Security</p></div><div class="planFeature"><p class="featureTitle">Account / Sub-Account Hierarchy</p></div><div class="planFeature"><p class="featureTitle">User Role Permissioning</p></div><div class="planFeature"><p class="featureTitle">Display Monitoring Notifications</p></div><div class="planFeature"><p class="featureTitle">Content Shows Offline</p></div><div class="planFeature"><p class="featureTitle">Alert Integration</p></div><div class="planFeature"><p class="featureTitle">Display On/Off Control</p></div><h4 class="text-center" style="column-span: all;"><a href="https://www.risevision.com/pricing" target="_blank">Learn More About Key Features</a></h4></div></div><div id="planFooter"></div></div><div class="text-center u_padding-sm-vertical"><h3><a href="https://www.risevision.com/contact-us" target="_blank">Questions? We can help!</a></h3><h3><a href="https://www.risevision.com/licensesubcompany" target="_blank">Need to license your Sub-Company?</a></h3></div></div><div class="modal-footer"></div></div>');
+    '<div rv-spinner="" rv-spinner-key="plans-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title" translate="">common-header.plans.choose-plan</h3></div><div id="plans-modal" class="modal-body u_padding-lg" stop-event="touchend"><div class="text-center"><div class="btn-group" role="group" aria-label="..."><button ng-click="isMonthly = true" type="button" class="btn btn-default" ng-class="{ active: isMonthly }">Monthly</button> <button ng-click="isMonthly = false" type="button" class="btn btn-default" ng-class="{ active: !isMonthly }">Yearly</button></div><p class="u_padding-sm-vertical">Pay yearly, get one month free!</p></div><div class="pricing-table"><div id="planHeader" class="monthly"><div class="planColumn" ng-class="{ currentPlan: currentPlanLabelVisible(plan) }" ng-repeat="plan in plans"><div id="current-plan" class="currentPlanLabel" ng-show="currentPlanLabelVisible(plan)" translate="">common-header.plans.current</div><h2>{{plan.name}}</h2><h3 class="planColumnPrice" ng-show="!isFree(plan) && !isStarter(plan)"><span>$10</span>${{ isMonthly ? plan.monthly.priceDisplayMonth : plan.yearly.priceDisplayMonth }}</h3><h3 class="planColumnPrice" ng-show="isStarter(plan)">${{ isMonthly ? plan.monthly.priceDisplayMonth : plan.yearly.priceDisplayMonth }}</h3><p ng-show="!isFree(plan) && isMonthly" class="text-muted" translate="" translate-values="{ price: plan.monthly.billAmount }">common-header.plans.perDisplayBilledMonthly</p><p ng-show="!isFree(plan) && !isMonthly" class="text-muted" translate="" translate-values="{ price: plan.yearly.billAmount }">common-header.plans.perDisplayBilledYearly</p><div ng-show="!isFree(plan)"><h3>{{plan.proLicenseCount}}</h3><span ng-show="plan.proLicenseCount === 1" translate="">common-header.plans.displayIncluded</span> <span ng-show="plan.proLicenseCount > 1" translate="">common-header.plans.displaysIncluded</span></div><p ng-show="showSavings(plan)" class="planSavings" translate="" translate-values="{ save: (isMonthly ? plan.monthly.save : plan.yearly.save) }">common-header.plans.saveEachYear</p><p ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan)" translate="">common-header.plans.needMoreDisplays</p><a ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan) && !isChargebee()" href="https://www.risevision.com/purchaseadditionaldisplaylicenses" target="_blank" translate="">common-header.plans.individual-licenses</a><a ng-show="!isFree(plan) && isCurrentPlanSubscribed(plan) && isChargebee()" href="https://www.risevision.com/purchaseadditionaldisplaylicenses" target="_blank" translate="">common-header.plans.individual-licenses</a><p id="trial-days-remaining" class="small u_margin-sm-bottom text-subtle" ng-show="isCurrentPlan(plan) && isOnTrial(plan)" translate="" translate-values="{ count: currentPlan.trialPeriod }">common-header.plans.days-left-trial</p><p class="small u_margin-sm-bottom text-danger" ng-show="isCurrentPlan(plan) && isTrialExpired(plan)" translate="">common-header.plans.trial-expired</p><a id="subscribe-plan" ng-if="!isChargebee()" ng-show="getVisibleAction(plan).indexOf(\'subscribe\') === 0" target="_blank" href="https://store.risevision.com/product/{{plan.productId}}" class="btn btn-primary btn-block" translate="">common-header.plans.subscribe</a><a id="subscribe-plan-cb" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === \'subscribe\'" ng-click="showPurchaseModal(plan, isMonthly)" class="btn btn-primary btn-block" translate="">common-header.plans.subscribe</a> <a id="subscribe-plan-cbp" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === \'subscribe-portal\'" target="_blank" href="https://www.risevision.com/downgradeplan" class="btn btn-primary btn-block" translate="">common-header.plans.upgrade</a><a id="downgrade-plan" ng-if="!isChargebee()" ng-show="getVisibleAction(plan).indexOf(\'downgrade\') === 0" target="_blank" href="https://www.risevision.com/downgradeplan" class="btn btn-default btn-block" translate="">common-header.plans.downgrade</a><a id="downgrade-plan-cb" ng-if="isChargebee()" ng-show="getVisibleAction(plan).indexOf(\'downgrade\') === 0" target="_blank" href="https://www.risevision.com/downgradeplan" class="btn btn-default btn-block" translate="">common-header.plans.downgrade</a><a id="start-trial-plan" ng-show="getVisibleAction(plan) === \'start-trial\'" target="_blank" ng-click="startTrial(plan)" class="btn btn-primary btn-block" translate="">common-header.plans.start-trial</a></div></div><div id="planFeatures"><div class="planFeatureColumn" id="planFreeFeatures"><h4 id="planFeatures" class="planFeatureColumnTitle" style="column-span: all;">You can use the following features for free on any of your displays!</h4><div class="planFeature"><p class="featureTitle">Text</p></div><div class="planFeature"><p class="featureTitle">Image by URL</p></div><div class="planFeature"><p class="featureTitle">Video by URL</p></div><div class="planFeature"><p class="featureTitle">RSS</p></div><div class="planFeature"><p class="featureTitle">Time & Date</p></div><div class="planFeature"><p class="featureTitle">HTML</p></div></div><div class="planFeatureColumn" id="planPaidFeatures"><h4 class="planFeatureColumnTitle" style="column-span: all;">Key Features Included With All Paid Plans <span class="u_padding-sm-vertical">Everything in \'Free\' +</span></h4><div class="planFeature"><p class="featureTitle">Image Slideshows</p></div><div class="planFeature"><p class="featureTitle">Video Playlists</p></div><div class="planFeature"><p class="featureTitle">Unlimited Image & Video File Storage</p></div><div class="planFeature"><p class="featureTitle">Pre-made Templates</p></div><div class="planFeature"><p class="featureTitle">Centralized Content Control</p></div><div class="planFeature"><p class="featureTitle">Scheduling</p></div><div class="planFeature"><p class="featureTitle">Google Calendar</p></div><div class="planFeature"><p class="featureTitle">Google Spreadsheet</p></div><div class="planFeature"><p class="featureTitle">Twitter</p></div><div class="planFeature"><p class="featureTitle">Web Pages</p></div><div class="planFeature"><p class="featureTitle">Google Reliability & Security</p></div><div class="planFeature"><p class="featureTitle">Account / Sub-Account Hierarchy</p></div><div class="planFeature"><p class="featureTitle">User Role Permissioning</p></div><div class="planFeature"><p class="featureTitle">Display Monitoring Notifications</p></div><div class="planFeature"><p class="featureTitle">Content Shows Offline</p></div><div class="planFeature"><p class="featureTitle">Alert Integration</p></div><div class="planFeature"><p class="featureTitle">Display On/Off Control</p></div><h4 class="text-center" style="column-span: all;"><a href="https://www.risevision.com/pricing" target="_blank">Learn More About Key Features</a></h4></div></div><div id="planFooter"></div></div><div class="text-center u_padding-sm-vertical"><h3><a href="https://www.risevision.com/contact-us" target="_blank">Questions? We can help!</a></h3><h3><a href="https://www.risevision.com/licensesubcompany" target="_blank">Need to license your Sub-Company?</a></h3></div></div><div class="modal-footer"></div></div>');
 }]);
 })();
 
@@ -10247,10 +10252,10 @@ angular.module("risevision.common.components.purchase-flow")
   "use strict";
   angular.module("risevision.common.components.purchase-flow")
     .constant("RPP_ADDON_ID", "c4b368be86245bf9501baaa6e0b00df9719869fd")
-    .factory("purchaseFactory", ["$q", "$modal", "$templateCache", "userState", "storeService",
-      "stripeService", "addressService", "contactService", "RPP_ADDON_ID",
-      function ($q, $modal, $templateCache, userState, storeService, stripeService, addressService,
-        contactService, RPP_ADDON_ID) {
+    .factory("purchaseFactory", ["$rootScope", "$q", "$log", "$modal", "$templateCache", "$timeout",
+      "userState", "storeService", "stripeService", "addressService", "contactService", "RPP_ADDON_ID",
+      function ($rootScope, $q, $log, $modal, $templateCache, $timeout, userState,
+        storeService, stripeService, addressService, contactService, RPP_ADDON_ID) {
         var factory = {};
 
         // Stop spinner - workaround for spinner not rendering
@@ -10287,12 +10292,14 @@ angular.module("risevision.common.components.purchase-flow")
         factory.showPurchaseModal = function (plan, isMonthly) {
           _init(plan, isMonthly);
 
-          $modal.open({
+          var modalInstance = $modal.open({
             template: $templateCache.get("purchase-flow/purchase-modal.html"),
             controller: "PurchaseModalCtrl",
             size: "md",
             backdrop: "static"
           });
+
+          return modalInstance.result;
         };
 
         var _validateCard = function (card, isNew) {
@@ -10424,6 +10431,23 @@ angular.module("risevision.common.components.purchase-flow")
           factory.loading = true;
 
           return storeService.purchase(jsonData)
+            .then(function () {
+              factory.purchase.reloadingCompany = true;
+
+              $timeout(10000)
+                .then(function () {
+                  return userState.reloadSelectedCompany();
+                })
+                .then(function () {
+                  $rootScope.$emit("risevision.company.trial.started");
+                })
+                .catch(function (err) {
+                  $log.debug("Failed to reload company", err);
+                })
+                .finally(function () {
+                  factory.purchase.reloadingCompany = false;
+                });
+            })
             .catch(function (result) {
               factory.purchase.checkoutError = result && result.message ? result.message :
                 "There was an unknown error with the payment.";
@@ -10932,6 +10956,22 @@ angular.module("risevision.common.components.purchase-flow")
       $scope.currentStep = index;
     };
 
+    $scope.close = function () {
+      if (!purchaseFactory.purchase.reloadingCompany) {
+        $modalInstance.close("success");
+      } else {
+        purchaseFactory.loading = true;
+
+        $scope.$watch("factory.purchase.reloadingCompany", function (loading) {
+          if (!loading) {
+            purchaseFactory.loading = false;
+
+            $modalInstance.close("success");
+          }
+        });
+      }
+    };
+
     $scope.dismiss = function () {
       $modalInstance.dismiss("cancel");
     };
@@ -11071,7 +11111,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/checkout-success.html',
-    '<div id="checkout-success"><h3 class="text-center u_margin-md-top">Payment Successful</h3><div class="text-center u_padding-md"><img src="https://s3.amazonaws.com/Rise-Images/Icons/online.svg" width="72px" alt="Payment Successful"><br><br><p>Your payment to Rise Vision was successful. You can keep track of your billing information in the <a ui-sref="apps.billing.home">Billing</a> section of your account.</p><br></div><hr><div class="row"><div class="col-xs-12 text-center"><button id="doneButton" class="btn btn-default" ng-click="dismiss()" aria-label="Done" tabindex="1">Done</button></div></div></div>');
+    '<div id="checkout-success"><h3 class="text-center u_margin-md-top">Payment Successful</h3><div class="text-center u_padding-md"><img src="https://s3.amazonaws.com/Rise-Images/Icons/online.svg" width="72px" alt="Payment Successful"><br><br><p>Your payment to Rise Vision was successful. You can keep track of your billing information in the <a ui-sref="apps.billing.home">Billing</a> section of your account.</p><br></div><hr><div class="row"><div class="col-xs-12 text-center"><button id="doneButton" class="btn btn-default" ng-click="close()" aria-label="Done" tabindex="1">Done</button></div></div></div>');
 }]);
 })();
 
@@ -11083,7 +11123,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/purchase-modal.html',
-    '<div rv-spinner="" rv-spinner-key="purchase-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-label="close" tabindex="2"><i class="fa fa-times"></i></button><h3 class="modal-title" translate="">Checkout</h3></div><div class="steps"><div ng-repeat="step in PURCHASE_STEPS" class="step-item" ng-class="{ active: currentStep === step.index, complete: currentStep > step.index }"><span>{{step.name}}</span></div></div><div id="purchase-modal" class="modal-body checkout-modal" stop-event="touchend"><review-subscription ng-if="currentStep === 0"></review-subscription><billing-address ng-if="currentStep === 1"></billing-address><shipping-address ng-if="currentStep === 2"></shipping-address><payment-methods ng-if="currentStep === 3"></payment-methods><review-purchase ng-if="currentStep === 4"></review-purchase><checkout-success ng-if="currentStep === 5"></checkout-success><div ng-include="\'purchase-flow/tax-exemption.html\'" ng-if="false"></div></div><div id="security-branding" class="modal-footer text-center" ng-show="currentStep > 2 && currentStep < 5"><span class="text-muted"><i class="fa fa-lock icon-left"></i> Secure Checkout from ChargeBee and <img alt="powered by Stripe" height="16" src="https://s3.amazonaws.com/Rise-Images/UI/powered_by_stripe.svg"></span></div></div>');
+    '<div rv-spinner="" rv-spinner-key="purchase-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-label="close" tabindex="2" ng-hide="currentStep === 5"><i class="fa fa-times"></i></button><h3 class="modal-title" translate="">Checkout</h3></div><div class="steps"><div ng-repeat="step in PURCHASE_STEPS" class="step-item" ng-class="{ active: currentStep === step.index, complete: currentStep > step.index }"><span>{{step.name}}</span></div></div><div id="purchase-modal" class="modal-body checkout-modal" stop-event="touchend"><review-subscription ng-if="currentStep === 0"></review-subscription><billing-address ng-if="currentStep === 1"></billing-address><shipping-address ng-if="currentStep === 2"></shipping-address><payment-methods ng-if="currentStep === 3"></payment-methods><review-purchase ng-if="currentStep === 4"></review-purchase><checkout-success ng-if="currentStep === 5"></checkout-success><div ng-include="\'purchase-flow/tax-exemption.html\'" ng-if="false"></div></div><div id="security-branding" class="modal-footer text-center" ng-show="currentStep > 2 && currentStep < 5"><span class="text-muted"><i class="fa fa-lock icon-left"></i> Secure Checkout from ChargeBee and <img alt="powered by Stripe" height="16" src="https://s3.amazonaws.com/Rise-Images/UI/powered_by_stripe.svg"></span></div></div>');
 }]);
 })();
 

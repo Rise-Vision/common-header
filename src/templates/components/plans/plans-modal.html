@@ -73,14 +73,14 @@
               class="btn btn-primary btn-block" translate>common-header.plans.subscribe</a>
 <!-- Remove after discussion with Chargebee gives us a definitive solution -->
           <a id="subscribe-plan-cb" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'subscribe'"
-              ng-click="purchaseFactory.showPurchaseModal(plan, isMonthly)"
+              ng-click="showPurchaseModal(plan, isMonthly)"
               class="btn btn-primary btn-block" translate>common-header.plans.subscribe</a>
           <a id="subscribe-plan-cbp" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'subscribe-portal'"
               target="_blank" href="https://www.risevision.com/downgradeplan"
               class="btn btn-primary btn-block" translate>common-header.plans.upgrade</a>
 <!-- Restore after discussion with Chargebee
           <a id="old-subscribe-plan-cb" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'subscribe'"
-              ng-click="purchaseFactory.showPurchaseModal(plan, isMonthly)"
+              ng-click="showPurchaseModal(plan, isMonthly)"
               class="btn btn-primary btn-block" translate>common-header.plans.subscribe</a>
           <a id="old-subscribe-plan-cbp" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'subscribe-portal'"
               ng-click="subscribePortal(plan)"
@@ -96,7 +96,7 @@
               class="btn btn-default btn-block" translate>common-header.plans.downgrade</a>
 <!-- Restore after discussion with Chargebee
           <a id="old-downgrade-plan-cbt" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'downgrade'"
-              ng-click="purchaseFactory.showPurchaseModal(plan, isMonthly)"
+              ng-click="showPurchaseModal(plan, isMonthly)"
               class="btn btn-default btn-block" translate>common-header.plans.downgrade</a>
           <a id="old-downgrade-plan-cb" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'downgrade-portal'"
               ng-click="downgradePortal(plan)"
