@@ -185,7 +185,7 @@
             .then(function () {
               factory.purchase.reloadingCompany = true;
 
-              $timeout(5000)
+              $timeout(10000)
                 .then(function () {
                   return userState.reloadSelectedCompany();
                 })

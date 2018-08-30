@@ -578,7 +578,7 @@ describe("Services: purchase factory", function() {
         expect(purchaseFactory.purchase.reloadingCompany).to.be.true;
         userState.reloadSelectedCompany.should.not.have.been.called;
 
-        $timeout.flush(5000);
+        $timeout.flush(10000);
         setTimeout(function() {
           userState.reloadSelectedCompany.should.have.been.called;
 
@@ -602,7 +602,7 @@ describe("Services: purchase factory", function() {
         userState.reloadSelectedCompany.should.not.have.been.called;
 
         validate = false;
-        $timeout.flush(5000);
+        $timeout.flush(10000);
         setTimeout(function() {
           userState.reloadSelectedCompany.should.have.been.called;
 
