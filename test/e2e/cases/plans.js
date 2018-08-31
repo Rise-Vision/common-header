@@ -49,9 +49,21 @@
           helper.wait(plansModalPage.getTrialDaysRemaining("basic"), "Basic Plan Trial");
         });
 
-        it("should show Free plan (Downgrade)", function () {
+        xit("should show Free plan (Downgrade)", function () {
           expect(plansModalPage.getCurrentPlanButton("free").isDisplayed()).to.eventually.be.false;
           expect(plansModalPage.getSubscribePlanButton("free").isDisplayed()).to.eventually.be.false;
+          expect(plansModalPage.getDowngradePlanButton("free").isDisplayed()).to.eventually.be.true;
+        });
+
+        it("should show Free plan (Downgrade) - 1", function () {
+          expect(plansModalPage.getCurrentPlanButton("free").isDisplayed()).to.eventually.be.false;
+        });
+
+        it("should show Free plan (Downgrade) - 2", function () {
+          expect(plansModalPage.getSubscribePlanButton("free").isDisplayed()).to.eventually.be.false;
+        });
+
+        it("should show Free plan (Downgrade) - 3", function () {
           expect(plansModalPage.getDowngradePlanButton("free").isDisplayed()).to.eventually.be.true;
         });
 
