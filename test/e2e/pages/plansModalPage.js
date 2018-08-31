@@ -25,7 +25,9 @@
     };
 
     this.getDowngradePlanButton = function(plan) {
-      return getButtonByPlan("downgrade-plan-cb", plan);
+      var selector = (plan === "free") ? "downgrade-plan-cbp" : "downgrade-plan-cb";
+
+      return getButtonByPlan(selector, plan);
     };
 
     this.getStartTrialPlanButton = function(plan) {
