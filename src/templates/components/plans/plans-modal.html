@@ -74,10 +74,10 @@
           <a id="downgrade-plan" ng-if="!isChargebee()" ng-show="getVisibleAction(plan).indexOf('downgrade') === 0"
               target="_blank" href="https://www.risevision.com/downgradeplan"
               class="btn btn-default btn-block" translate>common-header.plans.downgrade</a>
-          <a id="downgrade-plan-cbt" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'downgrade'"
+          <a id="downgrade-plan-cb" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'downgrade'"
               ng-click="showPurchaseModal(plan, isMonthly)"
               class="btn btn-default btn-block" translate>common-header.plans.downgrade</a>
-          <a id="downgrade-plan-cb" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'downgrade-portal'"
+          <a id="downgrade-plan-cbp" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'downgrade-portal'"
               ng-click="downgradePortal(plan)"
               class="btn btn-default btn-block" translate>common-header.plans.downgrade</a>
           <a id="start-trial-plan" ng-show="getVisibleAction(plan) === 'start-trial'"
