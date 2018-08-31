@@ -46,7 +46,8 @@ describe("controller: purchase modal", function() {
           } else {
             return Q.reject();
           }          
-        })
+        }),
+        purchase: {}
       };
     });
   }));
@@ -201,7 +202,6 @@ describe("controller: purchase modal", function() {
     });
 
     it("should complete payment and proceed to next step", function(done) {
-      purchaseFactory.purchase = {};
       $scope.completePayment({});
 
       purchaseFactory.completePayment.should.have.been.called;
@@ -214,9 +214,7 @@ describe("controller: purchase modal", function() {
     });
 
     it("should not proceed if there are errors", function(done) {
-      purchaseFactory.purchase = {
-        checkoutError: "error"
-      };
+      purchaseFactory.purchase.checkoutError = "error";
       $scope.completePayment({});
 
       setTimeout(function() {
@@ -330,16 +328,15 @@ describe("controller: purchase modal", function() {
   });
 
   it("setCurrentStep: ", function() {
+    purchaseFactory.purchase.checkoutError = "error";
+
     $scope.setCurrentStep(2);
 
     expect($scope.currentStep).to.equal(2);
+    expect(purchaseFactory.purchase.checkoutError).to.not.be.ok;
   });
 
   describe("dismiss: ", function() {
-    beforeEach(function() {
-      purchaseFactory.purchase = {};
-    });
-
     it("should close modal", function() {
       $scope.close();
 

@@ -972,6 +972,8 @@ angular.module("risevision.common.components.purchase-flow")
     };
 
     $scope.setCurrentStep = function (index) {
+      purchaseFactory.purchase.checkoutError = null;
+
       $scope.currentStep = index;
     };
 

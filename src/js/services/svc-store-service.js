@@ -63,6 +63,8 @@
                   $log.debug("tax estimate resp", resp);
                   deferred.resolve(resp.result);
                 } else {
+                  console.error("Failed to get tax estimate.", resp.result);
+
                   deferred.reject(resp.result);
                 }
               })
