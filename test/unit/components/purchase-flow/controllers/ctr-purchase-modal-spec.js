@@ -15,6 +15,16 @@ describe("controller: purchase modal", function() {
         stop: sinon.stub()
       };
     });
+    $provide.service("userState", function() {
+      return {
+        inRVAFrame: sinon.stub()
+      };
+    });
+    $provide.service("segmentAnalytics", function() {
+      return {
+        track: sinon.stub()
+      };
+    });
     $provide.service("addressFactory", function() {
       return addressFactory = {
         validateAddress: function(addressObject) {
@@ -52,7 +62,7 @@ describe("controller: purchase modal", function() {
     });
   }));
 
-  var sandbox, $scope, $modalInstance, $loading, validate, purchaseFactory, addressFactory;
+  var sandbox, $scope, $modalInstance, $loading, validate, purchaseFactory, addressFactory, segmentAnalytics;
 
   beforeEach(function() {
     validate = true;
@@ -62,6 +72,7 @@ describe("controller: purchase modal", function() {
       $scope = $rootScope.$new();
       $modalInstance = $injector.get("$modalInstance");
       $loading = $injector.get("$loading");
+      segmentAnalytics = $injector.get("segmentAnalytics");
 
       $controller("PurchaseModalCtrl", {
         $scope: $scope,
@@ -102,6 +113,7 @@ describe("controller: purchase modal", function() {
       $scope.$digest();
 
       $loading.start.should.have.been.calledWith("purchase-modal");
+      segmentAnalytics.track.should.have.been.called;
 
       purchaseFactory.loading = false;
       $scope.$digest();
@@ -207,6 +219,7 @@ describe("controller: purchase modal", function() {
       purchaseFactory.completePayment.should.have.been.called;
 
       setTimeout(function() {
+        segmentAnalytics.track.should.have.been.called;
         $scope.setNextStep.should.have.been.called;
 
         done();
@@ -291,6 +304,7 @@ describe("controller: purchase modal", function() {
         $scope.setNextStep();
 
         purchaseFactory.getEstimate.should.have.been.calledTwice;
+        segmentAnalytics.track.should.have.been.called;
 
         expect($scope.currentStep).to.equal(4);
         expect($scope.finalStep).to.be.true;

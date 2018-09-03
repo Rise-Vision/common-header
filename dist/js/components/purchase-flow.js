@@ -882,9 +882,9 @@ angular.module("risevision.common.components.purchase-flow")
 }])
 
 .controller("PurchaseModalCtrl", [
-  "$scope", "$modalInstance", "$loading", "purchaseFactory", "addressFactory",
+  "$scope", "$modalInstance", "$loading", "userState", "purchaseFactory", "addressFactory", "segmentAnalytics",
   "PURCHASE_STEPS",
-  function ($scope, $modalInstance, $loading, purchaseFactory, addressFactory,
+  function ($scope, $modalInstance, $loading, userState, purchaseFactory, addressFactory, segmentAnalytics,
     PURCHASE_STEPS) {
 
     $scope.form = {};
@@ -897,10 +897,50 @@ angular.module("risevision.common.components.purchase-flow")
     $scope.$watch("factory.loading", function (loading) {
       if (loading) {
         $loading.start("purchase-modal");
+        _trackProductAdded();
       } else {
         $loading.stop("purchase-modal");
       }
     });
+
+    function _trackProductAdded() {
+      var plan = purchaseFactory.purchase.plan || {
+        yearly: {}
+      };
+
+      segmentAnalytics.track("Product Added", {
+        id: plan.productCode,
+        name: plan.name,
+        price: plan.isMonthly ? plan.monthly.billAmount : plan.yearly.billAmount,
+        quantity: 1,
+        category: "Plans",
+        inApp: userState.inRVAFrame()
+      });
+    }
+
+    function _trackPlaceOrderClicked() {
+      var estimate = purchaseFactory.purchase.estimate || {};
+
+      if (!estimate.estimateError) {
+        segmentAnalytics.track("Place Order Clicked", {
+          amount: estimate.total,
+          currency: estimate.currency,
+          inApp: userState.inRVAFrame()
+        });
+      }
+    }
+
+    function _trackOrderPayNowClicked() {
+      var estimate = purchaseFactory.purchase.estimate || {};
+
+      if (!estimate.estimateError) {
+        segmentAnalytics.track("Order Pay Now Clicked", {
+          amount: estimate.total,
+          currency: estimate.currency,
+          inApp: userState.inRVAFrame()
+        });
+      }
+    }
 
     var _isFormValid = function () {
       var step = PURCHASE_STEPS[$scope.currentStep];
@@ -943,6 +983,7 @@ angular.module("risevision.common.components.purchase-flow")
       purchaseFactory.completePayment()
         .then(function () {
           if (!purchaseFactory.purchase.checkoutError) {
+            _trackOrderPayNowClicked();
             $scope.setNextStep();
           }
         });
@@ -958,7 +999,10 @@ angular.module("risevision.common.components.purchase-flow")
 
         $scope.finalStep = true;
 
-        purchaseFactory.getEstimate();
+        purchaseFactory.getEstimate()
+          .then(function () {
+            _trackPlaceOrderClicked();
+          });
       } else {
         $scope.currentStep++;
       }
