@@ -35,6 +35,10 @@
             }
           };
 
+          var invoiceDate = new Date();
+          invoiceDate.setDate(invoiceDate.getDate() + 30);
+          factory.purchase.paymentMethods.invoiceDate = invoiceDate;
+
           // Alpha Release - Select New Card by default
           factory.purchase.paymentMethods.selectedCard = factory.purchase.paymentMethods.newCreditCard;
           factory.purchase.estimate = {};
@@ -163,7 +167,7 @@
           }];
 
           var card = factory.purchase.paymentMethods.selectedCard;
-          var cardData = factory.purchase.paymentMethods.isOnAccount ? null : {
+          var cardData = factory.purchase.paymentMethods.paymentMethod === "invoice" ? null : {
             cardId: card.id,
             isDefault: card.isDefault ? true : false
           };

@@ -31,9 +31,18 @@
         Payment Method
         <button aria-label="Edit Payment Method" class="btn btn-default btn-xs" ng-click="setCurrentStep(3)" tabindex="1">Edit</button>
       </h4>
+      <div ng-show="purchase.paymentMethods.paymentMethod === 'card'">
         <span class="font-weight-bold">{{purchase.paymentMethods.selectedCard.cardType}}</span>
         <br>{{purchase.paymentMethods.selectedCard.last4 | cardLastFour}}
         <br>Exp: {{purchase.paymentMethods.selectedCard.expMonth | paddedMonth}}/{{purchase.paymentMethods.selectedCard.expYear}}
+      </div>
+      <div ng-show="purchase.paymentMethods.paymentMethod === 'invoice'">
+        <span class="font-weight-bold">Paying by Invoice</span>
+        <br>Due Date: {{purchase.paymentMethods.invoiceDate | date: 'd-MMM-yyyy'}}
+        <span ng-if="purchase.paymentMethods.purchaseOrderNumber">
+          <br>Purchase Order Number: {{purchase.paymentMethods.purchaseOrderNumber}}
+        </span>
+      </div>
     </div>
   </div>
   <div class="row">
@@ -46,7 +55,10 @@
         {{purchase.contact.email}}<br>
         {{purchase.billingAddress.name}}<br>
         {{purchase.billingAddress.street}}<br> 
-        <span ng-show="purchase.billingAddress.unit">{{purchase.billingAddress.unit}}</span>
+        <span ng-show="purchase.billingAddress.unit">
+          {{purchase.billingAddress.unit}}
+          <br>
+        </span>
         {{purchase.billingAddress.city}}, <span ng-show="purchase.billingAddress.province">{{purchase.billingAddress.province}},</span> {{purchase.billingAddress.postalCode}}<br> 
         {{purchase.billingAddress.country | countryName}}
     </div>
@@ -57,7 +69,10 @@
       </h4>
         {{purchase.shippingAddress.name}}<br>
         {{purchase.shippingAddress.street}}<br> 
-        <span ng-show="purchase.shippingAddress.unit">{{purchase.shippingAddress.unit}}</span>
+        <span ng-show="purchase.shippingAddress.unit">
+          {{purchase.shippingAddress.unit}}
+          <br>
+        </span>
         {{purchase.shippingAddress.city}}, <span ng-show="purchase.shippingAddress.province">{{purchase.shippingAddress.province}},</span> {{purchase.shippingAddress.postalCode}}<br> 
         {{purchase.shippingAddress.country | countryName}}
     </div>
@@ -108,7 +123,8 @@
   <div class="row">
     <div class="col-xs-8 col-xs-offset-2 u_margin-md-bottom">
       <button id="payButton" class="btn btn-primary btn-hg btn-block" ng-click="completePayment()" tabindex="1" aria-label="Complete Payment">
-        <span id="payLabel">Pay ${{purchase.estimate.total | number:2}} Now</span>
+        <span id="payLabel" ng-if="purchase.paymentMethods.paymentMethod === 'card'">Pay ${{purchase.estimate.total | number:2}} Now</span>
+        <span id="invoiceLabel" ng-if="purchase.paymentMethods.paymentMethod === 'invoice'">Invoice Me ${{purchase.estimate.total | number:2}} Now</span>
       </button>
     </div>
   </div>

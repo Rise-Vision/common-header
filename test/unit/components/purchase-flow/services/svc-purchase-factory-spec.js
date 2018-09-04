@@ -190,6 +190,16 @@ describe("Services: purchase factory", function() {
 
       expect(purchaseFactory.purchase.estimate).to.deep.equal({});
     });
+
+    it("should initialize invoice due date 30 days from now", function() {
+      var newDate = new Date();
+      var plan = { name: "PlanA"};
+      purchaseFactory.showPurchaseModal(plan, true);
+
+      expect(purchaseFactory.purchase.paymentMethods.invoiceDate).to.be.ok;
+      expect(purchaseFactory.purchase.paymentMethods.invoiceDate).to.be.a("date");
+      expect(purchaseFactory.purchase.paymentMethods.invoiceDate - newDate).to.equal(30 * 24 * 60 * 60 * 1000);
+    });
   });
 
   describe("validatePaymentMethod: ", function() {
@@ -563,7 +573,7 @@ describe("Services: purchase factory", function() {
     });
 
     it("should not add card for onAccount", function() {
-      purchaseFactory.purchase.paymentMethods.isOnAccount = true;
+      purchaseFactory.purchase.paymentMethods.paymentMethod = "invoice";
       purchaseFactory.completePayment();
 
       expect(storeService.purchase.getCall(0).args[0]).to.contain("\"card\":null");

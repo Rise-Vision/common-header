@@ -6,7 +6,10 @@ describe("directive: payment methods", function() {
   beforeEach(module(function ($provide) {
     $provide.value("purchaseFactory", {
       purchase: {
-        paymentMethods: "paymentMethods"
+        paymentMethods: "paymentMethods",
+        contact: {
+          email: "contactEmail"
+        }
       }
     });
   }));
@@ -28,6 +31,7 @@ describe("directive: payment methods", function() {
     expect($scope).to.be.an("object");
 
     expect($scope.paymentMethods).to.equal("paymentMethods");
+    expect($scope.contactEmail).to.equal("contactEmail");
 
     expect($scope.getCardDescription).to.be.a("function");
   });
