@@ -82,8 +82,8 @@ describe("Services: purchase factory", function() {
         })
       };
     });
-    $provide.service("trackEvents", function() {
-      return trackEvents = {
+    $provide.service("purchaseFlowTracker", function() {
+      return purchaseFlowTracker = {
         trackProductAdded: sinon.stub(),
         trackPlaceOrderClicked: sinon.stub(),
         trackOrderPayNowClicked: sinon.stub()
@@ -92,7 +92,7 @@ describe("Services: purchase factory", function() {
 
   }));
 
-  var $rootScope, $modal, $timeout, purchaseFactory, userState, stripeService, storeService, trackEvents, validate, RPP_ADDON_ID;
+  var $rootScope, $modal, $timeout, purchaseFactory, userState, stripeService, storeService, purchaseFlowTracker, validate, RPP_ADDON_ID;
 
   beforeEach(function() {
     inject(function($injector) {
@@ -127,7 +127,7 @@ describe("Services: purchase factory", function() {
         size: "md",
         backdrop: "static"
       });
-      expect(trackEvents.trackProductAdded).to.have.been.called;
+      expect(purchaseFlowTracker.trackProductAdded).to.have.been.called;
     });
 
     it("should return modal result", function() {
@@ -435,7 +435,7 @@ describe("Services: purchase factory", function() {
           totalTax: "totalTax",
           shippingTotal: "shippingTotal"
         });
-        expect(trackEvents.trackPlaceOrderClicked).to.have.been.called;
+        expect(purchaseFlowTracker.trackPlaceOrderClicked).to.have.been.called;
 
         done();
       })
@@ -573,7 +573,7 @@ describe("Services: purchase factory", function() {
       purchaseFactory.completePayment()
       .then(function() {
         expect(purchaseFactory.purchase.checkoutError).to.not.be.ok;
-        expect(trackEvents.trackOrderPayNowClicked).to.have.been.called;
+        expect(purchaseFlowTracker.trackOrderPayNowClicked).to.have.been.called;
 
         done();
       })

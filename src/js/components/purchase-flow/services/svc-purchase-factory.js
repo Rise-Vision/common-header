@@ -4,10 +4,10 @@
   angular.module("risevision.common.components.purchase-flow")
     .constant("RPP_ADDON_ID", "c4b368be86245bf9501baaa6e0b00df9719869fd")
     .factory("purchaseFactory", ["$rootScope", "$q", "$log", "$modal", "$templateCache", "$timeout",
-      "userState", "storeService", "stripeService", "addressService", "contactService", "trackEvents",
+      "userState", "storeService", "stripeService", "addressService", "contactService", "purchaseFlowTracker",
       "RPP_ADDON_ID",
       function ($rootScope, $q, $log, $modal, $templateCache, $timeout, userState,
-        storeService, stripeService, addressService, contactService, trackEvents, RPP_ADDON_ID) {
+        storeService, stripeService, addressService, contactService, purchaseFlowTracker, RPP_ADDON_ID) {
         var factory = {};
 
         // Stop spinner - workaround for spinner not rendering
@@ -39,7 +39,7 @@
           factory.purchase.paymentMethods.selectedCard = factory.purchase.paymentMethods.newCreditCard;
           factory.purchase.estimate = {};
 
-          trackEvents.trackProductAdded(factory.purchase.plan);
+          purchaseFlowTracker.trackProductAdded(factory.purchase.plan);
         };
 
         factory.showPurchaseModal = function (plan, isMonthly) {
@@ -142,7 +142,7 @@
               estimate.totalTax = result.totalTax;
               estimate.shippingTotal = result.shippingTotal;
 
-              trackEvents.trackPlaceOrderClicked(estimate);
+              purchaseFlowTracker.trackPlaceOrderClicked(estimate);
             })
             .catch(function (result) {
               factory.purchase.estimate.estimateError = (result && result.error) ||
@@ -189,7 +189,7 @@
             .then(function () {
               factory.purchase.reloadingCompany = true;
 
-              trackEvents.trackOrderPayNowClicked(factory.purchase.estimate);
+              purchaseFlowTracker.trackOrderPayNowClicked(factory.purchase.estimate);
 
               $timeout(10000)
                 .then(function () {

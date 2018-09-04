@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("risevision.common.components.purchase-flow")
-  .factory("trackEvents", ["segmentAnalytics",
+  .factory("purchaseFlowTracker", ["segmentAnalytics",
     function (segmentAnalytics) {
       var factory = {};
 
@@ -17,23 +17,19 @@ angular.module("risevision.common.components.purchase-flow")
       };
 
       factory.trackPlaceOrderClicked = function (estimate) {
-        if (!estimate.estimateError) {
-          segmentAnalytics.track("Place Order Clicked", {
-            amount: estimate.total,
-            currency: estimate.currency,
-            inApp: false
-          });
-        }
+        segmentAnalytics.track("Place Order Clicked", {
+          amount: estimate.total,
+          currency: estimate.currency,
+          inApp: false
+        });
       };
 
       factory.trackOrderPayNowClicked = function (estimate) {
-        if (!estimate.estimateError) {
-          segmentAnalytics.track("Order Pay Now Clicked", {
-            amount: estimate.total,
-            currency: estimate.currency,
-            inApp: false
-          });
-        }
+        segmentAnalytics.track("Order Pay Now Clicked", {
+          amount: estimate.total,
+          currency: estimate.currency,
+          inApp: false
+        });
       };
 
       return factory;
