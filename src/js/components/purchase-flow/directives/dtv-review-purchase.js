@@ -28,9 +28,11 @@ angular.module("risevision.common.components.purchase-flow")
           };
 
           $scope.showTaxExemptionModal = function () {
-            purchaseFactory.showTaxExemptionModal();
+            purchaseFactory.showTaxExemptionModal()
+              .then(function (result) {
+                $scope.taxExemptionSent = result;
+              });
           };
-
         }
       };
     }

@@ -10,7 +10,6 @@ angular.module("risevision.common.components.purchase-flow")
       $scope.taxExemptionSubmitted = false;
 
       $scope.submit = function () {
-        $scope.taxExemptionSubmitted = false;
         $scope.errors = $scope.validate();
 
         if (!$scope.errors.length) {
@@ -30,7 +29,7 @@ angular.module("risevision.common.components.purchase-flow")
                 $scope.formData.number,
                 expiryDateString);
             }).then(function () {
-              $scope.taxExemptionSubmitted = true;
+              $modalInstance.close(true);
             }).catch(function (error) {
               $scope.errors.push(error.message ? error.message :
                 "An error ocurred while submitting your tax exemption. Please try again.");
@@ -41,7 +40,7 @@ angular.module("risevision.common.components.purchase-flow")
       };
 
       $scope.close = function () {
-        $modalInstance.close();
+        $modalInstance.dismiss();
       };
 
       $scope.validate = function () {

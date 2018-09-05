@@ -3,9 +3,6 @@
   <h3 class="modal-title">Add Tax Exemption</h3>
 </div>
 <div class="modal-body" rv-spinner="defaultSpinnerOptions" rv-spinner-key="tax-modal" rv-spinner-start-active="0">
-  <div class="alert alert-info" ng-show="taxExemptionSubmitted">
-    Your Tax Exemption Request has been submitted.
-  </div>
   <div class="alert alert-danger" ng-show="errors.length">
     <ul>
       <li ng-repeat="error in errors">{{error}}</li>
@@ -84,7 +81,6 @@
   <hr>
 </div>
 <div class="modal-footer">
-  <button ng-click="close()" ng-show="!taxExemptionSubmitted" class="btn btn-default pull-left"> Cancel </button>
-  <button ng-click="close()" ng-show="taxExemptionSubmitted" class="btn btn-default pull-left"> Close </button>
+  <button ng-click="close()" class="btn btn-default pull-left"> Cancel </button>
   <button ng-click="submit()" class="btn btn-primary pull-right"> Submit Tax Exemption </button>
 </div>

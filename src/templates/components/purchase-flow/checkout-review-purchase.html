@@ -65,11 +65,17 @@
   <br/>
   <hr class="u_margin-xs-top u_margin-xs-bottom">
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-8">
       <h4 class="u_margin-sm-bottom">
         Subscription Details
         <button aria-label="Edit Subscription Details" class="btn btn-default btn-xs" ng-click="setCurrentStep(0)" tabindex="1">Edit</button>
       </h4>
+    </div>
+    <div class="col-xs-4 text-right">
+      <button id="showTaxExemption" ng-show="!taxExemptionSent" ng-click="showTaxExemptionModal()" class="btn btn-default btn-xs u_margin-sm-top">
+        Submit Tax Exemption
+      </button>
+      <h5 ng-show="taxExemptionSent">Tax Exemption Submitted</h5>
     </div>
   </div>
   <div class="row">
@@ -98,8 +104,11 @@
         <span class="u_margin-left text-subtle">{{purchase.estimate.currency | uppercase}}</span>
       </span>
     </div>
-    <div class="col-sm-4 col-xs-12 text-right">
-      <button id="showTaxExemption" ng-click="showTaxExemptionModal()" class="btn btn-default btn-xs">Submit Tax Exemption</button>
+    <div class="col-sm-4 col-xs-12 text-right small">
+      <span ng-show="taxExemptionSent">
+        Approval process is typically one business day.<br><br>
+        We encourage you to come back and complete your purchase at that point.
+      </span>
     </div>
   </div>
   <div class="row">
