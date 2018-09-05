@@ -10681,12 +10681,14 @@ angular.module("risevision.common.components.purchase-flow")
   ]);
 
 angular.module("risevision.common.components.purchase-flow")
-  .directive("checkoutSuccess", ["$templateCache",
-    function ($templateCache) {
+  .directive("checkoutSuccess", ["$templateCache", "purchaseFactory",
+    function ($templateCache, purchaseFactory) {
       return {
         restrict: "E",
         template: $templateCache.get("purchase-flow/checkout-success.html"),
-        link: function () {}
+        link: function ($scope) {
+          $scope.purchase = purchaseFactory.purchase;
+        }
       };
     }
   ]);
@@ -11162,7 +11164,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/checkout-success.html',
-    '<div id="checkout-success"><h3 class="text-center u_margin-md-top" ng-if="purchase.paymentMethods.paymentMethod === \'card\'">Payment Successful</h3><h3 class="text-center u_margin-md-top" ng-if="purchase.paymentMethods.paymentMethod === \'invoice\'">Invoice Generated</h3><div class="text-center u_padding-md"><img src="https://s3.amazonaws.com/Rise-Images/Icons/online.svg" width="72px" alt="Payment Successful"><br><br><p ng-if="purchase.paymentMethods.paymentMethod === \'card\'">Your payment to Rise Vision was successful. You can keep track of your billing information in the <a ui-sref="apps.billing.home">Billing</a> section of your account.</p><p ng-if="purchase.paymentMethods.paymentMethod === \'invoice\'">An invoice for payment has been sent to <span class="font-weight-bold">purchase.contact.email</span>. Payment is due by {{purchase.paymentMethods.invoiceDate | date: \'d-MMM-yyyy\'}}. <span class="hidden">You can view this invoice <a href="#">here</a>.</span></p><br></div><hr><div class="row"><div class="col-xs-12 text-center"><button id="doneButton" class="btn btn-default" ng-click="close()" aria-label="Done" tabindex="1">Done</button></div></div></div>');
+    '<div id="checkout-success"><h3 class="text-center u_margin-md-top" ng-if="purchase.paymentMethods.paymentMethod === \'card\'">Payment Successful</h3><h3 class="text-center u_margin-md-top" ng-if="purchase.paymentMethods.paymentMethod === \'invoice\'">Invoice Generated</h3><div class="text-center u_padding-md"><img src="https://s3.amazonaws.com/Rise-Images/Icons/online.svg" width="72px" alt="Payment Successful"><br><br><p ng-if="purchase.paymentMethods.paymentMethod === \'card\'">Your payment to Rise Vision was successful. You can keep track of your billing information in the <a ui-sref="apps.billing.home">Billing</a> section of your account.</p><p ng-if="purchase.paymentMethods.paymentMethod === \'invoice\'">An invoice for payment has been sent to <span class="font-weight-bold">{{purchase.contact.email}}</span>. Payment is due by {{purchase.paymentMethods.invoiceDate | date: \'d-MMM-yyyy\'}}. <span class="hidden">You can view this invoice <a href="#">here</a>.</span></p><br></div><hr><div class="row"><div class="col-xs-12 text-center"><button id="doneButton" class="btn btn-default" ng-click="close()" aria-label="Done" tabindex="1">Done</button></div></div></div>');
 }]);
 })();
 
