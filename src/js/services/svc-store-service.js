@@ -2,8 +2,8 @@
   "use strict";
 
   angular.module("risevision.store.services")
-    .service("storeService", ["$q", "$log", "storeAPILoader",
-      function ($q, $log, storeAPILoader) {
+    .service("storeService", ["$q", "$log", "$http", "storeAPILoader",
+      function ($q, $log, $http, storeAPILoader) {
 
         var _getResult = function (resp) {
           if (resp.result !== null && typeof resp.result === "object") {
@@ -115,6 +115,56 @@
                 console.error("Failed to create Customer Portal Session.", e);
                 deferred.reject(e);
               });
+            return deferred.promise;
+          },
+          addTaxExemption: function (country, state, blobKey, number, expiryDate) {
+            var deferred = $q.defer();
+            storeAPILoader().then(function (storeAPI) {
+              var obj = {
+                "country": country,
+                "state": state,
+                "blobKey": blobKey,
+                "number": number,
+                "expiryDate": expiryDate
+              };
+              var request = storeAPI.taxExemption.add(obj);
+              request.execute(function (resp) {
+                if (resp.error) {
+                  $log.error("Error adding tax exemption: ", resp.message);
+                  deferred.reject(resp.error);
+                } else {
+                  deferred.resolve(resp);
+                }
+              });
+            });
+            return deferred.promise;
+          },
+          uploadTaxExemptionCertificate: function (formData) {
+            var deferred = $q.defer();
+            storeAPILoader().then(function (storeAPI) {
+              var request = storeAPI.taxExemption.getUploadUrl();
+              request.execute(function (resp) {
+                if (resp.error) {
+                  $log.error("Error getting upload url: ", resp.message);
+                  deferred.reject(resp.error);
+                } else {
+                  $http.post(resp.result.result, formData, {
+                    withCredentials: true,
+                    headers: {
+                      "Content-Type": undefined
+                    },
+                    transformRequest: angular.identity
+                  })
+                    .then(function (response) {
+                        deferred.resolve(response.data);
+                      },
+                      function (error) {
+                        $log.error("Error uploading file: ", error);
+                        deferred.reject(error);
+                      });
+                }
+              });
+            });
             return deferred.promise;
           }
         };

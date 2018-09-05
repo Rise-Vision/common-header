@@ -55,6 +55,17 @@
           return modalInstance.result;
         };
 
+        factory.showTaxExemptionModal = function () {
+          var modalInstance = $modal.open({
+            template: $templateCache.get("purchase-flow/tax-exemption.html"),
+            controller: "TaxExemptionModalCtrl",
+            size: "md",
+            backdrop: "static"
+          });
+
+          return modalInstance.result;
+        };
+
         var _validateCard = function (card, isNew) {
           card.validationErrors = stripeService.validateCard(card, isNew);
 
