@@ -6,6 +6,7 @@ angular.module("risevision.common.components.purchase-flow")
         template: $templateCache.get("purchase-flow/checkout-payment-methods.html"),
         link: function ($scope) {
           $scope.paymentMethods = purchaseFactory.purchase.paymentMethods;
+          $scope.contactEmail = purchaseFactory.purchase.contact.email;
 
           $scope.getCardDescription = function (card) {
             return "***-" + card.last4 + ", " + card.cardType + (card.isDefault ? " (default)" : "");

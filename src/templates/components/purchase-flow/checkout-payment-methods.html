@@ -2,7 +2,7 @@
 <div id="checkout-payment-methods">
   <form id="form.paymentMethodsForm" role="form" class="u_margin-md-top" name="form.paymentMethodsForm" novalidate>
     <!-- Alpha Release - Select New Card by default -->
-    <div class="row u_margin-md-top" ng-if="false">
+    <div class="row u_margin-md-top">
       <div class="col-md-8 col-xs-12 form-inline">
         <div class="form-group">
           <label for="payment-method-select" class="u_margin-right">Payment Method</label>
@@ -13,7 +13,7 @@
         </div>
       </div>
     </div>
-    <hr ng-if="false" />
+    <hr />
 
     <div id="credit-card-form" ng-if="paymentMethods.paymentMethod === 'card'">
       <!-- Alpha Release - Select New Card by default -->
@@ -156,20 +156,23 @@
     <div id="generateInvoice" ng-if="paymentMethods.paymentMethod === 'invoice'">
       <p>If you'd like to be invoiced for your purchase (rather than paying now by credit card), please enter a <b>Purchase Order</b> number
         and continue with checkout.</p>
-      <p>You will receive an invoice for this purchase total at <b>user@domain.com</b>. Invoices are due within 30 days of creation, payable by check, wire transfer, or credit card.</p>
+      <p>You will receive an invoice for this purchase total at <span class="font-weight-bold">{{contactEmail}}</span>. Invoices are due within 30 days of creation, payable by check, wire transfer, or credit card.</p>
       <p>Please note your invoice is generated only once this checkout is completed.</p>
 
       <div class="row">
-          <div class="col-xs-12 col-sm-6">
-            <div class="form-group"><label class="control-label" id="triggerOverdue"> Purchase Order Number </label>
-              <input type="text" class="form-control"/>
-            </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group">
+            <label for="invoice-po-number" class="control-label">
+              Purchase Order Number
+            </label>
+            <input id="invoice-po-number" type="text" class="form-control" name="purchaseOrder" ng-model="paymentMethods.purchaseOrderNumber" tabindex="1"/>
           </div>
+        </div>
       </div>
 
-      <div id="generateInvoiceOverdue" style="display:none">
-          <p class="text-danger">You have overdue invoice payments on your account.</p>
-          <p>In order to complete this purchase by invoice, please pay your outstanding invoices <a href="#">here</a>.</p>
+      <div id="generateInvoiceOverdue" class="hidden">
+        <p class="text-danger">You have overdue invoice payments on your account.</p>
+        <p>In order to complete this purchase by invoice, please pay your outstanding invoices <a href="#">here</a>.</p>
       </div>
     </div>
 
