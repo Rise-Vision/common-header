@@ -29,7 +29,7 @@ angular.module("risevision.common.components.purchase-flow")
     $scope.factory = purchaseFactory;
 
     $scope.PURCHASE_STEPS = PURCHASE_STEPS;
-    $scope.currentStep = 4;
+    $scope.currentStep = 0;
     $scope.finalStep = false;
 
     $scope.$watch("factory.loading", function (loading) {

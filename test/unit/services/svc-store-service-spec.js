@@ -1,7 +1,7 @@
 "use strict";
 
 describe("Services: storeService", function() {
-  var storeService;
+  var storeService, $httpBackend;
   var storeApiFailure;
   var storeApi, addressObject, response;
 
@@ -58,8 +58,24 @@ describe("Services: storeService", function() {
                 return Q.reject(response);
               } else {
                 return Q.resolve(response);
-              }              
+              }
             })
+          },
+          taxExemption: {
+            add: function () {
+              return {
+                execute: sinon.spy(function(cb) {
+                  cb(response);
+                })
+              };
+            },
+            getUploadUrl: function () {
+              return {
+                execute: sinon.spy(function(cb) {
+                  cb(response);
+                })
+              };
+            }
           }
         });
 
@@ -71,6 +87,7 @@ describe("Services: storeService", function() {
   beforeEach(function() {
     inject(function($injector){
       storeService = $injector.get("storeService");
+      $httpBackend = $injector.get("$httpBackend");
     });
   });
 
@@ -360,6 +377,72 @@ describe("Services: storeService", function() {
       .then(null,done);
     });
 
+  });
+
+  describe("addTaxExemption: ", function() {
+    it("should exist", function() {
+      expect(storeService.addTaxExemption).to.be.ok;
+      expect(storeService.addTaxExemption).to.be.a("function");
+    });
+
+    it("should succeed", function(done) {
+      response = {};
+
+      storeService.addTaxExemption().then(function() {
+        done();
+      })
+      .then(null, done);
+    });
+
+    it("should fail", function(done) {
+      response = {
+        error: "error"
+      };
+
+      storeService.addTaxExemption().then(function() {
+        done("success");
+      }, function() {
+        done();
+      });
+    });
+  });
+
+  describe("uploadTaxExemptionCertificate: ", function() {
+    it("should exist", function() {
+      expect(storeService.uploadTaxExemptionCertificate).to.be.ok;
+      expect(storeService.uploadTaxExemptionCertificate).to.be.a("function");
+    });
+
+    it("should succeed", function(done) {
+      response = {
+        result: {
+          result: "url"
+        }
+      };
+
+      $httpBackend.expect("POST", function () { return true; }).respond(200, {});
+
+      storeService.uploadTaxExemptionCertificate().then(function() {
+        done();
+      })
+      .then(null, done);
+
+      setTimeout(function() {
+        $httpBackend.flush();
+      }, 10);
+    });
+
+    it("should fail", function(done) {
+      response = {
+        error: "error"
+      };
+
+      storeService.uploadTaxExemptionCertificate().then(function() {
+        done("success");
+      }, function() {
+        done();
+      });
+    });
   });
 
 });
