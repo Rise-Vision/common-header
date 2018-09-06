@@ -11114,7 +11114,7 @@ angular.module("risevision.common.components.purchase-flow")
 
           $loading.start("tax-modal");
 
-          storeService.uploadTaxExemptionCertificate(fd)
+          return storeService.uploadTaxExemptionCertificate(fd)
             .then(function (blobKey) {
               var expiryDateString = $filter("date")($scope.formData.expiryDate, "yyyy-MM-dd");
               return storeService.addTaxExemption(
