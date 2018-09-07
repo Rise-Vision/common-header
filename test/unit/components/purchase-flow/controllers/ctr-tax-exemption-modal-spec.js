@@ -1,6 +1,6 @@
 "use strict";
 
-describe.only("controller: tax exemption modal", function() {
+describe("controller: tax exemption modal", function() {
   beforeEach(module("risevision.common.components.purchase-flow"));
   beforeEach(module(function ($provide) {
     $provide.service("$modalInstance", function() {

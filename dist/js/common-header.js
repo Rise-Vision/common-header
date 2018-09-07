@@ -11126,7 +11126,7 @@ angular.module("risevision.common.components.purchase-flow")
               var expiryDateString = $filter("date")($scope.formData.expiryDate, "yyyy-MM-dd");
               return storeService.addTaxExemption(
                 $scope.formData.country,
-                $scope.formData.province,
+                _getProvinceValue(),
                 blobKey,
                 $scope.formData.number,
                 expiryDateString);
@@ -11157,7 +11157,7 @@ angular.module("risevision.common.components.purchase-flow")
         if (!$scope.formData.country) {
           errors.push("Missing Exempt in Country");
         }
-        if (!$scope.formData.province) {
+        if (!_getProvinceValue()) {
           errors.push("Missing Exempt in State");
         }
 
@@ -11193,6 +11193,29 @@ angular.module("risevision.common.components.purchase-flow")
       $scope.countryFilter = function (country) {
         return country.code === "CA" || country.code === "US";
       };
+
+      $scope.isFieldInvalid = function (fieldName) {
+        var form = $scope.taxExemptionForm;
+        var field = form[fieldName];
+
+        return (field.$dirty || form.$submitted) && field.$invalid;
+      };
+
+      $scope.isProvinceInvalid = function () {
+        var form = $scope.taxExemptionForm;
+        var fieldName = $scope.formData.country === "US" ? "stateSelector" : "provinceSelector";
+        var field = form[fieldName];
+
+        return (field.$dirty || form.$submitted) && !_getProvinceValue();
+      };
+
+      function _getProvinceValue() {
+        if ($scope.formData.country === "US") {
+          return $scope.formData.state;
+        } else {
+          return $scope.formData.province;
+        }
+      }
     }
   ]);
 
@@ -11351,7 +11374,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/tax-exemption.html',
-    '<div class="modal-header"><button ng-click="close()" type="button" class="close" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title">Add Tax Exemption</h3></div><div class="modal-body" rv-spinner="defaultSpinnerOptions" rv-spinner-key="tax-modal" rv-spinner-start-active="0"><div class="alert alert-danger" ng-show="errors.length"><ul><li ng-repeat="error in errors">{{error}}</li></ul></div><form id="tax-exemption-form" role="form" class="u_margin-md-top" novalidate=""><div class="row"><div class="col-xs-12"><div class="form-group"><label class="control-label">Tax Exemption Number</label> <input type="text" class="form-control" ng-model="formData.number"></div></div></div><label class="control-label">Tax Exemption Document (Image or PDF only)</label><div class="row"><div class="col-xs-9"><div class="form-group"><div class="input-group"><input type="file" id="inputExemption" accept="application/pdf,image/*" onchange="angular.element(this).scope().setFile(this)" style="display:none"> <input class="form-control" readonly="readonly" type="text" name="" value="{{formData.file.name}}"> <a href="#" ng-click="clearFile()" class="btn btn-default input-group-addon"><i class="fa fa-times"></i></a></div></div></div><div class="col-xs-3"><button ng-click="selectFile()" class="btn btn-default">Attach File</button></div></div><div class="row"><div class="col-md-6"><div class="form-group"><label for="company-settings-country" class="control-label">Exemption Country</label><select id="company-settings-country" name="country" autocomplete="country" class="form-control" ng-model="formData.country" ng-options="c.code as c.name for c in countries | filter:countryFilter" empty-select-parser="" aria-required="true" tabindex="1" required=""><option ng-show="false" value="">&lt; Select Country &gt;</option></select></div></div><div class="col-md-6"><div class="form-group"><label for="company-settings-state" class="control-label">Exemption State/Province</label><select name="province-selector" class="form-control selectpicker" ng-model="formData.province" ng-options="c[1] as c[0] for c in regionsCA" autocomplete="address-level1" ng-show="formData.country === \'CA\'" empty-select-parser=""><option ng-show="false" value="">&lt; Select Province &gt;</option></select><select name="state-selector" class="form-control selectpicker" ng-model="formData.province" ng-options="c[1] as c[0] for c in regionsUS" autocomplete="address-level1" ng-show="formData.country === \'US\'" empty-select-parser=""><option ng-show="false" value="">&lt; Select State &gt;</option></select></div></div></div><div class="row"><div class="col-md-6"><div class="form-group"><label class="control-label">Exemption Expiry Date</label><div class="input-group"><input type="text" id="expiryDate" name="expiryDate" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-model="formData.expiryDate" is-open="datepicker" min-date="today" ng-required="true" larger-than-date="" close-text="Close"> <span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openDatepicker($event)"><i class="fa fa-calendar"></i></button></span></div></div></div></div></form><hr></div><div class="modal-footer"><button ng-click="close()" class="btn btn-default pull-left">Cancel</button> <button ng-click="submit()" class="btn btn-primary pull-right">Submit Tax Exemption</button></div>');
+    '<div class="modal-header"><button ng-click="close()" type="button" class="close" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title">Add Tax Exemption</h3></div><div class="modal-body" rv-spinner="defaultSpinnerOptions" rv-spinner-key="tax-modal" rv-spinner-start-active="0"><form id="taxExemptionForm" name="taxExemptionForm" role="form" class="u_margin-md-top" novalidate=""><div class="alert alert-danger" ng-show="errors.length"><ul><li ng-repeat="error in errors">{{error}}</li></ul></div><div class="row"><div class="col-xs-12"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'number\') }"><label class="control-label">Tax Exemption Number *</label> <input type="text" class="form-control" name="number" ng-model="formData.number" required=""></div></div></div><label class="control-label">Tax Exemption Document (Image or PDF only) *</label><div class="row"><div class="col-xs-9"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'fileName\') }"><div class="input-group"><input type="file" id="inputExemption" name="fileName" ng-model="formData.fileObject" accept="application/pdf,image/*" onchange="angular.element(this).scope().setFile(this)" style="display:none" required=""> <input class="form-control" readonly="readonly" type="text" value="{{formData.file.name}}"> <a href="#" ng-click="clearFile()" class="btn btn-default input-group-addon"><i class="fa fa-times"></i></a></div></div></div><div class="col-xs-3"><button ng-click="selectFile()" class="btn btn-default">Attach File</button></div></div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'country\') }"><label for="company-settings-country" class="control-label">Exemption Country *</label><select id="company-settings-country" name="country" autocomplete="country" class="form-control" ng-model="formData.country" ng-options="c.code as c.name for c in countries | filter:countryFilter" empty-select-parser="" aria-required="true" required=""><option ng-show="false" value="">&lt; Select Country &gt;</option></select></div></div><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isProvinceInvalid() }"><label for="company-settings-state" class="control-label">Exemption State/Province *</label><select name="provinceSelector" class="form-control selectpicker" ng-model="formData.province" ng-options="c[1] as c[0] for c in regionsCA" autocomplete="address-level1" ng-show="formData.country === \'CA\'" empty-select-parser=""><option ng-show="false" value="">&lt; Select Province &gt;</option></select><select name="stateSelector" class="form-control selectpicker" ng-model="formData.state" ng-options="c[1] as c[0] for c in regionsUS" autocomplete="address-level1" ng-show="formData.country === \'US\'" empty-select-parser=""><option ng-show="false" value="">&lt; Select State &gt;</option></select></div></div></div><div class="row"><div class="col-md-6"><div class="form-group"><label class="control-label">Exemption Expiry Date</label><div class="input-group"><input type="text" id="expiryDate" name="expiryDate" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-model="formData.expiryDate" is-open="datepicker" min-date="today" ng-required="true" larger-than-date="" close-text="Close"> <span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openDatepicker($event)"><i class="fa fa-calendar"></i></button></span></div></div></div></div><hr><button ng-click="close()" class="btn btn-default pull-left">Cancel</button> <button type="submit" ng-click="submit()" class="btn btn-primary pull-right">Submit Tax Exemption</button></form></div><div class="modal-footer"></div>');
 }]);
 })();
 
