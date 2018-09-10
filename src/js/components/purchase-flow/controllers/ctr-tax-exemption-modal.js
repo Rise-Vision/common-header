@@ -70,13 +70,11 @@ angular.module("risevision.common.components.purchase-flow")
 
       $scope.setFile = function (element) {
         $scope.$apply(function () {
-          $scope.fileNotSelected = true;
           $scope.formData.file = element.files[0];
         });
       };
 
       $scope.clearFile = function () {
-        $scope.fileNotSelected = false;
         $scope.formData.file = null;
         document.querySelector("#inputExemption").value = "";
       };

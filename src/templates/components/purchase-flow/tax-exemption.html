@@ -21,9 +21,9 @@
       <div class="col-md-9">
         <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('fileName') }">
           <label class="control-label">Tax Exemption Document (Image or PDF only) *</label>
-          <input type="file" id="inputExemption" name="fileName" ng-model="formData.fileObject" accept="application/pdf,image/*" onchange="angular.element(this).scope().setFile(this)" style="display:none" required>
+          <input type="file" id="inputExemption" accept="application/pdf,image/*" onchange="angular.element(this).scope().setFile(this)" style="display:none">
           <div class="input-group">
-            <input class="form-control" readonly="readonly" type="text" value="{{formData.file.name}}">
+            <input class="form-control" name="fileName" readonly="readonly" type="text" ng-model="formData.file.name" required>
             <span class="input-group-btn">
               <a href="#" ng-click="clearFile()" class="btn btn-default">
                 <i class="fa fa-times"></i>
