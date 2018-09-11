@@ -15885,6 +15885,16 @@ tr.blocked-file {
   font-size: 1.5em;
   letter-spacing: .5em; }
 
+/* ==========================================================================
+   Extra Small devices (tablets, 576px and up)
+   ========================================================================== */
+@media (min-width: 576px) {
+  .rise-player-list.display-instructions {
+    padding-left: 200px;
+    background-image: url("https://s3.amazonaws.com/Rise-Images/UI/display-diagram.png");
+    background-position: left center;
+    background-size: 200px; } }
+
 .id-form {
   cursor: default !important;
   background-color: #FFF !important;
