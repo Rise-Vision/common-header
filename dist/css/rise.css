@@ -15865,13 +15865,18 @@ tr.blocked-file {
     .name-container p span:hover {
       text-decoration: underline; }
 
+.rise-player-list {
+  border-radius: 4px;
+  border: 1px solid #e6e6e6; }
+
 .rise-player-list-item {
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: .5em;
   border-bottom: 1px solid #e6e6e6;
-  min-height: 48px; }
+  min-height: 48px;
+  background-color: #FFF; }
   .rise-player-list-item .rise-player-list-item__icon {
     max-width: 24px;
     margin-right: 1em; }

@@ -1,3 +1,8 @@
+.rise-player-list {
+  border-radius: 4px;
+  border: 1px solid $light-gray;
+}
+
 .rise-player-list-item {
   display: flex;
   flex-direction: row;
@@ -5,7 +10,7 @@
   padding: .5em;
   border-bottom: 1px solid $light-gray;
   min-height: 48px;
- 
+  background-color: #FFF;
   .rise-player-list-item__icon {
     max-width: 24px;
     margin-right: 1em;
@@ -15,6 +20,14 @@
 .display-id {
   font-size: 1.5em;
   letter-spacing: .5em;
+}
+
+.display-instructions {
+
+}
+
+.display-diagram {
+
 }
 
 .id-form {
