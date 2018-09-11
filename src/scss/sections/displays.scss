@@ -1,3 +1,22 @@
+.rise-player-list-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: .5em;
+  border-bottom: 1px solid $light-gray;
+  min-height: 48px;
+ 
+  .rise-player-list-item__icon {
+    max-width: 24px;
+    margin-right: 1em;
+  }
+}
+
+.display-id {
+  font-size: 1.5em;
+  letter-spacing: .5em;
+}
+
 .id-form {
   cursor: default !important;
   background-color: #FFF !important;

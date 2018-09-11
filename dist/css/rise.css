@@ -9375,6 +9375,9 @@ All utilities have a prefix u_ added to them
   .mx-xl-auto {
     margin-left: auto !important; } }
 
+.img-fluid {
+  width: 100%; }
+
 /* ==========================================================================
    font awesome
    ========================================================================== */
@@ -15861,6 +15864,21 @@ tr.blocked-file {
     color: #0081BA; }
     .name-container p span:hover {
       text-decoration: underline; }
+
+.rise-player-list-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: .5em;
+  border-bottom: 1px solid #e6e6e6;
+  min-height: 48px; }
+  .rise-player-list-item .rise-player-list-item__icon {
+    max-width: 24px;
+    margin-right: 1em; }
+
+.display-id {
+  font-size: 1.5em;
+  letter-spacing: .5em; }
 
 .id-form {
   cursor: default !important;
