@@ -1,17 +1,14 @@
 .rise-player-list {
   border-radius: 4px;
-  border: 1px solid $light-gray;
-}
-
-.rise-player-list.display-instructions {
-
+  border: 1px solid #DDD;
+  overflow: hidden;
 }
 
 .rise-player-list-item {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: .5em;
+  padding: .5em 1em;
   border-bottom: 1px solid $light-gray;
   min-height: 48px;
   background-color: #FFF;
@@ -32,7 +29,6 @@
 /* ==========================================================================
    Extra Small devices (tablets, 576px and up)
    ========================================================================== */
-
  
 @media (min-width: 576px) {
   .rise-player-list.display-instructions {
