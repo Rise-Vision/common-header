@@ -15877,6 +15877,8 @@ tr.blocked-file {
   border-bottom: 1px solid #e6e6e6;
   min-height: 48px;
   background-color: #FFF; }
+  .rise-player-list-item:last-child {
+    border-bottom: none; }
   .rise-player-list-item .rise-player-list-item__icon {
     max-width: 24px;
     margin-right: 1em; }

@@ -15,6 +15,9 @@
   border-bottom: 1px solid $light-gray;
   min-height: 48px;
   background-color: #FFF;
+  &:last-child {
+    border-bottom: none;
+  }
   .rise-player-list-item__icon {
     max-width: 24px;
     margin-right: 1em;
