@@ -4,8 +4,8 @@
 </div>
 <div class="modal-body" rv-spinner="defaultSpinnerOptions" rv-spinner-key="tax-modal" rv-spinner-start-active="0">
   <form id="taxExemptionForm" name="taxExemptionForm" role="form" class="u_margin-md-top" novalidate>
-    <div class="alert alert-danger" ng-show="taxExemptionForm.$submitted && taxExemptionForm.$invalid">
-      Please complete the missing information below.
+    <div class="alert alert-danger" ng-show="errorMessage !== null">
+      {{errorMessage}}
     </div>
 
     <div class="row">

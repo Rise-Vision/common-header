@@ -1,8 +1,8 @@
 angular.module("risevision.common.components.purchase-flow")
-  .controller("TaxExemptionModalCtrl", ["$scope", "$modalInstance", "$loading", "$filter", "storeService", "COUNTRIES",
+  .controller("TaxExemptionModalCtrl", ["$scope", "$q", "$modalInstance", "$loading", "$filter", "storeService", "COUNTRIES",
     "REGIONS_CA",
     "REGIONS_US",
-    function ($scope, $modalInstance, $loading, $filter, storeService, COUNTRIES, REGIONS_CA, REGIONS_US) {
+    function ($scope, $q, $modalInstance, $loading, $filter, storeService, COUNTRIES, REGIONS_CA, REGIONS_US) {
       $scope.formData = {};
       $scope.countries = COUNTRIES;
       $scope.regionsCA = REGIONS_CA;
@@ -10,9 +10,9 @@ angular.module("risevision.common.components.purchase-flow")
       $scope.taxExemptionSubmitted = false;
 
       $scope.submit = function () {
-        $scope.errors = $scope.validate();
+        $scope.errorMessage = null;
 
-        if (!$scope.errors.length) {
+        if ($scope.validate()) {
           var fd = new FormData();
 
           fd.append("file", $scope.formData.file);
@@ -31,11 +31,14 @@ angular.module("risevision.common.components.purchase-flow")
             }).then(function () {
               $modalInstance.close(true);
             }).catch(function (error) {
-              $scope.errors.push(error.message ? error.message :
-                "An error ocurred while submitting your tax exemption. Please try again.");
+              $scope.errorMessage = error.message ||
+                "An error ocurred while submitting your tax exemption. Please try again.";
             }).finally(function () {
               $loading.stop("tax-modal");
             });
+        } else {
+          $scope.errorMessage = "Please complete the missing information below.";
+          return $q.reject($scope.errorMessage);
         }
       };
 
@@ -44,22 +47,9 @@ angular.module("risevision.common.components.purchase-flow")
       };
 
       $scope.validate = function () {
-        var errors = [];
+        var formData = $scope.formData;
 
-        if (!$scope.formData.file) {
-          errors.push("Missing Exemption Document");
-        }
-        if (!$scope.formData.number) {
-          errors.push("Missing Exemption Number");
-        }
-        if (!$scope.formData.country) {
-          errors.push("Missing Exempt in Country");
-        }
-        if (!$scope.formData.province) {
-          errors.push("Missing Exempt in State");
-        }
-
-        return errors;
+        return !!(formData.file && formData.number && formData.country && formData.province);
       };
 
       $scope.selectFile = function () {

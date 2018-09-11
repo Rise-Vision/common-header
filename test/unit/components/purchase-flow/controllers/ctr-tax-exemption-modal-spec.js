@@ -76,7 +76,7 @@ describe("controller: tax exemption modal", function() {
       };
 
       $scope.submit().then(function () {
-        expect($scope.errors.length).to.equal(0);
+        expect($scope.errorMessage).to.be.null;
         expect(storeService.uploadTaxExemptionCertificate).to.have.been.called;
         expect(storeService.addTaxExemption).to.have.been.called;
         expect($loading.start).to.have.been.called;
@@ -96,7 +96,7 @@ describe("controller: tax exemption modal", function() {
       };
 
       $scope.submit().then(function () {
-        expect($scope.errors.length).to.equal(1);
+        expect($scope.errorMessage).to.be.not.null;
         expect(storeService.uploadTaxExemptionCertificate).to.have.been.called;
         expect(storeService.addTaxExemption).to.not.have.been.called;
         expect($loading.start).to.have.been.called;
@@ -117,7 +117,7 @@ describe("controller: tax exemption modal", function() {
       };
 
       $scope.submit().then(function () {
-        expect($scope.errors.length).to.equal(1);
+        expect($scope.errorMessage).to.be.not.null;
         expect(storeService.uploadTaxExemptionCertificate).to.have.been.called;
         expect(storeService.addTaxExemption).to.have.been.called;
         expect($loading.start).to.have.been.called;
@@ -130,7 +130,7 @@ describe("controller: tax exemption modal", function() {
   describe("utils", function () {
     it("validate: ", function() {
       $scope.formData = {};
-      expect($scope.validate().length).to.equal(4);
+      expect($scope.validate()).to.be.false;
 
       $scope.formData = {
         file: {},
@@ -138,7 +138,7 @@ describe("controller: tax exemption modal", function() {
         country: "CA",
         province: "ON"
       };
-      expect($scope.validate().length).to.equal(0);
+      expect($scope.validate()).to.be.true;
     });
 
     it("close: ", function() {
