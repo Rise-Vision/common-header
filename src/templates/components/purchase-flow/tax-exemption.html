@@ -4,15 +4,15 @@
 </div>
 <div class="modal-body" rv-spinner="defaultSpinnerOptions" rv-spinner-key="tax-modal" rv-spinner-start-active="0">
   <form id="taxExemptionForm" name="taxExemptionForm" role="form" class="u_margin-md-top" novalidate>
-    <div class="alert alert-danger" ng-show="errorMessage !== null">
+    <div class="alert alert-danger" ng-show="errorMessage">
       {{errorMessage}}
     </div>
 
     <div class="row">
       <div class="col-xs-12">
         <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('number') }">
-          <label class="control-label">Tax Exemption Number *</label>
-          <input type="text" class="form-control" name="number" ng-model="formData.number" required>
+          <label for="number" class="control-label">Tax Exemption Number *</label>
+          <input name="number" id="number" type="text" class="form-control" ng-model="formData.number" tabindex="0" required>
         </div>
       </div>
     </div>
@@ -20,12 +20,12 @@
     <div class="row">
       <div class="col-md-9">
         <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('fileName') }">
-          <label class="control-label">Tax Exemption Document (Image or PDF only) *</label>
-          <input type="file" id="inputExemption" accept="application/pdf,image/*" onchange="angular.element(this).scope().setFile(this)" style="display:none">
+          <label for="fileName" class="control-label">Tax Exemption Document (Image or PDF only) *</label>
+          <input id="inputExemption" type="file" accept="application/pdf,image/*" onchange="angular.element(this).scope().setFile(this)" style="display:none">
           <div class="input-group">
-            <input class="form-control" name="fileName" readonly="readonly" type="text" ng-model="formData.file.name" required>
+            <input name="fileName" id="fileName" class="form-control" type="text" readonly="readonly" ng-model="formData.file.name" required>
             <span class="input-group-btn">
-              <a href="#" ng-click="clearFile()" class="btn btn-default">
+              <a href="#" ng-click="clearFile()" tabindex="0" class="btn btn-default">
                 <i class="fa fa-times"></i>
               </a>
             </span>
@@ -34,8 +34,8 @@
       </div>
       <div class="col-md-3">
         <div class="form-group">
-          <label class="control-label col-md-6 hidden-xs">&nbsp;</label>
-          <button ng-click="selectFile()" type="button" class="btn btn-default col-md-9">Attach File</button>
+          <label for="selectFile" class="control-label col-md-6 hidden-xs">&nbsp;</label>
+          <button name="selectFile" id="selectFile" type="button" ng-click="selectFile()" tabindex="0" class="btn btn-default col-md-9">Attach File</button>
         </div>
       </div>
     </div>
@@ -43,9 +43,9 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('country') }">
-          <label for="company-settings-country" class="control-label">Exemption Country *</label>
-          <select id="company-settings-country" name="country" autocomplete="country" class="form-control" ng-change="formData.province = null"
-            ng-model="formData.country" ng-options="c.code as c.name for c in countries | filter:countryFilter" empty-select-parser aria-required="true" required>
+          <label for="country" class="control-label">Exemption Country *</label>
+          <select name="country" id="country" autocomplete="country" class="form-control" ng-change="formData.province = null"
+            ng-model="formData.country" ng-options="c.code as c.name for c in countries | filter:countryFilter" empty-select-parser aria-required="true" tabindex="0" required>
             <option ng-show="false" value="">&lt; Select Country &gt;</option>
           </select>
         </div>
@@ -54,13 +54,13 @@
       <div class="col-md-6">
         <input name="province" type="hidden" ng-model="formData.province" required>
         <div class="form-group" ng-show="formData.country" ng-class="{ 'has-error': isFieldInvalid('province') }">
-          <label for="company-settings-state" class="control-label">Exemption State/Province *</label>
+          <label for="province" class="control-label">Exemption State/Province *</label>
 
-          <select class="form-control selectpicker" ng-model="formData.province" ng-options="c[1] as c[0] for c in regionsCA" autocomplete="address-level1" ng-show="formData.country === 'CA'" empty-select-parser>
+          <select class="form-control selectpicker" ng-model="formData.province" ng-options="c[1] as c[0] for c in regionsCA" autocomplete="address-level1" ng-show="formData.country === 'CA'" empty-select-parser tabindex="0">
             <option ng-show="false" value="">&lt; Select Province &gt;</option>
           </select>
 
-          <select class="form-control selectpicker" ng-model="formData.province" ng-options="c[1] as c[0] for c in regionsUS" autocomplete="address-level1" ng-show="formData.country === 'US'" empty-select-parser>
+          <select class="form-control selectpicker" ng-model="formData.province" ng-options="c[1] as c[0] for c in regionsUS" autocomplete="address-level1" ng-show="formData.country === 'US'" empty-select-parser tabindex="0">
             <option ng-show="false" value="">&lt; Select State &gt;</option>
           </select>
         </div>
@@ -70,11 +70,13 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label class="control-label">Exemption Expiry Date</label>
+          <label for="expiryDate" class="control-label">Exemption Expiry Date</label>
           <div class="input-group">
-            <input type="text" id="expiryDate" name="expiryDate" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-model="formData.expiryDate" is-open="datepicker" min-date="today" larger-than-date close-text="Close">
+            <input name="expiryDate" id="expiryDate" type="text" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-model="formData.expiryDate" is-open="datepicker" min-date="today" larger-than-date close-text="Close" tabindex="0">
             <span class="input-group-btn">
-              <button type="button" class="btn btn-default" ng-click="openDatepicker($event)"><i class="fa fa-calendar"></i></button>
+              <button name="selectExpiryDate" id="selectExpiryDate" type="button" class="btn btn-default" ng-click="openDatepicker($event)" tabindex="0">
+                <i class="fa fa-calendar"></i>
+              </button>
             </span>
           </div>
         </div>

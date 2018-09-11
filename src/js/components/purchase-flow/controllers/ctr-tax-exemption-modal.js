@@ -1,5 +1,6 @@
 angular.module("risevision.common.components.purchase-flow")
-  .controller("TaxExemptionModalCtrl", ["$scope", "$q", "$modalInstance", "$loading", "$filter", "storeService", "COUNTRIES",
+  .controller("TaxExemptionModalCtrl", ["$scope", "$q", "$modalInstance", "$loading", "$filter", "storeService",
+    "COUNTRIES",
     "REGIONS_CA",
     "REGIONS_US",
     function ($scope, $q, $modalInstance, $loading, $filter, storeService, COUNTRIES, REGIONS_CA, REGIONS_US) {
