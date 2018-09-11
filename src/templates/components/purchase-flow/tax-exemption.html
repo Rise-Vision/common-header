@@ -44,7 +44,7 @@
       <div class="col-md-6">
         <div class="form-group" ng-class="{ 'has-error': isFieldInvalid('country') }">
           <label for="company-settings-country" class="control-label">Exemption Country *</label>
-          <select id="company-settings-country" name="country" autocomplete="country" class="form-control"
+          <select id="company-settings-country" name="country" autocomplete="country" class="form-control" ng-change="formData.province = null"
             ng-model="formData.country" ng-options="c.code as c.name for c in countries | filter:countryFilter" empty-select-parser aria-required="true" required>
             <option ng-show="false" value="">&lt; Select Country &gt;</option>
           </select>
@@ -52,14 +52,15 @@
       </div>
 
       <div class="col-md-6">
-        <div class="form-group" ng-show="formData.country" ng-class="{ 'has-error': isProvinceInvalid() }">
+        <input name="province" type="hidden" ng-model="formData.province" required>
+        <div class="form-group" ng-show="formData.country" ng-class="{ 'has-error': isFieldInvalid('province') }">
           <label for="company-settings-state" class="control-label">Exemption State/Province *</label>
 
-          <select name="provinceSelector" class="form-control selectpicker" ng-model="formData.province" ng-options="c[1] as c[0] for c in regionsCA" autocomplete="address-level1" ng-show="formData.country === 'CA'" empty-select-parser>
+          <select class="form-control selectpicker" ng-model="formData.province" ng-options="c[1] as c[0] for c in regionsCA" autocomplete="address-level1" ng-show="formData.country === 'CA'" empty-select-parser>
             <option ng-show="false" value="">&lt; Select Province &gt;</option>
           </select>
 
-          <select name="stateSelector" class="form-control selectpicker" ng-model="formData.state" ng-options="c[1] as c[0] for c in regionsUS" autocomplete="address-level1" ng-show="formData.country === 'US'" empty-select-parser>
+          <select class="form-control selectpicker" ng-model="formData.province" ng-options="c[1] as c[0] for c in regionsUS" autocomplete="address-level1" ng-show="formData.country === 'US'" empty-select-parser>
             <option ng-show="false" value="">&lt; Select State &gt;</option>
           </select>
         </div>
@@ -71,7 +72,7 @@
         <div class="form-group">
           <label class="control-label">Exemption Expiry Date</label>
           <div class="input-group">
-            <input type="text" id="expiryDate" name="expiryDate" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-model="formData.expiryDate" is-open="datepicker" min-date="today" ng-required="true" larger-than-date close-text="Close" />
+            <input type="text" id="expiryDate" name="expiryDate" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-model="formData.expiryDate" is-open="datepicker" min-date="today" larger-than-date close-text="Close">
             <span class="input-group-btn">
               <button type="button" class="btn btn-default" ng-click="openDatepicker($event)"><i class="fa fa-calendar"></i></button>
             </span>

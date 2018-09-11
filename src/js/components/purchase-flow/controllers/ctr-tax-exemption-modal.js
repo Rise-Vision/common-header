@@ -24,7 +24,7 @@ angular.module("risevision.common.components.purchase-flow")
               var expiryDateString = $filter("date")($scope.formData.expiryDate, "yyyy-MM-dd");
               return storeService.addTaxExemption(
                 $scope.formData.country,
-                _getProvinceValue(),
+                $scope.formData.province,
                 blobKey,
                 $scope.formData.number,
                 expiryDateString);
@@ -55,7 +55,7 @@ angular.module("risevision.common.components.purchase-flow")
         if (!$scope.formData.country) {
           errors.push("Missing Exempt in Country");
         }
-        if (!_getProvinceValue()) {
+        if (!$scope.formData.province) {
           errors.push("Missing Exempt in State");
         }
 
@@ -96,21 +96,5 @@ angular.module("risevision.common.components.purchase-flow")
 
         return (field.$dirty || form.$submitted) && field.$invalid;
       };
-
-      $scope.isProvinceInvalid = function () {
-        var form = $scope.taxExemptionForm;
-        var fieldName = $scope.formData.country === "US" ? "stateSelector" : "provinceSelector";
-        var field = form[fieldName];
-
-        return (field.$dirty || form.$submitted) && !_getProvinceValue();
-      };
-
-      function _getProvinceValue() {
-        if ($scope.formData.country === "US") {
-          return $scope.formData.state;
-        } else {
-          return $scope.formData.province;
-        }
-      }
     }
   ]);
