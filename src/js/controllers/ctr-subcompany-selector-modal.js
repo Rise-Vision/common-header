@@ -10,7 +10,7 @@ angular.module("risevision.common.header")
 
       $scope.search = {
         companyId: companyId,
-        sortBy: "username",
+        sortBy: "name",
         reverse: false,
         name: "Companies"
       };
