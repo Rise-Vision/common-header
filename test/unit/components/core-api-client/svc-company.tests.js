@@ -176,7 +176,7 @@ describe("Services: Company Core API Service", function() {
 
   describe("getCompanies", function() {
     it("should get companies", function (done) {
-      companyService.getCompanies("some_id", "s").then(function (result) {
+      companyService.getCompanies({companyId: "some_id", query: "s"}).then(function (result) {
         expect(result).to.deep.equal(rvFixtures.companiesResp);
         done();
       });
@@ -184,7 +184,7 @@ describe("Services: Company Core API Service", function() {
 
     it("should get companies regardless of additional Array fields", function (done) {
       Array.prototype.contains = function(){};
-      companyService.getCompanies("some_id", "s").then(function (result) {
+      companyService.getCompanies({companyId: "some_id", query: "s"}).then(function (result) {
         expect(result).to.deep.equal(rvFixtures.companiesResp);
         done();
       });

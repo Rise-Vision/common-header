@@ -519,18 +519,20 @@ angular.module("risevision.common.core.endpoint", [
         return query.trim();
       };
 
-      this.getCompanies = function (companyId, search, cursor, count, sort) {
+      this.getCompanies = function (search, cursor) {
         var deferred = $q.defer();
-        var query = search ? createSearchQuery(COMPANY_SEARCH_FIELDS,
-          search) : "";
+
+        var query = search.query ? createSearchQuery(COMPANY_SEARCH_FIELDS,
+          search.query) : "";
 
         var obj = {
-          "companyId": companyId,
+          "companyId": search.companyId,
           "search": query,
           "cursor": cursor,
-          "count": count,
-          "sort": sort
+          "count": search.count,
+          "sort": search.sortBy + (search.reverse ? " desc" : " asc")
         };
+
         $log.debug("getCompanies called with", obj);
         coreAPILoader().then(function (coreApi) {
           var request = coreApi.company.list(obj);
@@ -1282,17 +1284,24 @@ angular.module("risevision.store.authorization", [
   ])
 
   .factory("getUsers", ["$q", "coreAPILoader", "$log",
-    function (
-      $q, coreAPILoader, $log) {
-      return function (criteria) {
-        $log.debug("getUsers", criteria);
+    function ($q, coreAPILoader, $log) {
+      return function (search, cursor) {
+        var obj = {
+          "companyId": search.companyId,
+          "search": search.query,
+          "cursor": cursor,
+          "count": search.count,
+          "sort": search.sortBy + (search.reverse ? " desc" : " asc")
+        };
+
+        $log.debug("getUsers", obj);
         var deferred = $q.defer();
         coreAPILoader().then(function (coreApi) {
-          var request = coreApi.user.list(criteria);
+          var request = coreApi.user.list(obj);
           request.execute(function (resp) {
             $log.debug("getUsers resp", resp);
             if (resp.result) {
-              deferred.resolve(resp.items);
+              deferred.resolve(resp.result);
             } else {
               deferred.reject("getUsers");
             }

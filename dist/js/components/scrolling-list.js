@@ -42,6 +42,166 @@
 
 })(angular);
 
+"use strict";
+
+angular.module("risevision.common.components.scrolling-list")
+  .service("processErrorCode", ["$filter",
+    function ($filter) {
+      var actionsMap = {
+        get: "loaded",
+        load: "loaded",
+        add: "added",
+        update: "updated",
+        delete: "deleted",
+        publish: "published",
+        restore: "restored",
+        move: "moved",
+        rename: "renamed",
+        upload: "uploaded",
+        restart: "restarted",
+        reboot: "rebooted"
+      };
+
+      return function (itemName, action, e) {
+        var tryAgainMessage = $filter("translate")("apps-common.errors.tryAgain");
+        var actionName = actionsMap[action];
+        var error = (e && e.result && e.result.error) || {};
+        var errorString = error.message ? error.message : "An Error has Occurred";
+        var messagePrefix = $filter("translate")("apps-common.errors.actionFailed", {
+          itemName: itemName,
+          actionName: actionName
+        });
+
+        // Attempt to internationalize Storage error
+        var key = "storage-client.error." + (action ? action + "." : "") + error.message;
+        var msg = $filter("translate")(key);
+        if (msg !== key) {
+          errorString = msg;
+        }
+
+        if (!e) {
+          return errorString;
+        } else if (e.status === 400) {
+          if (errorString.indexOf("is not editable") >= 0) {
+            return messagePrefix + " " + errorString;
+          } else if (errorString.indexOf("is required") >= 0) {
+            return messagePrefix + " " + errorString;
+          } else {
+            return messagePrefix + " " + errorString;
+          }
+        } else if (e.status === 401) {
+          return $filter("translate")("apps-common.errors.notAuthenticated", {
+            itemName: itemName,
+            actionName: action
+          });
+        } else if (e.status === 403) {
+          if (errorString.indexOf("User is not allowed access") >= 0) {
+            return messagePrefix + " " + $filter("translate")("apps-common.errors.parentCompanyAction");
+          } else if (errorString.indexOf("User does not have the necessary rights") >= 0) {
+            return messagePrefix + " " + $filter("translate")("apps-common.errors.permissionRequired");
+          } else if (errorString.indexOf("Premium Template requires Purchase") >= 0) {
+            return messagePrefix + " " + $filter("translate")("apps-common.errors.premiumTemplate");
+          } else if (errorString.indexOf("Storage requires active subscription") >= 0) {
+            return messagePrefix + " " + $filter("translate")("apps-common.errors.storageSubscription");
+          } else {
+            return messagePrefix + " " + errorString;
+          }
+        } else if (e.status === 404) {
+          return $filter("translate")("apps-common.errors.notFound", {
+            itemName: itemName
+          });
+        } else if (e.status === 409) {
+          return messagePrefix + " " + errorString;
+        } else if (e.status === 500 || e.status === 503) {
+          return $filter("translate")("apps-common.errors.serverError", {
+            itemName: itemName,
+            actionName: action
+          }) + " " + tryAgainMessage;
+        } else if (e.status === -1 || error.code === -1 || error.code === 0) {
+          return $filter("translate")("apps-common.errors.checkConnection");
+        } else {
+          return errorString;
+        }
+      };
+    }
+  ]);
+
+"use strict";
+
+angular.module("risevision.common.components.scrolling-list")
+  .service("ScrollingListService", ["$log", "BaseList", "processErrorCode",
+    function ($log, BaseList, processErrorCode) {
+      return function (listService, search) {
+        var DB_MAX_COUNT = 40; //number of records to load at a time
+        var factory = {};
+
+        factory.items = new BaseList(DB_MAX_COUNT);
+
+        factory.search = search ? search : {};
+        _.defaults(factory.search, {
+          sortBy: "name",
+          count: DB_MAX_COUNT,
+          reverse: false,
+          name: "Items"
+        });
+
+        var _clearMessages = function () {
+          factory.loadingItems = false;
+
+          factory.errorMessage = "";
+          factory.apiError = "";
+        };
+
+        factory.load = function () {
+          _clearMessages();
+
+          if (!factory.items.list.length || !factory.items.endOfList &&
+            factory.items.cursor) {
+            factory.loadingItems = true;
+
+            listService(factory.search, factory.items.cursor)
+              .then(function (result) {
+                factory.items.add(result.items ? result.items : [],
+                  result.cursor);
+              })
+              .then(null, function (e) {
+                factory.errorMessage = "Failed to load " + factory.search.name + ".";
+                factory.apiError = processErrorCode(factory.search.name, "load", e);
+
+                $log.error(factory.errorMessage, e);
+              })
+              .finally(function () {
+                factory.loadingItems = false;
+              });
+          }
+        };
+
+        factory.load();
+
+        factory.sortBy = function (cat) {
+          factory.items.clear();
+
+          if (cat !== factory.search.sortBy) {
+            factory.search.sortBy = cat;
+            factory.search.reverse = false;
+          } else {
+            factory.search.reverse = !factory.search.reverse;
+          }
+
+          factory.load();
+        };
+
+        factory.doSearch = function () {
+          factory.items.clear();
+
+          factory.load();
+        };
+
+        return factory;
+      };
+    }
+  ]);
+
 (function (angular) {
 
   "use strict";

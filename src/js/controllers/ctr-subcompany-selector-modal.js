@@ -1,56 +1,36 @@
 angular.module("risevision.common.header")
-  .controller("companySelectorCtr", ["$scope", "$modalInstance",
-    "companyService", "companyId", "BaseList", "$loading",
-    function ($scope, $modalInstance, companyService,
-      companyId, BaseList, $loading) {
+  .controller("companySelectorCtr", ["$scope", "$loading", "$modalInstance",
+    "companyService", "companyId", "ScrollingListService",
+    function ($scope, $loading, $modalInstance, companyService,
+      companyId, ScrollingListService) {
 
-      var DB_MAX_COUNT = 40; //number of records to load at a time
-
-      $scope.companies = new BaseList(DB_MAX_COUNT);
       $scope.search = {
         query: ""
       };
+
+      $scope.search = {
+        companyId: companyId,
+        sortBy: "username",
+        reverse: false,
+        name: "Companies"
+      };
+
+      $scope.companies = new ScrollingListService(companyService.getCompanies, $scope.search);
+
       $scope.filterConfig = {
         placeholder: "Search Companies"
       };
 
-      $scope.$watch("loading", function (loading) {
+      $scope.$watch("companies.loadingItems", function (loading) {
         if (loading) {
-          $loading.start("company-selector-modal");
           $loading.start("company-selector-modal-list");
         } else {
-          $loading.stop("company-selector-modal");
           $loading.stop("company-selector-modal-list");
         }
       });
 
       $scope.closeModal = function () {
         $modalInstance.dismiss("cancel");
-      };
-
-      $scope.loadCompanies = function () {
-        if (!$scope.companies.endOfList) {
-          $scope.loading = true;
-          companyService.getCompanies(
-            companyId, $scope.search.query,
-            $scope.companies.cursor, DB_MAX_COUNT, null).then(function (
-            result) {
-            if (result && result.items) {
-              $scope.companies.add(result.items, result.cursor);
-            }
-          }).finally(function () {
-            $scope.loading = false;
-          });
-        }
-      };
-
-      if ($scope.companies.list.length === 0) {
-        $scope.loadCompanies();
-      }
-
-      $scope.doSearch = function () {
-        $scope.companies.clear();
-        $scope.loadCompanies();
       };
 
       $scope.setCompany = function (company) {

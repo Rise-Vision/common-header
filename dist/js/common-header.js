@@ -114,7 +114,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('company-selector-modal.html',
-    '<form role="form"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 id="switch-company" class="modal-title">Select Sub-Company</h2></div><div class="modal-body select-subcompany-modal" stop-event="touchend"><search-filter filter-config="filterConfig" search="search" do-search="doSearch"></search-filter><div class="panel panel-default scrollable-list u_margin-sm-top" scrolling-list="loadCompanies()" rv-spinner="" rv-spinner-key="company-selector-modal-list" rv-spinner-start-active="1"><div class="list-group-item" ng-repeat="company in companies.list" ng-click="setCompany(company)"><p class="list-group-item-text"><strong>{{company.name}}</strong><br><small class="text-muted">{{company | fullAddress}}</small></p></div></div></div><div class="modal-footer"><button type="button" class="btn btn-default btn-fixed-width" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()">Cancel <i class="fa fa-white fa-times icon-right"></i></button></div></form>');
+    '<form role="form"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 id="switch-company" class="modal-title">Select Sub-Company</h2></div><div class="modal-body select-subcompany-modal" stop-event="touchend"><div id="errorBox" ng-show="companies.apiError" class="alert alert-danger" role="alert"><strong>{{companies.errorMessage}}</strong> {{companies.apiError}}</div><search-filter filter-config="filterConfig" search="search" do-search="companies.doSearch"></search-filter><div class="panel panel-default scrollable-list u_margin-sm-top" scrolling-list="companies.load()" rv-spinner="" rv-spinner-key="company-selector-modal-list" rv-spinner-start-active="1"><div class="list-group-item" ng-repeat="company in companies.items.list" ng-click="setCompany(company)"><p class="list-group-item-text"><strong>{{company.name}}</strong><br><small class="text-muted">{{company | fullAddress}}</small></p></div></div></div><div class="modal-footer"><button type="button" class="btn btn-default btn-fixed-width" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()">Cancel <i class="fa fa-white fa-times icon-right"></i></button></div></form>');
 }]);
 })();
 
@@ -138,7 +138,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('company-users-modal.html',
-    '<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 id="company-users-label" class="modal-title">Company Users</h2></div><div class="modal-body company-users-modal" stop-event="touchend"><search-filter filter-config="filterConfig" search="search" do-search="doSearch"></search-filter><div class="panel panel-default scrollable-list company-users-list u_margin-sm-top" rv-spinner="" rv-spinner-key="company-users-list" rv-spinner-start-active="1"><div class="list-group-item company-users-list-item" ng-repeat="user in users | orderBy:sort.field:sort.descending | filter:userSearchString" ng-click="editUser(user.username)"><p class="list-group-item-text"><strong>{{user.firstName}} {{user.lastName}}</strong> <small class="text-muted">{{user.email}}</small></p></div></div></div><div class="modal-footer"><button type="button" class="btn btn-success add-company-user-button" ng-click="addUser()">Add User <i class="fa fa-white fa-plus icon-right"></i></button> <button type="button" class="btn btn-default close-company-users-button" data-dismiss="modal" ng-click="closeModal()">Cancel <i class="fa fa-white fa-times icon-right"></i></button></div>');
+    '<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 id="company-users-label" class="modal-title">Company Users</h2></div><div class="modal-body company-users-modal" stop-event="touchend"><div id="errorBox" ng-show="users.apiError" class="alert alert-danger" role="alert"><strong>{{users.errorMessage}}</strong> {{users.apiError}}</div><search-filter filter-config="filterConfig" search="search" do-search="users.doSearch"></search-filter><div class="panel panel-default scrollable-list company-users-list u_margin-sm-top" scrolling-list="users.load()" rv-spinner="" rv-spinner-key="company-users-list" rv-spinner-start-active="1"><div class="list-group-item company-users-list-item" ng-repeat="user in users.items.list | orderBy:sort.field:sort.descending | filter:userSearchString" ng-click="editUser(user.username)"><p class="list-group-item-text"><strong>{{user.firstName}} {{user.lastName}}</strong> <small class="text-muted">{{user.email}}</small></p></div></div></div><div class="modal-footer"><button type="button" class="btn btn-success add-company-user-button" ng-click="addUser()">Add User <i class="fa fa-white fa-plus icon-right"></i></button> <button type="button" class="btn btn-default close-company-users-button" data-dismiss="modal" ng-click="closeModal()">Cancel <i class="fa fa-white fa-times icon-right"></i></button></div>');
 }]);
 })();
 
@@ -1299,55 +1299,31 @@ angular.module("risevision.common.header")
   }
 ])
 
-.controller("CompanyUsersModalCtrl", ["$scope", "$modalInstance", "$modal",
-  "$templateCache", "company", "getUsers", "$loading",
-  function ($scope, $modalInstance, $modal, $templateCache, company, getUsers,
-    $loading) {
+.controller("CompanyUsersModalCtrl", ["$scope", "$loading", "$modalInstance", "$modal",
+  "$templateCache", "ScrollingListService", "company", "getUsers",
+  function ($scope, $loading, $modalInstance, $modal, $templateCache,
+    ScrollingListService, company, getUsers) {
 
-    $scope.$watch("loading", function (loading) {
+    $scope.search = {
+      companyId: company.id,
+      sortBy: "username",
+      reverse: false,
+      name: "Users"
+    };
+
+    $scope.users = new ScrollingListService(getUsers, $scope.search);
+
+    $scope.filterConfig = {
+      placeholder: "Search Users"
+    };
+
+    $scope.$watch("users.loadingItems", function (loading) {
       if (loading) {
         $loading.start("company-users-list");
       } else {
         $loading.stop("company-users-list");
       }
     });
-
-    $scope.sort = {
-      field: "username",
-      descending: false
-    };
-
-    $scope.search = {
-      query: ""
-    };
-    $scope.filterConfig = {
-      placeholder: "Search Users"
-    };
-
-    $scope.changeSorting = function (field) {
-      var sort = $scope.sort;
-
-      if (sort.field === field) {
-        sort.descending = !sort.descending;
-      } else {
-        sort.field = field;
-        sort.descending = false;
-      }
-    };
-
-    var loadUsers = function () {
-      $scope.loading = true;
-      getUsers({
-        companyId: company.id,
-        search: $scope.search.query
-      }).then(function (users) {
-        $scope.users = users;
-      }).finally(function () {
-        $scope.loading = false;
-      });
-    };
-
-    loadUsers();
 
     $scope.addUser = function (size) {
       var instance = $modal.open({
@@ -1360,7 +1336,7 @@ angular.module("risevision.common.header")
           }
         }
       });
-      instance.result.finally(loadUsers);
+      instance.result.finally($scope.users.doSearch);
     };
 
     $scope.editUser = function (username, size) {
@@ -1377,17 +1353,13 @@ angular.module("risevision.common.header")
           }
         }
       });
-      instance.result.finally(loadUsers);
+      instance.result.finally($scope.users.doSearch);
     };
 
     $scope.closeModal = function () {
       $modalInstance.dismiss("cancel");
     };
 
-    $scope.doSearch = function () {
-      $scope.users = [];
-      loadUsers();
-    };
   }
 ]);
 
@@ -1831,58 +1803,38 @@ angular.module("risevision.common.header")
   ]);
 
 angular.module("risevision.common.header")
-  .controller("companySelectorCtr", ["$scope", "$modalInstance",
-    "companyService", "companyId", "BaseList", "$loading",
-    function ($scope, $modalInstance, companyService,
-      companyId, BaseList, $loading) {
+  .controller("companySelectorCtr", ["$scope", "$loading", "$modalInstance",
+    "companyService", "companyId", "ScrollingListService",
+    function ($scope, $loading, $modalInstance, companyService,
+      companyId, ScrollingListService) {
 
-      var DB_MAX_COUNT = 40; //number of records to load at a time
-
-      $scope.companies = new BaseList(DB_MAX_COUNT);
       $scope.search = {
         query: ""
       };
+
+      $scope.search = {
+        companyId: companyId,
+        sortBy: "username",
+        reverse: false,
+        name: "Companies"
+      };
+
+      $scope.companies = new ScrollingListService(companyService.getCompanies, $scope.search);
+
       $scope.filterConfig = {
         placeholder: "Search Companies"
       };
 
-      $scope.$watch("loading", function (loading) {
+      $scope.$watch("companies.loadingItems", function (loading) {
         if (loading) {
-          $loading.start("company-selector-modal");
           $loading.start("company-selector-modal-list");
         } else {
-          $loading.stop("company-selector-modal");
           $loading.stop("company-selector-modal-list");
         }
       });
 
       $scope.closeModal = function () {
         $modalInstance.dismiss("cancel");
-      };
-
-      $scope.loadCompanies = function () {
-        if (!$scope.companies.endOfList) {
-          $scope.loading = true;
-          companyService.getCompanies(
-            companyId, $scope.search.query,
-            $scope.companies.cursor, DB_MAX_COUNT, null).then(function (
-            result) {
-            if (result && result.items) {
-              $scope.companies.add(result.items, result.cursor);
-            }
-          }).finally(function () {
-            $scope.loading = false;
-          });
-        }
-      };
-
-      if ($scope.companies.list.length === 0) {
-        $scope.loadCompanies();
-      }
-
-      $scope.doSearch = function () {
-        $scope.companies.clear();
-        $scope.loadCompanies();
       };
 
       $scope.setCompany = function (company) {
@@ -5080,18 +5032,20 @@ angular.module("risevision.common.core.endpoint", [
         return query.trim();
       };
 
-      this.getCompanies = function (companyId, search, cursor, count, sort) {
+      this.getCompanies = function (search, cursor) {
         var deferred = $q.defer();
-        var query = search ? createSearchQuery(COMPANY_SEARCH_FIELDS,
-          search) : "";
+
+        var query = search.query ? createSearchQuery(COMPANY_SEARCH_FIELDS,
+          search.query) : "";
 
         var obj = {
-          "companyId": companyId,
+          "companyId": search.companyId,
           "search": query,
           "cursor": cursor,
-          "count": count,
-          "sort": sort
+          "count": search.count,
+          "sort": search.sortBy + (search.reverse ? " desc" : " asc")
         };
+
         $log.debug("getCompanies called with", obj);
         coreAPILoader().then(function (coreApi) {
           var request = coreApi.company.list(obj);
@@ -5843,17 +5797,24 @@ angular.module("risevision.store.authorization", [
   ])
 
   .factory("getUsers", ["$q", "coreAPILoader", "$log",
-    function (
-      $q, coreAPILoader, $log) {
-      return function (criteria) {
-        $log.debug("getUsers", criteria);
+    function ($q, coreAPILoader, $log) {
+      return function (search, cursor) {
+        var obj = {
+          "companyId": search.companyId,
+          "search": search.query,
+          "cursor": cursor,
+          "count": search.count,
+          "sort": search.sortBy + (search.reverse ? " desc" : " asc")
+        };
+
+        $log.debug("getUsers", obj);
         var deferred = $q.defer();
         coreAPILoader().then(function (coreApi) {
-          var request = coreApi.user.list(criteria);
+          var request = coreApi.user.list(obj);
           request.execute(function (resp) {
             $log.debug("getUsers resp", resp);
             if (resp.result) {
-              deferred.resolve(resp.items);
+              deferred.resolve(resp.result);
             } else {
               deferred.reject("getUsers");
             }
@@ -8533,6 +8494,166 @@ module.run(['$templateCache', function($templateCache) {
     });
 
 })(angular);
+
+"use strict";
+
+angular.module("risevision.common.components.scrolling-list")
+  .service("processErrorCode", ["$filter",
+    function ($filter) {
+      var actionsMap = {
+        get: "loaded",
+        load: "loaded",
+        add: "added",
+        update: "updated",
+        delete: "deleted",
+        publish: "published",
+        restore: "restored",
+        move: "moved",
+        rename: "renamed",
+        upload: "uploaded",
+        restart: "restarted",
+        reboot: "rebooted"
+      };
+
+      return function (itemName, action, e) {
+        var tryAgainMessage = $filter("translate")("apps-common.errors.tryAgain");
+        var actionName = actionsMap[action];
+        var error = (e && e.result && e.result.error) || {};
+        var errorString = error.message ? error.message : "An Error has Occurred";
+        var messagePrefix = $filter("translate")("apps-common.errors.actionFailed", {
+          itemName: itemName,
+          actionName: actionName
+        });
+
+        // Attempt to internationalize Storage error
+        var key = "storage-client.error." + (action ? action + "." : "") + error.message;
+        var msg = $filter("translate")(key);
+        if (msg !== key) {
+          errorString = msg;
+        }
+
+        if (!e) {
+          return errorString;
+        } else if (e.status === 400) {
+          if (errorString.indexOf("is not editable") >= 0) {
+            return messagePrefix + " " + errorString;
+          } else if (errorString.indexOf("is required") >= 0) {
+            return messagePrefix + " " + errorString;
+          } else {
+            return messagePrefix + " " + errorString;
+          }
+        } else if (e.status === 401) {
+          return $filter("translate")("apps-common.errors.notAuthenticated", {
+            itemName: itemName,
+            actionName: action
+          });
+        } else if (e.status === 403) {
+          if (errorString.indexOf("User is not allowed access") >= 0) {
+            return messagePrefix + " " + $filter("translate")("apps-common.errors.parentCompanyAction");
+          } else if (errorString.indexOf("User does not have the necessary rights") >= 0) {
+            return messagePrefix + " " + $filter("translate")("apps-common.errors.permissionRequired");
+          } else if (errorString.indexOf("Premium Template requires Purchase") >= 0) {
+            return messagePrefix + " " + $filter("translate")("apps-common.errors.premiumTemplate");
+          } else if (errorString.indexOf("Storage requires active subscription") >= 0) {
+            return messagePrefix + " " + $filter("translate")("apps-common.errors.storageSubscription");
+          } else {
+            return messagePrefix + " " + errorString;
+          }
+        } else if (e.status === 404) {
+          return $filter("translate")("apps-common.errors.notFound", {
+            itemName: itemName
+          });
+        } else if (e.status === 409) {
+          return messagePrefix + " " + errorString;
+        } else if (e.status === 500 || e.status === 503) {
+          return $filter("translate")("apps-common.errors.serverError", {
+            itemName: itemName,
+            actionName: action
+          }) + " " + tryAgainMessage;
+        } else if (e.status === -1 || error.code === -1 || error.code === 0) {
+          return $filter("translate")("apps-common.errors.checkConnection");
+        } else {
+          return errorString;
+        }
+      };
+    }
+  ]);
+
+"use strict";
+
+angular.module("risevision.common.components.scrolling-list")
+  .service("ScrollingListService", ["$log", "BaseList", "processErrorCode",
+    function ($log, BaseList, processErrorCode) {
+      return function (listService, search) {
+        var DB_MAX_COUNT = 40; //number of records to load at a time
+        var factory = {};
+
+        factory.items = new BaseList(DB_MAX_COUNT);
+
+        factory.search = search ? search : {};
+        _.defaults(factory.search, {
+          sortBy: "name",
+          count: DB_MAX_COUNT,
+          reverse: false,
+          name: "Items"
+        });
+
+        var _clearMessages = function () {
+          factory.loadingItems = false;
+
+          factory.errorMessage = "";
+          factory.apiError = "";
+        };
+
+        factory.load = function () {
+          _clearMessages();
+
+          if (!factory.items.list.length || !factory.items.endOfList &&
+            factory.items.cursor) {
+            factory.loadingItems = true;
+
+            listService(factory.search, factory.items.cursor)
+              .then(function (result) {
+                factory.items.add(result.items ? result.items : [],
+                  result.cursor);
+              })
+              .then(null, function (e) {
+                factory.errorMessage = "Failed to load " + factory.search.name + ".";
+                factory.apiError = processErrorCode(factory.search.name, "load", e);
+
+                $log.error(factory.errorMessage, e);
+              })
+              .finally(function () {
+                factory.loadingItems = false;
+              });
+          }
+        };
+
+        factory.load();
+
+        factory.sortBy = function (cat) {
+          factory.items.clear();
+
+          if (cat !== factory.search.sortBy) {
+            factory.search.sortBy = cat;
+            factory.search.reverse = false;
+          } else {
+            factory.search.reverse = !factory.search.reverse;
+          }
+
+          factory.load();
+        };
+
+        factory.doSearch = function () {
+          factory.items.clear();
+
+          factory.load();
+        };
+
+        return factory;
+      };
+    }
+  ]);
 
 (function (angular) {
 

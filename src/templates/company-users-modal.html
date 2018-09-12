@@ -6,16 +6,21 @@
   <h2 id="company-users-label" class="modal-title">Company Users</h2>
 </div>
 <div class="modal-body company-users-modal" stop-event="touchend">
+  <div id="errorBox" ng-show="users.apiError" class="alert alert-danger" role="alert">
+    <strong>{{users.errorMessage}}</strong> {{users.apiError}}
+  </div> 
+
   <!-- Search -->
-  <search-filter filter-config="filterConfig" search="search" do-search="doSearch"></search-filter> 
+  <search-filter filter-config="filterConfig" search="search" do-search="users.doSearch"></search-filter>
 
   <!-- List of Users -->
   <div class="panel panel-default scrollable-list company-users-list u_margin-sm-top"
+    scrolling-list="users.load()"
     rv-spinner
     rv-spinner-key="company-users-list"
     rv-spinner-start-active="1">
-    <div class="list-group-item  company-users-list-item"
-      ng-repeat="user in users | orderBy:sort.field:sort.descending | filter:userSearchString" ng-click="editUser(user.username)">
+    <div class="list-group-item company-users-list-item"
+      ng-repeat="user in users.items.list | orderBy:sort.field:sort.descending | filter:userSearchString" ng-click="editUser(user.username)">
       <p class="list-group-item-text"><strong>{{user.firstName}} {{user.lastName}}</strong> <small class="text-muted">{{user.email}}</small></p>
     </div>
   </div>

@@ -8,55 +8,31 @@ angular.module("risevision.common.header")
   }
 ])
 
-.controller("CompanyUsersModalCtrl", ["$scope", "$modalInstance", "$modal",
-  "$templateCache", "company", "getUsers", "$loading",
-  function ($scope, $modalInstance, $modal, $templateCache, company, getUsers,
-    $loading) {
+.controller("CompanyUsersModalCtrl", ["$scope", "$loading", "$modalInstance", "$modal",
+  "$templateCache", "ScrollingListService", "company", "getUsers",
+  function ($scope, $loading, $modalInstance, $modal, $templateCache,
+    ScrollingListService, company, getUsers) {
 
-    $scope.$watch("loading", function (loading) {
+    $scope.search = {
+      companyId: company.id,
+      sortBy: "username",
+      reverse: false,
+      name: "Users"
+    };
+
+    $scope.users = new ScrollingListService(getUsers, $scope.search);
+
+    $scope.filterConfig = {
+      placeholder: "Search Users"
+    };
+
+    $scope.$watch("users.loadingItems", function (loading) {
       if (loading) {
         $loading.start("company-users-list");
       } else {
         $loading.stop("company-users-list");
       }
     });
-
-    $scope.sort = {
-      field: "username",
-      descending: false
-    };
-
-    $scope.search = {
-      query: ""
-    };
-    $scope.filterConfig = {
-      placeholder: "Search Users"
-    };
-
-    $scope.changeSorting = function (field) {
-      var sort = $scope.sort;
-
-      if (sort.field === field) {
-        sort.descending = !sort.descending;
-      } else {
-        sort.field = field;
-        sort.descending = false;
-      }
-    };
-
-    var loadUsers = function () {
-      $scope.loading = true;
-      getUsers({
-        companyId: company.id,
-        search: $scope.search.query
-      }).then(function (users) {
-        $scope.users = users;
-      }).finally(function () {
-        $scope.loading = false;
-      });
-    };
-
-    loadUsers();
 
     $scope.addUser = function (size) {
       var instance = $modal.open({
@@ -69,7 +45,7 @@ angular.module("risevision.common.header")
           }
         }
       });
-      instance.result.finally(loadUsers);
+      instance.result.finally($scope.users.doSearch);
     };
 
     $scope.editUser = function (username, size) {
@@ -86,16 +62,12 @@ angular.module("risevision.common.header")
           }
         }
       });
-      instance.result.finally(loadUsers);
+      instance.result.finally($scope.users.doSearch);
     };
 
     $scope.closeModal = function () {
       $modalInstance.dismiss("cancel");
     };
 
-    $scope.doSearch = function () {
-      $scope.users = [];
-      loadUsers();
-    };
   }
 ]);

@@ -260,18 +260,20 @@
         return query.trim();
       };
 
-      this.getCompanies = function (companyId, search, cursor, count, sort) {
+      this.getCompanies = function (search, cursor) {
         var deferred = $q.defer();
-        var query = search ? createSearchQuery(COMPANY_SEARCH_FIELDS,
-          search) : "";
+
+        var query = search.query ? createSearchQuery(COMPANY_SEARCH_FIELDS,
+          search.query) : "";
 
         var obj = {
-          "companyId": companyId,
+          "companyId": search.companyId,
           "search": query,
           "cursor": cursor,
-          "count": count,
-          "sort": sort
+          "count": search.count,
+          "sort": search.sortBy + (search.reverse ? " desc" : " asc")
         };
+
         $log.debug("getCompanies called with", obj);
         coreAPILoader().then(function (coreApi) {
           var request = coreApi.company.list(obj);

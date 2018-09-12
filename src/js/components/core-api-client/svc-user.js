@@ -156,17 +156,24 @@
   ])
 
   .factory("getUsers", ["$q", "coreAPILoader", "$log",
-    function (
-      $q, coreAPILoader, $log) {
-      return function (criteria) {
-        $log.debug("getUsers", criteria);
+    function ($q, coreAPILoader, $log) {
+      return function (search, cursor) {
+        var obj = {
+          "companyId": search.companyId,
+          "search": search.query,
+          "cursor": cursor,
+          "count": search.count,
+          "sort": search.sortBy + (search.reverse ? " desc" : " asc")
+        };
+
+        $log.debug("getUsers", obj);
         var deferred = $q.defer();
         coreAPILoader().then(function (coreApi) {
-          var request = coreApi.user.list(criteria);
+          var request = coreApi.user.list(obj);
           request.execute(function (resp) {
             $log.debug("getUsers resp", resp);
             if (resp.result) {
-              deferred.resolve(resp.items);
+              deferred.resolve(resp.result);
             } else {
               deferred.reject("getUsers");
             }
