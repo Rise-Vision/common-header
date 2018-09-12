@@ -6,7 +6,7 @@
     var selectSubcompanyModal = element(by.css(".select-subcompany-modal"));
     var loader = element(by.xpath('//div[@spinner-key="company-selector-modal-list"]'));
 
-    var companies = element.all(by.repeater('company in companies.list'));
+    var companies = element.all(by.repeater('company in companies.items.list'));
     
     var closeButton = element(by.css(".modal-header button.close"));
     
