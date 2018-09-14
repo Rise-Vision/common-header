@@ -6097,13 +6097,13 @@ angular.module("risevision.common.components.ui-flow")
 
       $urlRouterProvider.otherwise("/");
 
+      $urlRouterProvider.when(/\/.*&id_token=.*&client_id=.*/, function () {
+        console.log("Google Auth result received");
+      });
+
       // Use $stateProvider to configure states.
       $stateProvider.state("common", {
         template: "<div class=\"app-launcher\" ui-view></div>"
-      })
-
-      .state("common.googleresult", {
-        url: "/:id_token&:client_id"
       })
 
       .state("common.auth", {
