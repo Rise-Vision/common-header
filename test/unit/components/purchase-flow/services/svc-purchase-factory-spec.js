@@ -92,7 +92,7 @@ describe("Services: purchase factory", function() {
 
   }));
 
-  var $rootScope, $modal, $timeout, purchaseFactory, userState, stripeService, storeService, purchaseFlowTracker, validate, RPP_ADDON_ID;
+  var $rootScope, $modal, $timeout, clock, purchaseFactory, userState, stripeService, storeService, purchaseFlowTracker, validate, RPP_ADDON_ID;
 
   beforeEach(function() {
     inject(function($injector) {
@@ -117,6 +117,14 @@ describe("Services: purchase factory", function() {
   });
 
   describe("showPurchaseModal: ", function() {
+    beforeEach(function() {
+      clock = sinon.useFakeTimers();
+    });
+
+    afterEach(function () {
+      clock.restore();
+    });
+
     it("should show purchase modal", function() {
       purchaseFactory.showPurchaseModal({});
 
