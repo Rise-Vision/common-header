@@ -133,10 +133,10 @@ angular.module("risevision.common.header", [
 
 .run(["segmentAnalytics", "SEGMENT_API_KEY", "ENABLE_INTERCOM_MESSAGING",
   "analyticsEvents", "$document",
-  "$rootScope", "$window", "userState", "STORE_URL", "APPS_URL",
+  "$rootScope", "$window", "userState", "STORE_URL", "STORE_URL_CH", "APPS_URL",
   function (segmentAnalytics, SEGMENT_API_KEY, ENABLE_INTERCOM_MESSAGING,
     analyticsEvents, $document,
-    $rootScope, $window, userState, STORE_URL, APPS_URL) {
+    $rootScope, $window, userState, STORE_URL, STORE_URL_CH, APPS_URL) {
     analyticsEvents.initialize();
     segmentAnalytics.load(SEGMENT_API_KEY, ENABLE_INTERCOM_MESSAGING);
 
@@ -168,10 +168,17 @@ angular.module("risevision.common.header", [
     });
 
     $rootScope.$on("risevision.company.selectedCompanyChanged", function () {
+      console.log("**************************************************");
+      console.log("$window.location.href", $window.location.href);
+      console.log("STORE_URL", STORE_URL);
+      console.log("STORE_URL_CH", STORE_URL_CH);
+      console.log("APPS_URL", APPS_URL);
+      console.log("userState.isSelectedCompanyChargebee()", userState.isSelectedCompanyChargebee());
+
       // Redirect Store requests by Chargebee users to Apps
       var currentURL = $window.location.href;
-      var isStoreRequest = currentURL.indexOf(STORE_URL) >= 0;
-      var isInvoicesRequest = currentURL.indexOf(STORE_URL + "account/view/invoicesHistory") >= 0;
+      var isStoreRequest = currentURL.indexOf(STORE_URL_CH) >= 0;
+      var isInvoicesRequest = currentURL.indexOf(STORE_URL_CH + "account/view/invoicesHistory") >= 0;
 
       if (userState.isSelectedCompanyChargebee() && isStoreRequest && !isInvoicesRequest) {
         $window.location.href = APPS_URL + "?cid=" + userState.getSelectedCompanyId();
