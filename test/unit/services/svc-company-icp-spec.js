@@ -39,7 +39,10 @@ describe("service: companyIcpFactory:", function() {
         isUserAdmin: function() {
           return isUserAdmin;
         },
-        _restoreState: function() {}
+        _restoreState: function() {},
+        isSelectedCompanyChargebee: function () {
+          return true;
+        }
       };
     });
     $provide.service("updateCompany", function() {
