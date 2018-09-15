@@ -11522,6 +11522,7 @@ module.run(['$templateCache', function($templateCache) {
     .value("CORE_URL", "https://rvaserver2.appspot.com/_ah/api")
     .value("COOKIE_CHECK_URL", "//storage-dot-rvaserver2.appspot.com")
     .value("STORE_URL", "https://store.risevision.com/")
+    .value("STORE_URL_CH", "https://store.risevision.com/")
     .value("STORE_SERVER_URL",
       "https://store-dot-rvaserver2.appspot.com/")
     .value("STORE_ENDPOINT_URL",
