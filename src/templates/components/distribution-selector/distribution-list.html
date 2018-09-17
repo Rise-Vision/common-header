@@ -35,7 +35,7 @@
         <tbody class="table-body">
           <tr class="table-body__row u_clickable display" ng-click="toggleDisplay(display.id);" ng-class="{'active' : isSelected(display.id) }" ng-repeat="display in displays.list">
             <td id="displayName-{{display.id}}" class="table-body__cell display-name"><span>{{display.name}}</span></td>
-            <td id="displayId-{{display.id}}" class="table-body__cell display-id hidden-xs"><span>{{display.id}}</span></td>
+            <td id="displayId-{{display.id}}" class="table-body__cell hidden-xs"><span>{{display.id}}</span></td>
             <td id="displayAddress-{{display.id}}" class="table-body__cell display-address hidden-xs"><span class="text-muted u_ellipsis-md">{{display.address}}</span></td>
           </tr>
         </tbody>
