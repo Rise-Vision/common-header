@@ -1,3 +1,40 @@
+.rise-player-list {
+  border-radius: 4px;
+  border: 1px solid #DDD;
+  overflow: hidden;
+}
+
+.rise-player-list-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: .5em 1em;
+  border-bottom: 1px solid $light-gray;
+  min-height: 48px;
+  background-color: #FFF;
+  &:last-child {
+    border-bottom: none;
+  }
+  .rise-player-list-item__icon {
+    max-width: 24px;
+    margin-right: 1em;
+  }
+}
+
+/* ==========================================================================
+   Extra Small devices (tablets, 576px and up)
+   ========================================================================== */
+ 
+@media (min-width: 576px) {
+  .rise-player-list.display-instructions {
+    padding-left: 200px;
+    background-image: url('https://s3.amazonaws.com/Rise-Images/UI/display-diagram.png');
+    background-position: left center;
+    background-size: 200px;
+  }
+}
+
+
 .id-form {
   cursor: default !important;
   background-color: #FFF !important;

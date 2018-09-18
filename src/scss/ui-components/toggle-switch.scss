@@ -36,10 +36,11 @@ $toggle-group-height: $switch-height + 5;
 
 /* ON/OFF Switch */
 .onoffswitch {
-    position: relative;
+    position: absolute;
     width: $switch-width;
-    display: inline-block;
     font-size: 80%;
+    left: 3px;
+    top: 0;
 
     .onoffswitch-label {
         display: block;
@@ -103,14 +104,18 @@ $toggle-group-height: $switch-height + 5;
 .toggle-group {
     position: relative;
     height: $toggle-group-height;
-    // font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    // top: 50%;
-    left: -260px;
-    margin-top: 7px;
+    overflow: hidden;
 
     input[type=checkbox] {
         position: relative;
-        left: 30px;
+        left: -20px;
+        top: 0;
+        width: 76px;
+        height: 27px;
+        margin: 0;
+        padding: 0;
+        vertical-align: top;
+        z-index: 100;
 
         &:checked ~ .onoffswitch .onoffswitch-label .onoffswitch-inner {
             margin-left: 0;
@@ -135,16 +140,7 @@ $toggle-group-height: $switch-height + 5;
     }
 
     label {
-        position: absolute;
-        cursor: pointer;
-        padding-left: $switch-width + 10;
-        display: inline-block;
-        text-align: left;
-        line-height: $switch-group-height;
-        width: 100%;
-        z-index: 1;
-        height: $switch-group-height;
-        font-weight: 400;
+        line-height: 27px;
     }
 
 }
