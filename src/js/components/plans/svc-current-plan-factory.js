@@ -16,9 +16,8 @@
             plan = _.cloneDeep(_plansByCode[company.planProductCode]);
             plan.status = company.planSubscriptionStatus;
             plan.trialPeriod = company.planTrialPeriod;
-            plan.proStatus = company.playerProSubscriptionStatus;
-            plan.planPlayerProLicenseCount = company.planPlayerProLicenseCount;
-            plan.playerProLicenseCount = company.playerProLicenseCount;
+            plan.playerProTotalLicenseCount = company.playerProTotalLicenseCount;
+            plan.playerProAvailableLicenseCount = company.playerProAvailableLicenseCount;
           } else {
             plan = _.cloneDeep(_plansByType.free);
           }
@@ -73,14 +72,6 @@
 
         _factory.isCancelled = function () {
           return !_factory.isFree() && _factory.currentPlan.status === "Cancelled";
-        };
-
-        _factory.isProSubscribed = function () {
-          return _factory.currentPlan.proStatus === "Active";
-        };
-
-        _factory.isProSuspended = function () {
-          return _factory.currentPlan.proStatus === "Suspended";
         };
 
         _loadCurrentPlan();

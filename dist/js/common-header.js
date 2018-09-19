@@ -186,7 +186,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plan-banner.html',
-    '<div id="free-plan-banner" class="alert alert-plan plan-active text-right" ng-show="isFree() || isCancelled()"><div class="u_margin-right"><strong>Get more out of Rise Vision!</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">See Our Plans</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="isSubscribed()"><div class="u_margin-right"><strong>{{plan.name}} Plan</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div id="trial-plan-banner" class="alert alert-plan plan-active text-right" ng-show="isOnTrial()"><div class="u_margin-right"><strong>You have {{plan.trialPeriod}} days left on your Rise Vision {{plan.name}} Plan trial!</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Subscribe Now</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="isTrialExpired()"><div class="u_margin-right"><strong ng-show="!isProSubscribed()">Your Rise Vision {{plan.name}} Plan trial has expired! You are now on the Free Plan. Your Displays are no longer Licensed.</strong> <strong ng-show="isProSubscribed()">Your Rise Vision {{plan.name}} Plan trial has expired! You are now on the Free Plan. Your Displays are still Licensed.</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Subscribe Now</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="isSuspended()"><div class="u_margin-right"><strong>There was an issue processing your payment. Please update your billing information. Your Displays may be affected.</strong> <a href="{{storeAccountUrl}}" target="_blank" class="u_margin-left">Update Billing</a></div></div>');
+    '<div id="free-plan-banner" class="alert alert-plan plan-active text-right" ng-show="isFree() || isCancelled()"><div class="u_margin-right"><strong>Get more out of Rise Vision!</strong> <a href="#" ng-click="showPlans()" class="u_margin-left">See Our Plans</a></div></div><div class="alert alert-plan plan-active text-right" ng-show="isSubscribed()"><div class="u_margin-right"><strong>{{plan.name}} Plan</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Change Plan</a></div></div><div id="trial-plan-banner" class="alert alert-plan plan-active text-right" ng-show="isOnTrial()"><div class="u_margin-right"><strong>You have {{plan.trialPeriod}} days left on your Rise Vision {{plan.name}} Plan trial!</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Subscribe Now</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="isTrialExpired()"><div class="u_margin-right"><strong>Your Rise Vision {{plan.name}} Plan trial has expired! You are now on the Free Plan. Your Displays are no longer Licensed.</strong> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Subscribe Now</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="isSuspended()"><div class="u_margin-right"><strong>There was an issue processing your payment. Please update your billing information. Your Displays may be affected.</strong> <a href="{{storeAccountUrl}}" target="_blank" class="u_margin-left">Update Billing</a></div></div>');
 }]);
 })();
 
@@ -1469,7 +1469,6 @@ angular.module("risevision.common.header")
       $scope.isTrialExpired = currentPlanFactory.isTrialExpired;
       $scope.isSuspended = currentPlanFactory.isSuspended;
       $scope.isCancelled = currentPlanFactory.isCancelled;
-      $scope.isProSubscribed = currentPlanFactory.isProSubscribed;
     }
   ]);
 
@@ -9643,9 +9642,8 @@ angular.module("risevision.common.components.plans", [
             plan = _.cloneDeep(_plansByCode[company.planProductCode]);
             plan.status = company.planSubscriptionStatus;
             plan.trialPeriod = company.planTrialPeriod;
-            plan.proStatus = company.playerProSubscriptionStatus;
-            plan.planPlayerProLicenseCount = company.planPlayerProLicenseCount;
-            plan.playerProLicenseCount = company.playerProLicenseCount;
+            plan.playerProTotalLicenseCount = company.playerProTotalLicenseCount;
+            plan.playerProAvailableLicenseCount = company.playerProAvailableLicenseCount;
           } else {
             plan = _.cloneDeep(_plansByType.free);
           }
@@ -9700,14 +9698,6 @@ angular.module("risevision.common.components.plans", [
 
         _factory.isCancelled = function () {
           return !_factory.isFree() && _factory.currentPlan.status === "Cancelled";
-        };
-
-        _factory.isProSubscribed = function () {
-          return _factory.currentPlan.proStatus === "Active";
-        };
-
-        _factory.isProSuspended = function () {
-          return _factory.currentPlan.proStatus === "Suspended";
         };
 
         _loadCurrentPlan();
@@ -9899,7 +9889,8 @@ angular.module("risevision.common.components.plans", [
               selectedCompany.planProductCode = plan.productCode;
               selectedCompany.planTrialPeriod = plan.trialPeriod;
               selectedCompany.planSubscriptionStatus = "Trial";
-              selectedCompany.planPlayerProLicenseCount = _plansByCode[plan.productCode].proLicenseCount;
+              selectedCompany.playerProTotalLicenseCount = _plansByCode[plan.productCode].proLicenseCount;
+              selectedCompany.playerProAvailableLicenseCount = _plansByCode[plan.productCode].proLicenseCount;
 
               userState.updateCompanySettings(selectedCompany);
             })
@@ -9929,37 +9920,29 @@ angular.module("risevision.common.components.plans", [
         var _factory = {};
 
         _factory.hasProfessionalLicenses = function () {
-          return currentPlanFactory.isPlanActive() || currentPlanFactory.isProSubscribed();
+          return currentPlanFactory.currentPlan.playerProTotalLicenseCount > 0;
         };
 
         _factory.getProLicenseCount = function () {
-          var planProLicenses = (currentPlanFactory.isPlanActive() && currentPlanFactory.currentPlan.planPlayerProLicenseCount) ||
-            0;
-          var extraProLicenses = (currentPlanFactory.isProSubscribed() && currentPlanFactory.currentPlan.playerProLicenseCount) ||
-            0;
-
-          return planProLicenses + extraProLicenses;
+          return currentPlanFactory.currentPlan.playerProTotalLicenseCount || 0;
         };
 
         _factory.areAllProLicensesUsed = function () {
-          var company = userState.getCopyOfSelectedCompany();
-          var maxProDisplays = _factory.getProLicenseCount();
-          var assignedDisplays = company.playerProAssignedDisplays || [];
-
-          return assignedDisplays.length >= maxProDisplays;
+          return currentPlanFactory.currentPlan.playerProAvailableLicenseCount <= 0;
         };
 
-        _factory.toggleDisplayLicenseLocal = function (displayId, playerProAuthorized) {
+        _factory.toggleDisplayLicenseLocal = function (playerProAuthorized) {
           var company = userState.getCopyOfSelectedCompany(true);
-          var assignedDisplays = company.playerProAssignedDisplays || [];
+          var availableLicenseCount = company.playerProAvailableLicenseCount;
 
-          if (playerProAuthorized && assignedDisplays.indexOf(displayId) === -1) {
-            assignedDisplays.push(displayId);
-          } else if (!playerProAuthorized && assignedDisplays.indexOf(displayId) >= 0) {
-            assignedDisplays.splice(assignedDisplays.indexOf(displayId), 1);
+          if (playerProAuthorized) {
+            availableLicenseCount--;
+            availableLicenseCount = availableLicenseCount < 0 ? 0 : availableLicenseCount;
+          } else {
+            availableLicenseCount++;
           }
 
-          company.playerProAssignedDisplays = assignedDisplays;
+          company.playerProAvailableLicenseCount = availableLicenseCount;
           userState.updateCompanySettings(company);
         };
 

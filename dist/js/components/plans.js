@@ -124,9 +124,8 @@ angular.module("risevision.common.components.plans", [
             plan = _.cloneDeep(_plansByCode[company.planProductCode]);
             plan.status = company.planSubscriptionStatus;
             plan.trialPeriod = company.planTrialPeriod;
-            plan.proStatus = company.playerProSubscriptionStatus;
-            plan.planPlayerProLicenseCount = company.planPlayerProLicenseCount;
-            plan.playerProLicenseCount = company.playerProLicenseCount;
+            plan.playerProTotalLicenseCount = company.playerProTotalLicenseCount;
+            plan.playerProAvailableLicenseCount = company.playerProAvailableLicenseCount;
           } else {
             plan = _.cloneDeep(_plansByType.free);
           }
@@ -181,14 +180,6 @@ angular.module("risevision.common.components.plans", [
 
         _factory.isCancelled = function () {
           return !_factory.isFree() && _factory.currentPlan.status === "Cancelled";
-        };
-
-        _factory.isProSubscribed = function () {
-          return _factory.currentPlan.proStatus === "Active";
-        };
-
-        _factory.isProSuspended = function () {
-          return _factory.currentPlan.proStatus === "Suspended";
         };
 
         _loadCurrentPlan();
@@ -380,7 +371,8 @@ angular.module("risevision.common.components.plans", [
               selectedCompany.planProductCode = plan.productCode;
               selectedCompany.planTrialPeriod = plan.trialPeriod;
               selectedCompany.planSubscriptionStatus = "Trial";
-              selectedCompany.planPlayerProLicenseCount = _plansByCode[plan.productCode].proLicenseCount;
+              selectedCompany.playerProTotalLicenseCount = _plansByCode[plan.productCode].proLicenseCount;
+              selectedCompany.playerProAvailableLicenseCount = _plansByCode[plan.productCode].proLicenseCount;
 
               userState.updateCompanySettings(selectedCompany);
             })
@@ -410,37 +402,29 @@ angular.module("risevision.common.components.plans", [
         var _factory = {};
 
         _factory.hasProfessionalLicenses = function () {
-          return currentPlanFactory.isPlanActive() || currentPlanFactory.isProSubscribed();
+          return currentPlanFactory.currentPlan.playerProTotalLicenseCount > 0;
         };
 
         _factory.getProLicenseCount = function () {
-          var planProLicenses = (currentPlanFactory.isPlanActive() && currentPlanFactory.currentPlan.planPlayerProLicenseCount) ||
-            0;
-          var extraProLicenses = (currentPlanFactory.isProSubscribed() && currentPlanFactory.currentPlan.playerProLicenseCount) ||
-            0;
-
-          return planProLicenses + extraProLicenses;
+          return currentPlanFactory.currentPlan.playerProTotalLicenseCount || 0;
         };
 
         _factory.areAllProLicensesUsed = function () {
-          var company = userState.getCopyOfSelectedCompany();
-          var maxProDisplays = _factory.getProLicenseCount();
-          var assignedDisplays = company.playerProAssignedDisplays || [];
-
-          return assignedDisplays.length >= maxProDisplays;
+          return currentPlanFactory.currentPlan.playerProAvailableLicenseCount <= 0;
         };
 
-        _factory.toggleDisplayLicenseLocal = function (displayId, playerProAuthorized) {
+        _factory.toggleDisplayLicenseLocal = function (playerProAuthorized) {
           var company = userState.getCopyOfSelectedCompany(true);
-          var assignedDisplays = company.playerProAssignedDisplays || [];
+          var availableLicenseCount = company.playerProAvailableLicenseCount;
 
-          if (playerProAuthorized && assignedDisplays.indexOf(displayId) === -1) {
-            assignedDisplays.push(displayId);
-          } else if (!playerProAuthorized && assignedDisplays.indexOf(displayId) >= 0) {
-            assignedDisplays.splice(assignedDisplays.indexOf(displayId), 1);
+          if (playerProAuthorized) {
+            availableLicenseCount--;
+            availableLicenseCount = availableLicenseCount < 0 ? 0 : availableLicenseCount;
+          } else {
+            availableLicenseCount++;
           }
 
-          company.playerProAssignedDisplays = assignedDisplays;
+          company.playerProAvailableLicenseCount = availableLicenseCount;
           userState.updateCompanySettings(company);
         };
 
