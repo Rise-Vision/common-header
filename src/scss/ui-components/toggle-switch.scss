@@ -116,6 +116,7 @@ $toggle-group-height: $switch-height + 5;
         padding: 0;
         vertical-align: top;
         z-index: 100;
+        opacity: 0;
 
         &:checked ~ .onoffswitch .onoffswitch-label .onoffswitch-inner {
             margin-left: 0;
@@ -145,7 +146,7 @@ $toggle-group-height: $switch-height + 5;
 
 }
 
-/* ==== Accessibility ===== */
+/* ==== Accessibility ==== */
 .aural {
     clip: rect(1px, 1px, 1px, 1px);
     height: 1px;
