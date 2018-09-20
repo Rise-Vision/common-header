@@ -14274,7 +14274,8 @@ ul.tree ul li:last-child:before {
     margin: 0;
     padding: 0;
     vertical-align: top;
-    z-index: 100; }
+    z-index: 100;
+    opacity: 0; }
     .toggle-group input[type=checkbox]:checked ~ .onoffswitch .onoffswitch-label .onoffswitch-inner {
       margin-left: 0; }
     .toggle-group input[type=checkbox]:checked ~ .onoffswitch .onoffswitch-label .onoffswitch-switch {
@@ -14291,7 +14292,7 @@ ul.tree ul li:last-child:before {
   .toggle-group label {
     line-height: 27px; }
 
-/* ==== Accessibility ===== */
+/* ==== Accessibility ==== */
 .aural {
   clip: rect(1px, 1px, 1px, 1px);
   height: 1px;
