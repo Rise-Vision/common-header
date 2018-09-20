@@ -83,9 +83,6 @@ angular.module("risevision.common.header", [
             title: "Home",
             link: "#/"
           }, {
-            title: "Store",
-            link: ""
-          }, {
             title: "Account",
             link: ""
           }, {
