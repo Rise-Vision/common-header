@@ -23,7 +23,8 @@
 
   <div class="alert alert-plan plan-suspended text-center" ng-show="isTrialExpired()">
     <div class="u_margin-right">
-      <strong>Your Rise Vision {{plan.name}} Plan trial has expired! You are now on the Free Plan. Your Displays are no longer Licensed.</strong>
+      <strong ng-show="!plan.playerProTotalLicenseCount">Your Rise Vision {{plan.name}} Plan trial has expired! You are now on the Free Plan. Your Displays are no longer Licensed.</strong>
+      <strong ng-show="plan.playerProTotalLicenseCount">Your Rise Vision {{plan.name}} Plan trial has expired! You are now on the Free Plan. Some of your Displays are no longer Licensed.</strong>
       <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Subscribe Now</a>
     </div>
   </div>
