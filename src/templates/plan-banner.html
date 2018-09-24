@@ -17,14 +17,14 @@
   <div class="alert alert-plan plan-active text-right" ng-show="isSubscribed()">
     <div class="u_margin-right">
       <strong>{{plan.name}} Plan</strong>
-      <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Change Plan</a>
+      <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="ml-3 btn btn-xs btn-primary">Change Plan</a>
     </div>
   </div>
 
   <div id="trial-plan-banner" class="alert alert-plan plan-active text-right" ng-show="isOnTrial()">
     <div class="u_margin-right">
       <strong>You have {{plan.trialPeriod}} days left on your Rise Vision {{plan.name}} Plan trial!</strong>
-      <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Subscribe Now</a>
+      <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="ml-3 btn btn-xs btn-primary">Subscribe Now</a>
     </div>
   </div>
 
@@ -32,13 +32,13 @@
     <div class="u_margin-right">
       <strong ng-show="!isProSubscribed()">Your Rise Vision {{plan.name}} Plan trial has expired! You are now on the Free Plan. Your Displays are no longer Licensed.</strong>
       <strong ng-show="isProSubscribed()">Your Rise Vision {{plan.name}} Plan trial has expired! You are now on the Free Plan. Your Displays are still Licensed.</strong>
-      <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="u_margin-left">Subscribe Now</a>
+      <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="ml-3 btn btn-xs btn-primary">Subscribe Now</a>
     </div>
   </div>
 
   <div class="alert alert-plan plan-suspended text-center" ng-show="isSuspended()">
     <div class="u_margin-right">
       <strong>There was an issue processing your payment. Please update your billing information. Your Displays may be affected.</strong>
-      <a href="{{storeAccountUrl}}" target="_blank" class="u_margin-left">Update Billing</a>
+      <a href="{{storeAccountUrl}}" target="_blank" class="ml-3 btn btn-xs btn-primary">Update Billing</a>
     </div>
   </div>
