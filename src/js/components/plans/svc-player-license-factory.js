@@ -7,37 +7,29 @@
         var _factory = {};
 
         _factory.hasProfessionalLicenses = function () {
-          return currentPlanFactory.isPlanActive() || currentPlanFactory.isProSubscribed();
+          return currentPlanFactory.currentPlan.playerProTotalLicenseCount > 0;
         };
 
         _factory.getProLicenseCount = function () {
-          var planProLicenses = (currentPlanFactory.isPlanActive() && currentPlanFactory.currentPlan.planPlayerProLicenseCount) ||
-            0;
-          var extraProLicenses = (currentPlanFactory.isProSubscribed() && currentPlanFactory.currentPlan.playerProLicenseCount) ||
-            0;
-
-          return planProLicenses + extraProLicenses;
+          return currentPlanFactory.currentPlan.playerProTotalLicenseCount || 0;
         };
 
         _factory.areAllProLicensesUsed = function () {
-          var company = userState.getCopyOfSelectedCompany();
-          var maxProDisplays = _factory.getProLicenseCount();
-          var assignedDisplays = company.playerProAssignedDisplays || [];
-
-          return assignedDisplays.length >= maxProDisplays;
+          return currentPlanFactory.currentPlan.playerProAvailableLicenseCount <= 0;
         };
 
-        _factory.toggleDisplayLicenseLocal = function (displayId, playerProAuthorized) {
+        _factory.toggleDisplayLicenseLocal = function (playerProAuthorized) {
           var company = userState.getCopyOfSelectedCompany(true);
-          var assignedDisplays = company.playerProAssignedDisplays || [];
+          var availableLicenseCount = company.playerProAvailableLicenseCount;
 
-          if (playerProAuthorized && assignedDisplays.indexOf(displayId) === -1) {
-            assignedDisplays.push(displayId);
-          } else if (!playerProAuthorized && assignedDisplays.indexOf(displayId) >= 0) {
-            assignedDisplays.splice(assignedDisplays.indexOf(displayId), 1);
+          if (playerProAuthorized) {
+            availableLicenseCount--;
+            availableLicenseCount = availableLicenseCount < 0 ? 0 : availableLicenseCount;
+          } else {
+            availableLicenseCount++;
           }
 
-          company.playerProAssignedDisplays = assignedDisplays;
+          company.playerProAvailableLicenseCount = availableLicenseCount;
           userState.updateCompanySettings(company);
         };
 

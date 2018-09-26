@@ -162,7 +162,8 @@ describe("Services: plans factory", function() {
             planProductCode: plan.productCode,
             planTrialPeriod: plan.trialPeriod,
             planSubscriptionStatus: "Trial",
-            planPlayerProLicenseCount: plan.proLicenseCount
+            playerProTotalLicenseCount: plan.proLicenseCount,
+            playerProAvailableLicenseCount: plan.proLicenseCount
           });
 
           done();

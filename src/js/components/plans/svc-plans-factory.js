@@ -163,7 +163,8 @@
               selectedCompany.planProductCode = plan.productCode;
               selectedCompany.planTrialPeriod = plan.trialPeriod;
               selectedCompany.planSubscriptionStatus = "Trial";
-              selectedCompany.planPlayerProLicenseCount = _plansByCode[plan.productCode].proLicenseCount;
+              selectedCompany.playerProTotalLicenseCount = _plansByCode[plan.productCode].proLicenseCount;
+              selectedCompany.playerProAvailableLicenseCount = _plansByCode[plan.productCode].proLicenseCount;
 
               userState.updateCompanySettings(selectedCompany);
             })

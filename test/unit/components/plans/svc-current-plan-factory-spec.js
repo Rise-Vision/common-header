@@ -51,8 +51,6 @@ describe("Services: current plan factory", function() {
     expect(currentPlanFactory.isOnTrial).to.be.a("function");
     expect(currentPlanFactory.isTrialExpired).to.be.a("function");
     expect(currentPlanFactory.isSuspended).to.be.a("function");
-    expect(currentPlanFactory.isProSubscribed).to.be.a("function");
-    expect(currentPlanFactory.isProSuspended).to.be.a("function");
   });
 
   describe("initialization", function() {
@@ -63,7 +61,8 @@ describe("Services: current plan factory", function() {
         id: "companyId",
         planProductCode: BASIC_PLAN_CODE,
         planSubscriptionStatus: "Subscribed",
-        playerProSubscriptionStatus: "Not Subscribed"
+        playerProTotalLicenseCount: 3,
+        playerProAvailableLicenseCount: 1
       });
 
       $rootScope.$emit("risevision.company.selectedCompanyChanged");
@@ -74,7 +73,8 @@ describe("Services: current plan factory", function() {
         expect(currentPlanFactory.currentPlan).to.be.not.null;
         expect(currentPlanFactory.currentPlan.type).to.equal("basic");
         expect(currentPlanFactory.currentPlan.status).to.equal("Subscribed");
-        expect(currentPlanFactory.currentPlan.proStatus).to.equal("Not Subscribed");
+        expect(currentPlanFactory.currentPlan.playerProTotalLicenseCount).to.equal(3);
+        expect(currentPlanFactory.currentPlan.playerProAvailableLicenseCount).to.equal(1);
 
         done();
       }, 0);
@@ -87,7 +87,8 @@ describe("Services: current plan factory", function() {
         planProductCode: BASIC_PLAN_CODE,
         planSubscriptionStatus: "Trial",
         planTrialPeriod: 23,
-        playerProSubscriptionStatus: "Subscribed"
+        playerProTotalLicenseCount: 3,
+        playerProAvailableLicenseCount: 1
       });
 
       $rootScope.$emit("risevision.company.selectedCompanyChanged");
@@ -99,7 +100,8 @@ describe("Services: current plan factory", function() {
         expect(currentPlanFactory.currentPlan.type).to.equal("basic");
         expect(currentPlanFactory.currentPlan.status).to.equal("Trial");
         expect(currentPlanFactory.currentPlan.trialPeriod).to.equal(23);
-        expect(currentPlanFactory.currentPlan.proStatus).to.equal("Subscribed");
+        expect(currentPlanFactory.currentPlan.playerProTotalLicenseCount).to.equal(3);
+        expect(currentPlanFactory.currentPlan.playerProAvailableLicenseCount).to.equal(1);
 
         done();
       }, 0);
@@ -223,23 +225,6 @@ describe("Services: current plan factory", function() {
     it("should return the subscription status is not Cancelled", function() {
       currentPlanFactory.currentPlan = { status: "Suspended" };
       expect(currentPlanFactory.isCancelled()).to.be.false;
-    });
-  });
-
-  describe("Pro Subscribed status: ", function() {
-    it("should return the Pro subscription status is Subscribed", function() {
-      currentPlanFactory.currentPlan = { proStatus: "Active" };
-      expect(currentPlanFactory.isProSubscribed()).to.be.true;
-    });
-
-    it("should return the Pro subscription status is not Subscribed", function() {
-      currentPlanFactory.currentPlan = { proStatus: "Cancelled" };
-      expect(currentPlanFactory.isProSubscribed()).to.be.false;
-    });
-
-    it("should return the Pro subscription status is Suspended", function() {
-      currentPlanFactory.currentPlan = { proStatus: "Suspended" };
-      expect(currentPlanFactory.isProSuspended()).to.be.true;
     });
   });
 
