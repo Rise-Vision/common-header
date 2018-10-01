@@ -166,7 +166,11 @@
       <div id="planFooter"></div>
     </div>
 
-    <div class="alert bg-info p-4 text-center my-2">
+    <div class="alert bg-info p-4 text-center my-2" ng-show="currentPlan.parentPlan">
+      By subscribing to a Plan on this Sub-Company, you will no longer share Display Licenses with your Parent Company. Your Licensed Displays will use the licenses included with the new Plan.
+    </div>
+
+    <div class="alert bg-info p-4 text-center my-2" ng-show="currentPlan.shareCompanyPlan && !currentPlan.parentPlan">
       Your Plan and Displays Licenses can be used on any of your Displays and any Display across all your Sub-Companies.
     </div>
 

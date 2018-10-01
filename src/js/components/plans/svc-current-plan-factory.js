@@ -18,6 +18,14 @@
             plan.trialPeriod = company.planTrialPeriod;
             plan.playerProTotalLicenseCount = company.playerProTotalLicenseCount;
             plan.playerProAvailableLicenseCount = company.playerProAvailableLicenseCount;
+
+            plan.shareCompanyPlan = company.shareCompanyPlan;
+
+            if (company.parentPlanProductCode) {
+              plan.parentPlan = _.cloneDeep(_plansByCode[company.parentPlanProductCode]);
+              plan.parentPlan.companyName = company.parentPlanCompanyName;
+              plan.parentPlan.administratorEmail = company.parentPlanAdministratorEmail;
+            }
           } else {
             plan = _.cloneDeep(_plansByType.free);
           }
@@ -48,6 +56,10 @@
 
         _factory.isFree = function () {
           return _factory.currentPlan.type === "free";
+        };
+
+        _factory.isParentPlan = function () {
+          return !!_factory.currentPlan.parentPlan;
         };
 
         _factory.isEnterpriseSubCompany = function () {

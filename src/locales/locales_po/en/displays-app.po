@@ -292,8 +292,11 @@ msgstr "View Terms and Conditions"
 msgid "alerts.webServiceURL"
 msgstr "Web Service URL"
 
-msgid "details.all-licenses-used"
-msgstr "You're using all <strong>{{count}}</strong> of your Display Licenses."
+msgid "details.contact-plan-parent-email"
+msgstr "You don't have access to purchase Display Licenses. Please contact your Plan Administrator at <a href="mailto:{{administratorEmail}}">{{administratorEmail}}</a> to request more."
+
+msgid "details.contact-plan-parent-no-email"
+msgstr "You don't have access to purchase Display Licenses. Please contact your Plan Administrator to request more."
 
 msgid "details.deleteTitle"
 msgstr "Deleting Display"
@@ -305,7 +308,7 @@ msgid "details.error"
 msgstr "Failed to update display!"
 
 msgid "details.get-more"
-msgstr "Get More Now"
+msgstr "Get More"
 
 msgid "details.rpp-is"
 msgstr "Licensed Display is"

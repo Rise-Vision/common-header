@@ -5,7 +5,14 @@ describe("controller: plan banner", function() {
   beforeEach(module(function ($provide) {
     $provide.factory("currentPlanFactory", function() {
       return {
-        currentPlan: { type: "basic" }
+        currentPlan: { type: "basic" },
+        isParentPlan: sinon.stub().returns(false),
+        isFree: sinon.stub().returns(false),
+        isCancelled: sinon.stub().returns(false),
+        isSubscribed: sinon.stub().returns(false),
+        isOnTrial: sinon.stub().returns(false),
+        isTrialExpired: sinon.stub().returns(false),
+        isSuspended: sinon.stub().returns(false)
       };
     });
     $provide.factory("userState", function() {
@@ -43,6 +50,57 @@ describe("controller: plan banner", function() {
 
   it("should initialize",function() {
     expect($scope.showPlans).to.be.ok;
+    expect($scope.getVisibleBanner).to.be.a("function");
+  });
+
+  describe("getVisibleBanner: ", function() {
+    
+    it("should default to free bar", function() {
+      expect($scope.getVisibleBanner()).to.equal("free");
+    });
+
+    it("should show parent plan bar", function() {
+      currentPlanFactory.isParentPlan.returns(true);
+
+      expect($scope.getVisibleBanner()).to.equal("parent");
+    });
+
+    it("should show free plan bar", function() {
+      currentPlanFactory.isFree.returns(true);
+
+      expect($scope.getVisibleBanner()).to.equal("free");
+    });
+
+    it("should show free plan bar if cancelled", function() {
+      currentPlanFactory.isCancelled.returns(true);
+
+      expect($scope.getVisibleBanner()).to.equal("free");
+    });
+
+    it("should show subscribed plan bar", function() {
+      currentPlanFactory.isSubscribed.returns(true);
+
+      expect($scope.getVisibleBanner()).to.equal("subscribed");
+    });
+
+    it("should show on trial plan bar", function() {
+      currentPlanFactory.isOnTrial.returns(true);
+
+      expect($scope.getVisibleBanner()).to.equal("trial");
+    });
+
+    it("should show expired trial plan bar", function() {
+      currentPlanFactory.isTrialExpired.returns(true);
+
+      expect($scope.getVisibleBanner()).to.equal("expired");
+    });
+
+    it("should show suspended plan bar", function() {
+      currentPlanFactory.isSuspended.returns(true);
+
+      expect($scope.getVisibleBanner()).to.equal("suspended");
+    });
+
   });
 
   it("should load the current plan when selected company changes", function(done) {

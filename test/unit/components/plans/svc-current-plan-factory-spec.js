@@ -47,6 +47,7 @@ describe("Services: current plan factory", function() {
     expect(currentPlanFactory).to.be.ok;
     expect(currentPlanFactory.isPlanActive).to.be.a("function");
     expect(currentPlanFactory.isFree).to.be.a("function");
+    expect(currentPlanFactory.isParentPlan).to.be.a("function");
     expect(currentPlanFactory.isSubscribed).to.be.a("function");
     expect(currentPlanFactory.isOnTrial).to.be.a("function");
     expect(currentPlanFactory.isTrialExpired).to.be.a("function");
@@ -62,7 +63,11 @@ describe("Services: current plan factory", function() {
         planProductCode: BASIC_PLAN_CODE,
         planSubscriptionStatus: "Subscribed",
         playerProTotalLicenseCount: 3,
-        playerProAvailableLicenseCount: 1
+        playerProAvailableLicenseCount: 1,
+        shareCompanyPlan: true,
+        parentPlanProductCode: ADVANCED_PLAN_CODE,
+        parentPlanCompanyName: "parentName",
+        parentPlanAdministratorEmail: "administratorEmail"
       });
 
       $rootScope.$emit("risevision.company.selectedCompanyChanged");
@@ -75,6 +80,12 @@ describe("Services: current plan factory", function() {
         expect(currentPlanFactory.currentPlan.status).to.equal("Subscribed");
         expect(currentPlanFactory.currentPlan.playerProTotalLicenseCount).to.equal(3);
         expect(currentPlanFactory.currentPlan.playerProAvailableLicenseCount).to.equal(1);
+
+        expect(currentPlanFactory.currentPlan.shareCompanyPlan).to.be.true;
+        expect(currentPlanFactory.currentPlan.parentPlan).to.be.ok;
+        expect(currentPlanFactory.currentPlan.parentPlan.type).to.equal("advanced");
+        expect(currentPlanFactory.currentPlan.parentPlan.companyName).to.equal("parentName");
+        expect(currentPlanFactory.currentPlan.parentPlan.administratorEmail).to.equal("administratorEmail");
 
         done();
       }, 0);
@@ -153,6 +164,18 @@ describe("Services: current plan factory", function() {
     it("should return the plan is not Free", function() {
       currentPlanFactory.currentPlan = { type: "advanced" };
       expect(currentPlanFactory.isFree()).to.be.false;
+    });
+  });
+
+  describe("Parent plan: ", function() {
+    it("should return the plan is inherited from the Parent", function() {
+      currentPlanFactory.currentPlan = { parentPlan: {} };
+      expect(currentPlanFactory.isParentPlan()).to.be.true;
+    });
+
+    it("should return the plan is not inherited from the Parent", function() {
+      currentPlanFactory.currentPlan = {};
+      expect(currentPlanFactory.isParentPlan()).to.be.false;
     });
   });
 
