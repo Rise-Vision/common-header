@@ -24,7 +24,7 @@
             if (company.parentPlanProductCode) {
               plan.parentPlan = _.cloneDeep(_plansByCode[company.parentPlanProductCode]);
               plan.parentPlan.companyName = company.parentPlanCompanyName;
-              plan.parentPlan.administratorEmail = company.parentPlanAdministratorEmail;
+              plan.parentPlan.contactEmail = company.parentPlanContactEmail;
             }
           } else {
             plan = _.cloneDeep(_plansByType.free);

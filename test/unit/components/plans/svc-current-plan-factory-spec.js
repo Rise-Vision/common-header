@@ -67,7 +67,7 @@ describe("Services: current plan factory", function() {
         shareCompanyPlan: true,
         parentPlanProductCode: ADVANCED_PLAN_CODE,
         parentPlanCompanyName: "parentName",
-        parentPlanAdministratorEmail: "administratorEmail"
+        parentPlanContactEmail: "administratorEmail"
       });
 
       $rootScope.$emit("risevision.company.selectedCompanyChanged");
@@ -85,7 +85,7 @@ describe("Services: current plan factory", function() {
         expect(currentPlanFactory.currentPlan.parentPlan).to.be.ok;
         expect(currentPlanFactory.currentPlan.parentPlan.type).to.equal("advanced");
         expect(currentPlanFactory.currentPlan.parentPlan.companyName).to.equal("parentName");
-        expect(currentPlanFactory.currentPlan.parentPlan.administratorEmail).to.equal("administratorEmail");
+        expect(currentPlanFactory.currentPlan.parentPlan.contactEmail).to.equal("administratorEmail");
 
         done();
       }, 0);
