@@ -9652,18 +9652,20 @@ angular.module("risevision.common.components.plans", [
             plan = _.cloneDeep(_plansByCode[company.planProductCode]);
             plan.status = company.planSubscriptionStatus;
             plan.trialPeriod = company.planTrialPeriod;
-            plan.playerProTotalLicenseCount = company.playerProTotalLicenseCount;
-            plan.playerProAvailableLicenseCount = company.playerProAvailableLicenseCount;
 
-            plan.shareCompanyPlan = company.shareCompanyPlan;
-
-            if (company.parentPlanProductCode) {
-              plan.parentPlan = _.cloneDeep(_plansByCode[company.parentPlanProductCode]);
-              plan.parentPlan.companyName = company.parentPlanCompanyName;
-              plan.parentPlan.contactEmail = company.parentPlanContactEmail;
-            }
           } else {
             plan = _.cloneDeep(_plansByType.free);
+          }
+
+          plan.playerProTotalLicenseCount = company.playerProTotalLicenseCount;
+          plan.playerProAvailableLicenseCount = company.playerProAvailableLicenseCount;
+
+          plan.shareCompanyPlan = company.shareCompanyPlan;
+
+          if (company.parentPlanProductCode) {
+            plan.parentPlan = _.cloneDeep(_plansByCode[company.parentPlanProductCode]);
+            plan.parentPlan.companyName = company.parentPlanCompanyName;
+            plan.parentPlan.contactEmail = company.parentPlanContactEmail;
           }
 
           _factory.currentPlan = plan;

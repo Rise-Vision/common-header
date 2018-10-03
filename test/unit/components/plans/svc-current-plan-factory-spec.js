@@ -91,6 +91,41 @@ describe("Services: current plan factory", function() {
       }, 0);
     });
 
+    it("should load Parent Company plan even if no Plan is available for the Company", function(done) {
+      sandbox.spy($rootScope, "$emit");
+      sandbox.stub(userState, "getSelectedCompanyId").returns("companyId");
+      sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
+        id: "companyId",
+        playerProTotalLicenseCount: 3,
+        playerProAvailableLicenseCount: 1,
+        shareCompanyPlan: true,
+        parentPlanProductCode: ADVANCED_PLAN_CODE,
+        parentPlanCompanyName: "parentName",
+        parentPlanContactEmail: "administratorEmail"
+      });
+
+      $rootScope.$emit("risevision.company.selectedCompanyChanged");
+      $rootScope.$digest();
+
+      setTimeout(function () {
+        expect($rootScope.$emit).to.have.been.called;
+        expect(currentPlanFactory.currentPlan).to.be.not.null;
+        expect(currentPlanFactory.currentPlan).to.be.not.null;
+        expect(currentPlanFactory.currentPlan.type).to.equal("free");
+        expect(currentPlanFactory.currentPlan.status).to.equal("Active");
+        expect(currentPlanFactory.currentPlan.playerProTotalLicenseCount).to.equal(3);
+        expect(currentPlanFactory.currentPlan.playerProAvailableLicenseCount).to.equal(1);
+
+        expect(currentPlanFactory.currentPlan.shareCompanyPlan).to.be.true;
+        expect(currentPlanFactory.currentPlan.parentPlan).to.be.ok;
+        expect(currentPlanFactory.currentPlan.parentPlan.type).to.equal("advanced");
+        expect(currentPlanFactory.currentPlan.parentPlan.companyName).to.equal("parentName");
+        expect(currentPlanFactory.currentPlan.parentPlan.contactEmail).to.equal("administratorEmail");
+
+        done();
+      }, 0);
+    });
+
     it("should correctly load the plan information when On Trial", function(done) {
       sandbox.spy($rootScope, "$emit");
       sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
