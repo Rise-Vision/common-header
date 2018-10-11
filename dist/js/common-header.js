@@ -1281,6 +1281,7 @@ angular.module("risevision.common.header")
         //exclude fields from API call
         delete company.sellerId;
         delete company.isTest;
+        delete company.shareCompanyPlan;
       }
     }
 
