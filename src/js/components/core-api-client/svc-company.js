@@ -13,7 +13,7 @@
     "mailSyncEnabled", "sellerId", "isTest", "shipToUseCompanyAddress",
     "shipToName", "shipToStreet", "shipToUnit", "shipToCity",
     "shipToProvince", "shipToPostalCode", "shipToCountry", "website",
-    "companySize", "companyIndustry", "billingContactEmails"
+    "companySize", "companyIndustry", "billingContactEmails", "shareCompanyPlan"
   ])
 
   .constant("ALERTS_WRITABLE_FIELDS", [
