@@ -121,7 +121,7 @@
     <option value="{{c[1]}}" ng-repeat="c in timezones">{{c[0]}}</option>
   </select>
 </div>
-<div class="form-group" ng-if="company.ownsPlan" require-role="sa">
+<div class="form-group" require-role="sa">
   <label class="form-control-label">Share Company Plan</label>
   <input type="checkbox" ng-model="company.shareCompanyPlan">
 </div>
