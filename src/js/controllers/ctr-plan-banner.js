@@ -12,6 +12,8 @@ angular.module("risevision.common.header")
         $scope.storeAccountUrl = STORE_URL + ACCOUNT_PATH.replace("companyId", $scope.companyId);
       });
 
+      $scope.isEnterpriseSubCompany = currentPlanFactory.isEnterpriseSubCompany;
+
       $scope.getVisibleBanner = function () {
         var banner = "free";
 
