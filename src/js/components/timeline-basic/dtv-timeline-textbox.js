@@ -132,9 +132,9 @@
             };
 
             $scope.reformatTime = function (timeString) {
-              var today = $filter("date")(new Date(), "dd-MMM-yyyy");
+              var today = $filter("date")(new Date(), "dd MMM yyyy");
               var fullDate = new Date(today + " " + timeString);
-              return $filter("date")(fullDate, "dd-MMM-yyyy hh:mm a");
+              return $filter("date")(fullDate, "dd MMM yyyy hh:mm a");
             };
           } // link
         };
