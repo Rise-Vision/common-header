@@ -52,6 +52,8 @@ describe("Services: current plan factory", function() {
     expect(currentPlanFactory.isOnTrial).to.be.a("function");
     expect(currentPlanFactory.isTrialExpired).to.be.a("function");
     expect(currentPlanFactory.isSuspended).to.be.a("function");
+    expect(currentPlanFactory.isCancelled).to.be.a("function");
+    expect(currentPlanFactory.isCancelledActive).to.be.a("function");
   });
 
   describe("initialization", function() {
@@ -62,6 +64,7 @@ describe("Services: current plan factory", function() {
         id: "companyId",
         planProductCode: BASIC_PLAN_CODE,
         planSubscriptionStatus: "Subscribed",
+        planCurrentPeriodEndDate: "Jan 1, 2018",
         playerProTotalLicenseCount: 3,
         playerProAvailableLicenseCount: 1,
         shareCompanyPlan: true,
@@ -78,6 +81,7 @@ describe("Services: current plan factory", function() {
         expect(currentPlanFactory.currentPlan).to.be.not.null;
         expect(currentPlanFactory.currentPlan.type).to.equal("basic");
         expect(currentPlanFactory.currentPlan.status).to.equal("Subscribed");
+        expect(currentPlanFactory.currentPlan.currentPeriodEndDate.getTime()).to.equal(new Date("Jan 1, 2018").getTime());
         expect(currentPlanFactory.currentPlan.playerProTotalLicenseCount).to.equal(3);
         expect(currentPlanFactory.currentPlan.playerProAvailableLicenseCount).to.equal(1);
 
@@ -283,6 +287,40 @@ describe("Services: current plan factory", function() {
     it("should return the subscription status is not Cancelled", function() {
       currentPlanFactory.currentPlan = { status: "Suspended" };
       expect(currentPlanFactory.isCancelled()).to.be.false;
+    });
+  });
+
+  describe("Cancelled Active status: ", function() {
+    var clock;
+
+    beforeEach(function() {
+      clock = sandbox.useFakeTimers(new Date(2018, 1, 1).getTime());
+    });
+
+    it("should return not Active if currentPeriodEndDate is missing", function() {
+      currentPlanFactory.currentPlan = { status: "Cancelled" };
+      expect(currentPlanFactory.isCancelledActive()).to.be.false;
+    });
+
+    it("should return Active if currentPeriodEndDate is after today", function() {
+      currentPlanFactory.currentPlan = { 
+        status: "Cancelled",
+        currentPeriodEndDate: new Date(2018, 1, 2)
+      };
+      expect(currentPlanFactory.isCancelledActive()).to.be.true;
+    });
+
+    it("should return not Active if currentPeriodEndDate is before today", function() {
+      currentPlanFactory.currentPlan = { 
+        status: "Cancelled",
+        currentPeriodEndDate: new Date(2017, 12, 31)
+      };
+      expect(currentPlanFactory.isCancelledActive()).to.be.false;
+    });
+
+    it("should return not Active if status it not Cancelled", function() {
+      currentPlanFactory.currentPlan = { status: "Suspended" };
+      expect(currentPlanFactory.isCancelledActive()).to.be.false;
     });
   });
 
