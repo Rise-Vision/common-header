@@ -9,6 +9,7 @@ describe("controller: plan banner", function() {
         isParentPlan: sinon.stub().returns(false),
         isFree: sinon.stub().returns(false),
         isCancelled: sinon.stub().returns(false),
+        isCancelledActive: sinon.stub().returns(false),
         isSubscribed: sinon.stub().returns(false),
         isOnTrial: sinon.stub().returns(false),
         isTrialExpired: sinon.stub().returns(false),
@@ -18,7 +19,7 @@ describe("controller: plan banner", function() {
     $provide.factory("userState", function() {
       return {
         _restoreState: function () {},
-        getSelectedCompanyId: sinon.stub().returns("companyId")
+        isSelectedCompanyChargebee: sinon.stub().returns(true)
       };
     });
   }));
@@ -50,6 +51,7 @@ describe("controller: plan banner", function() {
 
   it("should initialize",function() {
     expect($scope.showPlans).to.be.ok;
+    expect($scope.storeAccountUrl).to.equal("https://store.risevision.com/account?cid=companyId");
     expect($scope.getVisibleBanner).to.be.a("function");
   });
 
@@ -63,6 +65,12 @@ describe("controller: plan banner", function() {
       currentPlanFactory.isParentPlan.returns(true);
 
       expect($scope.getVisibleBanner()).to.equal("parent");
+    });
+
+    it("should show cancelled plan bar if cancelled and active", function() {
+      currentPlanFactory.isCancelledActive.returns(true);
+
+      expect($scope.getVisibleBanner()).to.equal("cancelled");
     });
 
     it("should show free plan bar", function() {
@@ -108,9 +116,11 @@ describe("controller: plan banner", function() {
     $rootScope.$digest();
 
     setTimeout(function () {
-      expect(userState.getSelectedCompanyId).to.have.been.called;
       expect($scope.plan).to.be.not.null;
       expect($scope.plan.type).to.equal("basic");
+
+      expect(userState.isSelectedCompanyChargebee).to.have.been.called;
+      expect($scope.isChargebee).to.be.true;
 
       done();
     }, 0);

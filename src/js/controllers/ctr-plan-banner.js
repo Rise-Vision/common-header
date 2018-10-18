@@ -5,11 +5,12 @@ angular.module("risevision.common.header")
       STORE_URL, ACCOUNT_PATH) {
       $scope.plan = {};
       $scope.showPlans = plansFactory.showPlansModal;
+      $scope.storeAccountUrl = STORE_URL + ACCOUNT_PATH;
 
       $rootScope.$on("risevision.plan.loaded", function () {
         $scope.plan = currentPlanFactory.currentPlan;
-        $scope.companyId = userState.getSelectedCompanyId();
-        $scope.storeAccountUrl = STORE_URL + ACCOUNT_PATH.replace("companyId", $scope.companyId);
+
+        $scope.isChargebee = userState.isSelectedCompanyChargebee();
       });
 
       $scope.isEnterpriseSubCompany = currentPlanFactory.isEnterpriseSubCompany;
@@ -19,7 +20,9 @@ angular.module("risevision.common.header")
 
         if (currentPlanFactory.isParentPlan()) {
           banner = "parent";
-        } else if (currentPlanFactory.isFree() || currentPlanFactory.isCancelled()) {
+        } else if (currentPlanFactory.isCancelledActive()) {
+          banner = "cancelled";
+        } else if (currentPlanFactory.isFree() && currentPlanFactory.isCancelled()) {
           banner = "free";
         } else if (currentPlanFactory.isSubscribed()) {
           banner = "subscribed";

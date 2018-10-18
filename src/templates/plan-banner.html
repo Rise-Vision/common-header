@@ -17,6 +17,15 @@
     </div>
   </div>
 
+  <div id="cancelled-plan-banner" class="alert alert-plan plan-active text-right" ng-show="getVisibleBanner() === 'cancelled'">
+    <div class="u_margin-right">
+      <span class="font-weight-bold">Your {{plan.name}} Plan subscription expires on {{ plan.currentPeriodEndDate | date : 'd-MMM-yyyy'}}</span>
+
+      <a href="{{storeAccountUrl}}" target="_blank" link-cid class="ml-3 btn btn-xs btn-primary" ng-hide="isChargebee">Account Settings</a>
+      <a ui-sref="apps.billing.home" class="ml-3 btn btn-xs btn-primary" ng-show="isChargebee">Account Settings</a>
+    </div>
+  </div>
+
   <div class="alert alert-plan plan-active text-right" ng-show="getVisibleBanner() === 'subscribed'">
     <div class="u_margin-right">
       <span class="font-weight-bold">{{plan.name}} Plan</span>
@@ -42,6 +51,8 @@
   <div class="alert alert-plan plan-suspended text-center" ng-show="getVisibleBanner() === 'suspended'">
     <div class="u_margin-right">
       <span class="font-weight-bold">There was an issue processing your payment. Please update your billing information. Your Displays may be affected.</span>
-      <a href="{{storeAccountUrl}}" target="_blank" class="ml-3 btn btn-xs btn-primary">Update Billing</a>
+
+      <a href="{{storeAccountUrl}}" target="_blank" link-cid class="ml-3 btn btn-xs btn-primary" ng-hide="isChargebee">Update Billing</a>
+      <a ui-sref="apps.billing.home" class="ml-3 btn btn-xs btn-primary" ng-show="isChargebee">Update Billing</a>
     </div>
   </div>

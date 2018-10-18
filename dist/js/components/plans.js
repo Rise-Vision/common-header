@@ -124,6 +124,7 @@ angular.module("risevision.common.components.plans", [
             plan = _.cloneDeep(_plansByCode[company.planProductCode]);
             plan.status = company.planSubscriptionStatus;
             plan.trialPeriod = company.planTrialPeriod;
+            plan.currentPeriodEndDate = new Date(company.planCurrentPeriodEndDate);
 
           } else {
             plan = _.cloneDeep(_plansByType.free);
@@ -194,6 +195,12 @@ angular.module("risevision.common.components.plans", [
 
         _factory.isCancelled = function () {
           return !_factory.isFree() && _factory.currentPlan.status === "Cancelled";
+        };
+
+        _factory.isCancelledActive = function () {
+          var now = new Date();
+
+          return _factory.isCancelled() && (_factory.currentPlan.currentPeriodEndDate > now);
         };
 
         _loadCurrentPlan();
