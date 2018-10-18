@@ -6,7 +6,7 @@
 
   var FocusMeScenarios = function() {
 
-    describe("Focus Me: ", function() {
+    xdescribe("Focus Me: ", function() {
       beforeEach(function () {
         browser.get("/test/e2e/components/focus-me/focus-me.html");
       });
