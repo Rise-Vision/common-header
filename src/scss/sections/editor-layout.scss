@@ -673,9 +673,12 @@
       }
     }
     .playlist-item-status {
-      color: red !important;
+      @extend .label;
+      @extend .label-primary;
       font-weight: 400;
+      color: #FFF;
       cursor: pointer;
+      text-decoration: none;
       .playlist-item-status .btn {
         font-size: 10px;
       }
