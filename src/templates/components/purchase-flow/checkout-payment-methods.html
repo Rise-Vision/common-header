@@ -90,7 +90,7 @@
           <div class="col-md-4">
             <div class="form-group" ng-class="{ 'has-error': (form.paymentMethodsForm.cardCvc.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardCvc.$invalid }">
               <label for="new-card-cvc" class="control-label">Security Code *</label>
-              <input id="new-card-cvc" aria-required="true" tabindex="1" type="number" class="form-control" name="cardCvc" data-stripe="cvc" ng-model="paymentMethods.newCreditCard.cvc" autocomplete="cc-csc" maxlength="4" required>
+              <input id="new-card-cvc" aria-required="true" tabindex="1" type="text" pattern="[0-9]*" class="form-control" name="cardCvc" data-stripe="cvc" ng-model="paymentMethods.newCreditCard.cvc" autocomplete="cc-csc" maxlength="4" required>
             </div>
           </div>
         </div>
