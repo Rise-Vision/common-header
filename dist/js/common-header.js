@@ -907,11 +907,7 @@ angular.module("risevision.common.header")
       };
 
       $scope.showAccountAndBilling = function () {
-        if (currentPlanFactory.isPlanActive()) {
-          $state.go("apps.billing.home");
-        } else {
-          plansFactory.showPlansModal();
-        }
+        $state.go("apps.billing.home");
       };
 
       $scope.isChargebee = function () {
