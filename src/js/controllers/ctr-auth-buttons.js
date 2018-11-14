@@ -150,10 +150,6 @@ angular.module("risevision.common.header")
         });
       };
 
-      $scope.showAccountAndBilling = function () {
-        $state.go("apps.billing.home");
-      };
-
       $scope.isChargebee = function () {
         return userState.isSelectedCompanyChargebee();
       };
