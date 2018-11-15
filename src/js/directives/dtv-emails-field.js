@@ -42,8 +42,9 @@ angular.module("risevision.common.header.directives")
 
           $scope.$watch("emails", function () {
             if (!updatingEmails) {
-              $scope.emailsList = ($scope.emails || []).map(function (e) {
+              $scope.emailsList = ($scope.emails || []).map(function (e, idx) {
                 return {
+                  id: idx,
                   text: e
                 };
               });

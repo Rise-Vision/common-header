@@ -150,7 +150,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('emails-field.html',
-    '<tags-input type="email" placeholder="Add an email" class="email-tags" ng-model="emailsList" add-on-enter="true" add-on-space="true" add-on-comma="true" add-on-blur="true" add-on-paste="true" on-tag-adding="isValidEmail($tag)" on-tag-removing="canRemove()" on-tag-added="updateModel()" on-tag-removed="updateModel()" on-invalid-tag="invalidateModel()"></tags-input>');
+    '<tags-input type="email" placeholder="Add an email" class="email-tags" ng-model="emailsList" key-property="id" display-property="text" add-on-enter="true" add-on-space="true" add-on-comma="true" add-on-blur="true" add-on-paste="true" on-tag-adding="isValidEmail($tag)" on-tag-removing="canRemove()" on-tag-added="updateModel()" on-tag-removed="updateModel()" on-invalid-tag="invalidateModel()"></tags-input>');
 }]);
 })();
 
@@ -568,8 +568,9 @@ angular.module("risevision.common.header.directives")
 
           $scope.$watch("emails", function () {
             if (!updatingEmails) {
-              $scope.emailsList = ($scope.emails || []).map(function (e) {
+              $scope.emailsList = ($scope.emails || []).map(function (e, idx) {
                 return {
+                  id: idx,
                   text: e
                 };
               });
