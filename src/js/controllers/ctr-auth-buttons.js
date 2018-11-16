@@ -2,13 +2,13 @@ angular.module("risevision.common.header")
   .value("RVA_URL", /https*:\/\/rva.risevision.com/)
   .controller("AuthButtonsCtr", ["$scope", "$modal", "$templateCache",
     "userState", "userAuthFactory", "canAccessApps",
-    "$loading", "cookieStore", "plansFactory", "currentPlanFactory",
+    "$loading", "cookieStore",
     "$log", "uiFlowManager", "oauth2APILoader", "bindToScopeWithWatch",
-    "$window", "$state", "APPS_URL",
+    "$window", "APPS_URL", "RVA_URL",
     function ($scope, $modal, $templateCache, userState, userAuthFactory,
       canAccessApps,
-      $loading, cookieStore, plansFactory, currentPlanFactory, $log, uiFlowManager, oauth2APILoader,
-      bindToScopeWithWatch, $window, $state, APPS_URL, RVA_URL) {
+      $loading, cookieStore, $log, uiFlowManager, oauth2APILoader,
+      bindToScopeWithWatch, $window, APPS_URL, RVA_URL) {
 
       window.$loading = $loading; //DEBUG
 
