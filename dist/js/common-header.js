@@ -30,7 +30,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('auth-buttons-menu.html',
-    '<company-buttons ng-show="isRiseVisionUser" ng-controller="CompanyButtonsCtrl"></company-buttons><ul><li ng-show="isRiseVisionUser"><a href="" ng-click="alertSettings()" class="alert-settings-button action"><i class="fa fa-bullhorn"></i> <span class="item-name">Alert Settings</span></a></li><li ng-show="isRiseVisionUser"><a href="" ng-click="userSettings()" class="user-settings-button action"><i class="fa fa-user"></i> <span class="item-name">User Settings</span></a></li><li ng-show="isRiseVisionUser"><a href="https://store.risevision.com/account" target="_blank" class="store-account-button action" link-cid="" ng-show="!isChargebee()"><i class="fa fa-shopping-cart"></i> <span class="item-name">Account & Billing</span></a> <a ui-sref="apps.billing.home" class="store-account-button action" ng-show="isChargebee() && !inRVAFrame"><i class="fa fa-shopping-cart"></i> <span class="item-name">Account & Billing</span></a> <a href="https://apps.risevision.com/billing" target="_blank" class="store-account-button action" link-cid="" ng-show="isChargebee() && inRVAFrame"><i class="fa fa-shopping-cart"></i> <span class="item-name">Account & Billing</span></a></li><span ng-if="isLoggedIn && !isRiseVisionUser" class="google-account">{{username}}</span><li class="dropdown-footer text-right" ng-show="isLoggedIn"><button class="sign-out-button btn btn-sm btn-default u_margin-sm-bottom" ng-controller="SignOutButtonCtrl" ng-click="logout()">Sign Out<i class="fa fa-sign-out icon-right"></i></button></li></ul>');
+    '<company-buttons ng-show="isRiseVisionUser" ng-controller="CompanyButtonsCtrl"></company-buttons><ul><li ng-show="isRiseVisionUser"><a href="" ng-click="alertSettings()" class="alert-settings-button action"><i class="fa fa-bullhorn"></i> <span class="item-name">Alert Settings</span></a></li><li ng-show="isRiseVisionUser"><a href="" ng-click="userSettings()" class="user-settings-button action"><i class="fa fa-user"></i> <span class="item-name">User Settings</span></a></li><li ng-show="isRiseVisionUser"><a href="https://store.risevision.com/account" target="_blank" class="store-account-button action" link-cid="" ng-show="!isChargebee()"><i class="fa fa-shopping-cart"></i> <span class="item-name">Account & Billing</span></a> <a ui-sref="apps.billing.home" class="store-account-button action" ng-show="isChargebee() && !isRVA()"><i class="fa fa-shopping-cart"></i> <span class="item-name">Account & Billing</span></a> <a href="https://apps.risevision.com/billing" target="_blank" class="store-account-button action" link-cid="" ng-show="isChargebee() && isRVA()"><i class="fa fa-shopping-cart"></i> <span class="item-name">Account & Billing</span></a></li><span ng-if="isLoggedIn && !isRiseVisionUser" class="google-account">{{username}}</span><li class="dropdown-footer text-right" ng-show="isLoggedIn"><button class="sign-out-button btn btn-sm btn-default u_margin-sm-bottom" ng-controller="SignOutButtonCtrl" ng-click="logout()">Sign Out<i class="fa fa-sign-out icon-right"></i></button></li></ul>');
 }]);
 })();
 
@@ -755,6 +755,7 @@ angular.module("risevision.common.header.directives")
   ]);
 
 angular.module("risevision.common.header")
+  .value("RVA_URL", /https*:\/\/rva.risevision.com/)
   .controller("AuthButtonsCtr", ["$scope", "$modal", "$templateCache",
     "userState", "userAuthFactory", "canAccessApps",
     "$loading", "cookieStore", "plansFactory", "currentPlanFactory",
@@ -763,7 +764,7 @@ angular.module("risevision.common.header")
     function ($scope, $modal, $templateCache, userState, userAuthFactory,
       canAccessApps,
       $loading, cookieStore, plansFactory, currentPlanFactory, $log, uiFlowManager, oauth2APILoader,
-      bindToScopeWithWatch, $window, $state, APPS_URL) {
+      bindToScopeWithWatch, $window, $state, APPS_URL, RVA_URL) {
 
       window.$loading = $loading; //DEBUG
 
@@ -908,6 +909,10 @@ angular.module("risevision.common.header")
 
       $scope.isChargebee = function () {
         return userState.isSelectedCompanyChargebee();
+      };
+
+      $scope.isRVA = function () {
+        return RVA_URL.test($window.location.href);
       };
 
       $loading.startGlobal("auth-buttons-silent");

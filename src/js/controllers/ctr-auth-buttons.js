@@ -1,4 +1,5 @@
 angular.module("risevision.common.header")
+  .value("RVA_URL", /https*:\/\/rva.risevision.com/)
   .controller("AuthButtonsCtr", ["$scope", "$modal", "$templateCache",
     "userState", "userAuthFactory", "canAccessApps",
     "$loading", "cookieStore", "plansFactory", "currentPlanFactory",
@@ -7,7 +8,7 @@ angular.module("risevision.common.header")
     function ($scope, $modal, $templateCache, userState, userAuthFactory,
       canAccessApps,
       $loading, cookieStore, plansFactory, currentPlanFactory, $log, uiFlowManager, oauth2APILoader,
-      bindToScopeWithWatch, $window, $state, APPS_URL) {
+      bindToScopeWithWatch, $window, $state, APPS_URL, RVA_URL) {
 
       window.$loading = $loading; //DEBUG
 
@@ -152,6 +153,10 @@ angular.module("risevision.common.header")
 
       $scope.isChargebee = function () {
         return userState.isSelectedCompanyChargebee();
+      };
+
+      $scope.isRVA = function () {
+        return RVA_URL.test($window.location.href);
       };
 
       $loading.startGlobal("auth-buttons-silent");
