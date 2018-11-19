@@ -23,11 +23,11 @@
       <i class="fa fa-shopping-cart"></i>
       <span class="item-name">Account & Billing</span>
     </a>
-    <a ui-sref="apps.billing.home" class="store-account-button action" ng-show="isChargebee() && !isRVA()">
+    <a ui-sref="apps.billing.home" class="store-account-button action" ng-show="isChargebee() && isApps()">
       <i class="fa fa-shopping-cart"></i>
       <span class="item-name">Account & Billing</span>
     </a>
-    <a href="https://apps.risevision.com/billing" target="_blank" class="store-account-button action" link-cid ng-show="isChargebee() && isRVA()">
+    <a href="https://apps.risevision.com/billing" target="_blank" class="store-account-button action" link-cid ng-show="isChargebee() && !isApps()">
       <i class="fa fa-shopping-cart"></i>
       <span class="item-name">Account & Billing</span>
     </a>
