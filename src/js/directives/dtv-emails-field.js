@@ -42,7 +42,7 @@ angular.module("risevision.common.header.directives")
 
           $scope.$watch("emails", function () {
             if (!updatingEmails) {
-              $scope.emailsList = ($scope.emails || []).map(function (e) {
+              $scope.emailsList = _.uniq($scope.emails).map(function (e) {
                 return {
                   text: e
                 };
@@ -55,9 +55,7 @@ angular.module("risevision.common.header.directives")
           $scope.updateModel = function () {
             _setValid(true);
             updatingEmails = true;
-            $scope.emails = $scope.emailsList.map(function (t) {
-              return t.text;
-            });
+            $scope.emails = _emailsModelToStrings();
           };
 
           $scope.invalidateModel = function () {
@@ -69,8 +67,15 @@ angular.module("risevision.common.header.directives")
           };
 
           $scope.isValidEmail = function (email) {
-            return !!(email && email.text && EMAIL_REGEX.test(email.text));
+            return !!(email && email.text && EMAIL_REGEX.test(email.text) && _emailsModelToStrings().indexOf(email.text) ===
+              -1);
           };
+
+          function _emailsModelToStrings() {
+            return $scope.emailsList.map(function (t) {
+              return t.text;
+            });
+          }
 
           function _setValid(isValid) {
             validationError = !isValid;
