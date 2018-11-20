@@ -1,5 +1,4 @@
 angular.module("risevision.common.header")
-  .value("RVA_BASE_URL", /https*:\/\/rva(-test)*.risevision.com/)
   .controller("AuthButtonsCtr", ["$scope", "$modal", "$templateCache",
     "userState", "userAuthFactory", "canAccessApps",
     "$loading", "cookieStore",
