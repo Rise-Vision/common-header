@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "bower": "^1.5.3",
-    "event-stream": "^3.1.7",
+    "event-stream": "3.3.4",
     "gulp-bump": "^0.1.11"
   },
   "devDependencies": {
