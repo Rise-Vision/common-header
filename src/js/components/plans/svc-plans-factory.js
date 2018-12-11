@@ -116,11 +116,16 @@
           _plansByType.free, _plansByType.starter, _plansByType.basic, _plansByType.advanced, _plansByType.enterprise
         ];
 
-        _factory.showPlansModal = function () {
+        _factory.showPlansModal = function (warningText) {
           $modal.open({
             template: $templateCache.get("plans/plans-modal.html"),
             controller: "PlansModalCtrl",
-            size: "lg"
+            size: "lg",
+            resolve: {
+              warningText: function () {
+                return warningText;
+              }
+            }
           });
         };
 

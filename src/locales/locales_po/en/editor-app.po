@@ -61,18 +61,6 @@ msgstr "Unsaved Changes"
 msgid "details.unsavedWarning"
 msgstr "You have unsaved changes. Do you want to Save or Discard them?"
 
-msgid "goToStore.message"
-msgstr "is a Premium Template Presentation for purchase. You can view more information about the template and"
-
-msgid "goToStore.purchase"
-msgstr "purchase for use in our Store"
-
-msgid "goToStore.title"
-msgstr "Premium Template"
-
-msgid "goToStore.view"
-msgstr "View In Store"
-
 msgid "json-error.message"
 msgstr "The content of your Presentation could not be parsed. Please check the syntax in HTML mode."
 
@@ -433,8 +421,11 @@ msgstr "Subscribe"
 msgid "subscription.viewAccount"
 msgstr "View Account"
 
+msgid "templatesLibrary.access-warning"
+msgstr "You need a Plan subscription to use this Template. Get access to all Templates with any 14-day Plan Trial, and with any Plan Subscription thereafter."
+
 msgid "templatesLibrary.details.details-list-1"
-msgstr "Get access to all Premium Templates with any 14-day Plan Trial, and with any Plan Subscription thereafter."
+msgstr "Get access to all Templates with any 14-day Plan Trial, and with any Plan Subscription thereafter."
 
 msgid "templatesLibrary.details.details-list-2"
 msgstr "There's no contract, and you can cancel at any time."

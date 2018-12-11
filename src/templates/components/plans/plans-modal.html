@@ -7,6 +7,10 @@
   </div>
 
   <div id="plans-modal" class="modal-body u_padding-lg" stop-event="touchend">
+    <div class="alert bg-warning p-4 text-center my-2" ng-show="warningText" translate>
+      {{warningText}}
+    </div>
+
     <div class="text-center">
       <div class="btn-group" role="group" aria-label="...">
         <button ng-click="isMonthly = true" type="button" class="btn btn-default" ng-class="{  active: isMonthly }">Monthly</button>

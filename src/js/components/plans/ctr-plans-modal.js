@@ -3,13 +3,16 @@ angular.module("risevision.common.components.plans")
 .controller("PlansModalCtrl", [
   "$scope", "$rootScope", "$modalInstance", "$log", "$loading", "$timeout",
   "plansFactory", "currentPlanFactory", "chargebeeFactory", "userState", "purchaseFactory",
+  "warningText",
   function ($scope, $rootScope, $modalInstance, $log, $loading, $timeout,
-    plansFactory, currentPlanFactory, chargebeeFactory, userState, purchaseFactory) {
+    plansFactory, currentPlanFactory, chargebeeFactory, userState, purchaseFactory,
+    warningText) {
 
     $scope.currentPlan = currentPlanFactory.currentPlan;
     $scope.purchaseFactory = purchaseFactory;
     $scope.startTrialError = null;
     $scope.isMonthly = true;
+    $scope.warningText = warningText;
 
     function _getPlansDetails() {
       $loading.start("plans-modal");
@@ -119,7 +122,7 @@ angular.module("risevision.common.components.plans")
 
       plansFactory.startTrial(plan)
         .then(function () {
-          return $timeout(5000)
+          return $timeout(10000)
             .then(function () {
               return userState.reloadSelectedCompany();
             })

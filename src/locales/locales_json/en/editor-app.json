@@ -28,12 +28,6 @@
     "unsavedTitle": "Unsaved Changes",
     "unsavedWarning": "You have unsaved changes. Do you want to Save or Discard them?"
   },
-  "goToStore": {
-    "message": "is a Premium Template Presentation for purchase. You can view more information about the template and",
-    "purchase": "purchase for use in our Store",
-    "title": "Premium Template",
-    "view": "View In Store"
-  },
   "json-error": {
     "message": "The content of your Presentation could not be parsed. Please check the syntax in HTML mode.",
     "title": "Invalid presentation data"
@@ -206,7 +200,7 @@
   },
   "templatesLibrary": {
     "details": {
-      "details-list-1": "Get access to all Premium Templates with any 14-day Plan Trial, and with any Plan Subscription thereafter.",
+      "details-list-1": "Get access to all Templates with any 14-day Plan Trial, and with any Plan Subscription thereafter.",
       "details-list-2": "There's no contract, and you can cancel at any time.",
       "details-list-3": "All the Templates are yours to keep, even if you cancel!",
       "details-list-4": "New Templates added every month.",
@@ -214,7 +208,8 @@
       "free": "FREE",
       "freeWithTrial": "with a Plan Trial or Subscription",
       "preview": "Preview this Template"
-    }
+    },
+    "access-warning": "You need a Plan subscription to use this Template. Get access to all Templates with any 14-day Plan Trial, and with any Plan Subscription thereafter."
   },
   "title": "Editor",
   "workspace": {
