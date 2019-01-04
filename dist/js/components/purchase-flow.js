@@ -428,7 +428,7 @@ angular.module("risevision.common.components.purchase-flow")
               purchaseFlowTracker.trackPlaceOrderClicked(estimate);
             })
             .catch(function (result) {
-              factory.purchase.estimate.estimateError = (result && result.error) ||
+              factory.purchase.estimate.estimateError = result && result.message ? result.message :
                 "An unexpected error has occurred. Please try again.";
             })
             .finally(function () {

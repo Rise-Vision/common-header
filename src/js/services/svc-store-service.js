@@ -68,9 +68,10 @@
                   deferred.reject(resp.result);
                 }
               })
-              .then(null, function (e) {
-                console.error("Failed to get tax estimate.", e);
-                deferred.reject(e);
+              .then(null, function (resp) {
+                console.error("Failed to get tax estimate.", resp);
+
+                deferred.reject(resp && resp.result && resp.result.error);
               });
             return deferred.promise;
           },

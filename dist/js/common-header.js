@@ -3636,9 +3636,10 @@ angular.module("risevision.common.geodata", [])
                   deferred.reject(resp.result);
                 }
               })
-              .then(null, function (e) {
-                console.error("Failed to get tax estimate.", e);
-                deferred.reject(e);
+              .then(null, function (resp) {
+                console.error("Failed to get tax estimate.", resp);
+
+                deferred.reject(resp && resp.result && resp.result.error);
               });
             return deferred.promise;
           },
@@ -10568,7 +10569,7 @@ angular.module("risevision.common.components.purchase-flow")
               purchaseFlowTracker.trackPlaceOrderClicked(estimate);
             })
             .catch(function (result) {
-              factory.purchase.estimate.estimateError = (result && result.error) ||
+              factory.purchase.estimate.estimateError = result && result.message ? result.message :
                 "An unexpected error has occurred. Please try again.";
             })
             .finally(function () {

@@ -46,7 +46,7 @@ describe("Services: storeService", function() {
           tax: {
             estimate: sinon.spy(function(){
               if (storeApiFailure) {
-                return Q.reject("some error");
+                return Q.reject(response);
               } else {
                 return Q.resolve(response);
               }
@@ -276,6 +276,7 @@ describe("Services: storeService", function() {
 
     it("should reject on API failure", function(done) {
       storeApiFailure = true;
+      response.result.error = "some error";
 
       storeService.calculateTaxes("companyId", "planId", "addonId", "addonQty", addressObject)
       .then(function() {
