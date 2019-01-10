@@ -4284,12 +4284,18 @@ angular.module("risevision.common.gapi", [
       return function () {
         var deferred = $q.defer();
         clientAPILoader().then(function (gApi) {
+          var apiValidationTimer;
+
           if (gApi.client[libName]) {
             // already loaded. return right away
             deferred.resolve(gApi.client[libName]);
           } else {
             gApi.client.load(libName, libVer,
               function () {
+                if (apiValidationTimer) {
+                  $timeout.cancel(apiValidationTimer);
+                }
+
                 if (gApi.client[libName]) {
                   $log.debug(libName + "." + libVer + " Loaded");
                   deferred.resolve(gApi.client[libName]);
@@ -4301,7 +4307,7 @@ angular.module("risevision.common.gapi", [
               },
               baseUrl);
 
-            $timeout(function () {
+            apiValidationTimer = $timeout(function () {
               if (baseUrl && !gApi.client[libName]) {
                 $http({
                   url: baseUrl,
