@@ -16,13 +16,40 @@
         };
 
         $scope.today = new Date();
-        $scope.datepickers = {};
+
+        var parseDate = function (dateString) {
+          var useLocaldate = factory.timeline.useLocaldate;
+
+          if (!dateString) {
+            return undefined;
+          }
+
+          var dt = new Date(dateString);
+
+          if (useLocaldate) {
+            // 'undo' the timezone offset again (so we end up on the original date again)
+            dt.setMinutes(dt.getMinutes() + dt.getTimezoneOffset());
+          }
+
+          return dt;
+        };
+
+        // Set init-date attribute to fix issue with Date initialization
+        // https://github.com/angular-ui/bootstrap/issues/5081
+        $scope.datepickers = {
+          startDate: {
+            initDate: parseDate(factory.timeline.startDate)
+          },
+          endDate: {
+            initDate: parseDate(factory.timeline.endDate)
+          }
+        };
 
         $scope.openDatepicker = function ($event, which) {
           $event.preventDefault();
           $event.stopPropagation();
 
-          $scope.datepickers[which] = true;
+          $scope.datepickers[which].isOpen = true;
         };
 
         $scope.save = function () {

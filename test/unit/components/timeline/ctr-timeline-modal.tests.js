@@ -15,7 +15,10 @@ describe("controller: Edit Timeline Modal", function() {
 
     $provide.factory("TimelineFactory",function(){
       return function() {
-        this.timeline = {};
+        this.timeline = {
+          useLocaldate: true,
+          startDate: "2019-02-27T00:00:00.000Z"
+        };
         this.recurrence = {};
         this.init = function(){
           return;
@@ -27,7 +30,6 @@ describe("controller: Edit Timeline Modal", function() {
     });
 
     $provide.value("timeline", timelineValue);
-    $provide.value("useLocaldate", true);
   }));
   var $scope, $modalInstance, $modalInstanceDismissSpy, $modalInstanceCloseSpy, timelineValue, timeline;
 
@@ -45,7 +47,6 @@ describe("controller: Edit Timeline Modal", function() {
           $modalInstance : $modalInstance,
           timeline: timeline,
           TimelineFactory: $injector.get("TimelineFactory"),
-          useLocaldate: $injector.get("useLocaldate")
         });
         $scope.$digest();
       });
@@ -66,11 +67,19 @@ describe("controller: Edit Timeline Modal", function() {
       expect($scope.datepickers).to.be.a("object");
     });
 
+    it("should initialize initDate variables for Start and End Date", function() {
+      expect($scope.datepickers.startDate).to.be.an("object");
+      expect($scope.datepickers.startDate.initDate).to.be.a("Date");
+
+      expect($scope.datepickers.endDate).to.be.an("object");
+      expect($scope.datepickers.endDate.initDate).to.be.undefined;
+    });
+
     it("should close modal when clicked on save",function(){
       $scope.save();
       $scope.$digest();
 
-      $modalInstanceCloseSpy.should.have.been.calledWith(timeline);
+      $modalInstanceCloseSpy.should.have.been.calledWith($scope.timeline);
     });
 
     it("should dismiss modal when clicked on close with no action",function(){

@@ -16,7 +16,7 @@
               <div class="form-group">
                 <label class="control-label">Start Date</label>
                 <div class="input-group">
-                  <input type="text" id="startDate" name="startDate" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-model="timeline.startDate" is-open="datepickers.startDate" min-date="today" datepicker-options="dateOptions" datepicker-localdate="{{timeline.useLocaldate}}" ng-required="!timeline.everyDay" close-text="Close" />
+                  <input type="text" id="startDate" name="startDate" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-model="timeline.startDate" is-open="datepickers.startDate.isOpen" init-date="datepickers.startDate.initDate" min-date="today" datepicker-options="dateOptions" datepicker-localdate="{{timeline.useLocaldate}}" ng-required="!timeline.everyDay" close-text="Close" />
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="openDatepicker($event, 'startDate')"><i class="fa fa-calendar"></i></button>
                   </span>
@@ -29,7 +29,7 @@
               <div class="form-group">
                 <label class="control-label">End Date</label>
                 <div class="input-group">
-                  <input type="text" id="endDate" name="endDate" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-model="timeline.endDate" is-open="datepickers.endDate" min-date="timeline.startDate" datepicker-options="dateOptions" datepicker-localdate="{{timeline.useLocaldate}}" larger-than-date close-text="Close" />
+                  <input type="text" id="endDate" name="endDate" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-model="timeline.endDate" is-open="datepickers.endDate.isOpen" init-date="datepickers.endDate.initDate" min-date="timeline.startDate" datepicker-options="dateOptions" datepicker-localdate="{{timeline.useLocaldate}}" larger-than-date close-text="Close" />
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="openDatepicker($event, 'endDate')"><i class="fa fa-calendar"></i></button>
                   </span>
