@@ -13655,10 +13655,6 @@ ul.tree ul li:last-child:before {
   position: relative;
   box-sizing: border-box; }
 
-.planColumn .btn, .planColumn .icon-nav label, .icon-nav .planColumn label {
-  align-self: flex-end;
-  margin-top: auto; }
-
 .planColumn .planSavings {
   min-height: 2.5em;
   line-height: 1.5em;

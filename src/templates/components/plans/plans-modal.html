@@ -65,28 +65,32 @@
           <!-- Trial expired notice -->
           <p class="small u_margin-sm-bottom text-danger" ng-show="isCurrentPlan(plan) && isTrialExpired(plan)" translate>common-header.plans.trial-expired</p>
 
-          <a id="subscribe-plan" ng-if="!isChargebee()" ng-show="getVisibleAction(plan).indexOf('subscribe') === 0"
-              target="_blank" href="https://store.risevision.com/product/{{plan.productId}}"
-              class="btn btn-primary btn-block" translate>common-header.plans.subscribe</a>
-          <a id="subscribe-plan-cb" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'subscribe'"
-              ng-click="showPurchaseModal(plan, isMonthly)"
-              class="btn btn-primary btn-block" translate>common-header.plans.subscribe</a>
-          <a id="subscribe-plan-cbp" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'subscribe-portal'"
-              ng-click="subscribePortal(plan)"
-              class="btn btn-primary btn-block" translate>common-header.plans.subscribe</a>
+          <div class="mt-auto">
+            <a id="subscribe-plan" ng-if="!isChargebee()" ng-show="getVisibleAction(plan).indexOf('subscribe') === 0"
+                target="_blank" href="https://store.risevision.com/product/{{plan.productId}}"
+                class="btn btn-primary btn-block" translate>common-header.plans.subscribe</a>
+            <a id="subscribe-plan-cb" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'subscribe'"
+                ng-click="showPurchaseModal(plan, isMonthly)"
+                class="btn btn-primary btn-block" translate>common-header.plans.subscribe</a>
+            <a id="subscribe-plan-cbp" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'subscribe-portal'"
+                ng-click="subscribePortal(plan)"
+                class="btn btn-primary btn-block" translate>common-header.plans.subscribe</a>
 
-          <a id="downgrade-plan" ng-if="!isChargebee()" ng-show="getVisibleAction(plan).indexOf('downgrade') === 0"
-              target="_blank" href="https://www.risevision.com/downgradeplan"
-              class="btn btn-default btn-block" translate>common-header.plans.downgrade</a>
-          <a id="downgrade-plan-cb" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'downgrade'"
-              ng-click="showPurchaseModal(plan, isMonthly)"
-              class="btn btn-default btn-block" translate>common-header.plans.downgrade</a>
-          <a id="downgrade-plan-cbp" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'downgrade-portal'"
-              ng-click="downgradePortal(plan)"
-              class="btn btn-default btn-block" translate>common-header.plans.downgrade</a>
-          <a id="start-trial-plan" ng-show="getVisibleAction(plan) === 'start-trial'"
-              target="_blank" ng-click="startTrial(plan)"
-              class="btn btn-primary btn-block" translate>common-header.plans.start-trial</a>
+            <a id="downgrade-plan" ng-if="!isChargebee()" ng-show="getVisibleAction(plan).indexOf('downgrade') === 0"
+                target="_blank" href="https://www.risevision.com/downgradeplan"
+                class="btn btn-default btn-block" translate>common-header.plans.downgrade</a>
+            <a id="downgrade-plan-cb" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'downgrade'"
+                ng-click="showPurchaseModal(plan, isMonthly)"
+                class="btn btn-default btn-block" translate>common-header.plans.downgrade</a>
+            <a id="downgrade-plan-cbp" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'downgrade-portal'"
+                ng-click="downgradePortal(plan)"
+                class="btn btn-default btn-block" translate>common-header.plans.downgrade</a>
+            <a id="subscribe-trial-plan" ng-if="isChargebee()" ng-show="getVisibleAction(plan) === 'start-trial'"
+                href="#" class="planSubscribe" ng-click="showPurchaseModal(plan, isMonthly)" translate>common-header.plans.subscribe</a>
+            <a id="start-trial-plan" ng-show="getVisibleAction(plan) === 'start-trial'"
+                target="_blank" ng-click="startTrial(plan)"
+                class="btn btn-primary btn-block" translate>common-header.plans.start-trial</a>
+          </div>
         </div><!--plan-column-->
       </div>
       <div id="planFeatures">
