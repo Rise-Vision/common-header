@@ -8,6 +8,9 @@ angular.module("risevision.common.components.purchase-flow")
           $scope.paymentMethods = purchaseFactory.purchase.paymentMethods;
           $scope.contactEmail = purchaseFactory.purchase.contact.email;
 
+          $scope.purchase = purchaseFactory.purchase;
+          $scope.showTaxExemptionModal = purchaseFactory.showTaxExemptionModal;
+
           $scope.getCardDescription = function (card) {
             return "***-" + card.last4 + ", " + card.cardType + (card.isDefault ? " (default)" : "");
           };
