@@ -389,7 +389,7 @@ describe("Services: storeService", function() {
     it("should succeed", function(done) {
       response = {};
 
-      storeService.addTaxExemption().then(function() {
+      storeService.addTaxExemption({}, "blobKey").then(function() {
         done();
       })
       .then(null, done);
@@ -400,7 +400,7 @@ describe("Services: storeService", function() {
         error: "error"
       };
 
-      storeService.addTaxExemption().then(function() {
+      storeService.addTaxExemption({}, "blobKey").then(function() {
         done("success");
       }, function() {
         done();
