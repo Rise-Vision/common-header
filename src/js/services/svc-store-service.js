@@ -2,8 +2,8 @@
   "use strict";
 
   angular.module("risevision.store.services")
-    .service("storeService", ["$q", "$log", "$filter", "$http", "storeAPILoader",
-      function ($q, $log, $filter, $http, storeAPILoader) {
+    .service("storeService", ["$q", "$log", "$http", "storeAPILoader",
+      function ($q, $log, $http, storeAPILoader) {
 
         var _getResult = function (resp) {
           if (resp.result !== null && typeof resp.result === "object") {
@@ -120,15 +120,15 @@
           },
           addTaxExemption: function (taxExemption, blobKey) {
             var deferred = $q.defer();
-            var expiryDateString = $filter("date")(taxExemption.expiryDate, "yyyy-MM-dd");
+            // var expiryDateString = $filter("date")(taxExemption.expiryDate, "yyyy-MM-dd");
 
             storeAPILoader().then(function (storeAPI) {
               var obj = {
-                "country": taxExemption.country,
-                "state": taxExemption.province,
+                // "country": taxExemption.country,
+                // "state": taxExemption.province,
                 "blobKey": blobKey,
                 "number": taxExemption.number,
-                "expiryDate": expiryDateString
+                // "expiryDate": expiryDateString
               };
               var request = storeAPI.taxExemption.add(obj);
               request.execute(function (resp) {

@@ -1,15 +1,13 @@
 angular.module("risevision.common.components.purchase-flow")
   .controller("TaxExemptionModalCtrl", ["$scope", "$modalInstance", "$loading", "taxExemptionFactory",
-    "COUNTRIES", "REGIONS_CA", "REGIONS_US",
-    function ($scope, $modalInstance, $loading, taxExemptionFactory,
-      COUNTRIES, REGIONS_CA, REGIONS_US) {
+    function ($scope, $modalInstance, $loading, taxExemptionFactory) {
 
       $scope.form = {};
       $scope.factory = taxExemptionFactory;
 
-      $scope.countries = COUNTRIES;
-      $scope.regionsCA = REGIONS_CA;
-      $scope.regionsUS = REGIONS_US;
+      // $scope.countries = COUNTRIES;
+      // $scope.regionsCA = REGIONS_CA;
+      // $scope.regionsUS = REGIONS_US;
 
       $scope.$watch("factory.loading", function (loading) {
         if (loading) {
@@ -53,16 +51,16 @@ angular.module("risevision.common.components.purchase-flow")
         document.querySelector("#inputExemption").value = "";
       };
 
-      $scope.openDatepicker = function ($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
+      // $scope.openDatepicker = function ($event) {
+      //   $event.preventDefault();
+      //   $event.stopPropagation();
+      // 
+      //   $scope.datepicker = true;
+      // };
 
-        $scope.datepicker = true;
-      };
-
-      $scope.countryFilter = function (country) {
-        return country.code === "CA" || country.code === "US";
-      };
+      // $scope.countryFilter = function (country) {
+      //   return country.code === "CA" || country.code === "US";
+      // };
 
       $scope.isFieldInvalid = function (fieldName) {
         var form = $scope.form.taxExemptionForm;
