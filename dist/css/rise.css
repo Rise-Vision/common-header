@@ -8041,7 +8041,7 @@ All utilities have a prefix u_ added to them
    ==========================================================================
    To be used with forms and buttons
 */
-.u_ellipsis, .u_ellipsis-sm, .u_ellipsis-md, .navbar-default li.user-profile-dropdown .user-id span, .box-list .title, .box-list p, .box-list .box-list-body, .box-list .box-list-aside, .placeholder-item-name, .editor-playlist .editor-playlist-item .playlist-item-name span, .display-name span, .display-address span, .playlist-item-reference, .u_ellipsis-lg {
+.u_ellipsis, .u_ellipsis-sm, .u_ellipsis-md, .navbar-default li.user-profile-dropdown .user-id span, .box-list .title, .box-list p, .box-list .box-list-body, .box-list .box-list-aside, .placeholder-item-name, .editor-playlist-item .playlist-item-name span, .display-name span, .display-address span, .playlist-item-reference, .u_ellipsis-lg {
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -8064,19 +8064,19 @@ All utilities have a prefix u_ added to them
     max-width: 160px; } }
 
 @media (max-width: 767px) {
-  .u_ellipsis-md, .navbar-default li.user-profile-dropdown .user-id span, .box-list .title, .box-list p, .box-list .box-list-body, .box-list .box-list-aside, .placeholder-item-name, .editor-playlist .editor-playlist-item .playlist-item-name span, .display-name span, .display-address span, .playlist-item-reference {
+  .u_ellipsis-md, .navbar-default li.user-profile-dropdown .user-id span, .box-list .title, .box-list p, .box-list .box-list-body, .box-list .box-list-aside, .placeholder-item-name, .editor-playlist-item .playlist-item-name span, .display-name span, .display-address span, .playlist-item-reference {
     width: 100px; } }
 
 @media (min-width: 768px) {
-  .u_ellipsis-md, .navbar-default li.user-profile-dropdown .user-id span, .box-list .title, .box-list p, .box-list .box-list-body, .box-list .box-list-aside, .placeholder-item-name, .editor-playlist .editor-playlist-item .playlist-item-name span, .display-name span, .display-address span, .playlist-item-reference {
+  .u_ellipsis-md, .navbar-default li.user-profile-dropdown .user-id span, .box-list .title, .box-list p, .box-list .box-list-body, .box-list .box-list-aside, .placeholder-item-name, .editor-playlist-item .playlist-item-name span, .display-name span, .display-address span, .playlist-item-reference {
     max-width: 140px; } }
 
 @media (min-width: 992px) {
-  .u_ellipsis-md, .navbar-default li.user-profile-dropdown .user-id span, .box-list .title, .box-list p, .box-list .box-list-body, .box-list .box-list-aside, .placeholder-item-name, .editor-playlist .editor-playlist-item .playlist-item-name span, .display-name span, .display-address span, .playlist-item-reference {
+  .u_ellipsis-md, .navbar-default li.user-profile-dropdown .user-id span, .box-list .title, .box-list p, .box-list .box-list-body, .box-list .box-list-aside, .placeholder-item-name, .editor-playlist-item .playlist-item-name span, .display-name span, .display-address span, .playlist-item-reference {
     max-width: 180px; } }
 
 @media (min-width: 1200px) {
-  .u_ellipsis-md, .navbar-default li.user-profile-dropdown .user-id span, .box-list .title, .box-list p, .box-list .box-list-body, .box-list .box-list-aside, .placeholder-item-name, .editor-playlist .editor-playlist-item .playlist-item-name span, .display-name span, .display-address span, .playlist-item-reference {
+  .u_ellipsis-md, .navbar-default li.user-profile-dropdown .user-id span, .box-list .title, .box-list p, .box-list .box-list-body, .box-list .box-list-aside, .placeholder-item-name, .editor-playlist-item .playlist-item-name span, .display-name span, .display-address span, .playlist-item-reference {
     max-width: 240px; } }
 
 @media (max-width: 767px) {
@@ -15701,79 +15701,76 @@ tr.blocked-file {
     line-height: 41px;
     content: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgNjAgNTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDYwIDUyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PGc+PHBhdGggZmlsbD0id2hpdGUiIGZpbGwtb3BhY2l0eT0iMC42IiBkPSJNNTMuMSwySDYuN0MzLjgsMiwxLjQsNC4zLDEuNCw3LjJ2MzcuOGMwLDIuOSwyLjMsNS4yLDUuMiw1LjJoNDYuNWMyLjksMCw1LjItMi4zLDUuMi01LjJWNy4yQzU4LjQsNC4zLDU2LDIsNTMuMSwyeiBNMTAuNCwzNS4xbDkuNS0xOC45bDkuNSwxOC45SDEwLjR6IE00OC44LDM0LjlIMzUuMWMtMC43LDAtMS4zLTAuNi0xLjMtMS4zYzAtMC43LDAuNi0xLjMsMS4zLTEuM2gxMy43YzAuNywwLDEuMywwLjYsMS4zLDEuM0M1MC4xLDM0LjMsNDkuNSwzNC45LDQ4LjgsMzQuOXogTTQ4LjgsMjcuNEgzNS4xYy0wLjcsMC0xLjMtMC42LTEuMy0xLjNjMC0wLjcsMC42LTEuMywxLjMtMS4zaDEzLjdjMC43LDAsMS4zLDAuNiwxLjMsMS4zQzUwLjEsMjYuOCw0OS41LDI3LjQsNDguOCwyNy40eiBNNDguOCwxOS44SDM1LjFjLTAuNywwLTEuMy0wLjYtMS4zLTEuM3MwLjYtMS4zLDEuMy0xLjNoMTMuN2MwLjcsMCwxLjMsMC42LDEuMywxLjNTNDkuNSwxOS44LDQ4LjgsMTkuOHoiLz48L2c+PC9zdmc+); }
 
-.editor-playlist .editor-playlist-item {
+.editor-playlist-item {
   overflow: hidden;
   background: #FFF;
   border: 1px solid #e6e6e6;
   border-radius: 4px;
   margin-bottom: 5px;
   padding: 8px; }
-  .editor-playlist .editor-playlist-item:hover {
+  .editor-playlist-item:hover {
     border: 1px solid #bcbcbc; }
-  .editor-playlist .editor-playlist-item p,
-  .editor-playlist .editor-playlist-item h4 {
+  .editor-playlist-item p,
+  .editor-playlist-item h4 {
     margin: 0;
     line-height: 22px; }
-  .editor-playlist .editor-playlist-item .playlist-item-name span {
+  .editor-playlist-item .playlist-item-name span {
     font-weight: 500;
     display: inline-block;
     vertical-align: top;
     max-width: 125px; }
-  .editor-playlist .editor-playlist-item .playlist-item-status {
+  .editor-playlist-item .playlist-item-status {
     color: red !important;
     font-weight: 400;
     cursor: pointer; }
-    .editor-playlist .editor-playlist-item .playlist-item-status .playlist-item-status .btn, .editor-playlist .editor-playlist-item .playlist-item-status .playlist-item-status .icon-nav label, .icon-nav .editor-playlist .editor-playlist-item .playlist-item-status .playlist-item-status label {
+    .editor-playlist-item .playlist-item-status .playlist-item-status .btn, .editor-playlist-item .playlist-item-status .playlist-item-status .icon-nav label, .icon-nav .editor-playlist-item .playlist-item-status .playlist-item-status label {
       font-size: 10px; }
-
-.editor-playlist .arrows {
-  float: left;
-  width: 24px;
-  margin: 6px; }
-  .editor-playlist .arrows .btn, .editor-playlist .arrows .icon-nav label, .icon-nav .editor-playlist .arrows label {
-    margin: 0; }
-    .editor-playlist .arrows .btn:first-child, .editor-playlist .arrows .icon-nav label:first-child, .icon-nav .editor-playlist .arrows label:first-child {
-      border-radius: 3px 3px 0 0; }
-    .editor-playlist .arrows .btn:last-child, .editor-playlist .arrows .icon-nav label:last-child, .icon-nav .editor-playlist .arrows label:last-child {
-      border-radius: 0 0 3px 3px; }
-
-.editor-playlist .list-grip {
-  position: relative;
-  float: left;
-  width: 25px;
-  margin-right: 3px;
-  background-color: white;
-  height: 56px;
-  display: inline-block;
-  cursor: move;
-  cursor: -webkit-grabbing; }
-  .editor-playlist .list-grip .btn, .editor-playlist .list-grip .icon-nav label, .icon-nav .editor-playlist .list-grip label {
-    margin: 0; }
-    .editor-playlist .list-grip .btn:first-child, .editor-playlist .list-grip .icon-nav label:first-child, .icon-nav .editor-playlist .list-grip label:first-child {
-      border-radius: 3px 3px 0 0; }
-    .editor-playlist .list-grip .btn:last-child, .editor-playlist .list-grip .icon-nav label:last-child, .icon-nav .editor-playlist .list-grip label:last-child {
-      border-radius: 0 0 3px 3px; }
-
-.editor-playlist .actions {
-  float: right;
-  margin-right: 4px;
-  margin-top: 1px;
-  width: 58px; }
-  .editor-playlist .actions .btn-default, .editor-playlist .actions .timeline .dropdown-menu li .btn, .timeline .dropdown-menu li .editor-playlist .actions .btn, .editor-playlist .actions .timeline .dropdown-menu li .icon-nav label, .timeline .dropdown-menu li .icon-nav .editor-playlist .actions label, .editor-playlist .actions .icon-nav .timeline .dropdown-menu li label, .icon-nav .timeline .dropdown-menu li .editor-playlist .actions label {
+  .editor-playlist-item .arrows {
+    float: left;
+    width: 24px;
+    margin: 6px; }
+    .editor-playlist-item .arrows .btn, .editor-playlist-item .arrows .icon-nav label, .icon-nav .editor-playlist-item .arrows label {
+      margin: 0; }
+      .editor-playlist-item .arrows .btn:first-child, .editor-playlist-item .arrows .icon-nav label:first-child, .icon-nav .editor-playlist-item .arrows label:first-child {
+        border-radius: 3px 3px 0 0; }
+      .editor-playlist-item .arrows .btn:last-child, .editor-playlist-item .arrows .icon-nav label:last-child, .icon-nav .editor-playlist-item .arrows label:last-child {
+        border-radius: 0 0 3px 3px; }
+  .editor-playlist-item .list-grip {
+    position: relative;
+    float: left;
+    width: 25px;
+    margin-right: 3px;
+    background-color: white;
+    height: 56px;
     display: inline-block;
-    margin-bottom: 3px;
-    margin-top: 3px;
-    width: 27px; }
-    .editor-playlist .actions .btn-default:nth-child(1):hover, .editor-playlist .actions .timeline .dropdown-menu li .btn:nth-child(1):hover, .timeline .dropdown-menu li .editor-playlist .actions .btn:nth-child(1):hover, .editor-playlist .actions .timeline .dropdown-menu li .icon-nav label:nth-child(1):hover, .timeline .dropdown-menu li .icon-nav .editor-playlist .actions label:nth-child(1):hover, .editor-playlist .actions .icon-nav .timeline .dropdown-menu li label:nth-child(1):hover, .icon-nav .timeline .dropdown-menu li .editor-playlist .actions label:nth-child(1):hover {
-      margin-right: 4px !important; }
-    .editor-playlist .actions .btn-default:first-child, .editor-playlist .actions .timeline .dropdown-menu li .btn:first-child, .timeline .dropdown-menu li .editor-playlist .actions .btn:first-child, .editor-playlist .actions .timeline .dropdown-menu li .icon-nav label:first-child, .timeline .dropdown-menu li .icon-nav .editor-playlist .actions label:first-child, .editor-playlist .actions .icon-nav .timeline .dropdown-menu li label:first-child, .icon-nav .timeline .dropdown-menu li .editor-playlist .actions label:first-child {
-      display: block;
-      width: 100%;
-      margin-bottom: 1px; }
+    cursor: move;
+    cursor: -webkit-grabbing; }
+    .editor-playlist-item .list-grip .btn, .editor-playlist-item .list-grip .icon-nav label, .icon-nav .editor-playlist-item .list-grip label {
+      margin: 0; }
+      .editor-playlist-item .list-grip .btn:first-child, .editor-playlist-item .list-grip .icon-nav label:first-child, .icon-nav .editor-playlist-item .list-grip label:first-child {
+        border-radius: 3px 3px 0 0; }
+      .editor-playlist-item .list-grip .btn:last-child, .editor-playlist-item .list-grip .icon-nav label:last-child, .icon-nav .editor-playlist-item .list-grip label:last-child {
+        border-radius: 0 0 3px 3px; }
+  .editor-playlist-item .actions {
+    float: right;
+    margin-right: 4px;
+    margin-top: 1px;
+    width: 58px; }
+    .editor-playlist-item .actions .btn-default, .editor-playlist-item .actions .timeline .dropdown-menu li .btn, .timeline .dropdown-menu li .editor-playlist-item .actions .btn, .editor-playlist-item .actions .timeline .dropdown-menu li .icon-nav label, .timeline .dropdown-menu li .icon-nav .editor-playlist-item .actions label, .editor-playlist-item .actions .icon-nav .timeline .dropdown-menu li label, .icon-nav .timeline .dropdown-menu li .editor-playlist-item .actions label {
+      display: inline-block;
+      margin-bottom: 3px;
+      margin-top: 3px;
+      width: 27px; }
+      .editor-playlist-item .actions .btn-default:nth-child(1):hover, .editor-playlist-item .actions .timeline .dropdown-menu li .btn:nth-child(1):hover, .timeline .dropdown-menu li .editor-playlist-item .actions .btn:nth-child(1):hover, .editor-playlist-item .actions .timeline .dropdown-menu li .icon-nav label:nth-child(1):hover, .timeline .dropdown-menu li .icon-nav .editor-playlist-item .actions label:nth-child(1):hover, .editor-playlist-item .actions .icon-nav .timeline .dropdown-menu li label:nth-child(1):hover, .icon-nav .timeline .dropdown-menu li .editor-playlist-item .actions label:nth-child(1):hover {
+        margin-right: 4px !important; }
+      .editor-playlist-item .actions .btn-default:first-child, .editor-playlist-item .actions .timeline .dropdown-menu li .btn:first-child, .timeline .dropdown-menu li .editor-playlist-item .actions .btn:first-child, .editor-playlist-item .actions .timeline .dropdown-menu li .icon-nav label:first-child, .timeline .dropdown-menu li .icon-nav .editor-playlist-item .actions label:first-child, .editor-playlist-item .actions .icon-nav .timeline .dropdown-menu li label:first-child, .icon-nav .timeline .dropdown-menu li .editor-playlist-item .actions label:first-child {
+        display: block;
+        width: 100%;
+        margin-bottom: 1px; }
 
-.editor-playlist .editor-playlist-item {
+.editor-playlist-item {
   box-shadow: 0 2px 2px rgba(40, 40, 40, 0.1); }
-  .editor-playlist .editor-playlist-item .playlist-item-name span {
+  .editor-playlist-item .playlist-item-name span {
     max-width: 100px; }
 
 .btn-group-justified {
