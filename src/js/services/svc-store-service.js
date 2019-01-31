@@ -118,15 +118,17 @@
               });
             return deferred.promise;
           },
-          addTaxExemption: function (country, state, blobKey, number, expiryDate) {
+          addTaxExemption: function (taxExemption, blobKey) {
             var deferred = $q.defer();
+            // var expiryDateString = $filter("date")(taxExemption.expiryDate, "yyyy-MM-dd");
+
             storeAPILoader().then(function (storeAPI) {
               var obj = {
-                "country": country,
-                "state": state,
+                // "country": taxExemption.country,
+                // "state": taxExemption.province,
                 "blobKey": blobKey,
-                "number": number,
-                "expiryDate": expiryDate
+                "number": taxExemption.number,
+                // "expiryDate": expiryDateString
               };
               var request = storeAPI.taxExemption.add(obj);
               request.execute(function (resp) {
@@ -140,8 +142,13 @@
             });
             return deferred.promise;
           },
-          uploadTaxExemptionCertificate: function (formData) {
+          uploadTaxExemptionCertificate: function (file) {
             var deferred = $q.defer();
+
+            var formData = new FormData();
+
+            formData.append("file", file);
+
             storeAPILoader().then(function (storeAPI) {
               var request = storeAPI.taxExemption.getUploadUrl();
               request.execute(function (resp) {

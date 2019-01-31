@@ -177,6 +177,21 @@
     </div>
 
     <hr>
+
+    <div class="row">
+      <div class="col-xs-12 text-center u_margin-sm-bottom">
+        <a id="showTaxExemption" href="#" aria-label="Are you Tax Exempt?" ng-click="showTaxExemptionModal()" ng-show="!purchase.taxExemptionSent" tabindex="3" translate>Are you Tax Exempt?</a>
+        <span ng-show="purchase.taxExemptionSent">
+          <h5>Tax Exemption Submitted</h5>
+          <div class="small">
+              Approval process is typically one business day.<br>
+              We encourage you to come back and complete your purchase at that point.
+          </div>
+        </span>
+
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-xs-12">
         <button id="backButton" type="button" aria-label="Go back to Shipping Address" class="btn btn-default pull-left" ng-click="setPreviousStep()" ng-hide="finalStep" tabindex="2" translate>common.back</button>

@@ -6,6 +6,7 @@ angular.module("risevision.common.components.purchase-flow")
         template: $templateCache.get("purchase-flow/checkout-review-purchase.html"),
         link: function ($scope) {
           $scope.purchase = purchaseFactory.purchase;
+          $scope.showTaxExemptionModal = purchaseFactory.showTaxExemptionModal;
 
           $scope.selectedCompany = userState.getCopyOfSelectedCompany();
 
@@ -27,12 +28,6 @@ angular.module("risevision.common.components.purchase-flow")
             }
           };
 
-          $scope.showTaxExemptionModal = function () {
-            purchaseFactory.showTaxExemptionModal()
-              .then(function (result) {
-                $scope.taxExemptionSent = result;
-              });
-          };
         }
       };
     }

@@ -8,7 +8,7 @@ describe("Services: purchase factory", function() {
     $provide.service("$modal", function() {
       return {
         open: sinon.stub().returns({
-          result: "result"
+          result: Q.resolve("result")
         })
       };
     });
@@ -107,6 +107,7 @@ describe("Services: purchase factory", function() {
   it("should exist", function() {
     expect(purchaseFactory).to.be.ok;
     expect(purchaseFactory.showPurchaseModal).to.be.a("function");
+    expect(purchaseFactory.showTaxExemptionModal).to.be.a("function");
     expect(purchaseFactory.validatePaymentMethod).to.be.a("function");
     expect(purchaseFactory.getEstimate).to.be.a("function");
     expect(purchaseFactory.completePayment).to.be.a("function");
@@ -139,7 +140,7 @@ describe("Services: purchase factory", function() {
     });
 
     it("should return modal result", function() {
-      expect(purchaseFactory.showPurchaseModal({})).to.equal("result");
+      expect(purchaseFactory.showPurchaseModal({})).to.be.an("object");
     });
 
     it("should initialize selected plan, attach addresses and clean contact info", function() {
@@ -208,6 +209,33 @@ describe("Services: purchase factory", function() {
       expect(purchaseFactory.purchase.paymentMethods.invoiceDate).to.be.a("date");
       expect(purchaseFactory.purchase.paymentMethods.invoiceDate - newDate).to.equal(30 * 24 * 60 * 60 * 1000);
     });
+  });
+
+  describe("showTaxExemptionModal: ", function() {
+
+    it("should show Tax Exemption modal", function() {
+      purchaseFactory.showTaxExemptionModal({});
+
+      expect($modal.open).to.have.been.called;
+      expect($modal.open).to.have.been.calledWith({
+        template: sinon.match.any,
+        controller: "TaxExemptionModalCtrl",
+        size: "md",
+        backdrop: "static"
+      });
+    });
+
+    it("should return modal result", function(done) {
+      purchaseFactory.purchase = {};
+      purchaseFactory.showTaxExemptionModal();
+
+      setTimeout(function() {
+        expect(purchaseFactory.purchase.taxExemptionSent).to.equal("result");
+
+        done();
+      }, 10);
+    });
+
   });
 
   describe("validatePaymentMethod: ", function() {

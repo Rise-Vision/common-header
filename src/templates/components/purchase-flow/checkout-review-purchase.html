@@ -86,12 +86,6 @@
         <button aria-label="Edit Subscription Details" class="btn btn-default btn-xs" ng-click="setCurrentStep(0)" tabindex="1">Edit</button>
       </h4>
     </div>
-    <div class="col-xs-4 text-right">
-      <button id="showTaxExemption" ng-show="!taxExemptionSent" ng-click="showTaxExemptionModal()" class="btn btn-default btn-xs u_margin-sm-top">
-        Submit Tax Exemption
-      </button>
-      <h5 ng-show="taxExemptionSent">Tax Exemption Submitted</h5>
-    </div>
   </div>
   <div class="row">
     <div class="col-sm-4 col-xs-6 text-right">
@@ -119,16 +113,25 @@
         <span class="u_margin-left text-subtle">{{purchase.estimate.currency | uppercase}}</span>
       </span>
     </div>
-    <div class="col-sm-4 col-xs-12 text-right small">
-      <span ng-show="taxExemptionSent">
-        Approval process is typically one business day.<br><br>
-        We encourage you to come back and complete your purchase at that point.
-      </span>
-    </div>
   </div>
   <div class="row">
     <hr class="u_margin-sm-top">
   </div>
+
+  <div class="row">
+    <div class="col-xs-12 text-center u_margin-sm-bottom">
+      <a id="showTaxExemption" href="#" aria-label="Are you Tax Exempt?" ng-click="showTaxExemptionModal()" ng-show="purchase.estimate.totalTax > 0 && !purchase.taxExemptionSent" tabindex="3" translate>Are you Tax Exempt?</a>
+      <span ng-show="purchase.taxExemptionSent">
+        <h5>Tax Exemption Submitted</h5>
+        <div class="small">
+            Approval process is typically one business day.<br>
+            We encourage you to come back and complete your purchase at that point.
+        </div>
+      </span>
+
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-xs-8 col-xs-offset-2 u_margin-md-bottom">
       <button id="payButton" class="btn btn-primary btn-hg btn-block" ng-click="completePayment()" tabindex="1" aria-label="Complete Payment">

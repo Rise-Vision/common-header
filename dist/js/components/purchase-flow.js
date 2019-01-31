@@ -335,7 +335,9 @@ angular.module("risevision.common.components.purchase-flow")
             backdrop: "static"
           });
 
-          return modalInstance.result;
+          modalInstance.result.then(function (result) {
+            factory.purchase.taxExemptionSent = result;
+          });
         };
 
         var _validateCard = function (card, isNew) {
@@ -629,6 +631,41 @@ angular.module("risevision.common.components.purchase-flow")
     }
   ]);
 
+(function (angular) {
+
+  "use strict";
+  angular.module("risevision.common.components.purchase-flow")
+    .factory("taxExemptionFactory", ["storeService",
+      function (storeService) {
+        var factory = {
+          taxExemption: {}
+        };
+
+        // Stop spinner - workaround for spinner not rendering
+        factory.loading = false;
+
+        factory.submitCertificate = function () {
+          factory.taxExemptionError = null;
+          factory.loading = true;
+
+          return storeService.uploadTaxExemptionCertificate(factory.taxExemption.file)
+            .then(function (blobKey) {
+              return storeService.addTaxExemption(factory.taxExemption, blobKey);
+            }).catch(function (error) {
+              factory.taxExemptionError = error.message ||
+                "An error ocurred while submitting your tax exemption. Please try again.";
+            }).finally(function () {
+              factory.loading = false;
+            });
+
+        };
+
+        return factory;
+      }
+    ]);
+
+})(angular);
+
 "use strict";
 
 angular.module("risevision.common.components.purchase-flow")
@@ -731,6 +768,9 @@ angular.module("risevision.common.components.purchase-flow")
           $scope.paymentMethods = purchaseFactory.purchase.paymentMethods;
           $scope.contactEmail = purchaseFactory.purchase.contact.email;
 
+          $scope.purchase = purchaseFactory.purchase;
+          $scope.showTaxExemptionModal = purchaseFactory.showTaxExemptionModal;
+
           $scope.getCardDescription = function (card) {
             return "***-" + card.last4 + ", " + card.cardType + (card.isDefault ? " (default)" : "");
           };
@@ -792,6 +832,7 @@ angular.module("risevision.common.components.purchase-flow")
         template: $templateCache.get("purchase-flow/checkout-review-purchase.html"),
         link: function ($scope) {
           $scope.purchase = purchaseFactory.purchase;
+          $scope.showTaxExemptionModal = purchaseFactory.showTaxExemptionModal;
 
           $scope.selectedCompany = userState.getCopyOfSelectedCompany();
 
@@ -813,12 +854,6 @@ angular.module("risevision.common.components.purchase-flow")
             }
           };
 
-          $scope.showTaxExemptionModal = function () {
-            purchaseFactory.showTaxExemptionModal()
-              .then(function (result) {
-                $scope.taxExemptionSent = result;
-              });
-          };
         }
       };
     }
@@ -1068,58 +1103,39 @@ angular.module("risevision.common.components.purchase-flow")
 ]);
 
 angular.module("risevision.common.components.purchase-flow")
-  .controller("TaxExemptionModalCtrl", ["$scope", "$q", "$modalInstance", "$loading", "$filter", "storeService",
-    "COUNTRIES",
-    "REGIONS_CA",
-    "REGIONS_US",
-    function ($scope, $q, $modalInstance, $loading, $filter, storeService, COUNTRIES, REGIONS_CA, REGIONS_US) {
-      $scope.formData = {};
-      $scope.countries = COUNTRIES;
-      $scope.regionsCA = REGIONS_CA;
-      $scope.regionsUS = REGIONS_US;
-      $scope.taxExemptionSubmitted = false;
+  .controller("TaxExemptionModalCtrl", ["$scope", "$modalInstance", "$loading", "taxExemptionFactory",
+    function ($scope, $modalInstance, $loading, taxExemptionFactory) {
+
+      $scope.form = {};
+      $scope.factory = taxExemptionFactory;
+
+      // $scope.countries = COUNTRIES;
+      // $scope.regionsCA = REGIONS_CA;
+      // $scope.regionsUS = REGIONS_US;
+
+      $scope.$watch("factory.loading", function (loading) {
+        if (loading) {
+          $loading.start("tax-exemption-modal");
+        } else {
+          $loading.stop("tax-exemption-modal");
+        }
+      });
 
       $scope.submit = function () {
-        $scope.errorMessage = null;
-
-        if ($scope.validate()) {
-          var fd = new FormData();
-
-          fd.append("file", $scope.formData.file);
-
-          $loading.start("tax-modal");
-
-          return storeService.uploadTaxExemptionCertificate(fd)
-            .then(function (blobKey) {
-              var expiryDateString = $filter("date")($scope.formData.expiryDate, "yyyy-MM-dd");
-              return storeService.addTaxExemption(
-                $scope.formData.country,
-                $scope.formData.province,
-                blobKey,
-                $scope.formData.number,
-                expiryDateString);
-            }).then(function () {
-              $modalInstance.close(true);
-            }).catch(function (error) {
-              $scope.errorMessage = error.message ||
-                "An error ocurred while submitting your tax exemption. Please try again.";
-            }).finally(function () {
-              $loading.stop("tax-modal");
-            });
-        } else {
-          $scope.errorMessage = "Please complete the missing information below.";
-          return $q.reject($scope.errorMessage);
+        if ($scope.form.taxExemptionForm && $scope.form.taxExemptionForm.$invalid) {
+          return;
         }
+
+        return taxExemptionFactory.submitCertificate()
+          .then(function () {
+            if (!taxExemptionFactory.taxExemptionError) {
+              $modalInstance.close(true);
+            }
+          });
       };
 
       $scope.close = function () {
         $modalInstance.dismiss();
-      };
-
-      $scope.validate = function () {
-        var formData = $scope.formData;
-
-        return !!(formData.file && formData.number && formData.country && formData.province);
       };
 
       $scope.selectFile = function () {
@@ -1130,28 +1146,28 @@ angular.module("risevision.common.components.purchase-flow")
 
       $scope.setFile = function (element) {
         $scope.$apply(function () {
-          $scope.formData.file = element.files[0];
+          taxExemptionFactory.taxExemption.file = element.files[0];
         });
       };
 
       $scope.clearFile = function () {
-        $scope.formData.file = null;
+        taxExemptionFactory.taxExemption.file = null;
         document.querySelector("#inputExemption").value = "";
       };
 
-      $scope.openDatepicker = function ($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
+      // $scope.openDatepicker = function ($event) {
+      //   $event.preventDefault();
+      //   $event.stopPropagation();
+      // 
+      //   $scope.datepicker = true;
+      // };
 
-        $scope.datepicker = true;
-      };
-
-      $scope.countryFilter = function (country) {
-        return country.code === "CA" || country.code === "US";
-      };
+      // $scope.countryFilter = function (country) {
+      //   return country.code === "CA" || country.code === "US";
+      // };
 
       $scope.isFieldInvalid = function (fieldName) {
-        var form = $scope.taxExemptionForm;
+        var form = $scope.form.taxExemptionForm;
         var field = form[fieldName];
 
         return (field.$dirty || form.$submitted) && field.$invalid;
@@ -1242,7 +1258,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/checkout-payment-methods.html',
-    '<div id="checkout-payment-methods"><form id="form.paymentMethodsForm" role="form" class="u_margin-md-top" name="form.paymentMethodsForm" novalidate=""><div class="row u_margin-md-top"><div class="col-md-8 col-xs-12 form-inline"><div class="form-group"><label for="payment-method-select" class="u_margin-right">Payment Method</label><select id="payment-method-select" class="form-control selectpicker" ng-model="paymentMethods.paymentMethod" tabindex="1"><option value="card">Credit Card</option><option value="invoice">Invoice Me</option></select></div></div></div><hr><div id="credit-card-form" ng-if="paymentMethods.paymentMethod === \'card\'"><div class="row" ng-if="false"><div class="col-md-12"><div class="form-group"><label for="credit-card-select" class="hidden">Add New Credit Card</label><select id="credit-card-select" class="form-control selectpicker" ng-model="paymentMethods.selectedCard" ng-options="c as getCardDescription(c) for c in paymentMethods.existingCreditCards track by c.id"><option value="">Add New Credit Card</option></select></div></div></div><div id="new-credit-card-form" ng-if="paymentMethods.selectedCard.isNew"><div class="alert alert-danger" ng-show="form.paymentMethodsForm.$submitted && form.paymentMethodsForm.$invalid">Please complete the missing information below.</div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="paymentMethods.newCreditCard.validationErrors.length"><strong>Card Validation Error<span ng-show="paymentMethods.newCreditCard.validationErrors.length > 1">s</span></strong><ul><li ng-repeat="error in paymentMethods.newCreditCard.validationErrors">{{error}}</li></ul></div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="paymentMethods.newCreditCard.tokenError"><strong>Card Processing Error</strong> {{paymentMethods.newCreditCard.tokenError}}</div><div class="row"><div class="col-md-12"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardholderName.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardholderName.$invalid }"><label for="new-card-name" lass="control-label">Cardholder Name *</label> <input id="new-card-name" aria-required="true" tabindex="1" type="text" class="form-control" name="cardholderName" data-stripe="name" ng-model="paymentMethods.newCreditCard.name" autocomplete="cc-name" required=""></div></div></div><div class="row"><div class="col-md-12"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardNumber.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardNumber.$invalid }"><label for="new-card-number" class="control-label">Card Number *</label> <input id="new-card-number" type="text" aria-required="true" tabindex="1" class="form-control" placeholder="0000 0000 0000 0000" name="cardNumber" data-stripe="number" ng-model="paymentMethods.newCreditCard.number" autocomplete="cc-number" required=""></div></div></div><div class="row"><div class="col-md-4"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardExpiryMonth.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardExpiryMonth.$invalid }"><label for="new-card-expiry-month" class="control-label">Expiry Month *</label><select id="new-card-expiry-month" aria-required="true" tabindex="1" class="form-control" name="cardExpiryMonth" data-stripe="exp-month" ng-model="paymentMethods.newCreditCard.expMonth" autocomplete="cc-exp-month" integer-parser="" required=""><option ng-show="false" value="">&lt; Select Month &gt;</option><option value="1">01</option><option value="2">02</option><option value="3">03</option><option value="4">04</option><option value="5">05</option><option value="6">06</option><option value="7">07</option><option value="8">08</option><option value="9">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select></div></div><div class="col-md-4"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardExpiryYear.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardExpiryYear.$invalid }"><label for="expiry-year" class="control-label">Expiry Year *</label><year-selector id="new-card-expiry-year" class="form-control" name="cardExpiryYear" data-stripe="exp-year" ng-model="paymentMethods.newCreditCard.expYear" tabindex="1" autocomplete="cc-exp-year" integer-parser="" required=""></year-selector></div></div><div class="col-md-4"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardCvc.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardCvc.$invalid }"><label for="new-card-cvc" class="control-label">Security Code *</label> <input id="new-card-cvc" aria-required="true" tabindex="1" type="text" pattern="[0-9]*" class="form-control" name="cardCvc" data-stripe="cvc" ng-model="paymentMethods.newCreditCard.cvc" autocomplete="cc-csc" maxlength="4" required=""></div></div></div><div class="checkbox"><label for="toggleMatchBillingAddress" aria-label="Match Billing Address"><input type="checkbox" id="toggleMatchBillingAddress" ng-model="paymentMethods.newCreditCard.useBillingAddress" tabindex="1"> Same As Billing Address</label></div><div id="new-card-address"><address-form form-object="form.paymentMethodsForm" address-object="paymentMethods.newCreditCard.address" hide-company-name="true" ng-if="!paymentMethods.newCreditCard.useBillingAddress"></address-form></div></div><div id="existing-credit-card-form" ng-if="!paymentMethods.selectedCard.isNew"><div id="errorBox" class="alert alert-danger" role="alert" ng-show="paymentMethods.selectedCard.validationErrors.length"><strong>Card Validation Error</strong> {{paymentMethods.selectedCard.validationErrors[0]}}</div><div class="row"><div class="col-md-12"><div class="form-group"><label for="existing-card-name" class="control-label">Cardholder Name</label> <input id="existing-card-name" type="text" class="form-control" placeholder="{{paymentMethods.selectedCard.name}}" tabindex="1" disabled="disabled"></div></div></div><div class="row"><div class="col-md-12"><div class="form-group"><label for="existing-card-number" class="control-label">Card Number</label> <input id="existing-card-number" type="text" class="form-control" placeholder="{{paymentMethods.selectedCard.last4 | cardLastFour}}" tabindex="1" disabled="disabled"></div></div></div><div class="row form-group"><div class="col-md-4"><div class="form-group"><label for="existing-card-expiry-month" class="control-label">Expiry Month</label> <input id="existing-card-expiry-month" type="text" class="form-control masked" placeholder="{{paymentMethods.selectedCard.expMonth | paddedMonth}}" disabled="disabled" tabindex="1"></div></div><div class="col-md-4"><div class="form-group"><label for="existing-card-expiry-year" class="control-label">Expiry Year</label> <input id="existing-card-expiry-year" type="text" class="form-control masked" placeholder="{{paymentMethods.selectedCard.expYear}}" tabindex="1" disabled="disabled"></div></div></div></div></div><div id="generateInvoice" ng-if="paymentMethods.paymentMethod === \'invoice\'"><p>If you\'d like to be invoiced for your purchase (rather than paying now by credit card), please enter a <b>Purchase Order</b> number and continue with checkout.</p><p>You will receive an invoice for this purchase total at <span class="font-weight-bold">{{contactEmail}}</span>. Invoices are due within 30 days of creation, payable by check, wire transfer, or credit card.</p><p>Please note your invoice is generated only once this checkout is completed.</p><div class="row"><div class="col-xs-12 col-sm-6"><div class="form-group"><label for="invoice-po-number" class="control-label">Purchase Order Number</label> <input id="invoice-po-number" type="text" class="form-control" name="purchaseOrder" ng-model="paymentMethods.purchaseOrderNumber" tabindex="1"></div></div></div><div id="generateInvoiceOverdue" class="hidden"><p class="text-danger">You have overdue invoice payments on your account.</p><p>In order to complete this purchase by invoice, please pay your outstanding invoices <a href="#">here</a>.</p></div></div><hr><div class="row"><div class="col-xs-12"><button id="backButton" type="button" aria-label="Go back to Shipping Address" class="btn btn-default pull-left" ng-click="setPreviousStep()" ng-hide="finalStep" tabindex="2" translate="">common.back</button> <button id="continueButton" type="submit" aria-label="Continue to Purchase Review" form="form.paymentMethodsForm" class="btn btn-primary pull-right" ng-click="validatePaymentMethod()" tabindex="1" translate="">common.continue</button></div></div></form></div>');
+    '<div id="checkout-payment-methods"><form id="form.paymentMethodsForm" role="form" class="u_margin-md-top" name="form.paymentMethodsForm" novalidate=""><div class="row u_margin-md-top"><div class="col-md-8 col-xs-12 form-inline"><div class="form-group"><label for="payment-method-select" class="u_margin-right">Payment Method</label><select id="payment-method-select" class="form-control selectpicker" ng-model="paymentMethods.paymentMethod" tabindex="1"><option value="card">Credit Card</option><option value="invoice">Invoice Me</option></select></div></div></div><hr><div id="credit-card-form" ng-if="paymentMethods.paymentMethod === \'card\'"><div class="row" ng-if="false"><div class="col-md-12"><div class="form-group"><label for="credit-card-select" class="hidden">Add New Credit Card</label><select id="credit-card-select" class="form-control selectpicker" ng-model="paymentMethods.selectedCard" ng-options="c as getCardDescription(c) for c in paymentMethods.existingCreditCards track by c.id"><option value="">Add New Credit Card</option></select></div></div></div><div id="new-credit-card-form" ng-if="paymentMethods.selectedCard.isNew"><div class="alert alert-danger" ng-show="form.paymentMethodsForm.$submitted && form.paymentMethodsForm.$invalid">Please complete the missing information below.</div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="paymentMethods.newCreditCard.validationErrors.length"><strong>Card Validation Error<span ng-show="paymentMethods.newCreditCard.validationErrors.length > 1">s</span></strong><ul><li ng-repeat="error in paymentMethods.newCreditCard.validationErrors">{{error}}</li></ul></div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="paymentMethods.newCreditCard.tokenError"><strong>Card Processing Error</strong> {{paymentMethods.newCreditCard.tokenError}}</div><div class="row"><div class="col-md-12"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardholderName.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardholderName.$invalid }"><label for="new-card-name" lass="control-label">Cardholder Name *</label> <input id="new-card-name" aria-required="true" tabindex="1" type="text" class="form-control" name="cardholderName" data-stripe="name" ng-model="paymentMethods.newCreditCard.name" autocomplete="cc-name" required=""></div></div></div><div class="row"><div class="col-md-12"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardNumber.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardNumber.$invalid }"><label for="new-card-number" class="control-label">Card Number *</label> <input id="new-card-number" type="text" aria-required="true" tabindex="1" class="form-control" placeholder="0000 0000 0000 0000" name="cardNumber" data-stripe="number" ng-model="paymentMethods.newCreditCard.number" autocomplete="cc-number" required=""></div></div></div><div class="row"><div class="col-md-4"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardExpiryMonth.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardExpiryMonth.$invalid }"><label for="new-card-expiry-month" class="control-label">Expiry Month *</label><select id="new-card-expiry-month" aria-required="true" tabindex="1" class="form-control" name="cardExpiryMonth" data-stripe="exp-month" ng-model="paymentMethods.newCreditCard.expMonth" autocomplete="cc-exp-month" integer-parser="" required=""><option ng-show="false" value="">&lt; Select Month &gt;</option><option value="1">01</option><option value="2">02</option><option value="3">03</option><option value="4">04</option><option value="5">05</option><option value="6">06</option><option value="7">07</option><option value="8">08</option><option value="9">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select></div></div><div class="col-md-4"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardExpiryYear.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardExpiryYear.$invalid }"><label for="expiry-year" class="control-label">Expiry Year *</label><year-selector id="new-card-expiry-year" class="form-control" name="cardExpiryYear" data-stripe="exp-year" ng-model="paymentMethods.newCreditCard.expYear" tabindex="1" autocomplete="cc-exp-year" integer-parser="" required=""></year-selector></div></div><div class="col-md-4"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardCvc.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardCvc.$invalid }"><label for="new-card-cvc" class="control-label">Security Code *</label> <input id="new-card-cvc" aria-required="true" tabindex="1" type="text" pattern="[0-9]*" class="form-control" name="cardCvc" data-stripe="cvc" ng-model="paymentMethods.newCreditCard.cvc" autocomplete="cc-csc" maxlength="4" required=""></div></div></div><div class="checkbox"><label for="toggleMatchBillingAddress" aria-label="Match Billing Address"><input type="checkbox" id="toggleMatchBillingAddress" ng-model="paymentMethods.newCreditCard.useBillingAddress" tabindex="1"> Same As Billing Address</label></div><div id="new-card-address"><address-form form-object="form.paymentMethodsForm" address-object="paymentMethods.newCreditCard.address" hide-company-name="true" ng-if="!paymentMethods.newCreditCard.useBillingAddress"></address-form></div></div><div id="existing-credit-card-form" ng-if="!paymentMethods.selectedCard.isNew"><div id="errorBox" class="alert alert-danger" role="alert" ng-show="paymentMethods.selectedCard.validationErrors.length"><strong>Card Validation Error</strong> {{paymentMethods.selectedCard.validationErrors[0]}}</div><div class="row"><div class="col-md-12"><div class="form-group"><label for="existing-card-name" class="control-label">Cardholder Name</label> <input id="existing-card-name" type="text" class="form-control" placeholder="{{paymentMethods.selectedCard.name}}" tabindex="1" disabled="disabled"></div></div></div><div class="row"><div class="col-md-12"><div class="form-group"><label for="existing-card-number" class="control-label">Card Number</label> <input id="existing-card-number" type="text" class="form-control" placeholder="{{paymentMethods.selectedCard.last4 | cardLastFour}}" tabindex="1" disabled="disabled"></div></div></div><div class="row form-group"><div class="col-md-4"><div class="form-group"><label for="existing-card-expiry-month" class="control-label">Expiry Month</label> <input id="existing-card-expiry-month" type="text" class="form-control masked" placeholder="{{paymentMethods.selectedCard.expMonth | paddedMonth}}" disabled="disabled" tabindex="1"></div></div><div class="col-md-4"><div class="form-group"><label for="existing-card-expiry-year" class="control-label">Expiry Year</label> <input id="existing-card-expiry-year" type="text" class="form-control masked" placeholder="{{paymentMethods.selectedCard.expYear}}" tabindex="1" disabled="disabled"></div></div></div></div></div><div id="generateInvoice" ng-if="paymentMethods.paymentMethod === \'invoice\'"><p>If you\'d like to be invoiced for your purchase (rather than paying now by credit card), please enter a <b>Purchase Order</b> number and continue with checkout.</p><p>You will receive an invoice for this purchase total at <span class="font-weight-bold">{{contactEmail}}</span>. Invoices are due within 30 days of creation, payable by check, wire transfer, or credit card.</p><p>Please note your invoice is generated only once this checkout is completed.</p><div class="row"><div class="col-xs-12 col-sm-6"><div class="form-group"><label for="invoice-po-number" class="control-label">Purchase Order Number</label> <input id="invoice-po-number" type="text" class="form-control" name="purchaseOrder" ng-model="paymentMethods.purchaseOrderNumber" tabindex="1"></div></div></div><div id="generateInvoiceOverdue" class="hidden"><p class="text-danger">You have overdue invoice payments on your account.</p><p>In order to complete this purchase by invoice, please pay your outstanding invoices <a href="#">here</a>.</p></div></div><hr><div class="row"><div class="col-xs-12 text-center u_margin-sm-bottom"><a id="showTaxExemption" href="#" aria-label="Are you Tax Exempt?" ng-click="showTaxExemptionModal()" ng-show="!purchase.taxExemptionSent" tabindex="3" translate="">Are you Tax Exempt?</a> <span ng-show="purchase.taxExemptionSent"><h5>Tax Exemption Submitted</h5><div class="small">Approval process is typically one business day.<br>We encourage you to come back and complete your purchase at that point.</div></span></div></div><div class="row"><div class="col-xs-12"><button id="backButton" type="button" aria-label="Go back to Shipping Address" class="btn btn-default pull-left" ng-click="setPreviousStep()" ng-hide="finalStep" tabindex="2" translate="">common.back</button> <button id="continueButton" type="submit" aria-label="Continue to Purchase Review" form="form.paymentMethodsForm" class="btn btn-primary pull-right" ng-click="validatePaymentMethod()" tabindex="1" translate="">common.continue</button></div></div></form></div>');
 }]);
 })();
 
@@ -1254,7 +1270,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/checkout-review-purchase.html',
-    '<div id="checkout-review-purchase"><div id="errorBox" class="alert alert-danger" role="alert" ng-show="purchase.estimate.estimateError"><div class="row"><div class="col-xs-9"><p><strong>Tax Estimate Error</strong> {{purchase.estimate.estimateError}}</p></div><div class="col-xs-3"><a class="btn btn-default btn-block" href="#" ng-click="factory.getEstimate()">Retry</a></div></div></div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="purchase.checkoutError"><strong>Payment Error</strong> {{purchase.checkoutError}}</div><div class="row"><div class="col-md-6 u_margin-sm-top"><h4 class="u_margin-sm-bottom">Purchasing For</h4><span class="font-weight-bold">{{selectedCompany.name}}</span><br>Company ID: {{selectedCompany.id}}</div><div class="col-md-6 u_margin-sm-top"><h4 class="u_margin-sm-bottom">Payment Method <button aria-label="Edit Payment Method" class="btn btn-default btn-xs" ng-click="setCurrentStep(3)" tabindex="1">Edit</button></h4><div ng-show="purchase.paymentMethods.paymentMethod === \'card\'"><span class="font-weight-bold">{{purchase.paymentMethods.selectedCard.cardType}}</span><br>{{purchase.paymentMethods.selectedCard.last4 | cardLastFour}}<br>Exp: {{purchase.paymentMethods.selectedCard.expMonth | paddedMonth}}/{{purchase.paymentMethods.selectedCard.expYear}}</div><div ng-show="purchase.paymentMethods.paymentMethod === \'invoice\'"><span class="font-weight-bold">Paying by Invoice</span><br>Due Date: {{purchase.paymentMethods.invoiceDate | date: \'d-MMM-yyyy\'}} <span ng-if="purchase.paymentMethods.purchaseOrderNumber"><br>Purchase Order Number: {{purchase.paymentMethods.purchaseOrderNumber}}</span></div></div></div><div class="row"><div class="col-md-6 u_margin-sm-top"><h4 class="u_margin-sm-bottom">Billing Address <button aria-label="Edit Billing Address" class="btn btn-default btn-xs" ng-click="setCurrentStep(1)" tabindex="1">Edit</button></h4>{{purchase.contact.firstName}} {{purchase.contact.lastName}}<br>{{purchase.contact.email}}<br>{{purchase.billingAddress.name}}<br>{{purchase.billingAddress.street}}<br><span ng-show="purchase.billingAddress.unit">{{purchase.billingAddress.unit}}<br></span> {{purchase.billingAddress.city}}, <span ng-show="purchase.billingAddress.province">{{purchase.billingAddress.province}},</span> {{purchase.billingAddress.postalCode}}<br>{{purchase.billingAddress.country | countryName}}</div><div class="col-md-6 u_margin-sm-top"><h4 class="u_margin-sm-bottom">Shipping Address <button aria-label="Edit Shipping Address" class="btn btn-default btn-xs" ng-click="setCurrentStep(2)" tabindex="1">Edit</button></h4>{{purchase.shippingAddress.name}}<br>{{purchase.shippingAddress.street}}<br><span ng-show="purchase.shippingAddress.unit">{{purchase.shippingAddress.unit}}<br></span> {{purchase.shippingAddress.city}}, <span ng-show="purchase.shippingAddress.province">{{purchase.shippingAddress.province}},</span> {{purchase.shippingAddress.postalCode}}<br>{{purchase.shippingAddress.country | countryName}}</div></div><br><hr class="u_margin-xs-top u_margin-xs-bottom"><div class="row"><div class="col-xs-8"><h4 class="u_margin-sm-bottom">Subscription Details <button aria-label="Edit Subscription Details" class="btn btn-default btn-xs" ng-click="setCurrentStep(0)" tabindex="1">Edit</button></h4></div><div class="col-xs-4 text-right"><button id="showTaxExemption" ng-show="!taxExemptionSent" ng-click="showTaxExemptionModal()" class="btn btn-default btn-xs u_margin-sm-top">Submit Tax Exemption</button><h5 ng-show="taxExemptionSent">Tax Exemption Submitted</h5></div></div><div class="row"><div class="col-sm-4 col-xs-6 text-right"><p>{{purchase.plan.name}} ({{ purchase.plan.isMonthly ? \'Monthly\' : \'Yearly\' }})<br><span ng-show="purchase.plan.additionalDisplayLicenses">{{purchase.plan.additionalDisplayLicenses}} Additional Display<span ng-show="purchase.plan.additionalDisplayLicenses > 1">s</span><br></span> <span ng-repeat="tax in purchase.estimate.taxes">{{tax.taxName}}<br></span> Total Tax:</p><span class="order-total">Order Total:</span></div><div class="col-sm-4 col-xs-6 text-right"><p>${{getPlanPrice()}}<br><span ng-show="purchase.plan.additionalDisplayLicenses">${{getAdditionalDisplaysPrice()}}<br></span> <span ng-repeat="tax in purchase.estimate.taxes">${{tax.taxAmount | number:2}}<br></span> ${{purchase.estimate.totalTax | number:2}}</p><span class="order-total">${{purchase.estimate.total | number:2}} <span class="u_margin-left text-subtle">{{purchase.estimate.currency | uppercase}}</span></span></div><div class="col-sm-4 col-xs-12 text-right small"><span ng-show="taxExemptionSent">Approval process is typically one business day.<br><br>We encourage you to come back and complete your purchase at that point.</span></div></div><div class="row"><hr class="u_margin-sm-top"></div><div class="row"><div class="col-xs-8 col-xs-offset-2 u_margin-md-bottom"><button id="payButton" class="btn btn-primary btn-hg btn-block" ng-click="completePayment()" tabindex="1" aria-label="Complete Payment"><span id="payLabel" ng-if="purchase.paymentMethods.paymentMethod === \'card\'">Pay ${{purchase.estimate.total | number:2}} Now</span> <span id="invoiceLabel" ng-if="purchase.paymentMethods.paymentMethod === \'invoice\'">Invoice Me ${{purchase.estimate.total | number:2}} Now</span></button></div></div></div>');
+    '<div id="checkout-review-purchase"><div id="errorBox" class="alert alert-danger" role="alert" ng-show="purchase.estimate.estimateError"><div class="row"><div class="col-xs-9"><p><strong>Tax Estimate Error</strong> {{purchase.estimate.estimateError}}</p></div><div class="col-xs-3"><a class="btn btn-default btn-block" href="#" ng-click="factory.getEstimate()">Retry</a></div></div></div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="purchase.checkoutError"><strong>Payment Error</strong> {{purchase.checkoutError}}</div><div class="row"><div class="col-md-6 u_margin-sm-top"><h4 class="u_margin-sm-bottom">Purchasing For</h4><span class="font-weight-bold">{{selectedCompany.name}}</span><br>Company ID: {{selectedCompany.id}}</div><div class="col-md-6 u_margin-sm-top"><h4 class="u_margin-sm-bottom">Payment Method <button aria-label="Edit Payment Method" class="btn btn-default btn-xs" ng-click="setCurrentStep(3)" tabindex="1">Edit</button></h4><div ng-show="purchase.paymentMethods.paymentMethod === \'card\'"><span class="font-weight-bold">{{purchase.paymentMethods.selectedCard.cardType}}</span><br>{{purchase.paymentMethods.selectedCard.last4 | cardLastFour}}<br>Exp: {{purchase.paymentMethods.selectedCard.expMonth | paddedMonth}}/{{purchase.paymentMethods.selectedCard.expYear}}</div><div ng-show="purchase.paymentMethods.paymentMethod === \'invoice\'"><span class="font-weight-bold">Paying by Invoice</span><br>Due Date: {{purchase.paymentMethods.invoiceDate | date: \'d-MMM-yyyy\'}} <span ng-if="purchase.paymentMethods.purchaseOrderNumber"><br>Purchase Order Number: {{purchase.paymentMethods.purchaseOrderNumber}}</span></div></div></div><div class="row"><div class="col-md-6 u_margin-sm-top"><h4 class="u_margin-sm-bottom">Billing Address <button aria-label="Edit Billing Address" class="btn btn-default btn-xs" ng-click="setCurrentStep(1)" tabindex="1">Edit</button></h4>{{purchase.contact.firstName}} {{purchase.contact.lastName}}<br>{{purchase.contact.email}}<br>{{purchase.billingAddress.name}}<br>{{purchase.billingAddress.street}}<br><span ng-show="purchase.billingAddress.unit">{{purchase.billingAddress.unit}}<br></span> {{purchase.billingAddress.city}}, <span ng-show="purchase.billingAddress.province">{{purchase.billingAddress.province}},</span> {{purchase.billingAddress.postalCode}}<br>{{purchase.billingAddress.country | countryName}}</div><div class="col-md-6 u_margin-sm-top"><h4 class="u_margin-sm-bottom">Shipping Address <button aria-label="Edit Shipping Address" class="btn btn-default btn-xs" ng-click="setCurrentStep(2)" tabindex="1">Edit</button></h4>{{purchase.shippingAddress.name}}<br>{{purchase.shippingAddress.street}}<br><span ng-show="purchase.shippingAddress.unit">{{purchase.shippingAddress.unit}}<br></span> {{purchase.shippingAddress.city}}, <span ng-show="purchase.shippingAddress.province">{{purchase.shippingAddress.province}},</span> {{purchase.shippingAddress.postalCode}}<br>{{purchase.shippingAddress.country | countryName}}</div></div><br><hr class="u_margin-xs-top u_margin-xs-bottom"><div class="row"><div class="col-xs-8"><h4 class="u_margin-sm-bottom">Subscription Details <button aria-label="Edit Subscription Details" class="btn btn-default btn-xs" ng-click="setCurrentStep(0)" tabindex="1">Edit</button></h4></div></div><div class="row"><div class="col-sm-4 col-xs-6 text-right"><p>{{purchase.plan.name}} ({{ purchase.plan.isMonthly ? \'Monthly\' : \'Yearly\' }})<br><span ng-show="purchase.plan.additionalDisplayLicenses">{{purchase.plan.additionalDisplayLicenses}} Additional Display<span ng-show="purchase.plan.additionalDisplayLicenses > 1">s</span><br></span> <span ng-repeat="tax in purchase.estimate.taxes">{{tax.taxName}}<br></span> Total Tax:</p><span class="order-total">Order Total:</span></div><div class="col-sm-4 col-xs-6 text-right"><p>${{getPlanPrice()}}<br><span ng-show="purchase.plan.additionalDisplayLicenses">${{getAdditionalDisplaysPrice()}}<br></span> <span ng-repeat="tax in purchase.estimate.taxes">${{tax.taxAmount | number:2}}<br></span> ${{purchase.estimate.totalTax | number:2}}</p><span class="order-total">${{purchase.estimate.total | number:2}} <span class="u_margin-left text-subtle">{{purchase.estimate.currency | uppercase}}</span></span></div></div><div class="row"><hr class="u_margin-sm-top"></div><div class="row"><div class="col-xs-12 text-center u_margin-sm-bottom"><a id="showTaxExemption" href="#" aria-label="Are you Tax Exempt?" ng-click="showTaxExemptionModal()" ng-show="purchase.estimate.totalTax > 0 && !purchase.taxExemptionSent" tabindex="3" translate="">Are you Tax Exempt?</a> <span ng-show="purchase.taxExemptionSent"><h5>Tax Exemption Submitted</h5><div class="small">Approval process is typically one business day.<br>We encourage you to come back and complete your purchase at that point.</div></span></div></div><div class="row"><div class="col-xs-8 col-xs-offset-2 u_margin-md-bottom"><button id="payButton" class="btn btn-primary btn-hg btn-block" ng-click="completePayment()" tabindex="1" aria-label="Complete Payment"><span id="payLabel" ng-if="purchase.paymentMethods.paymentMethod === \'card\'">Pay ${{purchase.estimate.total | number:2}} Now</span> <span id="invoiceLabel" ng-if="purchase.paymentMethods.paymentMethod === \'invoice\'">Invoice Me ${{purchase.estimate.total | number:2}} Now</span></button></div></div></div>');
 }]);
 })();
 
@@ -1314,7 +1330,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/tax-exemption.html',
-    '<div class="modal-header"><button ng-click="close()" type="button" class="close" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title">Add Tax Exemption</h3></div><div class="modal-body" rv-spinner="defaultSpinnerOptions" rv-spinner-key="tax-modal" rv-spinner-start-active="0"><form id="taxExemptionForm" name="taxExemptionForm" role="form" class="u_margin-md-top" novalidate=""><div class="alert alert-danger" ng-show="errorMessage">{{errorMessage}}</div><div class="row"><div class="col-xs-12"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'number\') }"><label for="number" class="control-label">Tax Exemption Number *</label> <input name="number" id="number" type="text" class="form-control" ng-model="formData.number" tabindex="0" required=""></div></div></div><div class="row"><div class="col-md-9"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'fileName\') }"><label for="fileName" class="control-label">Tax Exemption Document (Image or PDF only) *</label> <input id="inputExemption" type="file" accept="application/pdf,image/*" onchange="angular.element(this).scope().setFile(this)" style="display:none"><div class="input-group"><input name="fileName" id="fileName" class="form-control" type="text" readonly="readonly" ng-model="formData.file.name" required=""> <span class="input-group-btn"><a href="#" ng-click="clearFile()" tabindex="0" class="btn btn-default"><i class="fa fa-times"></i></a></span></div></div></div><div class="col-md-3"><div class="form-group"><label for="selectFile" class="control-label col-md-6 hidden-xs">&nbsp;</label> <button name="selectFile" id="selectFile" type="button" ng-click="selectFile()" tabindex="0" class="btn btn-default col-md-9">Attach File</button></div></div></div><div class="row"><div class="col-md-6"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'country\') }"><label for="country" class="control-label">Exemption Country *</label><select name="country" id="country" autocomplete="country" class="form-control" ng-change="formData.province = null" ng-model="formData.country" ng-options="c.code as c.name for c in countries | filter:countryFilter" empty-select-parser="" aria-required="true" tabindex="0" required=""><option ng-show="false" value="">&lt; Select Country &gt;</option></select></div></div><div class="col-md-6"><input name="province" type="hidden" ng-model="formData.province" required=""><div class="form-group" ng-show="formData.country" ng-class="{ \'has-error\': isFieldInvalid(\'province\') }"><label for="province" class="control-label">Exemption State/Province *</label><select class="form-control selectpicker" ng-model="formData.province" ng-options="c[1] as c[0] for c in regionsCA" autocomplete="address-level1" ng-show="formData.country === \'CA\'" empty-select-parser="" tabindex="0"><option ng-show="false" value="">&lt; Select Province &gt;</option></select><select class="form-control selectpicker" ng-model="formData.province" ng-options="c[1] as c[0] for c in regionsUS" autocomplete="address-level1" ng-show="formData.country === \'US\'" empty-select-parser="" tabindex="0"><option ng-show="false" value="">&lt; Select State &gt;</option></select></div></div></div><div class="row"><div class="col-md-6"><div class="form-group"><label for="expiryDate" class="control-label">Exemption Expiry Date</label><div class="input-group"><input name="expiryDate" id="expiryDate" type="text" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-model="formData.expiryDate" is-open="datepicker" min-date="today" larger-than-date="" close-text="Close" tabindex="0"> <span class="input-group-btn"><button name="selectExpiryDate" id="selectExpiryDate" type="button" class="btn btn-default" ng-click="openDatepicker($event)" tabindex="0"><i class="fa fa-calendar"></i></button></span></div></div></div></div><hr><button ng-click="close()" class="btn btn-default pull-left">Cancel</button> <button type="submit" ng-click="submit()" class="btn btn-primary pull-right">Submit Tax Exemption</button></form></div><div class="modal-footer"></div>');
+    '<div rv-spinner="" rv-spinner-key="tax-exemption-modal" rv-spinner-start-active="1"><div class="modal-header"><button ng-click="close()" type="button" class="close" aria-hidden="true"><i class="fa fa-times"></i></button><h3 class="modal-title">Add Tax Exemption</h3></div><div class="modal-body"><form id="form.taxExemptionForm" role="form" name="form.taxExemptionForm" class="u_margin-md-top" novalidate=""><div class="alert alert-danger" ng-show="form.taxExemptionForm.$submitted && form.taxExemptionForm.$invalid">Please complete the missing information below.</div><div class="alert alert-danger" ng-show="factory.taxExemptionError">{{factory.taxExemptionError}}</div><div class="row"><div class="col-xs-12"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'number\') }"><label for="number" class="control-label">Tax Exemption Number *</label> <input name="number" id="number" type="text" class="form-control" ng-model="factory.taxExemption.number" tabindex="1" maxlength="25" required=""></div></div></div><div class="row"><div class="col-md-9"><div class="form-group" ng-class="{ \'has-error\': isFieldInvalid(\'fileName\') }"><label for="fileName" class="control-label">Tax Exemption Document (Image or PDF only) *</label> <input id="inputExemption" type="file" accept="application/pdf,image/*" onchange="angular.element(this).scope().setFile(this)" style="display:none"><div class="input-group"><input name="fileName" id="fileName" class="form-control" type="text" readonly="readonly" ng-model="factory.taxExemption.file.name" required=""> <span class="input-group-btn"><a href="#" ng-click="clearFile()" tabindex="1" class="btn btn-default"><i class="fa fa-times"></i></a></span></div></div></div><div class="col-md-3"><div class="form-group"><label for="selectFile" class="control-label col-md-6 hidden-xs">&nbsp;</label> <button name="selectFile" id="selectFile" type="button" ng-click="selectFile()" tabindex="1" class="btn btn-default col-md-9">Attach File</button></div></div></div><hr><div class="row"><div class="col-xs-12"><button type="button" ng-click="close()" aria-label="Cancel Tax Exemption" tabindex="2" class="btn btn-default pull-left" translate="">common.cancel</button> <button id="submitButton" type="submit" form="form.taxExemptionForm" ng-click="submit()" aria-label="Submit Tax Exemption" tabindex="1" class="btn btn-primary pull-right">Submit Tax Exemption</button></div></div></form></div></div>');
 }]);
 })();
 

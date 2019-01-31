@@ -15,20 +15,20 @@ describe("controller: tax exemption modal", function() {
         stop: sinon.stub()
       };
     });
-    $provide.service("storeService", function() {
-      return storeService = {
-        addTaxExemption: function() {
-        },
-        uploadTaxExemptionCertificate: function () {
-        }
+    $provide.service("taxExemptionFactory", function() {
+      return taxExemptionFactory = {
+        submitCertificate: sinon.spy(function() {
+          taxExemptionFactory.taxExemptionError = exemptionError;
+          return Q.resolve();
+        })
       };
     });
   }));
 
-  var sandbox, $scope, $modalInstance, $loading, storeService;
+  var $scope, $modalInstance, $loading, taxExemptionFactory, exemptionError;
 
   beforeEach(function() {
-    sandbox = sinon.sandbox.create();
+    exemptionError = null;
 
     inject(function($injector, $rootScope, $controller) {
       $scope = $rootScope.$new();
@@ -45,16 +45,10 @@ describe("controller: tax exemption modal", function() {
     });
   });
 
-  afterEach(function() {
-    sandbox.restore();
-  });
-
   it("should initialize",function() {
-    expect($scope.formData).to.be.an("object");
+    expect($scope.form).to.be.an("object");
 
     expect($scope.submit).to.be.a("function");
-    expect($scope.close).to.be.a("function");
-    expect($scope.validate).to.be.a("function");
 
     expect($scope.clearFile).to.be.a("function");
     expect($scope.selectFile).to.be.a("function");
@@ -63,88 +57,64 @@ describe("controller: tax exemption modal", function() {
     expect($scope.close).to.be.a("function");
   });
 
+  describe("$loading spinner: ", function() {
+    it("should start and stop spinner", function() {
+      taxExemptionFactory.loading = true;
+      $scope.$digest();
+
+      $loading.start.should.have.been.calledWith("tax-exemption-modal");
+
+      taxExemptionFactory.loading = false;
+      $scope.$digest();
+
+      $loading.stop.should.have.been.calledTwice;
+    });
+  });
+
   describe("submit", function () {
-    it("should successfully submit", function () {
-      sandbox.stub(storeService, "uploadTaxExemptionCertificate").returns(Q.resolve("url"));
-      sandbox.stub(storeService, "addTaxExemption").returns(Q.resolve());
+    it("should not submit if form is invalid", function() {
+      $scope.form.taxExemptionForm = {
+        $invalid: true
+      };
 
-      $scope.formData = {
-        file: {},
-        number: 100,
-        country: "CA",
-        province: "ON"
+      $scope.submit();
+
+      expect(taxExemptionFactory.submitCertificate).to.not.have.been.called;
+    });
+
+    it("should successfully submit", function (done) {
+      $scope.form.taxExemptionForm = {
+        $invalid: false
       };
 
       $scope.submit().then(function () {
-        expect($scope.errorMessage).to.be.null;
-        expect(storeService.uploadTaxExemptionCertificate).to.have.been.called;
-        expect(storeService.addTaxExemption).to.have.been.called;
-        expect($loading.start).to.have.been.called;
-        expect($loading.stop).to.have.been.called;
+        taxExemptionFactory.submitCertificate.should.have.been.calledOnce;
         expect($modalInstance.close).to.have.been.called;
+
+        done();
       });
     });
 
-    it("should fail to submit when uploading tax exemption certificate fails", function () {
-      sandbox.stub(storeService, "uploadTaxExemptionCertificate").returns(Q.reject());
-
-      $scope.formData = {
-        file: {},
-        number: 100,
-        country: "CA",
-        province: "ON"
+    it("should fail to submit when tax exemption request fails", function (done) {
+      $scope.form.taxExemptionForm = {
+        $invalid: false
       };
+
+      exemptionError = "error";
 
       $scope.submit().then(function () {
-        expect($scope.errorMessage).to.be.not.null;
-        expect(storeService.uploadTaxExemptionCertificate).to.have.been.called;
-        expect(storeService.addTaxExemption).to.not.have.been.called;
-        expect($loading.start).to.have.been.called;
-        expect($loading.stop).to.have.been.called;
+        expect(taxExemptionFactory.submitCertificate).to.have.been.called;
         expect($modalInstance.close).to.not.have.been.called;
+
+        done();
       });
-    });
-
-    it("should fail to submit when uploading tax exemption certificate fails", function () {
-      sandbox.stub(storeService, "uploadTaxExemptionCertificate").returns(Q.resolve("url"));
-      sandbox.stub(storeService, "addTaxExemption").returns(Q.reject());
-
-      $scope.formData = {
-        file: {},
-        number: 100,
-        country: "CA",
-        province: "ON"
-      };
-
-      $scope.submit().then(function () {
-        expect($scope.errorMessage).to.be.not.null;
-        expect(storeService.uploadTaxExemptionCertificate).to.have.been.called;
-        expect(storeService.addTaxExemption).to.have.been.called;
-        expect($loading.start).to.have.been.called;
-        expect($loading.stop).to.have.been.called;
-        expect($modalInstance.close).to.not.have.been.called;
-      });
-    });
-  });
-
-  describe("utils", function () {
-    it("validate: ", function() {
-      $scope.formData = {};
-      expect($scope.validate()).to.be.false;
-
-      $scope.formData = {
-        file: {},
-        number: 100,
-        country: "CA",
-        province: "ON"
-      };
-      expect($scope.validate()).to.be.true;
-    });
-
-    it("close: ", function() {
-      $scope.close();
-      $modalInstance.dismiss.should.have.been.called;
     });
 
   });
+
+  it("close: ", function() {
+    $scope.close();
+    $modalInstance.dismiss.should.have.been.called;
+  });
+
 });
