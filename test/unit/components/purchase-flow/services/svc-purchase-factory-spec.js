@@ -212,9 +212,12 @@ describe("Services: purchase factory", function() {
   });
 
   describe("showTaxExemptionModal: ", function() {
+    it("should return a promise", function() {
+      expect(purchaseFactory.showTaxExemptionModal().then).to.be.a("function");
+    });
 
     it("should show Tax Exemption modal", function() {
-      purchaseFactory.showTaxExemptionModal({});
+      purchaseFactory.showTaxExemptionModal();
 
       expect($modal.open).to.have.been.called;
       expect($modal.open).to.have.been.calledWith({

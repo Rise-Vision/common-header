@@ -67,7 +67,7 @@
             backdrop: "static"
           });
 
-          modalInstance.result.then(function (result) {
+          return modalInstance.result.then(function (result) {
             factory.purchase.taxExemptionSent = result;
           });
         };

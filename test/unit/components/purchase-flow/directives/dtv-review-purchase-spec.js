@@ -4,10 +4,12 @@ describe("directive: review purchase", function() {
   beforeEach(module("risevision.common.components.purchase-flow"));
 
   beforeEach(module(function ($provide) {
-    $provide.value("purchaseFactory", {
+    $provide.value("purchaseFactory", purchaseFactory = {
       purchase: {
         plan: {}
-      }
+      },
+      showTaxExemptionModal: sinon.stub().returns(Q.resolve()),
+      getEstimate: sinon.stub()
     });
     $provide.value("userState", {
       getCopyOfSelectedCompany: function() {
@@ -16,7 +18,7 @@ describe("directive: review purchase", function() {
     });
   }));
 
-  var $scope, element;
+  var $scope, element, purchaseFactory;
 
   beforeEach(inject(function($compile, $rootScope, $templateCache){
     $templateCache.put("purchase-flow/checkout-review-purchase.html", "<p>mock</p>");
@@ -91,6 +93,36 @@ describe("directive: review purchase", function() {
       };
 
       expect($scope.getAdditionalDisplaysPrice()).to.equal(200);
+    });
+  });
+
+  describe("showTaxExemptionModal: ", function() {
+    it("should open tax exemption modal", function() {
+      $scope.showTaxExemptionModal();
+
+      purchaseFactory.showTaxExemptionModal.should.have.been.called;
+    });
+
+    it("should refresh estimate if tax exemption was submitted", function(done) {
+      $scope.purchase.taxExemptionSent = true;
+      $scope.showTaxExemptionModal();
+
+      setTimeout(function() {
+        purchaseFactory.getEstimate.should.have.been.called;
+
+        done();        
+      }, 10);
+    });
+
+    it("should open tax exemption modal", function(done) {
+      $scope.purchase.taxExemptionSent = false;
+      $scope.showTaxExemptionModal();
+
+      setTimeout(function() {
+        purchaseFactory.getEstimate.should.not.have.been.called;
+
+        done();        
+      }, 10);
     });
   });
 

@@ -121,13 +121,7 @@
   <div class="row">
     <div class="col-xs-12 text-center u_margin-sm-bottom">
       <a id="showTaxExemption" href="#" aria-label="Are you Tax Exempt?" ng-click="showTaxExemptionModal()" ng-show="purchase.estimate.totalTax > 0 && !purchase.taxExemptionSent" tabindex="3" translate>Are you Tax Exempt?</a>
-      <span ng-show="purchase.taxExemptionSent">
-        <h5>Tax Exemption Submitted</h5>
-        <div class="small">
-            Approval process is typically one business day.<br>
-            We encourage you to come back and complete your purchase at that point.
-        </div>
-      </span>
+      <h5 ng-show="purchase.taxExemptionSent">Tax Exemption Submitted</h5>
 
     </div>
   </div>
