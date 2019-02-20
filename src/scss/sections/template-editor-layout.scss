@@ -3,9 +3,6 @@
 }
 
 .template-editor-toolbar {
-  --buttons-width : 390px;
-  --icons-width : 100px;
-
   display: flex;
   align-items: center;
   z-index: 100;
@@ -21,28 +18,16 @@
   }
 
   &.presentation-name {
-    max-width: 378px;
     font-size: 16px;
     margin: 0;
     padding: 0;
     line-height: 32px;
-
-    & div {
-      max-width: 278px;
-      display: inline-block;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      vertical-align: middle;
-      margin-right: 10px;
-
-      @media (min-width: $screen-sm) {
-        max-width: calc(100vw - var(--buttons-width) - var(--icons-width));
-      }
-    }
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     @media (min-width: $screen-sm) {
-      max-width: calc(100vw - var(--buttons-width));
+      max-width: calc(100vw - 440px);
     }
   }
 

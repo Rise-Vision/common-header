@@ -17534,8 +17534,6 @@ a.mfp-iframe:hover:after {
   background-color: #FFF; }
 
 .template-editor-toolbar {
-  --buttons-width: 390px;
-  --icons-width: 100px;
   display: flex;
   align-items: center;
   z-index: 100;
@@ -17548,25 +17546,16 @@ a.mfp-iframe:hover:after {
   .template-editor-toolbar i {
     font-size: 18px; }
   .template-editor-toolbar.presentation-name {
-    max-width: 378px;
     font-size: 16px;
     margin: 0;
     padding: 0;
-    line-height: 32px; }
-    .template-editor-toolbar.presentation-name div {
-      max-width: 278px;
-      display: inline-block;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      vertical-align: middle;
-      margin-right: 10px; }
-      @media (min-width: 768px) {
-        .template-editor-toolbar.presentation-name div {
-          max-width: calc(100vw - var(--buttons-width) - var(--icons-width)); } }
+    line-height: 32px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; }
     @media (min-width: 768px) {
       .template-editor-toolbar.presentation-name {
-        max-width: calc(100vw - var(--buttons-width)); } }
+        max-width: calc(100vw - 440px); } }
   .template-editor-toolbar.toolbar-right {
     display: flex;
     margin-left: auto;
