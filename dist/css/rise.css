@@ -17545,7 +17545,7 @@ a.mfp-iframe:hover:after {
   white-space: nowrap; }
   .template-editor-toolbar i {
     font-size: 18px; }
-  .template-editor-toolbar.presentation-name {
+  .template-editor-toolbar .presentation-name {
     font-size: 16px;
     margin: 0;
     padding: 0;
@@ -17554,13 +17554,13 @@ a.mfp-iframe:hover:after {
     text-overflow: ellipsis;
     white-space: nowrap; }
     @media (min-width: 768px) {
-      .template-editor-toolbar.presentation-name {
+      .template-editor-toolbar .presentation-name {
         max-width: calc(100vw - 440px); } }
-  .template-editor-toolbar.toolbar-right {
+  .template-editor-toolbar .toolbar-right {
     display: flex;
     margin-left: auto;
     flex-wrap: nowrap; }
-  .template-editor-toolbar.btn, .icon-nav label.template-editor-toolbar {
+  .template-editor-toolbar .btn, .template-editor-toolbar .icon-nav label, .icon-nav .template-editor-toolbar label {
     width: 152px; }
 
 .template-editor-body {
@@ -17588,7 +17588,7 @@ a.mfp-iframe:hover:after {
   background-color: #FFF; }
   .template-editor-footer > div {
     border-top: 2px solid #f2f2f2; }
-  .template-editor-footer.btn, .icon-nav label.template-editor-footer {
+  .template-editor-footer .btn, .template-editor-footer .icon-nav label, .icon-nav .template-editor-footer label {
     margin: 10px 0px; }
 
 .subscription-summary {
