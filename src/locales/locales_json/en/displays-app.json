@@ -263,6 +263,9 @@
         "notScheduled": "This Display is not scheduled."
       },
       "serialNumber": "Serial Number",
+      "cpu": "CPU",
+      "hostName": "Host Name",
+      "productName": "Product Name",
       "status": "Status",
       "version": {
         "howGetHelp": "How do I get help?",

@@ -431,9 +431,6 @@ msgid "templatesLibrary.details.details-list-2"
 msgstr "There's no contract, and you can cancel at any time."
 
 msgid "templatesLibrary.details.details-list-3"
-msgstr "All the Templates are yours to keep, even if you cancel!"
-
-msgid "templatesLibrary.details.details-list-4"
 msgstr "New Templates added every month."
 
 msgid "templatesLibrary.details.details-list-title"

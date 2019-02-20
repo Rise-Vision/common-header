@@ -469,6 +469,9 @@ msgstr "User Managed"
 msgid "fields.player.browserVersion"
 msgstr "Browser Version"
 
+msgid "fields.player.cpu"
+msgstr "CPU"
+
 msgid "fields.player.displayControl.configure"
 msgstr "Configure"
 
@@ -492,6 +495,9 @@ msgstr "Display Control"
 
 msgid "fields.player.displayControl.unsupported"
 msgstr "Your Rise Player version doesn't support <b>Display Control</b>."
+
+msgid "fields.player.hostName"
+msgstr "Host Name"
 
 msgid "fields.player.id"
 msgstr "Display ID"
@@ -537,6 +543,9 @@ msgstr "Player Version"
 
 msgid "fields.player.playerWarning"
 msgstr "A Player has not been configured for your Display. To configure your Display, select your Operating System below and install the software <b>on the device</b> that will operate your Display. When the Player starts for the first time you will be prompted to enter the Display ID (above) to link the Player with the Display that you have setup here. Further setup details can be <a href="https://help.risevision.com/hc/en-us/articles/115000860926" target="_blank">found here</a>."
+
+msgid "fields.player.productName"
+msgstr "Product Name"
 
 msgid "fields.player.resolution"
 msgstr "Resolution"
