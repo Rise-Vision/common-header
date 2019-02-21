@@ -1,0 +1,9 @@
+msgid "financial.currencies"
+msgstr "Currencies"
+
+msgid "rise-data-financial"
+msgstr "Financial"
+
+msgid "rise-data-image"
+msgstr "Image"
+
