@@ -1,0 +1,81 @@
+.template-editor {
+  background-color: #FFF;
+}
+
+.template-editor-toolbar {
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  border-bottom: 2px solid #f2f2f2;
+  padding: 18px 0px;
+  margin: 0px 20px;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+
+  & i {
+    font-size: 18px;
+  }
+
+  & .presentation-name {
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    line-height: 32px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    @media (min-width: $screen-sm) {
+      max-width: calc(100vw - 440px);
+    }
+  }
+
+  & .toolbar-right {
+    display: flex;
+    margin-left: auto;
+    flex-wrap: nowrap;
+  }
+
+  & .btn {
+    width: 152px;
+  }
+}
+
+.template-editor-body {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.preview-holder {
+  padding: 20px;
+  background-image: linear-gradient(white, lightgray);
+  min-height: 50px;
+
+  @media (min-width: $screen-sm) {
+    min-height: calc(100vh - 180px);
+  }
+}
+
+.attribute-editor {
+  padding: 20px;
+  min-height: calc(100vh - 190px);
+
+  @media (min-width: $screen-sm) {
+    padding: 20px;
+    min-height: calc(100vh - 180px);
+  }
+}
+
+.template-editor-footer {
+  padding: 0px 10px;
+  background-color: #FFF;
+
+  & > div {
+    border-top: 2px solid #f2f2f2;
+  }
+
+  & .btn {
+    margin: 10px 0px;
+  }
+}
