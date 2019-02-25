@@ -1,4 +1,7 @@
 {
+  "confirm-modal": {
+    "delete-warning": "Are you sure you want to delete this Presentation?"
+  },
   "financial": {
     "currencies": "Currencies"
   },

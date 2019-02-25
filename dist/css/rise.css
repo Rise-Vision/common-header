@@ -18336,6 +18336,10 @@ a.mfp-iframe:hover:after {
     flex-wrap: nowrap; }
   .template-editor-toolbar .btn, .template-editor-toolbar .icon-nav label, .icon-nav .template-editor-toolbar label {
     width: 152px; }
+  .template-editor-toolbar a {
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit; }
 
 .template-editor-body {
   margin-left: 0px;
@@ -18364,6 +18368,34 @@ a.mfp-iframe:hover:after {
     border-top: 2px solid #f2f2f2; }
   .template-editor-footer .btn, .template-editor-footer .icon-nav label, .icon-nav .template-editor-footer label {
     margin: 10px 0px; }
+
+.template-editor-confirm-modal .modal-header {
+  background: inherit;
+  border-bottom: 0; }
+
+.template-editor-confirm-modal .modal-body {
+  padding-top: 0; }
+
+.template-editor-confirm-modal .modal-header .close {
+  width: 40px;
+  height: 40px; }
+
+.template-editor-confirm-modal .modal-footer {
+  background: #f2f2f2;
+  padding-top: 1.2em; }
+
+.template-editor-confirm-modal .modal-body p {
+  font-weight: bold;
+  text-align: center; }
+
+.template-editor-confirm-modal .modal-footer button {
+  border: inherit;
+  font-weight: bold;
+  padding-top: 0.6em;
+  padding-bottom: 0.6em; }
+
+.template-editor-confirm-modal .modal-footer .btn-default, .template-editor-confirm-modal .modal-footer .timeline .dropdown-menu li .btn, .timeline .dropdown-menu li .template-editor-confirm-modal .modal-footer .btn, .template-editor-confirm-modal .modal-footer .timeline .dropdown-menu li .icon-nav label, .timeline .dropdown-menu li .icon-nav .template-editor-confirm-modal .modal-footer label, .template-editor-confirm-modal .modal-footer .icon-nav .timeline .dropdown-menu li label, .icon-nav .timeline .dropdown-menu li .template-editor-confirm-modal .modal-footer label {
+  background: #e6e6e6; }
 
 .subscription-summary {
   display: flex;

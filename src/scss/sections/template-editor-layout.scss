@@ -40,6 +40,12 @@
   & .btn {
     width: 152px;
   }
+
+  & a {
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
 }
 
 .template-editor-body {
@@ -77,5 +83,42 @@
 
   & .btn {
     margin: 10px 0px;
+  }
+}
+
+.template-editor-confirm-modal {
+  & .modal-header {
+    background: inherit;
+    border-bottom: 0;
+  }
+
+  & .modal-body {
+    padding-top: 0;
+  }
+
+  & .modal-header .close {
+    width: 40px;
+    height: 40px;
+  }
+
+  & .modal-footer {
+    background: rgb(242, 242, 242);
+    padding-top: 1.2em;
+  }
+
+  & .modal-body p {
+    font-weight: bold;
+    text-align: center;
+  }
+
+  & .modal-footer button {
+    border: inherit;
+    font-weight: bold;
+    padding-top: 0.6em;
+    padding-bottom: 0.6em;
+  }
+
+  & .modal-footer .btn-default {
+    background: rgb(230, 230, 230);
   }
 }
