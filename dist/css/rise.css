@@ -18320,16 +18320,43 @@ a.mfp-iframe:hover:after {
   .template-editor-toolbar i {
     font-size: 18px; }
   .template-editor-toolbar .presentation-name {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
+    font-weight: 500;
     margin: 0;
     padding: 0;
     line-height: 32px;
     overflow: hidden;
     text-overflow: ellipsis;
+    border: none;
     white-space: nowrap; }
+    .template-editor-toolbar .presentation-name.disabled, .template-editor-toolbar .presentation-name[disabled],
+    fieldset[disabled] .template-editor-toolbar .presentation-name {
+      background-color: transparent; }
     @media (min-width: 768px) {
       .template-editor-toolbar .presentation-name {
         max-width: calc(100vw - 440px); } }
+  .template-editor-toolbar .edit-name {
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    -webkit-appearance: none; }
+    .template-editor-toolbar .edit-name:hover {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+      opacity: 0.65;
+      filter: alpha(opacity=65); }
+    .template-editor-toolbar .edit-name:focus {
+      outline: 0; }
+    .template-editor-toolbar .edit-name.disabled, .template-editor-toolbar .edit-name[disabled],
+    fieldset[disabled] .template-editor-toolbar .edit-name {
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: .50;
+      filter: alpha(opacity=50);
+      -webkit-box-shadow: none;
+      box-shadow: none; }
   .template-editor-toolbar .toolbar-right {
     display: flex;
     margin-left: auto;
