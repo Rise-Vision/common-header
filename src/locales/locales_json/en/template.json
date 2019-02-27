@@ -1,4 +1,8 @@
 {
+  "attribute-editor": {
+    "edit-component": "Edit",
+    "back-to-list": "Back"
+  },
   "confirm-modal": {
     "delete-warning": "Are you sure you want to delete this Presentation?"
   },

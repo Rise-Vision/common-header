@@ -1,3 +1,9 @@
+msgid "attribute-editor.back-to-list"
+msgstr "Back"
+
+msgid "attribute-editor.edit-component"
+msgstr "Edit"
+
 msgid "confirm-modal.delete-warning"
 msgstr "Are you sure you want to delete this Presentation?"
 
