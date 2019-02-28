@@ -7,7 +7,43 @@
     "delete-warning": "Are you sure you want to delete this Presentation?"
   },
   "financial": {
-    "currencies": "Currencies"
+    "add-category": {
+      "bonds": "Add Bonds",
+      "commodities": "Add Commodities",
+      "currencies": "Add Currencies",
+      "market-statistics": "Add Market Statistics",
+      "stocks": "Add Stocks",
+      "world-indexes": "Add World Indexes"
+    },
+    "bonds": "Bonds",
+    "commodities": "Commodities",
+    "currencies": "Currencies",
+    "market-statistics": "Market Statistics",
+    "most-popular-category": {
+      "bonds": "Most Popular Bonds",
+      "commodities": "Most Popular Commodities",
+      "currencies": "Most Popular Currencies",
+      "market-statistics": "Most Popular Market Statistics",
+      "stocks": "Most Popular Stocks",
+      "world-indexes": "Most Popular World Indexes"
+    },
+    "no-results": {
+      "title": "No Results Found",
+      "question": "Can't find what you're looking for?",
+      "verify-start": "Verify the instrument is valid",
+      "verify-mid": "or contact",
+      "verify-end": "for help."
+    },
+    "search-category": {
+      "bonds": "Search Bonds",
+      "commodities": "Search Commodities",
+      "currencies": "Search Currencies",
+      "market-statistics": "Search Market Statistics",
+      "stocks": "Search Stocks",
+      "world-indexes": "Search World Indexes"
+    },
+    "stocks": "Stocks",
+    "world-indexes": "World Indexes"
   },
   "rise-data-image": "Image",
   "rise-data-financial": "Financial"

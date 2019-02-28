@@ -7,8 +7,92 @@ msgstr "Edit"
 msgid "confirm-modal.delete-warning"
 msgstr "Are you sure you want to delete this Presentation?"
 
+msgid "financial.add-category.bonds"
+msgstr "Add Bonds"
+
+msgid "financial.add-category.commodities"
+msgstr "Add Commodities"
+
+msgid "financial.add-category.currencies"
+msgstr "Add Currencies"
+
+msgid "financial.add-category.market-statistics"
+msgstr "Add Market Statistics"
+
+msgid "financial.add-category.stocks"
+msgstr "Add Stocks"
+
+msgid "financial.add-category.world-indexes"
+msgstr "Add World Indexes"
+
+msgid "financial.bonds"
+msgstr "Bonds"
+
+msgid "financial.commodities"
+msgstr "Commodities"
+
 msgid "financial.currencies"
 msgstr "Currencies"
+
+msgid "financial.market-statistics"
+msgstr "Market Statistics"
+
+msgid "financial.most-popular-category.bonds"
+msgstr "Most Popular Bonds"
+
+msgid "financial.most-popular-category.commodities"
+msgstr "Most Popular Commodities"
+
+msgid "financial.most-popular-category.currencies"
+msgstr "Most Popular Currencies"
+
+msgid "financial.most-popular-category.market-statistics"
+msgstr "Most Popular Market Statistics"
+
+msgid "financial.most-popular-category.stocks"
+msgstr "Most Popular Stocks"
+
+msgid "financial.most-popular-category.world-indexes"
+msgstr "Most Popular World Indexes"
+
+msgid "financial.no-results.question"
+msgstr "Can't find what you're looking for?"
+
+msgid "financial.no-results.title"
+msgstr "No Results Found"
+
+msgid "financial.no-results.verify-end"
+msgstr "for help."
+
+msgid "financial.no-results.verify-mid"
+msgstr "or contact"
+
+msgid "financial.no-results.verify-start"
+msgstr "Verify the instrument is valid"
+
+msgid "financial.search-category.bonds"
+msgstr "Search Bonds"
+
+msgid "financial.search-category.commodities"
+msgstr "Search Commodities"
+
+msgid "financial.search-category.currencies"
+msgstr "Search Currencies"
+
+msgid "financial.search-category.market-statistics"
+msgstr "Search Market Statistics"
+
+msgid "financial.search-category.stocks"
+msgstr "Search Stocks"
+
+msgid "financial.search-category.world-indexes"
+msgstr "Search World Indexes"
+
+msgid "financial.stocks"
+msgstr "Stocks"
+
+msgid "financial.world-indexes"
+msgstr "World Indexes"
 
 msgid "rise-data-financial"
 msgstr "Financial"
