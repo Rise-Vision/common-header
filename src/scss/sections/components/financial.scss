@@ -1,0 +1,106 @@
+.instrument-list {
+  animation-name: slide-in;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.instrument-list-hide {
+  animation-name: slide-out;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.instrument-row {
+  border-bottom: 1px solid rgb(242, 242, 242);
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.instrument-name {
+  font-weight: bold;
+  color: rgb(77, 77, 77);
+}
+
+.instrument-rate {
+  font-size: 0.8em;
+  color: rgb(77, 77, 77);
+}
+
+.instrument-delete {
+  font-size: 0.8em;
+  font-weight: bold;
+  text-align: right;
+  padding-top: 0.85em;
+
+  & a {
+    color: rgb(239, 70, 55);
+    text-decoration: underline;
+  }
+}
+
+.instrument-selector {
+  animation-name: slide-in;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.instrument-selector-hide {
+  animation-name: slide-out;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.instrument-selector-popular {
+  font-weight: bold;
+  font-size: 0.8em;
+  color: rgb(77, 77, 77);
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.instrument-selector-checkbox {
+  position: absolute;
+  margin-top: 0.5em;
+}
+
+.instrument-selector-name {
+  display: inline-block;
+  margin-left: 1.5em;
+}
+
+.instrument-selector-no-results {
+  color: rgb(77, 77, 77);
+
+  & > h2 {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 20px 0px;
+  }
+
+  & > div:first-child {
+    font-weight: bold;
+  }
+
+  & > a {
+    text-decoration: underline;
+  }
+}
+
+.financial-action-button-bar {
+  position: fixed;
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  left: 0%;
+  right: 0%;
+  bottom: 0%;
+
+  & > div {
+    background: #FFF;
+    padding-bottom: 10px;
+  }
+}
