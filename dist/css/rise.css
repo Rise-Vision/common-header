@@ -18376,7 +18376,8 @@ a.mfp-iframe:hover:after {
 .preview-holder {
   padding: 20px;
   background-image: linear-gradient(white, lightgray);
-  min-height: 50px; }
+  min-height: 50px;
+  z-index: 1000; }
   @media (min-width: 768px) {
     .preview-holder {
       min-height: calc(100vh - 180px); } }
@@ -18413,6 +18414,18 @@ a.mfp-iframe:hover:after {
     transform: translateX(-150%); }
   100% {
     transform: translateX(0%); } }
+
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(150%); }
+  100% {
+    transform: translateX(0%); } }
+
+@keyframes slide-out-right {
+  0% {
+    transform: translateX(0%); }
+  100% {
+    transform: translateX(150%); } }
   .attribute-editor .attribute-list {
     font-size: 1.1em;
     font-weight: bold; }
@@ -18811,13 +18824,23 @@ a.mfp-iframe:hover:after {
     padding-left: 0;
     border-left: none; }
 
-.instrument-list {
-  animation-name: slide-in;
-  animation-duration: 0.5s;
+.instrument-list-show {
+  animation-name: slide-in-right;
+  animation-duration: 1s;
   animation-fill-mode: forwards; }
 
 .instrument-list-hide {
+  animation-name: slide-out-right;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards; }
+
+.instrument-list-cover {
   animation-name: slide-out;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards; }
+
+.instrument-list-uncover {
+  animation-name: slide-in;
   animation-duration: 0.5s;
   animation-fill-mode: forwards; }
 
@@ -18843,15 +18866,17 @@ a.mfp-iframe:hover:after {
   padding-top: 0.85em; }
   .instrument-delete a {
     color: #ef4637;
-    text-decoration: underline; }
+    text-decoration: none; }
+    .instrument-delete a:hover {
+      text-decoration: underline; }
 
-.instrument-selector {
-  animation-name: slide-in;
+.instrument-selector-show {
+  animation-name: slide-in-right;
   animation-duration: 0.5s;
   animation-fill-mode: forwards; }
 
 .instrument-selector-hide {
-  animation-name: slide-out;
+  animation-name: slide-out-right;
   animation-duration: 0.5s;
   animation-fill-mode: forwards; }
 
@@ -18878,7 +18903,7 @@ a.mfp-iframe:hover:after {
     padding: 20px 0px; }
   .instrument-selector-no-results > div:first-child {
     font-weight: bold; }
-  .instrument-selector-no-results > a {
+  .instrument-selector-no-results a:hover {
     text-decoration: underline; }
 
 .financial-action-button-bar {

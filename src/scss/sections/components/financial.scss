@@ -1,11 +1,23 @@
-.instrument-list {
-  animation-name: slide-in;
-  animation-duration: 0.5s;
+.instrument-list-show {
+  animation-name: slide-in-right;
+  animation-duration: 1s;
   animation-fill-mode: forwards;
 }
 
 .instrument-list-hide {
+  animation-name: slide-out-right;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.instrument-list-cover {
   animation-name: slide-out;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.instrument-list-uncover {
+  animation-name: slide-in;
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
 }
@@ -36,18 +48,22 @@
 
   & a {
     color: rgb(239, 70, 55);
-    text-decoration: underline;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
-.instrument-selector {
-  animation-name: slide-in;
+.instrument-selector-show {
+  animation-name: slide-in-right;
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
 }
 
 .instrument-selector-hide {
-  animation-name: slide-out;
+  animation-name: slide-out-right;
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
 }
@@ -83,7 +99,7 @@
     font-weight: bold;
   }
 
-  & > a {
+  & a:hover {
     text-decoration: underline;
   }
 }

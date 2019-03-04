@@ -96,6 +96,7 @@
   padding: 20px;
   background-image: linear-gradient(white, lightgray);
   min-height: 50px;
+  z-index: 1000;
 
   @media (min-width: $screen-sm) {
     min-height: calc(100vh - 180px);
@@ -138,6 +139,16 @@
   @keyframes slide-in {
     0% { transform: translateX(-150%); }
     100% { transform: translateX(0%); }
+  }
+
+  @keyframes slide-in-right {
+    0% { transform: translateX(150%); }
+    100% { transform: translateX(0%); }
+  }
+
+  @keyframes slide-out-right {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(150%); }
   }
 
   & .attribute-list {
