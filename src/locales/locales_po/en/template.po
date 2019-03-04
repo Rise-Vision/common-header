@@ -25,6 +25,9 @@ msgstr "Add Stocks"
 msgid "financial.add-category.world-indexes"
 msgstr "Add World Indexes"
 
+msgid "financial.add-selected"
+msgstr "Add Selected"
+
 msgid "financial.bonds"
 msgstr "Bonds"
 
