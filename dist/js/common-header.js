@@ -7029,7 +7029,12 @@ angular.module("risevision.common.components.logging")
         var urlStateService = {};
 
         urlStateService.get = function () {
-          var path, search, state;
+          var state = "";
+          var stateObject = {
+            p: null,
+            u: null,
+            s: null
+          };
 
           // Redirect to the URL root and append pathname back to the URL
           // on Authentication success
@@ -7038,16 +7043,15 @@ angular.module("risevision.common.components.logging")
           // otherwise no redirect is performed!
           // loc = $window.location.origin + "/";
           // Remove first character (/) from path since we're adding it to loc
-          path = $window.location.pathname ? $window.location
+          stateObject.p = $window.location.pathname ? $window.location
             .pathname
             .substring(1) : "";
-          search = $window.location.search;
+          stateObject.s = $window.location.search;
+          stateObject.u = $window.location.hash;
 
-          state = encodeURIComponent(JSON.stringify({
-            p: path,
-            u: $window.location.hash,
-            s: search
-          }));
+          if (stateObject.p || stateObject.s || stateObject.u) {
+            state = encodeURIComponent(JSON.stringify(stateObject));
+          }
 
           return state;
         };

@@ -45,6 +45,13 @@ describe("Services: urlStateService", function() {
 
   it("get: ", function() {
     expect(urlStateService.get()).to.equal(encodeURIComponent("{\"p\":\"path\",\"u\":\"#hash\",\"s\":\"?search\"}"));
+    
+    $window.location = {
+      pathname: "",
+      search: "",
+      hash: ""
+    };
+    expect(urlStateService.get()).to.equal("");
   });
 
   describe("redirectToState: ", function() {
