@@ -143,16 +143,14 @@
 }
 
 .attribute-editor {
-  flex-grow: 1;
-  flex-shrink: 0;
-  flex-basis: var(--sidebar-width);
-  width: var(--sidebar-width);
   height: 100%;
   padding: 0px 10px 10px 10px;
 
   @media (min-width: $screen-sm) {
-    //padding: 20px;
-    //min-height: calc(100vh - 180px);
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: var(--sidebar-width);
+    width: var(--sidebar-width);
   }
 
   & a {

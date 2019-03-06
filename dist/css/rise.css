@@ -18418,12 +18418,14 @@ a.mfp-iframe:hover:after {
       height: 100%; } }
 
 .attribute-editor {
-  flex-grow: 1;
-  flex-shrink: 0;
-  flex-basis: var(--sidebar-width);
-  width: var(--sidebar-width);
   height: 100%;
   padding: 0px 10px 10px 10px; }
+  @media (min-width: 768px) {
+    .attribute-editor {
+      flex-grow: 1;
+      flex-shrink: 0;
+      flex-basis: var(--sidebar-width);
+      width: var(--sidebar-width); } }
   .attribute-editor a {
     cursor: pointer;
     text-decoration: none; }
