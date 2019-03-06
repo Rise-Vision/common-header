@@ -18908,6 +18908,9 @@ a.mfp-iframe:hover:after {
     .instrument-delete a:hover {
       text-decoration: underline; }
 
+.instrument-selector .instrument-row {
+  cursor: pointer; }
+
 .instrument-selector-show {
   animation-name: slide-in-right;
   animation-duration: 0.5s;
@@ -18928,10 +18931,23 @@ a.mfp-iframe:hover:after {
 .instrument-selector-checkbox {
   position: absolute;
   margin-top: 0.5em; }
+  .instrument-selector-checkbox input[type=checkbox] {
+    display: none; }
+  .instrument-selector-checkbox input[type=checkbox] + label:before {
+    font-family: FontAwesome;
+    color: #4d4d4d;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    content: '\f096';
+    cursor: pointer; }
+  .instrument-selector-checkbox input[type=checkbox]:checked + label:before {
+    color: #FFF;
+    content: '\f14a'; }
 
 .instrument-selector-name {
   display: inline-block;
-  margin-left: 1.5em; }
+  margin-left: 1.75em; }
 
 .instrument-selector-no-results {
   color: #4d4d4d; }
@@ -18943,6 +18959,13 @@ a.mfp-iframe:hover:after {
     font-weight: bold; }
   .instrument-selector-no-results a:hover {
     text-decoration: underline; }
+
+.instrument-row--is-selected {
+  background: #4ab767; }
+  .instrument-row--is-selected .instrument-name {
+    color: #FFF; }
+  .instrument-row--is-selected .instrument-rate {
+    color: #FFF; }
 
 .financial-action-button-bar {
   height: var(--financial-button-bar-height);
