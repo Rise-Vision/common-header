@@ -1,3 +1,18 @@
+.financial-container {
+  --financial-button-bar-height: 44px;
+  --financial-body-height: calc(100vh - var(--body-height) - var(--component-header-height) - var(--financial-button-bar-height));
+}
+
+.instrument-list {
+  height: var(--financial-body-height);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.instrument-selector {
+  height: var(--financial-body-height);
+}
+
 .instrument-list-show {
   animation-name: slide-in-right;
   animation-duration: 0.5s;
@@ -105,18 +120,10 @@
 }
 
 .financial-action-button-bar {
-  position: fixed;
-  width: 100%;
-  margin-left: 0px;
-  margin-right: 0px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  left: 0%;
-  right: 0%;
-  bottom: 0%;
+  height: var(--financial-button-bar-height);
+  padding: 0px 10px 10px 10px;
 
   & > div {
     background: #FFF;
-    padding-bottom: 10px;
   }
 }
