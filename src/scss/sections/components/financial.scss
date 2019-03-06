@@ -1,5 +1,5 @@
 .financial-container {
-  --financial-button-bar-height: 44px;
+  --financial-button-bar-height: 54px;
   --financial-body-height: calc(100vh - var(--body-height) - var(--component-header-height) - var(--financial-button-bar-height));
 }
 
@@ -156,7 +156,7 @@
 
 .financial-action-button-bar {
   height: var(--financial-button-bar-height);
-  padding: 0px 10px 10px 10px;
+  padding: 10px 0px;
 
   & > div {
     background: #FFF;

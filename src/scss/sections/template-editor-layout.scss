@@ -1,9 +1,10 @@
 .template-editor {
   --header-height: 93px;
   --toolbar-height: 50px;
-  --footer-height: 10px;
+  --footer-height: 98px;
   --sidebar-width: 400px;
   --component-header-height: 44px;
+  --preview-holder-height: 200px;
 
   &.active-banner-mode { --header-height : 111px; }
   &.active-banner-mode-double { --header-height : 132px; }
@@ -11,6 +12,7 @@
 
   --total-height: calc(var(--header-height));
   --body-height: calc(var(--total-height) + var(--toolbar-height));
+  --attribute-list-height: calc(100vh - var(--body-height));
 
   background-color: #FFF;
   height: calc(100vh - var(--total-height));
@@ -20,6 +22,7 @@
   .template-editor {
     --toolbar-height: 50px;
     --sidebar-width: 360px;
+    --attribute-list-height: calc(100vh - var(--body-height) - var(--footer-height) - var(--preview-holder-height));
   }
 }
 
@@ -128,7 +131,7 @@
   background-image: linear-gradient(white, lightgray);
   z-index: 1000;
   width: 345px;
-  height: 200px;
+  height: var(--preview-holder-height);
   margin: auto;
   overflow-x: scroll;
   overflow-y: scroll;
@@ -194,6 +197,9 @@
   & .attribute-list {
     font-size: 1.1em;
     font-weight: bold;
+    height: var(--attribute-list-height);
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   & .attribute-row {

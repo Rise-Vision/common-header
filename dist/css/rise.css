@@ -18307,11 +18307,13 @@ a.mfp-iframe:hover:after {
 .template-editor {
   --header-height: 93px;
   --toolbar-height: 50px;
-  --footer-height: 10px;
+  --footer-height: 98px;
   --sidebar-width: 400px;
   --component-header-height: 44px;
+  --preview-holder-height: 200px;
   --total-height: calc(var(--header-height));
   --body-height: calc(var(--total-height) + var(--toolbar-height));
+  --attribute-list-height: calc(100vh - var(--body-height));
   background-color: #FFF;
   height: calc(100vh - var(--total-height)); }
   .template-editor.active-banner-mode {
@@ -18324,7 +18326,8 @@ a.mfp-iframe:hover:after {
 @media (max-width: 768px) {
   .template-editor {
     --toolbar-height: 50px;
-    --sidebar-width: 360px; } }
+    --sidebar-width: 360px;
+    --attribute-list-height: calc(100vh - var(--body-height) - var(--footer-height) - var(--preview-holder-height)); } }
 
 .template-editor-toolbar {
   display: flex;
@@ -18405,7 +18408,7 @@ a.mfp-iframe:hover:after {
   background-image: linear-gradient(white, lightgray);
   z-index: 1000;
   width: 345px;
-  height: 200px;
+  height: var(--preview-holder-height);
   margin: auto;
   overflow-x: scroll;
   overflow-y: scroll; }
@@ -18460,7 +18463,10 @@ a.mfp-iframe:hover:after {
     transform: translateX(150%); } }
   .attribute-editor .attribute-list {
     font-size: 1.1em;
-    font-weight: bold; }
+    font-weight: bold;
+    height: var(--attribute-list-height);
+    overflow-x: hidden;
+    overflow-y: auto; }
   .attribute-editor .attribute-row {
     border-bottom: 1px solid #f2f2f2;
     padding-bottom: 0.5em;
@@ -18856,7 +18862,7 @@ a.mfp-iframe:hover:after {
     border-left: none; }
 
 .financial-container {
-  --financial-button-bar-height: 44px;
+  --financial-button-bar-height: 54px;
   --financial-body-height: calc(100vh - var(--body-height) - var(--component-header-height) - var(--financial-button-bar-height)); }
 
 .instrument-list {
@@ -18974,6 +18980,6 @@ a.mfp-iframe:hover:after {
 
 .financial-action-button-bar {
   height: var(--financial-button-bar-height);
-  padding: 0px 10px 10px 10px; }
+  padding: 10px 0px; }
   .financial-action-button-bar > div {
     background: #FFF; }
