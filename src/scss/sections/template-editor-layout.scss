@@ -3,7 +3,7 @@
   --toolbar-height: 50px;
   --footer-height: 10px;
   --sidebar-width: 400px;
-  --component-header-height: 39px;
+  --component-header-height: 44px;
 
   &.active-banner-mode { --header-height : 111px; }
   &.active-banner-mode-double { --header-height : 132px; }
@@ -18,7 +18,8 @@
 
 @media (max-width: $screen-sm) {
   .template-editor {
-    --toolbar-height: 120px;
+    --toolbar-height: 50px;
+    --sidebar-width: 360px;
   }
 }
 
@@ -146,6 +147,7 @@
   flex-basis: var(--sidebar-width);
   width: var(--sidebar-width);
   height: 100%;
+  padding: 0px 10px 10px 10px;
 
   @media (min-width: $screen-sm) {
     //padding: 20px;
@@ -219,8 +221,8 @@
     font-size: 1.2em;
     font-weight: bold;
     border-bottom: 1px solid rgb(230, 230, 230);
-    padding-bottom: 0.7em;
-    padding-top: 0.2em;
+    padding-bottom: 10px;
+    padding-top: 10px;
   }
 
   & .arrow-icon {
