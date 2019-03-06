@@ -11,6 +11,8 @@
 
 .instrument-selector {
   height: var(--financial-body-height);
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .instrument-list-show {
