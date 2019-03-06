@@ -18393,7 +18393,7 @@ a.mfp-iframe:hover:after {
   margin-left: 0px;
   margin-right: 0px;
   display: flex;
-  flex-flow: column; }
+  flex-flow: column-reverse; }
 
 @media (min-width: 768px) {
   .template-editor-body {
@@ -18404,10 +18404,15 @@ a.mfp-iframe:hover:after {
 .preview-holder {
   background-image: linear-gradient(white, lightgray);
   z-index: 1000;
-  width: 100%;
-  height: 100%;
+  width: 345px;
+  height: 200px;
+  margin: auto;
   overflow-x: scroll;
   overflow-y: scroll; }
+  @media (min-width: 768px) {
+    .preview-holder {
+      width: 100%;
+      height: 100%; } }
 
 .attribute-editor {
   flex-grow: 1;

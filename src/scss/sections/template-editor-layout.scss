@@ -113,7 +113,7 @@
   margin-left: 0px;
   margin-right: 0px;
   display: flex;
-  flex-flow: column;
+  flex-flow: column-reverse;
 }
 
 @media (min-width: $screen-sm) {
@@ -125,23 +125,21 @@
 }
 
 .preview-holder {
-  //padding: 20px;
   background-image: linear-gradient(white, lightgray);
-  //min-height: 50px;
   z-index: 1000;
-  width: 100%;
-  height: 100%;
+  width: 345px;
+  height: 200px;
+  margin: auto;
   overflow-x: scroll;
   overflow-y: scroll;
 
   @media (min-width: $screen-sm) {
-    //min-height: calc(100vh - 180px);
+    width: 100%;
+    height: 100%;
   }
 }
 
 .attribute-editor {
-  //padding: 20px;
-  //min-height: calc(100vh - 190px);
   flex-grow: 1;
   flex-shrink: 0;
   flex-basis: var(--sidebar-width);
