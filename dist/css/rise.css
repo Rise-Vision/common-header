@@ -18525,6 +18525,21 @@ a.mfp-iframe:hover:after {
 .template-editor-confirm-modal .modal-footer .btn-default, .template-editor-confirm-modal .modal-footer .timeline .dropdown-menu li .btn, .timeline .dropdown-menu li .template-editor-confirm-modal .modal-footer .btn, .template-editor-confirm-modal .modal-footer .timeline .dropdown-menu li .icon-nav label, .timeline .dropdown-menu li .icon-nav .template-editor-confirm-modal .modal-footer label, .template-editor-confirm-modal .modal-footer .icon-nav .timeline .dropdown-menu li label, .icon-nav .timeline .dropdown-menu li .template-editor-confirm-modal .modal-footer label {
   background: #e6e6e6; }
 
+.te-scrollable-container {
+  --base-size: 5px;
+  overflow-y: auto; }
+
+.te-scrollable-container::-webkit-scrollbar {
+  width: var(--base-size); }
+
+.te-scrollable-container::-webkit-scrollbar-track {
+  background: #cccccc;
+  border-radius: var(--base-size); }
+
+.te-scrollable-container::-webkit-scrollbar-thumb {
+  border-radius: var(--base-size);
+  background: gray; }
+
 .subscription-summary {
   display: flex;
   flex-direction: row;

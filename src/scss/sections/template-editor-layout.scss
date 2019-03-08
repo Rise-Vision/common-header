@@ -280,3 +280,22 @@
     background: rgb(230, 230, 230);
   }
 }
+
+.te-scrollable-container {
+  --base-size : 5px;
+  overflow-y: auto;
+}
+
+.te-scrollable-container::-webkit-scrollbar {
+  width: var(--base-size);
+}
+
+.te-scrollable-container::-webkit-scrollbar-track {
+  background: #cccccc;
+  border-radius: var(--base-size);
+}
+
+.te-scrollable-container::-webkit-scrollbar-thumb {
+  border-radius: var(--base-size);
+  background: gray;
+}
