@@ -58,6 +58,9 @@ msgstr "Most Popular Stocks"
 msgid "financial.most-popular-category.world-indexes"
 msgstr "Most Popular World Indexes"
 
+msgid "financial.nasdaq-stocks"
+msgstr "NASDAQ Stocks"
+
 msgid "financial.no-results.question"
 msgstr "Can't find what you're looking for?"
 
@@ -72,6 +75,9 @@ msgstr "or contact"
 
 msgid "financial.no-results.verify-start"
 msgstr "Verify the instrument is valid"
+
+msgid "financial.nyse-stocks"
+msgstr "NYSE Stocks"
 
 msgid "financial.search-category.bonds"
 msgstr "Search Bonds"

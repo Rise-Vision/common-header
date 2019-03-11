@@ -28,6 +28,7 @@
       "stocks": "Most Popular Stocks",
       "world-indexes": "Most Popular World Indexes"
     },
+    "nasdaq-stocks": "NASDAQ Stocks",
     "no-results": {
       "title": "No Results Found",
       "question": "Can't find what you're looking for?",
@@ -35,6 +36,7 @@
       "verify-mid": "or contact",
       "verify-end": "for help."
     },
+    "nyse-stocks": "NYSE Stocks",
     "search-category": {
       "bonds": "Search Bonds",
       "commodities": "Search Commodities",
