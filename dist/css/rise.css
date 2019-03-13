@@ -18406,7 +18406,7 @@ a.mfp-iframe:hover:after {
 
 .preview-holder {
   background-image: linear-gradient(white, lightgray);
-  z-index: 1000;
+  z-index: 10;
   width: 320px;
   height: var(--preview-holder-height);
   margin: auto;
