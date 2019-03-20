@@ -59,10 +59,6 @@
     fieldset[disabled] & {
       background-color: transparent;
     }
-
-    @media (min-width: $screen-sm) {
-      max-width: calc(100vw - 440px);
-    }
   }
 
   & .edit-name, .delete-presentation {

@@ -18356,9 +18356,6 @@ a.mfp-iframe:hover:after {
     .template-editor-toolbar .presentation-name.disabled, .template-editor-toolbar .presentation-name[disabled],
     fieldset[disabled] .template-editor-toolbar .presentation-name {
       background-color: transparent; }
-    @media (min-width: 768px) {
-      .template-editor-toolbar .presentation-name {
-        max-width: calc(100vw - 440px); } }
   .template-editor-toolbar .edit-name, .template-editor-toolbar .delete-presentation {
     cursor: pointer;
     background: transparent;
