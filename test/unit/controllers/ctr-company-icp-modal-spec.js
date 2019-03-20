@@ -16,7 +16,7 @@ describe("controller: Company ICP Modal", function() {
     });
     $provide.value("company", {
       name: "Test Company",
-      companyIndustry: "COMPUTER_SOFTWARE"
+      companyIndustry: "HOSPITALITY"
     });
 
     $provide.factory("customLoader", function ($q) {
@@ -64,8 +64,8 @@ describe("controller: Company ICP Modal", function() {
     expect($scope.user.username).to.equal("user@example.io");
     expect($scope.company.name).to.equal("Test Company");
     
-    expect($scope.ICON_INDUSTRY_FIELDS).to.have.length(13);
-    expect($scope.DROPDOWN_INDUSTRY_FIELDS).to.have.length(135);
+    expect($scope.ICON_INDUSTRY_FIELDS).to.have.length(12);
+    expect($scope.DROPDOWN_INDUSTRY_FIELDS).to.have.length(6);
     expect($scope.otherSelected).to.be.true;
   });
   
@@ -78,7 +78,7 @@ describe("controller: Company ICP Modal", function() {
       }, 
       company: {
         name: "Test Company",
-        companyIndustry: "COMPUTER_SOFTWARE"
+        companyIndustry: "HOSPITALITY"
       }  
     });
   });
