@@ -129,8 +129,7 @@
   width: 320px;
   height: var(--preview-holder-height);
   margin: auto;
-  overflow-x: scroll;
-  overflow-y: scroll;
+  overflow: auto;
 
   @media (min-width: $screen-sm) {
     width: 100%;
