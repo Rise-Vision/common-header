@@ -12839,11 +12839,25 @@ a[data-wysihtml5-command=underline].active {
   padding: 0 20px;
   border-bottom: 1px solid #db695d;
   text-align: center;
-  display: inline-block; }
-
-.sub-company-alert .link-button {
   display: inline-block;
-  font-weight: bold; }
+  height: 21px; }
+
+.sub-company-alert .sub-company-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 220px; }
+
+@media (min-width: 767px) {
+  .sub-company-alert .link-button {
+    display: inline-block;
+    font-weight: bold; } }
+
+@media (max-width: 767px) {
+  .sub-company-alert .link-button {
+    float: right;
+    font-weight: bold; } }
 
 .authorization-modal {
   text-align: center; }
@@ -18325,9 +18339,14 @@ a.mfp-iframe:hover:after {
 
 @media (max-width: 768px) {
   .template-editor {
+    --header-height: 57px;
     --toolbar-height: 50px;
     --sidebar-width: 360px;
-    --attribute-list-height: calc(100vh - var(--body-height) - var(--footer-height) - var(--preview-holder-height)); } }
+    --attribute-list-height: calc(100vh - var(--body-height) - var(--footer-height) - var(--preview-holder-height)); }
+    .template-editor.active-banner-mode {
+      --header-height: 78px; }
+    .template-editor.active-banner-mode-double {
+      --header-height: 99px; } }
 
 .template-editor-toolbar {
   display: flex;
@@ -18881,6 +18900,11 @@ a.mfp-iframe:hover:after {
   --selector-search-box-height: 44px;
   --financial-body-height: calc(100vh - var(--body-height) - var(--component-header-height) - var(--financial-button-bar-height));
   --selector-body-height: calc(100vh - var(--body-height) - var(--component-header-height) - var(--financial-button-bar-height) - var(--selector-search-box-height)); }
+
+@media (max-width: 768px) {
+  .financial-container {
+    --financial-body-height: calc(100vh - var(--body-height) - var(--financial-button-bar-height));
+    --selector-body-height: calc(100vh - var(--body-height) - var(--financial-button-bar-height) - var(--selector-search-box-height)); } }
 
 .instrument-list {
   height: var(--financial-body-height);

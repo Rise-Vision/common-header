@@ -6,6 +6,13 @@
   --selector-body-height: calc(100vh - var(--body-height) - var(--component-header-height) - var(--financial-button-bar-height) - var(--selector-search-box-height));
 }
 
+@media (max-width: $screen-sm) {
+  .financial-container {
+    --financial-body-height: calc(100vh - var(--body-height) - var(--financial-button-bar-height));
+    --selector-body-height: calc(100vh - var(--body-height) - var(--financial-button-bar-height) - var(--selector-search-box-height));
+  }
+}
+
 .instrument-list {
   height: var(--financial-body-height);
   overflow-x: hidden;

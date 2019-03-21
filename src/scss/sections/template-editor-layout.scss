@@ -20,9 +20,13 @@
 
 @media (max-width: $screen-sm) {
   .template-editor {
+    --header-height: 57px;
     --toolbar-height: 50px;
     --sidebar-width: 360px;
     --attribute-list-height: calc(100vh - var(--body-height) - var(--footer-height) - var(--preview-holder-height));
+
+    &.active-banner-mode { --header-height: 78px; }
+    &.active-banner-mode-double { --header-height: 99px; }
   }
 }
 
