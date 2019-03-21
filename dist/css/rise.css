@@ -18407,8 +18407,7 @@ a.mfp-iframe:hover:after {
   width: 320px;
   height: var(--preview-holder-height);
   margin: auto;
-  overflow-x: scroll;
-  overflow-y: scroll; }
+  overflow: auto; }
   @media (min-width: 768px) {
     .preview-holder {
       width: 100%;
@@ -18923,7 +18922,10 @@ a.mfp-iframe:hover:after {
 
 .instrument-name {
   font-weight: bold;
-  color: #4d4d4d; }
+  color: #4d4d4d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
 
 .instrument-rate {
   font-size: 0.8em;
