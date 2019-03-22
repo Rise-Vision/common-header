@@ -59,6 +59,9 @@
 .instrument-name {
   font-weight: bold;
   color: rgb(77, 77, 77);
+}
+
+.instrument-name-ellipsis {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

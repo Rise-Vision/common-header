@@ -18922,7 +18922,9 @@ a.mfp-iframe:hover:after {
 
 .instrument-name {
   font-weight: bold;
-  color: #4d4d4d;
+  color: #4d4d4d; }
+
+.instrument-name-ellipsis {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; }
