@@ -104,12 +104,8 @@ describe("service: companyIcpFactory:", function() {
     });
     
     it("should open modal once user has logged in", function(done) {
-      var oneMonthAgo = new Date();
-      oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
 
-      userProfile = {
-        creationDate: oneMonthAgo
-      };
+      userProfile = {};
       companyIcpFactory.init();
       $rootScope.$broadcast("risevision.company.selectedCompanyChanged");
 
@@ -117,8 +113,9 @@ describe("service: companyIcpFactory:", function() {
         $modal.open.should.have.been.calledWith({
           templateUrl: "company-icp-modal.html",
           controller: "CompanyIcpModalCtrl",
-          size: "lg",
-          backdrop: true,
+          size: "md",
+          backdrop: "static",
+          keyboard: false,
           resolve: sinon.match.object
         });
 
@@ -136,12 +133,8 @@ describe("service: companyIcpFactory:", function() {
     
     it("should only open modal once and remove handler", function(done) {
       var listenerCount = $rootScope.$$listeners["risevision.company.selectedCompanyChanged"].length;
-      var oneMonthAgo = new Date();
-      oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
 
-      userProfile = {
-        creationDate: oneMonthAgo
-      };
+      userProfile = {};
       companyIcpFactory.init();
 
       expect($rootScope.$$listeners["risevision.company.selectedCompanyChanged"].length).to.equal(listenerCount + 1);      
@@ -159,13 +152,9 @@ describe("service: companyIcpFactory:", function() {
     });
     
     it("should not show for sub-companies", function(done) {
-      var testDate = new Date();
-      testDate.setMonth(testDate.getMonth() - 1);
       isSubcompanySelected = true;
 
-      userProfile = {
-        dataCollectionDate: testDate
-      };
+      userProfile = {};
       companyIcpFactory.init();
       $rootScope.$broadcast("risevision.company.selectedCompanyChanged");
 
@@ -177,13 +166,9 @@ describe("service: companyIcpFactory:", function() {
     });
 
     it("should not show if missing User Admin role", function(done) {
-      var testDate = new Date();
-      testDate.setMonth(testDate.getMonth() - 1);
       isUserAdmin = false;
 
-      userProfile = {
-        dataCollectionDate: testDate
-      };
+      userProfile = {};
       companyIcpFactory.init();
       $rootScope.$broadcast("risevision.company.selectedCompanyChanged");
 
@@ -194,54 +179,12 @@ describe("service: companyIcpFactory:", function() {
       }, 10);
     });
 
-    describe("less than 2 weeks ago", function() {
-      var testDate;
-      beforeEach(function() {
-        testDate = new Date();
-        testDate.setDate(testDate.getDate() - 10);
-      });
-      
-      it("should test dataCollectionDate", function(done) {
-        userProfile = {
-          dataCollectionDate: testDate
-        };
-        companyIcpFactory.init();
-        $rootScope.$broadcast("risevision.company.selectedCompanyChanged");
-
-        setTimeout(function() {
-          $modal.open.should.have.not.been.called;
-
-          done();
-        }, 10);
-      });
-
-      it("should test creationDate", function(done) {
-        userProfile = {
-          creationDate: testDate
-        };
-        companyIcpFactory.init();
-        $rootScope.$broadcast("risevision.company.selectedCompanyChanged");
-
-        setTimeout(function() {
-          $modal.open.should.have.not.been.called;
-
-          done();
-        }, 10);
-      });
-    });
-
     it("should not open modal if data is filled in", function(done) {
-      var oneMonthAgo = new Date();
-      oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
 
       userProfile = {
-        creationDate: oneMonthAgo,
-        companyRole: "Test Role",
-        email: "testEmail"
+        username: "username",
       };
       companyProfile = {
-        name: "Test Company",
-        companySize: "20",
         companyIndustry: "Other"
       };
       companyIcpFactory.init();
@@ -258,12 +201,9 @@ describe("service: companyIcpFactory:", function() {
 
   describe("$modal result", function() {
     beforeEach(function(done) {
-      var oneMonthAgo = new Date();
-      oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
 
       userProfile = {
         username: "username",
-        creationDate: oneMonthAgo,
         randomField: "123"
       };
       companyProfile = {
@@ -282,33 +222,5 @@ describe("service: companyIcpFactory:", function() {
       }, 10);
     });
 
-    it("should save dataCollectionDate on dismiss", function(done) {
-      $modalDeferred.reject(userProfile);
-      
-      setTimeout(function() {
-        updateUserSpy.should.have.been.calledWith("username", { dataCollectionDate: sinon.match.date });
-        updateCompanySpy.should.not.have.been.called;
-        $log.debug.should.have.been.calledOnce;
-        
-        done();
-      }, 10);
-    });
-    
-    it("should save user and company fields on close", function(done) {
-      userProfile.companyRole = "Role";
-      userProfile.email = "testEmail";
-      userProfile.randomField = "random";
-      companyProfile.companySize = "10";
-      companyProfile.randomField = "random";
-      $modalDeferred.resolve({user: userProfile, company: companyProfile});
-      
-      setTimeout(function() {
-        updateUserSpy.should.have.been.calledWith("username", { dataCollectionDate: sinon.match.date, companyRole: "Role", email: "testEmail" });
-        updateCompanySpy.should.have.been.calledWith("cid", { name: "Test Company", companySize: "10" });
-        $log.debug.should.have.been.calledOnce;
-        
-        done();
-      }, 10);
-    });
   });
 });

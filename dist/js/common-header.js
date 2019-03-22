@@ -102,7 +102,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('company-icp-modal.html',
-    '<div id="companyIcpModal"><div class="modal-header"><button type="button" class="close" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-times"></i></button><h3 id="icpModalTitle" class="modal-title">Customize your Rise Vision experience!</h3></div><div class="modal-body u_padding-lg" stop-event="touchend"><form id="companyIcpForm" role="form" name="forms.companyIcpForm"><div class="row"><div class="col-md-3"><div class="form-group" ng-class="{ \'has-error\' : forms.companyIcpForm.name.$invalid && !forms.companyIcpForm.name.$pristine }"><label for="company-name" class="control-label">Company Name</label> <input required="" id="company-name" type="text" class="form-control" ng-model="company.name" name="name"></div></div><div class="col-md-3"><div class="form-group"><label for="company-size" class="control-label">Company Size</label><select id="company-size" class="form-control" ng-model="company.companySize"><option value="" ng-show="false">&lt; Select Size &gt;</option><option ng-repeat="size in COMPANY_SIZE_FIELDS" value="{{size[1]}}">{{size[0]}}</option></select></div></div><div class="col-md-3"><div class="form-group"><label for="company-role" class="control-label">What\'s your title?</label><select id="company-role" class="form-control selectpicker" ng-model="user.companyRole"><option value="" ng-show="false">&lt; Select Role &gt;</option><option ng-repeat="role in COMPANY_ROLE_FIELDS" value="{{role[1]}}">{{role[0]}}</option></select></div></div><div class="col-md-3"><div class="form-group" ng-class="{ \'has-error\' : forms.companyIcpForm.email.$invalid && !forms.companyIcpForm.email.$pristine }"><label for="email" class="control-label">Preferred Email</label> <input type="email" class="form-control email" name="email" id="email" required="" ng-model="user.email"></div></div></div><div class="text-center"><h1 class="u_margin-xs-top">What\'s Your Industry?</h1><h4 class="u_margin-xs-top u_margin-xs-bottom">(Pick One)</h4></div><div class="panel panel-default grid-selector"><div id="" class="grid-selector-list text-center"><div class="no-select grid-selector-list-item" ng-class="{\'list-item--selected\' : company.companyIndustry === industry[1]}" ng-repeat="industry in ICON_INDUSTRY_FIELDS" ng-click="selectIndustry(industry[1]);"><img class="list-item-icon" ng-class="{{imgClasses}}" src="{{industry[2]}}"> <span class="list-item-label"><b>{{industry[0]}}</b></span></div><div class="no-select grid-selector-list-item" ng-class="{\'list-item--selected\' : otherSelected }" ng-click="selectOther()"><img class="list-item-icon" ng-class="{{imgClasses}}" src="https://cdn2.hubspot.net/hubfs/2700250/Assets%20May%5B17%5D/tick.svg"> <span class="list-item-label ng-binding"><b>Other</b></span></div><div class="grid-selector-list-item list-item-placeholder"></div><div class="grid-selector-list-item list-item-placeholder"></div><div class="grid-selector-list-item list-item-placeholder"></div><div class="grid-selector-list-item list-item-placeholder"></div><div class="grid-selector-list-item list-item-placeholder"></div><div class="grid-selector-list-item list-item-placeholder"></div><div class="grid-selector-list-item list-item-placeholder"></div><div class="grid-selector-list-item list-item-placeholder"></div></div></div><div class="text-center" id="pt-industry-selector" ng-show="otherSelected"><div class="form-inline"><div class="form-group"><img src="https://s3.amazonaws.com/Rise-Images/UI/r_arrow.png" class="icon-left"> <label for="company-industry" class="control-label">Please specify:</label><select id="company-industry" class="form-control selectpicker u_margin-left" ng-model="company.companyIndustry"><option value="" ng-show="false">&lt; Select Industry &gt;</option><option ng-repeat="industry in DROPDOWN_INDUSTRY_FIELDS | orderBy:industry[0]" value="{{industry[1]}}" ng-if="!industry[2]">{{industry[0]}}</option></select></div></div></div></form></div><div class="modal-footer"><button id="saveButton" class="btn btn-primary ng-binding" ng-click="save()" ng-disabled="forms.companyIcpForm.$invalid">Apply <i class="fa fa-check icon-right"></i></button> <button id="cancelButton" class="btn btn-link pull-left" ng-click="dismiss()">Ask Me Later</button></div></div>');
+    '<div id="companyIcpModal"><div class="modal-header"><h2 id="icpModalTitle" class="modal-title">Help us personalize your experience</h2></div><div class="modal-body" stop-event="touchend"><form id="companyIcpForm" role="form" name="forms.companyIcpForm"><div class="form-group"><label for="company-industry" class="control-label">Tell us your Industry to help us make your Display look great *</label><select id="company-industry" name="companyIndustry" class="form-control selectpicker" ng-model="company.companyIndustry" required=""><option value="" ng-show="false">&lt; Select Industry &gt;</option><option ng-repeat="industry in DROPDOWN_INDUSTRY_FIELDS | orderBy:industry[0]" value="{{industry[1]}}">{{industry[0]}}</option></select></div></form><div class="checkbox" ng-show="company.companyIndustry === \'PRIMARY_SECONDARY_EDUCATION\'"><label><input type="checkbox" ng-model="user.mailSyncEnabled"> Send me an email with great Template ideas for my school each week</label></div></div><div class="modal-footer"><button id="saveButton" class="btn btn-primary btn-lg btn-block ng-binding" ng-click="save()" ng-disabled="forms.companyIcpForm.$invalid">Apply <i class="fa fa-check icon-right"></i></button></div></div>');
 }]);
 })();
 
@@ -1069,34 +1069,13 @@ angular.module("risevision.common.header")
 angular.module("risevision.common.header")
 
 .controller("CompanyIcpModalCtrl", ["$scope", "$modalInstance",
-  "company", "user", "COMPANY_INDUSTRY_FIELDS", "COMPANY_SIZE_FIELDS",
-  "COMPANY_ROLE_FIELDS",
+  "company", "user", "COMPANY_INDUSTRY_FIELDS",
   function ($scope, $modalInstance, company, user,
-    COMPANY_INDUSTRY_FIELDS, COMPANY_SIZE_FIELDS, COMPANY_ROLE_FIELDS) {
+    COMPANY_INDUSTRY_FIELDS) {
 
     $scope.company = company;
     $scope.user = user;
-    $scope.COMPANY_SIZE_FIELDS = COMPANY_SIZE_FIELDS;
-    $scope.COMPANY_ROLE_FIELDS = COMPANY_ROLE_FIELDS;
-    $scope.ICON_INDUSTRY_FIELDS = [];
-    $scope.DROPDOWN_INDUSTRY_FIELDS = [];
-    $scope.otherSelected = false;
-
-    COMPANY_INDUSTRY_FIELDS.forEach(function (industry) {
-      if (company.companyIndustry === industry[1] && !industry[2]) {
-        $scope.otherSelected = true;
-      }
-
-      if (industry[2]) {
-        $scope.ICON_INDUSTRY_FIELDS.push(industry);
-      } else {
-        $scope.DROPDOWN_INDUSTRY_FIELDS.push(industry);
-      }
-    });
-
-    $scope.dismiss = function () {
-      $modalInstance.dismiss(user);
-    };
+    $scope.DROPDOWN_INDUSTRY_FIELDS = COMPANY_INDUSTRY_FIELDS;
 
     $scope.save = function () {
       $modalInstance.close({
@@ -1106,8 +1085,6 @@ angular.module("risevision.common.header")
     };
 
     $scope.selectIndustry = function (industryValue) {
-      $scope.otherSelected = false;
-
       if (company.companyIndustry !== industryValue) {
         company.companyIndustry = industryValue;
       } else {
@@ -1115,11 +1092,6 @@ angular.module("risevision.common.header")
       }
     };
 
-    $scope.selectOther = function () {
-      $scope.otherSelected = !$scope.otherSelected;
-
-      company.companyIndustry = "";
-    };
   }
 ]);
 
@@ -2775,10 +2747,10 @@ angular.module("risevision.common.header")
     ["More than 250 employees", "250"]
   ])
   .constant("USER_ICP_WRITABLE_FIELDS", [
-    "companyRole", "email", "dataCollectionDate"
+    "mailSyncEnabled"
   ])
   .constant("COMPANY_ICP_WRITABLE_FIELDS", [
-    "name", "companySize", "companyIndustry"
+    "companyIndustry"
   ])
   .factory("companyIcpFactory", ["$rootScope", "$q", "$log", "userState",
     "updateCompany", "updateUser", "$modal", "pick",
@@ -2801,7 +2773,6 @@ angular.module("risevision.common.header")
         var user = result.user;
         var companyId = company.id;
         var username = user.username;
-        user.dataCollectionDate = new Date();
 
         company = pick(company, COMPANY_ICP_WRITABLE_FIELDS);
         user = pick(user, USER_ICP_WRITABLE_FIELDS);
@@ -2814,21 +2785,9 @@ angular.module("risevision.common.header")
         });
       };
 
-      var _saveDataCollectionDate = function (user) {
-        updateUser(user.username, {
-          dataCollectionDate: new Date()
-        }).then(function () {
-          $log.debug("User Data Collection Date updated");
-        });
-      };
-
       var _checkIcpCollection = function () {
         var user = userState.getCopyOfProfile(true);
         var company = userState.getCopyOfUserCompany(true);
-        var lastContact = new Date(user.dataCollectionDate ||
-          user.creationDate);
-        var twoWeeksAgo = new Date();
-        twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
 
         if (!userState.isUserAdmin()) {
           return;
@@ -2838,22 +2797,17 @@ angular.module("risevision.common.header")
           return;
         }
 
-        // Last data collection was less than 2 weeks ago?
-        if (lastContact.getTime() >= twoWeeksAgo.getTime()) {
-          return;
-        }
-
-        // Has all data been collected?
-        if (user.companyRole && user.email && company.name && company.companySize &&
-          company.companyIndustry) {
+        // Has industry been collected?
+        if (company.companyIndustry) {
           return;
         }
 
         var modalInstance = $modal.open({
           templateUrl: "company-icp-modal.html",
           controller: "CompanyIcpModalCtrl",
-          size: "lg",
-          backdrop: true,
+          size: "md",
+          backdrop: "static", //prevent from closing modal by clicking outside
+          keyboard: false, //prevent from closing modal by pressing escape
           resolve: {
             user: function () {
               return user;
@@ -2866,8 +2820,6 @@ angular.module("risevision.common.header")
 
         modalInstance.result.then(function (user, company) {
           _saveIcpData(user, company);
-        }, function (user) {
-          _saveDataCollectionDate(user);
         });
 
       };

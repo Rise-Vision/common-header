@@ -66,10 +66,10 @@ angular.module("risevision.common.header")
     ["More than 250 employees", "250"]
   ])
   .constant("USER_ICP_WRITABLE_FIELDS", [
-    "companyRole", "email", "dataCollectionDate"
+    "mailSyncEnabled"
   ])
   .constant("COMPANY_ICP_WRITABLE_FIELDS", [
-    "name", "companySize", "companyIndustry"
+    "companyIndustry"
   ])
   .factory("companyIcpFactory", ["$rootScope", "$q", "$log", "userState",
     "updateCompany", "updateUser", "$modal", "pick",
@@ -92,7 +92,6 @@ angular.module("risevision.common.header")
         var user = result.user;
         var companyId = company.id;
         var username = user.username;
-        user.dataCollectionDate = new Date();
 
         company = pick(company, COMPANY_ICP_WRITABLE_FIELDS);
         user = pick(user, USER_ICP_WRITABLE_FIELDS);
@@ -105,21 +104,9 @@ angular.module("risevision.common.header")
         });
       };
 
-      var _saveDataCollectionDate = function (user) {
-        updateUser(user.username, {
-          dataCollectionDate: new Date()
-        }).then(function () {
-          $log.debug("User Data Collection Date updated");
-        });
-      };
-
       var _checkIcpCollection = function () {
         var user = userState.getCopyOfProfile(true);
         var company = userState.getCopyOfUserCompany(true);
-        var lastContact = new Date(user.dataCollectionDate ||
-          user.creationDate);
-        var twoWeeksAgo = new Date();
-        twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
 
         if (!userState.isUserAdmin()) {
           return;
@@ -129,22 +116,17 @@ angular.module("risevision.common.header")
           return;
         }
 
-        // Last data collection was less than 2 weeks ago?
-        if (lastContact.getTime() >= twoWeeksAgo.getTime()) {
-          return;
-        }
-
-        // Has all data been collected?
-        if (user.companyRole && user.email && company.name && company.companySize &&
-          company.companyIndustry) {
+        // Has industry been collected?
+        if (company.companyIndustry) {
           return;
         }
 
         var modalInstance = $modal.open({
           templateUrl: "company-icp-modal.html",
           controller: "CompanyIcpModalCtrl",
-          size: "lg",
-          backdrop: true,
+          size: "md",
+          backdrop: "static", //prevent from closing modal by clicking outside
+          keyboard: false, //prevent from closing modal by pressing escape
           resolve: {
             user: function () {
               return user;
@@ -157,8 +139,6 @@ angular.module("risevision.common.header")
 
         modalInstance.result.then(function (user, company) {
           _saveIcpData(user, company);
-        }, function (user) {
-          _saveDataCollectionDate(user);
         });
 
       };
