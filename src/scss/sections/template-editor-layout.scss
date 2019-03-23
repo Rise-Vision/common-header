@@ -10,25 +10,28 @@
   &.active-banner-mode-double { --header-height : 132px; }
   &.hide-sidebar { --sidebar-width: 0px; }
 
-  --total-height: calc(var(--header-height));
-  --body-height: calc(var(--total-height) + var(--toolbar-height));
+  --body-height: calc(var(--header-height) + var(--toolbar-height));
   --attribute-list-height: calc(100vh - var(--body-height));
 
   background-color: #FFF;
-  height: calc(100vh - var(--total-height));
+  height: calc(100vh - var(--header-height));
 }
 
 @media (max-width: $screen-sm) {
   .template-editor {
     --chrome-bar-height: 55px;
-    --header-height: 57px;
+    --header-height: 55px;
     --toolbar-height: 50px;
     --sidebar-width: 360px;
-    --total-height: calc(var(--chrome-bar-height) + var(--header-height));
+    --body-height: calc(var(--chrome-bar-height) + var(--header-height) + var(--toolbar-height) + var(--footer-height));
     --attribute-list-height: calc(100vh - var(--body-height) - var(--component-header-height) - var(--preview-holder-height));
 
-    &.active-banner-mode { --header-height: 78px; }
-    &.active-banner-mode-double { --header-height: 99px; }
+    height: calc(100vh - var(--chrome-bar-height) - var(--header-height));
+    &.active-banner-mode { --header-height: 76px; }
+    &.active-banner-mode-double { --header-height: 97px; }
+    &.active-component {
+      --body-height: calc(var(--chrome-bar-height) + var(--header-height) + var(--toolbar-height));
+    }
   }
 }
 
