@@ -18899,11 +18899,12 @@ a.mfp-iframe:hover:after {
     padding-left: 0;
     border-left: none; }
 
-.financial-container {
-  --financial-button-bar-height: 54px;
-  --selector-search-box-height: 44px;
-  --financial-body-height: calc(100vh - var(--body-height) - var(--component-header-height) - var(--financial-button-bar-height));
-  --selector-body-height: calc(100vh - var(--body-height) - var(--component-header-height) - var(--financial-button-bar-height) - var(--selector-search-box-height)); }
+@media (min-width: 768px) {
+  .financial-container {
+    --financial-button-bar-height: 54px;
+    --selector-search-box-height: 44px;
+    --financial-body-height: calc(100vh - var(--body-height) - var(--component-header-height) - var(--financial-button-bar-height));
+    --selector-body-height: calc(100vh - var(--body-height) - var(--component-header-height) - var(--financial-button-bar-height) - var(--selector-search-box-height)); } }
 
 @media (max-width: 768px) {
   .financial-container {
