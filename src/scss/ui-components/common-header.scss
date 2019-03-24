@@ -333,8 +333,8 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: inline-block;
-    max-width: 220px;
+    max-width: 65%;
+    float: left;
 }
 
 @media (min-width: $screen-xs-max) {
