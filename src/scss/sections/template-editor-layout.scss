@@ -239,9 +239,12 @@
   & .component-header {
     font-size: 1.2em;
     font-weight: bold;
-    border-bottom: 1px solid rgb(230, 230, 230);
     padding: 20px 0px 19px;
     margin: 0px 20px;
+
+    &.visible-bottom-rule {
+        border-bottom: 1px solid #e6e6e6;
+    }
   }
 
   & .arrow-icon {

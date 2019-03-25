@@ -18496,9 +18496,10 @@ a.mfp-iframe:hover:after {
   .attribute-editor .component-header {
     font-size: 1.2em;
     font-weight: bold;
-    border-bottom: 1px solid #e6e6e6;
     padding: 20px 0px 19px;
     margin: 0px 20px; }
+    .attribute-editor .component-header.visible-bottom-rule {
+      border-bottom: 1px solid #e6e6e6; }
   .attribute-editor .arrow-icon {
     line-height: 10px; }
 
@@ -18918,7 +18919,7 @@ a.mfp-iframe:hover:after {
 
 .instrument-selector-search-box {
   padding: 0px 0px 20px;
-  margin: 0px 20px 20px;
+  margin: 0px 20px 0px;
   border-bottom: 1px solid #e6e6e6; }
 
 .instrument-list-show {
@@ -18988,7 +18989,7 @@ a.mfp-iframe:hover:after {
   font-weight: bold;
   font-size: 0.8em;
   color: #4d4d4d;
-  margin: 0px;
+  margin: 20px 0px 0px;
   padding: 0px 20px; }
 
 .instrument-selector-checkbox {
@@ -19014,7 +19015,7 @@ a.mfp-iframe:hover:after {
 
 .instrument-selector-no-results {
   color: #4d4d4d;
-  margin: 0px 20px; }
+  margin: 20px; }
   .instrument-selector-no-results > h2 {
     font-size: 1.2em;
     font-weight: 700;
