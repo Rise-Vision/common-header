@@ -1,9 +1,9 @@
 .template-editor {
   --common-header-height: 93px;
-  --toolbar-height: 50px;
+  --toolbar-height: 78px;
   --footer-height: 98px;
   --sidebar-width: 400px;
-  --component-header-height: 44px;
+  --component-header-height: 63px;
   --preview-holder-height: 200px;
 
   &.active-banner-mode { --common-header-height : 111px; }
@@ -40,7 +40,7 @@
   align-items: center;
   z-index: 100;
   border-bottom: 2px solid #f2f2f2;
-  padding: 18px 0px;
+  padding: 38px 0px;
   margin: 0px 20px;
   overflow: hidden;
   text-overflow: clip;
@@ -53,8 +53,8 @@
 
   & .presentation-name {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 22px;
+    font-weight: bold;
     margin: 0;
     padding: 0;
     line-height: 32px;
@@ -67,10 +67,6 @@
     &[disabled],
     fieldset[disabled] & {
       background-color: transparent;
-    }
-
-    @media (min-width: $screen-sm) {
-      max-width: calc(100vw - 440px);
     }
   }
 
@@ -142,12 +138,30 @@
   width: 320px;
   height: var(--preview-holder-height);
   margin: auto;
-  overflow-x: scroll;
-  overflow-y: scroll;
+  overflow: auto;
 
   @media (min-width: $screen-sm) {
     width: 100%;
     height: 100%;
+  }
+
+  & .preview-temp-parent {
+    position:relative;
+    height: 100%;
+  }
+
+  & .preview-temp-child {
+    position: absolute;
+    top: 50%;
+    margin-top: -0.5em;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: #747474;
+    text-align: center;
   }
 }
 
@@ -221,6 +235,10 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    & a {
+      margin-right: 18px;
+    }
   }
 
   & .attribute-edit {
@@ -231,7 +249,7 @@
     font-size: 1.2em;
     font-weight: bold;
     border-bottom: 1px solid rgb(230, 230, 230);
-    padding: 10px 0px;
+    padding: 20px 0px 19px;
     margin: 0px 20px;
   }
 
@@ -241,11 +259,12 @@
 }
 
 .template-editor-footer {
-  padding: 0px 10px;
+  padding: 0px 20px;
   background-color: #FFF;
 
   & > div {
     border-top: 2px solid #f2f2f2;
+    padding-top: 10px;
   }
 
   & .btn {
