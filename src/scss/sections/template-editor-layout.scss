@@ -1,36 +1,36 @@
 .template-editor {
-  --header-height: 93px;
+  --common-header-height: 93px;
   --toolbar-height: 50px;
   --footer-height: 98px;
   --sidebar-width: 400px;
   --component-header-height: 44px;
   --preview-holder-height: 200px;
 
-  &.active-banner-mode { --header-height : 111px; }
-  &.active-banner-mode-double { --header-height : 132px; }
+  &.active-banner-mode { --common-header-height : 111px; }
+  &.active-banner-mode-double { --common-header-height : 132px; }
   &.hide-sidebar { --sidebar-width: 0px; }
 
-  --body-height: calc(var(--header-height) + var(--toolbar-height));
+  --body-height: calc(var(--common-header-height) + var(--toolbar-height));
   --attribute-list-height: calc(100vh - var(--body-height));
 
   background-color: #FFF;
-  height: calc(100vh - var(--header-height));
+  height: calc(100vh - var(--common-header-height));
 }
 
 @media (max-width: $screen-sm) {
   .template-editor {
     --chrome-bar-height: 55px;
-    --header-height: 55px;
+    --common-header-height: 55px;
     --toolbar-height: 50px;
     --sidebar-width: 360px;
-    --body-height: calc(var(--chrome-bar-height) + var(--header-height) + var(--toolbar-height) + var(--footer-height));
-    --attribute-list-height: calc(100vh - var(--body-height) - var(--component-header-height) - var(--preview-holder-height));
+    --body-height: calc(var(--chrome-bar-height) + var(--common-header-height) + var(--toolbar-height) + var(--footer-height));
+    --attribute-list-height: calc(100vh - var(--body-height) - var(--preview-holder-height));
 
-    height: calc(100vh - var(--chrome-bar-height) - var(--header-height));
-    &.active-banner-mode { --header-height: 76px; }
-    &.active-banner-mode-double { --header-height: 97px; }
+    height: calc(100vh - var(--chrome-bar-height) - var(--common-header-height));
+    &.active-banner-mode { --common-header-height: 76px; }
+    &.active-banner-mode-double { --common-header-height: 97px; }
     &.active-component {
-      --body-height: calc(var(--chrome-bar-height) + var(--header-height) + var(--toolbar-height));
+      --body-height: calc(var(--chrome-bar-height) + var(--common-header-height) + var(--toolbar-height));
     }
   }
 }
