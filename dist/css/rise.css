@@ -18412,6 +18412,21 @@ a.mfp-iframe:hover:after {
     .preview-holder {
       width: 100%;
       height: 100%; } }
+  .preview-holder .preview-temp-parent {
+    position: relative;
+    height: 100%; }
+  .preview-holder .preview-temp-child {
+    position: absolute;
+    top: 50%;
+    margin-top: -0.5em;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: #747474;
+    text-align: center; }
 
 .attribute-editor {
   height: 100%; }
