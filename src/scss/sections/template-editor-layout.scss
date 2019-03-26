@@ -1,3 +1,5 @@
+$short-phone-height: 570px;
+
 .template-editor {
   --common-header-height: 93px;
   --toolbar-height: 78px;
@@ -32,6 +34,11 @@
       --toolbar-height: 63px;
       --body-height: calc(var(--chrome-bar-height) + var(--common-header-height) + var(--toolbar-height));
     }
+
+    @media (max-height: $short-phone-height) {
+      --toolbar-height: 50px;
+      --preview-holder-height: 170px;
+    }
   }
 }
 
@@ -40,7 +47,6 @@
   align-items: center;
   z-index: 100;
   border-bottom: 2px solid #f2f2f2;
-  padding: 38px 0px;
   margin: 0px 20px;
   overflow: hidden;
   text-overflow: clip;
