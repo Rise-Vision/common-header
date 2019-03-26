@@ -18354,7 +18354,7 @@ a.mfp-iframe:hover:after {
   @media (max-width: 768px) and (max-height: 570px) {
     .template-editor {
       --toolbar-height: 50px;
-      --preview-holder-height: 170px; } }
+      --preview-holder-height: 140px; } }
 
 .template-editor-toolbar {
   display: flex;
