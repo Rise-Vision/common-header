@@ -4,7 +4,7 @@ jobs:
   dependencies:
     working_directory: ~/common-header
     docker:
-      - image: circleci/node:8.1.4
+      - image: circleci/node:8.9.4
     steps:
       - checkout
       - run:
