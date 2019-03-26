@@ -4,7 +4,7 @@ jobs:
   dependencies:
     working_directory: ~/common-header
     docker:
-      - image: circleci/node:8.1.4
+      - image: jenkinsrise/apps-node:8.9.4-stretch
     steps:
       - checkout
       - run:
@@ -22,7 +22,7 @@ jobs:
   test:
     working_directory: ~/common-header
     docker:
-      - image: circleci/node:8.1.4
+      - image: jenkinsrise/apps-node:8.9.4-stretch
     steps:
       - attach_workspace:
           at: ~/
