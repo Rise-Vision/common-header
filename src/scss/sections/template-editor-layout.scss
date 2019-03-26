@@ -21,7 +21,6 @@
   .template-editor {
     --chrome-bar-height: 55px;
     --common-header-height: 55px;
-    --toolbar-height: 50px;
     --sidebar-width: 360px;
     --body-height: calc(var(--chrome-bar-height) + var(--common-header-height) + var(--toolbar-height) + var(--footer-height));
     --attribute-list-height: calc(100vh - var(--body-height) - var(--preview-holder-height));
@@ -30,6 +29,7 @@
     &.active-banner-mode { --common-header-height: 76px; }
     &.active-banner-mode-double { --common-header-height: 97px; }
     &.active-component {
+      --toolbar-height: 63px;
       --body-height: calc(var(--chrome-bar-height) + var(--common-header-height) + var(--toolbar-height));
     }
   }
@@ -267,7 +267,7 @@
 
   & > div {
     border-top: 2px solid #f2f2f2;
-    padding-top: 10px;
+    padding: 10px 0;
   }
 
   & .btn {
