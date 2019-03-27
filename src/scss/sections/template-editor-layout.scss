@@ -1,28 +1,44 @@
+$short-phone-height: 570px;
+
 .template-editor {
-  --header-height: 93px;
+  --common-header-height: 93px;
   --toolbar-height: 78px;
   --footer-height: 98px;
   --sidebar-width: 400px;
   --component-header-height: 63px;
   --preview-holder-height: 200px;
 
-  &.active-banner-mode { --header-height : 111px; }
-  &.active-banner-mode-double { --header-height : 132px; }
+  &.active-banner-mode { --common-header-height : 114px; }
+  &.active-banner-mode-double { --common-header-height : 135px; }
   &.hide-sidebar { --sidebar-width: 0px; }
 
-  --total-height: calc(var(--header-height));
-  --body-height: calc(var(--total-height) + var(--toolbar-height));
+  --body-height: calc(var(--common-header-height) + var(--toolbar-height));
   --attribute-list-height: calc(100vh - var(--body-height));
 
   background-color: #FFF;
-  height: calc(100vh - var(--total-height));
+  height: calc(100vh - var(--common-header-height));
 }
 
 @media (max-width: $screen-sm) {
   .template-editor {
-    --toolbar-height: 50px;
+    --chrome-bar-height: 55px;
+    --common-header-height: 55px;
     --sidebar-width: 360px;
-    --attribute-list-height: calc(100vh - var(--body-height) - var(--footer-height) - var(--preview-holder-height));
+    --body-height: calc(var(--chrome-bar-height) + var(--common-header-height) + var(--toolbar-height) + var(--footer-height));
+    --attribute-list-height: calc(100vh - var(--body-height) - var(--preview-holder-height));
+
+    height: calc(100vh - var(--chrome-bar-height) - var(--common-header-height));
+    &.active-banner-mode { --common-header-height: 76px; }
+    &.active-banner-mode-double { --common-header-height: 97px; }
+    &.active-component {
+      --toolbar-height: 63px;
+      --body-height: calc(var(--chrome-bar-height) + var(--common-header-height) + var(--toolbar-height));
+    }
+
+    @media (max-height: $short-phone-height) {
+      --toolbar-height: 50px;
+      --preview-holder-height: 140px;
+    }
   }
 }
 
@@ -31,7 +47,6 @@
   align-items: center;
   z-index: 100;
   border-bottom: 2px solid #f2f2f2;
-  padding: 38px 0px;
   margin: 0px 20px;
   overflow: hidden;
   text-overflow: clip;
@@ -258,7 +273,7 @@
 
   & > div {
     border-top: 2px solid #f2f2f2;
-    padding-top: 10px;
+    padding: 10px 0;
   }
 
   & .btn {
