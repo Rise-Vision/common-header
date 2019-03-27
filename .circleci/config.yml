@@ -20,7 +20,7 @@ commands:
           name: e2e_tests
           command: |
             TEST_FILES=$(circleci tests glob "<< parameters.casesfile >>" | circleci tests split)
-            NODE_ENV=test XUNIT_FILE=~/common-header/reports/angular-xunit.xml PROSHOT_DIR=~/common-header/reports/screenshots DBUS_SESSION_BUS_ADDRESS=/dev/null xvfb-run node run-test.js $TEST_FILES
+            NODE_ENV=dev XUNIT_FILE=~/common-header/reports/angular-xunit.xml PROSHOT_DIR=~/common-header/reports/screenshots DBUS_SESSION_BUS_ADDRESS=/dev/null xvfb-run node run-test.js $TEST_FILES
       - store_test_results:
           path: ~/common-header/reports
       - store_artifacts:
@@ -101,13 +101,13 @@ workflows:
             - dependencies
       - test_unit:
           requires:
-            - test_build
+            - dependencies
       - e2e_components:
           requires:
-            - test_build
+            - dependencies
       - e2e_common-header:
           requires:
-            - test_build
+            - dependencies
       - test_e2e:
           requires:
             - e2e_components
