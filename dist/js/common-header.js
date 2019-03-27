@@ -2739,10 +2739,10 @@ angular.module("risevision.common.header")
     ["Retail", "RETAIL",
       "https://www.risevision.com/hubfs/business-1.svg"
     ],
-    ["Restaurants & Bars", "RESTAURANTS",
+    ["Restaurants and Bars", "RESTAURANTS",
       "https://cdn2.hubspot.net/hubfs/2700250/Assets%20May%5B17%5D/restaurants.svg"
     ],
-    ["Hospital & Healthcare", "HOSPITAL_HEALTH_CARE",
+    ["Hospital and Healthcare", "HOSPITAL_HEALTH_CARE",
       "https://www.risevision.com/hubfs/hospitality-2.svg?t=1502211789708"
     ],
     ["Libraries", "LIBRARIES",
@@ -2754,17 +2754,17 @@ angular.module("risevision.common.header")
     ["Gyms and Fitness", "HEALTH_WELLNESS_AND_FITNESS",
       "https://www.risevision.com/hubfs/health-2.svg?t=1502211789708"
     ],
-    ["Hotels & Hospitality", "HOSPITALITY"],
+    ["Hotels and Hospitality", "HOSPITALITY"],
     ["Corporate Offices", "EXECUTIVE_OFFICE"],
     ["Manufacturing", "INDUSTRIAL_AUTOMATION"],
     ["Government", "GOVERNMENT_ADMINISTRATION"],
     ["Auto Dealerships", "AUTOMOTIVE",
       "https://cdn2.hubspot.net/hubfs/2700250/automobile-1.svg"
     ],
-    ["Marketing & Advertising", "MARKETING_AND_ADVERTISING",
+    ["Marketing and Advertising", "MARKETING_AND_ADVERTISING",
       "https://cdn2.hubspot.net/hubfs/2700250/Assets%20May%5B17%5D/telemarketer.svg"
     ],
-    ["Technology & Integrator", "INFORMATION_TECHNOLOGY_AND_SERVICES"],
+    ["Technology and Integrator", "INFORMATION_TECHNOLOGY_AND_SERVICES"],
     ["Other", "OTHER"]
   ])
   .value("COMPANY_SIZE_FIELDS", [
