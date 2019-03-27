@@ -295,7 +295,13 @@ gulp.task("test:e2e:core", ["test:webdrive_update"], factory.testE2EAngular({
   browser: "chrome",
   loginUser: process.env.E2E_USER2,
   loginPass: process.env.E2E_PASS2,
-  testFiles: process.env.TEST_FILES || ["./test/e2e/**/*.scenarios.js"]
+  testFiles: function(){ 
+    try{
+      return JSON.parse(fs.readFileSync('/tmp/testFiles.txt').toString())
+    } catch (e) {
+      return process.env.TEST_FILES || ["./test/e2e/**/*.scenarios.js"]
+    }
+  }()
 }));
 gulp.task("test:e2e", function (cb) {
   runSequence("server", "test:e2e:core", "server-close", cb);
@@ -304,7 +310,7 @@ gulp.task("test:e2e", function (cb) {
 gulp.task("coveralls", factory.coveralls());
 
 gulp.task("test", function (cb) {
-  runSequence("html2js", "test:unit", "test:e2e", "coveralls", cb);
+  runSequence("html2js", "test:unit", "coveralls", cb);
 });
 
 // End - Testing
@@ -335,7 +341,6 @@ gulp.task("default", [], function () {
   console.log("\n**************************");
   console.log("* Basics:                *");
   console.log("**************************");
-  console.log("* gulp test              *");
   console.log("* gulp build             *");
   console.log("* gulp watch             *");
   console.log("* gulp dev               *");

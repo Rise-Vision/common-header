@@ -1,9 +1,35 @@
-version: 2
+version: 2.1
+
+commands:
+  run_e2e_cases:
+    description: "Runs a specific cases file as a workflow step"
+    parameters:
+      casesfile:
+        type: string
+        default: "invalid_path"
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: echo $CHROME_INSTANCES
+      # Install latest chrome
+      - run: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+      - run: echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee -a /etc/apt/sources.list
+      - run: sudo apt-get update -qq
+      - run: sudo apt-get install -y google-chrome-stable
+      - run:
+          name: e2e_tests
+          command: |
+            TEST_FILES=$(circleci tests glob "<< parameters.casesfile >>" | circleci tests split)
+            NODE_ENV=test XUNIT_FILE=~/common-header/reports/angular-xunit.xml PROSHOT_DIR=~/common-header/reports/screenshots DBUS_SESSION_BUS_ADDRESS=/dev/null xvfb-run node run-test.js $TEST_FILES
+      - store_test_results:
+          path: ~/common-header/reports
+      - store_artifacts:
+          path: ~/common-header/reports
 
 jobs:
   dependencies:
     working_directory: ~/common-header
-    docker:
+    docker: &BUILDIMAGE
       - image: jenkinsrise/apps-node:8.9.4-stretch
     steps:
       - checkout
@@ -19,33 +45,54 @@ jobs:
           root: ~/
           paths:
             - common-header/*
-  test:
+  test_unit:
     working_directory: ~/common-header
-    docker:
-      - image: jenkinsrise/apps-node:8.9.4-stretch
+    docker: *BUILDIMAGE
     steps:
       - attach_workspace:
           at: ~/
-      - run: echo $CHROME_INSTANCES
-      # Install latest chrome
-      - run: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-      - run: echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee -a /etc/apt/sources.list
-      - run: sudo apt-get update -qq
-      - run: sudo apt-get install -y google-chrome-stable
-      - run:
-          name: tests
-          command: |
-            NODE_ENV=dev XUNIT_FILE=~/common-header/reports/angular-xunit.xml PROSHOT_DIR=~/common-header/reports/screenshots DBUS_SESSION_BUS_ADDRESS=/dev/null xvfb-run npm run test
+      - run: 
+          name: unit_tests
+          command: NODE_ENV=test npm run test
       - store_test_results:
           path: ~/common-header/reports
       - store_artifacts:
           path: ~/common-header/reports
+  e2e_components:
+    working_directory: ~/common-header
+    docker: *BUILDIMAGE
+    steps:
+      - run_e2e_cases:
+          casesfile: "test/e2e/components/components.scenarios.js"
+  e2e_common-header:
+    working_directory: ~/common-header
+    docker: *BUILDIMAGE
+    steps:
+      - run_e2e_cases:
+          casesfile: "test/e2e/common-header.scenarios.js"
+  test_e2e:
+    working_directory: ~/common-header
+    docker: *BUILDIMAGE
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: echo "e2e tests finished"
 
 workflows:
   version: 2
-  build_and_test:
+  test_and_deploy:
     jobs: 
       - dependencies
-      - test:
+      - test_unit:
           requires:
             - dependencies
+      - e2e_components:
+          requires:
+            - dependencies
+      - e2e_common-header:
+          requires:
+            - dependencies
+      - test_e2e:
+          requires:
+            - e2e_components
+            - e2e_common-header
