@@ -77,11 +77,6 @@ And navigate to http://localhost:8099/test/e2e/index.html
 
 ### Testing
 
-To run all tests at once, do
-``` bash
-E2E_USER2=... E2E_PASS2=... npm run test
-```
-
 #### Unit Testing
 ``` bash
 gulp test:unit
