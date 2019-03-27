@@ -79,6 +79,8 @@
 
         it("Company Settings Dialog Should Close", function () {
           companySettingsModalPage.getCloseButton().click();
+
+          helper.waitDisappear(companySettingsModalPage.getCompanySettingsModal(), "Company Settings Modal");
           
           expect(companySettingsModalPage.getCompanySettingsModal().isPresent()).to.eventually.be.false;
         });
