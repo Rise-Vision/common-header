@@ -45,6 +45,19 @@ jobs:
           root: ~/
           paths:
             - common-header/*
+  test_build:
+    working_directory: ~/common-header
+    docker: *BUILDIMAGE
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: 
+          name: test_build
+          command: NODE_ENV=test npm run ci-build
+      - store_test_results:
+          path: ~/common-header/reports
+      - store_artifacts:
+          path: ~/common-header/reports
   test_unit:
     working_directory: ~/common-header
     docker: *BUILDIMAGE
@@ -83,6 +96,9 @@ workflows:
   test_and_deploy:
     jobs: 
       - dependencies
+      - test_build:
+          requires:
+            - dependencies
       - test_unit:
           requires:
             - dependencies

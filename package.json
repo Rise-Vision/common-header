@@ -36,7 +36,9 @@
     "widget-tester": "git://github.com/Rise-Vision/widget-tester.git"
   },
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "ci-build": "gulp build",
+    "test-e2e": "gulp test:e2e"
   },
   "repository": {
     "type": "git",
