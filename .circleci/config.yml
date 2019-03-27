@@ -93,7 +93,7 @@ jobs:
 
 workflows:
   version: 2
-  test_and_deploy:
+  build_and_test:
     jobs: 
       - dependencies
       - test_build:
@@ -101,13 +101,13 @@ workflows:
             - dependencies
       - test_unit:
           requires:
-            - dependencies
+            - test_build
       - e2e_components:
           requires:
-            - dependencies
+            - test_build
       - e2e_common-header:
           requires:
-            - dependencies
+            - test_build
       - test_e2e:
           requires:
             - e2e_components
