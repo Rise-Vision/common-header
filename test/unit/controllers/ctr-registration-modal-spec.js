@@ -50,7 +50,7 @@ describe("controller: registration modal", function() {
 
     $provide.service("updateCompany",function(){
       return function(companyId, company){
-        updateCompanyCalled = company.website;
+        updateCompanyCalled = company.name;
 
         var deferred = Q.defer();
         deferred.resolve(company);
@@ -167,6 +167,8 @@ describe("controller: registration modal", function() {
           accepted: {},
           firstName: {},
           lastName: {},
+          companyName: {},
+          companyIndustry: {},
           email: {}
         }
       };
@@ -226,9 +228,9 @@ describe("controller: registration modal", function() {
       },10);
     });
 
-    it("should register user, update company website, and close the modal",function(done){
+    it("should register user, update company name, and close the modal",function(done){
       $scope.forms.registrationForm.$invalid = false;
-      $scope.company.website = "test-website";
+      $scope.company.name = "test-company-name";
 
       $scope.save();
       expect($scope.registering).to.be.true;
@@ -240,7 +242,7 @@ describe("controller: registration modal", function() {
         identifySpy.should.have.been.called;
         expect(trackerCalled).to.equal("User Registered");
         expect(bqCalled).to.equal("User Registered");
-        expect(updateCompanyCalled).to.equal("test-website");
+        expect(updateCompanyCalled).to.equal("test-company-name");
         expect($scope.registering).to.be.false;
         expect($modalInstance._closed).to.be.true;
 

@@ -5,13 +5,15 @@ angular.module("risevision.common.header")
     "userState", "pick", "uiFlowManager", "humanReadableError",
     "agreeToTermsAndUpdateUser", "account", "segmentAnalytics",
     "bigQueryLogging", "analyticsEvents", "updateCompany", "plansFactory",
+    "COMPANY_INDUSTRY_FIELDS",
     function ($q, $scope, $rootScope, $modalInstance, $loading, registerAccount,
       $log,
       cookieStore, userState, pick, uiFlowManager, humanReadableError,
       agreeToTermsAndUpdateUser, account, segmentAnalytics, bigQueryLogging,
-      analyticsEvents, updateCompany, plansFactory) {
+      analyticsEvents, updateCompany, plansFactory, COMPANY_INDUSTRY_FIELDS) {
 
       $scope.newUser = !account;
+      $scope.DROPDOWN_INDUSTRY_FIELDS = COMPANY_INDUSTRY_FIELDS;
 
       var copyOfProfile = account ? account : userState.getCopyOfProfile() || {};
 
@@ -59,8 +61,8 @@ angular.module("risevision.common.header")
           }
         });
 
-      var updateCompanyWebsite = function () {
-        if ($scope.newUser && $scope.company.website) {
+      var updateCompanyData = function () {
+        if ($scope.newUser) {
           return updateCompany(userState.getUserCompanyId(), $scope.company);
         } else {
           return $q.defer().resolve();
@@ -71,6 +73,8 @@ angular.module("risevision.common.header")
         $scope.forms.registrationForm.accepted.$pristine = false;
         $scope.forms.registrationForm.firstName.$pristine = false;
         $scope.forms.registrationForm.lastName.$pristine = false;
+        $scope.forms.registrationForm.companyName.$pristine = false;
+        $scope.forms.registrationForm.companyIndustry.$pristine = false;
 
         if (!$scope.forms.registrationForm.$invalid) {
           //update terms and conditions date
@@ -95,7 +99,7 @@ angular.module("risevision.common.header")
                     plansFactory.startBasicPlanTrial();
                   }
 
-                  updateCompanyWebsite();
+                  updateCompanyData();
                   analyticsEvents.identify();
                   segmentAnalytics.track("User Registered", {
                     "companyId": userState.getUserCompanyId(),

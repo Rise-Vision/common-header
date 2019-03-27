@@ -198,7 +198,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('registration-modal.html',
-    '<div rv-spinner="" rv-spinner-key="registration-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close registration-cancel-button" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 class="modal-title">Let\'s finish with your details</h2></div><div class="modal-body registration-modal" stop-event="touchend"><div class="row"><div class="col-sm-12"><form id="registrationForm" novalidate="" role="form" name="forms.registrationForm"><div class="form-group" ng-class="{ \'has-error\' : forms.registrationForm.firstName.$invalid && !forms.registrationForm.firstName.$pristine }"><label for="firstName">First Name</label> <input type="text" class="form-control firstName" name="firstName" id="firstName" required="" autocomplete="fname" ng-model="profile.firstName"><p ng-show="forms.registrationForm.firstName.$invalid && !forms.registrationForm.firstName.$pristine" class="help-block validation-error-message-first-name">Enter First Name.</p></div><div class="form-group" ng-class="{ \'has-error\' : forms.registrationForm.lastName.$invalid && !forms.registrationForm.lastName.$pristine }"><label for="lastName">Last Name</label> <input type="text" class="form-control lastName" name="lastName" id="lastName" required="" autocomplete="lname" ng-model="profile.lastName"><p ng-show="forms.registrationForm.lastName.$invalid && !forms.registrationForm.lastName.$pristine" class="help-block validation-error-message-last-name">Enter Last Name.</p></div><div class="form-group" ng-show="newUser" ng-class="{\'has-error\': forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine}"><label for="website">Website</label> <input type="text" class="form-control website" placeholder="http://" name="website" id="website" ng-model="company.website" website-validator=""><p ng-show="forms.registrationForm.website.$error.website && !forms.registrationForm.website.$pristine" class="help-block validation-error-message-website">Please provide a valid URL.</p></div><div class="checkbox form-group" ng-class="{ \'has-error\' : forms.registrationForm.accepted.$invalid && !userForm.accepted.$pristine }"><label for="accepted"><input type="checkbox" name="accepted" ng-model="profile.accepted" class="accept-terms-checkbox" required=""> I accept the terms of <a href="https://help.risevision.com/hc/en-us/articles/360000924446-Terms-of-Service" target="_blank">Service</a> and <a href="https://help.risevision.com/hc/en-us/articles/360000915023-Privacy-Policy" target="_blank">Privacy</a><p ng-show="forms.registrationForm.accepted.$invalid && !forms.registrationForm.accepted.$pristine" class="help-block validation-error-message-accepted">You must accept terms and condtions.</p></label></div><div class="checkbox form-group"><label for="receive-newsletter"><input name="receive-newsletter" type="checkbox" class="sign-up-newsletter-checkbox" ng-model="profile.mailSyncEnabled"> Sign up for our newsletter</label></div><div class="u_margin-md-top"><button ng-click="save()" name="create-account" type="button" class="btn btn-lg btn-success btn-block registration-save-button" ng-disabled="registering">Create Account <i class="fa fa-white fa-check icon-right"></i></button> <button type="button" class="btn hidden btn-lg btn-link btn-fixed-width" ng-disabled="registering" ng-click="closeModal()">Cancel</button></div></form></div></div></div></div>');
+    '<div rv-spinner="" rv-spinner-key="registration-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close registration-cancel-button" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 class="modal-title">Let\'s finish with your details</h2></div><div class="modal-body registration-modal" stop-event="touchend"><div class="row"><div class="col-sm-12"><form id="registrationForm" novalidate="" role="form" name="forms.registrationForm"><div class="form-group" ng-class="{ \'has-error\' : forms.registrationForm.firstName.$invalid && !forms.registrationForm.firstName.$pristine }"><label for="firstName">First Name *</label> <input type="text" class="form-control firstName" name="firstName" id="firstName" required="" autocomplete="fname" ng-model="profile.firstName"><p ng-show="forms.registrationForm.firstName.$invalid && !forms.registrationForm.firstName.$pristine" class="help-block validation-error-message-first-name">Enter First Name.</p></div><div class="form-group" ng-class="{ \'has-error\' : forms.registrationForm.lastName.$invalid && !forms.registrationForm.lastName.$pristine }"><label for="lastName">Last Name *</label> <input type="text" class="form-control lastName" name="lastName" id="lastName" required="" autocomplete="lname" ng-model="profile.lastName"><p ng-show="forms.registrationForm.lastName.$invalid && !forms.registrationForm.lastName.$pristine" class="help-block validation-error-message-last-name">Enter Last Name.</p></div><div class="form-group" ng-show="newUser" ng-class="{\'has-error\': forms.registrationForm.companyName.$invalid && !forms.registrationForm.companyName.$pristine}"><label for="companyName">Organization *</label> <input type="text" class="form-control companyName" name="companyName" id="companyName" ng-required="newUser" ng-model="company.name"><p ng-show="forms.registrationForm.companyName.$invalid && !forms.registrationForm.companyName.$pristine" class="help-block validation-error-message-company-name">Enter Organization.</p></div><div class="form-group" ng-show="newUser" ng-class="{\'has-error\': forms.registrationForm.companyIndustry.$invalid && !forms.registrationForm.companyIndustry.$pristine}"><label for="companyIndustry">Tell us your Industry to help us make your Display look great *</label><select class="form-control selectpicker" name="companyIndustry" id="companyIndustry" ng-required="newUser" ng-model="company.companyIndustry"><option value="" ng-show="false">&lt; Select Industry &gt;</option><option ng-repeat="industry in DROPDOWN_INDUSTRY_FIELDS | orderBy:industry[0]" value="{{industry[1]}}">{{industry[0]}}</option></select><p ng-show="forms.registrationForm.companyIndustry.$invalid && !forms.registrationForm.companyIndustry.$pristine" class="help-block validation-error-message-company-industry">Industry is required.</p></div><div class="checkbox form-group" ng-show="company.companyIndustry === \'PRIMARY_SECONDARY_EDUCATION\'"><label for="receive-newsletter"><input name="receive-newsletter" type="checkbox" class="sign-up-newsletter-checkbox" ng-model="profile.mailSyncEnabled"> Send me an email with great Template ideas for my school each week</label></div><div class="checkbox form-group" ng-class="{ \'has-error\' : forms.registrationForm.accepted.$invalid && !userForm.accepted.$pristine }"><label for="accepted"><input type="checkbox" name="accepted" ng-model="profile.accepted" class="accept-terms-checkbox" required=""> I accept the terms of <a href="https://help.risevision.com/hc/en-us/articles/360000924446-Terms-of-Service" target="_blank">Service</a> and <a href="https://help.risevision.com/hc/en-us/articles/360000915023-Privacy-Policy" target="_blank">Privacy *</a><p ng-show="forms.registrationForm.accepted.$invalid && !forms.registrationForm.accepted.$pristine" class="help-block validation-error-message-accepted">You must accept terms and condtions.</p></label></div><div class="u_margin-md-top"><button ng-click="save()" name="create-account" type="button" class="btn btn-lg btn-success btn-block registration-save-button" ng-disabled="registering">Create Account <i class="fa fa-white fa-check icon-right"></i></button> <button type="button" class="btn hidden btn-lg btn-link btn-fixed-width" ng-disabled="registering" ng-click="closeModal()">Cancel</button></div></form></div></div></div></div>');
 }]);
 })();
 
@@ -1479,13 +1479,15 @@ angular.module("risevision.common.header")
     "userState", "pick", "uiFlowManager", "humanReadableError",
     "agreeToTermsAndUpdateUser", "account", "segmentAnalytics",
     "bigQueryLogging", "analyticsEvents", "updateCompany", "plansFactory",
+    "COMPANY_INDUSTRY_FIELDS",
     function ($q, $scope, $rootScope, $modalInstance, $loading, registerAccount,
       $log,
       cookieStore, userState, pick, uiFlowManager, humanReadableError,
       agreeToTermsAndUpdateUser, account, segmentAnalytics, bigQueryLogging,
-      analyticsEvents, updateCompany, plansFactory) {
+      analyticsEvents, updateCompany, plansFactory, COMPANY_INDUSTRY_FIELDS) {
 
       $scope.newUser = !account;
+      $scope.DROPDOWN_INDUSTRY_FIELDS = COMPANY_INDUSTRY_FIELDS;
 
       var copyOfProfile = account ? account : userState.getCopyOfProfile() || {};
 
@@ -1533,8 +1535,8 @@ angular.module("risevision.common.header")
           }
         });
 
-      var updateCompanyWebsite = function () {
-        if ($scope.newUser && $scope.company.website) {
+      var updateCompanyData = function () {
+        if ($scope.newUser) {
           return updateCompany(userState.getUserCompanyId(), $scope.company);
         } else {
           return $q.defer().resolve();
@@ -1545,6 +1547,8 @@ angular.module("risevision.common.header")
         $scope.forms.registrationForm.accepted.$pristine = false;
         $scope.forms.registrationForm.firstName.$pristine = false;
         $scope.forms.registrationForm.lastName.$pristine = false;
+        $scope.forms.registrationForm.companyName.$pristine = false;
+        $scope.forms.registrationForm.companyIndustry.$pristine = false;
 
         if (!$scope.forms.registrationForm.$invalid) {
           //update terms and conditions date
@@ -1569,7 +1573,7 @@ angular.module("risevision.common.header")
                     plansFactory.startBasicPlanTrial();
                   }
 
-                  updateCompanyWebsite();
+                  updateCompanyData();
                   analyticsEvents.identify();
                   segmentAnalytics.track("User Registered", {
                     "companyId": userState.getUserCompanyId(),
