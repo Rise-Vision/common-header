@@ -64,11 +64,17 @@
         expect(registrationModalPage.getValidationTermsAccepted().isPresent()).to.eventually.be.true;
         expect(registrationModalPage.getValidationFirstName().isPresent()).to.eventually.be.true;
         expect(registrationModalPage.getValidationLastName().isPresent()).to.eventually.be.true;
+        expect(registrationModalPage.getValidationCompanyName().isPresent()).to.eventually.be.true;
+        expect(registrationModalPage.getValidationCompanyIndustry().isPresent()).to.eventually.be.true;
       });
 
       it("should complete the registration process", function () {
         registrationModalPage.getFirstNameField().sendKeys("John");
         registrationModalPage.getLastNameField().sendKeys("Doe");
+        registrationModalPage.getCompanyNameField().sendKeys("Public School #5");
+        registrationModalPage.getCompanyIndustryOptions().then(function(options){
+          options[2].click(); //select random option
+        }); 
         //click authorize
         registrationModalPage.getTermsCheckbox().click();
         

@@ -47,13 +47,15 @@ rv-spinner-start-active="1">
         <!-- Industry -->
         <div class="form-group" ng-show="newUser" ng-class="{'has-error': forms.registrationForm.companyIndustry.$invalid && !forms.registrationForm.companyIndustry.$pristine}">
           <label for="companyIndustry">Tell us your Industry to help us make your Display look great *</label>
-          <select class="form-control selectpicker"
+          <select class="form-control selectpicker companyIndustry"
           name="companyIndustry"
           id="companyIndustry"
           ng-required='newUser'
           ng-model="company.companyIndustry">
             <option value="" ng-show="false">&lt; Select Industry &gt;</option>
-            <option ng-repeat="industry in DROPDOWN_INDUSTRY_FIELDS | orderBy:industry[0]" value="{{industry[1]}}">{{industry[0]}}</option>
+            <option class="companyIndustryOption"
+              ng-repeat="industry in DROPDOWN_INDUSTRY_FIELDS | orderBy:industry[0]" value="{{industry[1]}}">{{industry[0]}}
+            </option>
           </select>
           <p ng-show="forms.registrationForm.companyIndustry.$invalid && !forms.registrationForm.companyIndustry.$pristine"
             class="help-block validation-error-message-company-industry">Industry is required.</p>
