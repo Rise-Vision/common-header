@@ -18343,9 +18343,9 @@ a.mfp-iframe:hover:after {
   background-color: #FFF;
   height: calc(100vh - var(--common-header-height)); }
   .template-editor.active-banner-mode {
-    --common-header-height: 111px; }
+    --common-header-height: 114px; }
   .template-editor.active-banner-mode-double {
-    --common-header-height: 132px; }
+    --common-header-height: 135px; }
   .template-editor.hide-sidebar {
     --sidebar-width: 0px; }
 
