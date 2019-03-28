@@ -98,6 +98,8 @@
           helper.waitDisappear(companyUsersModalPage.getLoader(), "Load Company Users");
 
           companyUsersModalPage.getCloseButton().click();
+
+          helper.waitDisappear(companyUsersModalPage.getCompanyUsersModal(), "Company Users Modal");
           
           expect(companyUsersModalPage.getCompanyUsersModal().isPresent()).to.eventually.be.false;
         });
