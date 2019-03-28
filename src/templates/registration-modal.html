@@ -3,19 +3,25 @@
     <button type="button" class="close registration-cancel-button" tabindex="2" ng-click="closeModal()">
       <i class="fa fa-times"></i>
     </button>
-    <h2 class="modal-title">Let's finish with your details</h2>
+    <h2 class="modal-title">One last step!</h2>
   </div>
-  <div class="modal-body registration-modal" stop-event="touchend">
+  <div id="registration-modal" class="modal-body" stop-event="touchend">
     
     <form id="forms.registrationForm" novalidate role="form" name="forms.registrationForm" autocomplete="on">
       <div class="row">
         <div class="col-xs-12">
+          Help us personalize your experience.
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 u_margin-md-top">
           <!-- First Name -->
           <div class="form-group" ng-class="{ 'has-error' : forms.registrationForm.firstName.$invalid && !forms.registrationForm.firstName.$pristine }">
-            <label for="firstName">First Name *</label>
+            <label for="firstName">First name *</label>
             <input type="text" class="form-control firstName" name="firstName" id="firstName" autocomplete="fname" aria-required="true" tabindex="1" ng-model="profile.firstName" autofocus required>
             <p ng-show="forms.registrationForm.firstName.$invalid && !forms.registrationForm.firstName.$pristine"
-              class="help-block validation-error-message-first-name">Enter First Name.</p>
+              class="help-block validation-error-message-first-name">Enter first name.</p>
           </div>
         </div>
       </div>
@@ -24,10 +30,10 @@
         <div class="col-xs-12">      
           <!-- Last Name -->
           <div class="form-group" ng-class="{ 'has-error' : forms.registrationForm.lastName.$invalid && !forms.registrationForm.lastName.$pristine }">
-            <label for="lastName">Last Name *</label>
+            <label for="lastName">Last name *</label>
             <input type="text" class="form-control lastName" name="lastName" id="lastName" autocomplete="lname" aria-required="true" tabindex="1" ng-model="profile.lastName" required>
             <p ng-show="forms.registrationForm.lastName.$invalid && !forms.registrationForm.lastName.$pristine"
-              class="help-block validation-error-message-last-name">Enter Last Name.</p>
+              class="help-block validation-error-message-last-name">Enter last name.</p>
           </div>
         </div>
       </div>
@@ -39,7 +45,7 @@
             <label for="companyName">Organization *</label>
             <input type="text" class="form-control companyName" name="companyName" id="companyName" tabindex="1" aria-required="true" ng-model="company.name" required>
             <p ng-show="forms.registrationForm.companyName.$invalid && !forms.registrationForm.companyName.$pristine"
-              class="help-block validation-error-message-company-name">Enter Organization.</p>
+              class="help-block validation-error-message-company-name">Enter organization.</p>
           </div>
         </div>
       </div>
@@ -56,7 +62,7 @@
               </option>
             </select>
             <p ng-show="forms.registrationForm.companyIndustry.$invalid && !forms.registrationForm.companyIndustry.$pristine"
-              class="help-block validation-error-message-company-industry">Industry is required.</p>
+              class="help-block validation-error-message-company-industry">Select an Industry.</p>
           </div>
         </div>
       </div>
@@ -80,14 +86,14 @@
             <label for="accepted">
               <input type="checkbox" id="accepted" name="accepted" class="accept-terms-checkbox" ng-model="profile.accepted" tabindex="1" required />
               <span>
-                 I accept the terms of 
-                 <a href="https://help.risevision.com/hc/en-us/articles/360000924446-Terms-of-Service" target="_blank" tabindex="1">Service</a> 
+                 I accept the 
+                 <a href="https://help.risevision.com/hc/en-us/articles/360000924446-Terms-of-Service" target="_blank" tabindex="1">Terms of Service</a> 
                  and 
-                 <a href="https://help.risevision.com/hc/en-us/articles/360000915023-Privacy-Policy" target="_blank" tabindex="1">Privacy</a> *
+                 <a href="https://help.risevision.com/hc/en-us/articles/360000915023-Privacy-Policy" target="_blank" tabindex="1">Privacy Policy</a> *
               </span
             </label>
             <p class="help-block validation-error-message-accepted" ng-show="forms.registrationForm.accepted.$invalid && !forms.registrationForm.accepted.$pristine">
-              You must accept terms and condtions.
+              You must accept the terms and conditions.
             </p>
           </div>
         </div>

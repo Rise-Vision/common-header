@@ -12747,69 +12747,6 @@ a[data-wysihtml5-command=underline].active {
   border-radius: 5px;
   display: inline-block; }
 
-/* Signup Modal
-   ========================================================================== */
-.signup-modal h1 {
-  font-size: 44px;
-  font-weight: 300;
-  margin-top: 48px; }
-  .signup-modal h1.text-muted {
-    margin-top: 5px;
-    font-size: 16px; }
-
-.signup-offer {
-  margin-top: 48px; }
-  .signup-offer .widgets-offer li {
-    background: #f2f2f2;
-    display: inline-block;
-    width: 85px;
-    height: 85px;
-    vertical-align: top;
-    padding: 5px;
-    border-radius: 4px; }
-    .signup-offer .widgets-offer li img {
-      width: 36px; }
-    .signup-offer .widgets-offer li span {
-      font-size: 12px;
-      font-weight: 500;
-      color: #666;
-      display: block;
-      line-height: 14px;
-      margin-top: 5px; }
-
-.registration-modal label {
-  font-weight: 500;
-  font-size: 15px; }
-  .registration-modal label span {
-    color: #666;
-    font-weight: 400;
-    font-size: 14px;
-    margin-left: 5px; }
-
-.registration-modal .checkbox label {
-  font-size: 14px;
-  color: #666;
-  font-weight: 400; }
-
-.signup-counters {
-  text-align: center;
-  margin-top: 24px;
-  background: #f7f7f7;
-  border-radius: 10px;
-  padding: 10px; }
-  .signup-counters .counter {
-    margin-bottom: 16px; }
-    .signup-counters .counter p {
-      margin: 0;
-      font-weight: 300;
-      font-size: 28px;
-      color: #4ab767; }
-    .signup-counters .counter span {
-      font-size: 12px;
-      display: block;
-      color: #999;
-      font-weight: 500; }
-
 /* Company Selector
    ========================================================================== */
 .company-search {

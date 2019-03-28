@@ -3,12 +3,12 @@
   'use strict';
 
   var RegistrationModalPage = function () {
-    var registrationModal = element(by.css(".registration-modal"));
+    var registrationModal = element(by.css("#registration-modal"));
     var loader = element(by.xpath('//div[@spinner-key="company-settings-modal"]'));
     
-    var firstNameField = element(by.css(".registration-modal .firstName"));
-    var lastNameField = element(by.css(".registration-modal .lastName"));
-    var companyNameField = element(by.css(".registration-modal .companyName"));
+    var firstNameField = element(by.css("#registration-modal .firstName"));
+    var lastNameField = element(by.css("#registration-modal .lastName"));
+    var companyNameField = element(by.css("#registration-modal .companyName"));
     var companyIndustryOptions = element.all(by.tagName('option'));
     var termsCheckbox = element(by.css(".accept-terms-checkbox"));
     var newsletterCheckbox = element(by.css(".sign-up-newsletter-checkbox"));
