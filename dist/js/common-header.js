@@ -1529,7 +1529,10 @@ angular.module("risevision.common.header")
 
       var updateCompanyData = function () {
         if ($scope.newUser) {
-          return updateCompany(userState.getUserCompanyId(), $scope.company);
+          return updateCompany(userState.getUserCompanyId(), $scope.company)
+            .then(function (company) {
+              userState.updateCompanySettings(company);
+            });
         } else {
           return $q.defer().resolve();
         }
@@ -4786,8 +4789,8 @@ angular.module("risevision.common.core.endpoint", [
           });
           request.execute(function (resp) {
             $log.debug("updateCompany resp", resp);
-            if (resp.result) {
-              deferred.resolve(resp);
+            if (resp.result && resp.result.item) {
+              deferred.resolve(resp.result.item);
             } else {
               deferred.reject(resp);
             }

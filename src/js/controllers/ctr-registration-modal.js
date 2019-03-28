@@ -56,7 +56,10 @@ angular.module("risevision.common.header")
 
       var updateCompanyData = function () {
         if ($scope.newUser) {
-          return updateCompany(userState.getUserCompanyId(), $scope.company);
+          return updateCompany(userState.getUserCompanyId(), $scope.company)
+            .then(function (company) {
+              userState.updateCompanySettings(company);
+            });
         } else {
           return $q.defer().resolve();
         }

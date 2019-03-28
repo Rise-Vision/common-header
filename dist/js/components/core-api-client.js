@@ -434,8 +434,8 @@ angular.module("risevision.common.core.endpoint", [
           });
           request.execute(function (resp) {
             $log.debug("updateCompany resp", resp);
-            if (resp.result) {
-              deferred.resolve(resp);
+            if (resp.result && resp.result.item) {
+              deferred.resolve(resp.result.item);
             } else {
               deferred.reject(resp);
             }

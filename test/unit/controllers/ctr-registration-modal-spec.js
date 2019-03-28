@@ -33,6 +33,7 @@ describe("controller: registration modal", function() {
         getUserCompanyName: function() {
           return "company_name";
         },
+        updateCompanySettings: sinon.stub(),
         refreshProfile: function() {
           var deferred = Q.defer();
           
@@ -47,9 +48,7 @@ describe("controller: registration modal", function() {
       return function(companyId, company){
         updateCompanyCalled = company.name;
 
-        var deferred = Q.defer();
-        deferred.resolve(company);
-        return deferred.promise;
+        return Q.resolve("companyResult");
       };
     });
     
@@ -212,7 +211,10 @@ describe("controller: registration modal", function() {
         identifySpy.should.have.been.called;
         expect(trackerCalled).to.equal("User Registered");
         expect(bqCalled).to.equal("User Registered");
+
         expect(updateCompanyCalled).to.be.undefined;
+        userState.updateCompanySettings.should.have.been.calledWith("companyResult");
+
         expect($scope.registering).to.be.false;
         expect($modalInstance._closed).to.be.true;
 
@@ -236,7 +238,10 @@ describe("controller: registration modal", function() {
         identifySpy.should.have.been.called;
         expect(trackerCalled).to.equal("User Registered");
         expect(bqCalled).to.equal("User Registered");
+
         expect(updateCompanyCalled).to.equal("test-company-name");
+        userState.updateCompanySettings.should.have.been.calledWith("companyResult");
+
         expect($scope.registering).to.be.false;
         expect($modalInstance._closed).to.be.true;
 
