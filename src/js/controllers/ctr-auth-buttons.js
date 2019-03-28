@@ -52,7 +52,8 @@ angular.module("risevision.common.header")
                 userState.registrationModalInstance = $modal.open({
                   template: $templateCache.get("registration-modal.html"),
                   controller: "RegistrationModalCtrl",
-                  backdrop: "static",
+                  backdrop: "static", //prevent from closing modal by clicking outside
+                  keyboard: false, //prevent from closing modal by pressing escape
                   resolve: {
                     account: ["getUserProfile", "getAccount",
                       function (getUserProfile, getAccount) {
@@ -69,8 +70,6 @@ angular.module("risevision.common.header")
                           .catch(function () {
                             return null;
                           });
-                        // console.log(userState);
-                        // return getAccount().catch(function(data){return data;}, function(){return null;});
                       }
                     ]
                   }

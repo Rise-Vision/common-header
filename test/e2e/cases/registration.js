@@ -38,7 +38,7 @@
         //fill in email address
       });
 
-      it("should not bug me again when I click 'cancel', even after a refresh (limbo state)", function() {
+      xit("should not bug me again when I click 'cancel', even after a refresh (limbo state)", function() {
         registrationModalPage.getCancelButton().click();
         browser.refresh();
         
@@ -48,7 +48,7 @@
         expect(registrationModalPage.getRegistrationModal().isPresent()).to.eventually.be.false;
       });
 
-      it("allow me to register when I've changed my mind", function() {
+      xit("allow me to register when I've changed my mind", function() {
         expect(homepage.getRegisterUserButton().isDisplayed(), "Create Account button should show").to.eventually.be.true;
         homepage.getRegisterUserButton().click();
         

@@ -8,12 +8,7 @@ describe("controller: registration modal", function() {
   beforeEach(module(function ($provide, $translateProvider) {
     $provide.service("$modalInstance",function(){
       return {
-        _dismissed : false,
         _closed: false,
-        dismiss : function(reason){
-          expect(reason).to.equal("cancel");
-          this._dismissed = true;
-        },
         close: function(reason) {
           expect(reason).to.equal("success");          
           this._closed = true;
@@ -191,7 +186,6 @@ describe("controller: registration modal", function() {
 
     expect($scope.registering).to.be.false;
 
-    expect($scope.closeModal).to.exist;
     expect($scope.save).to.exist;
   });
   
@@ -326,12 +320,6 @@ describe("controller: registration modal", function() {
       },10);
     });
       
-  });
-  
-  it("should close modal on cancel",function(){
-    $scope.closeModal();
-    expect(cookieStored).to.be.true;
-    expect($modalInstance._dismissed).to.be.true;
   });
 
 });
