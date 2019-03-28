@@ -33,6 +33,10 @@ $short-phone-height: 570px;
     &.active-component {
       --toolbar-height: 63px;
       --body-height: calc(var(--chrome-bar-height) + var(--common-header-height) + var(--toolbar-height));
+
+      &.desktop-mode {
+        --body-height: calc(var(--common-header-height) + var(--toolbar-height));
+      }
     }
 
     @media (max-height: $short-phone-height) {

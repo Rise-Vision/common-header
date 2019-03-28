@@ -18363,7 +18363,9 @@ a.mfp-iframe:hover:after {
       --common-header-height: 97px; }
     .template-editor.active-component {
       --toolbar-height: 63px;
-      --body-height: calc(var(--chrome-bar-height) + var(--common-header-height) + var(--toolbar-height)); } }
+      --body-height: calc(var(--chrome-bar-height) + var(--common-header-height) + var(--toolbar-height)); }
+      .template-editor.active-component.desktop-mode {
+        --body-height: calc(var(--common-header-height) + var(--toolbar-height)); } }
   @media (max-width: 768px) and (max-height: 570px) {
     .template-editor {
       --toolbar-height: 50px;
