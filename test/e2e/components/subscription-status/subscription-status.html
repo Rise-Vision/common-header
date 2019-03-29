@@ -6,11 +6,15 @@
 </head>
 <body ng-app="testapp" ng-controller="mainController">
 
-<div id="subscription-status" subscription-status product-id="{{productId}}" product-code="{{productCode}}" company-id="{{companyId}}"
+<div id="subscription-status" subscription-status product-id="{{productId}}" product-code="{{productCode}}" expanded-format="{{expandedFormat}}" company-id="{{companyId}}"
   ng-model="subscribed"></div>
 <button id="setValid" ng-click="setValid()">Valid</button>
 <button id="setInvalid" ng-click="setInvalid()">Invalid</button>
 <button id="setExpired" ng-click="setExpired()">Expired</button>
+
+<button id="setActive" ng-click="setActive()">Active</button>
+<button id="setCancelledActive" ng-click="setCancelledActive()">Cancelled Active</button>
+<button id="setCancelledInactive" ng-click="setCancelledInactive()">Cancelled Inactive</button>
 
 <script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
@@ -45,6 +49,24 @@ angular.module('testapp', ['risevision.common.components.subscription-status'])
     $scope.setExpired = function() {
       $scope.productCode = "2";
       $scope.companyId = "12345";
+    };
+    
+    $scope.setActive = function() {
+      $scope.productCode = "0";
+      $scope.companyId = "12345";
+      $scope.expandedFormat = true;
+    };
+
+    $scope.setCancelledActive = function() {
+      $scope.productCode = "3";
+      $scope.companyId = "12345";
+      $scope.expandedFormat = true;
+    };
+    
+    $scope.setCancelledInactive = function() {
+      $scope.productCode = "4";
+      $scope.companyId = "12345";
+      $scope.expandedFormat = true;
     };
   }]);
 </script>
