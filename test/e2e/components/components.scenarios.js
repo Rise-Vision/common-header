@@ -11,7 +11,6 @@
   var ScrollingListScenarios = require('./scrolling-list/scrolling-list.js');
   var SearchFilterScenarios = require('./search-filter/search-filter.js');
 
-  var AppSubscriptionStatusScenarios = require('./subscription-status/app-subscription-status.js');
   var SubscriptionStatusScenarios = require('./subscription-status/subscription-status.js');
 
   var TimelineTextboxScenarios = require('./timeline/timeline-textbox.js');
@@ -30,7 +29,6 @@
     var scrollingListScenarios = new ScrollingListScenarios();
     var searchFilterScenarios = new SearchFilterScenarios();
 
-    var appSubscriptionStatusScenarios = new AppSubscriptionStatusScenarios();
     var subscriptionStatusScenarios = new SubscriptionStatusScenarios();
 
     var timelineTextboxScenarios = new TimelineTextboxScenarios();
