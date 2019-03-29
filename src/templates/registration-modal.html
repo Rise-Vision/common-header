@@ -30,17 +30,17 @@
           </div>
 
           <!-- Organization -->
-          <div class="form-group" ng-class="{'has-error': forms.registrationForm.companyName.$invalid && !forms.registrationForm.companyName.$pristine}" ng-if="newUser">
+          <div class="form-group" ng-class="{'has-error': forms.registrationForm.companyName.$invalid && !forms.registrationForm.companyName.$pristine}" ng-show="newUser">
             <label for="companyName">Organization *</label>
-            <input type="text" class="form-control companyName" name="companyName" id="companyName" tabindex="1" aria-required="true" ng-model="company.name" required>
+            <input type="text" class="form-control companyName" name="companyName" id="companyName" tabindex="1" aria-required="true" ng-model="company.name" ng-required="newUser">
             <p ng-show="forms.registrationForm.companyName.$invalid && !forms.registrationForm.companyName.$pristine"
               class="help-block validation-error-message-company-name">Enter organization.</p>
           </div>
 
           <!-- Industry -->
-          <div class="form-group" ng-class="{'has-error': forms.registrationForm.companyIndustry.$invalid && !forms.registrationForm.companyIndustry.$pristine}" ng-if="newUser">
+          <div class="form-group" ng-class="{'has-error': forms.registrationForm.companyIndustry.$invalid && !forms.registrationForm.companyIndustry.$pristine}" ng-show="newUser">
             <label for="companyIndustry">Tell us your Industry to help us make your Display look great *</label>
-            <select class="form-control selectpicker companyIndustry" name="companyIndustry" id="companyIndustry" tabindex="1" aria-required="true" ng-model="company.companyIndustry" required>
+            <select class="form-control selectpicker companyIndustry" name="companyIndustry" id="companyIndustry" tabindex="1" aria-required="true" ng-model="company.companyIndustry" ng-required="newUser">
               <option value="" ng-show="false">&lt; Select Industry &gt;</option>
               <option class="companyIndustryOption"
                 ng-repeat="industry in DROPDOWN_INDUSTRY_FIELDS | orderBy:industry[0]" value="{{industry[1]}}">{{industry[0]}}
@@ -51,7 +51,7 @@
           </div>
 
           <!-- Newsletter -->
-          <div class="form-group" ng-if="company.companyIndustry === 'PRIMARY_SECONDARY_EDUCATION'">
+          <div class="form-group" ng-show="company.companyIndustry === 'PRIMARY_SECONDARY_EDUCATION'">
             <div class="checkbox">
               <label for="receive-newsletter">
                 <input id="receive-newsletter" name="receive-newsletter" type="checkbox" class="sign-up-newsletter-checkbox" tabindex="1" ng-model="profile.mailSyncEnabled">
