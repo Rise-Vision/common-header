@@ -1,7 +1,6 @@
 {
   "cancelled": "Subscription Cancelled",
   "company-not-found": "Company Not Found",
-  "continue-to-app": "Continue To App",
   "error": "Error",
   "expanded-cancelled": "Your subscription was cancelled",
   "expanded-expired": "Your trial has expired",
@@ -12,7 +11,6 @@
   "expires-in": "Expiring in {{days}} Days",
   "expires-today": "Expiring Today",
   "free": "Free",
-  "get-subscription": "Get a Subscription",
   "heading": "Subscription Status",
   "na": "N/A",
   "not-subscribed": "Not Subscribed",
