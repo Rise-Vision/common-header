@@ -18,7 +18,11 @@ describe("Services: urlStateService", function() {
     $provide.value("$location", $location = {
       replace: sinon.spy(),
       url: sinon.spy(),
-      $$html5: true
+      $$html5: true,
+      $$search: null,
+      $$path: null,
+      search: function() { return this.$$search; },
+      path: function() { return this.$$path; }
     });
     $provide.service("userState", function() {
       return userState = {
@@ -98,4 +102,26 @@ describe("Services: urlStateService", function() {
   it("clearStatePath: ", function() {
     expect(urlStateService.clearStatePath(encodeURIComponent("{\"p\":\"path\",\"u\":\"hash\",\"s\":\"?search\"}"))).to.equal(encodeURIComponent("{\"u\":\"hash\"}"));
   });
+
+  describe("getUrlParam", function() {
+
+    it("page re-load: ", function() {
+      $location.$$search = {industry : "industry-name"};
+      expect(urlStateService.getUrlParam("industry")).to.equal("industry-name");
+    });
+
+    it("initial page load:  ", function() {
+      $location.$$search = {};
+      $location.$$path = "/unregistered/%7B%22p%22%3A%22editor%2Fworkspace%2Fnew%2F%22%2C%22u%22%3A%22%22%2C%22s%22%3A%22%3FcopyOf%123%26industry%3DGyms%2520and%2520Fitness%22%7D";
+      expect(urlStateService.getUrlParam("industry")).to.equal("Gyms and Fitness");
+    });
+
+    it("param is missing: ", function() {
+      $location.$$search = {};
+      $location.$$path = "";
+      expect(urlStateService.getUrlParam("industry")).to.be.null;
+    });
+
+  });
+
 });

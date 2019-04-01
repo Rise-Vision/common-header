@@ -1523,11 +1523,12 @@ angular.module("risevision.common.header")
     "userState", "pick", "uiFlowManager", "humanReadableError",
     "agreeToTermsAndUpdateUser", "account", "segmentAnalytics",
     "bigQueryLogging", "analyticsEvents", "updateCompany", "plansFactory",
-    "COMPANY_INDUSTRY_FIELDS",
+    "COMPANY_INDUSTRY_FIELDS", "urlStateService",
     function ($q, $scope, $rootScope, $modalInstance, $loading, registerAccount,
       $log, cookieStore, userState, pick, uiFlowManager, humanReadableError,
       agreeToTermsAndUpdateUser, account, segmentAnalytics, bigQueryLogging,
-      analyticsEvents, updateCompany, plansFactory, COMPANY_INDUSTRY_FIELDS) {
+      analyticsEvents, updateCompany, plansFactory, COMPANY_INDUSTRY_FIELDS,
+      urlStateService) {
 
       $scope.newUser = !account;
       $scope.DROPDOWN_INDUSTRY_FIELDS = COMPANY_INDUSTRY_FIELDS;
@@ -1637,6 +1638,23 @@ angular.module("risevision.common.header")
         }
 
       };
+
+      var populateIndustryFromUrl = function () {
+
+        var industryName = urlStateService.getUrlParam("industry");
+
+        if ($scope.newUser && industryName) {
+
+          COMPANY_INDUSTRY_FIELDS.forEach(function (industry) {
+            if (industryName === industry[0]) {
+              $scope.company.companyIndustry = industry[1];
+            }
+          });
+        }
+      };
+
+      populateIndustryFromUrl();
+
       $scope.forms = {};
     }
   ]);
@@ -6945,6 +6963,20 @@ angular.module("risevision.common.components.logging")
           state.s = undefined;
 
           return encodeURIComponent(JSON.stringify(state));
+        };
+
+        urlStateService.getUrlParam = function (paramName) {
+          // if page is reloaded, then you can get param from $location.search()
+          // otherwise you need to parse $location.path()
+
+          if ($location.search()[paramName]) {
+            return $location.search()[paramName];
+          } else {
+            var decodedPath = decodeURIComponent(decodeURIComponent(decodeURIComponent(decodeURIComponent($location
+              .path()))));
+            var match = new RegExp("[\?&]" + paramName + "=([^&#\"]*)").exec(decodedPath);
+            return match && match[1];
+          }
         };
 
         return urlStateService;

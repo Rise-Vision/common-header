@@ -1006,6 +1006,20 @@ angular.module("risevision.common.components.logging")
           return encodeURIComponent(JSON.stringify(state));
         };
 
+        urlStateService.getUrlParam = function (paramName) {
+          // if page is reloaded, then you can get param from $location.search()
+          // otherwise you need to parse $location.path()
+
+          if ($location.search()[paramName]) {
+            return $location.search()[paramName];
+          } else {
+            var decodedPath = decodeURIComponent(decodeURIComponent(decodeURIComponent(decodeURIComponent($location
+              .path()))));
+            var match = new RegExp("[\?&]" + paramName + "=([^&#\"]*)").exec(decodedPath);
+            return match && match[1];
+          }
+        };
+
         return urlStateService;
       }
     ]);

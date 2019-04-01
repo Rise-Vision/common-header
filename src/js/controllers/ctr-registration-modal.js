@@ -5,11 +5,12 @@ angular.module("risevision.common.header")
     "userState", "pick", "uiFlowManager", "humanReadableError",
     "agreeToTermsAndUpdateUser", "account", "segmentAnalytics",
     "bigQueryLogging", "analyticsEvents", "updateCompany", "plansFactory",
-    "COMPANY_INDUSTRY_FIELDS",
+    "COMPANY_INDUSTRY_FIELDS", "urlStateService",
     function ($q, $scope, $rootScope, $modalInstance, $loading, registerAccount,
       $log, cookieStore, userState, pick, uiFlowManager, humanReadableError,
       agreeToTermsAndUpdateUser, account, segmentAnalytics, bigQueryLogging,
-      analyticsEvents, updateCompany, plansFactory, COMPANY_INDUSTRY_FIELDS) {
+      analyticsEvents, updateCompany, plansFactory, COMPANY_INDUSTRY_FIELDS,
+      urlStateService) {
 
       $scope.newUser = !account;
       $scope.DROPDOWN_INDUSTRY_FIELDS = COMPANY_INDUSTRY_FIELDS;
@@ -119,6 +120,23 @@ angular.module("risevision.common.header")
         }
 
       };
+
+      var populateIndustryFromUrl = function () {
+
+        var industryName = urlStateService.getUrlParam("industry");
+
+        if ($scope.newUser && industryName) {
+
+          COMPANY_INDUSTRY_FIELDS.forEach(function (industry) {
+            if (industryName === industry[0]) {
+              $scope.company.companyIndustry = industry[1];
+            }
+          });
+        }
+      };
+
+      populateIndustryFromUrl();
+
       $scope.forms = {};
     }
   ]);
