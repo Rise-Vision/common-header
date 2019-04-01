@@ -14,12 +14,9 @@
         </select>
       </div>
 
-      <div class="checkbox form-group" ng-show="company.companyIndustry === 'PRIMARY_SECONDARY_EDUCATION'">
-        <label for="mailSyncEnabled">
-          <input type="checkbox" id="mailSyncEnabled" ng-model="user.mailSyncEnabled" tabindex="1" />
-          Send me an email with great Template ideas for my school each week
-        </label>
-      </div>
+      <!-- Newsletter -->
+      <newsletter-signup ng-model="user.mailSyncEnabled" company-industry="company.companyIndustry"></newsletter-signup>
+
     </form>
 
   </div> <!-- //Modal Body -->
