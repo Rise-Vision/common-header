@@ -4,9 +4,6 @@ msgstr "Subscription Cancelled"
 msgid "company-not-found"
 msgstr "Company Not Found"
 
-msgid "continue-to-app"
-msgstr "Continue To App"
-
 msgid "error"
 msgstr "Error"
 
@@ -36,9 +33,6 @@ msgstr "Expiring Today"
 
 msgid "free"
 msgstr "Free"
-
-msgid "get-subscription"
-msgstr "Get a Subscription"
 
 msgid "heading"
 msgstr "Subscription Status"

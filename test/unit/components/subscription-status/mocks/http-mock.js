@@ -27,13 +27,16 @@
               { pc: 2, status: "Trial Expired" },
               { pc: 3, status: "Cancelled" }];
           }
+          else if (url.indexOf("pc=0") !== -1) {
+            response.data[0].status = "Subscribed";
+          }      
           else if (url.indexOf("pc=1") !== -1) {
             response.data[0].status = "Free";
           }      
           else if (url.indexOf("pc=2") !== -1) {
             response.data[0].status = "Trial Expired";
           }
-          else if (url.indexOf("pc=3") !== -1) {
+          else if (url.indexOf("pc=3") !== -1 || url.indexOf("pc=4") !== -1) {
             response.data[0].status = "Cancelled";
           }    
         }

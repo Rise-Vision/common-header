@@ -191,101 +191,6 @@
 
   angular.module(
     "risevision.common.components.subscription-status.directives")
-    .directive("appSubscriptionStatus", ["$templateCache", "$modal",
-      "subscriptionStatusService",
-      function ($templateCache, $modal, subscriptionStatusService) {
-        return {
-          restrict: "AE",
-          require: "?ngModel",
-          scope: {
-            productId: "@",
-            productCode: "@",
-            companyId: "@",
-            productPrice: "@"
-          },
-          template: $templateCache.get(
-            "subscription-status/app-subscription-status-template.html"),
-          link: function ($scope, elm, attrs, ctrl) {
-            $scope.subscriptionStatus = {
-              "status": "N/A",
-              "statusCode": "na",
-              "subscribed": false,
-              "expiry": null
-            };
-
-            function checkSubscriptionStatus() {
-              if ($scope.productCode && $scope.productId && $scope.companyId) {
-                subscriptionStatusService.get($scope.productCode, $scope.companyId)
-                  .then(function (subscriptionStatus) {
-                      if (subscriptionStatus) {
-                        $scope.subscriptionStatus = subscriptionStatus;
-                      }
-                    },
-                    function () {
-                      // TODO: catch error here
-                    });
-              }
-            }
-
-            $scope.$watch("companyId", function () {
-              checkSubscriptionStatus();
-            });
-
-            if (ctrl) {
-              $scope.$watch("subscriptionStatus", function (
-                subscriptionStatus) {
-                ctrl.$setViewValue(subscriptionStatus);
-              });
-            }
-
-            $scope.$watch("showStoreModal", function (show) {
-              if (show) {
-                var modalInstance = $modal.open({
-                  templateUrl: "store-iframe-template.html",
-                  controller: "StoreModalController",
-                  size: "lg",
-                  resolve: {
-                    productId: function () {
-                      return $scope.productId;
-                    },
-                    companyId: function () {
-                      return $scope.companyId;
-                    }
-                  }
-                });
-
-                modalInstance.result.then(function () {
-                  checkSubscriptionStatus();
-
-                }, function () {
-                  checkSubscriptionStatus();
-
-                })
-                  .finally(function () {
-                    $scope.showStoreModal = false;
-                  });
-              }
-            });
-          }
-        };
-      }
-    ])
-    .directive("ngDisableRightClick", function () {
-      return function (scope, element) {
-        element.bind("contextmenu", function (event) {
-          scope.$apply(function () {
-            event.preventDefault();
-          });
-        });
-      };
-    });
-}());
-
-(function () {
-  "use strict";
-
-  angular.module(
-    "risevision.common.components.subscription-status.directives")
     .directive("subscriptionStatus", ["$rootScope", "$templateCache", "subscriptionStatusService",
       "STORE_URL", "ACCOUNT_PATH", "IN_RVA_PATH",
       function ($rootScope, $templateCache, subscriptionStatusService, STORE_URL, ACCOUNT_PATH,
@@ -430,19 +335,7 @@ try {
   module = angular.module('risevision.common.components.subscription-status', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('subscription-status/app-subscription-status-template.html',
-    '<a id="app-subscription-status" href="" ng-click="showStoreModal = true" class="store-link"><div class="rate"><strong>${{productPrice}}</strong></div><div class="subscribe"><strong ng-if="!subscriptionStatus.subscribed"><span translate="subscription-status.get-subscription"></span></strong> <strong ng-if="subscriptionStatus.subscribed"><span translate="subscription-status.continue-to-app"></span></strong></div></a>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('risevision.common.components.subscription-status');
-} catch (e) {
-  module = angular.module('risevision.common.components.subscription-status', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('subscription-status/subscription-status-template.html',
-    '<div ng-show="!expandedFormat"><h3 ng-disable-right-click=""><span ng-show="subscriptionStatus.statusCode !== \'not-subscribed\'" ng-bind-html="\'subscription-status.\' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted"></span></h3><span ng-show="subscriptionStatus.statusCode === \'trial-available\'"><button class="btn btn-primary btn-xs" ng-click="showStoreModal = true;"><span translate="subscription-status.start-trial"></span></button></span> <span ng-show="[\'on-trial\', \'trial-expired\', \'cancelled\', \'not-subscribed\'].indexOf(subscriptionStatus.statusCode) >= 0"><a class="btn btn-primary btn-xs" ng-href="{{storeUrl}}" target="_blank" ng-show="!customOnClick"><span translate="subscription-status.subscribe"></span></a> <a class="btn btn-primary btn-xs" ng-click="customOnClick()" ng-show="customOnClick"><span translate="subscription-status.subscribe"></span></a></span> <span ng-show="[\'suspended\'].indexOf(subscriptionStatus.statusCode) >= 0"><a type="button" class="btn btn-primary btn-xs" ng-href="{{storeAccountUrl}}" target="_blank"><span translate="subscription-status.view-account"></span></a></span></div><div ng-show="expandedFormat"><div class="subscription-status trial" ng-show="subscriptionStatus.statusCode === \'on-trial\'"><span ng-bind-html="\'subscription-status.expanded-\' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank" ng-show="!customOnClick"><span translate="subscription-status.subscribe-now"></span></a> <a type="button" class="btn btn-primary u_margin-left" ng-click="customOnClick()" ng-show="customOnClick"><span translate="subscription-status.subscribe-now"></span></a></div><div class="subscription-status expired" ng-show="subscriptionStatus.statusCode === \'trial-expired\'"><span translate="subscription-status.expanded-expired"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank" ng-show="!customOnClick"><span translate="subscription-status.subscribe-now"></span></a> <a type="button" class="btn btn-primary u_margin-left" ng-click="customOnClick()" ng-show="customOnClick"><span translate="subscription-status.subscribe-now"></span></a></div><div class="subscription-status cancelled" ng-show="subscriptionStatus.statusCode === \'cancelled\'"><span translate="subscription-status.expanded-cancelled"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank" ng-show="!customOnClick"><span translate="subscription-status.subscribe-now"></span></a> <a type="button" class="btn btn-primary u_margin-left" ng-click="customOnClick()" ng-show="customOnClick"><span translate="subscription-status.subscribe-now"></span></a></div><div class="subscription-status suspended" ng-show="subscriptionStatus.statusCode === \'suspended\'"><span translate="subscription-status.expanded-suspended"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeAccountUrl}}" target="_blank"><span translate="subscription-status.view-invoices"></span></a></div></div>');
+    '<div ng-show="!expandedFormat"><h3 ng-disable-right-click=""><span ng-show="subscriptionStatus.statusCode !== \'not-subscribed\'" ng-bind-html="\'subscription-status.\' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted"></span></h3><span ng-show="subscriptionStatus.statusCode === \'trial-available\'"><button class="btn btn-primary btn-xs" ng-click="showStoreModal = true;"><span translate="subscription-status.start-trial"></span></button></span> <span ng-show="[\'on-trial\', \'trial-expired\', \'cancelled\', \'not-subscribed\'].indexOf(subscriptionStatus.statusCode) >= 0"><a class="btn btn-primary btn-xs" ng-href="{{storeUrl}}" target="_blank" ng-show="!customOnClick"><span translate="subscription-status.subscribe"></span></a> <a class="btn btn-primary btn-xs" ng-click="customOnClick()" ng-show="customOnClick"><span translate="subscription-status.subscribe"></span></a></span> <span ng-show="[\'suspended\'].indexOf(subscriptionStatus.statusCode) >= 0"><a type="button" class="btn btn-primary btn-xs" ng-href="{{storeAccountUrl}}" target="_blank"><span translate="subscription-status.view-account"></span></a></span></div><div ng-show="expandedFormat"><div class="subscription-status trial" ng-show="subscriptionStatus.statusCode === \'on-trial\'"><span ng-bind-html="\'subscription-status.expanded-\' + subscriptionStatus.statusCode + subscriptionStatus.plural | translate:subscriptionStatus | to_trusted"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank" ng-show="!customOnClick"><span translate="subscription-status.subscribe-now"></span></a> <a type="button" class="btn btn-primary u_margin-left" ng-click="customOnClick()" ng-show="customOnClick"><span translate="subscription-status.subscribe-now"></span></a></div><div class="subscription-status expired" ng-show="subscriptionStatus.statusCode === \'trial-expired\'"><span translate="subscription-status.expanded-expired"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank" ng-show="!customOnClick"><span translate="subscription-status.subscribe-now"></span></a> <a type="button" class="btn btn-primary u_margin-left" ng-click="customOnClick()" ng-show="customOnClick"><span translate="subscription-status.subscribe-now"></span></a></div><div class="subscription-status cancelled" ng-show="subscriptionStatus.statusCode === \'cancelled\' && !subscriptionStatus.subscribed"><span translate="subscription-status.expanded-cancelled"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeUrl}}" target="_blank" ng-show="!customOnClick"><span translate="subscription-status.subscribe-now"></span></a> <a type="button" class="btn btn-primary u_margin-left" ng-click="customOnClick()" ng-show="customOnClick"><span translate="subscription-status.subscribe-now"></span></a></div><div class="subscription-status suspended" ng-show="subscriptionStatus.statusCode === \'suspended\'"><span translate="subscription-status.expanded-suspended"></span> <a type="button" class="btn btn-primary u_margin-left" ng-href="{{storeAccountUrl}}" target="_blank"><span translate="subscription-status.view-invoices"></span></a></div></div>');
 }]);
 })();

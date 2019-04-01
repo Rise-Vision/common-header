@@ -179,7 +179,16 @@ angular.module("risevision.common.header", [
       }
     });
   };
-});
+})
+  .directive("ngDisableRightClick", function () {
+    return function (scope, element) {
+      element.bind("contextmenu", function (event) {
+        scope.$apply(function () {
+          event.preventDefault();
+        });
+      });
+    };
+  });
 
 angular.module("risevision.common.header.directives", []);
 angular.module("risevision.common.header.filters", []);
