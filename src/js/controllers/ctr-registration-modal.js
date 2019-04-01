@@ -5,12 +5,12 @@ angular.module("risevision.common.header")
     "userState", "pick", "uiFlowManager", "humanReadableError",
     "agreeToTermsAndUpdateUser", "account", "segmentAnalytics",
     "bigQueryLogging", "analyticsEvents", "updateCompany", "plansFactory",
-    "COMPANY_INDUSTRY_FIELDS", "$location",
+    "COMPANY_INDUSTRY_FIELDS", "urlStateService",
     function ($q, $scope, $rootScope, $modalInstance, $loading, registerAccount,
       $log, cookieStore, userState, pick, uiFlowManager, humanReadableError,
       agreeToTermsAndUpdateUser, account, segmentAnalytics, bigQueryLogging,
       analyticsEvents, updateCompany, plansFactory, COMPANY_INDUSTRY_FIELDS,
-      $location) {
+      urlStateService) {
 
       $scope.newUser = !account;
       $scope.DROPDOWN_INDUSTRY_FIELDS = COMPANY_INDUSTRY_FIELDS;
@@ -121,23 +121,9 @@ angular.module("risevision.common.header")
 
       };
 
-      var getIndustryFromUrl = function () {
-
-        // if page is reloaded, then you can get industry from $location.search()
-        // otherwise you need to parse $location.path()
-
-        if ($location.search().industry) {
-          return $location.search().industry;
-        } else {
-          var decodedPath = decodeURIComponent(decodeURIComponent(decodeURIComponent(decodeURIComponent($location.path()))));
-          var match = new RegExp("[\?&]industry=([^&#\"]*)").exec(decodedPath);
-          return match && match[1];
-        }
-      };
-
       var populateIndustryFromUrl = function () {
 
-        var industryName = getIndustryFromUrl();
+        var industryName = urlStateService.getUrlParam("industry");
 
         if ($scope.newUser && industryName) {
 
