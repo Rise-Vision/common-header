@@ -13,6 +13,7 @@
     var ceCheckbox = element(by.id("user-settings-ce"));
     var cpCheckbox = element(by.id("user-settings-cp"));
     var daCheckbox = element(by.id("user-settings-da"));
+    var uaCheckbox = element(by.id("user-settings-ua"));
     var saveButton = element(by.id("save-button"));
     var deleteButton = element(by.id("delete-button"));
     
@@ -55,7 +56,11 @@
     this.getDaCheckbox = function() {
       return daCheckbox;
     };
-    
+
+    this.getUaCheckbox = function() {
+      return uaCheckbox;
+    };
+
     this.getSaveButton = function() {
       return saveButton;
     };

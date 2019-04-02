@@ -34,7 +34,7 @@ var FirstSigninScenarios = function() {
     });
 
     describe("Add a new User", function() {
-      xit("Opens Company Users Dialog and load company users", function() {
+      it("Opens Company Users Dialog and load company users", function() {
         commonHeaderPage.getProfilePic().click();
 
         expect(homepage.getCompanyUsersButton().isDisplayed()).to.eventually.be.true;
@@ -45,13 +45,13 @@ var FirstSigninScenarios = function() {
         expect(companyUsersModalPage.getCompanyUsersModal().isDisplayed()).to.eventually.be.true;
       });
 
-      xit("loads up a list of users for the company", function () {
+      it("loads up a list of users for the company", function () {
         helper.waitDisappear(companyUsersModalPage.getLoader(), "Load Company Users");
         
         expect(companyUsersModalPage.getUsersList().count()).to.eventually.be.above(0);
       });
 
-      xit("opens up Add User dialog", function () {
+      it("opens up Add User dialog", function () {
         companyUsersModalPage.getAddUserButton().click();
         
         helper.wait(userSettingsModalPage.getUserSettingsModal(), "User Settings Modal");
@@ -59,11 +59,13 @@ var FirstSigninScenarios = function() {
         expect(userSettingsModalPage.getUserSettingsModal().isPresent()).to.eventually.be.true;
       });
 
-      xit("adds a user", function () {
+      it("adds a user", function () {
         userSettingsModalPage.getUsernameField().sendKeys("jenkins1@risevision.com");
         userSettingsModalPage.getFirstNameField().sendKeys("Jenkins");
         userSettingsModalPage.getLastNameField().sendKeys("1");
         userSettingsModalPage.getEmailField().sendKeys("jenkins1@risevision.com");
+        // Set as User Administrator so they can delete themselves
+        userSettingsModalPage.getUaCheckbox().click();
         userSettingsModalPage.getSaveButton().click();
         
         helper.waitDisappear(userSettingsModalPage.getUserSettingsModal(), "User Settings Modal");        
@@ -71,7 +73,7 @@ var FirstSigninScenarios = function() {
         expect(userSettingsModalPage.getUserSettingsModal().isPresent()).to.eventually.be.false;
       });
       
-      xit("Company Users Dialog Should Close", function () {
+      it("Company Users Dialog Should Close", function () {
         helper.waitDisappear(companyUsersModalPage.getLoader(), "Load Company Users");
 
         companyUsersModalPage.getCloseButton().click();
@@ -118,15 +120,17 @@ var FirstSigninScenarios = function() {
       });
 
       it("should show only relevant Registration fields", function() {
-        expect(registrationModalPage.getFirstNameField().isPresent()).to.eventually.be.true;
-        expect(registrationModalPage.getLastNameField().isPresent()).to.eventually.be.true;
-        expect(registrationModalPage.getCompanyNameField().isPresent()).to.eventually.be.false;
-        expect(registrationModalPage.getCompanyIndustryOptions().isPresent()).to.eventually.be.false;
-        expect(registrationModalPage.getTermsCheckbox().isPresent()).to.eventually.be.true;
+        expect(registrationModalPage.getFirstNameField().isDisplayed()).to.eventually.be.true;
+        expect(registrationModalPage.getLastNameField().isDisplayed()).to.eventually.be.true;
+        expect(registrationModalPage.getCompanyNameField().isDisplayed()).to.eventually.be.false;
+        expect(registrationModalPage.getCompanyIndustryDropdown().isDisplayed()).to.eventually.be.false;
+        expect(registrationModalPage.getTermsCheckbox().isDisplayed()).to.eventually.be.true;
       });
 
       it("should complete the registration process", function () {
+        registrationModalPage.getFirstNameField().clear();
         registrationModalPage.getFirstNameField().sendKeys("Jenkins1");
+        registrationModalPage.getLastNameField().clear();
         registrationModalPage.getLastNameField().sendKeys("ForDeletion");
         //click authorize
         registrationModalPage.getTermsCheckbox().click();
@@ -146,14 +150,16 @@ var FirstSigninScenarios = function() {
 
     });
 
-    xdescribe("New User Deletes Themselves", function() {
+    describe("New User Deletes Themselves", function() {
       it("Opens User Settings Dialog", function() {
         commonHeaderPage.getProfilePic().click();
 
         expect(homepage.getUserSettingsButton().isDisplayed()).to.eventually.be.true;
         homepage.getUserSettingsButton().click();
 
-        helper.wait(userSettingsModalPage.getLoader(), "User Settings Modal");
+        helper.wait(userSettingsModalPage.getUserSettingsModal(), "User Settings Modal");
+
+        helper.waitDisappear(userSettingsModalPage.getLoader(), "User Settings Modal Loader");
       });
 
       it("deletes a user", function() {
@@ -162,20 +168,11 @@ var FirstSigninScenarios = function() {
 
         userSettingsModalPage.getDeleteButton().click();
         
-        // browser.switchTo().alert().accept();  // Use to accept (simulate clicking ok)
+        browser.switchTo().alert().accept();  // Use to accept (simulate clicking ok)
         
         helper.waitDisappear(userSettingsModalPage.getLoader(), "User Settings Modal");
       });
       
-      it("Company Users Dialog Should Close", function () {
-        helper.waitDisappear(companyUsersModalPage.getLoader(), "Load Company Users");
-
-        companyUsersModalPage.getCloseButton().click();
-
-        helper.waitDisappear(companyUsersModalPage.getCompanyUsersModal(), "Company Users Modal");
-        
-        expect(companyUsersModalPage.getCompanyUsersModal().isPresent()).to.eventually.be.false;
-      });
     });
 
   });

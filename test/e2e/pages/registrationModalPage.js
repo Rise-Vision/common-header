@@ -9,6 +9,7 @@
     var firstNameField = element(by.css("#registration-modal .firstName"));
     var lastNameField = element(by.css("#registration-modal .lastName"));
     var companyNameField = element(by.css("#registration-modal .companyName"));
+    var companyIndustryDropdown = element(by.css("#registration-modal .companyIndustry"));
     var companyIndustryOptions = element.all(by.tagName('option'));
     var termsCheckbox = element(by.css(".accept-terms-checkbox"));
     var newsletterCheckbox = element(by.css(".sign-up-newsletter-checkbox"));
@@ -40,6 +41,10 @@
     
     this.getCompanyNameField = function() {
       return companyNameField;
+    };
+    
+    this.getCompanyIndustryDropdown = function() {
+      return companyIndustryDropdown;
     };
     
     this.getCompanyIndustryOptions = function() {

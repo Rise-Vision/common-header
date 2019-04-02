@@ -39,11 +39,11 @@
       });
 
       it("should show all Registration fields", function() {
-        expect(registrationModalPage.getFirstNameField().isPresent()).to.eventually.be.true;
-        expect(registrationModalPage.getLastNameField().isPresent()).to.eventually.be.true;
-        expect(registrationModalPage.getCompanyNameField().isPresent()).to.eventually.be.true;
-        expect(registrationModalPage.getCompanyIndustryOptions().isPresent()).to.eventually.be.true;
-        expect(registrationModalPage.getTermsCheckbox().isPresent()).to.eventually.be.true;
+        expect(registrationModalPage.getFirstNameField().isDisplayed()).to.eventually.be.true;
+        expect(registrationModalPage.getLastNameField().isDisplayed()).to.eventually.be.true;
+        expect(registrationModalPage.getCompanyNameField().isDisplayed()).to.eventually.be.true;
+        expect(registrationModalPage.getCompanyIndustryDropdown().isDisplayed()).to.eventually.be.true;
+        expect(registrationModalPage.getTermsCheckbox().isDisplayed()).to.eventually.be.true;
       });
 
       xit("should not bug me again when I click 'cancel', even after a refresh (limbo state)", function() {
