@@ -42,6 +42,9 @@
         helper.wait(companySettingsModalPage.getCompanySettingsModal(), "Comapny Settings Modal");
         helper.waitDisappear(companySettingsModalPage.getLoader(), "Load Company Settings");
         
+        // Ensure the right Company is being deleted
+        expect(companySettingsModalPage.getNameField().getAttribute("value")).to.eventually.equal("Public School #5");
+
         companySettingsModalPage.getDeleteButton().click();
     
         // confirm delete

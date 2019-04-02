@@ -38,6 +38,14 @@
         //fill in email address
       });
 
+      it("should show all Registration fields", function() {
+        expect(registrationModalPage.getFirstNameField().isPresent()).to.eventually.be.true;
+        expect(registrationModalPage.getLastNameField().isPresent()).to.eventually.be.true;
+        expect(registrationModalPage.getCompanyNameField().isPresent()).to.eventually.be.true;
+        expect(registrationModalPage.getCompanyIndustryOptions().isPresent()).to.eventually.be.true;
+        expect(registrationModalPage.getTermsCheckbox().isPresent()).to.eventually.be.true;
+      });
+
       xit("should not bug me again when I click 'cancel', even after a refresh (limbo state)", function() {
         registrationModalPage.getCancelButton().click();
         browser.refresh();

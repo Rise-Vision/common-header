@@ -45,6 +45,7 @@
           helper.waitDisappear(companySettingsModalPage.getLoader(), "Load Company Settings");
           
           expect(companySettingsModalPage.getNameField().getAttribute('value')).to.eventually.be.ok;
+          expect(companySettingsModalPage.getNameField().getAttribute("value")).to.eventually.equal("Public School #5");
         });
 
         it("Resets auth key", function() {
