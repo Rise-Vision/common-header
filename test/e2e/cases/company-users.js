@@ -77,8 +77,10 @@
 
           // assume first user
           companyUsersModalPage.getUsers().get(0).click();
+
+          helper.wait(userSettingsModalPage.getUserSettingsModal(), "User Settings Modal");
           
-          helper.wait(userSettingsModalPage.getLoader(), "User Settings Modal");
+          helper.waitDisappear(userSettingsModalPage.getLoader(), "User Settings Modal Loader");
 
           expect(userSettingsModalPage.getFirstNameField().getAttribute('value')).to.eventually.equal("John");
           expect(userSettingsModalPage.getLastNameField().getAttribute('value')).to.eventually.equal("test");
