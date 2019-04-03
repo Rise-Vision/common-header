@@ -4,14 +4,14 @@
 
   var expect = require('rv-common-e2e').expect;
   var assert = require('rv-common-e2e').assert;
-  var CommonHeaderPage = require('rv-common-e2e').commonHeaderPage;
+  var helper = require('rv-common-e2e').helper;
+  var CommonHeaderPage = require('./../pages/commonHeaderPage.js');
   var HomePage = require('./../pages/homepage.js');
   var AddSubcompanyModalPage = require('./../pages/addSubcompanyModalPage.js');
   var SelectSubcompanyModalPage = require('./../pages/selectSubcompanyModalPage.js');
   var CompanySettingsModalPage = require('./../pages/companySettingsModalPage.js');
   var MoveCompanyModalPage = require('./../pages/moveCompanyModalPage.js');
   var SafeDeleteModalPage = require('./../pages/safeDeleteModalPage.js');
-  var helper = require('rv-common-e2e').helper;
 
   var CompanySubcompaniesScenarios = function() {
 

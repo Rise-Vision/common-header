@@ -4,11 +4,11 @@
 
   var expect = require('rv-common-e2e').expect;
   var assert = require('rv-common-e2e').assert;
-  var CommonHeaderPage = require('rv-common-e2e').commonHeaderPage;
+  var helper = require('rv-common-e2e').helper;
+  var CommonHeaderPage = require('./../pages/commonHeaderPage.js');
   var HomePage = require('./../pages/homepage.js');
   var CompanyUsersModalPage = require('./../pages/companyUsersModalPage.js');
   var UserSettingsModalPage = require('./../pages/userSettingsModalPage.js');
-  var helper = require('rv-common-e2e').helper;
 
   var CompanyUsersScenarios = function() {
 

@@ -3,9 +3,9 @@
   'use strict';
 
   var helper = require("rv-common-e2e").helper;
-  var CommonHeaderPage = require("rv-common-e2e").commonHeaderPage;
-  var HomePage = require("./../pages/homepage.js");
-  var UserSettingsModalPage = require("./../pages/userSettingsModalPage.js");
+  var CommonHeaderPage = require("./commonHeaderPage.js");
+  var HomePage = require("./homepage.js");
+  var UserSettingsModalPage = require("./userSettingsModalPage.js");
 
   var CompanyUsersModalPage = function () {
     var commonHeaderPage = new CommonHeaderPage();
