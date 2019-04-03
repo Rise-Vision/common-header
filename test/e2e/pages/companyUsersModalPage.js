@@ -9,7 +9,7 @@
 
   var CompanyUsersModalPage = function () {
     var commonHeaderPage = new CommonHeaderPage();
-    var homePage = new HomePage();
+    var homepage = new HomePage();
     var userSettingsModalPage = new UserSettingsModalPage();
 
     var companyUsersModal = element(by.css(".company-users-modal"));
