@@ -28,23 +28,23 @@
 
       homepage.getCompanyUsersButton().click();
 
-      helper.wait(getCompanyUsersModal(), "Company Users Modal");
+      helper.wait(companyUsersModal, "Company Users Modal");
 
-      helper.waitDisappear(getLoader(), "Load Company Users");
+      helper.waitDisappear(loader, "Load Company Users");
     };
 
     this.closeCompanyUsersModal = function() {
-      helper.wait(getCompanyUsersModal(), "Company Users Modal");
+      helper.wait(companyUsersModal, "Company Users Modal");
 
-      helper.waitDisappear(companyUsersModalPage.getLoader(), "Load Company Users");
+      helper.waitDisappear(loader, "Load Company Users");
 
-      companyUsersModalPage.getCloseButton().click();
+      closeButton.click();
 
-      helper.waitDisappear(companyUsersModalPage.getCompanyUsersModal(), "Company Users Modal");
+      helper.waitDisappear(companyUsersModal, "Company Users Modal");
     };
 
     this.openAddUserDialog = function() {
-      companyUsersModalPage.getAddUserButton().click();
+      addUserButton.click();
       
       helper.wait(userSettingsModalPage.getUserSettingsModal(), "User Settings Modal");
     };
