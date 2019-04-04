@@ -117,16 +117,24 @@
         ];
 
         _factory.showPlansModal = function (warningText) {
-          $modal.open({
-            template: $templateCache.get("plans/plans-modal.html"),
-            controller: "PlansModalCtrl",
-            size: "lg",
-            resolve: {
-              warningText: function () {
-                return warningText;
+          if (!_factory.isPlansModalOpen) {
+            _factory.isPlansModalOpen = true;
+
+            var $modalInstance = $modal.open({
+              template: $templateCache.get("plans/plans-modal.html"),
+              controller: "PlansModalCtrl",
+              size: "lg",
+              resolve: {
+                warningText: function () {
+                  return warningText;
+                }
               }
-            }
-          });
+            });
+
+            $modalInstance.result.finally(function () {
+              _factory.isPlansModalOpen = false;
+            });
+          }
         };
 
         var _getCompanyPlanStatus = function () {

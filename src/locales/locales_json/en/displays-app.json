@@ -124,6 +124,7 @@
     "webServiceURL": "Web Service URL"
   },
   "details": {
+    "additional-license-warning": "You need to Upgrade your Plan or Purchase Additional Licenses to License this Display.",
     "contact-plan-parent-email": "You don't have access to purchase Display Licenses. Please contact your Plan Administrator at <a href=\"mailto:{{administratorEmail}}\">{{administratorEmail}}</a> to request more.",
     "contact-plan-parent-no-email": "You don't have access to purchase Display Licenses. Please contact your Plan Administrator to request more.",
     "deleteTitle": "Deleting Display",

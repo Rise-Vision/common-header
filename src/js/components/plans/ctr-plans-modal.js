@@ -10,6 +10,7 @@ angular.module("risevision.common.components.plans")
 
     $scope.currentPlan = currentPlanFactory.currentPlan;
     $scope.purchaseFactory = purchaseFactory;
+    $scope.chargebeeFactory = chargebeeFactory;
     $scope.startTrialError = null;
     $scope.isMonthly = true;
     $scope.warningText = warningText;

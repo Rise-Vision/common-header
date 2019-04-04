@@ -292,6 +292,9 @@ msgstr "View Terms and Conditions"
 msgid "alerts.webServiceURL"
 msgstr "Web Service URL"
 
+msgid "details.additional-license-warning"
+msgstr "You need to Upgrade your Plan or Purchase Additional Licenses to License this Display."
+
 msgid "details.contact-plan-parent-email"
 msgstr "You don't have access to purchase Display Licenses. Please contact your Plan Administrator at <a href="mailto:{{administratorEmail}}">{{administratorEmail}}</a> to request more."
 

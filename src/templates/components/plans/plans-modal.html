@@ -7,8 +7,15 @@
   </div>
 
   <div id="plans-modal" class="modal-body u_padding-lg" stop-event="touchend">
-    <div class="alert bg-warning p-4 text-center my-2" ng-show="warningText" translate>
+    <div class="alert alert-warning p-4 text-center my-2" ng-show="warningText && !chargebeeFactory.apiError" translate>
       {{warningText}}
+    </div>
+    <div class="alert alert-danger p-4 text-center my-2" role="alert" ng-show="chargebeeFactory.apiError">
+      <span ng-show="chargebeeFactory.apiError === 403">
+        <span ng-show="currentPlan.parentPlanContactEmail" translate translate-values="{ parentPlanContactEmail: currentPlan.parentPlanContactEmail }">account-and-billing.errors.403-contact-email</span>
+        <span ng-hide="currentPlan.parentPlanContactEmail" translate>account-and-billing.errors.403-no-contact-email</span>
+      </span>
+      <span ng-hide="chargebeeFactory.apiError === 403">{{chargebeeFactory.apiError}}</span>
     </div>
 
     <div class="text-center">

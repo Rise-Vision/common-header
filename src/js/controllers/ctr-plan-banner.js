@@ -20,6 +20,8 @@ angular.module("risevision.common.header")
 
         if (currentPlanFactory.isParentPlan()) {
           banner = "parent";
+        } else if (currentPlanFactory.currentPlan.isPurchasedByParent) {
+          banner = "parentPurchased";
         } else if (currentPlanFactory.isCancelledActive()) {
           banner = "cancelled";
         } else if (currentPlanFactory.isFree() && currentPlanFactory.isCancelled()) {

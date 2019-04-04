@@ -61,7 +61,8 @@ angular.module("risevision.store.services")
     }
   ])
   .factory("chargebeeFactory", ["$rootScope", "$window", "$log", "getChargebeeInstance", "plansFactory",
-    function ($rootScope, $window, $log, getChargebeeInstance, plansFactory) {
+    "currentPlanFactory",
+    function ($rootScope, $window, $log, getChargebeeInstance, plansFactory, currentPlanFactory) {
       var factory = {
         apiError: null
       };
@@ -75,9 +76,13 @@ angular.module("risevision.store.services")
           });
       }
 
-      function _handleChargebeeAccountNotFound(err, companyId) {
-        if (err.status === 404) {
+      function _handleChargebeePortalError(err, companyId) {
+        if (err.status === 404 && !currentPlanFactory.currentPlan.isPurchasedByParent && !plansFactory.isPlansModalOpen) {
           plansFactory.showPlansModal();
+        } else if (err.status === 404 && currentPlanFactory.currentPlan.isPurchasedByParent) {
+          // Throw no access error
+          factory.apiError = 403;
+          console.log("Company does not exist in Chargebee, companyId", companyId, err);
         } else {
           factory.apiError = err;
           console.log("Failed to retrieve session for companyId", companyId, err);
@@ -120,69 +125,75 @@ angular.module("risevision.store.services")
       };
 
       factory.openPortal = function (companyId) {
-        _getChargebeePortal(companyId).then(function (portal) {
-          portal.open(_chargebeeCallbacks);
-        })
+        _getChargebeePortal(companyId)
+          .then(function (portal) {
+            portal.open(_chargebeeCallbacks);
+          })
           .catch(function (err) {
-            _handleChargebeeAccountNotFound(err, companyId);
+            _handleChargebeePortalError(err, companyId);
           });
       };
 
       factory.openAccountDetails = function (companyId) {
-        _getChargebeePortal(companyId).then(function (portal) {
-          portal.open(_chargebeeCallbacks, {
-            sectionType: $window.Chargebee.getPortalSections().ACCOUNT_DETAILS
-          });
-        })
+        _getChargebeePortal(companyId)
+          .then(function (portal) {
+            portal.open(_chargebeeCallbacks, {
+              sectionType: $window.Chargebee.getPortalSections().ACCOUNT_DETAILS
+            });
+          })
           .catch(function (err) {
-            _handleChargebeeAccountNotFound(err, companyId);
+            _handleChargebeePortalError(err, companyId);
           });
       };
 
       factory.openAddress = function (companyId) {
-        _getChargebeePortal(companyId).then(function (portal) {
-          portal.open(_chargebeeCallbacks, {
-            sectionType: $window.Chargebee.getPortalSections().ADDRESS
-          });
-        })
+        _getChargebeePortal(companyId)
+          .then(function (portal) {
+            portal.open(_chargebeeCallbacks, {
+              sectionType: $window.Chargebee.getPortalSections().ADDRESS
+            });
+          })
           .catch(function (err) {
-            _handleChargebeeAccountNotFound(err, companyId);
+            _handleChargebeePortalError(err, companyId);
           });
       };
 
       factory.openBillingHistory = function (companyId) {
-        _getChargebeePortal(companyId).then(function (portal) {
-          portal.open(_chargebeeCallbacks, {
-            sectionType: $window.Chargebee.getPortalSections().BILLING_HISTORY
-          });
-        })
+        _getChargebeePortal(companyId)
+          .then(function (portal) {
+            portal.open(_chargebeeCallbacks, {
+              sectionType: $window.Chargebee.getPortalSections().BILLING_HISTORY
+            });
+          })
           .catch(function (err) {
-            _handleChargebeeAccountNotFound(err, companyId);
+            _handleChargebeePortalError(err, companyId);
           });
       };
 
       factory.openPaymentSources = function (companyId) {
-        _getChargebeePortal(companyId).then(function (portal) {
-          portal.open(_chargebeeCallbacks, {
-            sectionType: $window.Chargebee.getPortalSections().PAYMENT_SOURCES
-          });
-        })
+        _getChargebeePortal(companyId)
+          .then(function (portal) {
+            portal.open(_chargebeeCallbacks, {
+              sectionType: $window.Chargebee.getPortalSections().PAYMENT_SOURCES
+            });
+          })
           .catch(function (err) {
-            _handleChargebeeAccountNotFound(err, companyId);
+            _handleChargebeePortalError(err, companyId);
           });
       };
 
       factory.openSubscriptionDetails = function (companyId, subscriptionId) {
-        _getChargebeePortal(companyId).then(function (portal) {
-          portal.open(_chargebeeCallbacks, {
-            sectionType: $window.Chargebee.getPortalSections().SUBSCRIPTION_DETAILS,
-            params: {
-              subscriptionId: subscriptionId
-            }
-          });
-        })
+        _getChargebeePortal(companyId)
+          .then(function (portal) {
+            portal.open(_chargebeeCallbacks, {
+              sectionType: $window.Chargebee.getPortalSections().SUBSCRIPTION_DETAILS,
+              params: {
+                subscriptionId: subscriptionId
+              }
+            });
+          })
           .catch(function (err) {
-            _handleChargebeeAccountNotFound(err, companyId);
+            _handleChargebeePortalError(err, companyId);
           });
       };
 
