@@ -2,7 +2,7 @@
 
 describe("Services: chargebeeFactory", function() {
   var sandbox = sinon.sandbox.create();
-  var clock, $rootScope, $window, $loading, userState, storeService, plansFactory, chargebeePortal;
+  var clock, $rootScope, $window, $loading, userState, storeService, plansFactory, currentPlanFactory, chargebeePortal;
 
   beforeEach(module("risevision.store.services"));
 
@@ -35,7 +35,15 @@ describe("Services: chargebeeFactory", function() {
     });
     $provide.service("plansFactory", function() {
       return {
-        showPlansModal: function() {}
+        showPlansModal: sinon.stub(),
+        isPlansModalOpen: false
+      };
+    });
+    $provide.service("currentPlanFactory", function() {
+      return {
+        currentPlan: {
+          isPurchasedByParent: false
+        }
       };
     });
   }));
@@ -48,6 +56,7 @@ describe("Services: chargebeeFactory", function() {
       userState = $injector.get("userState");
       storeService = $injector.get("storeService");
       plansFactory = $injector.get("plansFactory");
+      currentPlanFactory = $injector.get("currentPlanFactory");
 
       chargebeePortal = {
         open: sandbox.stub()
@@ -154,12 +163,14 @@ describe("Services: chargebeeFactory", function() {
       });
     });
 
-    it("should handle failure", function(done) {
-      sandbox.stub(storeService, "createSession").returns(Q.reject("error"));
+    describe("_handleChargebeePortalError", function() {
+      it("should handle failure", function(done) {
+        sandbox.stub(storeService, "createSession").returns(Q.reject("error"));
 
-      getChargebeeInstance("companyId1").catch(function(err) {
-        expect(err).to.equal("error");
-        done();
+        getChargebeeInstance("companyId1").catch(function(err) {
+          expect(err).to.equal("error");
+          done();
+        });
       });
     });
   });
@@ -173,7 +184,6 @@ describe("Services: chargebeeFactory", function() {
         chargebeeFactory = $injector.get("chargebeeFactory");
         chargebeeSections = $window.Chargebee.getPortalSections();
 
-        sandbox.stub(plansFactory, "showPlansModal");
         sandbox.stub(storeService, "createSession").returns(Q.resolve({
           id: "sessionId1"
         }));
@@ -359,6 +369,25 @@ describe("Services: chargebeeFactory", function() {
           done();
         });
       });
+
+      describe("companies with Plans Purchased by Parent", function () {
+        it("should return 403 error", function(done) {
+          currentPlanFactory.currentPlan.isPurchasedByParent = true;
+
+          chargebeeFactory.openPortal("companyId1");
+
+          setTimeout(function () {
+            expect(chargebeePortal.open).to.not.have.been.called;
+            expect(plansFactory.showPlansModal).to.not.have.been.called;
+            expect(chargebeeFactory.apiError).to.equal(403);
+
+            done();
+          });
+        });
+
+      });
+
     });
+
   });
 });

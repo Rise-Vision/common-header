@@ -5,7 +5,10 @@ describe("controller: plan banner", function() {
   beforeEach(module(function ($provide) {
     $provide.factory("currentPlanFactory", function() {
       return {
-        currentPlan: { type: "basic" },
+        currentPlan: {
+          type: "basic",
+          isPurchasedByParent: false
+        },
         isParentPlan: sinon.stub().returns(false),
         isFree: sinon.stub().returns(false),
         isCancelled: sinon.stub().returns(false),
@@ -65,6 +68,12 @@ describe("controller: plan banner", function() {
       currentPlanFactory.isParentPlan.returns(true);
 
       expect($scope.getVisibleBanner()).to.equal("parent");
+    });
+
+    it("should show parent plan bar", function() {
+      currentPlanFactory.currentPlan.isPurchasedByParent = true;
+
+      expect($scope.getVisibleBanner()).to.equal("parentPurchased");
     });
 
     it("should show cancelled plan bar if cancelled and active", function() {

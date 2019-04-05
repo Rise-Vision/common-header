@@ -103,10 +103,34 @@ describe("Services: plans factory", function() {
     expect(plansFactory.getPlansDetails).to.be.a("function");
   });
 
-  it("should show plans modal", function() {
-    plansFactory.showPlansModal();
+  describe("showPlansModal: ", function() {
+    it("should show plans modal", function() {
+      plansFactory.showPlansModal();
 
-    expect($modal.open).to.have.been.called;
+      expect($modal.open).to.have.been.called;
+    });
+
+    it("should not show plans modal more than once", function() {
+      plansFactory.showPlansModal();
+      plansFactory.showPlansModal();
+
+      expect($modal.open).to.have.been.calledOnce;
+    });
+
+    it("should show plans modal again if closed", function(done) {
+      $modal.open.returns({result: Q.resolve()});
+
+      plansFactory.showPlansModal();
+      
+      setTimeout(function() {
+        plansFactory.showPlansModal();
+
+        expect($modal.open).to.have.been.calledTwice;
+
+        done();
+      }, 10);
+    });
+    
   });
 
   describe("getPlansDetails: ", function() {

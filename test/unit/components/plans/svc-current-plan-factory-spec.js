@@ -1,7 +1,7 @@
 /*jshint expr:true */
 "use strict";
 
-describe("Services: current plan factory", function() {
+describe.only("Services: current plan factory", function() {
 
   beforeEach(module("risevision.common.components.plans"));
   beforeEach(module(function ($provide) {
@@ -79,6 +79,7 @@ describe("Services: current plan factory", function() {
       setTimeout(function () {
         expect($rootScope.$emit).to.have.been.called;
         expect(currentPlanFactory.currentPlan).to.be.not.null;
+        expect(currentPlanFactory.currentPlan.isPurchasedByParent).to.be.false;
         expect(currentPlanFactory.currentPlan.type).to.equal("basic");
         expect(currentPlanFactory.currentPlan.status).to.equal("Subscribed");
         expect(currentPlanFactory.currentPlan.currentPeriodEndDate.getTime()).to.equal(new Date("Jan 1, 2018").getTime());
@@ -88,8 +89,8 @@ describe("Services: current plan factory", function() {
         expect(currentPlanFactory.currentPlan.shareCompanyPlan).to.be.true;
         expect(currentPlanFactory.currentPlan.parentPlan).to.be.ok;
         expect(currentPlanFactory.currentPlan.parentPlan.type).to.equal("advanced");
-        expect(currentPlanFactory.currentPlan.parentPlan.companyName).to.equal("parentName");
-        expect(currentPlanFactory.currentPlan.parentPlan.contactEmail).to.equal("administratorEmail");
+        expect(currentPlanFactory.currentPlan.parentPlanCompanyName).to.equal("parentName");
+        expect(currentPlanFactory.currentPlan.parentPlanContactEmail).to.equal("administratorEmail");
 
         done();
       }, 0);
@@ -114,7 +115,7 @@ describe("Services: current plan factory", function() {
       setTimeout(function () {
         expect($rootScope.$emit).to.have.been.called;
         expect(currentPlanFactory.currentPlan).to.be.not.null;
-        expect(currentPlanFactory.currentPlan).to.be.not.null;
+        expect(currentPlanFactory.currentPlan.isPurchasedByParent).to.be.false;
         expect(currentPlanFactory.currentPlan.type).to.equal("free");
         expect(currentPlanFactory.currentPlan.status).to.equal("Active");
         expect(currentPlanFactory.currentPlan.playerProTotalLicenseCount).to.equal(3);
@@ -123,8 +124,8 @@ describe("Services: current plan factory", function() {
         expect(currentPlanFactory.currentPlan.shareCompanyPlan).to.be.true;
         expect(currentPlanFactory.currentPlan.parentPlan).to.be.ok;
         expect(currentPlanFactory.currentPlan.parentPlan.type).to.equal("advanced");
-        expect(currentPlanFactory.currentPlan.parentPlan.companyName).to.equal("parentName");
-        expect(currentPlanFactory.currentPlan.parentPlan.contactEmail).to.equal("administratorEmail");
+        expect(currentPlanFactory.currentPlan.parentPlanCompanyName).to.equal("parentName");
+        expect(currentPlanFactory.currentPlan.parentPlanContactEmail).to.equal("administratorEmail");
 
         done();
       }, 0);
@@ -147,11 +148,14 @@ describe("Services: current plan factory", function() {
       setTimeout(function () {
         expect($rootScope.$emit).to.have.been.called;
         expect(currentPlanFactory.currentPlan).to.be.not.null;
+        expect(currentPlanFactory.currentPlan.isPurchasedByParent).to.be.false;
         expect(currentPlanFactory.currentPlan.type).to.equal("basic");
         expect(currentPlanFactory.currentPlan.status).to.equal("Trial");
         expect(currentPlanFactory.currentPlan.trialPeriod).to.equal(23);
         expect(currentPlanFactory.currentPlan.playerProTotalLicenseCount).to.equal(3);
         expect(currentPlanFactory.currentPlan.playerProAvailableLicenseCount).to.equal(1);
+        expect(currentPlanFactory.currentPlan.parentPlanCompanyName).to.be.undefined;
+        expect(currentPlanFactory.currentPlan.parentPlanContactEmail).to.be.undefined;
 
         done();
       }, 0);
@@ -169,8 +173,11 @@ describe("Services: current plan factory", function() {
       setTimeout(function () {
         expect($rootScope.$emit).to.have.been.called;
         expect(currentPlanFactory.currentPlan).to.be.not.null;
+        expect(currentPlanFactory.currentPlan.isPurchasedByParent).to.be.false;
         expect(currentPlanFactory.currentPlan.type).to.equal("free");
         expect(currentPlanFactory.currentPlan.status).to.equal("Active");
+        expect(currentPlanFactory.currentPlan.parentPlanCompanyName).to.be.undefined;
+        expect(currentPlanFactory.currentPlan.parentPlanContactEmail).to.be.undefined;
 
         done();
       }, 0);
