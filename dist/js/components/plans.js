@@ -123,7 +123,6 @@ angular.module("risevision.common.components.plans", [
           if (company.id && company.planProductCode) {
             plan = _.cloneDeep(_plansByCode[company.planProductCode]);
 
-            plan.isPurchasedByParent = company.planBillToCompanyId !== company.id;
             plan.status = company.planSubscriptionStatus;
             plan.trialPeriod = company.planTrialPeriod;
             plan.currentPeriodEndDate = new Date(company.planCurrentPeriodEndDate);
@@ -141,6 +140,7 @@ angular.module("risevision.common.components.plans", [
             plan.parentPlan = _.cloneDeep(_plansByCode[company.parentPlanProductCode]);
           }
 
+          plan.isPurchasedByParent = !!company.planBillToCompanyId && (company.planBillToCompanyId !== company.id);
           plan.parentPlanCompanyName = company.parentPlanCompanyName;
           plan.parentPlanContactEmail = company.parentPlanContactEmail;
 

@@ -1,7 +1,7 @@
 /*jshint expr:true */
 "use strict";
 
-describe.only("Services: current plan factory", function() {
+describe("Services: current plan factory", function() {
 
   beforeEach(module("risevision.common.components.plans"));
   beforeEach(module(function ($provide) {
