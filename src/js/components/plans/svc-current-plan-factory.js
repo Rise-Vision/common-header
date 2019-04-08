@@ -32,7 +32,8 @@
             plan.parentPlan = _.cloneDeep(_plansByCode[company.parentPlanProductCode]);
           }
 
-          plan.isPurchasedByParent = !!company.planBillToId && (company.planBillToId !== company.id);
+          plan.isPurchasedByParent = !!company.planBillToId && !!company.planShipToId && (company.planBillToId !==
+            company.planShipToId);
           plan.parentPlanCompanyName = company.parentPlanCompanyName;
           plan.parentPlanContactEmail = company.parentPlanContactEmail;
 

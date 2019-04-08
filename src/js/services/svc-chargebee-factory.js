@@ -67,16 +67,16 @@ angular.module("risevision.store.services")
         apiError: null
       };
 
-      function _getChargebeePortal(companyId) {
+      var _getChargebeePortal = function (companyId) {
         factory.apiError = null;
 
         return getChargebeeInstance(companyId)
           .then(function (instance) {
             return instance.portal;
           });
-      }
+      };
 
-      function _handleChargebeePortalError(err, companyId) {
+      var _handleChargebeePortalError = function (err, companyId) {
         if (err.status === 404 && !currentPlanFactory.currentPlan.isPurchasedByParent && !plansFactory.isPlansModalOpen) {
           plansFactory.showPlansModal();
         } else if (err.status === 404 && currentPlanFactory.currentPlan.isPurchasedByParent) {
@@ -87,7 +87,7 @@ angular.module("risevision.store.services")
           factory.apiError = err;
           console.log("Failed to retrieve session for companyId", companyId, err);
         }
-      }
+      };
 
       var _chargebeeCallbacks = {
         loaded: function () {
