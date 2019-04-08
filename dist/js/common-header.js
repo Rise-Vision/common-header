@@ -9486,7 +9486,7 @@ angular.module("risevision.common.components.plans", [
             plan.parentPlan = _.cloneDeep(_plansByCode[company.parentPlanProductCode]);
           }
 
-          plan.isPurchasedByParent = !!company.planBillToCompanyId && (company.planBillToCompanyId !== company.id);
+          plan.isPurchasedByParent = !!company.planBillToId && (company.planBillToId !== company.id);
           plan.parentPlanCompanyName = company.parentPlanCompanyName;
           plan.parentPlanContactEmail = company.parentPlanContactEmail;
 
