@@ -406,12 +406,6 @@ msgstr "Add a New Presentation"
 msgid "subscription.buy"
 msgstr "Buy"
 
-msgid "subscription.status.daysRemaining"
-msgstr "Days Remaining"
-
-msgid "subscription.status.daysTrial"
-msgstr "Days Trial"
-
 msgid "subscription.status.professional"
 msgstr "For Licensed Displays"
 

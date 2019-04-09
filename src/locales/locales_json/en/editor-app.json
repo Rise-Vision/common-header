@@ -192,8 +192,6 @@
     "buy": "Buy",
     "subscribe": "Subscribe",
     "status": {
-      "daysRemaining": "Days Remaining",
-      "daysTrial": "Days Trial",
       "professional": "For Licensed Displays"
     },
     "viewAccount": "View Account"
