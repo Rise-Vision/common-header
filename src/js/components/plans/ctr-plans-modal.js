@@ -2,15 +2,15 @@ angular.module("risevision.common.components.plans")
 
 .controller("PlansModalCtrl", [
   "$scope", "$rootScope", "$modalInstance", "$log", "$loading", "$timeout",
-  "plansFactory", "currentPlanFactory", "chargebeeFactory", "userState", "purchaseFactory",
+  "plansFactory", "currentPlanFactory", "ChargebeeFactory", "userState", "purchaseFactory",
   "warningText",
   function ($scope, $rootScope, $modalInstance, $log, $loading, $timeout,
-    plansFactory, currentPlanFactory, chargebeeFactory, userState, purchaseFactory,
+    plansFactory, currentPlanFactory, ChargebeeFactory, userState, purchaseFactory,
     warningText) {
 
     $scope.currentPlan = currentPlanFactory.currentPlan;
     $scope.purchaseFactory = purchaseFactory;
-    $scope.chargebeeFactory = chargebeeFactory;
+    $scope.chargebeeFactory = new ChargebeeFactory();
     $scope.startTrialError = null;
     $scope.isMonthly = true;
     $scope.warningText = warningText;
@@ -30,7 +30,7 @@ angular.module("risevision.common.components.plans")
     function _showSubscriptionDetails() {
       var company = userState.getCopyOfSelectedCompany();
 
-      chargebeeFactory.openSubscriptionDetails(company.id, company.planSubscriptionId);
+      $scope.chargebeeFactory.openSubscriptionDetails(company.id, company.planSubscriptionId);
     }
 
     $scope.isCurrentPlan = function (plan) {

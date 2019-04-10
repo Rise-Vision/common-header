@@ -52,9 +52,11 @@ describe("controller: plans modal", function() {
         }
       };
     });
-    $provide.factory("chargebeeFactory", function() {
-      return {
-        openPortal: function() {}
+    $provide.factory("ChargebeeFactory", function() {
+      return function() {
+        return {
+          openPortal: function() {}
+        };
       };
     });
     $provide.factory("purchaseFactory", function() {

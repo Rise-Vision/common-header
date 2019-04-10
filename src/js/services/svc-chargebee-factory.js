@@ -60,143 +60,146 @@ angular.module("risevision.store.services")
       };
     }
   ])
-  .factory("chargebeeFactory", ["$rootScope", "$window", "$log", "getChargebeeInstance", "plansFactory",
+  .factory("ChargebeeFactory", ["$rootScope", "$window", "$log", "getChargebeeInstance", "plansFactory",
     "currentPlanFactory",
     function ($rootScope, $window, $log, getChargebeeInstance, plansFactory, currentPlanFactory) {
-      var factory = {
-        apiError: null
-      };
+      return function () {
+        var factory = {
+          apiError: null
+        };
 
-      var _getChargebeePortal = function (companyId) {
-        factory.apiError = null;
+        var _getChargebeePortal = function (companyId) {
+          factory.apiError = null;
 
-        return getChargebeeInstance(companyId)
-          .then(function (instance) {
-            return instance.portal;
-          });
-      };
-
-      var _handleChargebeePortalError = function (err, companyId) {
-        if (err.status === 404 && !currentPlanFactory.currentPlan.isPurchasedByParent && !plansFactory.isPlansModalOpen) {
-          plansFactory.showPlansModal();
-        } else if (err.status === 404 && currentPlanFactory.currentPlan.isPurchasedByParent) {
-          // Throw no access error
-          factory.apiError = 403;
-          console.log("Company does not exist in Chargebee, companyId", companyId, err);
-        } else {
-          factory.apiError = err;
-          console.log("Failed to retrieve session for companyId", companyId, err);
-        }
-      };
-
-      var _chargebeeCallbacks = {
-        loaded: function () {
-          $log.debug("Chargebee loaded event");
-          $rootScope.$emit("chargebee.loaded");
-        },
-        close: function () {
-          $log.debug("Chargebee close event");
-          $rootScope.$emit("chargebee.close");
-        },
-        visit: function (sectionName) {
-          $log.debug("Chargebee visit event", sectionName);
-          $rootScope.$emit("chargebee.visit", sectionName);
-        },
-        paymentSourceAdd: function () {
-          $log.debug("Chargebee paymentSourceAdd event");
-          $rootScope.$emit("chargebee.paymentSourceAdd");
-        },
-        paymentSourceUpdate: function () {
-          $log.debug("Chargebee paymentSourceUpdate event");
-          $rootScope.$emit("chargebee.paymentSourceUpdate");
-        },
-        paymentSourceRemove: function () {
-          $log.debug("Chargebee paymentSourceRemove event");
-          $rootScope.$emit("chargebee.paymentSourceRemove");
-        },
-        subscriptionChanged: function (data) {
-          $log.debug("Chargebee subscriptionChanged event", data);
-          $rootScope.$emit("chargebee.subscriptionChanged", data);
-        },
-        subscriptionCancelled: function (data) {
-          $log.debug("Chargebee subscriptionCancelled event", data);
-          $rootScope.$emit("chargebee.subscriptionCancelled", data);
-        }
-      };
-
-      factory.openPortal = function (companyId) {
-        _getChargebeePortal(companyId)
-          .then(function (portal) {
-            portal.open(_chargebeeCallbacks);
-          })
-          .catch(function (err) {
-            _handleChargebeePortalError(err, companyId);
-          });
-      };
-
-      factory.openAccountDetails = function (companyId) {
-        _getChargebeePortal(companyId)
-          .then(function (portal) {
-            portal.open(_chargebeeCallbacks, {
-              sectionType: $window.Chargebee.getPortalSections().ACCOUNT_DETAILS
+          return getChargebeeInstance(companyId)
+            .then(function (instance) {
+              return instance.portal;
             });
-          })
-          .catch(function (err) {
-            _handleChargebeePortalError(err, companyId);
-          });
-      };
+        };
 
-      factory.openAddress = function (companyId) {
-        _getChargebeePortal(companyId)
-          .then(function (portal) {
-            portal.open(_chargebeeCallbacks, {
-              sectionType: $window.Chargebee.getPortalSections().ADDRESS
+        var _handleChargebeePortalError = function (err, companyId) {
+          if (err.status === 404 && !currentPlanFactory.currentPlan.isPurchasedByParent && !plansFactory.isPlansModalOpen) {
+            plansFactory.showPlansModal();
+          } else if (err.status === 404 && currentPlanFactory.currentPlan.isPurchasedByParent) {
+            // Throw no access error
+            factory.apiError = 403;
+            console.log("Company does not exist in Chargebee, companyId", companyId, err);
+          } else {
+            factory.apiError = err;
+            console.log("Failed to retrieve session for companyId", companyId, err);
+          }
+        };
+
+        var _chargebeeCallbacks = {
+          loaded: function () {
+            $log.debug("Chargebee loaded event");
+            $rootScope.$emit("chargebee.loaded");
+          },
+          close: function () {
+            $log.debug("Chargebee close event");
+            $rootScope.$emit("chargebee.close");
+          },
+          visit: function (sectionName) {
+            $log.debug("Chargebee visit event", sectionName);
+            $rootScope.$emit("chargebee.visit", sectionName);
+          },
+          paymentSourceAdd: function () {
+            $log.debug("Chargebee paymentSourceAdd event");
+            $rootScope.$emit("chargebee.paymentSourceAdd");
+          },
+          paymentSourceUpdate: function () {
+            $log.debug("Chargebee paymentSourceUpdate event");
+            $rootScope.$emit("chargebee.paymentSourceUpdate");
+          },
+          paymentSourceRemove: function () {
+            $log.debug("Chargebee paymentSourceRemove event");
+            $rootScope.$emit("chargebee.paymentSourceRemove");
+          },
+          subscriptionChanged: function (data) {
+            $log.debug("Chargebee subscriptionChanged event", data);
+            $rootScope.$emit("chargebee.subscriptionChanged", data);
+          },
+          subscriptionCancelled: function (data) {
+            $log.debug("Chargebee subscriptionCancelled event", data);
+            $rootScope.$emit("chargebee.subscriptionCancelled", data);
+          }
+        };
+
+        factory.openPortal = function (companyId) {
+          _getChargebeePortal(companyId)
+            .then(function (portal) {
+              portal.open(_chargebeeCallbacks);
+            })
+            .catch(function (err) {
+              _handleChargebeePortalError(err, companyId);
             });
-          })
-          .catch(function (err) {
-            _handleChargebeePortalError(err, companyId);
-          });
-      };
+        };
 
-      factory.openBillingHistory = function (companyId) {
-        _getChargebeePortal(companyId)
-          .then(function (portal) {
-            portal.open(_chargebeeCallbacks, {
-              sectionType: $window.Chargebee.getPortalSections().BILLING_HISTORY
+        factory.openAccountDetails = function (companyId) {
+          _getChargebeePortal(companyId)
+            .then(function (portal) {
+              portal.open(_chargebeeCallbacks, {
+                sectionType: $window.Chargebee.getPortalSections().ACCOUNT_DETAILS
+              });
+            })
+            .catch(function (err) {
+              _handleChargebeePortalError(err, companyId);
             });
-          })
-          .catch(function (err) {
-            _handleChargebeePortalError(err, companyId);
-          });
-      };
+        };
 
-      factory.openPaymentSources = function (companyId) {
-        _getChargebeePortal(companyId)
-          .then(function (portal) {
-            portal.open(_chargebeeCallbacks, {
-              sectionType: $window.Chargebee.getPortalSections().PAYMENT_SOURCES
+        factory.openAddress = function (companyId) {
+          _getChargebeePortal(companyId)
+            .then(function (portal) {
+              portal.open(_chargebeeCallbacks, {
+                sectionType: $window.Chargebee.getPortalSections().ADDRESS
+              });
+            })
+            .catch(function (err) {
+              _handleChargebeePortalError(err, companyId);
             });
-          })
-          .catch(function (err) {
-            _handleChargebeePortalError(err, companyId);
-          });
-      };
+        };
 
-      factory.openSubscriptionDetails = function (companyId, subscriptionId) {
-        _getChargebeePortal(companyId)
-          .then(function (portal) {
-            portal.open(_chargebeeCallbacks, {
-              sectionType: $window.Chargebee.getPortalSections().SUBSCRIPTION_DETAILS,
-              params: {
-                subscriptionId: subscriptionId
-              }
+        factory.openBillingHistory = function (companyId) {
+          _getChargebeePortal(companyId)
+            .then(function (portal) {
+              portal.open(_chargebeeCallbacks, {
+                sectionType: $window.Chargebee.getPortalSections().BILLING_HISTORY
+              });
+            })
+            .catch(function (err) {
+              _handleChargebeePortalError(err, companyId);
             });
-          })
-          .catch(function (err) {
-            _handleChargebeePortalError(err, companyId);
-          });
-      };
+        };
 
-      return factory;
+        factory.openPaymentSources = function (companyId) {
+          _getChargebeePortal(companyId)
+            .then(function (portal) {
+              portal.open(_chargebeeCallbacks, {
+                sectionType: $window.Chargebee.getPortalSections().PAYMENT_SOURCES
+              });
+            })
+            .catch(function (err) {
+              _handleChargebeePortalError(err, companyId);
+            });
+        };
+
+        factory.openSubscriptionDetails = function (companyId, subscriptionId) {
+          _getChargebeePortal(companyId)
+            .then(function (portal) {
+              portal.open(_chargebeeCallbacks, {
+                sectionType: $window.Chargebee.getPortalSections().SUBSCRIPTION_DETAILS,
+                params: {
+                  subscriptionId: subscriptionId
+                }
+              });
+            })
+            .catch(function (err) {
+              _handleChargebeePortalError(err, companyId);
+            });
+        };
+
+        return factory;
+
+      };
     }
   ]);

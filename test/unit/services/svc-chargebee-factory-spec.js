@@ -1,6 +1,6 @@
 "use strict";
 
-describe("Services: chargebeeFactory", function() {
+describe("Services: ChargebeeFactory", function() {
   var sandbox = sinon.sandbox.create();
   var clock, $rootScope, $window, $loading, userState, storeService, plansFactory, currentPlanFactory, chargebeePortal;
 
@@ -175,13 +175,13 @@ describe("Services: chargebeeFactory", function() {
     });
   });
 
-  describe("chargebeeFactory: ", function() {
-    var chargebeeFactory;
+  describe("ChargebeeFactory: ", function() {
+    var chargebeeFactoryInstance;
     var chargebeeSections;
 
     beforeEach(function() {
       inject(function($injector) {
-        chargebeeFactory = $injector.get("chargebeeFactory");
+        chargebeeFactoryInstance = $injector.get("ChargebeeFactory")();
         chargebeeSections = $window.Chargebee.getPortalSections();
 
         sandbox.stub(storeService, "createSession").returns(Q.resolve({
@@ -191,15 +191,15 @@ describe("Services: chargebeeFactory", function() {
     });
 
     it("should exist", function() {
-      expect(chargebeeFactory).to.be.ok;
-      expect(chargebeeFactory.openPortal).to.be.a("function");
+      expect(chargebeeFactoryInstance).to.be.ok;
+      expect(chargebeeFactoryInstance.openPortal).to.be.a("function");
     });
 
     it("should open Customer Portal for a Test company", function(done) {
       sandbox.spy($window.Chargebee, "init");
       sandbox.stub(userState, "isTestCompanySelected").returns(true);
 
-      chargebeeFactory.openPortal("companyId1");
+      chargebeeFactoryInstance.openPortal("companyId1");
 
       setTimeout(function () {
         expect($window.Chargebee.init.getCall(0).args[0].site).to.equal("risevision-test");
@@ -214,7 +214,7 @@ describe("Services: chargebeeFactory", function() {
       sandbox.spy($window.Chargebee, "init");
       sandbox.stub(userState, "isTestCompanySelected").returns(false);
 
-      chargebeeFactory.openPortal("companyId1");
+      chargebeeFactoryInstance.openPortal("companyId1");
 
       setTimeout(function () {
         expect($window.Chargebee.init.getCall(0).args[0].site).to.equal("risevision");
@@ -232,7 +232,7 @@ describe("Services: chargebeeFactory", function() {
       sandbox.stub(userState, "isTestCompanySelected").returns(true);
       sandbox.stub(storeService, "createSession").returns(Q.reject("API error"));
 
-      chargebeeFactory.openPortal("companyId1");
+      chargebeeFactoryInstance.openPortal("companyId1");
 
       setTimeout(function () {
         expect(chargebeePortal.open).to.not.have.been.called;
@@ -243,7 +243,7 @@ describe("Services: chargebeeFactory", function() {
     });
 
     it("should open Account Details section", function(done) {
-      chargebeeFactory.openAccountDetails("companyId1");
+      chargebeeFactoryInstance.openAccountDetails("companyId1");
 
       setTimeout(function () {
         expect(chargebeePortal.open).to.have.been.calledOnce;
@@ -254,7 +254,7 @@ describe("Services: chargebeeFactory", function() {
     });
 
     it("should open Address section", function(done) {
-      chargebeeFactory.openAddress("companyId1");
+      chargebeeFactoryInstance.openAddress("companyId1");
 
       setTimeout(function () {
         expect(chargebeePortal.open).to.have.been.calledOnce;
@@ -265,7 +265,7 @@ describe("Services: chargebeeFactory", function() {
     });
 
     it("should open Address section", function(done) {
-      chargebeeFactory.openBillingHistory("companyId1");
+      chargebeeFactoryInstance.openBillingHistory("companyId1");
 
       setTimeout(function () {
         expect(chargebeePortal.open).to.have.been.calledOnce;
@@ -276,7 +276,7 @@ describe("Services: chargebeeFactory", function() {
     });
 
     it("should open Payment Sources section", function(done) {
-      chargebeeFactory.openPaymentSources("companyId1");
+      chargebeeFactoryInstance.openPaymentSources("companyId1");
 
       setTimeout(function () {
         expect(chargebeePortal.open).to.have.been.calledOnce;
@@ -287,7 +287,7 @@ describe("Services: chargebeeFactory", function() {
     });
 
     it("should open Subscription Details section", function(done) {
-      chargebeeFactory.openSubscriptionDetails("companyId1", "subs1");
+      chargebeeFactoryInstance.openSubscriptionDetails("companyId1", "subs1");
 
       setTimeout(function () {
         expect(chargebeePortal.open).to.have.been.calledOnce;
@@ -310,7 +310,7 @@ describe("Services: chargebeeFactory", function() {
       it("should show Plans Modal for companies with origin=chargebee without Chargebee account", function(done) {
         sandbox.stub(userState, "isTestCompanySelected").returns(true);
 
-        chargebeeFactory.openPortal("companyId1");
+        chargebeeFactoryInstance.openPortal("companyId1");
 
         setTimeout(function () {
           expect(chargebeePortal.open).to.not.have.been.called;
@@ -321,7 +321,7 @@ describe("Services: chargebeeFactory", function() {
       });
 
       it("should open Store Account instead of Customer Portal Account Details", function(done) {
-        chargebeeFactory.openAccountDetails("companyId1");
+        chargebeeFactoryInstance.openAccountDetails("companyId1");
 
         setTimeout(function () {
           expect(chargebeePortal.open).to.not.have.been.called;
@@ -331,7 +331,7 @@ describe("Services: chargebeeFactory", function() {
       });
 
       it("should open Store Account instead of Customer Portal Address", function(done) {
-        chargebeeFactory.openAddress("companyId1");
+        chargebeeFactoryInstance.openAddress("companyId1");
 
         setTimeout(function () {
           expect(chargebeePortal.open).to.not.have.been.called;
@@ -341,7 +341,7 @@ describe("Services: chargebeeFactory", function() {
       });
 
       it("should open Store Account instead of Customer Billing History", function(done) {
-        chargebeeFactory.openBillingHistory("companyId1");
+        chargebeeFactoryInstance.openBillingHistory("companyId1");
 
         setTimeout(function () {
           expect(chargebeePortal.open).to.not.have.been.called;
@@ -351,7 +351,7 @@ describe("Services: chargebeeFactory", function() {
       });
 
       it("should open Store Account instead of Customer Portal Billing Sources", function(done) {
-        chargebeeFactory.openPaymentSources("companyId1");
+        chargebeeFactoryInstance.openPaymentSources("companyId1");
 
         setTimeout(function () {
           expect(chargebeePortal.open).to.not.have.been.called;
@@ -361,7 +361,7 @@ describe("Services: chargebeeFactory", function() {
       });
 
       it("should open Store Account instead of Customer Portal Subscription Details", function(done) {
-        chargebeeFactory.openSubscriptionDetails("companyId1");
+        chargebeeFactoryInstance.openSubscriptionDetails("companyId1");
 
         setTimeout(function () {
           expect(chargebeePortal.open).to.not.have.been.called;
@@ -374,12 +374,12 @@ describe("Services: chargebeeFactory", function() {
         it("should return 403 error", function(done) {
           currentPlanFactory.currentPlan.isPurchasedByParent = true;
 
-          chargebeeFactory.openPortal("companyId1");
+          chargebeeFactoryInstance.openPortal("companyId1");
 
           setTimeout(function () {
             expect(chargebeePortal.open).to.not.have.been.called;
             expect(plansFactory.showPlansModal).to.not.have.been.called;
-            expect(chargebeeFactory.apiError).to.equal(403);
+            expect(chargebeeFactoryInstance.apiError).to.equal(403);
 
             done();
           });
