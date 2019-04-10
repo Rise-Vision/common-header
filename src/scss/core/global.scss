@@ -329,6 +329,40 @@ ul.social {
   border-top: 2px dashed #cbcbcb;
 }
 
+/* Panels
+   ========================================================================== */
+.sideways-panels {
+  display: flex;
+  
+  .panel {
+    flex: 1;
+    @extend .u_margin-right;
+    &:last-child{
+        @extend .u_remove-right;
+    }
+  }
+}
+
+.panel {
+  &.panel-thick-shadow {
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.05), 0 6px 6px 0 rgba(0, 0, 0, 0.13);
+  }
+
+  &.action-panel {
+    color: $link-color;
+    font-weight: 500;
+
+    &:hover,
+    &:active {
+      text-decoration: none;
+    }
+
+    &:hover {
+      border-color: $brand-success;
+    }
+  }  
+}
+
 /* Other
    ========================================================================== */
 .title {

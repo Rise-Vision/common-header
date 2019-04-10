@@ -8727,6 +8727,24 @@ ul.social {
   margin-bottom: 5px;
   border-top: 2px dashed #cbcbcb; }
 
+/* Panels
+   ========================================================================== */
+.sideways-panels {
+  display: flex; }
+  .sideways-panels .panel, .sideways-panels .select-subcompany-modal .list-group, .select-subcompany-modal .sideways-panels .list-group, .sideways-panels .panel-editable, .sideways-panels .card, .sideways-panels #appLauncherContainer .scrollable-list, #appLauncherContainer .sideways-panels .scrollable-list {
+    flex: 1; }
+
+.panel.panel-thick-shadow, .select-subcompany-modal .panel-thick-shadow.list-group, .panel-thick-shadow.panel-editable, .panel-thick-shadow.card, #appLauncherContainer .panel-thick-shadow.scrollable-list {
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.05), 0 6px 6px 0 rgba(0, 0, 0, 0.13); }
+
+.panel.action-panel, .select-subcompany-modal .action-panel.list-group, .action-panel.panel-editable, .action-panel.card, #appLauncherContainer .action-panel.scrollable-list {
+  color: #0081BA;
+  font-weight: 500; }
+  .panel.action-panel:hover, .select-subcompany-modal .action-panel.list-group:hover, .action-panel.panel-editable:hover, .action-panel.card:hover, #appLauncherContainer .action-panel.scrollable-list:hover, .panel.action-panel:active, .select-subcompany-modal .action-panel.list-group:active, .action-panel.panel-editable:active, .action-panel.card:active, #appLauncherContainer .action-panel.scrollable-list:active {
+    text-decoration: none; }
+  .panel.action-panel:hover, .select-subcompany-modal .action-panel.list-group:hover, .action-panel.panel-editable:hover, .action-panel.card:hover, #appLauncherContainer .action-panel.scrollable-list:hover {
+    border-color: #4ab767; }
+
 /* Other
    ========================================================================== */
 .title {
@@ -8979,7 +8997,7 @@ All utilities have a prefix u_ added to them
 .u_margin-left {
   margin-left: 10px !important; }
 
-.u_margin-right {
+.u_margin-right, .sideways-panels .panel, .sideways-panels .select-subcompany-modal .list-group, .select-subcompany-modal .sideways-panels .list-group, .sideways-panels .panel-editable, .sideways-panels .card, .sideways-panels #appLauncherContainer .scrollable-list, #appLauncherContainer .sideways-panels .scrollable-list {
   margin-right: 10px !important; }
 
 .u_margin-xs-top {
@@ -9017,6 +9035,12 @@ All utilities have a prefix u_ added to them
 
 .u_remove-padding {
   padding: 0 !important; }
+
+.u_remove-left {
+  margin-left: 0 !important; }
+
+.u_remove-right, .sideways-panels .panel:last-child, .sideways-panels .select-subcompany-modal .list-group:last-child, .select-subcompany-modal .sideways-panels .list-group:last-child, .sideways-panels .panel-editable:last-child, .sideways-panels .card:last-child, .sideways-panels #appLauncherContainer .scrollable-list:last-child, #appLauncherContainer .sideways-panels .scrollable-list:last-child {
+  margin-right: 0 !important; }
 
 .u_remove-top {
   margin-top: 0 !important; }
