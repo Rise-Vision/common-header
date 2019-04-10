@@ -338,7 +338,7 @@ ul.social {
     flex: 1;
     @extend .u_margin-right;
     &:last-child{
-        @extend .u_remove-right;
+      @extend .u_remove-right;
     }
   }
 }
