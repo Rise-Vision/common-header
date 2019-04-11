@@ -315,6 +315,10 @@ All utilities have a prefix u_ added to them
   text-decoration: none;
 }
 
+.u_link {
+  @extend a;
+}
+
 .u_link-no-underline {
   text-decoration: none !important;
 }
@@ -368,6 +372,10 @@ All utilities have a prefix u_ added to them
 
 .aligner-item--bottom {
   align-self: flex-end;
+}
+
+.font-weight-medium {
+  font-weight: 500;
 }
 
 .font-weight-bold {
