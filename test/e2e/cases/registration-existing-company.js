@@ -138,6 +138,12 @@
       });
 
       describe("New User Deletes Themselves", function() {
+        before(function() {
+          homepage.get();
+
+          helper.waitDisappear(commonHeaderPage.getLoader(), "CH spinner loader");
+        });
+
         it("Opens User Settings Dialog", function() {
           commonHeaderPage.getProfilePic().click();
 
@@ -151,7 +157,7 @@
 
         it("deletes a user", function() {
           // Ensure the right User is being deleted
-          expect(userSettingsModalPage.getEmailField().getAttribute("value")).to.eventually.equal("jenkins1@risevision.com");
+          expect(userSettingsModalPage.getUsernameLabel().getText()).to.eventually.equal("jenkins1@risevision.com");
 
           userSettingsModalPage.getDeleteButton().click();
           
