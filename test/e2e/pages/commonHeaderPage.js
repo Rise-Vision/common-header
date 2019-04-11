@@ -87,12 +87,18 @@
       helper.waitRemoved(addSubcompanyModal, "Add Subcompany Modal");
     };
 
-    this.selectSubCompany = function() {
+    this.selectSubCompany = function(subCompanyName) {
       helper.clickWhenClickable(profilePic, 'Profile Picture');
       helper.clickWhenClickable(selectSubcompanyButton, 'Select Sub Company Button');
       helper.wait(selectSubcompanyModal, "Select Subcompany Modal");
       helper.waitDisappear(selectSubcompanyModalLoader, "Load Companies");
-      selectSubcompanyModalCompanies.get(0).click();
+
+      if (subCompanyName) {
+        element(by.xpath('//div[p/strong[contains(text(), "' + subCompanyName + '")]]')).click();
+      } else {
+        selectSubcompanyModalCompanies.get(0).click();
+      }
+
       helper.wait(subcompanyAlert, "Subcompany Alert");
     };
 
