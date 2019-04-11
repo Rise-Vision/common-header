@@ -138,6 +138,12 @@
       });
 
       describe("New User Deletes Themselves", function() {
+        before(function() {
+          homepage.get();
+
+          helper.waitDisappear(commonHeaderPage.getLoader(), "CH spinner loader");
+        });
+
         it("Opens User Settings Dialog", function() {
           commonHeaderPage.getProfilePic().click();
 
