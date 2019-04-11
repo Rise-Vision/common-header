@@ -27,7 +27,7 @@
 
     var selectSubcompanyModal = element(by.css(".select-subcompany-modal"));
     var selectSubcompanyModalLoader = element(by.xpath('//div[@spinner-key="company-selector-modal-list"]'));
-    var selectSubcompanyModalFilter = element(by.css('input[ng-model="search.query"]'));
+    var selectSubcompanyModalFilter = element(by.css('.select-subcompany-modal input[ng-model="search.query"]'));
     var selectSubcompanyModalCompanies = element.all(by.repeater('company in companies.items.list'));
     var selectSubcompanyModalCloseButton = element(by.css(".modal-header .close"));
 
@@ -95,7 +95,7 @@
       helper.waitDisappear(selectSubcompanyModalLoader, "Load Companies");
 
       if (subCompanyName) {
-        selectSubcompanyModalFilter.sendKeys(subCompanyName);
+        selectSubcompanyModalFilter.sendKeys(subCompanyName.replace('-', ''));
         helper.wait(selectSubcompanyModalLoader, "Load Companies");
         helper.waitDisappear(selectSubcompanyModalLoader, "Load Companies");
       }
