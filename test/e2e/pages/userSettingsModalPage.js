@@ -6,6 +6,7 @@
     var userSettingsModal = element(by.css(".user-settings-modal"));
     var loader = element(by.xpath('//div[@spinner-key="user-settings-modal"]'));
     var usernameField = element(by.id("user-settings-username"));
+    var usernameLabel = element(by.id("user-settings-username-label"));
     var firstNameField = element(by.id("user-settings-first-name"));
     var lastNameField = element(by.id("user-settings-last-name"));
     var phoneField = element(by.id("user-settings-phone"));
@@ -27,6 +28,10 @@
     
     this.getUsernameField = function() {
       return usernameField;
+    };
+
+    this.getUsernameLabel = function() {
+      return usernameLabel;
     };
 
     this.getFirstNameField = function() {

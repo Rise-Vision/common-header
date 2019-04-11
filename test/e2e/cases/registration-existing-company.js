@@ -157,7 +157,7 @@
 
         it("deletes a user", function() {
           // Ensure the right User is being deleted
-          expect(userSettingsModalPage.getEmailField().getAttribute("value")).to.eventually.equal("jenkins1@risevision.com");
+          expect(userSettingsModalPage.getUsernameLabel().getText()).to.eventually.equal("jenkins1@risevision.com");
 
           userSettingsModalPage.getDeleteButton().click();
           
