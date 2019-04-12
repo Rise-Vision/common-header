@@ -4,62 +4,14 @@ msgstr "Add Display"
 msgid "add.activate"
 msgstr "Activate your Display"
 
-msgid "add.added-activate"
-msgstr "You've added a Display named <b>'{{displayName}}'</b>. Now activate this Display by following these steps:"
-
-msgid "add.download.armv7l"
-msgstr "for Raspbian 8.0 [ARMv7]"
-
-msgid "add.download.chromeos"
-msgstr "for Chrome OS"
-
-msgid "add.download.diff-32-64"
-msgstr "How can I tell if I need the 32-bit or 64-bit version?"
-
-msgid "add.download.label"
-msgstr "Download"
-
-msgid "add.download.linux32"
-msgstr "for Ubuntu 16.04 LTS [32-bit]"
-
-msgid "add.download.linux64"
-msgstr "for Ubuntu 16.04 LTS [64-bit]"
-
-msgid "add.download.win32"
-msgstr "for Windows 7 and Up [32-bit]"
-
-msgid "add.download.win64"
-msgstr "for Windows 7 and Up [64-bit]"
-
-msgid "add.error"
-msgstr "Failed to create display!"
-
 msgid "add.instructions.anotherEmail"
 msgstr "Send To Another E-Mail"
-
-msgid "add.instructions.claimIds"
-msgstr "Claim IDs"
-
-msgid "add.instructions.claimIdsDesc"
-msgstr "can quickly deploy a large number of Displays."
-
-msgid "add.instructions.displayId"
-msgstr "Display ID"
 
 msgid "add.instructions.emailInfo"
 msgstr "We’ve also emailed these instructions to"
 
 msgid "add.instructions.emailPlaceholder"
 msgstr "Enter Email Address"
-
-msgid "add.instructions.mediaPlayer"
-msgstr "Media Player"
-
-msgid "add.instructions.needMediaPlayer"
-msgstr "Need a"
-
-msgid "add.instructions.once-activated"
-msgstr "Once activated, the Display will show your"
 
 msgid "add.instructions.os.chromeos"
 msgstr "Chrome OS"
@@ -73,32 +25,8 @@ msgstr "Rapsberry Pi"
 msgid "add.instructions.os.windows10"
 msgstr "Windows 7 and Up"
 
-msgid "add.instructions.presentations"
-msgstr "Presentations"
-
-msgid "add.instructions.step1"
-msgstr "Step 1"
-
-msgid "add.instructions.step1-desc"
-msgstr "Download and install Rise Player on your Media Player."
-
-msgid "add.instructions.step2"
-msgstr "Step 2"
-
-msgid "add.instructions.step2-a"
-msgstr "When prompted by Rise Player, enter the"
-
-msgid "add.instructions.step2-b"
-msgstr "to complete your installation."
-
-msgid "add.instructions.title"
-msgstr "Complete '{{displayName}}' Display by installing Rise Player"
-
 msgid "add.name.name"
 msgstr "Name Your Display"
-
-msgid "add.name.placeholder"
-msgstr "Display Name"
 
 msgid "add.next"
 msgstr "Next"
