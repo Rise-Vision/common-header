@@ -20,7 +20,7 @@ msgid "add.instructions.os.linux"
 msgstr "Linux"
 
 msgid "add.instructions.os.pi"
-msgstr "Rapsberry Pi"
+msgstr "Raspberry Pi"
 
 msgid "add.instructions.os.windows10"
 msgstr "Windows 7 and Up"

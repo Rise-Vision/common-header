@@ -11,7 +11,7 @@
       "os": {
         "chromeos": "Chrome OS",
         "linux": "Linux",
-        "pi": "Rapsberry Pi",
+        "pi": "Raspberry Pi",
         "windows10": "Windows 7 and Up"
       }
     },
