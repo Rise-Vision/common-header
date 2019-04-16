@@ -10,7 +10,6 @@ angular.module("risevision.common.header", [
   "risevision.common.header.directives",
   "risevision.common.header.filters",
   "risevision.common.i18n",
-  "risevision.common.systemmessages", "risevision.core.systemmessages",
   "risevision.core.countries",
   "risevision.core.oauth2",
   "risevision.store.authorization",
@@ -19,7 +18,6 @@ angular.module("risevision.common.header", [
   "risevision.store.data-gadgets",
   "risevision.core.userprofile",
   "risevision.common.registration",
-  "risevision.common.shoppingcart",
   "checklist-model",
   "ui.bootstrap", "ngSanitize", "ngCsv", "ngTouch", "ngTagsInput",
   "risevision.common.components.userstate",
@@ -31,6 +29,7 @@ angular.module("risevision.common.header", [
   "risevision.common.components.analytics",
   "risevision.common.components.message-box",
   "risevision.common.components.svg",
+  "risevision.common.components.subscription-status",
   "risevision.common.components.plans",
   "risevision.common.components.purchase-flow",
   "risevision.common.support"
@@ -96,8 +95,6 @@ angular.module("risevision.common.header", [
         }
 
         //default to true
-        $scope.hideShoppingCart = attr.hideShoppingCart !== "0" &&
-          attr.hideShoppingCart !== "false";
         $scope.hideHelpMenu = attr.hideHelpMenu !== "0" &&
           attr.hideHelpMenu !== "false";
 

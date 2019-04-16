@@ -13247,8 +13247,6 @@ ul .spinner-backdrop, .inner-box .spinner-backdrop, .panel .spinner-backdrop, .s
     margin: 0; }
     .action-sheet li > a, .action-sheet li > .u_link {
       padding: 8px; }
-    .action-sheet li.system-message {
-      padding-bottom: 10px !important; }
     .action-sheet li:active {
       background-color: #d5d5d5; }
     .action-sheet li a.action, .action-sheet li .action.u_link {
@@ -13274,12 +13272,6 @@ li.dropdown-header {
   background-color: #fff;
   padding: 0 10px;
   border: 1px solid #e5e5e5; }
-
-.system-message-list {
-  overflow-y: scroll;
-  min-width: 425px; }
-  .system-message-list .system-message {
-    padding: 22px; }
 
 .distribution {
   padding: 20px;
@@ -17598,73 +17590,6 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   .nailthumb-image {
     width: 294px !important;
     height: 343px !important; } }
-
-/* ==========================================================================
-   Shopping Cart
-   ========================================================================== */
-/* Bill To & Ship To
-   ========================================================================== */
-.shopping-cart .bill-to,
-.shopping-cart .ship-to {
-  margin-top: 6px;
-  margin-bottom: 0; }
-
-.shopping-cart .cart-empty,
-.shopping-cart .payment-confirmed {
-  margin-top: 6px; }
-
-.shopping-cart .cart-empty-content,
-.shopping-cart .payment-confirmed-content {
-  border-top: 1px solid #CCCCCC;
-  padding: 20px 0px 10px 0px; }
-
-.shopping-cart .address-icons {
-  margin-bottom: 0;
-  margin-top: 4px; }
-  .shopping-cart .address-icons li {
-    /* Positioning */
-    float: left;
-    /* Display & Box Model */
-    margin-left: 5px;
-    margin-top: 1px; }
-    .shopping-cart .address-icons li span {
-      position: relative;
-      top: -3px;
-      margin: 0px 10px; }
-
-.shopping-cart .address {
-  padding: 10px 17px;
-  border-top: 1px solid #cbcbcb;
-  margin-top: 5px;
-  margin-bottom: 3px; }
-
-.shopping-cart .row.title, .shopping-cart .support-app .ticket-list-table .title.title-row, .support-app .ticket-list-table .shopping-cart .title.title-row, .shopping-cart .support-app .ticket-list-table .title.ticket, .support-app .ticket-list-table .shopping-cart .title.ticket {
-  padding: 0 17px; }
-
-.shopping-cart .title {
-  margin-top: 0;
-  margin-bottom: 0; }
-
-.shopping-cart .terms {
-  font-size: 90%; }
-
-.shopping-cart .alert, .shopping-cart .support-app .support-time, .support-app .shopping-cart .support-time {
-  margin: 0;
-  padding: 10px 17px;
-  border-radius: 0;
-  cursor: pointer; }
-
-.shopping-cart .alert.ship-to-restriction, .shopping-cart .support-app .ship-to-restriction.support-time, .support-app .shopping-cart .ship-to-restriction.support-time {
-  margin-top: 0px; }
-  .shopping-cart .alert.ship-to-restriction h5, .shopping-cart .support-app .ship-to-restriction.support-time h5, .support-app .shopping-cart .ship-to-restriction.support-time h5 {
-    margin-top: 0; }
-
-.shopping-cart .subscriptions .btn .buttons .btn, .shopping-cart .subscriptions .icon-nav label .buttons .btn, .icon-nav .shopping-cart .subscriptions label .buttons .btn, .shopping-cart .subscriptions .btn .buttons .icon-nav label, .icon-nav .shopping-cart .subscriptions .btn .buttons label, .shopping-cart .subscriptions .icon-nav label .buttons label, .icon-nav .shopping-cart .subscriptions label .buttons label,
-.shopping-cart .purchases .buttons .btn,
-.shopping-cart .purchases .buttons .icon-nav label,
-.icon-nav .shopping-cart .purchases .buttons label {
-  width: 204px;
-  margin-top: 4px; }
 
 /* Purchases
    ========================================================================== */

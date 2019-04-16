@@ -66,7 +66,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('common-header.html',
-    '<div id="commonHeaderDiv" ng-hide="hideCommonHeader"><ng-include replace-include="" ng-controller="PlanBannerCtrl" src="\'plan-banner.html\'"></ng-include><nav class="navbar navbar-default hidden-print" ng-class="{\'active-banner\': isSubcompanySelected() || isTestCompanySelected()}" role="navigation"><div class="navbar-header"><a class="navbar-brand visible-md visible-lg" href="http://www.risevision.com/" target="{{newTabHome ? \'_blank\' : \'_self\'}}" ng-if="!inRVAFrame"><img src="//s3.amazonaws.com/Rise-Images/UI/logo.svg" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></a> <a class="navbar-brand hidden-md hidden-lg text-center" href="" off-canvas-toggle=""><i class="fa fa-bars"></i></a><div class="navbar-left visible-xs visible-sm" ng-if="ENV_NAME"><ul class="nav navbar-nav"><li class="env-name-nav-item"><span class="env-name-label">{{ENV_NAME}}</span></li></ul></div><div class="navbar-collapse navbar-left hidden-xs hidden-sm"><ul class="nav navbar-nav"><li class="env-name-nav-item visible-md visible-lg" ng-if="ENV_NAME"><span class="env-name-label">{{ENV_NAME}}</span></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a></li><li ng-if="!inRVAFrame && !hideHelpMenu"><a href="http://www.risevision.com/help/" target="_blank">Help</a></li></ul></div><ul class="nav navbar-nav navbar-right actions-nav pull-right"><ng-include replace-include="" ng-controller="ZendeskButtonCtrl" src="\'zendesk-button.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="SystemMessagesButtonCtrl" src="\'system-messages-button.html\'"></ng-include><ng-include replace-include="" ng-controller="ShoppingCartButtonCtrl" src="\'shoppingcart-button.html\'"></ng-include><ng-include replace-include="" ng-if="inRVAFrame" ng-controller="CloseFrameButtonCtrl" src="\'close-frame-button.html\'"></ng-include><ng-include ng-if="!inRVAFrame" replace-include="" src="\'app-nav-buttons.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="AuthButtonsCtr" src="\'auth-buttons.html\'"></ng-include><li ng-if="inRVAFrame" ng-controller="AuthButtonsCtr"></li></ul></div><ng-include replace-include="" ng-controller="TestCompanyBannerCtrl" src="\'test-company-banner.html\'"></ng-include><ng-include replace-include="" ng-controller="SubcompanyBannerCtrl" src="\'subcompany-banner.html\'"></ng-include></nav><ng-include replace-include="" ng-controller="GlobalAlertsCtrl" src="\'global-alerts.html\'"></ng-include><nav class="off-canvas-nav" off-canvas-nav=""><ul class="nav nav-pills nav-stacked"><li off-canvas-toggle=""><i class="fa fa-times fa-2x pull-right"></i> <img src="//s3.amazonaws.com/rise-common/images/logo-small.png" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}">{{opt.title}}</a></li><li ng-if="!hideHelpMenu"><a target="_blank" href="http://www.risevision.com/help">Help</a></li></ul></nav></div><div ng-show="cookieEnabled === false" class="bg-warning text-center u_padding-sm"><small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small></div><iframe name="logoutFrame" id="logoutFrame" style="display:none"></iframe>');
+    '<div id="commonHeaderDiv" ng-hide="hideCommonHeader"><ng-include replace-include="" ng-controller="PlanBannerCtrl" src="\'plan-banner.html\'"></ng-include><nav class="navbar navbar-default hidden-print" ng-class="{\'active-banner\': isSubcompanySelected() || isTestCompanySelected()}" role="navigation"><div class="navbar-header"><a class="navbar-brand visible-md visible-lg" href="http://www.risevision.com/" target="{{newTabHome ? \'_blank\' : \'_self\'}}" ng-if="!inRVAFrame"><img src="//s3.amazonaws.com/Rise-Images/UI/logo.svg" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></a> <a class="navbar-brand hidden-md hidden-lg text-center" href="" off-canvas-toggle=""><i class="fa fa-bars"></i></a><div class="navbar-left visible-xs visible-sm" ng-if="ENV_NAME"><ul class="nav navbar-nav"><li class="env-name-nav-item"><span class="env-name-label">{{ENV_NAME}}</span></li></ul></div><div class="navbar-collapse navbar-left hidden-xs hidden-sm"><ul class="nav navbar-nav"><li class="env-name-nav-item visible-md visible-lg" ng-if="ENV_NAME"><span class="env-name-label">{{ENV_NAME}}</span></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}" ng-class="{\'selected\': opt.states && opt.states.indexOf(navSelected) > -1}">{{opt.title}}</a></li><li ng-if="!inRVAFrame && !hideHelpMenu"><a href="http://www.risevision.com/help/" target="_blank">Help</a></li></ul></div><ul class="nav navbar-nav navbar-right actions-nav pull-right"><ng-include replace-include="" ng-controller="ZendeskButtonCtrl" src="\'zendesk-button.html\'"></ng-include><ng-include replace-include="" ng-if="inRVAFrame" ng-controller="CloseFrameButtonCtrl" src="\'close-frame-button.html\'"></ng-include><ng-include ng-if="!inRVAFrame" replace-include="" src="\'app-nav-buttons.html\'"></ng-include><ng-include replace-include="" ng-if="!inRVAFrame" ng-controller="AuthButtonsCtr" src="\'auth-buttons.html\'"></ng-include><li ng-if="inRVAFrame" ng-controller="AuthButtonsCtr"></li></ul></div><ng-include replace-include="" ng-controller="TestCompanyBannerCtrl" src="\'test-company-banner.html\'"></ng-include><ng-include replace-include="" ng-controller="SubcompanyBannerCtrl" src="\'subcompany-banner.html\'"></ng-include></nav><ng-include replace-include="" ng-controller="GlobalAlertsCtrl" src="\'global-alerts.html\'"></ng-include><nav class="off-canvas-nav" off-canvas-nav=""><ul class="nav nav-pills nav-stacked"><li off-canvas-toggle=""><i class="fa fa-times fa-2x pull-right"></i> <img src="//s3.amazonaws.com/rise-common/images/logo-small.png" class="img-responsive logo-small" width="113" height="42" alt="Rise Vision"></li><li ng-repeat="opt in navOptions"><a ng-if="opt.cid" ng-href="{{opt.link}}" link-cid="" target="{{opt.target}}">{{opt.title}}</a> <a ng-if="!opt.cid" ng-href="{{opt.link}}" target="{{opt.target}}">{{opt.title}}</a></li><li ng-if="!hideHelpMenu"><a target="_blank" href="http://www.risevision.com/help">Help</a></li></ul></nav></div><div ng-show="cookieEnabled === false" class="bg-warning text-center u_padding-sm"><small><strong>Cookies Are Disabled.</strong> Rise Vision needs to use cookies to properly function. Please enable Cookies and Third-Party Cookies on your web browser and refresh this page.</small></div><iframe name="logoutFrame" id="logoutFrame" style="display:none"></iframe>');
 }]);
 })();
 
@@ -233,18 +233,6 @@ try {
   module = angular.module('risevision.common.header.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('shoppingcart-button.html',
-    '<li class="shopping-cart" ng-show="!hideShoppingCart && isRiseVisionUser"><a href="{{shoppingCartUrl}}" class="shopping-cart-button"><i class="fa fa-shopping-cart"></i> <span id="cartBadge" class="label label-primary" ng-show="cart.items.length">{{cart.items.length | surpressZero}}</span></a></li>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('risevision.common.header.templates');
-} catch (e) {
-  module = angular.module('risevision.common.header.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('signout-modal.html',
     '<div class="modal-header"><button type="button" class="close" ng-click="closeModal()" aria-hidden="true"><i class="fa fa-times"></i></button><h2 id="sign-out-label" class="modal-title">Sign Out</h2></div><div class="modal-body sign-out-modal" stop-event="touchend"><form role="form"><p>Signing out does not sign you out of your Google Account.</p><p>If you are on a shared computer you should sign out of your Google Account.</p><p><button type="button" class="btn btn-default sign-out-rv-only-button" ng-click="signOut(false)">Sign Out <i class="fa fa-sign-out fa-lg icon-right"></i></button></p><button type="button" class="btn btn-default sign-out-google-account" ng-click="signOut(true)">Sign Out of your Google Account <i class="fa fa-google-plus-square fa-lg icon-right"></i></button><p></p></form></div>');
 }]);
@@ -271,30 +259,6 @@ try {
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('subcompany-modal.html',
     '<div rv-spinner="" rv-spinner-key="add-subcompany-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" ng-click="closeModal()" aria-hidden="true"><i class="fa fa-times"></i></button><h2 id="sub-company-label" class="modal-title">Add Sub-Company</h2></div><div class="modal-body add-subcompany-modal" stop-event="touchend"><form role="form" name="forms.companyForm" novalidate=""><div ng-include="\'company-fields.html\'"></div><div class="form-group"><a href="" data-dismiss="modal" data-toggle="modal" class="move-subcompany-button" ng-click="moveCompany()">Move a Company Under Your Company</a></div></form></div><div class="modal-footer"><button type="button" class="btn btn-success btn-fixed-width add-subcompany-save-button" ng-click="save()" ng-disabled="forms.companyForm.$invalid">Save <i class="fa fa-white fa-check icon-right"></i></button> <button type="button" class="btn btn-default btn-fixed-width cancel-add-subcompany-button" ng-click="closeModal()">Cancel <i class="fa fa-white fa-times icon-right"></i></button></div></div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('risevision.common.header.templates');
-} catch (e) {
-  module = angular.module('risevision.common.header.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('system-messages-button-menu.html',
-    '<ul><li class="dropdown-header dropdown-title system-message">Notifications</li><li class="divider"></li><li class="system-message" ng-repeat="message in messages" ng-bind-html="renderHtml(message.text)"></li></ul>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('risevision.common.header.templates');
-} catch (e) {
-  module = angular.module('risevision.common.header.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('system-messages-button.html',
-    '<li dropdown="" class="dropdown system-messages hidden-xs" ng-show="isRiseVisionUser && messages.length > 0"><a href="" dropdown-toggle="" class="dropdown-toggle system-messages-button"><i class="fa fa-bell"></i> <span class="label label-danger system-messages-badge">{{messages.length | surpressZero}}</span></a><div class="dropdown-menu system-messages system-message-list" role="menu"><ng-include src="\'system-messages-button-menu.html\'"></ng-include></div></li><li class="system-messages" ng-show="isRiseVisionUser && messages.length > 0" ng-class="{\'visible-xs-inline-block\': isRiseVisionUser && messages.length > 0}"><a href="" class="system-messages-button" action-sheet="\'system-messages-button-menu.html\'" action-sheet-class="system-message-list"><i class="fa fa-bell"></i> <span class="label label-danger system-messages-badge">{{messages.length}}</span></a></li>');
 }]);
 })();
 
@@ -346,7 +310,6 @@ angular.module("risevision.common.header", [
   "risevision.common.header.directives",
   "risevision.common.header.filters",
   "risevision.common.i18n",
-  "risevision.common.systemmessages", "risevision.core.systemmessages",
   "risevision.core.countries",
   "risevision.core.oauth2",
   "risevision.store.authorization",
@@ -355,7 +318,6 @@ angular.module("risevision.common.header", [
   "risevision.store.data-gadgets",
   "risevision.core.userprofile",
   "risevision.common.registration",
-  "risevision.common.shoppingcart",
   "checklist-model",
   "ui.bootstrap", "ngSanitize", "ngCsv", "ngTouch", "ngTagsInput",
   "risevision.common.components.userstate",
@@ -367,6 +329,7 @@ angular.module("risevision.common.header", [
   "risevision.common.components.analytics",
   "risevision.common.components.message-box",
   "risevision.common.components.svg",
+  "risevision.common.components.subscription-status",
   "risevision.common.components.plans",
   "risevision.common.components.purchase-flow",
   "risevision.common.support"
@@ -432,8 +395,6 @@ angular.module("risevision.common.header", [
         }
 
         //default to true
-        $scope.hideShoppingCart = attr.hideShoppingCart !== "0" &&
-          attr.hideShoppingCart !== "false";
         $scope.hideHelpMenu = attr.hideHelpMenu !== "0" &&
           attr.hideHelpMenu !== "false";
 
@@ -803,6 +764,19 @@ angular.module("risevision.common.header.directives")
       };
     }
   ]);
+
+"use strict";
+
+angular.module("risevision.common.header.filters")
+  .filter("surpressZero", function () {
+    return function (num) {
+      if (num) {
+        return num;
+      } else {
+        return "";
+      }
+    };
+  });
 
 angular.module("risevision.common.header")
   .controller("AuthButtonsCtr", ["$scope", "$modal", "$templateCache",
@@ -1690,36 +1664,6 @@ angular.module("risevision.common.header")
   ]);
 
 angular.module("risevision.common.header")
-
-.filter("surpressZero", function () {
-  return function (num) {
-    if (num) {
-      return num;
-    } else {
-      return "";
-    }
-  };
-})
-
-.controller("ShoppingCartButtonCtrl", [
-  "$scope", "shoppingCart", "userState", "$log", "STORE_URL",
-  function ($scope, shoppingCart, userState, $log, STORE_URL) {
-
-    $scope.shoppingCartUrl = STORE_URL + "shopping-cart";
-    $scope.cart = {};
-    $scope.cart.items = shoppingCart.getItems();
-    $scope.$watch(function () {
-        return userState.isRiseVisionUser();
-      },
-      function (isRvUser) {
-        $scope.isRiseVisionUser = isRvUser;
-        shoppingCart.get();
-      });
-
-  }
-]);
-
-angular.module("risevision.common.header")
   .controller("SignOutButtonCtrl", ["$scope", "$modal", "$templateCache",
     "$log", "uiFlowManager", "userAuthFactory", "userState",
     function ($scope, $modal, $templateCache, $log, uiFlowManager,
@@ -1893,46 +1837,6 @@ angular.module("risevision.common.header")
 
     }
   ]);
-
-angular.module("risevision.common.header")
-
-.controller("SystemMessagesButtonCtrl", [
-  "$scope", "userState", "$log", "$sce", "getCoreSystemMessages",
-  "systemMessages",
-  function ($scope, userState, $log, $sce, getCoreSystemMessages,
-    systemMessages) {
-
-    $scope.messages = systemMessages;
-    $scope.$watch(function () {
-        return userState.isRiseVisionUser();
-      },
-      function (isRvUser) {
-        $scope.isRiseVisionUser = isRvUser;
-      });
-
-    $scope.renderHtml = function (html_code) {
-      return $sce.trustAsHtml(html_code);
-    };
-
-    //register core message retriever
-    systemMessages.registerRetriever(function () {
-      return getCoreSystemMessages(userState.getSelectedCompanyId());
-    });
-
-    $scope.$watch(
-      function () {
-        return userState.getSelectedCompanyId();
-      },
-      function (newCompanyId) {
-        if (newCompanyId !== null) {
-          systemMessages.resetAndGetMessages().then($scope.apply);
-        } else {
-          systemMessages.clear();
-        }
-      });
-
-  }
-]);
 
 angular.module("risevision.common.header")
 
@@ -3182,272 +3086,6 @@ angular.module("risevision.common.geodata", [])
 
 })(angular);
 
-(function (angular) {
-  "use strict";
-
-  angular.module("risevision.common.shoppingcart", ["risevision.common.gapi",
-    "risevision.common.components.userstate"
-  ])
-
-  .factory("shoppingCart", ["storeAPILoader", "$log", "$q",
-    "userState",
-    function (storeAPILoader, $log, $q, userState) {
-      var _items = [];
-      var _cart = {
-        "items": _items,
-        "useBillToAddress": false,
-        "shipToAttention": "",
-        "couponCode": ""
-      };
-
-      var readFromStorage = function () {
-        var deferred = $q.defer();
-        if (userState.isLoggedIn()) {
-
-          storeAPILoader().then(function (storeApi) {
-            var obj = {
-              "id": userState.getUsername()
-            };
-            var request = storeApi.cart.get(obj);
-            request.execute(function (resp) {
-              if (!resp.error) {
-                clearItems();
-                addItems(resp.items);
-                _cart.useBillToAddress = resp.useBillToAddress;
-                _cart.shipToAttention = resp.shipToAttention ? resp.shipToAttention :
-                  "";
-                _cart.couponCode = resp.couponCode;
-                deferred.resolve();
-              } else {
-                $log.warn("Error loading cart items. Error: " + resp.error);
-                deferred.resolve();
-              }
-            });
-          });
-
-        } else {
-          clearItems();
-          deferred.resolve();
-        }
-        return deferred.promise;
-      };
-
-      var persistToStorage = function () {
-        var deferred = $q.defer();
-        if (userState.isLoggedIn()) {
-          storeAPILoader().then(function (storeApi) {
-            //remove try/catch after API is implemented
-            try {
-              var obj = {
-                "data": {
-                  //"id": userState.getUsername(),
-                  "jsonItems": getJsonItems(_items),
-                  "shipToAttention": _cart.shipToAttention,
-                  "useBillToAddress": _cart.useBillToAddress,
-                  "couponCode": _cart.couponCode
-                }
-              };
-              var request = storeApi.cart.put(obj);
-              request.execute(function (resp) {
-                if (!resp.error) {
-                  deferred.resolve();
-                } else {
-                  $log.warn("Error persisting cart items. Error: " +
-                    resp.error);
-                  deferred.resolve();
-                }
-              });
-            } catch (e) {
-              deferred.resolve();
-              console.error(
-                "[persistToStorage] - Unimplemented API method " + e.message
-              );
-            }
-          });
-        }
-        return deferred.promise;
-
-      };
-
-      var clearCart = function () {
-        _cart.useBillToAddress = false;
-        _cart.shipToAttention = "";
-        _cart.couponCode = "";
-        clearItems();
-      };
-
-      var clearItems = function () {
-        while (_items.length > 0) {
-          _items.pop();
-        }
-      };
-
-      var addItems = function (items) {
-        if (items) {
-          for (var i = 0; i < items.length; i++) {
-            _items.push(items[i]);
-          }
-        }
-      };
-
-      var cleanProducts = function (items) {
-        var item;
-        var res = [];
-        for (var i = 0; i < items.length; i++) {
-          item = {
-            "productId": items[i].productId,
-            "qty": items[i].qty,
-            "accountingId": items[i].selected.accountingId,
-            "licensedDisplays": items[i].licensedDisplays
-          };
-          res.push(item);
-        }
-        return res;
-      };
-
-      var getJsonItems = function (items) {
-        var cleanedItems = cleanProducts(items);
-        return JSON.stringify(cleanedItems);
-      };
-
-      var loadReady = null;
-      var username = null;
-
-      var cartManager = {
-        get: function () {
-
-          if (loadReady !== null && userState.checkUsername(username)) {
-            return loadReady;
-          }
-
-          username = userState.getUsername();
-          clearCart();
-
-          loadReady = $q.defer();
-          var deferred = loadReady;
-
-          readFromStorage().then(function () {
-            deferred.resolve(_cart);
-          });
-
-          return deferred;
-        },
-        clear: function () {
-          clearItems();
-          persistToStorage();
-          $log.debug("Shopping cart cleared.");
-        },
-        getItems: function () {
-          return _items;
-        },
-        setItems: function (items) {
-          $log.debug("Setting cart items", items);
-          //check if they are pointing to the same object
-          if (items !== _items) {
-            clearItems();
-            addItems(items);
-          }
-          return persistToStorage();
-        },
-        getShipToAttention: function () {
-          return _cart.shipToAttention;
-        },
-        getUseBillToAddress: function () {
-          return _cart.useBillToAddress;
-        },
-        setAddressFields: function (shipToAttention, useBillToAddress) {
-          _cart.shipToAttention = shipToAttention;
-          _cart.useBillToAddress = useBillToAddress;
-          return persistToStorage();
-        },
-        getCouponCode: function () {
-          return _cart.couponCode;
-        },
-        setCouponCode: function (couponCode) {
-          $log.debug("Setting coupon code", couponCode);
-          //check if they are pointing to the same object
-          _cart.couponCode = couponCode;
-          return persistToStorage();
-        },
-        getItemCount: function () {
-          if (_items !== null) {
-            return _items.length;
-          } else {
-            return 0;
-          }
-        },
-        removeItem: function (itemToRemove) {
-          if (itemToRemove) {
-            for (var i = 0; i < _items.length; i++) {
-              if (_items[i].productId === itemToRemove.productId) {
-                _items.splice(i, 1);
-                break;
-              }
-            }
-            persistToStorage();
-          }
-        },
-        adjustItemQuantity: function (itemToAdjust, qty) {
-          if (itemToAdjust && $.isNumeric(qty) && qty > 0) {
-            persistToStorage();
-          }
-        },
-        addItem: function (itemToAdd, qty, pricingIndex) {
-
-          if (!userState.isRiseVisionUser()) {
-            return;
-          }
-          var item = this.findItem(itemToAdd);
-
-          if (item && (itemToAdd.paymentTerms === "Subscription" ||
-            itemToAdd.paymentTerms === "Metered")) {
-            return;
-          }
-
-          if (itemToAdd && $.isNumeric(qty) && itemToAdd.orderedPricing.length >
-            pricingIndex) {
-            if (item) {
-              // qty for existing item is increased
-              item.qty = parseInt(item.qty) + parseInt(qty);
-            } else {
-              // item is not already in the cart
-              item = angular.copy(itemToAdd);
-              item.qty = qty;
-              _items.push(item);
-            }
-            item.selected = itemToAdd.orderedPricing[pricingIndex];
-            persistToStorage();
-          }
-        },
-        findItem: function (item) {
-          //returns instance of the object from _items array
-
-          if (item) {
-            for (var i = 0; i < _items.length; i++) {
-              if (item.productId === _items[i].productId) {
-                return _items[i];
-              }
-            }
-          }
-
-          return null;
-        },
-        itemExists: function (item) {
-          if (userState.isRiseVisionUser() && item && this.findItem(item) !==
-            null) {
-            return true;
-          }
-          return false;
-        }
-      };
-      //cartManager.initialize();
-
-      return cartManager;
-
-    }
-  ]);
-})(angular);
-
 (function () {
   "use strict";
 
@@ -3632,109 +3270,21 @@ angular.module("risevision.common.geodata", [])
     ]);
 })();
 
-(function (angular) {
-
-  "use strict";
-
-  angular.module("risevision.common.systemmessages", [])
-
-  .factory("systemMessages", ["$log", "$q",
-    function ($log, $q) {
-
-      var messages = [];
-      var _retrievers = [];
-
-      function pushMessage(m, list) {
-        //TODO add more sophisticated, sorting-based logic here
-        $log.debug("pushing message", m);
-        list.push(m);
-      }
-
-      messages.addMessages = function (newMessages) {
-        if (newMessages && newMessages instanceof Array) {
-          newMessages = (function filterNewMessages(items) {
-            var _newItems = [];
-
-            var currentTime = new Date();
-
-            angular.forEach(items, function (msg) {
-              var endTime = new Date(msg.endDate || "2199-12-31");
-              var startTime = new Date(msg.startDate || 0);
-              endTime.setDate(endTime.getDate() + 1);
-              if (currentTime > startTime && currentTime < endTime) {
-                _newItems.push(msg);
-              }
-            });
-            return _newItems;
-          })(newMessages);
-          newMessages.forEach(function (m) {
-            //temporary logic to avoid duplicate messages
-            var duplicate = false;
-            messages.forEach(function (um) {
-              if (um.text === m.text) {
-                duplicate = true;
-              }
-            });
-            if (!duplicate) {
-              pushMessage(m, messages);
-            }
-          });
-
-          messages.sort(function (a, b) {
-            if (!a.startDate || a.startDate > b.startDate) {
-              return 1;
-            } else if (a.startDate && a.startDate === b.startDate) {
-              return 0;
-            } else {
-              return -1;
-            }
-          }).reverse();
-        }
-      };
-
-      messages.clear = function () {
-        messages.length = 0;
-        $log.debug("System message cleared.");
-      };
-
-      messages.registerRetriever = function (func) {
-        //the retriever must return a promise that resolves to an array
-        // of messages
-        _retrievers.push(func);
-      };
-
-      messages.resetAndGetMessages = function () {
-        messages.clear();
-        var promises = _retrievers.map(function (func) {
-          return func.call();
-        });
-        return $q.all(promises).then(function (messageArrays) {
-          messageArrays.forEach(messages.addMessages);
-        });
-      };
-
-      return messages;
-
-    }
-  ]);
-
-})(angular);
-
 /* jshint maxlen: false */
 
 (function (angular) {
   "use strict";
 
-  angular.module("risevision.common.support", ["risevision.common.components.subscription-status"])
+  angular.module("risevision.common.support", [])
   /* jshint quotmark: single */
   .value('ZENDESK_WEB_WIDGET_SCRIPT',
     'window.zE||(function(e,t,s){var n=window.zE=window.zEmbed=function(){n._.push(arguments)},a=n.s=e.createElement(t),r=e.getElementsByTagName(t)[0];n.set=function(e){n.set._.push(e)},n._=[],n.set._=[],a.async=true,a.setAttribute("charset","utf-8"),a.src="https://static.zdassets.com/ekr/asset_composer.js?key="+s,n.t=+new Date,a.type="text/javascript",r.parentNode.insertBefore(a,r)})(document,"script","b8d6bdba-10ea-4b88-b96c-9d3905b85d8f");'
   )
   /* jshint quotmark: double */
-  .factory("zendesk", ["getSupportSubscriptionStatus", "segmentAnalytics",
-    "userState", "$window", "$q", "$location", "ZENDESK_WEB_WIDGET_SCRIPT",
-    function (getSupportSubscriptionStatus, segmentAnalytics, userState,
-      $window, $q, $location, ZENDESK_WEB_WIDGET_SCRIPT) {
+  .factory("zendesk", ["$q", "$window", "segmentAnalytics",
+    "userState", "ZENDESK_WEB_WIDGET_SCRIPT",
+    function ($q, $window, segmentAnalytics, userState,
+      ZENDESK_WEB_WIDGET_SCRIPT) {
 
       var loaded = false;
       var previousUsername = "";
@@ -3783,30 +3333,15 @@ angular.module("risevision.common.geodata", [])
         var deferred = $q.defer();
 
         $window.zE(function () {
-
           var username = userState.getUsername();
           var properties = {
             email: userState.getUserEmail(),
             "rise_vision_company_id": userState.getUserCompanyId(),
           };
 
-          getSupportSubscriptionStatus()
-            .then(function (subscriptionStatus) {
-              if (subscriptionStatus && subscriptionStatus.statusCode === "subscribed") {
-                // append priority support flag
-                $location.search("cHJpb3JpdHktc3VwcG9ydA", 1);
-              } else {
-                // clear priority support flag
-                $location.search("cHJpb3JpdHktc3VwcG9ydA", null);
-              }
-              segmentAnalytics.identify(username, properties);
-              deferred.resolve();
-            })
-            .catch(function (err) {
-              console.log("Error getting subscription status", err);
-              deferred.reject();
-            });
+          segmentAnalytics.identify(username, properties);
 
+          deferred.resolve();
         });
         return deferred.promise;
       }
@@ -3892,77 +3427,54 @@ angular.module("risevision.common.geodata", [])
 
     }
   ])
-    .factory("getSupportSubscriptionStatus", ["SUPPORT_PRODUCT_CODE", "userState", "$q",
-      "subscriptionStatusService", "$log",
-      function (SUPPORT_PRODUCT_CODE, userState, $q, subscriptionStatusService,
-        $log) {
-        return function getSupportSubscriptionStatus() {
-          var deferred = $q.defer();
 
-          if (SUPPORT_PRODUCT_CODE && userState.getSelectedCompanyId()) {
-            subscriptionStatusService.get(SUPPORT_PRODUCT_CODE, userState.getSelectedCompanyId())
-              .then(function (subscriptionStatus) {
-                  $log.debug("subscriptionStatus", subscriptionStatus);
-                  deferred.resolve(subscriptionStatus);
-                },
-                function (err) {
-                  $log.debug("Could not retrieve a subscription status", err);
-                  deferred.reject(err);
-                });
-          } else {
-            deferred.reject();
-          }
-          return deferred.promise;
-        };
-      }
-    ])
-    .run(["$rootScope", "$window", "userState", "userAuthFactory", "zendesk", "ZENDESK_WEB_WIDGET_SCRIPT",
-      function ($rootScope, $window, userState, userAuthFactory, zendesk, ZENDESK_WEB_WIDGET_SCRIPT) {
-        var widgetVisible = false;
+  .run(["$rootScope", "$window", "userState", "userAuthFactory", "zendesk", "ZENDESK_WEB_WIDGET_SCRIPT",
+    function ($rootScope, $window, userState, userAuthFactory, zendesk, ZENDESK_WEB_WIDGET_SCRIPT) {
+      var widgetVisible = false;
 
-        if (ZENDESK_WEB_WIDGET_SCRIPT) {
-          zendesk.initializeWidget();
+      if (ZENDESK_WEB_WIDGET_SCRIPT) {
+        zendesk.initializeWidget();
 
-          userAuthFactory.authenticate()
-            .then(function () {
-              if (!userState.isLoggedIn()) {
-                _showWebWidget();
-              }
-            })
-            .catch(function () {
+        userAuthFactory.authenticate()
+          .then(function () {
+            if (!userState.isLoggedIn()) {
               _showWebWidget();
-            });
-
-          $rootScope.$on("risevision.user.authorized", function () {
-            zendesk.initializeWidget(); // Needed to authenticate the user
-            _hideWebWidget();
-          });
-
-          $rootScope.$on("risevision.user.signedOut", function () {
+            }
+          })
+          .catch(function () {
             _showWebWidget();
           });
 
-          $rootScope.$on("$stateChangeStart", function () {
-            zendesk.enableSuggestions();
-          });
-        }
+        $rootScope.$on("risevision.user.authorized", function () {
+          zendesk.initializeWidget(); // Needed to authenticate the user
+          _hideWebWidget();
+        });
 
-        function _hideWebWidget() {
-          if (widgetVisible) {
-            zendesk.hideWidget();
-            widgetVisible = false;
-          }
-        }
+        $rootScope.$on("risevision.user.signedOut", function () {
+          _showWebWidget();
+        });
 
-        function _showWebWidget() {
-          setTimeout(function () {
-            zendesk.logout();
-            zendesk.displayButton();
-            widgetVisible = true;
-          }, 2000);
+        $rootScope.$on("$stateChangeStart", function () {
+          zendesk.enableSuggestions();
+        });
+      }
+
+      function _hideWebWidget() {
+        if (widgetVisible) {
+          zendesk.hideWidget();
+          widgetVisible = false;
         }
       }
-    ]);
+
+      function _showWebWidget() {
+        setTimeout(function () {
+          zendesk.logout();
+          zendesk.displayButton();
+          widgetVisible = true;
+        }, 2000);
+      }
+    }
+  ]);
 })(angular);
 
 "use strict";
@@ -5530,35 +5042,6 @@ angular.module("risevision.store.authorization", [
       }
     ]);
 }());
-
-(function (angular) {
-  "use strict";
-
-  angular.module("risevision.core.systemmessages", ["risevision.common.gapi"])
-
-  .factory("getCoreSystemMessages", ["gapiLoader", "$q", "$log",
-    function (gapiLoader, $q, $log) {
-      return function (companyId) {
-        var deferred = $q.defer();
-        gapiLoader().then(function (gApi) {
-          var request = gApi.client.core.systemmessage.list({
-            "companyId": companyId
-          });
-          request.execute(function (resp) {
-            var items = resp;
-            if (!(items instanceof Array) && items.items) {
-              items = items.items;
-            }
-            $log.debug("getCoreSystemMessage resp", items);
-            deferred.resolve(items);
-          });
-        });
-        return deferred.promise;
-      };
-    }
-  ]);
-
-})(angular);
 
 (function (angular) {
   "use strict";
@@ -11358,10 +10841,6 @@ module.run(['$templateCache', function($templateCache) {
     .value("STORAGE_ENDPOINT_URL",
       "https://storage-dot-rvaserver2.appspot.com/_ah/api")
     .value("GSFP_URL", "https://gsfp-dot-rvaserver2.appspot.com/fp")
-    .value("SUPPORT_PRODUCT_CODE", "4c8c2f1a481d0ad84c6b16a9c6e90e2fc2252944")
-    .value("SUPPORT_PRODUCT_ID", "14")
-    .value("SUPPORT_PRODUCT_URL",
-      "https://store.risevision.com/products/?cat=compareSupport")
     .value("APPS_URL", "https://apps.risevision.com")
     .value("CHARGEBEE_TEST_SITE", "risevision-test")
     .value("CHARGEBEE_PROD_SITE", "risevision")

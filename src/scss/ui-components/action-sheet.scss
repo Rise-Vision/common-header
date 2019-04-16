@@ -49,9 +49,6 @@
     > a {
       padding: 8px;
     }
-    &.system-message {
-      padding-bottom: 10px !important;
-    }
     &:active { background-color: $gray-lighter; }
     a.action {
       display: block;

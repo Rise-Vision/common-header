@@ -3,16 +3,16 @@
 (function (angular) {
   "use strict";
 
-  angular.module("risevision.common.support", ["risevision.common.components.subscription-status"])
+  angular.module("risevision.common.support", [])
   /* jshint quotmark: single */
   .value('ZENDESK_WEB_WIDGET_SCRIPT',
     'window.zE||(function(e,t,s){var n=window.zE=window.zEmbed=function(){n._.push(arguments)},a=n.s=e.createElement(t),r=e.getElementsByTagName(t)[0];n.set=function(e){n.set._.push(e)},n._=[],n.set._=[],a.async=true,a.setAttribute("charset","utf-8"),a.src="https://static.zdassets.com/ekr/asset_composer.js?key="+s,n.t=+new Date,a.type="text/javascript",r.parentNode.insertBefore(a,r)})(document,"script","b8d6bdba-10ea-4b88-b96c-9d3905b85d8f");'
   )
   /* jshint quotmark: double */
-  .factory("zendesk", ["getSupportSubscriptionStatus", "segmentAnalytics",
-    "userState", "$window", "$q", "$location", "ZENDESK_WEB_WIDGET_SCRIPT",
-    function (getSupportSubscriptionStatus, segmentAnalytics, userState,
-      $window, $q, $location, ZENDESK_WEB_WIDGET_SCRIPT) {
+  .factory("zendesk", ["$q", "$window", "segmentAnalytics",
+    "userState", "ZENDESK_WEB_WIDGET_SCRIPT",
+    function ($q, $window, segmentAnalytics, userState,
+      ZENDESK_WEB_WIDGET_SCRIPT) {
 
       var loaded = false;
       var previousUsername = "";
@@ -61,30 +61,15 @@
         var deferred = $q.defer();
 
         $window.zE(function () {
-
           var username = userState.getUsername();
           var properties = {
             email: userState.getUserEmail(),
             "rise_vision_company_id": userState.getUserCompanyId(),
           };
 
-          getSupportSubscriptionStatus()
-            .then(function (subscriptionStatus) {
-              if (subscriptionStatus && subscriptionStatus.statusCode === "subscribed") {
-                // append priority support flag
-                $location.search("cHJpb3JpdHktc3VwcG9ydA", 1);
-              } else {
-                // clear priority support flag
-                $location.search("cHJpb3JpdHktc3VwcG9ydA", null);
-              }
-              segmentAnalytics.identify(username, properties);
-              deferred.resolve();
-            })
-            .catch(function (err) {
-              console.log("Error getting subscription status", err);
-              deferred.reject();
-            });
+          segmentAnalytics.identify(username, properties);
 
+          deferred.resolve();
         });
         return deferred.promise;
       }
@@ -170,75 +155,52 @@
 
     }
   ])
-    .factory("getSupportSubscriptionStatus", ["SUPPORT_PRODUCT_CODE", "userState", "$q",
-      "subscriptionStatusService", "$log",
-      function (SUPPORT_PRODUCT_CODE, userState, $q, subscriptionStatusService,
-        $log) {
-        return function getSupportSubscriptionStatus() {
-          var deferred = $q.defer();
 
-          if (SUPPORT_PRODUCT_CODE && userState.getSelectedCompanyId()) {
-            subscriptionStatusService.get(SUPPORT_PRODUCT_CODE, userState.getSelectedCompanyId())
-              .then(function (subscriptionStatus) {
-                  $log.debug("subscriptionStatus", subscriptionStatus);
-                  deferred.resolve(subscriptionStatus);
-                },
-                function (err) {
-                  $log.debug("Could not retrieve a subscription status", err);
-                  deferred.reject(err);
-                });
-          } else {
-            deferred.reject();
-          }
-          return deferred.promise;
-        };
-      }
-    ])
-    .run(["$rootScope", "$window", "userState", "userAuthFactory", "zendesk", "ZENDESK_WEB_WIDGET_SCRIPT",
-      function ($rootScope, $window, userState, userAuthFactory, zendesk, ZENDESK_WEB_WIDGET_SCRIPT) {
-        var widgetVisible = false;
+  .run(["$rootScope", "$window", "userState", "userAuthFactory", "zendesk", "ZENDESK_WEB_WIDGET_SCRIPT",
+    function ($rootScope, $window, userState, userAuthFactory, zendesk, ZENDESK_WEB_WIDGET_SCRIPT) {
+      var widgetVisible = false;
 
-        if (ZENDESK_WEB_WIDGET_SCRIPT) {
-          zendesk.initializeWidget();
+      if (ZENDESK_WEB_WIDGET_SCRIPT) {
+        zendesk.initializeWidget();
 
-          userAuthFactory.authenticate()
-            .then(function () {
-              if (!userState.isLoggedIn()) {
-                _showWebWidget();
-              }
-            })
-            .catch(function () {
+        userAuthFactory.authenticate()
+          .then(function () {
+            if (!userState.isLoggedIn()) {
               _showWebWidget();
-            });
-
-          $rootScope.$on("risevision.user.authorized", function () {
-            zendesk.initializeWidget(); // Needed to authenticate the user
-            _hideWebWidget();
-          });
-
-          $rootScope.$on("risevision.user.signedOut", function () {
+            }
+          })
+          .catch(function () {
             _showWebWidget();
           });
 
-          $rootScope.$on("$stateChangeStart", function () {
-            zendesk.enableSuggestions();
-          });
-        }
+        $rootScope.$on("risevision.user.authorized", function () {
+          zendesk.initializeWidget(); // Needed to authenticate the user
+          _hideWebWidget();
+        });
 
-        function _hideWebWidget() {
-          if (widgetVisible) {
-            zendesk.hideWidget();
-            widgetVisible = false;
-          }
-        }
+        $rootScope.$on("risevision.user.signedOut", function () {
+          _showWebWidget();
+        });
 
-        function _showWebWidget() {
-          setTimeout(function () {
-            zendesk.logout();
-            zendesk.displayButton();
-            widgetVisible = true;
-          }, 2000);
+        $rootScope.$on("$stateChangeStart", function () {
+          zendesk.enableSuggestions();
+        });
+      }
+
+      function _hideWebWidget() {
+        if (widgetVisible) {
+          zendesk.hideWidget();
+          widgetVisible = false;
         }
       }
-    ]);
+
+      function _showWebWidget() {
+        setTimeout(function () {
+          zendesk.logout();
+          zendesk.displayButton();
+          widgetVisible = true;
+        }, 2000);
+      }
+    }
+  ]);
 })(angular);

@@ -18,9 +18,6 @@
     var changeSubcompanyButton = element(by.id("change-subcompany-button"));
     var resetSubcompanyButton = element(by.id("reset-subcompany-button"));
     
-    var systemMessagesButton = element(by.css(".dropdown .system-messages-button"));
-    var systemMessagesBadge = element(by.css(".dropdown .system-messages-badge"));
-    
     var subcompanyAlert = element(by.css(".common-header-alert.sub-company-alert"));
     var testCompanyAlert = element(by.css(".sub-company-alert.test-company-alert"));
 
@@ -74,14 +71,6 @@
 
     this.getResetSubcompanyButton = function() {
       return resetSubcompanyButton;
-    };
-    
-    this.getSystemMessagesButton = function() {
-      return systemMessagesButton;
-    };
-    
-    this.getSystemMessagesBadge = function() {
-      return systemMessagesBadge;
     };
     
     this.getSubcompanyAlert = function() {

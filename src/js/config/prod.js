@@ -33,10 +33,6 @@
     .value("STORAGE_ENDPOINT_URL",
       "https://storage-dot-rvaserver2.appspot.com/_ah/api")
     .value("GSFP_URL", "https://gsfp-dot-rvaserver2.appspot.com/fp")
-    .value("SUPPORT_PRODUCT_CODE", "4c8c2f1a481d0ad84c6b16a9c6e90e2fc2252944")
-    .value("SUPPORT_PRODUCT_ID", "14")
-    .value("SUPPORT_PRODUCT_URL",
-      "https://store.risevision.com/products/?cat=compareSupport")
     .value("APPS_URL", "https://apps.risevision.com")
     .value("CHARGEBEE_TEST_SITE", "risevision-test")
     .value("CHARGEBEE_PROD_SITE", "risevision")

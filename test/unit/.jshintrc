@@ -251,7 +251,6 @@
     "rvFixtures": false,
 
     /* RV Globals */
-    "shoppingCart": false,
     "showSpin": false,
     "hideSpin": false
   }

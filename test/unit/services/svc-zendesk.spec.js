@@ -3,7 +3,7 @@
 describe("Services: Zendesk", function() {
   beforeEach(module("risevision.common.support"));
 
-  var sandbox, windowObj, zeSpy, locationSearchSpy, widgetShown;
+  var sandbox, windowObj, zeSpy, widgetShown;
 
   sandbox = sinon.sandbox.create();
 
@@ -42,12 +42,6 @@ describe("Services: Zendesk", function() {
         authenticate: function() {
           return Q.resolve();
         },
-      };
-    });
-    locationSearchSpy = sandbox.stub();
-    $provide.service("$location", function() {
-      return {
-        search: locationSearchSpy,
       };
     });
 
@@ -92,13 +86,6 @@ describe("Services: Zendesk", function() {
     $provide.service("$window", function() {
       return windowObj;
     });
-    $provide.factory("getSupportSubscriptionStatus", function() {
-      return function() {
-        return Q.when({
-          statusCode: "subscribed"
-        });
-      };
-    });
   }));
 
   it("should exists", function() {
@@ -111,7 +98,6 @@ describe("Services: Zendesk", function() {
     inject(function(zendesk) {
       zendesk.initializeWidget().then(function(){
         expect(zeSpy).to.have.been.called;
-        expect(locationSearchSpy).to.have.been.calledWith("cHJpb3JpdHktc3VwcG9ydA", 1);
         done();
       }, done);
     });
