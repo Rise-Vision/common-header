@@ -8729,11 +8729,11 @@ angular.module("risevision.common.components.stop-event", [])
   angular.module("risevision.common.components.analytics", [])
 
   .value("SEGMENT_API_KEY", "AFtY3tN10BQj6RbnfpDDp9Hx8N1modKN")
-    .value("GA_LINKER_USER_ANCHOR", true)
+    .value("GA_LINKER_USE_ANCHOR", true)
 
   .factory("segmentAnalytics", ["$rootScope", "$window", "$log", "$location",
-    "GA_LINKER_USER_ANCHOR",
-    function ($rootScope, $window, $log, $location, GA_LINKER_USER_ANCHOR) {
+    "GA_LINKER_USE_ANCHOR",
+    function ($rootScope, $window, $log, $location, GA_LINKER_USE_ANCHOR) {
       var service = {};
       var loaded;
 
@@ -8777,7 +8777,7 @@ angular.module("risevision.common.components.stop-event", [])
           "store.risevision.com", "help.risevision.com",
           "apps.risevision.com", "risevision.com",
           "preview.risevision.com", "rva.risevision.com"
-        ], GA_LINKER_USER_ANCHOR);
+        ], GA_LINKER_USE_ANCHOR);
       });
 
       /**
