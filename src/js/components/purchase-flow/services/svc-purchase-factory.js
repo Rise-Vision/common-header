@@ -53,7 +53,6 @@
             template: $templateCache.get("purchase-flow/purchase-modal.html"),
             controller: "PurchaseModalCtrl",
             size: "md",
-            backdrop: "static"
           });
 
           return modalInstance.result;
@@ -64,7 +63,6 @@
             template: $templateCache.get("purchase-flow/tax-exemption.html"),
             controller: "TaxExemptionModalCtrl",
             size: "md",
-            backdrop: "static"
           });
 
           return modalInstance.result.then(function (result) {

@@ -74,7 +74,6 @@ angular.module("risevision.common.header")
           template: $templateCache.get("company-users-modal.html"),
           controller: "CompanyUsersModalCtrl",
           size: size,
-          backdrop: true,
           resolve: {
             company: function () {
               return userState.getCopyOfSelectedCompany();
@@ -87,7 +86,6 @@ angular.module("risevision.common.header")
         var modalInstance = $modal.open({
           template: $templateCache.get("company-selector-modal.html"),
           controller: "companySelectorCtr",
-          backdrop: true,
           resolve: {
             companyId: function () {
               return userState.getSelectedCompanyId();

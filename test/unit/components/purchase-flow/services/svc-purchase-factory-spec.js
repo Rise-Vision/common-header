@@ -133,8 +133,7 @@ describe("Services: purchase factory", function() {
       expect($modal.open).to.have.been.calledWith({
         template: sinon.match.any,
         controller: "PurchaseModalCtrl",
-        size: "md",
-        backdrop: "static"
+        size: "md"
       });
       expect(purchaseFlowTracker.trackProductAdded).to.have.been.called;
     });
@@ -223,8 +222,7 @@ describe("Services: purchase factory", function() {
       expect($modal.open).to.have.been.calledWith({
         template: sinon.match.any,
         controller: "TaxExemptionModalCtrl",
-        size: "md",
-        backdrop: "static"
+        size: "md"
       });
     });
 
