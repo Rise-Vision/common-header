@@ -4376,7 +4376,7 @@ a.list-group-item-danger, .list-group-item-danger.u_link {
   margin-bottom: 0;
   line-height: 1.3; }
 
-.panel, .select-subcompany-modal .list-group, .card, #appLauncherContainer .scrollable-list {
+.panel, .select-subcompany-modal .list-group, .panel-editable, .card, #appLauncherContainer .scrollable-list {
   margin-bottom: 20px;
   background-color: #fff;
   border: 1px solid transparent;
@@ -4415,16 +4415,16 @@ a.list-group-item-danger, .list-group-item-danger.u_link {
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px; }
 
-.panel > .list-group, .select-subcompany-modal .list-group > .list-group, .card > .list-group, #appLauncherContainer .scrollable-list > .list-group {
+.panel > .list-group, .select-subcompany-modal .list-group > .list-group, .panel-editable > .list-group, .card > .list-group, #appLauncherContainer .scrollable-list > .list-group {
   margin-bottom: 0; }
-  .panel > .list-group .list-group-item, .select-subcompany-modal .list-group > .list-group .list-group-item, .card > .list-group .list-group-item, #appLauncherContainer .scrollable-list > .list-group .list-group-item {
+  .panel > .list-group .list-group-item, .select-subcompany-modal .list-group > .list-group .list-group-item, .panel-editable > .list-group .list-group-item, .card > .list-group .list-group-item, #appLauncherContainer .scrollable-list > .list-group .list-group-item {
     border-width: 1px 0;
     border-radius: 0; }
-  .panel > .list-group:first-child .list-group-item:first-child, .select-subcompany-modal .list-group > .list-group:first-child .list-group-item:first-child, .card > .list-group:first-child .list-group-item:first-child, #appLauncherContainer .scrollable-list > .list-group:first-child .list-group-item:first-child {
+  .panel > .list-group:first-child .list-group-item:first-child, .select-subcompany-modal .list-group > .list-group:first-child .list-group-item:first-child, .panel-editable > .list-group:first-child .list-group-item:first-child, .card > .list-group:first-child .list-group-item:first-child, #appLauncherContainer .scrollable-list > .list-group:first-child .list-group-item:first-child {
     border-top: 0;
     border-top-right-radius: 3px;
     border-top-left-radius: 3px; }
-  .panel > .list-group:last-child .list-group-item:last-child, .select-subcompany-modal .list-group > .list-group:last-child .list-group-item:last-child, .card > .list-group:last-child .list-group-item:last-child, #appLauncherContainer .scrollable-list > .list-group:last-child .list-group-item:last-child {
+  .panel > .list-group:last-child .list-group-item:last-child, .select-subcompany-modal .list-group > .list-group:last-child .list-group-item:last-child, .panel-editable > .list-group:last-child .list-group-item:last-child, .card > .list-group:last-child .list-group-item:last-child, #appLauncherContainer .scrollable-list > .list-group:last-child .list-group-item:last-child {
     border-bottom: 0;
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px; }
@@ -4435,336 +4435,407 @@ a.list-group-item-danger, .list-group-item-danger.u_link {
 .list-group + .panel-footer {
   border-top-width: 0; }
 
-.panel > .table, .select-subcompany-modal .list-group > .table, .card > .table, #appLauncherContainer .scrollable-list > .table,
+.panel > .table, .select-subcompany-modal .list-group > .table, .panel-editable > .table, .card > .table, #appLauncherContainer .scrollable-list > .table,
 .panel > .table-responsive > .table,
 .select-subcompany-modal .list-group > .table-responsive > .table,
+.panel-editable > .table-responsive > .table,
 .card > .table-responsive > .table,
 #appLauncherContainer .scrollable-list > .table-responsive > .table,
 .panel > .panel-collapse > .table,
 .select-subcompany-modal .list-group > .panel-collapse > .table,
+.panel-editable > .panel-collapse > .table,
 .card > .panel-collapse > .table,
 #appLauncherContainer .scrollable-list > .panel-collapse > .table {
   margin-bottom: 0; }
 
-.panel > .table:first-child, .select-subcompany-modal .list-group > .table:first-child, .card > .table:first-child, #appLauncherContainer .scrollable-list > .table:first-child,
+.panel > .table:first-child, .select-subcompany-modal .list-group > .table:first-child, .panel-editable > .table:first-child, .card > .table:first-child, #appLauncherContainer .scrollable-list > .table:first-child,
 .panel > .table-responsive:first-child > .table:first-child,
 .select-subcompany-modal .list-group > .table-responsive:first-child > .table:first-child,
+.panel-editable > .table-responsive:first-child > .table:first-child,
 .card > .table-responsive:first-child > .table:first-child,
 #appLauncherContainer .scrollable-list > .table-responsive:first-child > .table:first-child {
   border-top-right-radius: 3px;
   border-top-left-radius: 3px; }
-  .panel > .table:first-child > thead:first-child > tr:first-child td:first-child, .select-subcompany-modal .list-group > .table:first-child > thead:first-child > tr:first-child td:first-child, .card > .table:first-child > thead:first-child > tr:first-child td:first-child, #appLauncherContainer .scrollable-list > .table:first-child > thead:first-child > tr:first-child td:first-child,
+  .panel > .table:first-child > thead:first-child > tr:first-child td:first-child, .select-subcompany-modal .list-group > .table:first-child > thead:first-child > tr:first-child td:first-child, .panel-editable > .table:first-child > thead:first-child > tr:first-child td:first-child, .card > .table:first-child > thead:first-child > tr:first-child td:first-child, #appLauncherContainer .scrollable-list > .table:first-child > thead:first-child > tr:first-child td:first-child,
   .panel > .table:first-child > thead:first-child > tr:first-child th:first-child,
   .select-subcompany-modal .list-group > .table:first-child > thead:first-child > tr:first-child th:first-child,
+  .panel-editable > .table:first-child > thead:first-child > tr:first-child th:first-child,
   .card > .table:first-child > thead:first-child > tr:first-child th:first-child,
   #appLauncherContainer .scrollable-list > .table:first-child > thead:first-child > tr:first-child th:first-child,
   .panel > .table:first-child > tbody:first-child > tr:first-child td:first-child,
   .select-subcompany-modal .list-group > .table:first-child > tbody:first-child > tr:first-child td:first-child,
+  .panel-editable > .table:first-child > tbody:first-child > tr:first-child td:first-child,
   .card > .table:first-child > tbody:first-child > tr:first-child td:first-child,
   #appLauncherContainer .scrollable-list > .table:first-child > tbody:first-child > tr:first-child td:first-child,
   .panel > .table:first-child > tbody:first-child > tr:first-child th:first-child,
   .select-subcompany-modal .list-group > .table:first-child > tbody:first-child > tr:first-child th:first-child,
+  .panel-editable > .table:first-child > tbody:first-child > tr:first-child th:first-child,
   .card > .table:first-child > tbody:first-child > tr:first-child th:first-child,
   #appLauncherContainer .scrollable-list > .table:first-child > tbody:first-child > tr:first-child th:first-child,
   .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:first-child,
   .select-subcompany-modal .list-group > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:first-child,
+  .panel-editable > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:first-child,
   .card > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:first-child,
   #appLauncherContainer .scrollable-list > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:first-child,
   .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:first-child,
   .select-subcompany-modal .list-group > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:first-child,
+  .panel-editable > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:first-child,
   .card > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:first-child,
   #appLauncherContainer .scrollable-list > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:first-child,
   .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:first-child,
   .select-subcompany-modal .list-group > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:first-child,
+  .panel-editable > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:first-child,
   .card > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:first-child,
   #appLauncherContainer .scrollable-list > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:first-child,
   .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:first-child,
   .select-subcompany-modal .list-group > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:first-child,
+  .panel-editable > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:first-child,
   .card > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:first-child,
   #appLauncherContainer .scrollable-list > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:first-child {
     border-top-left-radius: 3px; }
-  .panel > .table:first-child > thead:first-child > tr:first-child td:last-child, .select-subcompany-modal .list-group > .table:first-child > thead:first-child > tr:first-child td:last-child, .card > .table:first-child > thead:first-child > tr:first-child td:last-child, #appLauncherContainer .scrollable-list > .table:first-child > thead:first-child > tr:first-child td:last-child,
+  .panel > .table:first-child > thead:first-child > tr:first-child td:last-child, .select-subcompany-modal .list-group > .table:first-child > thead:first-child > tr:first-child td:last-child, .panel-editable > .table:first-child > thead:first-child > tr:first-child td:last-child, .card > .table:first-child > thead:first-child > tr:first-child td:last-child, #appLauncherContainer .scrollable-list > .table:first-child > thead:first-child > tr:first-child td:last-child,
   .panel > .table:first-child > thead:first-child > tr:first-child th:last-child,
   .select-subcompany-modal .list-group > .table:first-child > thead:first-child > tr:first-child th:last-child,
+  .panel-editable > .table:first-child > thead:first-child > tr:first-child th:last-child,
   .card > .table:first-child > thead:first-child > tr:first-child th:last-child,
   #appLauncherContainer .scrollable-list > .table:first-child > thead:first-child > tr:first-child th:last-child,
   .panel > .table:first-child > tbody:first-child > tr:first-child td:last-child,
   .select-subcompany-modal .list-group > .table:first-child > tbody:first-child > tr:first-child td:last-child,
+  .panel-editable > .table:first-child > tbody:first-child > tr:first-child td:last-child,
   .card > .table:first-child > tbody:first-child > tr:first-child td:last-child,
   #appLauncherContainer .scrollable-list > .table:first-child > tbody:first-child > tr:first-child td:last-child,
   .panel > .table:first-child > tbody:first-child > tr:first-child th:last-child,
   .select-subcompany-modal .list-group > .table:first-child > tbody:first-child > tr:first-child th:last-child,
+  .panel-editable > .table:first-child > tbody:first-child > tr:first-child th:last-child,
   .card > .table:first-child > tbody:first-child > tr:first-child th:last-child,
   #appLauncherContainer .scrollable-list > .table:first-child > tbody:first-child > tr:first-child th:last-child,
   .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:last-child,
   .select-subcompany-modal .list-group > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:last-child,
+  .panel-editable > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:last-child,
   .card > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:last-child,
   #appLauncherContainer .scrollable-list > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:last-child,
   .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:last-child,
   .select-subcompany-modal .list-group > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:last-child,
+  .panel-editable > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:last-child,
   .card > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:last-child,
   #appLauncherContainer .scrollable-list > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:last-child,
   .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:last-child,
   .select-subcompany-modal .list-group > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:last-child,
+  .panel-editable > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:last-child,
   .card > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:last-child,
   #appLauncherContainer .scrollable-list > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:last-child,
   .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:last-child,
   .select-subcompany-modal .list-group > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:last-child,
+  .panel-editable > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:last-child,
   .card > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:last-child,
   #appLauncherContainer .scrollable-list > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:last-child {
     border-top-right-radius: 3px; }
 
-.panel > .table:last-child, .select-subcompany-modal .list-group > .table:last-child, .card > .table:last-child, #appLauncherContainer .scrollable-list > .table:last-child,
+.panel > .table:last-child, .select-subcompany-modal .list-group > .table:last-child, .panel-editable > .table:last-child, .card > .table:last-child, #appLauncherContainer .scrollable-list > .table:last-child,
 .panel > .table-responsive:last-child > .table:last-child,
 .select-subcompany-modal .list-group > .table-responsive:last-child > .table:last-child,
+.panel-editable > .table-responsive:last-child > .table:last-child,
 .card > .table-responsive:last-child > .table:last-child,
 #appLauncherContainer .scrollable-list > .table-responsive:last-child > .table:last-child {
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px; }
-  .panel > .table:last-child > tbody:last-child > tr:last-child td:first-child, .select-subcompany-modal .list-group > .table:last-child > tbody:last-child > tr:last-child td:first-child, .card > .table:last-child > tbody:last-child > tr:last-child td:first-child, #appLauncherContainer .scrollable-list > .table:last-child > tbody:last-child > tr:last-child td:first-child,
+  .panel > .table:last-child > tbody:last-child > tr:last-child td:first-child, .select-subcompany-modal .list-group > .table:last-child > tbody:last-child > tr:last-child td:first-child, .panel-editable > .table:last-child > tbody:last-child > tr:last-child td:first-child, .card > .table:last-child > tbody:last-child > tr:last-child td:first-child, #appLauncherContainer .scrollable-list > .table:last-child > tbody:last-child > tr:last-child td:first-child,
   .panel > .table:last-child > tbody:last-child > tr:last-child th:first-child,
   .select-subcompany-modal .list-group > .table:last-child > tbody:last-child > tr:last-child th:first-child,
+  .panel-editable > .table:last-child > tbody:last-child > tr:last-child th:first-child,
   .card > .table:last-child > tbody:last-child > tr:last-child th:first-child,
   #appLauncherContainer .scrollable-list > .table:last-child > tbody:last-child > tr:last-child th:first-child,
   .panel > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
   .select-subcompany-modal .list-group > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
+  .panel-editable > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
   .card > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
   #appLauncherContainer .scrollable-list > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
   .panel > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
   .select-subcompany-modal .list-group > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
+  .panel-editable > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
   .card > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
   #appLauncherContainer .scrollable-list > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
   .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:first-child,
   .select-subcompany-modal .list-group > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:first-child,
+  .panel-editable > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:first-child,
   .card > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:first-child,
   #appLauncherContainer .scrollable-list > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:first-child,
   .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:first-child,
   .select-subcompany-modal .list-group > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:first-child,
+  .panel-editable > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:first-child,
   .card > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:first-child,
   #appLauncherContainer .scrollable-list > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:first-child,
   .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
   .select-subcompany-modal .list-group > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
+  .panel-editable > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
   .card > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
   #appLauncherContainer .scrollable-list > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
   .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
   .select-subcompany-modal .list-group > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
+  .panel-editable > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
   .card > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
   #appLauncherContainer .scrollable-list > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:first-child {
     border-bottom-left-radius: 3px; }
-  .panel > .table:last-child > tbody:last-child > tr:last-child td:last-child, .select-subcompany-modal .list-group > .table:last-child > tbody:last-child > tr:last-child td:last-child, .card > .table:last-child > tbody:last-child > tr:last-child td:last-child, #appLauncherContainer .scrollable-list > .table:last-child > tbody:last-child > tr:last-child td:last-child,
+  .panel > .table:last-child > tbody:last-child > tr:last-child td:last-child, .select-subcompany-modal .list-group > .table:last-child > tbody:last-child > tr:last-child td:last-child, .panel-editable > .table:last-child > tbody:last-child > tr:last-child td:last-child, .card > .table:last-child > tbody:last-child > tr:last-child td:last-child, #appLauncherContainer .scrollable-list > .table:last-child > tbody:last-child > tr:last-child td:last-child,
   .panel > .table:last-child > tbody:last-child > tr:last-child th:last-child,
   .select-subcompany-modal .list-group > .table:last-child > tbody:last-child > tr:last-child th:last-child,
+  .panel-editable > .table:last-child > tbody:last-child > tr:last-child th:last-child,
   .card > .table:last-child > tbody:last-child > tr:last-child th:last-child,
   #appLauncherContainer .scrollable-list > .table:last-child > tbody:last-child > tr:last-child th:last-child,
   .panel > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
   .select-subcompany-modal .list-group > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
+  .panel-editable > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
   .card > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
   #appLauncherContainer .scrollable-list > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
   .panel > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
   .select-subcompany-modal .list-group > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
+  .panel-editable > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
   .card > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
   #appLauncherContainer .scrollable-list > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
   .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:last-child,
   .select-subcompany-modal .list-group > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:last-child,
+  .panel-editable > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:last-child,
   .card > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:last-child,
   #appLauncherContainer .scrollable-list > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:last-child,
   .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:last-child,
   .select-subcompany-modal .list-group > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:last-child,
+  .panel-editable > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:last-child,
   .card > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:last-child,
   #appLauncherContainer .scrollable-list > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:last-child,
   .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
   .select-subcompany-modal .list-group > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
+  .panel-editable > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
   .card > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
   #appLauncherContainer .scrollable-list > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
   .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
   .select-subcompany-modal .list-group > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
+  .panel-editable > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
   .card > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
   #appLauncherContainer .scrollable-list > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:last-child {
     border-bottom-right-radius: 3px; }
 
-.panel > .panel-body + .table, .select-subcompany-modal .list-group > .panel-body + .table, .card > .panel-body + .table, #appLauncherContainer .scrollable-list > .panel-body + .table,
+.panel > .panel-body + .table, .select-subcompany-modal .list-group > .panel-body + .table, .panel-editable > .panel-body + .table, .card > .panel-body + .table, #appLauncherContainer .scrollable-list > .panel-body + .table,
 .panel > .panel-body + .table-responsive,
 .select-subcompany-modal .list-group > .panel-body + .table-responsive,
+.panel-editable > .panel-body + .table-responsive,
 .card > .panel-body + .table-responsive,
 #appLauncherContainer .scrollable-list > .panel-body + .table-responsive {
   border-top: 1px solid #F1EEEA; }
 
-.panel > .table > tbody:first-child > tr:first-child th, .select-subcompany-modal .list-group > .table > tbody:first-child > tr:first-child th, .card > .table > tbody:first-child > tr:first-child th, #appLauncherContainer .scrollable-list > .table > tbody:first-child > tr:first-child th,
+.panel > .table > tbody:first-child > tr:first-child th, .select-subcompany-modal .list-group > .table > tbody:first-child > tr:first-child th, .panel-editable > .table > tbody:first-child > tr:first-child th, .card > .table > tbody:first-child > tr:first-child th, #appLauncherContainer .scrollable-list > .table > tbody:first-child > tr:first-child th,
 .panel > .table > tbody:first-child > tr:first-child td,
 .select-subcompany-modal .list-group > .table > tbody:first-child > tr:first-child td,
+.panel-editable > .table > tbody:first-child > tr:first-child td,
 .card > .table > tbody:first-child > tr:first-child td,
 #appLauncherContainer .scrollable-list > .table > tbody:first-child > tr:first-child td {
   border-top: 0; }
 
-.panel > .table-bordered, .select-subcompany-modal .list-group > .table-bordered, .card > .table-bordered, #appLauncherContainer .scrollable-list > .table-bordered,
+.panel > .table-bordered, .select-subcompany-modal .list-group > .table-bordered, .panel-editable > .table-bordered, .card > .table-bordered, #appLauncherContainer .scrollable-list > .table-bordered,
 .panel > .table-responsive > .table-bordered,
 .select-subcompany-modal .list-group > .table-responsive > .table-bordered,
+.panel-editable > .table-responsive > .table-bordered,
 .card > .table-responsive > .table-bordered,
 #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered {
   border: 0; }
-  .panel > .table-bordered > thead > tr > th:first-child, .select-subcompany-modal .list-group > .table-bordered > thead > tr > th:first-child, .card > .table-bordered > thead > tr > th:first-child, #appLauncherContainer .scrollable-list > .table-bordered > thead > tr > th:first-child,
+  .panel > .table-bordered > thead > tr > th:first-child, .select-subcompany-modal .list-group > .table-bordered > thead > tr > th:first-child, .panel-editable > .table-bordered > thead > tr > th:first-child, .card > .table-bordered > thead > tr > th:first-child, #appLauncherContainer .scrollable-list > .table-bordered > thead > tr > th:first-child,
   .panel > .table-bordered > thead > tr > td:first-child,
   .select-subcompany-modal .list-group > .table-bordered > thead > tr > td:first-child,
+  .panel-editable > .table-bordered > thead > tr > td:first-child,
   .card > .table-bordered > thead > tr > td:first-child,
   #appLauncherContainer .scrollable-list > .table-bordered > thead > tr > td:first-child,
   .panel > .table-bordered > tbody > tr > th:first-child,
   .select-subcompany-modal .list-group > .table-bordered > tbody > tr > th:first-child,
+  .panel-editable > .table-bordered > tbody > tr > th:first-child,
   .card > .table-bordered > tbody > tr > th:first-child,
   #appLauncherContainer .scrollable-list > .table-bordered > tbody > tr > th:first-child,
   .panel > .table-bordered > tbody > tr > td:first-child,
   .select-subcompany-modal .list-group > .table-bordered > tbody > tr > td:first-child,
+  .panel-editable > .table-bordered > tbody > tr > td:first-child,
   .card > .table-bordered > tbody > tr > td:first-child,
   #appLauncherContainer .scrollable-list > .table-bordered > tbody > tr > td:first-child,
   .panel > .table-bordered > tfoot > tr > th:first-child,
   .select-subcompany-modal .list-group > .table-bordered > tfoot > tr > th:first-child,
+  .panel-editable > .table-bordered > tfoot > tr > th:first-child,
   .card > .table-bordered > tfoot > tr > th:first-child,
   #appLauncherContainer .scrollable-list > .table-bordered > tfoot > tr > th:first-child,
   .panel > .table-bordered > tfoot > tr > td:first-child,
   .select-subcompany-modal .list-group > .table-bordered > tfoot > tr > td:first-child,
+  .panel-editable > .table-bordered > tfoot > tr > td:first-child,
   .card > .table-bordered > tfoot > tr > td:first-child,
   #appLauncherContainer .scrollable-list > .table-bordered > tfoot > tr > td:first-child,
   .panel > .table-responsive > .table-bordered > thead > tr > th:first-child,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > thead > tr > th:first-child,
+  .panel-editable > .table-responsive > .table-bordered > thead > tr > th:first-child,
   .card > .table-responsive > .table-bordered > thead > tr > th:first-child,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > thead > tr > th:first-child,
   .panel > .table-responsive > .table-bordered > thead > tr > td:first-child,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > thead > tr > td:first-child,
+  .panel-editable > .table-responsive > .table-bordered > thead > tr > td:first-child,
   .card > .table-responsive > .table-bordered > thead > tr > td:first-child,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > thead > tr > td:first-child,
   .panel > .table-responsive > .table-bordered > tbody > tr > th:first-child,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > tbody > tr > th:first-child,
+  .panel-editable > .table-responsive > .table-bordered > tbody > tr > th:first-child,
   .card > .table-responsive > .table-bordered > tbody > tr > th:first-child,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > tbody > tr > th:first-child,
   .panel > .table-responsive > .table-bordered > tbody > tr > td:first-child,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > tbody > tr > td:first-child,
+  .panel-editable > .table-responsive > .table-bordered > tbody > tr > td:first-child,
   .card > .table-responsive > .table-bordered > tbody > tr > td:first-child,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > tbody > tr > td:first-child,
   .panel > .table-responsive > .table-bordered > tfoot > tr > th:first-child,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > tfoot > tr > th:first-child,
+  .panel-editable > .table-responsive > .table-bordered > tfoot > tr > th:first-child,
   .card > .table-responsive > .table-bordered > tfoot > tr > th:first-child,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > tfoot > tr > th:first-child,
   .panel > .table-responsive > .table-bordered > tfoot > tr > td:first-child,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > tfoot > tr > td:first-child,
+  .panel-editable > .table-responsive > .table-bordered > tfoot > tr > td:first-child,
   .card > .table-responsive > .table-bordered > tfoot > tr > td:first-child,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > tfoot > tr > td:first-child {
     border-left: 0; }
-  .panel > .table-bordered > thead > tr > th:last-child, .select-subcompany-modal .list-group > .table-bordered > thead > tr > th:last-child, .card > .table-bordered > thead > tr > th:last-child, #appLauncherContainer .scrollable-list > .table-bordered > thead > tr > th:last-child,
+  .panel > .table-bordered > thead > tr > th:last-child, .select-subcompany-modal .list-group > .table-bordered > thead > tr > th:last-child, .panel-editable > .table-bordered > thead > tr > th:last-child, .card > .table-bordered > thead > tr > th:last-child, #appLauncherContainer .scrollable-list > .table-bordered > thead > tr > th:last-child,
   .panel > .table-bordered > thead > tr > td:last-child,
   .select-subcompany-modal .list-group > .table-bordered > thead > tr > td:last-child,
+  .panel-editable > .table-bordered > thead > tr > td:last-child,
   .card > .table-bordered > thead > tr > td:last-child,
   #appLauncherContainer .scrollable-list > .table-bordered > thead > tr > td:last-child,
   .panel > .table-bordered > tbody > tr > th:last-child,
   .select-subcompany-modal .list-group > .table-bordered > tbody > tr > th:last-child,
+  .panel-editable > .table-bordered > tbody > tr > th:last-child,
   .card > .table-bordered > tbody > tr > th:last-child,
   #appLauncherContainer .scrollable-list > .table-bordered > tbody > tr > th:last-child,
   .panel > .table-bordered > tbody > tr > td:last-child,
   .select-subcompany-modal .list-group > .table-bordered > tbody > tr > td:last-child,
+  .panel-editable > .table-bordered > tbody > tr > td:last-child,
   .card > .table-bordered > tbody > tr > td:last-child,
   #appLauncherContainer .scrollable-list > .table-bordered > tbody > tr > td:last-child,
   .panel > .table-bordered > tfoot > tr > th:last-child,
   .select-subcompany-modal .list-group > .table-bordered > tfoot > tr > th:last-child,
+  .panel-editable > .table-bordered > tfoot > tr > th:last-child,
   .card > .table-bordered > tfoot > tr > th:last-child,
   #appLauncherContainer .scrollable-list > .table-bordered > tfoot > tr > th:last-child,
   .panel > .table-bordered > tfoot > tr > td:last-child,
   .select-subcompany-modal .list-group > .table-bordered > tfoot > tr > td:last-child,
+  .panel-editable > .table-bordered > tfoot > tr > td:last-child,
   .card > .table-bordered > tfoot > tr > td:last-child,
   #appLauncherContainer .scrollable-list > .table-bordered > tfoot > tr > td:last-child,
   .panel > .table-responsive > .table-bordered > thead > tr > th:last-child,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > thead > tr > th:last-child,
+  .panel-editable > .table-responsive > .table-bordered > thead > tr > th:last-child,
   .card > .table-responsive > .table-bordered > thead > tr > th:last-child,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > thead > tr > th:last-child,
   .panel > .table-responsive > .table-bordered > thead > tr > td:last-child,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > thead > tr > td:last-child,
+  .panel-editable > .table-responsive > .table-bordered > thead > tr > td:last-child,
   .card > .table-responsive > .table-bordered > thead > tr > td:last-child,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > thead > tr > td:last-child,
   .panel > .table-responsive > .table-bordered > tbody > tr > th:last-child,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > tbody > tr > th:last-child,
+  .panel-editable > .table-responsive > .table-bordered > tbody > tr > th:last-child,
   .card > .table-responsive > .table-bordered > tbody > tr > th:last-child,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > tbody > tr > th:last-child,
   .panel > .table-responsive > .table-bordered > tbody > tr > td:last-child,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > tbody > tr > td:last-child,
+  .panel-editable > .table-responsive > .table-bordered > tbody > tr > td:last-child,
   .card > .table-responsive > .table-bordered > tbody > tr > td:last-child,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > tbody > tr > td:last-child,
   .panel > .table-responsive > .table-bordered > tfoot > tr > th:last-child,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > tfoot > tr > th:last-child,
+  .panel-editable > .table-responsive > .table-bordered > tfoot > tr > th:last-child,
   .card > .table-responsive > .table-bordered > tfoot > tr > th:last-child,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > tfoot > tr > th:last-child,
   .panel > .table-responsive > .table-bordered > tfoot > tr > td:last-child,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > tfoot > tr > td:last-child,
+  .panel-editable > .table-responsive > .table-bordered > tfoot > tr > td:last-child,
   .card > .table-responsive > .table-bordered > tfoot > tr > td:last-child,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > tfoot > tr > td:last-child {
     border-right: 0; }
-  .panel > .table-bordered > thead > tr:first-child > td, .select-subcompany-modal .list-group > .table-bordered > thead > tr:first-child > td, .card > .table-bordered > thead > tr:first-child > td, #appLauncherContainer .scrollable-list > .table-bordered > thead > tr:first-child > td,
+  .panel > .table-bordered > thead > tr:first-child > td, .select-subcompany-modal .list-group > .table-bordered > thead > tr:first-child > td, .panel-editable > .table-bordered > thead > tr:first-child > td, .card > .table-bordered > thead > tr:first-child > td, #appLauncherContainer .scrollable-list > .table-bordered > thead > tr:first-child > td,
   .panel > .table-bordered > thead > tr:first-child > th,
   .select-subcompany-modal .list-group > .table-bordered > thead > tr:first-child > th,
+  .panel-editable > .table-bordered > thead > tr:first-child > th,
   .card > .table-bordered > thead > tr:first-child > th,
   #appLauncherContainer .scrollable-list > .table-bordered > thead > tr:first-child > th,
   .panel > .table-bordered > tbody > tr:first-child > td,
   .select-subcompany-modal .list-group > .table-bordered > tbody > tr:first-child > td,
+  .panel-editable > .table-bordered > tbody > tr:first-child > td,
   .card > .table-bordered > tbody > tr:first-child > td,
   #appLauncherContainer .scrollable-list > .table-bordered > tbody > tr:first-child > td,
   .panel > .table-bordered > tbody > tr:first-child > th,
   .select-subcompany-modal .list-group > .table-bordered > tbody > tr:first-child > th,
+  .panel-editable > .table-bordered > tbody > tr:first-child > th,
   .card > .table-bordered > tbody > tr:first-child > th,
   #appLauncherContainer .scrollable-list > .table-bordered > tbody > tr:first-child > th,
   .panel > .table-responsive > .table-bordered > thead > tr:first-child > td,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > thead > tr:first-child > td,
+  .panel-editable > .table-responsive > .table-bordered > thead > tr:first-child > td,
   .card > .table-responsive > .table-bordered > thead > tr:first-child > td,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > thead > tr:first-child > td,
   .panel > .table-responsive > .table-bordered > thead > tr:first-child > th,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > thead > tr:first-child > th,
+  .panel-editable > .table-responsive > .table-bordered > thead > tr:first-child > th,
   .card > .table-responsive > .table-bordered > thead > tr:first-child > th,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > thead > tr:first-child > th,
   .panel > .table-responsive > .table-bordered > tbody > tr:first-child > td,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > tbody > tr:first-child > td,
+  .panel-editable > .table-responsive > .table-bordered > tbody > tr:first-child > td,
   .card > .table-responsive > .table-bordered > tbody > tr:first-child > td,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > tbody > tr:first-child > td,
   .panel > .table-responsive > .table-bordered > tbody > tr:first-child > th,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > tbody > tr:first-child > th,
+  .panel-editable > .table-responsive > .table-bordered > tbody > tr:first-child > th,
   .card > .table-responsive > .table-bordered > tbody > tr:first-child > th,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > tbody > tr:first-child > th {
     border-bottom: 0; }
-  .panel > .table-bordered > tbody > tr:last-child > td, .select-subcompany-modal .list-group > .table-bordered > tbody > tr:last-child > td, .card > .table-bordered > tbody > tr:last-child > td, #appLauncherContainer .scrollable-list > .table-bordered > tbody > tr:last-child > td,
+  .panel > .table-bordered > tbody > tr:last-child > td, .select-subcompany-modal .list-group > .table-bordered > tbody > tr:last-child > td, .panel-editable > .table-bordered > tbody > tr:last-child > td, .card > .table-bordered > tbody > tr:last-child > td, #appLauncherContainer .scrollable-list > .table-bordered > tbody > tr:last-child > td,
   .panel > .table-bordered > tbody > tr:last-child > th,
   .select-subcompany-modal .list-group > .table-bordered > tbody > tr:last-child > th,
+  .panel-editable > .table-bordered > tbody > tr:last-child > th,
   .card > .table-bordered > tbody > tr:last-child > th,
   #appLauncherContainer .scrollable-list > .table-bordered > tbody > tr:last-child > th,
   .panel > .table-bordered > tfoot > tr:last-child > td,
   .select-subcompany-modal .list-group > .table-bordered > tfoot > tr:last-child > td,
+  .panel-editable > .table-bordered > tfoot > tr:last-child > td,
   .card > .table-bordered > tfoot > tr:last-child > td,
   #appLauncherContainer .scrollable-list > .table-bordered > tfoot > tr:last-child > td,
   .panel > .table-bordered > tfoot > tr:last-child > th,
   .select-subcompany-modal .list-group > .table-bordered > tfoot > tr:last-child > th,
+  .panel-editable > .table-bordered > tfoot > tr:last-child > th,
   .card > .table-bordered > tfoot > tr:last-child > th,
   #appLauncherContainer .scrollable-list > .table-bordered > tfoot > tr:last-child > th,
   .panel > .table-responsive > .table-bordered > tbody > tr:last-child > td,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > tbody > tr:last-child > td,
+  .panel-editable > .table-responsive > .table-bordered > tbody > tr:last-child > td,
   .card > .table-responsive > .table-bordered > tbody > tr:last-child > td,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > tbody > tr:last-child > td,
   .panel > .table-responsive > .table-bordered > tbody > tr:last-child > th,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > tbody > tr:last-child > th,
+  .panel-editable > .table-responsive > .table-bordered > tbody > tr:last-child > th,
   .card > .table-responsive > .table-bordered > tbody > tr:last-child > th,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > tbody > tr:last-child > th,
   .panel > .table-responsive > .table-bordered > tfoot > tr:last-child > td,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > tfoot > tr:last-child > td,
+  .panel-editable > .table-responsive > .table-bordered > tfoot > tr:last-child > td,
   .card > .table-responsive > .table-bordered > tfoot > tr:last-child > td,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > tfoot > tr:last-child > td,
   .panel > .table-responsive > .table-bordered > tfoot > tr:last-child > th,
   .select-subcompany-modal .list-group > .table-responsive > .table-bordered > tfoot > tr:last-child > th,
+  .panel-editable > .table-responsive > .table-bordered > tfoot > tr:last-child > th,
   .card > .table-responsive > .table-bordered > tfoot > tr:last-child > th,
   #appLauncherContainer .scrollable-list > .table-responsive > .table-bordered > tfoot > tr:last-child > th {
     border-bottom: 0; }
 
-.panel > .table-responsive, .select-subcompany-modal .list-group > .table-responsive, .card > .table-responsive, #appLauncherContainer .scrollable-list > .table-responsive {
+.panel > .table-responsive, .select-subcompany-modal .list-group > .table-responsive, .panel-editable > .table-responsive, .card > .table-responsive, #appLauncherContainer .scrollable-list > .table-responsive {
   border: 0;
   margin-bottom: 0; }
 
 .panel-group {
   margin-bottom: 20px; }
-  .panel-group .panel, .panel-group .select-subcompany-modal .list-group, .select-subcompany-modal .panel-group .list-group, .panel-group .card, .panel-group #appLauncherContainer .scrollable-list, #appLauncherContainer .panel-group .scrollable-list {
+  .panel-group .panel, .panel-group .select-subcompany-modal .list-group, .select-subcompany-modal .panel-group .list-group, .panel-group .panel-editable, .panel-group .card, .panel-group #appLauncherContainer .scrollable-list, #appLauncherContainer .panel-group .scrollable-list {
     margin-bottom: 0;
     border-radius: 4px; }
-    .panel-group .panel + .panel, .panel-group .select-subcompany-modal .list-group + .panel, .select-subcompany-modal .panel-group .list-group + .panel, .panel-group .card + .panel, .panel-group #appLauncherContainer .scrollable-list + .panel, #appLauncherContainer .panel-group .scrollable-list + .panel, .panel-group .select-subcompany-modal .panel + .list-group, .select-subcompany-modal .panel-group .panel + .list-group, .panel-group .select-subcompany-modal .list-group + .list-group, .select-subcompany-modal .panel-group .list-group + .list-group, .panel-group .select-subcompany-modal .card + .list-group, .select-subcompany-modal .panel-group .card + .list-group, .panel-group #appLauncherContainer .select-subcompany-modal .scrollable-list + .list-group, .select-subcompany-modal .panel-group #appLauncherContainer .scrollable-list + .list-group, #appLauncherContainer .panel-group .select-subcompany-modal .scrollable-list + .list-group, .select-subcompany-modal #appLauncherContainer .panel-group .scrollable-list + .list-group, .panel-group .panel + .card, .panel-group .select-subcompany-modal .list-group + .card, .select-subcompany-modal .panel-group .list-group + .card, .panel-group .card + .card, .panel-group #appLauncherContainer .scrollable-list + .card, #appLauncherContainer .panel-group .scrollable-list + .card, .panel-group #appLauncherContainer .panel + .scrollable-list, #appLauncherContainer .panel-group .panel + .scrollable-list, .panel-group .select-subcompany-modal #appLauncherContainer .list-group + .scrollable-list, #appLauncherContainer .panel-group .select-subcompany-modal .list-group + .scrollable-list, .select-subcompany-modal .panel-group #appLauncherContainer .list-group + .scrollable-list, #appLauncherContainer .select-subcompany-modal .panel-group .list-group + .scrollable-list, .panel-group #appLauncherContainer .card + .scrollable-list, #appLauncherContainer .panel-group .card + .scrollable-list, .panel-group #appLauncherContainer .scrollable-list + .scrollable-list, #appLauncherContainer .panel-group .scrollable-list + .scrollable-list {
+    .panel-group .panel + .panel, .panel-group .select-subcompany-modal .list-group + .panel, .select-subcompany-modal .panel-group .list-group + .panel, .panel-group .panel-editable + .panel, .panel-group .card + .panel, .panel-group #appLauncherContainer .scrollable-list + .panel, #appLauncherContainer .panel-group .scrollable-list + .panel, .panel-group .select-subcompany-modal .panel + .list-group, .select-subcompany-modal .panel-group .panel + .list-group, .panel-group .select-subcompany-modal .list-group + .list-group, .select-subcompany-modal .panel-group .list-group + .list-group, .panel-group .select-subcompany-modal .panel-editable + .list-group, .select-subcompany-modal .panel-group .panel-editable + .list-group, .panel-group .select-subcompany-modal .card + .list-group, .select-subcompany-modal .panel-group .card + .list-group, .panel-group #appLauncherContainer .select-subcompany-modal .scrollable-list + .list-group, .select-subcompany-modal .panel-group #appLauncherContainer .scrollable-list + .list-group, #appLauncherContainer .panel-group .select-subcompany-modal .scrollable-list + .list-group, .select-subcompany-modal #appLauncherContainer .panel-group .scrollable-list + .list-group, .panel-group .panel + .panel-editable, .panel-group .select-subcompany-modal .list-group + .panel-editable, .select-subcompany-modal .panel-group .list-group + .panel-editable, .panel-group .panel-editable + .panel-editable, .panel-group .card + .panel-editable, .panel-group #appLauncherContainer .scrollable-list + .panel-editable, #appLauncherContainer .panel-group .scrollable-list + .panel-editable, .panel-group .panel + .card, .panel-group .select-subcompany-modal .list-group + .card, .select-subcompany-modal .panel-group .list-group + .card, .panel-group .panel-editable + .card, .panel-group .card + .card, .panel-group #appLauncherContainer .scrollable-list + .card, #appLauncherContainer .panel-group .scrollable-list + .card, .panel-group #appLauncherContainer .panel + .scrollable-list, #appLauncherContainer .panel-group .panel + .scrollable-list, .panel-group .select-subcompany-modal #appLauncherContainer .list-group + .scrollable-list, #appLauncherContainer .panel-group .select-subcompany-modal .list-group + .scrollable-list, .select-subcompany-modal .panel-group #appLauncherContainer .list-group + .scrollable-list, #appLauncherContainer .select-subcompany-modal .panel-group .list-group + .scrollable-list, .panel-group #appLauncherContainer .panel-editable + .scrollable-list, #appLauncherContainer .panel-group .panel-editable + .scrollable-list, .panel-group #appLauncherContainer .card + .scrollable-list, #appLauncherContainer .panel-group .card + .scrollable-list, .panel-group #appLauncherContainer .scrollable-list + .scrollable-list, #appLauncherContainer .panel-group .scrollable-list + .scrollable-list {
       margin-top: 5px; }
   .panel-group .panel-heading {
     border-bottom: 0; }
@@ -8296,7 +8367,7 @@ button.close {
     border: 0;
     border-bottom: 5px solid #1ebb53; }
 
-.panel, .select-subcompany-modal .list-group, .card, #appLauncherContainer .scrollable-list {
+.panel, .select-subcompany-modal .list-group, .panel-editable, .card, #appLauncherContainer .scrollable-list {
   border-color: #DDDDDD; }
 
 .progress-panel {
@@ -8687,10 +8758,10 @@ ul.social {
    ========================================================================== */
 .sideways-panels {
   display: flex; }
-  .sideways-panels .panel, .sideways-panels .select-subcompany-modal .list-group, .select-subcompany-modal .sideways-panels .list-group, .sideways-panels .card, .sideways-panels #appLauncherContainer .scrollable-list, #appLauncherContainer .sideways-panels .scrollable-list {
+  .sideways-panels .panel, .sideways-panels .select-subcompany-modal .list-group, .select-subcompany-modal .sideways-panels .list-group, .sideways-panels .panel-editable, .sideways-panels .card, .sideways-panels #appLauncherContainer .scrollable-list, #appLauncherContainer .sideways-panels .scrollable-list {
     flex: 1; }
 
-.panel.panel-thick-shadow, .select-subcompany-modal .panel-thick-shadow.list-group, .panel-thick-shadow.card, #appLauncherContainer .panel-thick-shadow.scrollable-list {
+.panel.panel-thick-shadow, .select-subcompany-modal .panel-thick-shadow.list-group, .panel-thick-shadow.panel-editable, .panel-thick-shadow.card, #appLauncherContainer .panel-thick-shadow.scrollable-list {
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.05), 0 6px 6px 0 rgba(0, 0, 0, 0.13); }
 
 /* Other
@@ -8945,7 +9016,7 @@ All utilities have a prefix u_ added to them
 .u_margin-left {
   margin-left: 10px !important; }
 
-.u_margin-right, .sideways-panels .panel, .sideways-panels .select-subcompany-modal .list-group, .select-subcompany-modal .sideways-panels .list-group, .sideways-panels .card, .sideways-panels #appLauncherContainer .scrollable-list, #appLauncherContainer .sideways-panels .scrollable-list {
+.u_margin-right, .sideways-panels .panel, .sideways-panels .select-subcompany-modal .list-group, .select-subcompany-modal .sideways-panels .list-group, .sideways-panels .panel-editable, .sideways-panels .card, .sideways-panels #appLauncherContainer .scrollable-list, #appLauncherContainer .sideways-panels .scrollable-list {
   margin-right: 10px !important; }
 
 .u_margin-xs-top {
@@ -8987,7 +9058,7 @@ All utilities have a prefix u_ added to them
 .u_remove-left {
   margin-left: 0 !important; }
 
-.u_remove-right, .sideways-panels .panel:last-child, .sideways-panels .select-subcompany-modal .list-group:last-child, .select-subcompany-modal .sideways-panels .list-group:last-child, .sideways-panels .card:last-child, .sideways-panels #appLauncherContainer .scrollable-list:last-child, #appLauncherContainer .sideways-panels .scrollable-list:last-child {
+.u_remove-right, .sideways-panels .panel:last-child, .sideways-panels .select-subcompany-modal .list-group:last-child, .select-subcompany-modal .sideways-panels .list-group:last-child, .sideways-panels .panel-editable:last-child, .sideways-panels .card:last-child, .sideways-panels #appLauncherContainer .scrollable-list:last-child, #appLauncherContainer .sideways-panels .scrollable-list:last-child {
   margin-right: 0 !important; }
 
 .u_remove-top {
@@ -12862,7 +12933,7 @@ a[data-wysihtml5-command=underline].active,
 .actions-nav .dropdown .company-menu::after {
   right: 81px; }
 
-.background-group .panel, .background-group .select-subcompany-modal .list-group, .select-subcompany-modal .background-group .list-group, .background-group .card, .background-group #appLauncherContainer .scrollable-list, #appLauncherContainer .background-group .scrollable-list {
+.background-group .panel, .background-group .select-subcompany-modal .list-group, .select-subcompany-modal .background-group .list-group, .background-group .panel-editable, .background-group .card, .background-group #appLauncherContainer .scrollable-list, #appLauncherContainer .background-group .scrollable-list {
   height: 34px;
   overflow: hidden;
   width: 123px;
@@ -13054,7 +13125,7 @@ a[data-wysihtml5-command=underline].active,
   left: 0;
   background: rgba(255, 255, 255, 0.75); }
 
-ul .spinner-backdrop, .inner-box .spinner-backdrop, .panel .spinner-backdrop, .select-subcompany-modal .list-group .spinner-backdrop, .card .spinner-backdrop, #appLauncherContainer .scrollable-list .spinner-backdrop, .scrollable-list .spinner-backdrop, .modal-dialog .spinner-backdrop {
+ul .spinner-backdrop, .inner-box .spinner-backdrop, .panel .spinner-backdrop, .select-subcompany-modal .list-group .spinner-backdrop, .panel-editable .spinner-backdrop, .card .spinner-backdrop, #appLauncherContainer .scrollable-list .spinner-backdrop, .scrollable-list .spinner-backdrop, .modal-dialog .spinner-backdrop {
   position: absolute; }
 
 .select2-container {
@@ -13612,7 +13683,7 @@ li.dropdown-header {
   min-height: 180px;
   overflow: hidden; }
 
-.grid-list .panel, .grid-list .select-subcompany-modal .list-group, .select-subcompany-modal .grid-list .list-group, .grid-list .card, .grid-list #appLauncherContainer .scrollable-list, #appLauncherContainer .grid-list .scrollable-list {
+.grid-list .panel, .grid-list .select-subcompany-modal .list-group, .select-subcompany-modal .grid-list .list-group, .grid-list .panel-editable, .grid-list .card, .grid-list #appLauncherContainer .scrollable-list, #appLauncherContainer .grid-list .scrollable-list {
   margin: 4px;
   padding: 12px;
   -webkit-box-shadow: inset 0 -1px 0 #d5d1cb, 0 1px 4px rgba(113, 108, 102, 0.1), transparent 0 0 0;
@@ -13623,18 +13694,18 @@ li.dropdown-header {
   -moz-transition: border .2s ease-out;
   -webkit-transition: border .2s ease-out;
   transition: border .2s ease-out; }
-  .grid-list .panel .product-pricing, .grid-list .select-subcompany-modal .list-group .product-pricing, .select-subcompany-modal .grid-list .list-group .product-pricing, .grid-list .card .product-pricing, .grid-list #appLauncherContainer .scrollable-list .product-pricing, #appLauncherContainer .grid-list .scrollable-list .product-pricing {
+  .grid-list .panel .product-pricing, .grid-list .select-subcompany-modal .list-group .product-pricing, .select-subcompany-modal .grid-list .list-group .product-pricing, .grid-list .panel-editable .product-pricing, .grid-list .card .product-pricing, .grid-list #appLauncherContainer .scrollable-list .product-pricing, #appLauncherContainer .grid-list .scrollable-list .product-pricing {
     position: absolute;
     bottom: 4px; }
-    .grid-list .panel .product-pricing span, .grid-list .select-subcompany-modal .list-group .product-pricing span, .select-subcompany-modal .grid-list .list-group .product-pricing span, .grid-list .card .product-pricing span, .grid-list #appLauncherContainer .scrollable-list .product-pricing span, #appLauncherContainer .grid-list .scrollable-list .product-pricing span {
+    .grid-list .panel .product-pricing span, .grid-list .select-subcompany-modal .list-group .product-pricing span, .select-subcompany-modal .grid-list .list-group .product-pricing span, .grid-list .panel-editable .product-pricing span, .grid-list .card .product-pricing span, .grid-list #appLauncherContainer .scrollable-list .product-pricing span, #appLauncherContainer .grid-list .scrollable-list .product-pricing span {
       color: #3C7BDA;
       font-weight: bold; }
-  .grid-list .panel .product-description, .grid-list .select-subcompany-modal .list-group .product-description, .select-subcompany-modal .grid-list .list-group .product-description, .grid-list .card .product-description, .grid-list #appLauncherContainer .scrollable-list .product-description, #appLauncherContainer .grid-list .scrollable-list .product-description {
+  .grid-list .panel .product-description, .grid-list .select-subcompany-modal .list-group .product-description, .select-subcompany-modal .grid-list .list-group .product-description, .grid-list .panel-editable .product-description, .grid-list .card .product-description, .grid-list #appLauncherContainer .scrollable-list .product-description, #appLauncherContainer .grid-list .scrollable-list .product-description {
     min-height: 130px; }
     @media (max-width: 992px) {
-      .grid-list .panel .product-description, .grid-list .select-subcompany-modal .list-group .product-description, .select-subcompany-modal .grid-list .list-group .product-description, .grid-list .card .product-description, .grid-list #appLauncherContainer .scrollable-list .product-description, #appLauncherContainer .grid-list .scrollable-list .product-description {
+      .grid-list .panel .product-description, .grid-list .select-subcompany-modal .list-group .product-description, .select-subcompany-modal .grid-list .list-group .product-description, .grid-list .panel-editable .product-description, .grid-list .card .product-description, .grid-list #appLauncherContainer .scrollable-list .product-description, #appLauncherContainer .grid-list .scrollable-list .product-description {
         min-height: 40px; } }
-  .grid-list .panel .info, .grid-list .select-subcompany-modal .list-group .info, .select-subcompany-modal .grid-list .list-group .info, .grid-list .card .info, .grid-list #appLauncherContainer .scrollable-list .info, #appLauncherContainer .grid-list .scrollable-list .info {
+  .grid-list .panel .info, .grid-list .select-subcompany-modal .list-group .info, .select-subcompany-modal .grid-list .list-group .info, .grid-list .panel-editable .info, .grid-list .card .info, .grid-list #appLauncherContainer .scrollable-list .info, #appLauncherContainer .grid-list .scrollable-list .info {
     position: absolute;
     top: 0;
     left: 0;
@@ -13647,10 +13718,10 @@ li.dropdown-header {
     -moz-transition: opacity .2s ease-in;
     -webkit-transition: opacity .2s ease-in;
     transition: opacity .2s ease-in; }
-  .grid-list .panel:hover, .grid-list .select-subcompany-modal .list-group:hover, .select-subcompany-modal .grid-list .list-group:hover, .grid-list .card:hover, .grid-list #appLauncherContainer .scrollable-list:hover, #appLauncherContainer .grid-list .scrollable-list:hover {
+  .grid-list .panel:hover, .grid-list .select-subcompany-modal .list-group:hover, .select-subcompany-modal .grid-list .list-group:hover, .grid-list .panel-editable:hover, .grid-list .card:hover, .grid-list #appLauncherContainer .scrollable-list:hover, #appLauncherContainer .grid-list .scrollable-list:hover {
     border: 1px solid #8E8E8E;
     box-shadow: inset 0 -1px 0 #9A9895, 2px 3px 6px rgba(113, 108, 102, 0.3), rgba(0, 0, 0, 0) 0 0 0; }
-    .grid-list .panel:hover .info, .grid-list .select-subcompany-modal .list-group:hover .info, .select-subcompany-modal .grid-list .list-group:hover .info, .grid-list .card:hover .info, .grid-list #appLauncherContainer .scrollable-list:hover .info, #appLauncherContainer .grid-list .scrollable-list:hover .info {
+    .grid-list .panel:hover .info, .grid-list .select-subcompany-modal .list-group:hover .info, .select-subcompany-modal .grid-list .list-group:hover .info, .grid-list .panel-editable:hover .info, .grid-list .card:hover .info, .grid-list #appLauncherContainer .scrollable-list:hover .info, #appLauncherContainer .grid-list .scrollable-list:hover .info {
       opacity: 1; }
 
 @media only screen and (max-width: 992px) {
@@ -14060,6 +14131,98 @@ ul.tree ul li:last-child:before {
   vertical-align: middle;
   width: 1%;
   padding: 0 0 0 12px; }
+
+.label-tag {
+  background: #f2f2f2;
+  color: #777;
+  white-space: normal;
+  font-size: 14px;
+  display: inline-block;
+  border: 1px solid #e6e6e6;
+  padding: 2px 5px 2px 5px;
+  line-height: 20px;
+  text-align: left;
+  cursor: pointer;
+  font-weight: 500; }
+  .label-tag:hover {
+    color: #5b5b5b; }
+  .label-tag .tag-name, .label-tag .tag-value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top; }
+  .label-tag .tag-name {
+    max-width: 80px;
+    display: inline-block;
+    padding: 0; }
+    .label-tag .tag-name::before {
+      content: ':';
+      float: right;
+      font-weight: bold;
+      font-size: 13px;
+      margin-left: 2px; }
+  .label-tag .tag-value {
+    max-width: 120px;
+    display: inline-block;
+    padding: 0;
+    font-weight: bold;
+    color: #4d4d4d; }
+  @media (max-width: 480px) {
+    .label-tag {
+      font-size: 13px; }
+      .label-tag .tag-name::before {
+        line-height: 18px; } }
+  .label-tag.invalid {
+    background-color: #f2dede;
+    border-color: #ebccd1; }
+
+.tag-selector {
+  padding: 5px;
+  margin-bottom: 10px; }
+  .tag-selector .scrollable-content {
+    white-space: normal; }
+    .tag-selector .scrollable-content .label-tag {
+      display: inline-block;
+      margin-top: 5px;
+      margin-right: 5px; }
+
+.btn-remove {
+  color: #5b5b5b;
+  padding: 0; }
+
+.panel-editable {
+  min-height: 34px;
+  padding: 0;
+  position: relative;
+  border: 1px solid #ccc;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
+  .panel-editable .input-group > .input-group-addon {
+    height: 32px; }
+  .panel-editable > .edit-icon {
+    position: absolute;
+    top: 6px;
+    right: 8px; }
+  .panel-editable .label-tag {
+    margin-top: 3px;
+    margin-left: 3px; }
+  .panel-editable .text-muted, .panel-editable .text-placeholder {
+    line-height: 24px;
+    margin: 4px 0 0 0;
+    padding: 0 12px;
+    color: #777777;
+    -webkit-font-smoothing: subpixel-antialiased; }
+  .panel-editable.panel-disabled {
+    background-color: #d5d5d5 !important;
+    cursor: not-allowed !important; }
+    .panel-editable.panel-disabled .label-tag {
+      cursor: not-allowed !important;
+      opacity: .5; }
+
+.select-tags {
+  padding: 3px; }
+  .select-tags .label {
+    margin-right: 3px;
+    margin-top: 3px; }
 
 .timeline .control-label {
   font-weight: 500; }
@@ -15207,7 +15370,7 @@ ul.tree ul li:last-child:before {
     cursor: pointer; }
   .storage-modal tbody tr:first-child td {
     border-top: none; }
-  .storage-modal .panel table, .storage-modal .select-subcompany-modal .list-group table, .select-subcompany-modal .storage-modal .list-group table, .storage-modal .card table, .storage-modal #appLauncherContainer .scrollable-list table, #appLauncherContainer .storage-modal .scrollable-list table {
+  .storage-modal .panel table, .storage-modal .select-subcompany-modal .list-group table, .select-subcompany-modal .storage-modal .list-group table, .storage-modal .panel-editable table, .storage-modal .card table, .storage-modal #appLauncherContainer .scrollable-list table, #appLauncherContainer .storage-modal .scrollable-list table {
     margin-bottom: 0px !important; }
   .storage-modal .panel-heading {
     cursor: pointer; }
@@ -16180,11 +16343,11 @@ tr.blocked-file {
   .display-status .btn-link.btn-xs, .display-status .btn-group-xs > .btn-link.btn, .display-status .icon-nav .btn-group-xs > label.btn-link, .icon-nav .display-status .btn-group-xs > label.btn-link {
     display: block; }
 
-.panel .panel__header, .select-subcompany-modal .list-group .panel__header, .card .panel__header, #appLauncherContainer .scrollable-list .panel__header {
+.panel .panel__header, .select-subcompany-modal .list-group .panel__header, .panel-editable .panel__header, .card .panel__header, #appLauncherContainer .scrollable-list .panel__header {
   font-size: 1.8em;
   margin-top: 0.2em; }
 
-.panel .panel__sub-header, .select-subcompany-modal .list-group .panel__sub-header, .card .panel__sub-header, #appLauncherContainer .scrollable-list .panel__sub-header {
+.panel .panel__sub-header, .select-subcompany-modal .list-group .panel__sub-header, .panel-editable .panel__sub-header, .card .panel__sub-header, #appLauncherContainer .scrollable-list .panel__sub-header {
   font-size: 1.4em;
   font-weight: 400;
   color: #555; }
@@ -18225,7 +18388,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   font-size: 18px; }
   .apps-launcher .apps-launcher-tour {
     padding: 64px 32px; }
-    .apps-launcher .apps-launcher-tour .panel, .apps-launcher .apps-launcher-tour .select-subcompany-modal .list-group, .select-subcompany-modal .apps-launcher .apps-launcher-tour .list-group, .apps-launcher .apps-launcher-tour .card, .apps-launcher .apps-launcher-tour #appLauncherContainer .scrollable-list, #appLauncherContainer .apps-launcher .apps-launcher-tour .scrollable-list {
+    .apps-launcher .apps-launcher-tour .panel, .apps-launcher .apps-launcher-tour .select-subcompany-modal .list-group, .select-subcompany-modal .apps-launcher .apps-launcher-tour .list-group, .apps-launcher .apps-launcher-tour .panel-editable, .apps-launcher .apps-launcher-tour .card, .apps-launcher .apps-launcher-tour #appLauncherContainer .scrollable-list, #appLauncherContainer .apps-launcher .apps-launcher-tour .scrollable-list {
       overflow: hidden;
       margin: 2px;
       -webkit-box-shadow: 0 1px 4px rgba(50, 50, 50, 0.1);
@@ -18282,7 +18445,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   height: 100vh; }
   .app-launcher-login h1 {
     margin-top: 0; }
-  .app-launcher-login .panel, .app-launcher-login .select-subcompany-modal .list-group, .select-subcompany-modal .app-launcher-login .list-group, .app-launcher-login .card, .app-launcher-login #appLauncherContainer .scrollable-list, #appLauncherContainer .app-launcher-login .scrollable-list {
+  .app-launcher-login .panel, .app-launcher-login .select-subcompany-modal .list-group, .select-subcompany-modal .app-launcher-login .list-group, .app-launcher-login .panel-editable, .app-launcher-login .card, .app-launcher-login #appLauncherContainer .scrollable-list, #appLauncherContainer .app-launcher-login .scrollable-list {
     padding: 32px; }
   .app-launcher-login .rise-logo {
     text-align: center;
