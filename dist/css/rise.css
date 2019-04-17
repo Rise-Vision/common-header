@@ -18472,6 +18472,15 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     padding-left: 0;
     border-left: none; }
 
+.weekly-templates .collapsed-label {
+  font-size: 18px; }
+
+.weekly-templates .expanded-panel {
+  color: #444; }
+
+.weekly-templates .expanded-message {
+  font-size: 16px; }
+
 @media (min-width: 768px) {
   .financial-container {
     --financial-button-bar-height: 70px;
