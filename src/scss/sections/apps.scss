@@ -362,5 +362,14 @@
 	.col-centered {
 		float: none; display:
 		inline-block;
+		@media (min-width: $screen-sm) and (max-width: $screen-sm-max) {
+			width: 49%;
+		}	
+		@media (min-width: $screen-md) and (max-width: $screen-md-max) {
+			width: 33%;
+		}
+		@media (min-width: $screen-lg) {
+			width: 24%;
+		}
 	}
 }
