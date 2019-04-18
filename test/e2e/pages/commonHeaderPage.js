@@ -23,6 +23,7 @@
 
     var addSubcompanyModal = element(by.css(".add-subcompany-modal"));
     var addSubcompanyModalNameField = element(by.id("company-settings-name"));
+    var addSubcompanyModalIndustryField = element(by.id('company-industry'));
     var addSubcompanyModalSaveButton = element(by.css(".add-subcompany-save-button"));
 
     var selectSubcompanyModal = element(by.css(".select-subcompany-modal"));
@@ -78,12 +79,15 @@
       });
     };
 
-    this.createSubCompany = function(name) {    
+    this.createSubCompany = function(name, industryValue) {    
       profilePic.click();
       addSubcompanyButton.click();
       helper.wait(addSubcompanyModal, "Add Subcompany Modal");
 
       addSubcompanyModalNameField.sendKeys(name);
+      if (industryValue) {
+        addSubcompanyModalIndustryField.$('[value="'+industryValue+'"]').click(); 
+      }
       addSubcompanyModalSaveButton.click();
       helper.waitRemoved(addSubcompanyModal, "Add Subcompany Modal");
     };
