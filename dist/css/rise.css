@@ -18481,6 +18481,10 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
 .weekly-templates .expanded-message {
   font-size: 16px; }
 
+.weekly-templates .col-centered {
+  float: none;
+  display: inline-block; }
+
 @media (min-width: 768px) {
   .financial-container {
     --financial-button-bar-height: 70px;
