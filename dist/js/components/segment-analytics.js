@@ -61,10 +61,9 @@
        * Load Segment.io analytics script
        * @param apiKey The key API to use
        */
-      service.load = function (apiKey, enableIntercomMessading) {
+      service.load = function (apiKey) {
         if (apiKey && !loaded) {
 
-          configureIntercomMessading(enableIntercomMessading);
           trackPageviews();
 
           var e = document.createElement("script");
@@ -79,15 +78,6 @@
           loaded = true;
         }
       };
-
-      function configureIntercomMessading(enableIntercomMessading) {
-        if (enableIntercomMessading) {
-          $window.intercomSettings = $window.intercomSettings || {};
-          $window.intercomSettings.widget = {
-            activator: "#IntercomDefaultWidget"
-          };
-        }
-      }
 
       function trackPageviews() {
         // Listening to $viewContentLoaded event to track pageview

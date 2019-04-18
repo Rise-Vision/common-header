@@ -9,8 +9,6 @@
     var getStartedButton = element(by.id("getStartedButton"));
     var documentationButton = element(by.id("documentationButton"));
 
-    var intercomMessenger = element(by.id("intercom-messenger"));
-
     this.getHelpDropdownButton = function() {
       return helpDropdownButton;
     };
@@ -31,9 +29,6 @@
       return documentationButton;
     };
 
-    this.getIntercomMessenger = function() {
-      return intercomMessenger;
-    };
   };
 
   module.exports = HelpDropdownPage;

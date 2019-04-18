@@ -351,11 +351,11 @@ angular.module("risevision.common.header", [
 
 .value("ENV_NAME", "")
 
-.directive("commonHeader", ["$modal", "$rootScope", "$q", "$loading",
+.directive("commonHeader", ["$rootScope", "$q", "$loading",
   "$interval", "oauth2APILoader", "$log",
   "$templateCache", "userState", "$location", "bindToScopeWithWatch",
   "$document", "cookieTester", "companyIcpFactory", "ENV_NAME",
-  function ($modal, $rootScope, $q, $loading, $interval,
+  function ($rootScope, $q, $loading, $interval,
     oauth2APILoader, $log, $templateCache, userState, $location,
     bindToScopeWithWatch, $document, cookieTester, companyIcpFactory,
     ENV_NAME) {
@@ -428,12 +428,10 @@ angular.module("risevision.common.header", [
   }
 ])
 
-.run(["segmentAnalytics", "SEGMENT_API_KEY", "ENABLE_INTERCOM_MESSAGING",
-  "analyticsEvents", "$document",
-  function (segmentAnalytics, SEGMENT_API_KEY, ENABLE_INTERCOM_MESSAGING,
-    analyticsEvents, $document) {
+.run(["segmentAnalytics", "SEGMENT_API_KEY", "analyticsEvents", "$document",
+  function (segmentAnalytics, SEGMENT_API_KEY, analyticsEvents, $document) {
     analyticsEvents.initialize();
-    segmentAnalytics.load(SEGMENT_API_KEY, ENABLE_INTERCOM_MESSAGING);
+    segmentAnalytics.load(SEGMENT_API_KEY);
 
     $document.on("keydown", function (event) {
       var doPrevent = false;
@@ -477,15 +475,16 @@ angular.module("risevision.common.header", [
     });
   };
 })
-  .directive("ngDisableRightClick", function () {
-    return function (scope, element) {
-      element.bind("contextmenu", function (event) {
-        scope.$apply(function () {
-          event.preventDefault();
-        });
+
+.directive("ngDisableRightClick", function () {
+  return function (scope, element) {
+    element.bind("contextmenu", function (event) {
+      scope.$apply(function () {
+        event.preventDefault();
       });
-    };
-  });
+    });
+  };
+});
 
 angular.module("risevision.common.header.directives", []);
 angular.module("risevision.common.header.filters", []);
@@ -8268,10 +8267,9 @@ angular.module("risevision.common.components.stop-event", [])
        * Load Segment.io analytics script
        * @param apiKey The key API to use
        */
-      service.load = function (apiKey, enableIntercomMessading) {
+      service.load = function (apiKey) {
         if (apiKey && !loaded) {
 
-          configureIntercomMessading(enableIntercomMessading);
           trackPageviews();
 
           var e = document.createElement("script");
@@ -8286,15 +8284,6 @@ angular.module("risevision.common.components.stop-event", [])
           loaded = true;
         }
       };
-
-      function configureIntercomMessading(enableIntercomMessading) {
-        if (enableIntercomMessading) {
-          $window.intercomSettings = $window.intercomSettings || {};
-          $window.intercomSettings.widget = {
-            activator: "#IntercomDefaultWidget"
-          };
-        }
-      }
 
       function trackPageviews() {
         // Listening to $viewContentLoaded event to track pageview
@@ -10831,7 +10820,6 @@ module.run(['$templateCache', function($templateCache) {
     .constant("LOCALES_SUFIX", ".json");
 
   angular.module("risevision.common.config")
-    .value("ENABLE_INTERCOM_MESSAGING", false)
     .value("ENABLE_EXTERNAL_LOGGING", true)
     .value("CORE_URL", "https://rvaserver2.appspot.com/_ah/api")
     .value("COOKIE_CHECK_URL", "//storage-dot-rvaserver2.appspot.com")

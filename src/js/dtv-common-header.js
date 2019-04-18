@@ -51,11 +51,11 @@ angular.module("risevision.common.header", [
 
 .value("ENV_NAME", "")
 
-.directive("commonHeader", ["$modal", "$rootScope", "$q", "$loading",
+.directive("commonHeader", ["$rootScope", "$q", "$loading",
   "$interval", "oauth2APILoader", "$log",
   "$templateCache", "userState", "$location", "bindToScopeWithWatch",
   "$document", "cookieTester", "companyIcpFactory", "ENV_NAME",
-  function ($modal, $rootScope, $q, $loading, $interval,
+  function ($rootScope, $q, $loading, $interval,
     oauth2APILoader, $log, $templateCache, userState, $location,
     bindToScopeWithWatch, $document, cookieTester, companyIcpFactory,
     ENV_NAME) {
@@ -128,12 +128,10 @@ angular.module("risevision.common.header", [
   }
 ])
 
-.run(["segmentAnalytics", "SEGMENT_API_KEY", "ENABLE_INTERCOM_MESSAGING",
-  "analyticsEvents", "$document",
-  function (segmentAnalytics, SEGMENT_API_KEY, ENABLE_INTERCOM_MESSAGING,
-    analyticsEvents, $document) {
+.run(["segmentAnalytics", "SEGMENT_API_KEY", "analyticsEvents", "$document",
+  function (segmentAnalytics, SEGMENT_API_KEY, analyticsEvents, $document) {
     analyticsEvents.initialize();
-    segmentAnalytics.load(SEGMENT_API_KEY, ENABLE_INTERCOM_MESSAGING);
+    segmentAnalytics.load(SEGMENT_API_KEY);
 
     $document.on("keydown", function (event) {
       var doPrevent = false;
@@ -177,15 +175,16 @@ angular.module("risevision.common.header", [
     });
   };
 })
-  .directive("ngDisableRightClick", function () {
-    return function (scope, element) {
-      element.bind("contextmenu", function (event) {
-        scope.$apply(function () {
-          event.preventDefault();
-        });
+
+.directive("ngDisableRightClick", function () {
+  return function (scope, element) {
+    element.bind("contextmenu", function (event) {
+      scope.$apply(function () {
+        event.preventDefault();
       });
-    };
-  });
+    });
+  };
+});
 
 angular.module("risevision.common.header.directives", []);
 angular.module("risevision.common.header.filters", []);

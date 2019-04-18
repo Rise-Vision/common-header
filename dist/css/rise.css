@@ -1350,13 +1350,13 @@ pre {
   .container-fluid:after {
     clear: both; }
 
-.row, .support-app .ticket-list-table .title-row, .support-app .ticket-list-table .ticket {
+.row {
   margin-left: -7.5px;
   margin-right: -7.5px; }
-  .row:before, .support-app .ticket-list-table .title-row:before, .support-app .ticket-list-table .ticket:before, .row:after, .support-app .ticket-list-table .title-row:after, .support-app .ticket-list-table .ticket:after {
+  .row:before, .row:after {
     content: " ";
     display: table; }
-  .row:after, .support-app .ticket-list-table .title-row:after, .support-app .ticket-list-table .ticket:after {
+  .row:after {
     clear: both; }
 
 .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
@@ -4071,21 +4071,20 @@ a.thumbnail.active,
 .thumbnail.active.u_link {
   border-color: #0081BA; }
 
-.alert, .support-app .support-time {
+.alert {
   padding: 15px;
   margin-bottom: 20px;
   border: 1px solid transparent;
   border-radius: 4px; }
-  .alert h4, .support-app .support-time h4 {
+  .alert h4 {
     margin-top: 0;
     color: inherit; }
-  .alert .alert-link, .support-app .support-time .alert-link {
+  .alert .alert-link {
     font-weight: bold; }
-  .alert > p, .support-app .support-time > p,
-  .alert > ul,
-  .support-app .support-time > ul {
+  .alert > p,
+  .alert > ul {
     margin-bottom: 0; }
-  .alert > p + p, .support-app .support-time > p + p {
+  .alert > p + p {
     margin-top: 5px; }
 
 .alert-dismissable,
@@ -8311,24 +8310,24 @@ button.close {
 .icon-nav .input-group > .input-group-btn > label {
   height: 34px; }
 
-.alert.alert-premium, .support-app .alert-premium.support-time {
+.alert.alert-premium {
   background-color: #dbf0e0;
   border-color: #4ab767;
   color: #333; }
-  .alert.alert-premium hr, .support-app .alert-premium.support-time hr {
+  .alert.alert-premium hr {
     border-top-color: #42a65c; }
-  .alert.alert-premium .alert-link, .support-app .alert-premium.support-time .alert-link {
+  .alert.alert-premium .alert-link {
     color: #1a1a1a; }
 
-.alert.alert-plan, .support-app .alert-plan.support-time {
+.alert.alert-plan {
   font-size: 13px;
   margin: 0 !important;
   padding: 6px;
   color: #020621; }
-  .alert.alert-plan.plan-active, .support-app .alert-plan.plan-active.support-time {
+  .alert.alert-plan.plan-active {
     border-color: #d6e9c6;
     background-color: #dff0d8; }
-  .alert.alert-plan.plan-suspended, .support-app .alert-plan.plan-suspended.support-time {
+  .alert.alert-plan.plan-suspended {
     background-color: #fcf8e3;
     border-color: #faebcc; }
 
@@ -9114,25 +9113,21 @@ All utilities have a prefix u_ added to them
   font-weight: bold;
   display: inline-block; }
 
-.row.sm-gutter, .support-app .ticket-list-table .sm-gutter.title-row, .support-app .ticket-list-table .sm-gutter.ticket {
+.row.sm-gutter {
   margin-left: -4px;
   margin-right: -4px; }
 
-.row.sm-gutter [class*='col-']:not(:first-child), .support-app .ticket-list-table .sm-gutter.title-row [class*='col-']:not(:first-child), .support-app .ticket-list-table .sm-gutter.ticket [class*='col-']:not(:first-child),
-.row.sm-gutter [class*='col-']:not(:last-child),
-.support-app .ticket-list-table .sm-gutter.title-row [class*='col-']:not(:last-child),
-.support-app .ticket-list-table .sm-gutter.ticket [class*='col-']:not(:last-child) {
+.row.sm-gutter [class*='col-']:not(:first-child),
+.row.sm-gutter [class*='col-']:not(:last-child) {
   padding-right: 4px;
   padding-left: 4px; }
 
-.row.no-gutter, .support-app .ticket-list-table .no-gutter.title-row, .support-app .ticket-list-table .no-gutter.ticket {
+.row.no-gutter {
   margin-left: 0px;
   margin-right: 0px; }
 
-.row.no-gutter [class*='col-']:not(:first-child), .support-app .ticket-list-table .no-gutter.title-row [class*='col-']:not(:first-child), .support-app .ticket-list-table .no-gutter.ticket [class*='col-']:not(:first-child),
-.row.no-gutter [class*='col-']:not(:last-child),
-.support-app .ticket-list-table .no-gutter.title-row [class*='col-']:not(:last-child),
-.support-app .ticket-list-table .no-gutter.ticket [class*='col-']:not(:last-child) {
+.row.no-gutter [class*='col-']:not(:first-child),
+.row.no-gutter [class*='col-']:not(:last-child) {
   padding-right: 0px;
   padding-left: 0px; }
 
@@ -14741,86 +14736,6 @@ ul.tree ul li:last-child:before {
     height: 100%;
     top: 0; }
 
-#intercom-launcher {
-  list-style: none;
-  position: fixed;
-  z-index: 1;
-  right: 0;
-  top: 130px;
-  width: 134px;
-  padding: 8px 5px;
-  border: 3px solid #fff;
-  border-right: none;
-  -moz-border-radius: 10px 0 0 10px;
-  -webkit-border-radius: 10px 0 0 10px;
-  border-radius: 10px 0 0 10px;
-  -moz-box-shadow: 0 0 7px rgba(0, 0, 0, 0.6);
-  -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, 0.6);
-  box-shadow: 0 0 7px rgba(0, 0, 0, 0.6);
-  cursor: pointer; }
-
-#intercom-container .intercom-launcher-button {
-  position: absolute !important;
-  bottom: 7px !important;
-  right: 10px !important;
-  background-color: #79807B !important;
-  border: none !important;
-  box-shadow: none !important;
-  float: right !important; }
-
-#intercom-container .intercom-launcher {
-  position: fixed;
-  bottom: 0 !important;
-  right: 0 !important;
-  background: #79807B !important;
-  top: 40% !important;
-  color: white !important;
-  width: 60px !important;
-  height: 45px !important; }
-
-#intercom-container .intercom-launcher-preview {
-  position: absolute;
-  bottom: 0;
-  right: 67px;
-  max-width: 205px;
-  padding: 10px;
-  color: white;
-  border-radius: 0;
-  background: none;
-  cursor: pointer;
-  width: 205px; }
-
-#intercom-container .intercom-launcher-badge {
-  top: 4px !important;
-  right: 3px !important; }
-
-#intercom-container .intercom-launcher-inactive.intercom-launcher-maximized {
-  opacity: 1 !important;
-  visibility: visible !important; }
-
-#intercom-container .intercom-launcher-inactive {
-  visibility: hidden !important; }
-
-#intercom-container .intercom-launcher-preview:after {
-  background-color: #79807B; }
-
-#intercom-container .intercom-launcher-preview {
-  box-shadow: none; }
-
-#intercom-container .intercom-launcher-preview .intercom-comment-body {
-  line-height: 16px; }
-
-#intercom-container .intercom-launcher-preview {
-  position: absolute;
-  bottom: 2px;
-  right: 60px;
-  max-width: 240px;
-  padding: 8px;
-  color: white;
-  border-radius: 0;
-  background: none;
-  cursor: pointer; }
-
 .cta-tooltip .tooltip-inner {
   color: #4ab767;
   background: #fff;
@@ -15590,211 +15505,6 @@ tr.blocked-file {
 
 .table.filetable .file-name.folder-type a .fa-folder::before, .table.filetable .file-name.folder-type .u_link .fa-folder::before {
   color: #4ab767; }
-
-.support-app {
-  /* Ticket List Table (desktop) */
-  /* Media Style Ticket List (mobile) */
-  /* Ticket Details View */
-  /* Comments */
-  /* Post Comment Box */
-  /* Tickets Table Stack View */ }
-  .support-app .support-time {
-    border-top-right-radius: 0px;
-    border-top-left-radius: 0px;
-    border-top-width: 0px;
-    margin-top: -20px;
-    margin-bottom: 40px;
-    text-align: center;
-    color: #5b5b5b; }
-    .support-app .support-time.alert-warning {
-      border-color: #FAEBCC; }
-    .support-app .support-time.alert-success {
-      border-color: #D6E9C6; }
-    .support-app .support-time .text-danger {
-      color: #c0392b; }
-    .support-app .support-time .divider {
-      margin: 0 5px; }
-  .support-app h2 {
-    margin-top: 0px !important; }
-  .support-app .ticket-description {
-    white-space: pre-line;
-    line-height: 20px; }
-  .support-app .ticket-attachments {
-    margin: 20px 0;
-    line-height: 20px; }
-    .support-app .ticket-attachments a, .support-app .ticket-attachments .u_link {
-      display: block; }
-  .support-app .ticket-list-table {
-    background-color: #fff;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    font-weight: bold;
-    margin-bottom: 40px; }
-    .support-app .ticket-list-table .no-tickets {
-      min-height: 200px;
-      text-align: center;
-      line-height: 200px;
-      color: #aaa; }
-    .support-app .ticket-list-table .text-muted {
-      color: #aaa; }
-    .support-app .ticket-list-table .text-success {
-      color: #4ab767; }
-    .support-app .ticket-list-table .text-primary {
-      color: #5bc0de; }
-    .support-app .ticket-list-table .text-danger {
-      color: #c0392b; }
-    .support-app .ticket-list-table .text-warning {
-      color: #f0ad4e; }
-    .support-app .ticket-list-table .title-row {
-      font-size: 12px;
-      margin: 0;
-      border-bottom: 1px solid #ccc;
-      padding: 0;
-      line-height: 40px;
-      font-weight: bold;
-      cursor: pointer;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none; }
-    .support-app .ticket-list-table .ticket {
-      margin: 0;
-      line-height: 66px; }
-      .support-app .ticket-list-table .ticket a, .support-app .ticket-list-table .ticket .u_link {
-        color: #020621; }
-      .support-app .ticket-list-table .ticket:not(:last-child) {
-        border-bottom: 1px solid #eee; }
-      .support-app .ticket-list-table .ticket * {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis; }
-  .support-app .ticket-list-mobile {
-    background-color: #fff;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    padding: 0 10px; }
-    .support-app .ticket-list-mobile .ticket.media {
-      margin-top: 0;
-      color: #333;
-      cursor: pointer; }
-    .support-app .ticket-list-mobile .ticket .label {
-      width: 60px; }
-    .support-app .ticket-list-mobile .ticket h5 {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      padding-right: 40px; }
-    .support-app .ticket-list-mobile .ticket .ticket-item {
-      padding: 15px 0; }
-    .support-app .ticket-list-mobile .ticket:not(:last-child) .ticket-item {
-      border-bottom: 1px solid #ccc; }
-  .support-app .ticket {
-    margin-bottom: 40px;
-    width: 100%;
-    height: 66px;
-    position: relative; }
-    .support-app .ticket .status-tag {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      line-height: 64px;
-      text-align: center;
-      color: #fff;
-      font-weight: bold;
-      margin-right: 10px;
-      background-color: #888; }
-      .support-app .ticket .status-tag.solved {
-        background-color: #5CB85C; }
-      .support-app .ticket .status-tag.open {
-        background-color: #D9534F; }
-      .support-app .ticket .status-tag.pending {
-        background-color: #5BC0DE; }
-      .support-app .ticket .status-tag.new {
-        background-color: #f0ad4e; }
-    .support-app .ticket .ticket-heading h4 {
-      max-width: 100%;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      display: block;
-      margin: 0;
-      line-height: 64px;
-      height: 64px; }
-      .support-app .ticket .ticket-heading h4 .ticket-id {
-        margin-right: 4px; }
-      .support-app .ticket .ticket-heading h4 small {
-        display: block; }
-    .support-app .ticket .meta {
-      height: 64px;
-      width: 64px;
-      text-align: right;
-      line-height: 64px; }
-  .support-app .panel-footer {
-    padding: 0;
-    border-top: none; }
-    .support-app .panel-footer .ticket-attachments {
-      margin: 0;
-      padding: 10px;
-      border-top: 1px solid #ddd; }
-  .support-app .panel-body {
-    background-color: #eee;
-    border-radius: 4px; }
-    .support-app .panel-body p {
-      margin-bottom: 0; }
-  .support-app .panel-body.rise-vision-support {
-    background-color: #FFF; }
-  .support-app .chat-head {
-    width: 32px;
-    height: 32px; }
-  .support-app .comments-list {
-    margin-bottom: 200px; }
-    .support-app .comments-list h4 {
-      margin-bottom: 30px; }
-  .support-app .comment {
-    margin-bottom: 10px; }
-  .support-app .comment .user {
-    margin-bottom: 5px; }
-  .support-app .comment-box {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    /* Set the fixed height of the footer here */
-    background-color: #fff; }
-  .support-app .comment-box .ticket-button .dropdown-toggle {
-    color: #FFF;
-    background-color: #45B864;
-    border-color: #3c9f57;
-    border-radius: 0px; }
-  @media (max-width: 768px) {
-    .support-app .table-stack > tbody > tr {
-      display: block;
-      position: relative; }
-    .support-app .table-stack > tbody > tr:hover > td:before {
-      color: #0081BA; }
-    .support-app .table-stack > tbody > tr > td {
-      padding: 5px 10px; }
-      .support-app .table-stack > tbody > tr > td.ticket-subject {
-        padding: 10px 80px 0 10px; }
-      .support-app .table-stack > tbody > tr > td.ticket-id {
-        display: none; }
-      .support-app .table-stack > tbody > tr > td.ticket-status {
-        text-align: right;
-        position: absolute;
-        width: 80px;
-        right: 0;
-        top: 5px; }
-      .support-app .table-stack > tbody > tr > td.ticket-requester {
-        margin-left: 0;
-        padding-left: 0; }
-        .support-app .table-stack > tbody > tr > td.ticket-requester:before {
-          content: attr(data-th) " ";
-          float: left;
-          margin-right: 5px; }
-      .support-app .table-stack > tbody > tr > td.ticket-date {
-        width: auto;
-        padding-right: 5px; } }
 
 .alerts-app h2 {
   margin-top: 0px !important; }
@@ -17727,7 +17437,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
 .address-editor .alert-info .form-group {
   margin-bottom: 0; }
 
-.address-editor .alert-info + .row, .address-editor .support-app .ticket-list-table .alert-info + .title-row, .support-app .ticket-list-table .address-editor .alert-info + .title-row, .address-editor .support-app .ticket-list-table .alert-info + .ticket, .support-app .ticket-list-table .address-editor .alert-info + .ticket {
+.address-editor .alert-info + .row {
   margin-right: 5px; }
 
 /* ==========================================================================
@@ -18144,11 +17854,11 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
 
 .couponEntry {
   margin: 0 10px; }
-  .couponEntry .alert, .couponEntry .support-app .support-time, .support-app .couponEntry .support-time {
+  .couponEntry .alert {
     margin-bottom: 10px;
     padding: 5px 15px;
     text-align: center; }
-    .couponEntry .alert span, .couponEntry .support-app .support-time span, .support-app .couponEntry .support-time span {
+    .couponEntry .alert span {
       display: inline; }
   .couponEntry input {
     display: inline-block;

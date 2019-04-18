@@ -21,7 +21,6 @@
     .constant("LOCALES_SUFIX", ".json");
 
   angular.module("risevision.common.config")
-    .value("ENABLE_INTERCOM_MESSAGING", false)
     .value("ENABLE_EXTERNAL_LOGGING", true)
     .value("CORE_URL", "https://rvaserver2.appspot.com/_ah/api")
     .value("COOKIE_CHECK_URL", "//storage-dot-rvaserver2.appspot.com")
