@@ -109,13 +109,17 @@
     };
 
     this.deleteCurrentCompany = function() {
+      helper.wait(profilePic, 'Profile Picture');
       helper.clickWhenClickable(profilePic, 'Profile Picture');
+
+      helper.wait(companySettingsButton, 'Company Settings Button');
       helper.clickWhenClickable(companySettingsButton, 'Company Settings Button');
-      
-      helper.wait(companySettingsModal, "Comapny Settings Modal");
+
+      helper.wait(companySettingsModal, "Company Settings Modal");
       helper.waitDisappear(companySettingsModalLoader, "Load Company Settings");
-      
-      companySettingsModalDeleteButton.click();
+
+      helper.wait(companySettingsModalDeleteButton, "Delete Button");
+      helper.clickWhenClickable(companySettingsModalDeleteButton, "Delete Button");
 
       helper.wait(safeDeleteModal, "Safe Delete Modal");
       safeDeleteModalInput.sendKeys('DELETE');
