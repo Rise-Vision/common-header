@@ -8347,11 +8347,10 @@ angular.module("risevision.common.components.stop-event", [])
 "use strict";
 
 angular.module("risevision.common.components.message-box.services", [])
-  .factory("messageBox", ["$q", "$log", "$modal", "$templateCache",
-    function ($q, $log, $modal, $templateCache) {
-      return function (title, message, close) {
-        return $modal.open({
-          template: $templateCache.get("message-box/message-box.html"),
+  .factory("messageBox", ["$modal", "$templateCache",
+    function ($modal, $templateCache) {
+      return function (title, message, close, windowClass, templateUrl) {
+        var options = {
           controller: "messageBoxInstance",
           size: "md",
           resolve: {
@@ -8365,7 +8364,19 @@ angular.module("risevision.common.components.message-box.services", [])
               return close || "common.ok";
             }
           }
-        });
+        };
+
+        if (windowClass) {
+          options.windowClass = windowClass;
+        }
+
+        if (!templateUrl) {
+          options.template = $templateCache.get("message-box/message-box.html");
+        } else {
+          options.templateUrl = templateUrl;
+        }
+
+        return $modal.open(options);
       };
     }
   ]);

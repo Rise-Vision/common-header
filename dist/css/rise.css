@@ -18115,6 +18115,48 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
 .template-editor-confirm-modal .modal-footer .btn-default, .template-editor-confirm-modal .modal-footer .timeline .dropdown-menu li .btn, .timeline .dropdown-menu li .template-editor-confirm-modal .modal-footer .btn, .template-editor-confirm-modal .modal-footer .timeline .dropdown-menu li .icon-nav label, .timeline .dropdown-menu li .icon-nav .template-editor-confirm-modal .modal-footer label, .template-editor-confirm-modal .modal-footer .icon-nav .timeline .dropdown-menu li label, .icon-nav .timeline .dropdown-menu li .template-editor-confirm-modal .modal-footer label {
   background: #e6e6e6; }
 
+.template-editor-message-box::before {
+  display: inline-block;
+  vertical-align: middle;
+  content: " ";
+  height: 25%; }
+
+.template-editor-message-box {
+  text-align: center;
+  padding: 0 !important;
+  color: #4d4d4d; }
+  .template-editor-message-box .modal-dialog {
+    display: inline-block;
+    vertical-align: middle; }
+  .template-editor-message-box .modal-header {
+    background: inherit;
+    border-bottom: 0; }
+  .template-editor-message-box .modal-body {
+    padding-top: 0;
+    text-align: center; }
+    .template-editor-message-box .modal-body .modal-title {
+      font-size: 16px;
+      font-weight: bold; }
+  .template-editor-message-box .modal-header .close {
+    width: 40px;
+    height: 40px; }
+  .template-editor-message-box .modal-footer {
+    background: #f2f2f2;
+    padding-top: 1.2em; }
+  .template-editor-message-box .modal-footer button {
+    border: inherit;
+    font-weight: bold;
+    padding-top: 0.6em;
+    padding-bottom: 0.6em; }
+  .template-editor-message-box .modal-footer .btn-default, .template-editor-message-box .modal-footer .timeline .dropdown-menu li .btn, .timeline .dropdown-menu li .template-editor-message-box .modal-footer .btn, .template-editor-message-box .modal-footer .timeline .dropdown-menu li .icon-nav label, .timeline .dropdown-menu li .icon-nav .template-editor-message-box .modal-footer label, .template-editor-message-box .modal-footer .icon-nav .timeline .dropdown-menu li label, .icon-nav .timeline .dropdown-menu li .template-editor-message-box .modal-footer label {
+    background: #e6e6e6; }
+
+@media screen and (min-width: 768px) {
+  .template-editor-message-box::before {
+    height: 100%; }
+  .template-editor-message-box .modal-dialog {
+    width: 460px; } }
+
 .te-scrollable-container {
   --base-size: 5px;
   overflow-y: auto; }
