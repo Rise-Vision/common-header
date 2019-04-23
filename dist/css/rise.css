@@ -18087,6 +18087,12 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   .template-editor-footer .btn, .template-editor-footer .icon-nav label, .icon-nav .template-editor-footer label {
     margin: 10px 0px; }
 
+.template-editor-confirm-modal::before {
+  display: inline-block;
+  vertical-align: middle;
+  content: " ";
+  height: 25%; }
+
 .template-editor-confirm-modal .modal-header {
   background: inherit;
   border-bottom: 0; }
@@ -18115,6 +18121,12 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
 .template-editor-confirm-modal .modal-footer .btn-default, .template-editor-confirm-modal .modal-footer .timeline .dropdown-menu li .btn, .timeline .dropdown-menu li .template-editor-confirm-modal .modal-footer .btn, .template-editor-confirm-modal .modal-footer .timeline .dropdown-menu li .icon-nav label, .timeline .dropdown-menu li .icon-nav .template-editor-confirm-modal .modal-footer label, .template-editor-confirm-modal .modal-footer .icon-nav .timeline .dropdown-menu li label, .icon-nav .timeline .dropdown-menu li .template-editor-confirm-modal .modal-footer label {
   background: #e6e6e6; }
 
+@media screen and (min-width: 768px) {
+  .template-editor-confirm-modal::before {
+    height: 40%; }
+  .template-editor-confirm-modal .modal-dialog {
+    width: 350px; } }
+
 .template-editor-message-box::before {
   display: inline-block;
   vertical-align: middle;
@@ -18124,7 +18136,8 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
 .template-editor-message-box {
   text-align: center;
   padding: 0 !important;
-  color: #4d4d4d; }
+  color: #4d4d4d;
+  font-size: 12px; }
   .template-editor-message-box .modal-dialog {
     display: inline-block;
     vertical-align: middle; }

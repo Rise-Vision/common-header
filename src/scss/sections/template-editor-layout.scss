@@ -278,6 +278,13 @@ $short-phone-height: 570px;
   }
 }
 
+.template-editor-confirm-modal::before {
+  display: inline-block;
+  vertical-align: middle;
+  content: " ";
+  height: 25%;
+}
+
 .template-editor-confirm-modal {
   & .modal-header {
     background: inherit;
@@ -315,6 +322,18 @@ $short-phone-height: 570px;
   }
 }
 
+@media screen and (min-width: 768px) {
+  .template-editor-confirm-modal::before {
+    height: 40%;
+  }
+
+  .template-editor-confirm-modal {
+    & .modal-dialog {
+      width: 350px;
+    }
+  }
+}
+
 .template-editor-message-box::before {
   display: inline-block;
   vertical-align: middle;
@@ -326,6 +345,7 @@ $short-phone-height: 570px;
   text-align: center;
   padding: 0!important;
   color: rgb(77, 77, 77);
+  font-size: 12px;
 
   & .modal-dialog {
     display: inline-block;
