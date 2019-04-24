@@ -17985,9 +17985,8 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
 .preview-holder {
   background-image: linear-gradient(white, lightgray);
   z-index: 10;
-  width: 320px;
+  width: 100%;
   height: var(--preview-holder-height);
-  margin: auto;
   overflow: auto; }
   @media (min-width: 768px) {
     .preview-holder {
@@ -17997,6 +17996,14 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     position: relative;
     height: 100%;
     overflow: hidden; }
+
+#template-editor-preview-parent {
+  width: 320px;
+  margin: auto; }
+  @media (min-width: 768px) {
+    #template-editor-preview-parent {
+      width: 100%;
+      margin: 0px; } }
 
 #template-editor-preview {
   width: calc(100% - 20px);
