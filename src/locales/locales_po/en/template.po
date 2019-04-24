@@ -97,6 +97,9 @@ msgstr "Stocks"
 msgid "financial.world-indexes"
 msgstr "World Indexes"
 
+msgid "message-box.confirmation-message"
+msgstr "Okay I got it"
+
 msgid "rise-data-financial"
 msgstr "Financial"
 

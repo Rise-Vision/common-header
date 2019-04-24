@@ -6,6 +6,9 @@
   "confirm-modal": {
     "delete-warning": "Are you sure you want to delete this Presentation?"
   },
+  "message-box": {
+    "confirmation-message": "Okay I got it"
+  },
   "financial": {
     "add-category": {
       "bonds": "Add Bonds",
