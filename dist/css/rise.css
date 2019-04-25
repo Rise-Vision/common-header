@@ -17992,18 +17992,17 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     .preview-holder {
       width: 100%;
       height: 100%; } }
-  .preview-holder .preview-parent {
-    position: relative;
-    height: 100%;
-    overflow: hidden; }
 
 #template-editor-preview-parent {
+  height: 100%;
   width: 320px;
   margin: auto; }
   @media (min-width: 768px) {
     #template-editor-preview-parent {
+      height: 100%;
       width: 100%;
-      margin: 0px; } }
+      margin: 0px;
+      padding-bottom: 0px !important; } }
 
 #template-editor-preview {
   width: calc(100% - 20px);
