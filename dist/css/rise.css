@@ -18006,7 +18006,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
 #template-editor-preview {
   width: calc(100% - 40px);
   height: calc(100% - 40px);
-  margin: 40px; }
+  margin: 20px; }
 
 .attribute-editor {
   height: 100%; }
