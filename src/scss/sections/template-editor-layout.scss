@@ -159,14 +159,14 @@ $short-phone-height: 570px;
   margin: 0px;
 
   @media (min-width: $screen-sm) {
-    width: 100% !important;
+    width: 100%;
   }
 
   @media (max-width: $screen-sm) {
     height: 100%;
     width: 320px;
     margin: auto;
-    padding-bottom: 0px !important;
+    padding-bottom: 0px;
   }
 }
 

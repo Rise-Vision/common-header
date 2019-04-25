@@ -17997,13 +17997,13 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   margin: 0px; }
   @media (min-width: 768px) {
     #template-editor-preview-parent {
-      width: 100% !important; } }
+      width: 100%; } }
   @media (max-width: 768px) {
     #template-editor-preview-parent {
       height: 100%;
       width: 320px;
       margin: auto;
-      padding-bottom: 0px !important; } }
+      padding-bottom: 0px; } }
 
 #template-editor-preview {
   width: calc(100% - 40px);
