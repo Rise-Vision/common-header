@@ -17994,14 +17994,13 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
       height: 100%; } }
 
 #template-editor-preview-parent {
-  height: 100%;
-  width: 320px;
-  margin: auto; }
-  @media (min-width: 768px) {
+  width: 100%;
+  margin: 0px; }
+  @media (max-width: 768px) {
     #template-editor-preview-parent {
       height: 100%;
-      width: 100%;
-      margin: 0px;
+      width: 320px;
+      margin: auto;
       padding-bottom: 0px !important; } }
 
 #template-editor-preview {
