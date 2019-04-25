@@ -156,7 +156,6 @@ $short-phone-height: 570px;
 }
 
 #template-editor-preview-parent {
-
   width: 100%;
   margin: 0px;
 
@@ -169,9 +168,9 @@ $short-phone-height: 570px;
 }
 
 #template-editor-preview {
-  width: calc(100% - 20px);
-  height: calc(100% - 20px);
-  margin: 10px;
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  margin: 40px;
 }
 
 .attribute-editor {
