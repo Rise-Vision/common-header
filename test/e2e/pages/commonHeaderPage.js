@@ -79,8 +79,9 @@
       });
     };
 
-    function _addCompanySuffix(name) {
-      return name + " - " + browser.params.login.stageEnv;
+    function _addStageSuffix(name) {
+      var stageEnv = browser.params.login.stageEnv.split('-').join('');
+      return name + " - " + stageEnv;
     }
 
     function _searchSubCompany(subCompanyName) {
@@ -90,7 +91,7 @@
       helper.waitDisappear(selectSubcompanyModalLoader, "Load Companies");
 
       if (subCompanyName) {
-        selectSubcompanyModalFilter.sendKeys(_addCompanySuffix(subCompanyName).split('-').join(''));
+        selectSubcompanyModalFilter.sendKeys(_addStageSuffix(subCompanyName).split('-').join(''));
         helper.wait(selectSubcompanyModalLoader, "Load Companies");
         helper.waitDisappear(selectSubcompanyModalLoader, "Load Companies");
       }
@@ -103,7 +104,7 @@
       addSubcompanyButton.click();
       helper.wait(addSubcompanyModal, "Add Subcompany Modal");
 
-      addSubcompanyModalNameField.sendKeys(_addCompanySuffix(name));
+      addSubcompanyModalNameField.sendKeys(_addStageSuffix(name));
       if (industryValue) {
         addSubcompanyModalIndustryField.$('[value="'+industryValue+'"]').click(); 
       }
