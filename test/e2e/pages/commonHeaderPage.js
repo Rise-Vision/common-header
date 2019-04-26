@@ -100,15 +100,15 @@
     this.createSubCompany = function(name, industryValue) {
       this.deleteSubCompanyIfExists(name);
 
-      profilePic.click();
-      addSubcompanyButton.click();
+      helper.clickWhenClickable(profilePic, 'Profile Picture');
+      helper.clickWhenClickable(addSubcompanyButton, 'Add Sub Company Button');
       helper.wait(addSubcompanyModal, "Add Subcompany Modal");
 
       addSubcompanyModalNameField.sendKeys(_addStageSuffix(name));
       if (industryValue) {
         addSubcompanyModalIndustryField.$('[value="'+industryValue+'"]').click(); 
       }
-      addSubcompanyModalSaveButton.click();
+      helper.clickWhenClickable(addSubcompanyModalSaveButton, 'Add Sub Company Modal Save Button');
       helper.waitRemoved(addSubcompanyModal, "Add Subcompany Modal");
     };
 
@@ -150,7 +150,7 @@
 
       helper.wait(safeDeleteModal, "Safe Delete Modal");
       safeDeleteModalInput.sendKeys('DELETE');
-      safeDeleteModalDeleteForeverButton.click();
+      helper.clickWhenClickable(safeDeleteModalDeleteForeverButton, "Safe Delete Modal Delete Forever Button");
       
       helper.waitRemoved(companySettingsModal, "Company Settings Modal");
       helper.waitDisappear(loader, 'CH spinner loader');
@@ -167,21 +167,23 @@
       selectSubcompanyModalCompanies.count().then(function(count) {
         console.log("count: "+count);
         if (count > 0) {
-          selectSubcompanyModalCompanies.get(0).click();
+          helper.clickWhenClickable(selectSubcompanyModalCompanies.get(0), "First matching Subcompany");
           helper.wait(subcompanyAlert, "Subcompany Alert");
           helper.waitDisappear(loader, 'CH spinner loader');
           selfCommonHeaderPage.deleteCurrentCompany();
           selfCommonHeaderPage.deleteAllSubCompanies();    
         } else {
-          selectSubcompanyModalCloseButton.click();
+          helper.clickWhenClickable(selectSubcompanyModalCloseButton, "Subcompany Modal Close Button");
         }
       });
     };
 
     this.selectAlerts = function() {
-      profilePic.click();
+      helper.wait(profilePic, 'Profile Picture');
+      helper.clickWhenClickable(profilePic, 'Profile Picture');
+
       helper.wait(alertSettingsButton, "Alert settings button");
-      alertSettingsButton.click();
+      helper.clickWhenClickable(alertSettingsButton, "Alert settings button");
       helper.wait(turnOnAlertsButton, "Turn on alerts button");
     };
 
