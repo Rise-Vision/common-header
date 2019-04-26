@@ -110,11 +110,24 @@
       helper.waitRemoved(addSubcompanyModal, "Add Subcompany Modal");
     };
 
-    this.selectSubCompany = function(subCompanyName) {
+    this.selectSubCompany = function(subCompanyName, avoidRetry) {
+      var service = this;
       _searchSubCompany(subCompanyName);
 
-      helper.clickWhenClickable(selectSubcompanyModalCompanies.get(0), "First matching Subcompany");
-      helper.wait(subcompanyAlert, "Subcompany Alert");
+      selectSubcompanyModalCompanies.count().then(function(count) {
+        if (count > 0) {
+          helper.clickWhenClickable(selectSubcompanyModalCompanies.get(0), "First matching Subcompany");
+          helper.wait(subcompanyAlert, "Subcompany Alert");
+        }
+        else if (!avoidRetry) {
+          helper.clickWhenClickable(selectSubcompanyModalCloseButton, "Subcompany Modal Close Button");
+          browser.sleep(10000);
+          service.selectSubCompany(subCompanyName, true);
+        }
+        else {
+          fail("Could not find the Sub Company: " + subCompanyName);
+        }
+      });
     };
 
     this.deleteSubCompanyIfExists = function(subCompanyName) {
