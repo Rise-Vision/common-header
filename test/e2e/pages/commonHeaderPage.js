@@ -57,7 +57,7 @@
         if (state) {
           helper.clickWhenClickable(signInButton, "Sign In Button");
           loginPage.signIn(username, password);
-
+          helper.wait(loader, 'CH spinner loader');
           helper.waitDisappear(loader, 'CH spinner loader');
         }
       });
@@ -68,8 +68,9 @@
 
       profilePic.isDisplayed().then(function(value) {
         if (value) {
-          profilePic.click();
-          signOutButton.click();
+          helper.wait(profilePic, 'Profile Picture');
+          helper.clickWhenClickable(profilePic, 'Profile Picture');
+          helper.clickWhenClickable(signOutButton, 'Sign Out Button');
           helper.wait(signOutModal, 'Sign Out Modal');
           signOutRvOnlyButton.click();
           helper.waitDisappear(signOutModal, 'Sign Out Modal');
@@ -83,7 +84,9 @@
     }
 
     function _searchSubCompany(subCompanyName) {
+      helper.wait(profilePic, 'Profile Picture');
       helper.clickWhenClickable(profilePic, 'Profile Picture');
+      helper.wait(selectSubcompanyButton, 'Select Sub Company Button');
       helper.clickWhenClickable(selectSubcompanyButton, 'Select Sub Company Button');
       helper.wait(selectSubcompanyModal, "Select Subcompany Modal");
       helper.waitDisappear(selectSubcompanyModalLoader, "Load Companies");
@@ -98,7 +101,9 @@
     this.createSubCompany = function(name, industryValue) {
       this.deleteSubCompanyIfExists(name);
 
+      helper.wait(profilePic, 'Profile Picture');
       helper.clickWhenClickable(profilePic, 'Profile Picture');
+      helper.wait(addSubcompanyButton, 'Add Sub Company Button');
       helper.clickWhenClickable(addSubcompanyButton, 'Add Sub Company Button');
       helper.wait(addSubcompanyModal, "Add Subcompany Modal");
 
