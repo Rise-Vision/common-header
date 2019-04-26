@@ -34,9 +34,8 @@
     "no-results": {
       "title": "No Results Found",
       "question": "Can't find what you're looking for?",
-      "verify-start": "Verify the instrument is valid",
-      "verify-mid": "or contact",
-      "verify-end": "for help."
+      "verify": "Verify the instrument is valid.",
+      "contact": "Contact support@risevision.com for help."
     },
     "search-category": {
       "bonds": "Search Bonds",
