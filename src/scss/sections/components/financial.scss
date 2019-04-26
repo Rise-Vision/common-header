@@ -24,6 +24,31 @@
   .instrument-row {
     padding: 13px 0px 10px;
   }
+
+  .instrument-list-empty {
+    color: #999999;
+    margin: 20px;
+
+    & > h2 {
+      font-size: 1em;
+      font-weight: bold;
+      padding: 20px 0 0 0;
+      margin-top: 0;
+    }
+
+    & > div {
+      margin-top: 20px;
+    }
+
+    & > p {
+      font-size: 0.75em;
+      line-height: 0.8;
+    }
+
+    & img {
+      margin: 0 auto;
+    }
+  }
 }
 
 .instrument-selector {
