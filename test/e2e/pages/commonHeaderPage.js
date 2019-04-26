@@ -79,12 +79,31 @@
       });
     };
 
-    this.createSubCompany = function(name, industryValue) {    
+    function _addCompanySuffix(name) {
+      return name + " - " + browser.params.login.stageEnv;
+    }
+
+    function _searchSubCompany(subCompanyName) {
+      helper.clickWhenClickable(profilePic, 'Profile Picture');
+      helper.clickWhenClickable(selectSubcompanyButton, 'Select Sub Company Button');
+      helper.wait(selectSubcompanyModal, "Select Subcompany Modal");
+      helper.waitDisappear(selectSubcompanyModalLoader, "Load Companies");
+
+      if (subCompanyName) {
+        selectSubcompanyModalFilter.sendKeys(_addCompanySuffix(subCompanyName).split('-').join(''));
+        helper.wait(selectSubcompanyModalLoader, "Load Companies");
+        helper.waitDisappear(selectSubcompanyModalLoader, "Load Companies");
+      }
+    }
+
+    this.createSubCompany = function(name, industryValue) {
+      this.deleteSubCompanyIfExists(name);
+
       profilePic.click();
       addSubcompanyButton.click();
       helper.wait(addSubcompanyModal, "Add Subcompany Modal");
 
-      addSubcompanyModalNameField.sendKeys(name);
+      addSubcompanyModalNameField.sendKeys(_addCompanySuffix(name));
       if (industryValue) {
         addSubcompanyModalIndustryField.$('[value="'+industryValue+'"]').click(); 
       }
@@ -93,19 +112,26 @@
     };
 
     this.selectSubCompany = function(subCompanyName) {
-      helper.clickWhenClickable(profilePic, 'Profile Picture');
-      helper.clickWhenClickable(selectSubcompanyButton, 'Select Sub Company Button');
-      helper.wait(selectSubcompanyModal, "Select Subcompany Modal");
-      helper.waitDisappear(selectSubcompanyModalLoader, "Load Companies");
+      _searchSubCompany(subCompanyName);
 
-      if (subCompanyName) {
-        selectSubcompanyModalFilter.sendKeys(subCompanyName.replace('-', ''));
-        helper.wait(selectSubcompanyModalLoader, "Load Companies");
-        helper.waitDisappear(selectSubcompanyModalLoader, "Load Companies");
-      }
-
-      selectSubcompanyModalCompanies.get(0).click();
+      helper.clickWhenClickable(selectSubcompanyModalCompanies.get(0), "First matching Subcompany");
       helper.wait(subcompanyAlert, "Subcompany Alert");
+    };
+
+    this.deleteSubCompanyIfExists = function(subCompanyName) {
+      var service = this;
+      _searchSubCompany(subCompanyName);
+
+      selectSubcompanyModalCompanies.count().then(function(count) {
+        if (count > 0) {
+          helper.clickWhenClickable(selectSubcompanyModalCompanies.get(0), "First matching Subcompany");
+          helper.wait(subcompanyAlert, "Subcompany Alert");
+          service.deleteCurrentCompany();
+        }
+        else {
+          helper.clickWhenClickable(selectSubcompanyModalCloseButton, "Subcompany Modal Close Button");
+        }
+      });
     };
 
     this.deleteCurrentCompany = function() {
