@@ -55,12 +55,10 @@
 
       signInButton.isDisplayed().then(function (state) {
         if (state) {
+          helper.clickWhenClickable(signInButton, "Sign In Button");
+          loginPage.signIn(username, password);
 
-          signInButton.click().then(function () {
-            loginPage.signIn(username, password);
-
-            helper.waitDisappear(loader, 'CH spinner loader');
-          });
+          helper.waitDisappear(loader, 'CH spinner loader');
         }
       });
     };
