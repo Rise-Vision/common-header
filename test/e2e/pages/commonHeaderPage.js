@@ -136,7 +136,7 @@
           service.selectSubCompany(subCompanyName, true);
         }
         else {
-          fail("Could not find the Sub Company: " + subCompanyName);
+          throw "Could not find the Sub Company: " + subCompanyName;
         }
       });
     };
