@@ -61,12 +61,10 @@
             loginPage.signIn(username, password);
 
             // Apps' tests are more reliable by waiting for the spinner to show, but CH's tests need the try/catch clause
-            try {
-              helper.wait(loader, 'CH spinner loader', 5000);
-            }
-            catch (err) {
+            helper.wait(loader, 'CH spinner loader', 5000)
+            .catch(function (err) {
               console.log(err);
-            }
+            });
 
             helper.waitDisappear(loader, 'CH spinner loader');
           });
