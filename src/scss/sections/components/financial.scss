@@ -161,6 +161,7 @@
 
 .instrument-selector-no-results {
   color: rgb(77, 77, 77);
+  font-size: 0.9em;
   margin: 20px;
 
   & > h2 {
@@ -174,7 +175,11 @@
     font-weight: bold;
   }
 
-  & a:hover {
+  & > div > i {
+    margin-right: 5px;
+  }
+
+  & a:hover > span {
     text-decoration: underline;
   }
 }

@@ -18677,6 +18677,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
 
 .instrument-selector-no-results {
   color: #4d4d4d;
+  font-size: 0.9em;
   margin: 20px; }
   .instrument-selector-no-results > h2 {
     font-size: 1.2em;
@@ -18685,7 +18686,9 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     margin-top: 0px; }
   .instrument-selector-no-results > div:first-of-type {
     font-weight: bold; }
-  .instrument-selector-no-results a:hover, .instrument-selector-no-results .u_link:hover {
+  .instrument-selector-no-results > div > i {
+    margin-right: 5px; }
+  .instrument-selector-no-results a:hover > span, .instrument-selector-no-results .u_link:hover > span {
     text-decoration: underline; }
 
 .instrument-row--is-selected {
