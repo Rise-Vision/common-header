@@ -58,7 +58,7 @@
         if (state) {
           helper.clickWhenClickable(signInButton, "Sign In Button");
           loginPage.signIn(username, password);
-          helper.wait(loader, 'CH spinner loader');
+          browser.sleep(500);
           helper.waitDisappear(loader, 'CH spinner loader');
         }
       });
