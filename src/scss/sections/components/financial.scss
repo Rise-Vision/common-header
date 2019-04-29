@@ -164,6 +164,10 @@
   font-size: 0.9em;
   margin: 20px;
 
+  & > div {
+    margin: 0 0 10px;
+  }
+
   & > h2 {
     font-size: 1.2em;
     font-weight: 700;
@@ -175,7 +179,7 @@
     font-weight: bold;
   }
 
-  & > div > i {
+  & > i {
     font-size: 1.2em;
     margin-right: 5px;
   }
