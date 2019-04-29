@@ -78,9 +78,12 @@
       });
     };
 
+    function _getStageEnv() {
+      return browser.params.login.stageEnv.split('-').join('');
+    }
+
     function _addStageSuffix(name) {
-      var stageEnv = browser.params.login.stageEnv.split('-').join('');
-      return name + " - " + stageEnv;
+      return name + " - " + _getStageEnv();
     }
 
     function _searchSubCompany(subCompanyName) {
@@ -97,6 +100,8 @@
         helper.waitDisappear(selectSubcompanyModalLoader, "Load Companies");
       }
     }
+
+    this.getStageEnv = _getStageEnv;
 
     this.createSubCompany = function(name, industryValue) {
       this.deleteSubCompanyIfExists(name);
