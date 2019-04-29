@@ -18688,7 +18688,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     margin-top: 0px; }
   .instrument-selector-no-results > div:first-of-type {
     font-weight: bold; }
-  .instrument-selector-no-results > i {
+  .instrument-selector-no-results i {
     font-size: 1.2em;
     margin-right: 5px; }
   .instrument-selector-no-results a:hover > span, .instrument-selector-no-results .u_link:hover > span {
