@@ -18683,7 +18683,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     font-weight: 700;
     padding: 20px 0px;
     margin-top: 0px; }
-  .instrument-selector-no-results > div:first-child {
+  .instrument-selector-no-results > div:first-of-type {
     font-weight: bold; }
   .instrument-selector-no-results a:hover, .instrument-selector-no-results .u_link:hover {
     text-decoration: underline; }
