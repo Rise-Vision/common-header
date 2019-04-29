@@ -60,7 +60,14 @@
           signInButton.click().then(function () {
             loginPage.signIn(username, password);
 
-            browser.sleep(1000);
+            // Apps' tests are more reliable by waiting for the spinner to show, but CH's tests need the try/catch clause
+            try {
+              helper.wait(loader, 'CH spinner loader', 5000);
+            }
+            catch (err) {
+              console.log(err);
+            }
+
             helper.waitDisappear(loader, 'CH spinner loader');
           });
         }
