@@ -52,6 +52,7 @@
     this.signin = function (username, password) {
       //wait for spinner to go away.
       helper.waitDisappear(loader, 'CH spinner loader');
+      browser.sleep(500);
 
       signInButton.isDisplayed().then(function (state) {
         if (state) {
