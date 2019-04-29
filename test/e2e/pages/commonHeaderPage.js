@@ -56,10 +56,13 @@
 
       signInButton.isDisplayed().then(function (state) {
         if (state) {
-          helper.clickWhenClickable(signInButton, "Sign In Button");
-          loginPage.signIn(username, password);
-          browser.sleep(1000);
-          helper.waitDisappear(loader, 'CH spinner loader');
+
+          signInButton.click().then(function () {
+            loginPage.signIn(username, password);
+
+            browser.sleep(1000);
+            helper.waitDisappear(loader, 'CH spinner loader');
+          });
         }
       });
     };
