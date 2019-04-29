@@ -18570,6 +18570,20 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   overflow-y: auto; }
   .instrument-list .instrument-row {
     padding: 13px 0px 10px; }
+  .instrument-list .instrument-list-empty {
+    color: #4D4D4D;
+    margin: 20px; }
+    .instrument-list .instrument-list-empty h2 {
+      font-size: 1em;
+      font-weight: bold;
+      padding: 20px 0 0 0;
+      margin-top: 0; }
+    .instrument-list .instrument-list-empty p {
+      font-size: 0.75em;
+      line-height: 0.8;
+      padding-bottom: 20px; }
+    .instrument-list .instrument-list-empty img {
+      margin: 0 auto; }
 
 .instrument-selector {
   height: var(--selector-body-height);
