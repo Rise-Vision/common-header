@@ -22,6 +22,10 @@
     "bonds": "Bonds",
     "commodities": "Commodities",
     "currencies": "Currencies",
+    "empty-list": {
+      "title": "There are no symbols in this list",
+      "suggestion": "Add currencies to keep your display interesting!"
+    },
     "market-statistics": "Market Statistics",
     "most-popular-category": {
       "bonds": "Most Popular Bonds",
