@@ -203,12 +203,18 @@
 
   & i {
     font-size: 1.2em;
+    color: $rise-green;
     margin-right: 5px;
   }
 
-  & a:hover > span {
-    text-decoration: underline;
+  & a {
+    color: $dark-gray;
+
+    &:hover > span {
+      text-decoration: underline;
+    }
   }
+
 }
 
 .instrument-row--is-selected {

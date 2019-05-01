@@ -18704,9 +18704,12 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     font-weight: bold; }
   .instrument-selector-no-results i {
     font-size: 1.2em;
+    color: #4ab767;
     margin-right: 5px; }
-  .instrument-selector-no-results a:hover > span, .instrument-selector-no-results .u_link:hover > span {
-    text-decoration: underline; }
+  .instrument-selector-no-results a, .instrument-selector-no-results .u_link {
+    color: #4d4d4d; }
+    .instrument-selector-no-results a:hover > span, .instrument-selector-no-results .u_link:hover > span {
+      text-decoration: underline; }
 
 .instrument-row--is-selected {
   background: #4ab767; }
