@@ -18703,7 +18703,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   .instrument-selector-no-results > div:first-of-type {
     font-weight: bold; }
   .instrument-selector-no-results i {
-    font-size: 1.2em;
+    font-size: 15pt;
     color: #4ab767;
     margin-right: 5px; }
   .instrument-selector-no-results a, .instrument-selector-no-results .u_link {
