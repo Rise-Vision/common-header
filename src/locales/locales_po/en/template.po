@@ -118,3 +118,6 @@ msgstr "Financial"
 msgid "rise-data-image"
 msgstr "Image"
 
+msgid "rise-text"
+msgstr "Text"
+
