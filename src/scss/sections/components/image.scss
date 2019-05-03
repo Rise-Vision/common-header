@@ -18,7 +18,11 @@
   overflow-y: auto;
 
   .image-component-list-empty {
+<<<<<<< 2af1063a0fd9cd409220b62e57694a39771d7c5a
     color: $mid-gray;
+=======
+    color: rgb(153, 153, 153);
+>>>>>>> Add basic Image Component styles
     margin: 20px;
 
     h2 {
@@ -29,7 +33,11 @@
     }
 
     p {
+<<<<<<< 2af1063a0fd9cd409220b62e57694a39771d7c5a
       color: $dark-gray;
+=======
+      color: rgb(77, 77, 77);
+>>>>>>> Add basic Image Component styles
       font-size: 0.75em;
       line-height: 1.2;
       padding-bottom: 20px;
@@ -44,17 +52,26 @@
 .image-component-list-action-button-bar {
   height: var(--image-component-list-button-bar-height);
   padding: 0px 20px;
+<<<<<<< 2af1063a0fd9cd409220b62e57694a39771d7c5a
   background: $white;
 
   & .upload-images {
     padding: 18px 0 0 0;
     border-top: 1px solid $light-gray;
+=======
+  background: #FFF;
+
+  & .upload-images {
+    padding: 18px 0 0 0;
+    border-top: 1px solid #e6e6e6;
+>>>>>>> Add basic Image Component styles
   }
 
   & .select-from-storage {
     padding: 10px 0 0 0;
 
     button {
+<<<<<<< 2af1063a0fd9cd409220b62e57694a39771d7c5a
       background: $white;
       border-width: 2px;
       color: $rise-green;
@@ -116,3 +133,11 @@
     border-top: 1px solid $light-gray;
   }
 }
+=======
+      background: white;
+      border-width: 2px;
+      color: #4ab767;
+    }
+  }
+}
+>>>>>>> Add basic Image Component styles
