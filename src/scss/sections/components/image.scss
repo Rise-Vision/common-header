@@ -17,25 +17,32 @@
   overflow-x: hidden;
   overflow-y: auto;
 
-  .image-thumbnail {
-    display: flex;
-    margin-right: auto;
-    flex-wrap: nowrap;
-  }
-
   .image-row {
+    display: flex;
     padding: 13px 0px 10px;
     border-bottom: 1px solid rgb(242, 242, 242);
     margin-left: 20px;
     margin-right: 20px;
 
-    .image-name {
-      font-weight: bold;
-      color: $dark-gray;
+    .image-thumbnail {
+      margin-right: 20px;
+    }
 
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .image-entry {
+      display: flex;
+
+      .image-name {
+        font-weight: bold;
+        color: $dark-gray;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .image-not-available {
+      color: red;
     }
   }
 
