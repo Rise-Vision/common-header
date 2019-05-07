@@ -896,7 +896,7 @@ textarea {
 a, .u_link {
   color: #0081BA;
   text-decoration: none; }
-
+  
   a:hover,
   .u_link:hover, a:focus, .u_link:focus {
     color: #005e87;
@@ -3282,12 +3282,12 @@ tbody.collapse.in {
       margin-left: -1px; }
     .input-group-btn > .btn:hover, .icon-nav .input-group-btn > label:hover, .input-group-btn > .btn:focus, .icon-nav .input-group-btn > label:focus, .input-group-btn > .btn:active, .icon-nav .input-group-btn > label:active {
       z-index: 2; }
-
+  
   .input-group-btn:first-child > .btn,
   .icon-nav .input-group-btn:first-child > label,
   .input-group-btn:first-child > .btn-group {
     margin-right: -1px; }
-
+  
   .input-group-btn:last-child > .btn,
   .icon-nav .input-group-btn:last-child > label,
   .input-group-btn:last-child > .btn-group {
@@ -8550,11 +8550,11 @@ body::-webkit-scrollbar-thumb {
   border-radius: var(--scrollbar-size);
   background: gray; }
 
-/**
-* Start of workaround for Bootstrap bug where content shifts when modal
+/**    
+* Start of workaround for Bootstrap bug where content shifts when modal   
 * is opened.
 
-* https://github.com/twbs/bootstrap/issues/9855
+* https://github.com/twbs/bootstrap/issues/9855   
 */
 body.modal-open {
   overflow: hidden; }
@@ -8848,7 +8848,7 @@ ul.social {
 /* ==========================================================================
    Small devices (tablets, 768px and up)
    ========================================================================== */
-/* STANDARD UTILITIES
+/* STANDARD UTILITIES 
 All utilities have a prefix u_ added to them
 */
 /* Line Height Utilities
@@ -8946,7 +8946,7 @@ All utilities have a prefix u_ added to them
   color: #fff; }
 
 /* Text Utilities
-   ==========================================================================
+   ========================================================================== 
 */
 .u_text-ellipsis {
   overflow: hidden;
@@ -8960,7 +8960,7 @@ All utilities have a prefix u_ added to them
   opacity: 1; }
 
 /* Padding Utilities
-   ==========================================================================
+   ========================================================================== 
 */
 .u_padding-lg {
   padding: 32px; }
@@ -8999,7 +8999,7 @@ All utilities have a prefix u_ added to them
   padding-bottom: 8px; }
 
 /* Margin Utilities
-   ==========================================================================
+   ========================================================================== 
 */
 .u_margin-xs {
   margin: 3px !important; }
@@ -9044,7 +9044,7 @@ All utilities have a prefix u_ added to them
   margin-bottom: 40px !important; }
 
 /* Clearing Utilities
-   ==========================================================================
+   ========================================================================== 
 */
 .u_remove-radius {
   border-radius: 0 !important; }
@@ -9068,7 +9068,7 @@ All utilities have a prefix u_ added to them
   margin-bottom: 0 !important; }
 
 /* Alignment Utilities
-   ==========================================================================
+   ========================================================================== 
 */
 .empty-state .tag {
   position: relative;
@@ -9087,7 +9087,7 @@ All utilities have a prefix u_ added to them
   vertical-align: bottom !important; }
 
 /* Misc Utilities
-   ==========================================================================
+   ========================================================================== 
 */
 .u_nowrap {
   white-space: nowrap; }
@@ -14648,7 +14648,7 @@ ul.tree ul li:last-child:before {
     width: 16.3%; } }
 
 /* ==========================================================================
-   Medium devices (desktops, 992px and up)
+   Medium devices (desktops, 992px and up) 
    ========================================================================== */
 @media (min-width: 992px) {
   .grid-selector .grid-selector-list-item {
@@ -14689,7 +14689,7 @@ ul.tree ul li:last-child:before {
       top: -5000px; } }
 
 /* ==========================================================================
-   Medium devices (desktops, 992px and up)
+   Medium devices (desktops, 992px and up) 
    ========================================================================== */
 @media (min-width: 992px) {
   .product-grid .product-grid_image {
@@ -14698,7 +14698,7 @@ ul.tree ul li:last-child:before {
     min-height: 44px; } }
 
 /* ==========================================================================
-   Large devices (desktops, 1200px and up)
+   Large devices (desktops, 1200px and up) 
    ========================================================================== */
 @media (min-width: 1200px) {
   .product-grid .product-grid_image {
@@ -16299,10 +16299,10 @@ tr.blocked-file {
       font-size: 17px; } }
 
 /* Deprecate Below
- +   ==========================================================================
- +   ==========================================================================
- +   ==========================================================================
- +   ==========================================================================
+ +   ========================================================================== 
+ +   ========================================================================== 
+ +   ========================================================================== 
+ +   ========================================================================== 
  +   ========================================================================== */
 .display-name span {
   max-width: 240px;
@@ -16668,7 +16668,7 @@ body.in-rva-iframe {
   width: 94% !important;
   height: 332px !important; }
 
-/*
+/* 
  *  Core Owl Carousel CSS File
  *  v1.3.3
  */
@@ -16804,8 +16804,8 @@ body.in-rva-iframe {
   .owl-theme .owl-controls .owl-buttons .owl-next {
     right: -13px; } }
 
-/*
-* Magnific Popup CSS
+/* 
+* Magnific Popup CSS 
 */
 button.mfp-close, button.mfp-arrow {
   z-index: 1046;
@@ -17245,8 +17245,8 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   to {
     background-size: 60%; } }
 
-/* NailThumb Plugin
- *
+/* NailThumb Plugin 
+ *  
  */
 .nailthumb-container {
   width: auto;
@@ -18792,7 +18792,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
         .image-component-list .image-row .image-entry .image-entry-top a, .image-component-list .image-row .image-entry .image-entry-top .u_link {
           color: red;
           text-decoration: none; }
-          .image-component-list .image-row .image-entry .image-entry-top a#hover, .image-component-list .image-row .image-entry .image-entry-top #hover.u_link {
+          .image-component-list .image-row .image-entry .image-entry-top a:hover, .image-component-list .image-row .image-entry .image-entry-top .u_link:hover {
             text-decoration: underline; }
       .image-component-list .image-row .image-entry .image-not-available {
         color: red;
@@ -18816,7 +18816,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
 .image-component-list-action-button-bar {
   height: var(--image-component-list-button-bar-height);
   padding: 0px 20px;
-  background: #FFF; }
+  background: white; }
   .image-component-list-action-button-bar .upload-images {
     padding: 18px 0 0 0;
     border-top: 1px solid #e6e6e6; }
@@ -18826,6 +18826,44 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
       background: white;
       border-width: 2px;
       color: #4ab767; }
+
+@media (min-width: 768px) {
+  .storage-selector-container {
+    --storage-selector-button-bar-height: 70px;
+    --storage-selector-body-height: calc(100vh - var(--body-height) - var(--component-header-height)); } }
+
+@media (max-width: 768px) {
+  .storage-selector-container {
+    --storage-selector-button-bar-height: 75px;
+    --storage-selector-body-height: calc(100vh - var(--body-height)); } }
+
+.storage-selector-component {
+  height: calc(var(--storage-selector-body-height) - var(--storage-selector-button-bar-height));
+  overflow-x: hidden;
+  overflow-y: auto; }
+  .storage-selector-component .storage-selector-list-empty {
+    color: #999999;
+    margin: 20px; }
+    .storage-selector-component .storage-selector-list-empty h2 {
+      font-size: 1.1em;
+      font-weight: bold;
+      padding: 0;
+      margin-top: 0; }
+    .storage-selector-component .storage-selector-list-empty p {
+      color: #4d4d4d;
+      font-size: 0.75em;
+      line-height: 1.2;
+      padding-bottom: 20px; }
+    .storage-selector-component .storage-selector-list-empty img {
+      margin: 0 auto; }
+
+.storage-selector-action-button-bar {
+  height: var(--storage-selector-button-bar-height);
+  padding: 0px 20px;
+  background: white; }
+  .storage-selector-action-button-bar .upload-images {
+    padding: 18px 0 0 0;
+    border-top: 1px solid #e6e6e6; }
 
 @media (min-width: 768px) {
   .storage-selector-container {
