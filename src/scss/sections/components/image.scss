@@ -58,7 +58,7 @@
           color: red;
           text-decoration: none;
 
-          &#hover {
+          &:hover {
             text-decoration: underline;
           }
         }
