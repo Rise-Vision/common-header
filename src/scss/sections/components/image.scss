@@ -13,6 +13,8 @@
 }
 
 .image-component-list {
+  --thumbnail-width: 80px;
+
   height: calc(var(--image-component-body-height) - var(--image-component-list-button-bar-height));
   overflow-x: hidden;
   overflow-y: auto;
@@ -28,10 +30,15 @@
 
     .image-thumbnail {
       margin-right: 20px;
+
+      div {
+        width: var(--thumbnail-width);
+      }
     }
 
     .image-entry {
       flex-grow: 1;
+      width: calc(var(--sidebar-width) - var(--thumbnail-width) - 60px);
 
       .image-entry-top {
         display: flex;
@@ -45,6 +52,15 @@
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+        }
+
+        a {
+          color: red;
+          text-decoration: none;
+
+          &#hover {
+            text-decoration: underline;
+          }
         }
       }
 
