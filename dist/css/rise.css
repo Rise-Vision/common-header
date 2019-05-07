@@ -18194,6 +18194,26 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   border-radius: var(--base-size);
   background: gray; }
 
+.attribute-editor-show-from-right {
+  animation-name: slide-in-right;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards; }
+
+.attribute-editor-hide-to-right {
+  animation-name: slide-out-right;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards; }
+
+.attribute-editor-show-from-left {
+  animation-name: slide-in;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards; }
+
+.attribute-editor-hide-to-left {
+  animation-name: slide-out;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards; }
+
 .subscription-summary {
   display: flex;
   flex-direction: row;
@@ -18810,23 +18830,3 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   .storage-selector-action-button-bar .upload-images {
     padding: 18px 0 0 0;
     border-top: 1px solid #e6e6e6; }
-
-.attribute-editor-show-from-right {
-  animation-name: slide-in-right;
-  animation-duration: 0.5s;
-  animation-fill-mode: forwards; }
-
-.attribute-editor-hide-to-right {
-  animation-name: slide-out-right;
-  animation-duration: 0.5s;
-  animation-fill-mode: forwards; }
-
-.attribute-editor-show-from-left {
-  animation-name: slide-in;
-  animation-duration: 0.5s;
-  animation-fill-mode: forwards; }
-
-.attribute-editor-hide-to-left {
-  animation-name: slide-out;
-  animation-duration: 0.5s;
-  animation-fill-mode: forwards; }

@@ -430,3 +430,27 @@ $short-phone-height: 570px;
   border-radius: var(--base-size);
   background: gray;
 }
+
+.attribute-editor-show-from-right {
+  animation-name: slide-in-right;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.attribute-editor-hide-to-right {
+  animation-name: slide-out-right;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.attribute-editor-show-from-left {
+  animation-name: slide-in;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.attribute-editor-hide-to-left {
+  animation-name: slide-out;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
