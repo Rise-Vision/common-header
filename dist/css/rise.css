@@ -18782,7 +18782,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
 .image-component-list-action-button-bar {
   height: var(--image-component-list-button-bar-height);
   padding: 0px 20px;
-  background: #FFF; }
+  background: white; }
   .image-component-list-action-button-bar .upload-images {
     padding: 18px 0 0 0;
     border-top: 1px solid #e6e6e6; }
@@ -18826,7 +18826,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
 .storage-selector-action-button-bar {
   height: var(--storage-selector-button-bar-height);
   padding: 0px 20px;
-  background: #FFF; }
+  background: white; }
   .storage-selector-action-button-bar .upload-images {
     padding: 18px 0 0 0;
     border-top: 1px solid #e6e6e6; }

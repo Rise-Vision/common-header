@@ -18,7 +18,7 @@
   overflow-y: auto;
 
   .image-component-list-empty {
-    color: rgb(153, 153, 153);
+    color: $mid-gray;
     margin: 20px;
 
     h2 {
@@ -29,7 +29,7 @@
     }
 
     p {
-      color: rgb(77, 77, 77);
+      color: $dark-gray;
       font-size: 0.75em;
       line-height: 1.2;
       padding-bottom: 20px;
@@ -44,20 +44,20 @@
 .image-component-list-action-button-bar {
   height: var(--image-component-list-button-bar-height);
   padding: 0px 20px;
-  background: #FFF;
+  background: $white;
 
   & .upload-images {
     padding: 18px 0 0 0;
-    border-top: 1px solid #e6e6e6;
+    border-top: 1px solid $light-gray;
   }
 
   & .select-from-storage {
     padding: 10px 0 0 0;
 
     button {
-      background: white;
+      background: $white;
       border-width: 2px;
-      color: #4ab767;
+      color: $rise-green;
     }
   }
 }
@@ -83,7 +83,7 @@
   overflow-y: auto;
 
   .storage-selector-list-empty {
-    color: rgb(153, 153, 153);
+    color: $mid-gray;
     margin: 20px;
 
     h2 {
@@ -94,7 +94,7 @@
     }
 
     p {
-      color: rgb(77, 77, 77);
+      color: $dark-gray;
       font-size: 0.75em;
       line-height: 1.2;
       padding-bottom: 20px;
@@ -109,10 +109,10 @@
 .storage-selector-action-button-bar {
   height: var(--storage-selector-button-bar-height);
   padding: 0px 20px;
-  background: #FFF;
+  background: $white;
 
   & .upload-images {
     padding: 18px 0 0 0;
-    border-top: 1px solid #e6e6e6;
+    border-top: 1px solid $light-gray;
   }
 }
