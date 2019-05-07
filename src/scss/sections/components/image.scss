@@ -38,6 +38,7 @@
         flex-wrap: nowrap;
 
         .image-name {
+          flex-grow: 1;
           font-weight: bold;
           color: $dark-gray;
 
