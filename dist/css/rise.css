@@ -18791,7 +18791,8 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
           text-overflow: ellipsis; }
         .image-component-list .image-row .image-entry .image-entry-top a, .image-component-list .image-row .image-entry .image-entry-top .u_link {
           color: red;
-          text-decoration: none; }
+          text-decoration: none;
+          margin-left: 5px; }
           .image-component-list .image-row .image-entry .image-entry-top a:hover, .image-component-list .image-row .image-entry .image-entry-top .u_link:hover {
             text-decoration: underline; }
       .image-component-list .image-row .image-entry .image-not-available {
