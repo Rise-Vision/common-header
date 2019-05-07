@@ -17,6 +17,22 @@
   overflow-x: hidden;
   overflow-y: auto;
 
+  .image-row {
+    padding: 13px 0px 10px;
+    border-bottom: 1px solid rgb(242, 242, 242);
+    margin-left: 20px;
+    margin-right: 20px;
+
+    .image-name {
+      font-weight: bold;
+      color: $dark-gray;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
   .image-component-list-empty {
     color: $mid-gray;
     margin: 20px;
