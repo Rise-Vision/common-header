@@ -17,6 +17,12 @@
   overflow-x: hidden;
   overflow-y: auto;
 
+  .image-thumbnail {
+    display: flex;
+    margin-right: auto;
+    flex-wrap: nowrap;
+  }
+
   .image-row {
     padding: 13px 0px 10px;
     border-bottom: 1px solid rgb(242, 242, 242);

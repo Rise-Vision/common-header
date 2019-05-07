@@ -18763,6 +18763,10 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   height: calc(var(--image-component-body-height) - var(--image-component-list-button-bar-height));
   overflow-x: hidden;
   overflow-y: auto; }
+  .image-component-list .image-thumbnail {
+    display: flex;
+    margin-right: auto;
+    flex-wrap: nowrap; }
   .image-component-list .image-row {
     padding: 13px 0px 10px;
     border-bottom: 1px solid #f2f2f2;
