@@ -6,7 +6,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('app-nav-buttons-menu.html',
-    '<ul><li class="new-app"><a href="https://apps.risevision.com/editor" target="_blank" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/editor-image.png"></div><span>Presentations</span></a></li><li class="new-app"><a href="https://apps.risevision.com/schedules" target="_blank" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/schedule-image.png"></div><span>Schedules</span></a></li><li class="new-app"><a href="https://apps.risevision.com/displays" target="_blank" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/displays-image.png"></div><span>Displays</span></a></li><li><a href="https://apps.risevision.com/storage" target="_blank" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/storage-image.png"></div><span>Storage</span></a></li><li><a href="https://rva.risevision.com/#PRESENTATIONS" target="_blank" class="old-app" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/editor-image-gray.png"></div><span>Classic Editor</span></a></li></ul>');
+    '<ul><li class="new-app"><a href="https://apps.risevision.com/editor" target="_blank" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/editor-image.png"></div><span>Presentations</span></a></li><li class="new-app"><a href="https://apps.risevision.com/schedules" target="_blank" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/schedule-image.png"></div><span>Schedules</span></a></li><li class="new-app"><a href="https://apps.risevision.com/displays" target="_blank" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/displays-image.png"></div><span>Displays</span></a></li><li><a href="https://apps.risevision.com/storage" target="_blank" link-cid=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/storage-image.png"></div><span>Storage</span></a></li><li><a href="#" class="old-app" classic-editor-link=""><div class="image"><img src="https://s3.amazonaws.com/Rise-Images/landing-page/editor-image-gray.png"></div><span>Classic Editor</span></a></li></ul>');
 }]);
 })();
 
@@ -489,6 +489,29 @@ angular.module("risevision.common.header", [
 angular.module("risevision.common.header.directives", []);
 angular.module("risevision.common.header.filters", []);
 angular.module("risevision.store.services", []);
+
+"use strict";
+
+angular.module("risevision.common.header.directives")
+  .constant("CLASSIC_EDITOR_URL", "https://rva.risevision.com/#PRESENTATIONS")
+  .directive("classicEditorLink", ["$window", "userState", "CLASSIC_EDITOR_URL",
+    function ($window, userState, CLASSIC_EDITOR_URL) {
+      return {
+        restrict: "A",
+        scope: false,
+        compile: function (elem) {
+          elem.bind("click", function () {
+            var companyId = userState.getSelectedCompanyId();
+            var url = CLASSIC_EDITOR_URL + (companyId ? "?cid=" + companyId : "");
+
+            $window.open(url, "_blank");
+
+          });
+
+        } //link()
+      };
+    }
+  ]);
 
 "use strict";
 
