@@ -18869,3 +18869,35 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   .storage-selector-action-button-bar .upload-images {
     padding: 18px 0 0 0;
     border-top: 1px solid #e6e6e6; }
+
+.storage-upload-panel {
+  margin-top: 5px; }
+  .storage-upload-panel .storage-upload-header {
+    background: #f7f7f7;
+    padding: 10px 15px;
+    color: #5b5b5b;
+    cursor: pointer;
+    overflow: hidden; }
+    .storage-upload-panel .storage-upload-header p {
+      float: left; }
+    @media (max-width: 768px) {
+      .storage-upload-panel .storage-upload-header p {
+        float: none; }
+      .storage-upload-panel .storage-upload-header .actions-block {
+        text-align: left; } }
+  .storage-upload-panel .storage-upload-body {
+    margin: 15px 20px;
+    color: #5b5b5b; }
+  .storage-upload-panel p {
+    overflow: hidden;
+    margin: 5px 0 5px 0; }
+    .storage-upload-panel p a, .storage-upload-panel p .u_link {
+      text-transform: capitalize;
+      float: right; }
+  .storage-upload-panel .actions-block {
+    text-align: right; }
+  .storage-upload-panel .collapse-control {
+    line-height: 28px;
+    padding: 0 15px;
+    margin-right: -15px;
+    float: right; }
