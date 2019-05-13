@@ -93,6 +93,12 @@
     img {
       margin: 0 auto;
     }
+
+    @media (max-width: $screen-sm) {
+      .img-responsive {
+        width: 80%;
+      }
+    }
   }
 }
 
@@ -157,6 +163,12 @@
 
     img {
       margin: 0 auto;
+    }
+
+    @media (max-width: $screen-sm) {
+      .img-responsive {
+        width: 80%;
+      }
     }
   }
 }

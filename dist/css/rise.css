@@ -18817,6 +18817,9 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
       padding-bottom: 20px; }
     .image-component-list .image-component-list-empty img {
       margin: 0 auto; }
+    @media (max-width: 768px) {
+      .image-component-list .image-component-list-empty .img-responsive {
+        width: 80%; } }
 
 .image-component-list-action-button-bar {
   height: var(--image-component-list-button-bar-height);
@@ -18861,6 +18864,9 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
       padding-bottom: 20px; }
     .storage-selector-component .storage-selector-list-empty img {
       margin: 0 auto; }
+    @media (max-width: 768px) {
+      .storage-selector-component .storage-selector-list-empty .img-responsive {
+        width: 80%; } }
 
 .storage-selector-action-button-bar {
   height: var(--storage-selector-button-bar-height);
