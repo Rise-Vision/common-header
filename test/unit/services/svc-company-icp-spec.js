@@ -27,7 +27,7 @@ describe("service: companyIcpFactory:", function() {
         getCopyOfProfile: function() {
           return userProfile;
         },
-        getCopyOfUserCompany: function() {
+        getCopyOfSelectedCompany: function() {
           return companyProfile;
         },
         getSelectedCompanyId: function() {
@@ -130,28 +130,8 @@ describe("service: companyIcpFactory:", function() {
         done();
       }, 10);
     });
-    
-    it("should only open modal once and remove handler", function(done) {
-      var listenerCount = $rootScope.$$listeners["risevision.company.selectedCompanyChanged"].length;
 
-      userProfile = {};
-      companyIcpFactory.init();
-
-      expect($rootScope.$$listeners["risevision.company.selectedCompanyChanged"].length).to.equal(listenerCount + 1);      
-      
-      $rootScope.$broadcast("risevision.company.selectedCompanyChanged");
-      $rootScope.$broadcast("risevision.company.selectedCompanyChanged");
-
-      setTimeout(function() {
-        $modal.open.should.have.been.calledOnce;
-
-        expect($rootScope.$$listeners["risevision.company.selectedCompanyChanged"].length).to.equal(listenerCount);
-
-        done();
-      }, 10);
-    });
-    
-    it("should not show for sub-companies", function(done) {
+    it("should show for sub-companies", function(done) {
       isSubcompanySelected = true;
 
       userProfile = {};
@@ -159,7 +139,22 @@ describe("service: companyIcpFactory:", function() {
       $rootScope.$broadcast("risevision.company.selectedCompanyChanged");
 
       setTimeout(function() {
-        $modal.open.should.have.not.been.called;
+        $modal.open.should.have.been.calledWith({
+          templateUrl: "company-icp-modal.html",
+          controller: "CompanyIcpModalCtrl",
+          size: "md",
+          backdrop: "static",
+          keyboard: false,
+          resolve: sinon.match.object
+        });
+
+        var resolve = $modal.open.getCall(0).args[0].resolve;
+        
+        expect(resolve.user).to.be.a("function");
+        expect(resolve.company).to.be.a("function");
+
+        expect(resolve.user()).to.equal(userProfile);
+        expect(resolve.company()).to.equal(companyProfile);
 
         done();
       }, 10);
