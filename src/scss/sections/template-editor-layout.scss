@@ -464,3 +464,108 @@ $short-phone-height: 570px;
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
 }
+
+// Storage
+@media (min-width: $screen-sm) {
+  .storage-selector-container {
+    --storage-selector-button-bar-height: 70px;
+    --storage-selector-body-height: calc(100vh - var(--body-height) - var(--component-header-height));
+  }
+}
+
+@media (max-width: $screen-sm) {
+  .storage-selector-container {
+    --storage-selector-button-bar-height: 75px;
+    --storage-selector-body-height: calc(100vh - var(--body-height));
+  }
+}
+
+.storage-selector-component {
+  height: calc(var(--storage-selector-body-height) - var(--storage-selector-button-bar-height));
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  .storage-selector-list-empty {
+    color: $mid-gray;
+    margin: 20px;
+
+    h2 {
+      font-size: 1.1em;
+      font-weight: bold;
+      padding: 0;
+      margin-top: 0;
+    }
+
+    p {
+      color: $dark-gray;
+      font-size: 0.75em;
+      line-height: 1.2;
+      padding-bottom: 20px;
+    }
+
+    img {
+      margin: 0 auto;
+    }
+
+    @media (max-width: $screen-sm) {
+      .img-responsive {
+        width: 70%;
+      }
+    }
+  }
+}
+
+.storage-selector-action-button-bar {
+  height: var(--storage-selector-button-bar-height);
+  padding: 0px 20px;
+  background: $white;
+
+  & .upload-images {
+    padding: 18px 0 0 0;
+    border-top: 1px solid $light-gray;
+  }
+}
+
+.storage-upload-panel {
+  margin-top: 5px;
+
+  .storage-upload-header {
+    background: #f7f7f7;
+    padding: 10px 15px;
+    color: $gray;
+    cursor: pointer;
+    overflow: hidden;
+    p {
+      float: left;
+    }
+    @media (max-width: $screen-sm) {
+      p {
+        float: none;
+      }
+      .actions-block {
+        text-align: left;
+      }
+    }
+  }
+  .storage-upload-body {
+    margin: 15px 20px;
+    color: $gray;
+  }
+  p {
+    overflow: hidden;
+    margin: 5px 0 5px 0;
+    a {
+      text-transform: capitalize;
+      float: right;
+    }
+  }
+  .actions-block {
+    text-align: right;
+  }
+  .collapse-control {
+    line-height: 28px;
+    padding: 0 15px;
+    margin-right: -15px;
+    float: right;
+  }
+}
