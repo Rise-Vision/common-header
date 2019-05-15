@@ -33,7 +33,14 @@
       margin-right: 20px;
       overflow: hidden;
 
+      .image-helper {
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+      }
+
       img {
+        vertical-align: middle;
         width: var(--thumbnail-width);
       }
     }
