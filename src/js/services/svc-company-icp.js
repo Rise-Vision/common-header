@@ -79,10 +79,8 @@ angular.module("risevision.common.header")
       var factory = {};
 
       factory.init = function () {
-        var handler = $rootScope.$on(
+        $rootScope.$on(
           "risevision.company.selectedCompanyChanged", function () {
-            handler();
-
             _checkIcpCollection();
           });
       };
@@ -106,13 +104,10 @@ angular.module("risevision.common.header")
 
       var _checkIcpCollection = function () {
         var user = userState.getCopyOfProfile(true);
-        var company = userState.getCopyOfUserCompany(true);
+        var company = userState.getCopyOfSelectedCompany(true);
 
-        if (!userState.isUserAdmin()) {
-          return;
-        }
-
-        if (userState.isSubcompanySelected()) {
+        //Rise user should not be asked to confirm industry of a sub-company
+        if (userState.isRiseAdmin()) {
           return;
         }
 

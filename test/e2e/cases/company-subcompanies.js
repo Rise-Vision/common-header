@@ -65,6 +65,7 @@
         
         it("Add new company", function() {
           addSubcompanyModalPage.getNameField().sendKeys("e2e test sub-company");
+          addSubcompanyModalPage.getIndustryOption().click(); 
           addSubcompanyModalPage.getSaveButton().click();
           
           helper.waitRemoved(addSubcompanyModalPage.getAddSubcompanyModal(), "Sub-Company modal should hide");
@@ -147,6 +148,7 @@
           helper.wait(addSubcompanyModalPage.getAddSubcompanyModal(), "Add Subcompany Modal");
 
           addSubcompanyModalPage.getNameField().sendKeys("e2e test sub-sub-company");
+          addSubcompanyModalPage.getIndustryOption().click(); 
           addSubcompanyModalPage.getSaveButton().click();
           
           helper.waitRemoved(addSubcompanyModalPage.getAddSubcompanyModal(), "Sub-Company modal should hide");

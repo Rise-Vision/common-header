@@ -112,7 +112,7 @@
 
     this.getStageEnv = _getStageEnv;
 
-    this.createSubCompany = function(name, industryValue) {
+    this.createSubCompany = function(name, industryValue = 'OTHER') {
       this.deleteSubCompanyIfExists(name);
 
       helper.wait(profilePic, 'Profile Picture');
