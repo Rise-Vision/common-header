@@ -2789,7 +2789,7 @@ angular.module("risevision.common.header")
         var user = userState.getCopyOfProfile(true);
         var company = userState.getCopyOfSelectedCompany(true);
 
-        if (!userState.isUserAdmin()) {
+        if (userState.isRiseAdmin()) {
           return;
         }
 

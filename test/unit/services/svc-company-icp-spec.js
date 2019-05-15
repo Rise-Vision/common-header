@@ -36,8 +36,8 @@ describe("service: companyIcpFactory:", function() {
         isSubcompanySelected: function() {
           return isSubcompanySelected;
         },
-        isUserAdmin: function() {
-          return isUserAdmin;
+        isRiseAdmin: function() {
+          return isRiseAdmin;
         },
         _restoreState: function() {},
         isSelectedCompanyChargebee: function () {
@@ -73,14 +73,14 @@ describe("service: companyIcpFactory:", function() {
   }));
   
   var companyIcpFactory, $rootScope, $modal, $modalDeferred, $log, userProfile, companyProfile,
-    updateUserSpy, updateCompanySpy, isSubcompanySelected, isUserAdmin;
+    updateUserSpy, updateCompanySpy, isSubcompanySelected, isRiseAdmin;
   
   beforeEach(function(){
     $modalDeferred = Q.defer();
     userProfile = {};
     companyProfile = {};
     isSubcompanySelected = false;
-    isUserAdmin = true;
+    isRiseAdmin = false;
 
     inject(function($injector){
       $rootScope = $injector.get("$rootScope");
@@ -160,8 +160,8 @@ describe("service: companyIcpFactory:", function() {
       }, 10);
     });
 
-    it("should not show if missing User Admin role", function(done) {
-      isUserAdmin = false;
+    it("should not show if user is Rise Admin", function(done) {
+      isRiseAdmin = true;
 
       userProfile = {};
       companyIcpFactory.init();
