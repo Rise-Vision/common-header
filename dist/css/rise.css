@@ -18850,9 +18850,8 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     margin-left: 20px;
     margin-right: 20px; }
     .image-component-list .image-row .image-thumbnail {
-      width: 86px;
+      width: 90px;
       height: 75px;
-      margin-right: 20px;
       overflow: hidden; }
       .image-component-list .image-row .image-thumbnail .image-helper {
         display: inline-block;
@@ -18863,6 +18862,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
         vertical-align: middle;
         width: var(--thumbnail-width); }
     .image-component-list .image-row .image-entry {
+      margin-left: 20px;
       flex-grow: 1;
       width: calc(var(--sidebar-width) - var(--thumbnail-width) - 60px); }
       .image-component-list .image-row .image-entry .image-entry-top {

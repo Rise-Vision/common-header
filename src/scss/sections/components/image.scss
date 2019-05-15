@@ -29,9 +29,8 @@
     margin-right: 20px;
 
     .image-thumbnail {
-      width: 86px;
+      width: 90px;
       height: 75px;
-      margin-right: 20px;
       overflow: hidden;
 
       .image-helper {
@@ -48,6 +47,7 @@
     }
 
     .image-entry {
+      margin-left: 20px;
       flex-grow: 1;
       width: calc(var(--sidebar-width) - var(--thumbnail-width) - 60px);
 
