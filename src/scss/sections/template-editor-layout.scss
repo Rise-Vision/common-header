@@ -468,14 +468,14 @@ $short-phone-height: 570px;
 // Storage
 @media (min-width: $screen-sm) {
   .storage-selector-container {
-    --storage-selector-button-bar-height: 70px;
+    --storage-selector-button-bar-height: 115px;
     --storage-selector-body-height: calc(100vh - var(--body-height) - var(--component-header-height));
   }
 }
 
 @media (max-width: $screen-sm) {
   .storage-selector-container {
-    --storage-selector-button-bar-height: 75px;
+    --storage-selector-button-bar-height: 120px;
     --storage-selector-body-height: calc(100vh - var(--body-height));
   }
 }
@@ -484,6 +484,12 @@ $short-phone-height: 570px;
   height: calc(var(--storage-selector-body-height) - var(--storage-selector-button-bar-height));
   overflow-x: hidden;
   overflow-y: auto;
+
+  .storage-selector-list {
+    .selected-item {
+      background-color: gray;
+    }
+  }
 
   .storage-selector-list-empty {
     color: $mid-gray;
@@ -523,6 +529,16 @@ $short-phone-height: 570px;
   & .upload-images {
     padding: 18px 0 0 0;
     border-top: 1px solid $light-gray;
+  }
+
+  & .add-selected {
+    padding: 10px 0 0 0;
+
+    button {
+      background: $white;
+      border-width: 2px;
+      color: $rise-green;
+    }
   }
 }
 

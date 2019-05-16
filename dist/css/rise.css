@@ -18220,18 +18220,20 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
 
 @media (min-width: 768px) {
   .storage-selector-container {
-    --storage-selector-button-bar-height: 70px;
+    --storage-selector-button-bar-height: 115px;
     --storage-selector-body-height: calc(100vh - var(--body-height) - var(--component-header-height)); } }
 
 @media (max-width: 768px) {
   .storage-selector-container {
-    --storage-selector-button-bar-height: 75px;
+    --storage-selector-button-bar-height: 120px;
     --storage-selector-body-height: calc(100vh - var(--body-height)); } }
 
 .storage-selector-component {
   height: calc(var(--storage-selector-body-height) - var(--storage-selector-button-bar-height));
   overflow-x: hidden;
   overflow-y: auto; }
+  .storage-selector-component .storage-selector-list .selected-item {
+    background-color: gray; }
   .storage-selector-component .storage-selector-list-empty {
     color: #999999;
     margin: 20px; }
@@ -18258,6 +18260,12 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   .storage-selector-action-button-bar .upload-images {
     padding: 18px 0 0 0;
     border-top: 1px solid #e6e6e6; }
+  .storage-selector-action-button-bar .add-selected {
+    padding: 10px 0 0 0; }
+    .storage-selector-action-button-bar .add-selected button {
+      background: white;
+      border-width: 2px;
+      color: #4ab767; }
 
 .storage-upload-panel {
   margin-top: 5px; }
