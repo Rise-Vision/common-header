@@ -486,6 +486,15 @@ $short-phone-height: 570px;
   overflow-y: auto;
 
   .storage-selector-list {
+    column-count: 2;
+    column-gap: 5px;
+    margin: 10px 20px 0;
+
+    img {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+
     .selected-item {
       background-color: gray;
     }

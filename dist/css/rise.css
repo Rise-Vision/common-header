@@ -18232,8 +18232,15 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   height: calc(var(--storage-selector-body-height) - var(--storage-selector-button-bar-height));
   overflow-x: hidden;
   overflow-y: auto; }
-  .storage-selector-component .storage-selector-list .selected-item {
-    background-color: gray; }
+  .storage-selector-component .storage-selector-list {
+    column-count: 2;
+    column-gap: 5px;
+    margin: 10px 20px 0; }
+    .storage-selector-component .storage-selector-list img {
+      width: 100%;
+      margin-bottom: 5px; }
+    .storage-selector-component .storage-selector-list .selected-item {
+      background-color: gray; }
   .storage-selector-component .storage-selector-list-empty {
     color: #999999;
     margin: 20px; }
