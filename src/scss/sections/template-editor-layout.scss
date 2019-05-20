@@ -490,6 +490,26 @@ $short-phone-height: 570px;
     column-gap: 5px;
     margin: 10px 20px 0;
 
+    .folder-entry {
+      text-align: center;
+      background-color: $lighter-gray;
+
+      a {
+        display: block;
+        padding: 20px 0;
+
+        i {
+          font-size: 42pt;
+          color: $mid-gray;
+        }
+
+        folder-name {
+          margin-top: 5px;
+          color: $dark-gray;
+        }
+      }
+    }
+
     img {
       width: 100%;
       margin-bottom: 5px;
