@@ -493,6 +493,7 @@ $short-phone-height: 570px;
     .folder-entry {
       text-align: center;
       background-color: $lighter-gray;
+      margin-bottom: 5px;
 
       a {
         display: block;
@@ -503,9 +504,10 @@ $short-phone-height: 570px;
           color: $mid-gray;
         }
 
-        folder-name {
+        .folder-name {
           margin-top: 5px;
           color: $dark-gray;
+          font-weight: bold;
         }
       }
     }
