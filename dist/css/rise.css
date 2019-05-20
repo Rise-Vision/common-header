@@ -18242,7 +18242,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
       margin-bottom: 5px; }
       .storage-selector-component .storage-selector-list .folder-entry a, .storage-selector-component .storage-selector-list .folder-entry .u_link {
         display: block;
-        padding: 20px 0; }
+        padding: 20px 10px; }
         .storage-selector-component .storage-selector-list .folder-entry a i, .storage-selector-component .storage-selector-list .folder-entry .u_link i {
           font-size: 42pt;
           color: #999999; }
