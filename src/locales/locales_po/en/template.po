@@ -118,6 +118,9 @@ msgstr "Financial"
 msgid "rise-data-image"
 msgstr "Image"
 
+msgid "rise-data-weather"
+msgstr "Weather"
+
 msgid "rise-text"
 msgstr "Text"
 
