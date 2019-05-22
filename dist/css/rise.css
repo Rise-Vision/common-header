@@ -18236,6 +18236,20 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     column-count: 2;
     column-gap: 5px;
     margin: 10px 20px 0; }
+    .storage-selector-component .storage-selector-list .folder-entry {
+      text-align: center;
+      background-color: #f2f2f2;
+      margin-bottom: 5px; }
+      .storage-selector-component .storage-selector-list .folder-entry a, .storage-selector-component .storage-selector-list .folder-entry .u_link {
+        display: block;
+        padding: 20px 10px; }
+        .storage-selector-component .storage-selector-list .folder-entry a i, .storage-selector-component .storage-selector-list .folder-entry .u_link i {
+          font-size: 42pt;
+          color: #999999; }
+        .storage-selector-component .storage-selector-list .folder-entry a .folder-name, .storage-selector-component .storage-selector-list .folder-entry .u_link .folder-name {
+          margin-top: 5px;
+          color: #4d4d4d;
+          font-weight: bold; }
     .storage-selector-component .storage-selector-list img {
       width: 100%;
       margin-bottom: 5px; }
