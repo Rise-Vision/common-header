@@ -110,7 +110,7 @@ msgid "financial.world-indexes"
 msgstr "World Indexes"
 
 msgid "message-box.confirmation-message"
-msgstr "Okay I got it"
+msgstr "Okay I Got It"
 
 msgid "rise-data-financial"
 msgstr "Financial"
