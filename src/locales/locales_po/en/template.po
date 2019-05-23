@@ -121,6 +121,9 @@ msgstr "Image"
 msgid "rise-data-weather"
 msgstr "Weather"
 
+msgid "rise-slides"
+msgstr "Google Slides"
+
 msgid "rise-text"
 msgstr "Text"
 
