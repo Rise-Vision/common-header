@@ -278,6 +278,11 @@ $short-phone-height: 570px;
     &.visible-bottom-rule {
         border-bottom: 1px solid #e6e6e6;
     }
+
+    & svg {
+      fill: $dark-gray;
+      stroke: none;
+    }
   }
 
   & .arrow-icon {

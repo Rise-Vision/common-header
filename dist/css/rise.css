@@ -18088,6 +18088,9 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     margin: 0px 20px; }
     .attribute-editor .component-header.visible-bottom-rule {
       border-bottom: 1px solid #e6e6e6; }
+    .attribute-editor .component-header svg {
+      fill: #4d4d4d;
+      stroke: none; }
   .attribute-editor .arrow-icon {
     line-height: 10px; }
 
