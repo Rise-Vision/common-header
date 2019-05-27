@@ -8568,7 +8568,7 @@ angular.module("risevision.common.components.svg", [])
 
         // a and b are javascript Date objects
         function dateDiffInDays(a, b) {
-          return Math.floor((b.getTime() - a.getTime()) / _MS_PER_DAY);
+          return Math.ceil((b.getTime() - a.getTime()) / _MS_PER_DAY);
         }
 
         var checkAuthorizedStatus = function (productCode, companyId) {
@@ -8641,13 +8641,10 @@ angular.module("risevision.common.components.svg", [])
 
                 if (subscriptionStatus.expiry && subscriptionStatus.statusCode ===
                   "on-trial") {
-                  subscriptionStatus.expiry = new Date(
-                    subscriptionStatus
-                    .expiry);
+                  subscriptionStatus.expiry = new Date(subscriptionStatus.expiry);
 
-                  if (subscriptionStatus.expiry instanceof Date && !
-                    isNaN(
-                      subscriptionStatus.expiry.valueOf())) {
+                  if (subscriptionStatus.expiry instanceof Date &&
+                    !isNaN(subscriptionStatus.expiry.valueOf())) {
                     subscriptionStatus.expiry = dateDiffInDays(new Date(),
                       subscriptionStatus.expiry);
                   }
