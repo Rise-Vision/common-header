@@ -18905,7 +18905,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
           vertical-align: middle;
           transform: scale(0.5); }
           .image-component-list .image-row .image-thumbnail .broken-link svg g {
-            fill: #4d4d4d; }
+            fill: #999999; }
     .image-component-list .image-row .image-entry {
       flex-grow: 1;
       width: calc(var(--sidebar-width) - var(--thumbnail-width) - 60px); }
