@@ -51,6 +51,16 @@
         vertical-align: middle;
         width: var(--thumbnail-width);
         font-size: 40px;
+        background-color: $light-gray;
+        padding: 5px;
+
+        svg {
+          vertical-align: middle;
+
+          g {
+            fill: $dark-gray;
+          }
+        }
       }
     }
 
