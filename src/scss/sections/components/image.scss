@@ -52,10 +52,11 @@
         width: var(--thumbnail-width);
         font-size: 40px;
         background-color: $light-gray;
-        padding: 5px;
+        border-radius: 2px;
 
         svg {
           vertical-align: middle;
+          transform: scale(.5);
 
           g {
             fill: $dark-gray;

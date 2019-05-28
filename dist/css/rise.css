@@ -18900,9 +18900,10 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
         width: var(--thumbnail-width);
         font-size: 40px;
         background-color: #e6e6e6;
-        padding: 5px; }
+        border-radius: 2px; }
         .image-component-list .image-row .image-thumbnail .broken-link svg {
-          vertical-align: middle; }
+          vertical-align: middle;
+          transform: scale(0.5); }
           .image-component-list .image-row .image-thumbnail .broken-link svg g {
             fill: #4d4d4d; }
     .image-component-list .image-row .image-entry {
