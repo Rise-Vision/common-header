@@ -44,6 +44,14 @@
         vertical-align: middle;
         width: var(--thumbnail-width);
       }
+
+      broken-link {
+        display: inline-block;
+        text-align: center;
+        vertical-align: middle;
+        width: var(--thumbnail-width);
+        font-size: 40px;
+      }
     }
 
     .image-entry {
