@@ -67,6 +67,8 @@
 
     .image-entry {
       width: calc(var(--sidebar-width) - var(--thumbnail-width) - 60px);
+      display: flex;
+      align-items: center;
 
       .image-text {
         display: inline-block;
