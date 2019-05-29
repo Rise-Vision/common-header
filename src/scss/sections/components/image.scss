@@ -72,11 +72,12 @@
       .image-entry-top {
         display: flex;
         flex-wrap: nowrap;
+        font-size: 12px;
 
         .image-name {
           flex-grow: 1;
           font-weight: bold;
-          color: $dark-gray;
+          color: $mid-gray;
 
           white-space: nowrap;
           overflow: hidden;
@@ -84,7 +85,8 @@
         }
 
         a {
-          color: red;
+          color: $danger;
+          font-weight: bold;
           text-decoration: none;
           margin-left: 5px;
 
@@ -95,8 +97,8 @@
       }
 
       .image-not-available {
-        color: red;
-        font-size: 0.8em;
+        color: $danger;
+        font-size: 12px;
       }
     }
   }

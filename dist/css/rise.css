@@ -18911,23 +18911,25 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
       width: calc(var(--sidebar-width) - var(--thumbnail-width) - 60px); }
       .image-component-list .image-row .image-entry .image-entry-top {
         display: flex;
-        flex-wrap: nowrap; }
+        flex-wrap: nowrap;
+        font-size: 12px; }
         .image-component-list .image-row .image-entry .image-entry-top .image-name {
           flex-grow: 1;
           font-weight: bold;
-          color: #4d4d4d;
+          color: #999999;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis; }
         .image-component-list .image-row .image-entry .image-entry-top a, .image-component-list .image-row .image-entry .image-entry-top .u_link {
-          color: red;
+          color: #d9534f;
+          font-weight: bold;
           text-decoration: none;
           margin-left: 5px; }
           .image-component-list .image-row .image-entry .image-entry-top a:hover, .image-component-list .image-row .image-entry .image-entry-top .u_link:hover {
             text-decoration: underline; }
       .image-component-list .image-row .image-entry .image-not-available {
-        color: red;
-        font-size: 0.8em; }
+        color: #d9534f;
+        font-size: 12px; }
   .image-component-list .image-component-list-empty {
     color: #999999;
     margin: 20px; }
