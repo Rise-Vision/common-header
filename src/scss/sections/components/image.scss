@@ -66,40 +66,29 @@
     }
 
     .image-entry {
-      flex-grow: 1;
       width: calc(var(--sidebar-width) - var(--thumbnail-width) - 60px);
 
-      .image-entry-top {
-        display: flex;
-        flex-wrap: nowrap;
-        font-size: 12px;
+      .image-name {
+        display: inline-block;
+        width: calc(var(--sidebar-width) - var(--thumbnail-width) - 130px);
+        font-weight: bold;
+        color: $mid-gray;
 
-        .image-text {
-          .image-name {
-            flex-grow: 1;
-            font-weight: bold;
-            color: $mid-gray;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
+      a {
+        display: inline-block;
+        width: 50px;
+        color: $danger;
+        font-weight: bold;
+        text-decoration: none;
+        margin-left: 20px;
 
-          .image-not-available {
-            color: $danger;
-            font-size: 12px;
-          }
-        }
-
-        a {
-          color: $danger;
-          font-weight: bold;
-          text-decoration: none;
-          margin-left: 5px;
-
-          &:hover {
-            text-decoration: underline;
-          }
+        &:hover {
+          text-decoration: underline;
         }
       }
     }
