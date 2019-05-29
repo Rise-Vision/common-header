@@ -68,15 +68,23 @@
     .image-entry {
       width: calc(var(--sidebar-width) - var(--thumbnail-width) - 60px);
 
-      .image-name {
+      .image-text {
         display: inline-block;
         width: calc(var(--sidebar-width) - var(--thumbnail-width) - 130px);
-        font-weight: bold;
-        color: $mid-gray;
 
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        .image-name {
+          font-weight: bold;
+          color: $mid-gray;
+
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .image-not-available {
+          color: $danger;
+          font-size: 12px;
+        }
       }
 
       a {
