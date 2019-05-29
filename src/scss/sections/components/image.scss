@@ -74,14 +74,21 @@
         flex-wrap: nowrap;
         font-size: 12px;
 
-        .image-name {
-          flex-grow: 1;
-          font-weight: bold;
-          color: $mid-gray;
+        .image-text {
+          .image-name {
+            flex-grow: 1;
+            font-weight: bold;
+            color: $mid-gray;
 
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .image-not-available {
+            color: $danger;
+            font-size: 12px;
+          }
         }
 
         a {
@@ -94,11 +101,6 @@
             text-decoration: underline;
           }
         }
-      }
-
-      .image-not-available {
-        color: $danger;
-        font-size: 12px;
       }
     }
   }
