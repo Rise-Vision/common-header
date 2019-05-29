@@ -70,7 +70,8 @@
 
       .image-text {
         display: inline-block;
-        width: calc(var(--sidebar-width) - var(--thumbnail-width) - 130px);
+        width: calc(var(--sidebar-width) - var(--thumbnail-width) - 140px);
+        font-size: 12px;
 
         .image-name {
           font-weight: bold;
@@ -83,20 +84,22 @@
 
         .image-not-available {
           color: $danger;
-          font-size: 12px;
         }
       }
 
-      a {
+      .image-remove {
         display: inline-block;
         width: 50px;
-        color: $danger;
-        font-weight: bold;
-        text-decoration: none;
-        margin-left: 20px;
 
-        &:hover {
-          text-decoration: underline;
+        a {
+          color: $danger;
+          font-weight: bold;
+          text-decoration: none;
+          margin-left: 20px;
+
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
     }
