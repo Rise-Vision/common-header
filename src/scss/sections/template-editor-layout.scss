@@ -487,6 +487,11 @@ $short-phone-height: 570px;
 
 .storage-selector-component {
   --storage-column-width: calc(var(--sidebar-width) / 2 - 25px);
+
+  @media (max-width: $screen-sm) {
+    --storage-column-width: 100%;
+  }
+
   height: calc(var(--storage-selector-body-height) - var(--storage-selector-button-bar-height));
   overflow-x: hidden;
   overflow-y: auto;

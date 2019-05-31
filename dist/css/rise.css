@@ -18236,6 +18236,9 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   height: calc(var(--storage-selector-body-height) - var(--storage-selector-button-bar-height));
   overflow-x: hidden;
   overflow-y: auto; }
+  @media (max-width: 768px) {
+    .storage-selector-component {
+      --storage-column-width: 100%; } }
   .storage-selector-component .storage-selector-list {
     column-count: 2;
     column-gap: 5px;
