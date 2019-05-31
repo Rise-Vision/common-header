@@ -17,9 +17,13 @@
 .image-component-list {
   --thumbnail-width: 80px;
 
-  height: calc(var(--image-component-body-height) - var(--image-component-list-duration-height) - var(--image-component-list-button-bar-height));
+  height: calc(var(--image-component-body-height) - var(--image-component-list-button-bar-height));
   overflow-x: hidden;
   overflow-y: auto;
+
+  &.active-duration {
+    height: calc(var(--image-component-body-height) - var(--image-component-list-duration-height) - var(--image-component-list-button-bar-height));
+  }
 
   .image-row {
     display: flex;
