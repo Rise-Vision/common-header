@@ -18264,7 +18264,8 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
       top: 0;
       width: var(--storage-column-width);
       height: calc(100% - 5px);
-      background-color: rgba(50, 106, 191, 0.8); }
+      background-color: rgba(50, 106, 191, 0.8);
+      cursor: pointer; }
     .storage-selector-component .storage-selector-list .overlay-content {
       position: absolute;
       top: 30%; }

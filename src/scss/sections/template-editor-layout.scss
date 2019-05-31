@@ -534,6 +534,7 @@ $short-phone-height: 570px;
       width: var(--storage-column-width);
       height: calc(100% - 5px);
       background-color: rgba(50, 106, 191, 0.8);
+      cursor: pointer;
     }
 
     .overlay-content {
