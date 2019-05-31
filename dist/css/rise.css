@@ -18872,9 +18872,11 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
 
 .image-component-list {
   --thumbnail-width: 80px;
-  height: calc(var(--image-component-body-height) - var(--image-component-list-duration-height) - var(--image-component-list-button-bar-height));
+  height: calc(var(--image-component-body-height) - var(--image-component-list-button-bar-height));
   overflow-x: hidden;
   overflow-y: auto; }
+  .image-component-list.active-duration {
+    height: calc(var(--image-component-body-height) - var(--image-component-list-duration-height) - var(--image-component-list-button-bar-height)); }
   .image-component-list .image-row {
     display: flex;
     flex-wrap: nowrap;
