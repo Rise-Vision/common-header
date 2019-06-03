@@ -18897,11 +18897,13 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
 @media (min-width: 768px) {
   .image-component-container {
     --image-component-list-button-bar-height: 115px;
+    --image-component-list-duration-height: 80px;
     --image-component-body-height: calc(100vh - var(--body-height) - var(--component-header-height)); } }
 
 @media (max-width: 768px) {
   .image-component-container {
     --image-component-list-button-bar-height: 120px;
+    --image-component-list-duration-height: 85px;
     --image-component-body-height: calc(100vh - var(--body-height)); } }
 
 .image-component-list {
@@ -18909,6 +18911,8 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   height: calc(var(--image-component-body-height) - var(--image-component-list-button-bar-height));
   overflow-x: hidden;
   overflow-y: auto; }
+  .image-component-list.active-duration {
+    height: calc(var(--image-component-body-height) - var(--image-component-list-duration-height) - var(--image-component-list-button-bar-height)); }
   .image-component-list .image-row {
     display: flex;
     flex-wrap: nowrap;
@@ -18987,6 +18991,28 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     @media (max-width: 768px) {
       .image-component-list .image-component-list-empty .img-responsive {
         width: 70%; } }
+
+.image-component-list-duration {
+  height: var(--image-component-list-duration-height);
+  padding: 10px 20px 0;
+  background: white; }
+  .image-component-list-duration .form-control {
+    height: 40px;
+    color: #020621;
+    border: 1px solid #999999;
+    border-right: 0;
+    box-shadow: none;
+    transition: none; }
+    .image-component-list-duration .form-control:focus {
+      border-color: #107dda; }
+    .image-component-list-duration .form-control:focus + .input-group-addon {
+      border-color: #107dda; }
+  .image-component-list-duration .input-group-addon {
+    font-size: 12px;
+    color: #020621;
+    background-color: #f2f2f2;
+    border: 1px solid #999999;
+    border-left: 0; }
 
 .image-component-list-action-button-bar {
   height: var(--image-component-list-button-bar-height);

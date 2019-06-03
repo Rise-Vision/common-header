@@ -2303,12 +2303,7 @@ angular.module("risevision.common.header")
       service.enabled = angular.element($window).width() <= 1200 ? true :
         false;
 
-      service.toggle = function (event) {
-
-        if (event) {
-          event.stopPropagation();
-        }
-
+      service.toggle = function () {
         if (!service.enabled && !service.visible) {
           return;
         }
@@ -2353,8 +2348,12 @@ angular.module("risevision.common.header")
       return {
         restrict: "A",
         link: function (scope, iElement) {
-          iElement.bind("tap", offCanvas.toggle);
-          iElement.bind("click", offCanvas.toggle);
+          var toggleAndStopPropagation = function (event) {
+            offCanvas.toggle();
+            event.stopPropagation();
+          };
+          iElement.bind("tap", toggleAndStopPropagation);
+          iElement.bind("click", toggleAndStopPropagation);
         }
       };
     }
