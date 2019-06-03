@@ -29,7 +29,14 @@
     "currencies": "Currencies",
     "empty-list": {
       "title": "There are no symbols in this list",
-      "suggestion": "Add currencies to keep your display interesting!"
+      "suggestion": {
+        "bonds": "Add bonds to keep your display interesting!",
+        "commodities": "Add commodities to keep your display interesting!",
+        "currencies": "Add currencies to keep your display interesting!",
+        "market-statistics": "Add market statistics to keep your display interesting!",
+        "stocks": "Add stocks to keep your display interesting!",
+        "world-indexes": "Add world indexes to keep your display interesting!"
+      }
     },
     "market-statistics": "Market Statistics",
     "most-popular-category": {

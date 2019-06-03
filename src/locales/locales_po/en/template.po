@@ -46,8 +46,23 @@ msgstr "Commodities"
 msgid "financial.currencies"
 msgstr "Currencies"
 
-msgid "financial.empty-list.suggestion"
+msgid "financial.empty-list.suggestion.bonds"
+msgstr "Add bonds to keep your display interesting!"
+
+msgid "financial.empty-list.suggestion.commodities"
+msgstr "Add commodities to keep your display interesting!"
+
+msgid "financial.empty-list.suggestion.currencies"
 msgstr "Add currencies to keep your display interesting!"
+
+msgid "financial.empty-list.suggestion.market-statistics"
+msgstr "Add market statistics to keep your display interesting!"
+
+msgid "financial.empty-list.suggestion.stocks"
+msgstr "Add stocks to keep your display interesting!"
+
+msgid "financial.empty-list.suggestion.world-indexes"
+msgstr "Add world indexes to keep your display interesting!"
 
 msgid "financial.empty-list.title"
 msgstr "There are no symbols in this list"
