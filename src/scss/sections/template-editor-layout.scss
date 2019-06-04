@@ -486,6 +486,8 @@ $short-phone-height: 570px;
 }
 
 .storage-selector-component {
+  --storage-column-width: 100%;
+
   height: calc(var(--storage-selector-body-height) - var(--storage-selector-button-bar-height));
   overflow-x: hidden;
   overflow-y: auto;
@@ -495,10 +497,15 @@ $short-phone-height: 570px;
     column-gap: 5px;
     margin: 10px 20px 0;
 
+    .storage-row {
+      position: relative;
+    }
+
     .folder-entry {
       text-align: center;
       background-color: $lighter-gray;
       margin-bottom: 5px;
+      width: var(--storage-column-width);
 
       a {
         display: block;
@@ -515,6 +522,50 @@ $short-phone-height: 570px;
           font-weight: bold;
         }
       }
+    }
+
+    .file-entry {
+      background: inherit;
+    }
+
+    .overlay-entry {
+      position: absolute;
+      top: 0;
+      width: var(--storage-column-width);
+      height: calc(100% - 5px);
+      background-color: rgba(50, 106, 191, 0.8);
+      cursor: pointer;
+    }
+
+    .overlay-content {
+      position: absolute;
+      top: 30%;
+    }
+
+    .overlay-icon {
+      position: absolute;
+      left: calc(50% - 16px);
+      top: calc(50% - 16px);
+
+      & svg {
+        fill: $white;
+        stroke: none;
+      }
+    }
+
+    .overlay-text {
+      position: absolute;
+      width: calc(var(--storage-column-width) - 20%);
+      left: 10%;
+      bottom: 10px;
+      color: $white;
+      font-family: Helvetica;
+      font-size: 12px;
+      font-weight: bold;
+      text-align: center;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
 
     img {
