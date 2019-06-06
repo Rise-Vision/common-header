@@ -88,9 +88,9 @@
         expect(userSettingsModalPage.getEmailField().getAttribute('value')).to.eventually.equal("testmail@testmail.com");
         expect(userSettingsModalPage.getPhoneField().getAttribute('value')).to.eventually.equal("000-000-0000");
 
-        expect(userSettingsModalPage.getCeCheckbox().isSelected()).to.eventually.equal.true;
-        expect(userSettingsModalPage.getCpCheckbox().isSelected()).to.eventually.equal.false;
-        expect(userSettingsModalPage.getDaCheckbox().isSelected()).to.eventually.equal.true;
+        expect(userSettingsModalPage.getCeCheckbox().isSelected()).to.eventually.be.true;
+        expect(userSettingsModalPage.getCpCheckbox().isSelected()).to.eventually.be.false;
+        expect(userSettingsModalPage.getDaCheckbox().isSelected()).to.eventually.be.true;
       });
 
       // username should be shown here instead of email

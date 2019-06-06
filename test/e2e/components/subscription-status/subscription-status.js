@@ -14,7 +14,7 @@
       describe("Simple format", function() {
         it("Should show the default subscription status", function () {
           expect(element(by.css("#subscription-status h3 span")).isPresent()).
-            to.equal.true;
+            to.eventually.be.true;
 
           expect(element(by.css("#subscription-status h3 span")).getText()).
             to.eventually.equal("subscription-status.na");

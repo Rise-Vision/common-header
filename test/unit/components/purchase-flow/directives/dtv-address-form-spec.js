@@ -49,34 +49,34 @@ describe("directive: address form", function() {
 
   describe("isFieldInvalid: ", function() {
     it("should return true if invalid, submitted and dirty", function() {
-      expect($scope.isFieldInvalid("field1")).to.equal.false;
+      expect($scope.isFieldInvalid("field1")).to.be.false;
     });
 
     it("should return true if not submitted or drity", function() {
       form.addressForm.$submitted = false;
       form.addressForm.field1.$dirty = false;
 
-      expect($scope.isFieldInvalid("field1")).to.equal.true;
+      expect($scope.isFieldInvalid("field1")).to.be.true;
     });
 
     it("should return false if submitted but not dirty", function() {
       form.addressForm.$submitted = true;
       form.addressForm.field1.$dirty = false;
 
-      expect($scope.isFieldInvalid("field1")).to.equal.false;
+      expect($scope.isFieldInvalid("field1")).to.be.false;
     });
 
     it("should return false if not submitted but dirty", function() {
       form.addressForm.$submitted = false;
       form.addressForm.field1.$dirty = true;
 
-      expect($scope.isFieldInvalid("field1")).to.equal.false;
+      expect($scope.isFieldInvalid("field1")).to.be.false;
     });
 
     it("should return false if valid", function() {
       form.addressForm.field1.$invalid = false;
 
-      expect($scope.isFieldInvalid("field1")).to.equal.false;
+      expect($scope.isFieldInvalid("field1")).to.be.false;
     });
 
   });
