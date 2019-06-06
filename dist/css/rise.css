@@ -18943,9 +18943,8 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
         border-radius: 2px; }
         .image-component-list .image-row .image-thumbnail .broken-link svg {
           vertical-align: middle;
-          transform: scale(0.5); }
-          .image-component-list .image-row .image-thumbnail .broken-link svg g {
-            fill: #999999; }
+          transform: scale(0.5);
+          fill: #999999; }
     .image-component-list .image-row .image-entry {
       width: calc(var(--sidebar-width) - var(--thumbnail-width) - 60px);
       display: flex;
