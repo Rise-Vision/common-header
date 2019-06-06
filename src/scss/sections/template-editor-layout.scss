@@ -499,6 +499,9 @@ $short-phone-height: 570px;
 
     .storage-row {
       position: relative;
+      break-inside: avoid-column;
+      -webkit-column-break-inside: avoid;
+      -moz-column-break-inside: avoid;
     }
 
     .folder-entry {

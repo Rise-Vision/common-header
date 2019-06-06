@@ -18241,7 +18241,10 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     column-gap: 5px;
     margin: 10px 20px 0; }
     .storage-selector-component .storage-selector-list .storage-row {
-      position: relative; }
+      position: relative;
+      break-inside: avoid-column;
+      -webkit-column-break-inside: avoid;
+      -moz-column-break-inside: avoid; }
     .storage-selector-component .storage-selector-list .folder-entry {
       text-align: center;
       background-color: #f2f2f2;
