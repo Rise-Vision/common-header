@@ -31,9 +31,9 @@
     "jshint": "2.9.5",
     "jshint-stylish": "^2.2.1",
     "run-sequence": "^0.3.6",
-    "rv-common-e2e": "git://github.com/Rise-Vision/rv-common-e2e.git",
+    "rv-common-e2e": "git://github.com/Rise-Vision/rv-common-e2e.git#chore/update-dependencies",
     "underscore": "1.7.0",
-    "widget-tester": "git://github.com/Rise-Vision/widget-tester.git"
+    "widget-tester": "git://github.com/Rise-Vision/widget-tester.git#chore/update-sinon"
   },
   "scripts": {
     "test": "gulp test",
