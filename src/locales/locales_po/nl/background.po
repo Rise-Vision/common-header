@@ -1,6 +1,0 @@
-msgid "color.label"
-msgstr "Kleur"
-
-msgid "heading"
-msgstr "Achtergrond"
-

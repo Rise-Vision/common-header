@@ -1,6 +1,0 @@
-msgid "color.label"
-msgstr "Cor"
-
-msgid "heading"
-msgstr "Fundo"
-

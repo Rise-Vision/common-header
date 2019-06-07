@@ -1,6 +1,0 @@
-msgid "color.label"
-msgstr "Boja"
-
-msgid "heading"
-msgstr "Pozadine"
-
