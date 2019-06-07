@@ -427,6 +427,12 @@ $short-phone-height: 570px;
   }
 }
 
+.primary-btn-danger {
+  & .btn-primary {
+    background: $danger;
+  }
+}
+
 .te-scrollable-container {
   --base-size : 5px;
   overflow-y: auto;

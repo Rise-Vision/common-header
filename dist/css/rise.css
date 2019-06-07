@@ -18186,6 +18186,9 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   .template-editor-message-box .modal-dialog {
     width: 460px; } }
 
+.primary-btn-danger .btn-primary {
+  background: #d9534f; }
+
 .te-scrollable-container {
   --base-size: 5px;
   overflow-y: auto; }
