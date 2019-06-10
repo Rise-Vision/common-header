@@ -34,8 +34,8 @@
   ])
 
   // Set up our mappings between URLs, templates, and controllers
-  .config(["$urlRouterProvider", "$stateProvider", "$locationProvider",
-    function storeRouteConfig($urlRouterProvider, $stateProvider,
+  .config(["$urlRouterProvider", "$urlMatcherFactoryProvider", "$stateProvider", "$locationProvider",
+    function storeRouteConfig($urlRouterProvider, $urlMatcherFactoryProvider, $stateProvider,
       $locationProvider) {
 
       $locationProvider.html5Mode(true);
@@ -46,6 +46,9 @@
       $urlRouterProvider.when(/\/.*&id_token=.*&client_id=.*/, function () {
         console.log("Google Auth result received");
       });
+
+      // https://stackoverflow.com/questions/24420578/handling-trailing-slashes-in-angularui-router
+      $urlMatcherFactoryProvider.strictMode(false);
 
       // Use $stateProvider to configure states.
       $stateProvider.state("common", {
