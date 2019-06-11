@@ -114,6 +114,31 @@ $short-phone-height: 570px;
     display: flex;
     margin-left: auto;
     flex-wrap: nowrap;
+
+    .auto-saving-changes {
+      position: relative;
+      width: 115px;
+      height: 33px;
+      margin-right: 20px;
+      overflow: hidden;
+      font-size: 12px;
+      color: $dark-gray;
+      white-space: nowrap;
+
+      div {
+        position: absolute;
+        top: 50%;
+        margin-top: -6px;
+
+        svg {
+          fill: $rise-green;
+          stroke: none;
+          position: absolute;
+          margin-left: 5px;
+          margin-top: 1px;
+        }
+      }
+    }
   }
 
   & .btn {
@@ -301,6 +326,36 @@ $short-phone-height: 570px;
 
   & .btn {
     margin: 10px 0px;
+  }
+
+  .auto-saving-changes {
+    position: relative;
+    width: 320px;
+    height: 25px;
+    overflow: hidden;
+    font-size: 12px;
+    color: $dark-gray;
+    white-space: nowrap;
+
+    div {
+      position: absolute;
+      width: 320px;
+      top: 50%;
+      margin-top: -5px;
+      text-align: center;
+    }
+
+    .saving-message {
+      margin-left: -6px;
+
+      svg {
+        fill: $rise-green;
+        stroke: none;
+        position: absolute;
+        margin-left: 5px;
+        margin-top: 1px;
+      }
+    }
   }
 }
 
