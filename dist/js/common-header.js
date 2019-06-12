@@ -6592,6 +6592,7 @@ angular.module("risevision.common.components.logging")
           $log.debug("visibility: " + document[visibilityState]);
           if ("visible" === document[visibilityState]) {
             _detectUserOrAuthChange();
+            $rootScope.$broadcast("risevision.page.visible", true);
           }
         };
 
