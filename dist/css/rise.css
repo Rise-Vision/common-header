@@ -18322,10 +18322,11 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     background: inherit;
     border-bottom: 0; }
     .madero-style .modal-content .modal-header .close {
-      color: #999999;
       width: 20px;
       height: 20px;
       margin: 5px 5px -5px 0px; }
+      .madero-style .modal-content .modal-header .close svg {
+        fill: #999999; }
     @media (max-width: 480px) {
       .madero-style .modal-content .modal-header .close {
         padding: inherit; } }

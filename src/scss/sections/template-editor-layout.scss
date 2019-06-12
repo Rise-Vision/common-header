@@ -616,10 +616,12 @@ $short-phone-height: 570px;
       border-bottom: 0;
 
       .close {
-        color: $text-outline-fill;
         width: 20px;
         height: 20px;
         margin: 5px 5px -5px 0px;
+        & svg {
+          fill: $text-outline-fill;
+        }
       }
 
       @media (max-width: 480px) {
