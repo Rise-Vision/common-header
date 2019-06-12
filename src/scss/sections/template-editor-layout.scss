@@ -304,135 +304,6 @@ $short-phone-height: 570px;
   }
 }
 
-.template-editor-confirm-modal::before {
-  display: inline-block;
-  vertical-align: middle;
-  content: " ";
-  height: 25%;
-}
-
-.template-editor-confirm-modal {
-  & .modal-header {
-    background: inherit;
-    border-bottom: 0;
-  }
-
-  & .modal-body {
-    padding-top: 0;
-  }
-
-  & .modal-header .close {
-    width: 40px;
-    height: 40px;
-  }
-
-  & .modal-footer {
-    background: rgb(242, 242, 242);
-    padding-top: 1.2em;
-  }
-
-  & .modal-body p {
-    font-weight: bold;
-    text-align: center;
-  }
-
-  & .modal-footer button {
-    border: inherit;
-    font-weight: bold;
-    padding-top: 0.6em;
-    padding-bottom: 0.6em;
-  }
-
-  & .modal-footer .btn-default {
-    background: rgb(230, 230, 230);
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .template-editor-confirm-modal::before {
-    height: 40%;
-  }
-
-  .template-editor-confirm-modal {
-    & .modal-dialog {
-      width: 350px;
-    }
-  }
-}
-
-.template-editor-message-box::before {
-  display: inline-block;
-  vertical-align: middle;
-  content: " ";
-  height: 25%;
-}
-
-.template-editor-message-box {
-  text-align: center;
-  padding: 0!important;
-  color: rgb(77, 77, 77);
-  font-size: 12px;
-
-  & .modal-dialog {
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  & .modal-header {
-    background: inherit;
-    border-bottom: 0;
-  }
-
-  & .modal-body {
-    padding-top: 0;
-    text-align: center;
-
-    & .modal-title {
-      font-size: 16px;
-      font-weight: bold;
-    }
-  }
-
-  & .modal-header .close {
-    width: 40px;
-    height: 40px;
-  }
-
-  & .modal-footer {
-    background: rgb(242, 242, 242);
-    padding-top: 1.2em;
-  }
-
-  & .modal-footer button {
-    border: inherit;
-    font-weight: bold;
-    padding-top: 0.6em;
-    padding-bottom: 0.6em;
-  }
-
-  & .modal-footer .btn-default {
-    background: rgb(230, 230, 230);
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .template-editor-message-box::before {
-    height: 100%;
-  }
-
-  .template-editor-message-box {
-    & .modal-dialog {
-      width: 460px;
-    }
-  }
-}
-
-.primary-btn-danger {
-  & .btn-primary {
-    background: $danger;
-  }
-}
-
 .te-scrollable-container {
   --base-size : 5px;
   overflow-y: auto;
@@ -679,5 +550,116 @@ $short-phone-height: 570px;
     padding: 0 15px;
     margin-right: -15px;
     float: right;
+  }
+}
+
+.madero-style {
+  $text-outline-color: #020620;
+  $text-outline-fill: #999999;
+
+  h4 {
+    font-size: 18px;
+    font-weight: bold;
+    color: $text-outline-color;
+  }
+
+  p {
+    color: $text-outline-color;
+    font-size: 12px;
+  }
+
+  .btn {
+    font-weight: bold;
+  }
+
+  .btn-default {
+    background: $white;
+    border-width: 2px;
+    color: $rise-green;
+    border-color: $rise-green;
+    padding: 5px 12px;
+  }
+
+  &.centered-modal::before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 25%;
+  }
+
+  &.centered-modal {
+    text-align: center;
+
+    & .modal-dialog {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    &.centered-modal::before {
+      height: 100%;
+    }
+
+    &.centered-modal {
+      & .modal-dialog {
+        width: 460px;
+      }
+    }
+  }
+
+  .modal-content {
+    background: $white;
+
+    .modal-header {
+      background: inherit;
+      border-bottom: 0;
+
+      .close {
+        color: $text-outline-fill;
+        width: 20px;
+        height: 20px;
+        margin: 5px 5px -5px 0px;
+      }
+
+      @media (max-width: 480px) {
+        .close {
+          padding: inherit;
+        }  
+      }
+      
+    }
+
+    .modal-body {
+      padding: 0px 20px 15px 20px;
+
+      h4 {
+        margin-top: 0px;
+        margin-bottom: 5px;
+      }
+
+      p {
+        margin-bottom: 0px; 
+      }
+    }
+
+    .modal-footer {
+      padding: 0px 20px 20px;
+    }
+  }
+
+  &.primary-btn-danger .modal-footer {
+    & .btn-primary {
+      background: $danger;
+      border-color: $danger;
+    }
+
+    & .btn-default {
+      color: $white;
+      border-width: 1px;
+      background: $rise-green;
+      border-color: $rise-green;
+      padding: 6px 12px;
+    }
   }
 }
