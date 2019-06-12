@@ -18139,14 +18139,12 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
       top: 50%;
       margin-top: -5px;
       text-align: center; }
-    .template-editor-footer .auto-saving-changes .all-changes-saved-message {
-      margin-left: -6px; }
-      .template-editor-footer .auto-saving-changes .all-changes-saved-message svg {
-        fill: #4ab767;
-        stroke: none;
-        position: absolute;
-        margin-left: 5px;
-        margin-top: 1px; }
+    .template-editor-footer .auto-saving-changes .all-changes-saved-message svg {
+      fill: #4ab767;
+      stroke: none;
+      position: absolute;
+      margin-left: 5px;
+      margin-top: 1px; }
 
 .template-editor-confirm-modal::before {
   display: inline-block;
