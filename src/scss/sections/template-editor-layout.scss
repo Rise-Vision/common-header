@@ -336,7 +336,7 @@ $short-phone-height: 570px;
 
   .auto-saving-changes {
     position: relative;
-    width: 320px;
+    width: 100%;
     height: 25px;
     overflow: hidden;
     font-size: 12px;
@@ -345,7 +345,7 @@ $short-phone-height: 570px;
 
     div {
       position: absolute;
-      width: 320px;
+      width: 100%;
       top: 50%;
       margin-top: -5px;
       text-align: center;
