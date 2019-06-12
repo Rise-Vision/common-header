@@ -117,7 +117,7 @@ $short-phone-height: 570px;
 
     .auto-saving-changes {
       position: relative;
-      width: 115px;
+      width: 120px;
       height: 33px;
       margin-right: 20px;
       overflow: hidden;
@@ -129,13 +129,19 @@ $short-phone-height: 570px;
         position: absolute;
         top: 50%;
         margin-top: -6px;
+        right: 0px;
 
-        svg {
-          fill: $rise-green;
-          stroke: none;
-          position: absolute;
-          margin-left: 5px;
-          margin-top: 1px;
+        div {
+          width: 114px;
+          margin-top: 0px;
+
+          svg {
+            fill: $rise-green;
+            stroke: none;
+            position: absolute;
+            margin-left: 5px;
+            margin-top: 1px;
+          }
         }
       }
     }
@@ -345,7 +351,7 @@ $short-phone-height: 570px;
       text-align: center;
     }
 
-    .saving-message {
+    .all-changes-saved-message {
       margin-left: -6px;
 
       svg {

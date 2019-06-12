@@ -17965,7 +17965,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     flex-wrap: nowrap; }
     .template-editor-toolbar .toolbar-right .auto-saving-changes {
       position: relative;
-      width: 115px;
+      width: 120px;
       height: 33px;
       margin-right: 20px;
       overflow: hidden;
@@ -17975,13 +17975,17 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
       .template-editor-toolbar .toolbar-right .auto-saving-changes div {
         position: absolute;
         top: 50%;
-        margin-top: -6px; }
-        .template-editor-toolbar .toolbar-right .auto-saving-changes div svg {
-          fill: #4ab767;
-          stroke: none;
-          position: absolute;
-          margin-left: 5px;
-          margin-top: 1px; }
+        margin-top: -6px;
+        right: 0px; }
+        .template-editor-toolbar .toolbar-right .auto-saving-changes div div {
+          width: 114px;
+          margin-top: 0px; }
+          .template-editor-toolbar .toolbar-right .auto-saving-changes div div svg {
+            fill: #4ab767;
+            stroke: none;
+            position: absolute;
+            margin-left: 5px;
+            margin-top: 1px; }
   .template-editor-toolbar .btn, .template-editor-toolbar .icon-nav label, .icon-nav .template-editor-toolbar label {
     width: 152px; }
   .template-editor-toolbar a, .template-editor-toolbar .u_link {
@@ -18135,9 +18139,9 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
       top: 50%;
       margin-top: -5px;
       text-align: center; }
-    .template-editor-footer .auto-saving-changes .saving-message {
+    .template-editor-footer .auto-saving-changes .all-changes-saved-message {
       margin-left: -6px; }
-      .template-editor-footer .auto-saving-changes .saving-message svg {
+      .template-editor-footer .auto-saving-changes .all-changes-saved-message svg {
         fill: #4ab767;
         stroke: none;
         position: absolute;
