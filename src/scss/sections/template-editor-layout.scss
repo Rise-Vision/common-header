@@ -470,6 +470,10 @@ $short-phone-height: 570px;
   animation-fill-mode: forwards;
 }
 
+.attribute-editor-component {
+  position: relative;
+}
+
 // Storage
 @media (min-width: $screen-sm) {
   .storage-selector-container {
