@@ -18146,89 +18146,6 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
       margin-left: 5px;
       margin-top: 1px; }
 
-.template-editor-confirm-modal::before {
-  display: inline-block;
-  vertical-align: middle;
-  content: " ";
-  height: 25%; }
-
-.template-editor-confirm-modal .modal-header {
-  background: inherit;
-  border-bottom: 0; }
-
-.template-editor-confirm-modal .modal-body {
-  padding-top: 0; }
-
-.template-editor-confirm-modal .modal-header .close {
-  width: 40px;
-  height: 40px; }
-
-.template-editor-confirm-modal .modal-footer {
-  background: #f2f2f2;
-  padding-top: 1.2em; }
-
-.template-editor-confirm-modal .modal-body p {
-  font-weight: bold;
-  text-align: center; }
-
-.template-editor-confirm-modal .modal-footer button {
-  border: inherit;
-  font-weight: bold;
-  padding-top: 0.6em;
-  padding-bottom: 0.6em; }
-
-.template-editor-confirm-modal .modal-footer .btn-default, .template-editor-confirm-modal .modal-footer .timeline .dropdown-menu li .btn, .timeline .dropdown-menu li .template-editor-confirm-modal .modal-footer .btn, .template-editor-confirm-modal .modal-footer .timeline .dropdown-menu li .icon-nav label, .timeline .dropdown-menu li .icon-nav .template-editor-confirm-modal .modal-footer label, .template-editor-confirm-modal .modal-footer .icon-nav .timeline .dropdown-menu li label, .icon-nav .timeline .dropdown-menu li .template-editor-confirm-modal .modal-footer label {
-  background: #e6e6e6; }
-
-@media screen and (min-width: 768px) {
-  .template-editor-confirm-modal::before {
-    height: 40%; }
-  .template-editor-confirm-modal .modal-dialog {
-    width: 350px; } }
-
-.template-editor-message-box::before {
-  display: inline-block;
-  vertical-align: middle;
-  content: " ";
-  height: 25%; }
-
-.template-editor-message-box {
-  text-align: center;
-  padding: 0 !important;
-  color: #4d4d4d;
-  font-size: 12px; }
-  .template-editor-message-box .modal-dialog {
-    display: inline-block;
-    vertical-align: middle; }
-  .template-editor-message-box .modal-header {
-    background: inherit;
-    border-bottom: 0; }
-  .template-editor-message-box .modal-body {
-    padding-top: 0;
-    text-align: center; }
-    .template-editor-message-box .modal-body .modal-title {
-      font-size: 16px;
-      font-weight: bold; }
-  .template-editor-message-box .modal-header .close {
-    width: 40px;
-    height: 40px; }
-  .template-editor-message-box .modal-footer {
-    background: #f2f2f2;
-    padding-top: 1.2em; }
-  .template-editor-message-box .modal-footer button {
-    border: inherit;
-    font-weight: bold;
-    padding-top: 0.6em;
-    padding-bottom: 0.6em; }
-  .template-editor-message-box .modal-footer .btn-default, .template-editor-message-box .modal-footer .timeline .dropdown-menu li .btn, .timeline .dropdown-menu li .template-editor-message-box .modal-footer .btn, .template-editor-message-box .modal-footer .timeline .dropdown-menu li .icon-nav label, .timeline .dropdown-menu li .icon-nav .template-editor-message-box .modal-footer label, .template-editor-message-box .modal-footer .icon-nav .timeline .dropdown-menu li label, .icon-nav .timeline .dropdown-menu li .template-editor-message-box .modal-footer label {
-    background: #e6e6e6; }
-
-@media screen and (min-width: 768px) {
-  .template-editor-message-box::before {
-    height: 100%; }
-  .template-editor-message-box .modal-dialog {
-    width: 460px; } }
-
 .te-scrollable-container {
   --base-size: 5px;
   overflow-y: auto; }
@@ -18404,6 +18321,78 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     padding: 0 15px;
     margin-right: -15px;
     float: right; }
+
+.madero-style h4 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #020620; }
+
+.madero-style p {
+  color: #020620;
+  font-size: 12px; }
+
+.madero-style .btn, .madero-style .icon-nav label, .icon-nav .madero-style label {
+  font-weight: bold; }
+
+.madero-style .btn-default, .madero-style .timeline .dropdown-menu li .btn, .timeline .dropdown-menu li .madero-style .btn, .madero-style .timeline .dropdown-menu li .icon-nav label, .timeline .dropdown-menu li .icon-nav .madero-style label, .madero-style .icon-nav .timeline .dropdown-menu li label, .icon-nav .timeline .dropdown-menu li .madero-style label {
+  background: white;
+  border-width: 2px;
+  color: #4ab767;
+  border-color: #4ab767;
+  padding: 5px 12px; }
+
+.madero-style.centered-modal::before {
+  display: inline-block;
+  vertical-align: middle;
+  content: " ";
+  height: 25%; }
+
+.madero-style.centered-modal {
+  text-align: center; }
+  .madero-style.centered-modal .modal-dialog {
+    display: inline-block;
+    vertical-align: middle; }
+
+@media screen and (min-width: 768px) {
+  .madero-style.centered-modal::before {
+    height: 100%; }
+  .madero-style.centered-modal .modal-dialog {
+    width: 460px; } }
+
+.madero-style .modal-content {
+  background: white; }
+  .madero-style .modal-content .modal-header {
+    background: inherit;
+    border-bottom: 0; }
+    .madero-style .modal-content .modal-header .close {
+      width: 20px;
+      height: 20px;
+      margin: 5px 5px -5px 0px; }
+      .madero-style .modal-content .modal-header .close svg {
+        fill: #999999; }
+    @media (max-width: 480px) {
+      .madero-style .modal-content .modal-header .close {
+        padding: inherit; } }
+  .madero-style .modal-content .modal-body {
+    padding: 0px 20px 15px 20px; }
+    .madero-style .modal-content .modal-body h4 {
+      margin-top: 0px;
+      margin-bottom: 5px; }
+    .madero-style .modal-content .modal-body p {
+      margin-bottom: 0px; }
+  .madero-style .modal-content .modal-footer {
+    padding: 0px 20px 20px; }
+
+.madero-style.primary-btn-danger .modal-footer .btn-primary {
+  background: #d9534f;
+  border-color: #d9534f; }
+
+.madero-style.primary-btn-danger .modal-footer .btn-default, .madero-style.primary-btn-danger .modal-footer .timeline .dropdown-menu li .btn, .timeline .dropdown-menu li .madero-style.primary-btn-danger .modal-footer .btn, .madero-style.primary-btn-danger .modal-footer .timeline .dropdown-menu li .icon-nav label, .timeline .dropdown-menu li .icon-nav .madero-style.primary-btn-danger .modal-footer label, .madero-style.primary-btn-danger .modal-footer .icon-nav .timeline .dropdown-menu li label, .icon-nav .timeline .dropdown-menu li .madero-style.primary-btn-danger .modal-footer label {
+  color: white;
+  border-width: 1px;
+  background: #4ab767;
+  border-color: #4ab767;
+  padding: 6px 12px; }
 
 .subscription-summary {
   display: flex;
