@@ -13125,7 +13125,7 @@ a[data-wysihtml5-command=underline].active,
   left: 0;
   background: rgba(255, 255, 255, 0.75); }
 
-ul .spinner-backdrop, .inner-box .spinner-backdrop, .panel .spinner-backdrop, .select-subcompany-modal .list-group .spinner-backdrop, .panel-editable .spinner-backdrop, .card .spinner-backdrop, #appLauncherContainer .scrollable-list .spinner-backdrop, .scrollable-list .spinner-backdrop, .modal-dialog .spinner-backdrop {
+ul .spinner-backdrop, .inner-box .spinner-backdrop, .panel .spinner-backdrop, .select-subcompany-modal .list-group .spinner-backdrop, .panel-editable .spinner-backdrop, .card .spinner-backdrop, #appLauncherContainer .scrollable-list .spinner-backdrop, .scrollable-list .spinner-backdrop, .modal-dialog .spinner-backdrop, .attribute-editor-component .spinner-backdrop {
   position: absolute; }
 
 .select2-container {
@@ -18180,6 +18180,9 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   animation-name: slide-out;
   animation-duration: 0.5s;
   animation-fill-mode: forwards; }
+
+.attribute-editor-component {
+  position: relative; }
 
 @media (min-width: 768px) {
   .storage-selector-container {
