@@ -19026,10 +19026,14 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
       width: calc(var(--sidebar-width) - var(--thumbnail-width) - 60px);
       display: flex;
       align-items: center; }
+      @media (max-width: 768px) {
+        .image-component-list .image-row .image-entry {
+          width: calc(100% - var(--thumbnail-width) - 50px); } }
       .image-component-list .image-row .image-entry .image-text {
         display: inline-block;
         width: calc(var(--sidebar-width) - var(--thumbnail-width) - 140px);
-        font-size: 12px; }
+        font-size: 12px;
+        flex-grow: 1; }
         .image-component-list .image-row .image-entry .image-text .image-name {
           font-weight: bold;
           color: #999999;
