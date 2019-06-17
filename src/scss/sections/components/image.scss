@@ -81,7 +81,10 @@
         display: inline-block;
         width: calc(var(--sidebar-width) - var(--thumbnail-width) - 140px);
         font-size: 12px;
-        flex-grow: 1;
+
+        @media (max-width: $screen-sm) {
+          flex-grow: 1;
+        }
 
         .image-name {
           font-weight: bold;
