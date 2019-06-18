@@ -514,6 +514,11 @@ $short-phone-height: 570px;
     img {
       width: 100%;
       margin-bottom: 5px;
+      background-color: $white;
+      background-size: 14px 14px;
+      background-position: 0 0, 7px 7px;
+      background-image: linear-gradient(45deg, $mid-gray 25%, transparent 25%, transparent 75%, $mid-gray 75%, $mid-gray),
+      linear-gradient(45deg, $mid-gray 25%, transparent 25%, transparent 75%, $mid-gray 75%, $mid-gray);
     }
 
     .selected-item {
@@ -691,9 +696,9 @@ $short-phone-height: 570px;
       @media (max-width: 480px) {
         .close {
           padding: inherit;
-        }  
+        }
       }
-      
+
     }
 
     .modal-body {
@@ -705,7 +710,7 @@ $short-phone-height: 570px;
       }
 
       p {
-        margin-bottom: 0px; 
+        margin-bottom: 0px;
       }
     }
 
@@ -739,7 +744,7 @@ $short-phone-height: 570px;
       box-shadow: none;
     }
   }
-  
+
   .form-control-feedback {
     top: 32px;
     fill: #f2f2f2;

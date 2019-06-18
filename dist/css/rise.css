@@ -18257,7 +18257,11 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
       white-space: nowrap; }
     .storage-selector-component .storage-selector-list img {
       width: 100%;
-      margin-bottom: 5px; }
+      margin-bottom: 5px;
+      background-color: white;
+      background-size: 14px 14px;
+      background-position: 0 0, 7px 7px;
+      background-image: linear-gradient(45deg, #999999 25%, transparent 25%, transparent 75%, #999999 75%, #999999), linear-gradient(45deg, #999999 25%, transparent 25%, transparent 75%, #999999 75%, #999999); }
     .storage-selector-component .storage-selector-list .selected-item {
       background-color: gray; }
   .storage-selector-component .storage-selector-list-empty {
@@ -19009,7 +19013,11 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
         vertical-align: middle; }
       .image-component-list .image-row .image-thumbnail img {
         vertical-align: middle;
-        width: var(--thumbnail-width); }
+        width: var(--thumbnail-width);
+        background-color: #f2f2f2;
+        background-size: 12px 12px;
+        background-position: 0 0, 6px 6px;
+        background-image: linear-gradient(45deg, #999999 25%, transparent 25%, transparent 75%, #999999 75%, #999999), linear-gradient(45deg, #999999 25%, transparent 25%, transparent 75%, #999999 75%, #999999); }
       .image-component-list .image-row .image-thumbnail .broken-link {
         display: inline-block;
         text-align: center;
