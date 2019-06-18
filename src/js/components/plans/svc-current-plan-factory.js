@@ -23,6 +23,8 @@
             plan = _.cloneDeep(_plansByType.free);
           }
 
+          _factory.currentPlan = plan;
+
           plan.playerProTotalLicenseCount = company.playerProTotalLicenseCount;
           plan.playerProAvailableLicenseCount = company.playerProAvailableLicenseCount;
 
@@ -33,11 +35,10 @@
           }
 
           plan.isPurchasedByParent = !!company.planBillToId && !!company.planShipToId && (company.planBillToId !==
-            company.planShipToId);
+            company.planShipToId) && (_factory.isSubscribed() || _factory.isCancelledActive());
           plan.parentPlanCompanyName = company.parentPlanCompanyName;
           plan.parentPlanContactEmail = company.parentPlanContactEmail;
 
-          _factory.currentPlan = plan;
           $log.debug("Current plan", plan);
           $rootScope.$emit("risevision.plan.loaded", plan);
         };
@@ -66,7 +67,7 @@
         };
 
         _factory.isParentPlan = function () {
-          return !!_factory.currentPlan.parentPlan;
+          return !!_factory.currentPlan.parentPlan && (_factory.isSubscribed() || _factory.isCancelledActive());
         };
 
         _factory.isEnterpriseSubCompany = function () {
