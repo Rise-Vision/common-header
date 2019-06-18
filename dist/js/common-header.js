@@ -9027,7 +9027,7 @@ angular.module("risevision.common.components.plans", [
         };
 
         _factory.isParentPlan = function () {
-          return !!_factory.currentPlan.parentPlan && (_factory.isSubscribed() || _factory.isCancelledActive());
+          return !!_factory.currentPlan.parentPlan;
         };
 
         _factory.isEnterpriseSubCompany = function () {

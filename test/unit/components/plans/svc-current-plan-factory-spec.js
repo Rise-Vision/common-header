@@ -188,7 +188,7 @@ describe("Services: current plan factory", function() {
           playerProAvailableLicenseCount: 1,
           shareCompanyPlan: true,
           planShipToId: "shipToId",
-          parentPlanProductCode: ADVANCED_PLAN_CODE,
+          planProductCode: ADVANCED_PLAN_CODE,
           parentPlanCompanyName: "parentName",
           parentPlanContactEmail: "administratorEmail"
         });
@@ -213,7 +213,7 @@ describe("Services: current plan factory", function() {
           playerProAvailableLicenseCount: 1,
           shareCompanyPlan: true,
           planShipToId: "shipToId",
-          parentPlanProductCode: ADVANCED_PLAN_CODE,
+          planProductCode: ADVANCED_PLAN_CODE,
           parentPlanCompanyName: "parentName",
           parentPlanContactEmail: "administratorEmail"
         });
@@ -230,16 +230,17 @@ describe("Services: current plan factory", function() {
 
       });
 
-      it("should be true if shipToId differs from billToId", function(done) {
+      it("should be true if shipToId differs from billToId and plan is Active", function(done) {
         sandbox.stub(userState, "getSelectedCompanyId").returns("companyId");
         sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
           id: "companyId",
           playerProTotalLicenseCount: 3,
           playerProAvailableLicenseCount: 1,
           shareCompanyPlan: true,
+          planSubscriptionStatus: "Active",
           planShipToId: "shipToId",
           planBillToId: "billToId",
-          parentPlanProductCode: ADVANCED_PLAN_CODE,
+          planProductCode: ADVANCED_PLAN_CODE,
           parentPlanCompanyName: "parentName",
           parentPlanContactEmail: "administratorEmail"
         });
@@ -256,6 +257,33 @@ describe("Services: current plan factory", function() {
 
       });
 
+      it("should be false if shipToId differs from billToId and plan is Cancelled", function(done) {
+        sandbox.stub(userState, "getSelectedCompanyId").returns("companyId");
+        sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
+          id: "companyId",
+          playerProTotalLicenseCount: 3,
+          playerProAvailableLicenseCount: 1,
+          shareCompanyPlan: true,
+          planSubscriptionStatus: "Cancelled",
+          planShipToId: "shipToId",
+          planBillToId: "billToId",
+          planProductCode: ADVANCED_PLAN_CODE,
+          parentPlanCompanyName: "parentName",
+          parentPlanContactEmail: "administratorEmail"
+        });
+
+        $rootScope.$emit("risevision.company.selectedCompanyChanged");
+        $rootScope.$digest();
+
+        setTimeout(function () {
+          expect(currentPlanFactory.currentPlan).to.be.not.null;
+          expect(currentPlanFactory.currentPlan.isPurchasedByParent).to.be.false;
+
+          done();
+        }, 0);
+
+      });
+
       it("should be false if shipToId and billToId are the same", function(done) {
         sandbox.stub(userState, "getSelectedCompanyId").returns("companyId");
         sandbox.stub(userState, "getCopyOfSelectedCompany").returns({
@@ -265,7 +293,7 @@ describe("Services: current plan factory", function() {
           shareCompanyPlan: true,
           planShipToId: "billToId",
           planBillToId: "billToId",
-          parentPlanProductCode: ADVANCED_PLAN_CODE,
+          planProductCode: ADVANCED_PLAN_CODE,
           parentPlanCompanyName: "parentName",
           parentPlanContactEmail: "administratorEmail"
         });
