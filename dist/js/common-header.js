@@ -198,7 +198,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plan-banner.html',
-    '<div class="hidden-xs"><div id="parent-plan-banner" class="alert p-2 mb-0 bg-success text-right" ng-show="getVisibleBanner() === \'parent\'"><div class="u_margin-right"><span class="font-weight-bold">{{plan.parentPlan.name}} Plan</span> <span class="ml-2">Managed by {{plan.parentPlanCompanyName || "the Parent Company"}}</span> <a href="#" ng-click="showPlans()" class="ml-3 btn btn-xs btn-primary">Change Plan</a></div></div><div id="parent-purchased-plan-banner" class="alert p-2 mb-0 bg-success text-right" ng-show="getVisibleBanner() === \'parentPurchased\'"><div class="u_margin-right"><span class="font-weight-bold">{{plan.name}} Plan</span> <span class="ml-2">Managed by {{plan.parentPlanCompanyName || "the Parent Company"}}</span></div></div><div id="free-plan-banner" class="alert alert-plan plan-active text-right" ng-show="getVisibleBanner() === \'free\'"><div class="u_margin-right"><span class="font-weight-bold">Get more out of Rise Vision!</span> <a href="#" ng-click="showPlans()" class="u_margin-left">See Our Plans</a></div></div><div id="cancelled-plan-banner" class="alert alert-plan plan-active text-right" ng-show="getVisibleBanner() === \'cancelled\'"><div class="u_margin-right"><span class="font-weight-bold">Your {{plan.name}} Plan subscription expires on {{ plan.currentPeriodEndDate | date : \'d-MMM-yyyy\'}}</span> <a href="{{storeAccountUrl}}" target="_blank" link-cid="" class="ml-3 btn btn-xs btn-primary" ng-hide="isChargebee">Account Settings</a> <a ui-sref="apps.billing.home" class="ml-3 btn btn-xs btn-primary" ng-show="isChargebee">Account Settings</a></div></div><div id="trial-plan-banner" class="alert alert-plan plan-active text-right" ng-show="getVisibleBanner() === \'trial\'"><div class="u_margin-right"><span class="font-weight-bold">You have {{plan.trialPeriod}} days left on your Rise Vision {{plan.name}} Plan trial!</span> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="ml-3 btn btn-xs btn-primary">Subscribe Now</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="getVisibleBanner() === \'expired\'"><div class="u_margin-right"><span class="font-weight-bold" ng-show="!plan.playerProTotalLicenseCount">Your Rise Vision {{plan.name}} Plan trial has expired! You are now on the Free Plan. Your Displays are no longer Licensed.</span> <span class="font-weight-bold" ng-show="plan.playerProTotalLicenseCount">Your Rise Vision {{plan.name}} Plan trial has expired! You are now on the Free Plan. Some of your Displays are no longer Licensed.</span> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="ml-3 btn btn-xs btn-primary">Subscribe Now</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="getVisibleBanner() === \'suspended\'"><div class="u_margin-right"><span class="font-weight-bold">There was an issue processing your payment. Please update your billing information. Your Displays may be affected.</span> <a href="{{storeAccountUrl}}" target="_blank" link-cid="" class="ml-3 btn btn-xs btn-primary" ng-hide="isChargebee">Update Billing</a> <a ui-sref="apps.billing.home" class="ml-3 btn btn-xs btn-primary" ng-show="isChargebee">Update Billing</a></div></div></div>');
+    '<div class="hidden-xs"><div id="parent-purchased-plan-banner" class="alert p-2 mb-0 bg-success text-right" ng-show="getVisibleBanner() === \'parentPurchased\'"><div class="u_margin-right"><span class="font-weight-bold">{{plan.name}} Plan</span> <span class="ml-2">Managed by {{plan.parentPlanCompanyName || "the Parent Company"}}</span></div></div><div id="free-plan-banner" class="alert alert-plan plan-active text-right" ng-show="getVisibleBanner() === \'free\'"><div class="u_margin-right"><span class="font-weight-bold">Get more out of Rise Vision!</span> <a href="#" ng-click="showPlans()" class="u_margin-left">See Our Plans</a></div></div><div id="cancelled-plan-banner" class="alert alert-plan plan-active text-right" ng-show="getVisibleBanner() === \'cancelled\'"><div class="u_margin-right"><span class="font-weight-bold">Your {{plan.name}} Plan subscription expires on {{ plan.currentPeriodEndDate | date : \'d-MMM-yyyy\'}}</span> <a href="{{storeAccountUrl}}" target="_blank" link-cid="" class="ml-3 btn btn-xs btn-primary" ng-hide="isChargebee">Account Settings</a> <a ui-sref="apps.billing.home" class="ml-3 btn btn-xs btn-primary" ng-show="isChargebee">Account Settings</a></div></div><div id="trial-plan-banner" class="alert alert-plan plan-active text-right" ng-show="getVisibleBanner() === \'trial\'"><div class="u_margin-right"><span class="font-weight-bold">You have {{plan.trialPeriod}} days left on your Rise Vision {{plan.name}} Plan trial!</span> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="ml-3 btn btn-xs btn-primary">Subscribe Now</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="getVisibleBanner() === \'expired\'"><div class="u_margin-right"><span class="font-weight-bold" ng-show="!plan.playerProTotalLicenseCount">Your Rise Vision {{plan.name}} Plan trial has expired! You are now on the Free Plan. Your Displays are no longer Licensed.</span> <span class="font-weight-bold" ng-show="plan.playerProTotalLicenseCount">Your Rise Vision {{plan.name}} Plan trial has expired! You are now on the Free Plan. Some of your Displays are no longer Licensed.</span> <a href="#" ng-show="!isEnterpriseSubCompany()" ng-click="showPlans()" class="ml-3 btn btn-xs btn-primary">Subscribe Now</a></div></div><div class="alert alert-plan plan-suspended text-center" ng-show="getVisibleBanner() === \'suspended\'"><div class="u_margin-right"><span class="font-weight-bold">There was an issue processing your payment. Please update your billing information. Your Displays may be affected.</span> <a href="{{storeAccountUrl}}" target="_blank" link-cid="" class="ml-3 btn btn-xs btn-primary" ng-hide="isChargebee">Update Billing</a> <a ui-sref="apps.billing.home" class="ml-3 btn btn-xs btn-primary" ng-show="isChargebee">Update Billing</a></div></div></div>');
 }]);
 })();
 
@@ -9228,9 +9228,9 @@ module.run(['$templateCache', function($templateCache) {
       productCode: "d521f5bfbc1eef109481eebb79831e11c7804ad8",
       proLicenseCount: 0
     }])
-    .factory("plansFactory", ["$q", "$log", "$modal", "$templateCache", "getCompany",
+    .factory("plansFactory", ["$q", "$log", "$modal", "$templateCache",
       "userState", "subscriptionStatusService", "storeAuthorization", "PLANS_LIST",
-      function ($q, $log, $modal, $templateCache, getCompany, userState,
+      function ($q, $log, $modal, $templateCache, userState,
         subscriptionStatusService, storeAuthorization, PLANS_LIST) {
         var _factory = {};
         var _plansCodesList = _.map(PLANS_LIST, "productCode");
@@ -9334,7 +9334,9 @@ angular.module("risevision.common.components.plans")
         });
       }
     };
-  })
+  });
+
+angular.module("risevision.common.components.plans")
   .controller("PlansModalCtrl", [
     "$scope", "$rootScope", "$modalInstance", "$log", "$loading", "$timeout", "getCompany",
     "plansFactory", "currentPlanFactory", "ChargebeeFactory", "userState", "purchaseFactory",
@@ -9357,19 +9359,10 @@ angular.module("risevision.common.components.plans")
       $scope.useProductionChargebeeData = CHARGEBEE_PLANS_USE_PROD === "true";
 
       function _setPricingComponentDiscount() {
-        return _getIndustry()
-          .then(function (industry) {
-            $scope.pricingComponentDiscount = volumePlan.discountIndustries.includes(industry);
-          });
-      }
+        var companyIndustry = userState.getCopyOfSelectedCompany().companyIndustry;
 
-      function _getIndustry() {
-        var cid = window.top.location.href.match(/cid=([a-z0-9-]+)/);
-        var companyId = cid ? cid[1] : null;
-
-        return getCompany(companyId).then(function (company) {
-          return company.companyIndustry;
-        });
+        $scope.pricingComponentDiscount = volumePlan
+          .discountIndustries.indexOf(companyIndustry) >= 0;
       }
 
       function _getPlansDetails() {
@@ -9575,7 +9568,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plans/plans-modal.html',
-    '<div><button type="button" style="display: block; width: 100%; text-align: center; padding: 0.5em 0.5em 0 0; background: none; border: none; text-align: right" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-lg fa-times" style="opacity: 0.4"></i></button><h3 style="font-weight: bold; text-align: center; margin-top: 0" translate="">common-header.plans.pricing-component-title</h3><div id="pricingComponentContainer"><pricing-component ng-attr-apply-discount="{{pricingComponentDiscount ? \'\' : undefined}}" ng-attr-prod-env="{{useProductionChargebeeData ? \'\' : undefined}}" rv-on="display-count-changed:refreshButton"></pricing-component><button type="button" ng-disabled="!pricingAtLeastOneDisplay" ng-click="dismissAndShowPurchaseModal()" id="subscribeButton">I Want To Subscribe</button></div></div>');
+    '<div><button type="button" class="dismiss" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-lg fa-times"></i></button><h3 id="pricingComponentTitle" translate="">common-header.plans.pricing-component-title</h3><div id="pricingComponentContainer"><pricing-component ng-attr-apply-discount="{{pricingComponentDiscount ? \'\' : undefined}}" ng-attr-prod-env="{{useProductionChargebeeData ? \'\' : undefined}}" rv-on="display-count-changed:refreshButton"></pricing-component><button type="button" ng-disabled="!pricingAtLeastOneDisplay" ng-click="dismissAndShowPurchaseModal()" id="subscribeButton">I Want To Subscribe</button></div></div>');
 }]);
 })();
 

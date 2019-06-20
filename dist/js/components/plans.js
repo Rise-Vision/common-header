@@ -375,9 +375,9 @@
       productCode: "d521f5bfbc1eef109481eebb79831e11c7804ad8",
       proLicenseCount: 0
     }])
-    .factory("plansFactory", ["$q", "$log", "$modal", "$templateCache", "getCompany",
+    .factory("plansFactory", ["$q", "$log", "$modal", "$templateCache",
       "userState", "subscriptionStatusService", "storeAuthorization", "PLANS_LIST",
-      function ($q, $log, $modal, $templateCache, getCompany, userState,
+      function ($q, $log, $modal, $templateCache, userState,
         subscriptionStatusService, storeAuthorization, PLANS_LIST) {
         var _factory = {};
         var _plansCodesList = _.map(PLANS_LIST, "productCode");
@@ -481,7 +481,9 @@ angular.module("risevision.common.components.plans")
         });
       }
     };
-  })
+  });
+
+angular.module("risevision.common.components.plans")
   .controller("PlansModalCtrl", [
     "$scope", "$rootScope", "$modalInstance", "$log", "$loading", "$timeout", "getCompany",
     "plansFactory", "currentPlanFactory", "ChargebeeFactory", "userState", "purchaseFactory",
@@ -504,19 +506,10 @@ angular.module("risevision.common.components.plans")
       $scope.useProductionChargebeeData = CHARGEBEE_PLANS_USE_PROD === "true";
 
       function _setPricingComponentDiscount() {
-        return _getIndustry()
-          .then(function (industry) {
-            $scope.pricingComponentDiscount = volumePlan.discountIndustries.includes(industry);
-          });
-      }
+        var companyIndustry = userState.getCopyOfSelectedCompany().companyIndustry;
 
-      function _getIndustry() {
-        var cid = window.top.location.href.match(/cid=([a-z0-9-]+)/);
-        var companyId = cid ? cid[1] : null;
-
-        return getCompany(companyId).then(function (company) {
-          return company.companyIndustry;
-        });
+        $scope.pricingComponentDiscount = volumePlan
+          .discountIndustries.indexOf(companyIndustry) >= 0;
       }
 
       function _getPlansDetails() {
@@ -722,6 +715,6 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('plans/plans-modal.html',
-    '<div><button type="button" style="display: block; width: 100%; text-align: center; padding: 0.5em 0.5em 0 0; background: none; border: none; text-align: right" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-lg fa-times" style="opacity: 0.4"></i></button><h3 style="font-weight: bold; text-align: center; margin-top: 0" translate="">common-header.plans.pricing-component-title</h3><div id="pricingComponentContainer"><pricing-component ng-attr-apply-discount="{{pricingComponentDiscount ? \'\' : undefined}}" ng-attr-prod-env="{{useProductionChargebeeData ? \'\' : undefined}}" rv-on="display-count-changed:refreshButton"></pricing-component><button type="button" ng-disabled="!pricingAtLeastOneDisplay" ng-click="dismissAndShowPurchaseModal()" id="subscribeButton">I Want To Subscribe</button></div></div>');
+    '<div><button type="button" class="dismiss" ng-click="dismiss()" aria-hidden="true"><i class="fa fa-lg fa-times"></i></button><h3 id="pricingComponentTitle" translate="">common-header.plans.pricing-component-title</h3><div id="pricingComponentContainer"><pricing-component ng-attr-apply-discount="{{pricingComponentDiscount ? \'\' : undefined}}" ng-attr-prod-env="{{useProductionChargebeeData ? \'\' : undefined}}" rv-on="display-count-changed:refreshButton"></pricing-component><button type="button" ng-disabled="!pricingAtLeastOneDisplay" ng-click="dismissAndShowPurchaseModal()" id="subscribeButton">I Want To Subscribe</button></div></div>');
 }]);
 })();
