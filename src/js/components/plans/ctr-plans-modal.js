@@ -24,7 +24,7 @@ angular.module("risevision.common.components.plans")
         var companyIndustry = userState.getCopyOfSelectedCompany().companyIndustry;
 
         $scope.pricingComponentDiscount = volumePlan
-          .discountIndustries.includes(companyIndustry);
+          .discountIndustries.indexOf(companyIndustry) >= 0;
       }
 
       function _getPlansDetails() {
