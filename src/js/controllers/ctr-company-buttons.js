@@ -1,8 +1,10 @@
 angular.module("risevision.common.header")
   .controller("CompanyButtonsCtrl", ["$scope", "$modal", "$templateCache",
-    "userState", "getCoreCountries",
-    function ($scope, $modal, $templateCache, userState, getCoreCountries) {
+    "userState", "getCoreCountries", "companySettingsFactory",
+
+    function ($scope, $modal, $templateCache, userState, getCoreCountries, companySettingsFactory) {
       $scope.inRVAFrame = userState.inRVAFrame();
+      $scope.companySettingsFactory = companySettingsFactory;
 
       $scope.$watch(function () {
           return userState.isSubcompanySelected();
@@ -44,23 +46,6 @@ angular.module("risevision.common.header")
           controller: "SubCompanyModalCtrl",
           size: "lg",
           resolve: {
-            countries: function () {
-              return getCoreCountries();
-            }
-          }
-        });
-      };
-
-      // Show Company Settings Modal
-      $scope.companySettings = function () {
-        $modal.open({
-          template: $templateCache.get("company-settings-modal.html"),
-          controller: "CompanySettingsModalCtrl",
-          size: "lg",
-          resolve: {
-            companyId: function () {
-              return userState.getSelectedCompanyId();
-            },
             countries: function () {
               return getCoreCountries();
             }

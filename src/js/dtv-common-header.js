@@ -9,6 +9,7 @@ angular.module("risevision.common.header", [
   "risevision.common.header.templates",
   "risevision.common.header.directives",
   "risevision.common.header.filters",
+  "risevision.common.header.services",
   "risevision.common.i18n",
   "risevision.core.countries",
   "risevision.core.oauth2",
@@ -188,4 +189,5 @@ angular.module("risevision.common.header", [
 
 angular.module("risevision.common.header.directives", []);
 angular.module("risevision.common.header.filters", []);
+angular.module("risevision.common.header.services", []);
 angular.module("risevision.store.services", []);

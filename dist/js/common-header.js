@@ -78,7 +78,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('company-buttons-menu.html',
-    '<ul><li class="dropdown-header" ng-show="!isSubcompanySelected"><p>{{username}}</p><p><strong>{{selectedCompanyName}}</strong> <span class="text-muted" ng-show="isRiseVisionUser && !isSubcompanySelected">|</span> <a id="select-subcompany-button" href="" ng-click="switchCompany()" ng-show="isRiseVisionUser && !isSubcompanySelected">Select Sub-Company</a></p></li><li class="dropdown-header sub-company-header" ng-show="isSubcompanySelected"><p>You are in Sub-Company <strong>{{selectedCompanyName}}</strong> <span class="text-muted">|</span> <a id="change-subcompany-button" href="" ng-click="switchCompany()" ng-show="isRiseVisionUser">Change</a></p><p><a id="reset-subcompany-button" href="" ng-click="resetCompany()">Switch to My Company</a></p></li><hr><li ng-show="isUserAdmin || isRiseAdmin"><a href="" ng-click="addSubCompany()" class="action add-subcompany-menu-button"><i class="fa fa-plus"></i> <span class="item-name">Add Sub-Company</span></a></li><li ng-show="isUserAdmin || isRiseAdmin"><a href="" ng-click="companySettings()" class="action company-settings-menu-button"><i class="fa fa-building"></i> <span class="item-name">Company Settings</span></a></li><li ng-show="isUserAdmin || isRiseAdmin"><a href="" data-toggle="modal" ng-click="companyUsers()" class="action company-users-menu-button"><i class="fa fa-users"></i> <span class="item-name">Company Users</span></a></li></ul>');
+    '<ul><li class="dropdown-header" ng-show="!isSubcompanySelected"><p>{{username}}</p><p><strong>{{selectedCompanyName}}</strong> <span class="text-muted" ng-show="isRiseVisionUser && !isSubcompanySelected">|</span> <a id="select-subcompany-button" href="" ng-click="switchCompany()" ng-show="isRiseVisionUser && !isSubcompanySelected">Select Sub-Company</a></p></li><li class="dropdown-header sub-company-header" ng-show="isSubcompanySelected"><p>You are in Sub-Company <strong>{{selectedCompanyName}}</strong> <span class="text-muted">|</span> <a id="change-subcompany-button" href="" ng-click="switchCompany()" ng-show="isRiseVisionUser">Change</a></p><p><a id="reset-subcompany-button" href="" ng-click="resetCompany()">Switch to My Company</a></p></li><hr><li ng-show="isUserAdmin || isRiseAdmin"><a href="" ng-click="addSubCompany()" class="action add-subcompany-menu-button"><i class="fa fa-plus"></i> <span class="item-name">Add Sub-Company</span></a></li><li ng-show="isUserAdmin || isRiseAdmin"><a href="" ng-click="companySettingsFactory.openCompanySettings()" class="action company-settings-menu-button"><i class="fa fa-building"></i> <span class="item-name">Company Settings</span></a></li><li ng-show="isUserAdmin || isRiseAdmin"><a href="" data-toggle="modal" ng-click="companyUsers()" class="action company-users-menu-button"><i class="fa fa-users"></i> <span class="item-name">Company Users</span></a></li></ul>');
 }]);
 })();
 
@@ -309,6 +309,7 @@ angular.module("risevision.common.header", [
   "risevision.common.header.templates",
   "risevision.common.header.directives",
   "risevision.common.header.filters",
+  "risevision.common.header.services",
   "risevision.common.i18n",
   "risevision.core.countries",
   "risevision.core.oauth2",
@@ -488,6 +489,7 @@ angular.module("risevision.common.header", [
 
 angular.module("risevision.common.header.directives", []);
 angular.module("risevision.common.header.filters", []);
+angular.module("risevision.common.header.services", []);
 angular.module("risevision.store.services", []);
 
 "use strict";
@@ -992,9 +994,11 @@ angular.module("risevision.common.header")
 
 angular.module("risevision.common.header")
   .controller("CompanyButtonsCtrl", ["$scope", "$modal", "$templateCache",
-    "userState", "getCoreCountries",
-    function ($scope, $modal, $templateCache, userState, getCoreCountries) {
+    "userState", "getCoreCountries", "companySettingsFactory",
+
+    function ($scope, $modal, $templateCache, userState, getCoreCountries, companySettingsFactory) {
       $scope.inRVAFrame = userState.inRVAFrame();
+      $scope.companySettingsFactory = companySettingsFactory;
 
       $scope.$watch(function () {
           return userState.isSubcompanySelected();
@@ -1036,23 +1040,6 @@ angular.module("risevision.common.header")
           controller: "SubCompanyModalCtrl",
           size: "lg",
           resolve: {
-            countries: function () {
-              return getCoreCountries();
-            }
-          }
-        });
-      };
-
-      // Show Company Settings Modal
-      $scope.companySettings = function () {
-        $modal.open({
-          template: $templateCache.get("company-settings-modal.html"),
-          controller: "CompanySettingsModalCtrl",
-          size: "lg",
-          resolve: {
-            companyId: function () {
-              return userState.getSelectedCompanyId();
-            },
             countries: function () {
               return getCoreCountries();
             }
@@ -2822,6 +2809,33 @@ angular.module("risevision.common.header")
           _saveIcpData(user, company);
         });
 
+      };
+
+      return factory;
+    }
+  ]);
+
+"use strict";
+
+angular.module("risevision.common.header.services")
+  .factory("companySettingsFactory", ["$modal", "$templateCache", "userState", "getCoreCountries",
+    function ($modal, $templateCache, userState, getCoreCountries) {
+      var factory = {};
+
+      factory.openCompanySettings = function () {
+        return $modal.open({
+          template: $templateCache.get("company-settings-modal.html"),
+          controller: "CompanySettingsModalCtrl",
+          size: "lg",
+          resolve: {
+            companyId: function () {
+              return userState.getSelectedCompanyId();
+            },
+            countries: function () {
+              return getCoreCountries();
+            }
+          }
+        });
       };
 
       return factory;
