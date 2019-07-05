@@ -39,6 +39,18 @@ angular.module("risevision.common.components.purchase-flow")
         }
       };
 
+      factory.isValidOrEmptyAddress = function (addressObject) {
+        if (addressService.isEmptyAddress(addressObject)) {
+          $log.debug("Address is empty, skipped validation");
+          return $q.resolve();
+        }
+        if (addressObject.country !== "CA" && addressObject.country !== "US" && addressObject.country !== "") {
+          $log.debug("Address Validation skipped for country: ", addressObject.country);
+          return $q.resolve();
+        }
+        return storeService.validateAddress(addressObject);
+      };
+
       var _updateCompanySettings = function (company, isShipping) {
         if (isShipping) {
           // update Selected company saved in userState

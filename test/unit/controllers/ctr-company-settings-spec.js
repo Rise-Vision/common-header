@@ -53,7 +53,13 @@ describe("controller: company settings", function() {
         load: function() {}
       };
     });
-
+    $provide.service("addressFactory", function() {
+      return {
+        isValidOrEmptyAddress: function() {
+          return Q.resolve();
+        }
+      };
+    });
     $provide.factory("customLoader", function ($q) {
       return function () {
         var deferred = $q.defer();

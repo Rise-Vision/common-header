@@ -10,6 +10,9 @@
 </div>
 <div class="modal-body company-settings-modal" stop-event="touchend">
   <form id="companyForm" role="form" name="forms.companyForm" novalidate>
+    <div id="errorBox" class="alert alert-danger" role="alert" ng-show="formError">
+      <strong>Oops, an error has occurred:</strong> {{formError}}
+    </div>
     <div ng-include="'company-fields.html'"></div>
     <div class="form-group">
       <label>

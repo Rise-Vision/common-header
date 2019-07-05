@@ -6,12 +6,12 @@ angular.module("risevision.common.header")
   "TIMEZONES", "getCompany", "regenerateCompanyField", "$window", "$loading",
   "humanReadableError", "userState", "userAuthFactory", "deleteCompany",
   "segmentAnalytics", "$modal", "$templateCache",
-  "COMPANY_INDUSTRY_FIELDS", "COMPANY_SIZE_FIELDS",
+  "COMPANY_INDUSTRY_FIELDS", "COMPANY_SIZE_FIELDS", "addressFactory",
   function ($scope, $modalInstance, updateCompany, companyId,
     countries, REGIONS_CA, REGIONS_US, TIMEZONES, getCompany,
     regenerateCompanyField, $window, $loading, humanReadableError,
     userState, userAuthFactory, deleteCompany, segmentAnalytics,
-    $modal, $templateCache, COMPANY_INDUSTRY_FIELDS, COMPANY_SIZE_FIELDS) {
+    $modal, $templateCache, COMPANY_INDUSTRY_FIELDS, COMPANY_SIZE_FIELDS, addressFactory) {
 
     $scope.company = {
       id: companyId
@@ -23,6 +23,7 @@ angular.module("risevision.common.header")
     $scope.COMPANY_INDUSTRY_FIELDS = COMPANY_INDUSTRY_FIELDS;
     $scope.COMPANY_SIZE_FIELDS = COMPANY_SIZE_FIELDS;
     $scope.isRiseStoreAdmin = userState.isRiseStoreAdmin();
+    $scope.formError = false;
 
     $scope.$watch("loading", function (loading) {
       if (loading) {
@@ -55,26 +56,28 @@ angular.module("risevision.common.header")
     };
     $scope.save = function () {
       $scope.loading = true;
+      $scope.formError = false;
 
-      var company = angular.copy($scope.company);
+      addressFactory.isValidOrEmptyAddress($scope.company).then(function () {
+        var company = angular.copy($scope.company);
 
-      verifyAdmin(company);
-      updateCompany($scope.company.id, company)
-        .then(
-          function () {
-            segmentAnalytics.track("Company Updated", {
-              companyId: userState.getSelectedCompanyId(),
-              companyName: userState.getSelectedCompanyName(),
-              isUserCompany: !userState.isSubcompanySelected()
+        verifyAdmin(company);
+        return updateCompany($scope.company.id, company)
+          .then(
+            function () {
+              segmentAnalytics.track("Company Updated", {
+                companyId: userState.getSelectedCompanyId(),
+                companyName: userState.getSelectedCompanyName(),
+                isUserCompany: !userState.isSubcompanySelected()
+              });
+
+              userState.updateCompanySettings($scope.company);
+              $modalInstance.close("success");
             });
-
-            userState.updateCompanySettings($scope.company);
-            $modalInstance.close("success");
-          })
-        .catch(
-          function (error) {
-            $window.alert("Error(s): " + humanReadableError(error));
-          })
+      })
+        .catch(function (error) {
+          $scope.formError = humanReadableError(error);
+        })
         .finally(function () {
           $scope.loading = false;
         });
@@ -147,6 +150,13 @@ angular.module("risevision.common.header")
             $loading.stop("company-settings-modal");
           });
       }
+    };
+
+    $scope.isFieldInvalid = function (fieldName) {
+      var form = $scope.forms.companyForm;
+      var field = form[fieldName];
+
+      return (field.$dirty || form.$submitted) && field.$invalid;
     };
 
     function verifyAdmin(company) {
