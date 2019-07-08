@@ -78,9 +78,23 @@
           expect(companySettingsModalPage.getClaimIdField().getText()).to.eventually.not.equal(claimId);
         });
 
-        it("Company Settings Dialog Should Close", function () {
-          companySettingsModalPage.getCloseButton().click();
+        it("Flags invalid Company address", function() {          
+          expect(companySettingsModalPage.getFormError().isDisplayed()).to.eventually.be.false;
 
+          companySettingsModalPage.getStreetField().sendKeys("515 King St W");
+
+          companySettingsModalPage.getSaveButton().click();
+          helper.waitDisappear(companySettingsModalPage.getLoader(), "Load Company Settings");
+
+          expect(companySettingsModalPage.getFormError().isDisplayed()).to.eventually.be.true;
+          expect(companySettingsModalPage.getFormError().getText()).to.eventually.be.ok;
+          expect(companySettingsModalPage.getFormError().getText()).to.eventually.equal("Oops, an error has occurred: \"The address value was incomplete.\"");
+        });
+
+        it("Saves company with empty address and closes dialog", function () {
+          companySettingsModalPage.getStreetField().clear();
+
+          companySettingsModalPage.getSaveButton().click();
           helper.waitDisappear(companySettingsModalPage.getCompanySettingsModal(), "Company Settings Modal");
           
           expect(companySettingsModalPage.getCompanySettingsModal().isPresent()).to.eventually.be.false;

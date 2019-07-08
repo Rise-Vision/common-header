@@ -5,7 +5,11 @@
   var CompanySettingsModalPage = function () {
     var companySettingsModal = element(by.css(".company-settings-modal"));
     var loader = element(by.xpath('//div[@spinner-key="company-settings-modal"]'));
+
     var nameField = element(by.id("company-settings-name"));
+    var streetField = element(by.id("company-settings-street"));
+
+    var formError = element(by.id("errorBox"));
     
     var authKeyField = element(by.css(".ps-auth-key"));
     var claimIdField = element(by.css(".ps-claim-id"));
@@ -27,6 +31,14 @@
     this.getNameField = function() {
       return nameField;
     };
+
+    this.getStreetField = function() {
+      return streetField;
+    };
+
+    this.getFormError = function() {
+      return formError;
+    }
 
     this.getAuthKeyField = function() {
       return authKeyField;
