@@ -88,4 +88,57 @@ describe("Services: address service", function() {
     
   });
 
+  describe("isEmptyAddress:",function() {
+    it("should return true on empty address variations",function(){
+      expect(addressService.isEmptyAddress()).to.be.true;
+      expect(addressService.isEmptyAddress({})).to.be.true;
+      expect(addressService.isEmptyAddress({
+        street: "",
+        unit: "",
+        city: "",
+        country: "",
+        postalCode: "",
+        province: ""
+      }
+      )).to.be.true;
+      expect(addressService.isEmptyAddress({
+        country: "",
+        postalCode: "",
+        province: ""
+      }
+      )).to.be.true;
+      expect(addressService.isEmptyAddress({
+        street: "",
+        unit: null,
+        city: "",
+        country: "",
+        postalCode: null,
+        province: ""
+      }
+      )).to.be.true;
+    });
+
+    it("should return false when address is not empty",function(){
+      expect(addressService.isEmptyAddress({
+        street: "515 King St W",
+        unit: "",
+        city: "Toronto",
+        country: "CA",
+        postalCode: "M5V 3M4",
+        province: "ON"
+      })).to.be.false;
+      expect(addressService.isEmptyAddress({
+        street: "515 King St W"
+      })).to.be.false;
+      expect(addressService.isEmptyAddress({
+        country: "CA"        
+      })).to.be.false;
+      expect(addressService.isEmptyAddress({
+        country: "CA",
+        postalCode: "M5V 3M4"
+      })).to.be.false;
+    });
+
+  });
+
 });

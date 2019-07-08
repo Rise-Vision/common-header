@@ -23,7 +23,7 @@ angular.module("risevision.common.header")
     $scope.COMPANY_INDUSTRY_FIELDS = COMPANY_INDUSTRY_FIELDS;
     $scope.COMPANY_SIZE_FIELDS = COMPANY_SIZE_FIELDS;
     $scope.isRiseStoreAdmin = userState.isRiseStoreAdmin();
-    $scope.formError = false;
+    $scope.formError = null;
 
     $scope.$watch("loading", function (loading) {
       if (loading) {
@@ -56,7 +56,7 @@ angular.module("risevision.common.header")
     };
     $scope.save = function () {
       $scope.loading = true;
-      $scope.formError = false;
+      $scope.formError = null;
 
       addressFactory.isValidOrEmptyAddress($scope.company).then(function () {
         var company = angular.copy($scope.company);
@@ -83,6 +83,7 @@ angular.module("risevision.common.header")
         });
     };
     $scope.deleteCompany = function () {
+      $scope.formError = null;
       var instance = $modal.open({
         template: $templateCache.get("safe-delete-modal.html"),
         controller: "SafeDeleteModalCtrl"
@@ -116,6 +117,7 @@ angular.module("risevision.common.header")
       });
     };
     $scope.resetAuthKey = function () {
+      $scope.formError = null;
       if ($window.confirm(
         "Resetting the Company Authentication Key will cause existing Data Gadgets to no longer report data until they are updated with the new Key."
       )) {
@@ -134,6 +136,7 @@ angular.module("risevision.common.header")
       }
     };
     $scope.resetClaimId = function () {
+      $scope.formError = null;
       if ($window.confirm(
         "Resetting the Company Claim Id will cause existing installations to no longer be associated with your Company."
       )) {
@@ -150,13 +153,6 @@ angular.module("risevision.common.header")
             $loading.stop("company-settings-modal");
           });
       }
-    };
-
-    $scope.isFieldInvalid = function (fieldName) {
-      var form = $scope.forms.companyForm;
-      var field = form[fieldName];
-
-      return (field.$dirty || form.$submitted) && field.$invalid;
     };
 
     function verifyAdmin(company) {

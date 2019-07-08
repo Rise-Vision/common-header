@@ -492,4 +492,88 @@ describe("Services: address factory", function() {
     });
 
   });
+
+  describe("isValidOrEmptyAddress:", function() {
+
+    it("should resolve on empty address", function(done){
+      var addressObject = {};
+      addressFactory.isValidOrEmptyAddress(addressObject).then(function(){
+        storeService.validateAddress.should.not.have.been.called;
+        done();
+      });
+    });
+
+    it("should resolve on empty address fields", function(done){
+      var addressObject = {
+        street: "",
+        unit: "",
+        city: "",
+        country: "",
+        postalCode: "",
+        province: ""
+      };
+      addressFactory.isValidOrEmptyAddress(addressObject).then(function(){
+        storeService.validateAddress.should.not.have.been.called;
+        done();
+      });
+    });
+
+    it("should resolve if country is not US or CA", function(done){
+      var addressObject = {
+        country: "BR"
+      };
+      addressFactory.isValidOrEmptyAddress(addressObject).then(function(){
+        storeService.validateAddress.should.not.have.been.called;
+        done();
+      });
+    });
+
+    it("should resolve on valid address", function(done){
+      var addressObject = {
+        street: "515 King St W",
+        unit: "",
+        city: "Toronto",
+        country: "CA",
+        postalCode: "M5V 3M4",
+        province: "ON"
+      };
+      addressObject.resolve = true;
+      addressFactory.isValidOrEmptyAddress(addressObject).then(function(){
+        storeService.validateAddress.should.have.been.called;
+        done();
+      });
+    });
+
+    it("should reject if store validation rejects", function(done){
+      var addressObject = {
+        street: "515 King St W",
+        unit: "",
+        city: "Toronto",
+        country: "CA",
+        postalCode: "M5V 3M4",
+        province: "ON"
+      };
+      addressObject.resolve = false;
+      addressFactory.isValidOrEmptyAddress(addressObject).then(null,function(){
+        storeService.validateAddress.should.have.been.called;
+        done();
+      });
+    });
+
+    it("should try to validate if contry is empty, as address could be incomplete", function(done){
+      var addressObject = {
+        street: "515 King St W",
+        unit: "",
+        city: "Toronto",
+        country: "",
+        postalCode: "M5V 3M4",
+        province: "ON"
+      };
+      addressObject.resolve = false;
+      addressFactory.isValidOrEmptyAddress(addressObject).then(null,function(){
+        storeService.validateAddress.should.have.been.called;
+        done();
+      });
+    });
+  });
 });

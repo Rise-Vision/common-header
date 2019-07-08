@@ -56,7 +56,10 @@ describe("controller: company settings", function() {
     $provide.service("addressFactory", function() {
       return {
         isValidOrEmptyAddress: function() {
-          return Q.resolve();
+          if (validateAddress) {
+            return Q.resolve();  
+          }
+          return Q.reject("ERROR; invalid address");
         }
       };
     });
@@ -74,10 +77,11 @@ describe("controller: company settings", function() {
   }));
 
   var $scope, userProfile, userCompany, savedCompany, company, userState, $modalInstance, createCompany,
-  trackerCalled;
+  trackerCalled, validateAddress;
   var isStoreAdmin = true;
   beforeEach(function(){
     createCompany = true;
+    validateAddress = true;
     trackerCalled = undefined;
     userProfile = {
       id : "RV_user_id",
@@ -166,6 +170,7 @@ describe("controller: company settings", function() {
     expect($scope).to.have.property("COMPANY_SIZE_FIELDS");
     expect($scope).to.have.property("isRiseStoreAdmin");
     expect($scope.loading).to.be.true;
+    expect($scope.formError).to.be.null;
 
     expect($scope.closeModal).to.exist;
     expect($scope.save).to.exist;
@@ -198,6 +203,7 @@ describe("controller: company settings", function() {
       expect($scope.loading).to.be.true;
       setTimeout(function() {
         expect($scope.loading).to.be.false;
+        expect($scope.formError).to.be.null;
         expect(trackerCalled).to.equal("Company Updated");
         expect($modalInstance._closed).to.be.true;
 
@@ -233,6 +239,12 @@ describe("controller: company settings", function() {
       },10);
     });
 
+    it("should clear form error",function(){
+      $scope.formError = "ERROR";
+      $scope.save();
+      expect($scope.formError).to.be.null;
+    });
+
     it("should handle failure to create company correctly",function(done){
       createCompany = false;
 
@@ -241,6 +253,21 @@ describe("controller: company settings", function() {
       setTimeout(function(){
         expect($scope.loading).to.be.false;
         expect($modalInstance._closed).to.be.false;
+        expect($scope.formError).to.be.equal("\"ERROR; could not create company\"");
+
+        done();
+      },10);
+    });
+
+    it("should report error if company address is not valid", function(done){
+      validateAddress = false;
+
+      $scope.$digest();
+      $scope.save();
+      setTimeout(function(){
+        expect($scope.loading).to.be.false;
+        expect($modalInstance._closed).to.be.false;
+        expect($scope.formError).to.be.equal("\"ERROR; invalid address\"");
 
         done();
       },10);
