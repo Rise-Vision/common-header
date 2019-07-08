@@ -38,7 +38,7 @@
 
     this.getFormError = function() {
       return formError;
-    }
+    };
 
     this.getAuthKeyField = function() {
       return authKeyField;
