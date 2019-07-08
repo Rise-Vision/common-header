@@ -76,7 +76,9 @@ angular.module("risevision.common.components.purchase-flow")
       };
 
       this.isEmptyAddress = function (addressObject) {
-        if (!addressObject) return true;
+        if (!addressObject) {
+          return true;
+        }
         return !addressObject.street &&
           !addressObject.unit &&
           !addressObject.city &&

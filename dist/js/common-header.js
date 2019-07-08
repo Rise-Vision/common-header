@@ -1147,7 +1147,7 @@ angular.module("risevision.common.header")
     $scope.COMPANY_INDUSTRY_FIELDS = COMPANY_INDUSTRY_FIELDS;
     $scope.COMPANY_SIZE_FIELDS = COMPANY_SIZE_FIELDS;
     $scope.isRiseStoreAdmin = userState.isRiseStoreAdmin();
-    $scope.formError = false;
+    $scope.formError = null;
 
     $scope.$watch("loading", function (loading) {
       if (loading) {
@@ -1170,7 +1170,7 @@ angular.module("risevision.common.header")
           $scope.company.isChargebee = company && company.origin === "Chargebee";
         },
         function (resp) {
-          $window.alert("An error has occurred. " + humanReadableError(resp));
+          $scope.formError = humanReadableError(resp);
         }).finally(function () {
         $scope.loading = false;
       });
@@ -1180,7 +1180,7 @@ angular.module("risevision.common.header")
     };
     $scope.save = function () {
       $scope.loading = true;
-      $scope.formError = false;
+      $scope.formError = null;
 
       addressFactory.isValidOrEmptyAddress($scope.company).then(function () {
         var company = angular.copy($scope.company);
@@ -1207,6 +1207,7 @@ angular.module("risevision.common.header")
         });
     };
     $scope.deleteCompany = function () {
+      $scope.formError = null;
       var instance = $modal.open({
         template: $templateCache.get("safe-delete-modal.html"),
         controller: "SafeDeleteModalCtrl"
@@ -1232,7 +1233,7 @@ angular.module("risevision.common.header")
             })
           .catch(
             function (error) {
-              $window.alert("Error(s): " + humanReadableError(error));
+              $scope.formError = humanReadableError(error);
             })
           .finally(function () {
             $scope.loading = false;
@@ -1240,6 +1241,7 @@ angular.module("risevision.common.header")
       });
     };
     $scope.resetAuthKey = function () {
+      $scope.formError = null;
       if ($window.confirm(
         "Resetting the Company Authentication Key will cause existing Data Gadgets to no longer report data until they are updated with the new Key."
       )) {
@@ -1250,7 +1252,7 @@ angular.module("risevision.common.header")
             $window.alert("Successfully changed Authentication Key.");
           },
           function (error) {
-            $window.alert("Error: " + humanReadableError(error));
+            $scope.formError = humanReadableError(error);
           })
           .finally(function () {
             $loading.stop("company-settings-modal");
@@ -1258,6 +1260,7 @@ angular.module("risevision.common.header")
       }
     };
     $scope.resetClaimId = function () {
+      $scope.formError = null;
       if ($window.confirm(
         "Resetting the Company Claim Id will cause existing installations to no longer be associated with your Company."
       )) {
@@ -1268,19 +1271,12 @@ angular.module("risevision.common.header")
             $window.alert("Successfully changed Claim ID.");
           },
           function (error) {
-            $window.alert("Error: " + humanReadableError(error));
+            $scope.formError = humanReadableError(error);
           })
           .finally(function () {
             $loading.stop("company-settings-modal");
           });
       }
-    };
-
-    $scope.isFieldInvalid = function (fieldName) {
-      var form = $scope.forms.companyForm;
-      var field = form[fieldName];
-
-      return (field.$dirty || form.$submitted) && field.$invalid;
     };
 
     function verifyAdmin(company) {
@@ -9847,6 +9843,9 @@ angular.module("risevision.common.components.purchase-flow")
       };
 
       this.isEmptyAddress = function (addressObject) {
+        if (!addressObject) {
+          return true;
+        }
         return !addressObject.street &&
           !addressObject.unit &&
           !addressObject.city &&
