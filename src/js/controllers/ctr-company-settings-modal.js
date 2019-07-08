@@ -46,7 +46,7 @@ angular.module("risevision.common.header")
           $scope.company.isChargebee = company && company.origin === "Chargebee";
         },
         function (resp) {
-          $window.alert("An error has occurred. " + humanReadableError(resp));
+          $scope.formError = humanReadableError(resp);
         }).finally(function () {
         $scope.loading = false;
       });
@@ -108,7 +108,7 @@ angular.module("risevision.common.header")
             })
           .catch(
             function (error) {
-              $window.alert("Error(s): " + humanReadableError(error));
+              $scope.formError = humanReadableError(error);
             })
           .finally(function () {
             $scope.loading = false;
@@ -126,7 +126,7 @@ angular.module("risevision.common.header")
             $window.alert("Successfully changed Authentication Key.");
           },
           function (error) {
-            $window.alert("Error: " + humanReadableError(error));
+            $scope.formError = humanReadableError(error);
           })
           .finally(function () {
             $loading.stop("company-settings-modal");
@@ -144,7 +144,7 @@ angular.module("risevision.common.header")
             $window.alert("Successfully changed Claim ID.");
           },
           function (error) {
-            $window.alert("Error: " + humanReadableError(error));
+            $scope.formError = humanReadableError(error);
           })
           .finally(function () {
             $loading.stop("company-settings-modal");
