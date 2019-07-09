@@ -18440,6 +18440,11 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   position: relative;
   top: 3px; }
 
+.streamline-component-icon {
+  display: inline-block;
+  margin-right: .5rem;
+  margin-top: .25rem; }
+
 .subscription-summary {
   display: flex;
   flex-direction: row;
