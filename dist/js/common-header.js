@@ -126,7 +126,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('company-settings-modal.html',
-    '<div rv-spinner="" rv-spinner-key="company-settings-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 id="company-settings-label" class="modal-title">Company Settings</h2></div><div class="modal-body company-settings-modal" stop-event="touchend"><form id="companyForm" role="form" name="forms.companyForm" novalidate=""><div id="errorBox" class="alert alert-danger" role="alert" ng-show="formError"><strong>Oops, an error has occurred:</strong> {{formError}}</div><div ng-include="\'company-fields.html\'"></div><div class="form-group"><label>Authentication Key</label> <a class="action-link ps-reset-auth-key" href="" ng-click="resetAuthKey()">Reset</a><div class="ps-auth-key">{{company.authKey}}</div></div><div class="form-group"><label>Claim ID</label> <a class="action-link ps-reset-claim-id" href="" ng-click="resetClaimId()">Reset</a><div class="ps-claim-id">{{company.claimId}}</div></div><div class="form-group" ng-hide="true"><label>Sub-Company Home Page Presentation</label> <a class="action-link" href="" ng-click="showSelector()">Select</a> <a class="action-link" href="">Default</a><div id="presentation-name">Rise Vision Default (ID=a6789044-ae4a-48c7-b6fd-b5d4ffea2f24)</div><div class="presentation-selector" ng-show="isSelectorVisible"><div class="panel panel-default"><ul class="list-unstyled selector-header"><li ng-class="{active : selected == \'list\'}"><a href="" ng-click="showPresentationView($event, \'list\')">Search Presentations</a></li><li ng-class="{active : selected == \'search\'}"><a href="" ng-click="showPresentationView($event, \'search\')">Enter Presentation ID</a></li><li class="close-button"><button type="button" class="close" aria-hidden="true" ng-click="closeSelector()"><i class="fa fa-times"></i></button></li></ul><div class="panel-body"><div class="presentation-list" ng-show="selected == \'list\'"><div class="input-group search"><input type="text" class="form-control" placeholder="Search Presentations"> <span class="input-group-btn"><button class="btn btn-primary" type="submit"><i class="fa fa-search fa-white"></i></button></span></div><div class="list-group scrollable-list"><a href="" class="list-group-item" ng-click="setPresentation($event, \'Demo Presentation\')">Demo Presentation</a> <a href="" class="list-group-item" ng-click="setPresentation($event, \'My First Presentation\')">My First Presentation</a></div></div><div class="presentation-search" ng-show="selected == \'search\'"><form role="form"><div class="form-group"><input id="presentation-id" type="text" class="form-control" placeholder="Enter Presentation ID"></div><div class="form-group"><a href="" ng-click="setPresentation($event)">Retrieve Presentation</a></div></form></div></div></div></div></div><div class="form-group" ng-hide="true"><label for="company-settings-community-url">Sub-Company Community URL</label> <a class="action-link" href="">Default</a> <input id="company-settings-community-url" type="url" class="form-control"></div><div class="form-group" ng-hide="true"><label for="company-settings-support-url">Sub-Company Support URL</label> <a class="action-link" href="">Default</a> <input id="company-settings-support-url" type="url" class="form-control"></div><div class="checkbox" ng-if="isRiseStoreAdmin"><label><input type="checkbox" ng-model="company.isSeller"> Registered Seller</label></div><div class="checkbox" ng-if="isRiseStoreAdmin"><label><input type="checkbox" ng-model="company.isTest"> Test Company</label></div><div class="checkbox" ng-if="isRiseStoreAdmin"><label class="form-control-label"><input type="checkbox" ng-model="company.shareCompanyPlan"> Share Company Plan</label></div><div class="form-group" ng-hide="true"><label for="company-settings-status">Status</label><select id="company-settings-status" class="form-control selectpicker"><option value="active">Active</option><option value="inactive">Inactive</option></select></div></form></div><div class="modal-footer"><p class="visible-xs text-right"><last-modified change-date="company.changeDate" changed-by="company.changedBy"></last-modified></p><button type="button" id="delete-button" class="btn btn-danger btn-fixed-width pull-left" ng-show="!isDeletingCompany" ng-click="deleteCompany()">Delete <i class="fa fa-white fa-trash-o icon-right"></i></button> <button type="button" class="btn btn-danger btn-confirm-delete" data-dismiss="modal" ng-show="isDeletingCompany" ng-click="closeModal()">Confirm Deletion <i class="fa fa-white fa-warning icon-right"></i></button><div class="pull-right"><span class="hidden-xs"><last-modified change-date="company.changeDate" changed-by="company.changedBy"></last-modified></span> <button type="button" id="save-button" class="btn btn-primary btn-fixed-width" ng-click="save()" ng-disabled="forms.companyForm.$invalid">Save <i class="fa fa-white fa-check icon-right"></i></button> <button type="button" id="close-button" class="btn btn-default btn-fixed-width" data-dismiss="modal" ng-click="closeModal()">Cancel <i class="fa fa-white fa-times icon-right"></i></button></div></div></div>');
+    '<div rv-spinner="" rv-spinner-key="company-settings-modal" rv-spinner-start-active="1"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()"><i class="fa fa-times"></i></button><h2 id="company-settings-label" class="modal-title">Company Settings</h2></div><div class="modal-body company-settings-modal" stop-event="touchend"><form id="companyForm" role="form" name="forms.companyForm" novalidate=""><div id="errorBox" class="alert alert-danger" role="alert" ng-show="formError"><strong>{{formError}}</strong> {{apiError}}</div><div ng-include="\'company-fields.html\'"></div><div class="form-group"><label>Authentication Key</label> <a class="action-link ps-reset-auth-key" href="" ng-click="resetAuthKey()">Reset</a><div class="ps-auth-key">{{company.authKey}}</div></div><div class="form-group"><label>Claim ID</label> <a class="action-link ps-reset-claim-id" href="" ng-click="resetClaimId()">Reset</a><div class="ps-claim-id">{{company.claimId}}</div></div><div class="form-group" ng-hide="true"><label>Sub-Company Home Page Presentation</label> <a class="action-link" href="" ng-click="showSelector()">Select</a> <a class="action-link" href="">Default</a><div id="presentation-name">Rise Vision Default (ID=a6789044-ae4a-48c7-b6fd-b5d4ffea2f24)</div><div class="presentation-selector" ng-show="isSelectorVisible"><div class="panel panel-default"><ul class="list-unstyled selector-header"><li ng-class="{active : selected == \'list\'}"><a href="" ng-click="showPresentationView($event, \'list\')">Search Presentations</a></li><li ng-class="{active : selected == \'search\'}"><a href="" ng-click="showPresentationView($event, \'search\')">Enter Presentation ID</a></li><li class="close-button"><button type="button" class="close" aria-hidden="true" ng-click="closeSelector()"><i class="fa fa-times"></i></button></li></ul><div class="panel-body"><div class="presentation-list" ng-show="selected == \'list\'"><div class="input-group search"><input type="text" class="form-control" placeholder="Search Presentations"> <span class="input-group-btn"><button class="btn btn-primary" type="submit"><i class="fa fa-search fa-white"></i></button></span></div><div class="list-group scrollable-list"><a href="" class="list-group-item" ng-click="setPresentation($event, \'Demo Presentation\')">Demo Presentation</a> <a href="" class="list-group-item" ng-click="setPresentation($event, \'My First Presentation\')">My First Presentation</a></div></div><div class="presentation-search" ng-show="selected == \'search\'"><form role="form"><div class="form-group"><input id="presentation-id" type="text" class="form-control" placeholder="Enter Presentation ID"></div><div class="form-group"><a href="" ng-click="setPresentation($event)">Retrieve Presentation</a></div></form></div></div></div></div></div><div class="form-group" ng-hide="true"><label for="company-settings-community-url">Sub-Company Community URL</label> <a class="action-link" href="">Default</a> <input id="company-settings-community-url" type="url" class="form-control"></div><div class="form-group" ng-hide="true"><label for="company-settings-support-url">Sub-Company Support URL</label> <a class="action-link" href="">Default</a> <input id="company-settings-support-url" type="url" class="form-control"></div><div class="checkbox" ng-if="isRiseStoreAdmin"><label><input type="checkbox" ng-model="company.isSeller"> Registered Seller</label></div><div class="checkbox" ng-if="isRiseStoreAdmin"><label><input type="checkbox" ng-model="company.isTest"> Test Company</label></div><div class="checkbox" ng-if="isRiseStoreAdmin"><label class="form-control-label"><input type="checkbox" ng-model="company.shareCompanyPlan"> Share Company Plan</label></div><div class="form-group" ng-hide="true"><label for="company-settings-status">Status</label><select id="company-settings-status" class="form-control selectpicker"><option value="active">Active</option><option value="inactive">Inactive</option></select></div></form></div><div class="modal-footer"><p class="visible-xs text-right"><last-modified change-date="company.changeDate" changed-by="company.changedBy"></last-modified></p><button type="button" id="delete-button" class="btn btn-danger btn-fixed-width pull-left" ng-show="!isDeletingCompany" ng-click="deleteCompany()">Delete <i class="fa fa-white fa-trash-o icon-right"></i></button> <button type="button" class="btn btn-danger btn-confirm-delete" data-dismiss="modal" ng-show="isDeletingCompany" ng-click="closeModal()">Confirm Deletion <i class="fa fa-white fa-warning icon-right"></i></button><div class="pull-right"><span class="hidden-xs"><last-modified change-date="company.changeDate" changed-by="company.changedBy"></last-modified></span> <button type="button" id="save-button" class="btn btn-primary btn-fixed-width" ng-click="save()" ng-disabled="forms.companyForm.$invalid">Save <i class="fa fa-white fa-check icon-right"></i></button> <button type="button" id="close-button" class="btn btn-default btn-fixed-width" data-dismiss="modal" ng-click="closeModal()">Cancel <i class="fa fa-white fa-times icon-right"></i></button></div></div></div>');
 }]);
 })();
 
@@ -1147,7 +1147,7 @@ angular.module("risevision.common.header")
     $scope.COMPANY_INDUSTRY_FIELDS = COMPANY_INDUSTRY_FIELDS;
     $scope.COMPANY_SIZE_FIELDS = COMPANY_SIZE_FIELDS;
     $scope.isRiseStoreAdmin = userState.isRiseStoreAdmin();
-    $scope.formError = null;
+    _clearErrorMessages();
 
     $scope.$watch("loading", function (loading) {
       if (loading) {
@@ -1170,7 +1170,7 @@ angular.module("risevision.common.header")
           $scope.company.isChargebee = company && company.origin === "Chargebee";
         },
         function (resp) {
-          $scope.formError = humanReadableError(resp);
+          _showErrorMessage("load", resp);
         }).finally(function () {
         $scope.loading = false;
       });
@@ -1180,7 +1180,7 @@ angular.module("risevision.common.header")
     };
     $scope.save = function () {
       $scope.loading = true;
-      $scope.formError = null;
+      _clearErrorMessages();
 
       addressFactory.isValidOrEmptyAddress($scope.company).then(function () {
         var company = angular.copy($scope.company);
@@ -1200,14 +1200,14 @@ angular.module("risevision.common.header")
             });
       })
         .catch(function (error) {
-          $scope.formError = humanReadableError(error);
+          _showErrorMessage("update", error);
         })
         .finally(function () {
           $scope.loading = false;
         });
     };
     $scope.deleteCompany = function () {
-      $scope.formError = null;
+      _clearErrorMessages();
       var instance = $modal.open({
         template: $templateCache.get("safe-delete-modal.html"),
         controller: "SafeDeleteModalCtrl"
@@ -1233,7 +1233,7 @@ angular.module("risevision.common.header")
             })
           .catch(
             function (error) {
-              $scope.formError = humanReadableError(error);
+              _showErrorMessage("delete", error);
             })
           .finally(function () {
             $scope.loading = false;
@@ -1241,7 +1241,7 @@ angular.module("risevision.common.header")
       });
     };
     $scope.resetAuthKey = function () {
-      $scope.formError = null;
+      _clearErrorMessages();
       if ($window.confirm(
         "Resetting the Company Authentication Key will cause existing Data Gadgets to no longer report data until they are updated with the new Key."
       )) {
@@ -1252,7 +1252,7 @@ angular.module("risevision.common.header")
             $window.alert("Successfully changed Authentication Key.");
           },
           function (error) {
-            $scope.formError = humanReadableError(error);
+            _showErrorMessage("update", error);
           })
           .finally(function () {
             $loading.stop("company-settings-modal");
@@ -1260,7 +1260,7 @@ angular.module("risevision.common.header")
       }
     };
     $scope.resetClaimId = function () {
-      $scope.formError = null;
+      _clearErrorMessages();
       if ($window.confirm(
         "Resetting the Company Claim Id will cause existing installations to no longer be associated with your Company."
       )) {
@@ -1271,7 +1271,7 @@ angular.module("risevision.common.header")
             $window.alert("Successfully changed Claim ID.");
           },
           function (error) {
-            $scope.formError = humanReadableError(error);
+            _showErrorMessage("update", error);
           })
           .finally(function () {
             $loading.stop("company-settings-modal");
@@ -1288,6 +1288,16 @@ angular.module("risevision.common.header")
         delete company.isTest;
         delete company.shareCompanyPlan;
       }
+    }
+
+    function _clearErrorMessages() {
+      $scope.formError = null;
+      $scope.apiError = null;
+    }
+
+    function _showErrorMessage(action, error) {
+      $scope.formError = "Failed to " + action + " Company.";
+      $scope.apiError = humanReadableError(error);
     }
 
   }

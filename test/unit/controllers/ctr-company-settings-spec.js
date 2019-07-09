@@ -171,6 +171,7 @@ describe("controller: company settings", function() {
     expect($scope).to.have.property("isRiseStoreAdmin");
     expect($scope.loading).to.be.true;
     expect($scope.formError).to.be.null;
+    expect($scope.apiError).to.be.null;
 
     expect($scope.closeModal).to.exist;
     expect($scope.save).to.exist;
@@ -253,7 +254,8 @@ describe("controller: company settings", function() {
       setTimeout(function(){
         expect($scope.loading).to.be.false;
         expect($modalInstance._closed).to.be.false;
-        expect($scope.formError).to.be.equal("\"ERROR; could not create company\"");
+        expect($scope.formError).to.be.equal("Failed to update Company.");
+        expect($scope.apiError).to.be.equal("\"ERROR; could not create company\"");
 
         done();
       },10);
@@ -267,7 +269,8 @@ describe("controller: company settings", function() {
       setTimeout(function(){
         expect($scope.loading).to.be.false;
         expect($modalInstance._closed).to.be.false;
-        expect($scope.formError).to.be.equal("\"ERROR; invalid address\"");
+        expect($scope.formError).to.be.equal("Failed to update Company.");
+        expect($scope.apiError).to.be.equal("\"ERROR; invalid address\"");
 
         done();
       },10);
