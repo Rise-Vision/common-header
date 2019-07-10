@@ -1197,10 +1197,13 @@ angular.module("risevision.common.header")
 
               userState.updateCompanySettings($scope.company);
               $modalInstance.close("success");
-            });
+            }).catch(function (error) {
+            _showErrorMessage("update", error);
+          });
       })
         .catch(function (error) {
-          _showErrorMessage("update", error);
+          $scope.formError = "We couldn't update your address.";
+          $scope.apiError = humanReadableError(error);
         })
         .finally(function () {
           $scope.loading = false;

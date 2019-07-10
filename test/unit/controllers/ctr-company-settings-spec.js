@@ -269,7 +269,7 @@ describe("controller: company settings", function() {
       setTimeout(function(){
         expect($scope.loading).to.be.false;
         expect($modalInstance._closed).to.be.false;
-        expect($scope.formError).to.be.equal("Failed to update Company.");
+        expect($scope.formError).to.be.equal("We couldn't update your address.");
         expect($scope.apiError).to.be.equal("\"ERROR; invalid address\"");
 
         done();

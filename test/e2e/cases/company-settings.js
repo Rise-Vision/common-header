@@ -88,7 +88,7 @@
 
           expect(companySettingsModalPage.getFormError().isDisplayed()).to.eventually.be.true;
           expect(companySettingsModalPage.getFormError().getText()).to.eventually.be.ok;
-          expect(companySettingsModalPage.getFormError().getText()).to.eventually.equal("Failed to update Company. \"The address value was incomplete.\"");
+          expect(companySettingsModalPage.getFormError().getText()).to.eventually.equal("We couldn't update your address. \"The address value was incomplete.\"");
         });
 
         it("Saves company with empty address and closes dialog", function () {
