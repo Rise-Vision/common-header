@@ -8,8 +8,6 @@ $short-phone-height: 570px;
   --component-header-height: 63px;
   --preview-holder-height: 200px;
 
-  &.active-banner-mode { --common-header-height : 114px; }
-  &.active-banner-mode-double { --common-header-height : 135px; }
   &.hide-sidebar { --sidebar-width: 0px; }
 
   --body-height: calc(var(--common-header-height) + var(--toolbar-height));
@@ -28,8 +26,6 @@ $short-phone-height: 570px;
     --attribute-list-height: calc(100vh - var(--body-height) - var(--preview-holder-height));
 
     height: calc(100vh - var(--chrome-bar-height) - var(--common-header-height));
-    &.active-banner-mode { --common-header-height: 76px; }
-    &.active-banner-mode-double { --common-header-height: 97px; }
     &.active-component {
       --toolbar-height: 63px;
       --body-height: calc(var(--chrome-bar-height) + var(--common-header-height) + var(--toolbar-height));

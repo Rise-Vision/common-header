@@ -2,14 +2,12 @@
   --sidebar-width: 290px;
   --toolbar-height : 53px;
   --footer-height : 50px;
-  --header-height : 90px;
+  --common-header-height : 90px;
   --sidebar-displace : -290px;
   // Edge currently has issues using calculated variables in transitions
   // --sidebar-displace : calc(var(--sidebar-width)*-1);
-  &.active-banner-mode {--header-height : 111px;}
-  &.active-banner-mode-double {--header-height : 132px;}
   &.hide-sidebar {--sidebar-width: 0px;}
-  --total-height:  calc(var(--toolbar-height) + var(--footer-height) + var(--header-height));
+  --total-height:  calc(var(--toolbar-height) + var(--footer-height) + var(--common-header-height));
   height: calc(100vh - var(--total-height) );
 }
 
