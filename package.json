@@ -1,6 +1,6 @@
 {
   "name": "common-header",
-  "version": "3.9.7",
+  "version": "3.9.8",
   "description": "Rise Vision Common Header ==============",
   "main": "index.js",
   "dependencies": {

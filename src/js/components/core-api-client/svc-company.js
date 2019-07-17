@@ -252,7 +252,7 @@
         var query = "";
 
         for (var i = 0; i < fields.length; i++) {
-          query += "OR " + fields[i] + ":~\'" + search + "\' ";
+          query += "OR " + fields[i] + ":~\"" + search + "\" ";
         }
 
         query = query ? query.substring(3) : "";

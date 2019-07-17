@@ -33,7 +33,7 @@ describe("Services: Company Core API Service", function() {
                   setTimeout(function () {
                     expect(obj).to.be.truely;
                     expect(obj.companyId).to.equal("some_id");
-                    expect(obj.search).to.equal("name:~\'s\' OR id:~\'s\' OR street:~\'s\' OR unit:~\'s\' OR city:~\'s\' OR province:~\'s\' OR country:~\'s\' OR postalCode:~\'s\' OR telephone:~\'s\' OR fax:~\'s\' OR shipToName:~\'s\' OR shipToStreet:~\'s\' OR shipToCity:~\'s\' OR shipToPostalCode:~\'s\'");
+                    expect(obj.search).to.equal("name:~\"s\" OR id:~\"s\" OR street:~\"s\" OR unit:~\"s\" OR city:~\"s\" OR province:~\"s\" OR country:~\"s\" OR postalCode:~\"s\" OR telephone:~\"s\" OR fax:~\"s\" OR shipToName:~\"s\" OR shipToStreet:~\"s\" OR shipToCity:~\"s\" OR shipToPostalCode:~\"s\"");
 
                     callback(window.rvFixtures.companiesResp);
                   }, 0);
