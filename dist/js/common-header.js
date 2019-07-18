@@ -1608,6 +1608,13 @@ angular.module("risevision.common.header")
                       updateCompany(userState.getUserCompanyId(), $scope.company)
                         .then(function () {
                           plansFactory.startVolumePlanTrial();
+                        })
+                        .finally(function () {
+                          $rootScope.$broadcast(
+                            "risevision.user.authorized");
+
+                          $modalInstance.close("success");
+                          $loading.stop("registration-modal");
                         });
                     }
 
@@ -1618,11 +1625,14 @@ angular.module("risevision.common.header")
                       "isNewCompany": $scope.newUser
                     });
                     bigQueryLogging.logEvent("User Registered");
-                    $rootScope.$broadcast(
-                      "risevision.user.authorized");
 
-                    $modalInstance.close("success");
-                    $loading.stop("registration-modal");
+                    if (!$scope.newUser) {
+                      $rootScope.$broadcast(
+                        "risevision.user.authorized");
+
+                      $modalInstance.close("success");
+                      $loading.stop("registration-modal");
+                    }
                   });
               },
               function (err) {
@@ -2755,9 +2765,9 @@ angular.module("risevision.common.header")
   ])
   .factory("companyIcpFactory", ["$rootScope", "$q", "$log", "userState",
     "updateCompany", "updateUser", "$modal", "pick",
-    "USER_ICP_WRITABLE_FIELDS", "COMPANY_ICP_WRITABLE_FIELDS",
+    "USER_ICP_WRITABLE_FIELDS", "COMPANY_ICP_WRITABLE_FIELDS", "$state",
     function ($rootScope, $q, $log, userState, updateCompany, updateUser,
-      $modal, pick, USER_ICP_WRITABLE_FIELDS, COMPANY_ICP_WRITABLE_FIELDS) {
+      $modal, pick, USER_ICP_WRITABLE_FIELDS, COMPANY_ICP_WRITABLE_FIELDS, $state) {
       var factory = {};
 
       factory.init = function () {
@@ -2785,6 +2795,12 @@ angular.module("risevision.common.header")
       };
 
       var _checkIcpCollection = function () {
+
+        //make sure user registration process is complete
+        if ($state.current.name.indexOf("common.auth") !== -1) {
+          return;
+        }
+
         var user = userState.getCopyOfProfile(true);
         var company = userState.getCopyOfSelectedCompany(true);
 

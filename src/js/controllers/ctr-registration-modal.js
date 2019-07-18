@@ -83,6 +83,13 @@ angular.module("risevision.common.header")
                       updateCompany(userState.getUserCompanyId(), $scope.company)
                         .then(function () {
                           plansFactory.startVolumePlanTrial();
+                        })
+                        .finally(function () {
+                          $rootScope.$broadcast(
+                            "risevision.user.authorized");
+
+                          $modalInstance.close("success");
+                          $loading.stop("registration-modal");
                         });
                     }
 
@@ -93,11 +100,14 @@ angular.module("risevision.common.header")
                       "isNewCompany": $scope.newUser
                     });
                     bigQueryLogging.logEvent("User Registered");
-                    $rootScope.$broadcast(
-                      "risevision.user.authorized");
 
-                    $modalInstance.close("success");
-                    $loading.stop("registration-modal");
+                    if (!$scope.newUser) {
+                      $rootScope.$broadcast(
+                        "risevision.user.authorized");
+
+                      $modalInstance.close("success");
+                      $loading.stop("registration-modal");
+                    }
                   });
               },
               function (err) {
