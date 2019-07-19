@@ -52,6 +52,37 @@ angular.module("risevision.common.header", [
 
 .value("ENV_NAME", "")
 
+// Fix issue with modal closing when clicking inside the modal, dragging the
+// mouse button and releasing it outside
+// https://github.com/angular-ui/bootstrap/issues/5810#issuecomment-486149448
+.run(["$rootScope", "$document", "$modalStack",
+  function ($rootScope, $document, $modalStack) {
+    $rootScope.$watch(function () {
+      return $document[0].querySelectorAll(".modal").length;
+    }, function (val) {
+      // Sometimes there are other elements with the .modal class
+      var top = $modalStack.getTop();
+
+      $document[0].querySelectorAll(".modal").forEach(function (modal) {
+        if (top && top.value.backdrop !== "static") { // Don't bother with static modals
+          modal.addEventListener("mousedown", function (e) {
+            if (e.which === 1) {
+              $modalStack.getTop().key.dismiss();
+            }
+          });
+          modal.querySelector(".modal-content").addEventListener("mousedown", function (e) {
+            e.stopPropagation();
+          });
+        }
+      });
+
+      if (top && val > 0) {
+        top.value.backdrop = "static";
+      }
+    });
+  }
+])
+
 .directive("commonHeader", ["$rootScope", "$q", "$loading",
   "$interval", "oauth2APILoader", "$log",
   "$templateCache", "userState", "$location", "bindToScopeWithWatch",
