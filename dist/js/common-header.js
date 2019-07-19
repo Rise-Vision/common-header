@@ -357,29 +357,32 @@ angular.module("risevision.common.header", [
 // https://github.com/angular-ui/bootstrap/issues/5810#issuecomment-486149448
 .run(["$rootScope", "$document", "$modalStack",
   function ($rootScope, $document, $modalStack) {
-    $rootScope.$watch(function () {
-      return $document[0].querySelectorAll(".modal").length;
-    }, function (val) {
-      // Sometimes there are other elements with the .modal class
-      var top = $modalStack.getTop();
+    // abort for unit tests
+    if ($document[0] && $document[0].querySelectorAll) {
+      $rootScope.$watch(function () {
+        return $document[0].querySelectorAll(".modal").length;
+      }, function (val) {
+        // Sometimes there are other elements with the .modal class
+        var top = $modalStack.getTop();
 
-      $document[0].querySelectorAll(".modal").forEach(function (modal) {
-        if (top && top.value.backdrop !== "static") { // Don't bother with static modals
-          modal.addEventListener("mousedown", function (e) {
-            if (e.which === 1) {
-              $modalStack.getTop().key.dismiss();
+        if (val > 0 && top) {
+          $document[0].querySelectorAll(".modal").forEach(function (modal) {
+            if (top.value.backdrop !== "static") { // Don't bother with static modals
+              modal.addEventListener("mousedown", function (e) {
+                if (e.which === 1) {
+                  $modalStack.getTop().key.dismiss();
+                }
+              });
+              modal.querySelector(".modal-content").addEventListener("mousedown", function (e) {
+                e.stopPropagation();
+              });
             }
           });
-          modal.querySelector(".modal-content").addEventListener("mousedown", function (e) {
-            e.stopPropagation();
-          });
+
+          top.value.backdrop = "static";
         }
       });
-
-      if (top && val > 0) {
-        top.value.backdrop = "static";
-      }
-    });
+    }
   }
 ])
 
