@@ -5,7 +5,7 @@ describe("directive: common header", function() {
   beforeEach(module("risevision.common.header"));
 
   var sandbox = sinon.sandbox.create();
-  var $scope, initCommonHeader, form, elem, $modalStack, modalElements, modalContent, modalTop;
+  var $scope, initCommonHeader, elem, $modalStack, modalElements, modalContent, modalTop;
 
   beforeEach(module(function ($provide) {
     modalTop = {
