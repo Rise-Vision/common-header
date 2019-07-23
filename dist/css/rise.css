@@ -18275,7 +18275,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   height: var(--storage-selector-button-bar-height);
   padding: 0px 20px;
   background: white; }
-  .storage-selector-action-button-bar .upload-images {
+  .storage-selector-action-button-bar .upload-files {
     padding: 18px 0 0 0;
     border-top: 1px solid #e6e6e6; }
   .storage-selector-action-button-bar .add-selected {
@@ -19101,7 +19101,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   height: var(--image-component-list-button-bar-height);
   padding: 0px 20px;
   background: white; }
-  .image-component-list-action-button-bar .upload-images {
+  .image-component-list-action-button-bar .upload-files {
     padding: 18px 0 0 0;
     border-top: 1px solid #e6e6e6; }
   .image-component-list-action-button-bar .select-from-storage {
