@@ -361,15 +361,17 @@ angular.module("risevision.common.header", [
     if ($document[0] && $document[0].querySelectorAll) {
       $rootScope.$watch(function () {
         return $document[0].querySelectorAll(".modal").length;
-      }, function (val) {
+      }, function (numberOfModals) {
         // Sometimes there are other elements with the .modal class
         var top = $modalStack.getTop();
 
-        if (val > 0 && top) {
+        if (numberOfModals > 0 && top) {
           $document[0].querySelectorAll(".modal").forEach(function (modal) {
             if (top.value.backdrop !== "static") { // Don't bother with static modals
               modal.addEventListener("mousedown", function (e) {
-                if (e.which === 1) {
+                // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/which
+                var leftButton = 1;
+                if (e.which === leftButton) {
                   $modalStack.getTop().key.dismiss();
                 }
               });
