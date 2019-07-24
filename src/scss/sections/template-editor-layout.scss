@@ -630,7 +630,11 @@ $short-phone-height: 570px;
 
   p {
     color: $text-outline-color;
-    font-size: 12px;
+    font-size: 14px;
+  }
+
+  label {
+    margin-bottom: 0px;
   }
 
   .btn {
@@ -643,6 +647,59 @@ $short-phone-height: 570px;
     color: $rise-green;
     border-color: $rise-green;
     padding: 5px 12px;
+  }
+
+  .radio {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    min-height: 25px;
+  }
+
+  .radio label {
+    padding-left: 0px;
+  }
+
+  input[type=radio] {
+    position: absolute;
+    top: auto;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px); /* IE 6/7 */
+    clip: rect(1px, 1px, 1px, 1px);
+    width: 1px;
+    height: 1px;
+    white-space: nowrap;
+  }
+
+  input[type=radio] + label {
+    display: block;
+    padding-top: 5px;
+  }
+
+  input[type=radio] + label:before {
+    content: '';
+    background: #fff;
+    border: .15em solid #999999;
+    background-color: rgba(255, 255, 255, .8);
+    display: block;
+    box-sizing: border-box;
+    float: left;
+    width: 20px;
+    height: 20px;
+    vertical-align: top;
+    cursor: pointer;
+    text-align: center;
+    transition: all .1s ease-out;
+  }
+
+  input[type=radio] + label:before {
+    border-radius: 100%;
+    margin-right: 10px;
+  }
+
+  input[type=radio]:checked + label:before {
+    background-color: #107dda;
+    border: .15em solid #107dda;
+    box-shadow: inset 0 0 0 0.23em rgba(255, 255, 255, .95);
   }
 
   &.centered-modal::before {
@@ -707,6 +764,7 @@ $short-phone-height: 570px;
 
       p {
         margin-bottom: 0px;
+        font-size: 12px;
       }
     }
 
