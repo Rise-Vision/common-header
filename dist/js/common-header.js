@@ -5627,18 +5627,22 @@ angular.module("risevision.common.components.ui-flow")
       $locationProvider.html5Mode(true);
       $locationProvider.hashPrefix("/");
 
-      $urlRouterProvider.otherwise("/");
+      $urlRouterProvider
+        .when(/\/.*&id_token=.*&client_id=.*/, function () {
+          console.log("Google Auth result received");
+        })
+        .when("/", ["$location",
+          function ($location) {
+            var hash = $location.hash();
 
-      $urlRouterProvider.when(/\/.*/, ["$location",
-        function ($location) {
-          var hash = $location.hash();
-          if (hash && hash.indexOf("&id_token") > -1) {
-            console.log("Google Auth result received");
-          } else {
-            return false;
+            if (hash && hash.match(/\/.*&id_token=.*&client_id=.*/)) {
+              console.log("Google Auth result received");
+            } else {
+              return false;
+            }
           }
-        }
-      ]);
+        ])
+        .otherwise("/");
 
       // https://stackoverflow.com/questions/24420578/handling-trailing-slashes-in-angularui-router
       $urlMatcherFactoryProvider.strictMode(false);
