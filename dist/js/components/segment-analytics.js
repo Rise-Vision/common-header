@@ -114,11 +114,15 @@
             lastName: profile.lastName ? profile.lastName : "",
           };
           if (userState.getUserCompanyId()) {
-            properties.companyId = userState.getUserCompanyId();
-            properties.companyName = userState.getUserCompanyName();
+            var company = userState.getCopyOfUserCompany();
+
+            properties.companyId = company.id;
+            properties.companyName = company.name;
+            properties.companyIndustry = company.companyIndustry;
             properties.company = {
-              id: userState.getUserCompanyId(),
-              name: userState.getUserCompanyName()
+              id: company.id,
+              name: company.name,
+              companyIndustry: company.companyIndustry
             };
           }
 
