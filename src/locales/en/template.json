@@ -14,6 +14,9 @@
     "expired-message": "You are now on the Free plan and can edit and preview this Template but it will not show on your Display until you subscribe to a plan.",
     "confirmation-button": "Subscribe Now"
   },
+  "image": {
+    "upload": "Upload Images"
+  },
   "financial": {
     "add-category": {
       "bonds": "Add Bonds",
@@ -63,6 +66,9 @@
     },
     "stocks": "Stocks",
     "world-indexes": "World Indexes"
+  },
+  "video": {
+    "upload": "Upload Videos"
   },
   "rise-image": "Image",
   "rise-data-financial": "Financial",

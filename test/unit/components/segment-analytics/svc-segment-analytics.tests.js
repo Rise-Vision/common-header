@@ -16,8 +16,12 @@ describe("Services: segment analytics", function() {
         getUserCompanyId: function() {
           return companyId;
         },
-        getUserCompanyName: function() {
-          return "companyName";
+        getCopyOfUserCompany: function() {
+          return {
+            id: companyId,
+            name: "companyName",
+            companyIndustry: "K-12 Education"
+          };
         }
       };
     }]);
@@ -80,9 +84,10 @@ describe("Services: segment analytics", function() {
     
     setTimeout(function() {
       identifySpy.should.have.been.calledWith("username",{
-        company: { id: "companyId", name: "companyName" },
+        company: { id: "companyId", name: "companyName", companyIndustry: "K-12 Education" },
         companyId: "companyId",
         companyName: "companyName",
+        companyIndustry: "K-12 Education",
         email: undefined,
         firstName: "",
         lastName: ""
@@ -99,9 +104,10 @@ describe("Services: segment analytics", function() {
     
     setTimeout(function() {
       identifySpy.should.have.been.calledWith("username",{
-        company: { id: "companyId", name: "companyName" },
+        company: { id: "companyId", name: "companyName", companyIndustry: "K-12 Education" },
         companyId: "companyId",
         companyName: "companyName",
+        companyIndustry: "K-12 Education",
         email: undefined,
         firstName: "",
         lastName: ""

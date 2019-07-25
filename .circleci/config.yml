@@ -87,8 +87,6 @@ jobs:
     working_directory: ~/common-header
     docker: *BUILDIMAGE
     steps:
-      - attach_workspace:
-          at: ~/
       - run: echo "e2e tests finished"
 
 workflows:
