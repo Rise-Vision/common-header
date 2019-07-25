@@ -375,9 +375,14 @@ angular.module("risevision.common.header", [
                   $modalStack.getTop().key.dismiss();
                 }
               });
-              modal.querySelector(".modal-content").addEventListener("mousedown", function (e) {
-                e.stopPropagation();
-              });
+
+              // Sometimes there are other elements with the .modal class that don't have .modal-content
+              var modalContent = modal.querySelector(".modal-content");
+              if (modalContent) {
+                modalContent.addEventListener("mousedown", function (e) {
+                  e.stopPropagation();
+                });
+              }
             }
           });
 
