@@ -617,6 +617,162 @@ $short-phone-height: 570px;
   }
 }
 
+.file-component-list {
+  --thumbnail-width: 80px;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  .file-row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 10px 0px;
+    border-bottom: 1px solid $lighter-gray;
+    margin-left: 20px;
+    margin-right: 20px;
+
+    .file-thumbnail {
+      width: 100px;
+      height: 75px;
+      overflow: hidden;
+
+      .file-helper {
+        display: inline-block;
+        width: 0;
+        height: 100%;
+        vertical-align: middle;
+      }
+
+      img {
+        vertical-align: middle;
+        width: var(--thumbnail-width);
+        background-color: $lighter-gray;
+        background-size: 12px 12px;
+        background-position: 0 0, 6px 6px;
+        background-image: linear-gradient(45deg, $mid-gray 25%, transparent 25%, transparent 75%, $mid-gray 75%, $mid-gray),
+                          linear-gradient(45deg, $mid-gray 25%, transparent 25%, transparent 75%, $mid-gray 75%, $mid-gray);
+      }
+
+      .broken-link {
+        display: inline-block;
+        text-align: center;
+        vertical-align: middle;
+        width: var(--thumbnail-width);
+        font-size: 40px;
+        background-color: $light-gray;
+        border-radius: 2px;
+
+        svg {
+          vertical-align: middle;
+          transform: scale(.5);
+          fill: $mid-gray;
+        }
+      }
+    }
+
+    .file-entry {
+      width: calc(var(--sidebar-width) - var(--thumbnail-width) - 60px);
+      display: flex;
+      align-items: center;
+
+      @media (max-width: $screen-sm) {
+        width: calc(100% - var(--thumbnail-width) - 50px);
+      }
+
+      .file-text {
+        display: inline-block;
+        width: calc(var(--sidebar-width) - var(--thumbnail-width) - 140px);
+        font-size: 12px;
+
+        @media (max-width: $screen-sm) {
+          flex-grow: 1;
+        }
+
+        .file-name {
+          font-weight: bold;
+          color: $mid-gray;
+
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .file-not-available {
+          color: $danger;
+        }
+      }
+
+      .file-remove {
+        display: inline-block;
+        width: 50px;
+
+        a {
+          color: $danger;
+          font-weight: bold;
+          text-decoration: none;
+          margin-left: 20px;
+          vertical-align: middle;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .file-component-list-empty {
+    color: $mid-gray;
+    margin: 20px;
+
+    h2 {
+      font-size: 1.1em;
+      font-weight: bold;
+      padding: 0;
+      margin-top: 0;
+    }
+
+    p {
+      color: $dark-gray;
+      font-size: 0.75em;
+      line-height: 1.2;
+      padding-bottom: 20px;
+    }
+
+    img {
+      margin: 0 auto;
+    }
+
+    @media (max-width: $screen-sm) {
+      .img-responsive {
+        width: 70%;
+      }
+    }
+  }
+}
+
+.file-component-list-action-button-bar {
+  height: var(--image-component-list-button-bar-height);
+  padding: 0px 20px;
+  background: $white;
+
+  .upload-files {
+    padding: 18px 0 0 0;
+    border-top: 1px solid $light-gray;
+  }
+
+  .select-from-storage {
+    padding: 10px 0 0 0;
+
+    button {
+      background: $white;
+      border-width: 2px;
+      color: $rise-green;
+    }
+  }
+}
+
 // Madero is the codename of the new style-guide
 .madero-style {
   $text-outline-color: #020620;
