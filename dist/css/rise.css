@@ -19164,3 +19164,16 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     background-color: #f2f2f2;
     border: 1px solid #999999;
     border-left: 0; }
+
+@media (min-width: 768px) {
+  .video-component-container {
+    --video-component-list-button-bar-height: 115px;
+    --video-component-body-height: calc(100vh - var(--body-height) - var(--component-header-height)); } }
+
+@media (max-width: 768px) {
+  .video-component-container {
+    --video-component-list-button-bar-height: 120px;
+    --video-component-body-height: calc(100vh - var(--body-height)); } }
+
+.video-component-list {
+  height: calc(var(--video-component-body-height) - var(--video-component-list-button-bar-height)); }

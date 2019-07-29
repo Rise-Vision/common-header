@@ -1,0 +1,17 @@
+@media (min-width: $screen-sm) {
+  .video-component-container {
+    --video-component-list-button-bar-height: 115px;
+    --video-component-body-height: calc(100vh - var(--body-height) - var(--component-header-height));
+  }
+}
+
+@media (max-width: $screen-sm) {
+  .video-component-container {
+    --video-component-list-button-bar-height: 120px;
+    --video-component-body-height: calc(100vh - var(--body-height));
+  }
+}
+
+.video-component-list {
+  height: calc(var(--video-component-body-height) - var(--video-component-list-button-bar-height));
+}
