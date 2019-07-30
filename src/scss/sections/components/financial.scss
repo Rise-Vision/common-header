@@ -22,11 +22,16 @@
   overflow-y: auto;
 
   .instrument-row {
-    padding: 13px 0px 10px;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+
+    @media (max-width: $screen-sm) {
+      min-height: 40px;
+    }
   }
 
   .instrument-list-empty {
-    color: #4D4D4D;
     margin: 20px;
 
     h2 {
@@ -55,14 +60,24 @@
   overflow-y: auto;
 
   .instrument-row {
-    padding: 13px 0px 7px;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+
+    @media (max-width: $screen-sm) {
+      min-height: 40px;
+    }
   }
 }
 
 .instrument-selector-search-box {
   padding: 0px 0px 20px;
   margin: 0px 20px 0px;
-  border-bottom: 1px solid rgb(230, 230, 230);
+  border-bottom: 1px solid #999999;
+
+  svg {
+    fill: #999999;
+  }
 }
 
 .instrument-list-show {
@@ -90,14 +105,16 @@
 }
 
 .instrument-row {
-  border-bottom: 1px solid rgb(242, 242, 242);
+  border-bottom: 1px solid #999999;
   margin-left: 20px;
   margin-right: 20px;
 }
 
 .instrument-name {
+  font-size: 14px;
   font-weight: bold;
-  color: rgb(77, 77, 77);
+  letter-spacing: 0px;
+  line-height: 20px;
 }
 
 .instrument-name-ellipsis {
@@ -107,23 +124,22 @@
 }
 
 .instrument-rate {
-  font-size: 0.8em;
-  color: rgb(77, 77, 77);
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0px;
+  color: #999999;
 }
 
 .instrument-delete {
-  font-size: 0.8em;
+  font-size: 12px;
   font-weight: bold;
   text-align: right;
-  padding-top: 0.85em;
+  letter-spacing: 0px;
+  line-height: 18px;
 
   & a {
-    color: rgb(239, 70, 55);
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
+    color: #d9534f;
+    text-decoration: underline;
   }
 }
 
@@ -149,25 +165,25 @@
 .instrument-selector-popular {
   font-weight: bold;
   font-size: 0.8em;
-  color: rgb(77, 77, 77);
   margin: 20px 0px 0px;
   padding: 0px 20px;
 }
 
 .instrument-selector-checkbox {
   position: absolute;
-  margin-top: 0.5em;
+  margin-top: 0.2em;
 
   input[type=checkbox] { display:none; }
 
   input[type=checkbox] + label:before {
     font-family: FontAwesome;
-    color: #4d4d4d;
     display: inline-block;
     vertical-align: middle;
     text-align: center;
     content: '\f096';
     cursor: pointer;
+    font-size: 20px;
+    color: #999999;
   }
 
   input[type=checkbox]:checked + label:before {
@@ -182,7 +198,6 @@
 }
 
 .instrument-selector-no-results {
-  color: rgb(77, 77, 77);
   font-size: 0.9em;
   margin: 20px;
 
@@ -218,7 +233,7 @@
 }
 
 .instrument-row--is-selected {
-  background: #4ab767;
+  background: #107DDA;
 
   & .instrument-name {
     color: #FFF;
@@ -237,6 +252,6 @@
   & > div {
     background: #FFF;
     padding: 18px 0 0 0;
-    border-top: 1px solid #e6e6e6;
+    border-top: 1px solid #999999;
   }
 }
