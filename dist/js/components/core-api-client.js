@@ -272,7 +272,7 @@ angular.module("risevision.common.core.endpoint", [
     "mailSyncEnabled", "sellerId", "isTest", "shipToUseCompanyAddress",
     "shipToName", "shipToStreet", "shipToUnit", "shipToCity",
     "shipToProvince", "shipToPostalCode", "shipToCountry", "website",
-    "companySize", "companyIndustry", "billingContactEmails", "shareCompanyPlan"
+    "companySize", "companyIndustry", "billingContactEmails", "shareCompanyPlan", "settings"
   ])
 
   .constant("ALERTS_WRITABLE_FIELDS", [
