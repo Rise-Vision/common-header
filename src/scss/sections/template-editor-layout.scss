@@ -639,30 +639,30 @@ $madero-light-blue: #107DDA;
   }
 
   .storage-selector-list-empty {
-    color: $mid-gray;
+    color: $madero-black;
     margin: 20px;
 
     h2 {
-      font-size: 1.1em;
-      font-weight: bold;
+      font-size: 14px;
+      line-height: 20px;
       padding: 0;
       margin-top: 0;
     }
 
     p {
-      color: $dark-gray;
-      font-size: 0.75em;
-      line-height: 1.2;
+      font-size: 12px;
+      line-height: 20px;
       padding-bottom: 20px;
     }
 
     img {
+      width: 100%;
       margin: 0 auto;
     }
 
     @media (max-width: $screen-sm) {
       .img-responsive {
-        width: 70%;
+        width: 70% !important;
       }
     }
   }
@@ -845,30 +845,30 @@ $madero-light-blue: #107DDA;
   }
 
   .file-component-list-empty {
-    color: $mid-gray;
+    color: $madero-black;
     margin: 20px;
 
     h2 {
-      font-size: 1.1em;
-      font-weight: bold;
+      font-size: 14px;
+      line-height: 20px;
       padding: 0;
       margin-top: 0;
     }
 
     p {
-      color: $dark-gray;
-      font-size: 0.75em;
-      line-height: 1.2;
+      font-size: 12px;
+      line-height: 20px;
       padding-bottom: 20px;
     }
 
     img {
+      width: 100%;
       margin: 0 auto;
     }
 
     @media (max-width: $screen-sm) {
       .img-responsive {
-        width: 70%;
+        width: 70% !important;
       }
     }
   }
@@ -882,7 +882,7 @@ $madero-light-blue: #107DDA;
   .upload-files {
     padding: 18px 0 0 0;
     border-top: 1px solid $madero-gray;
-  
+
     label {
       display: flex;
       align-items: center;

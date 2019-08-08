@@ -18336,23 +18336,23 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     .storage-selector-component .storage-selector-list .selected-item {
       background-color: gray; }
   .storage-selector-component .storage-selector-list-empty {
-    color: #999999;
+    color: #020620;
     margin: 20px; }
     .storage-selector-component .storage-selector-list-empty h2 {
-      font-size: 1.1em;
-      font-weight: bold;
+      font-size: 14px;
+      line-height: 20px;
       padding: 0;
       margin-top: 0; }
     .storage-selector-component .storage-selector-list-empty p {
-      color: #4d4d4d;
-      font-size: 0.75em;
-      line-height: 1.2;
+      font-size: 12px;
+      line-height: 20px;
       padding-bottom: 20px; }
     .storage-selector-component .storage-selector-list-empty img {
+      width: 100%;
       margin: 0 auto; }
     @media (max-width: 768px) {
       .storage-selector-component .storage-selector-list-empty .img-responsive {
-        width: 70%; } }
+        width: 70% !important; } }
 
 .storage-selector-action-button-bar {
   height: var(--storage-selector-button-bar-height);
@@ -18480,23 +18480,23 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
           .file-component-list .file-row .file-entry .file-remove a:hover, .file-component-list .file-row .file-entry .file-remove .u_link:hover {
             text-decoration: underline; }
   .file-component-list .file-component-list-empty {
-    color: #999999;
+    color: #020620;
     margin: 20px; }
     .file-component-list .file-component-list-empty h2 {
-      font-size: 1.1em;
-      font-weight: bold;
+      font-size: 14px;
+      line-height: 20px;
       padding: 0;
       margin-top: 0; }
     .file-component-list .file-component-list-empty p {
-      color: #4d4d4d;
-      font-size: 0.75em;
-      line-height: 1.2;
+      font-size: 12px;
+      line-height: 20px;
       padding-bottom: 20px; }
     .file-component-list .file-component-list-empty img {
+      width: 100%;
       margin: 0 auto; }
     @media (max-width: 768px) {
       .file-component-list .file-component-list-empty .img-responsive {
-        width: 70%; } }
+        width: 70% !important; } }
 
 .file-component-list-action-button-bar {
   height: var(--image-component-list-button-bar-height);
