@@ -18335,24 +18335,25 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
       background-image: linear-gradient(45deg, #999999 25%, transparent 25%, transparent 75%, #999999 75%, #999999), linear-gradient(45deg, #999999 25%, transparent 25%, transparent 75%, #999999 75%, #999999); }
     .storage-selector-component .storage-selector-list .selected-item {
       background-color: gray; }
-  .storage-selector-component .storage-selector-list-empty {
-    color: #020620;
-    margin: 20px; }
-    .storage-selector-component .storage-selector-list-empty h2 {
-      font-size: 14px;
-      line-height: 20px;
-      padding: 0;
-      margin-top: 0; }
-    .storage-selector-component .storage-selector-list-empty p {
-      font-size: 12px;
-      line-height: 20px;
-      padding-bottom: 20px; }
-    .storage-selector-component .storage-selector-list-empty img {
-      width: 100%;
-      margin: 0 auto; }
-    @media (max-width: 768px) {
-      .storage-selector-component .storage-selector-list-empty .img-responsive {
-        width: 70% !important; } }
+
+.item-list-empty {
+  color: #020620;
+  margin: 20px; }
+  .item-list-empty h2 {
+    font-size: 14px;
+    line-height: 20px;
+    padding: 0;
+    margin-top: 0; }
+  .item-list-empty p {
+    font-size: 12px;
+    line-height: 20px;
+    padding-bottom: 20px; }
+  .item-list-empty img {
+    width: 100%;
+    margin: 0 auto; }
+  @media (max-width: 768px) {
+    .item-list-empty .img-responsive {
+      width: 70% !important; } }
 
 .storage-selector-action-button-bar {
   height: var(--storage-selector-button-bar-height);
@@ -18479,24 +18480,6 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
           vertical-align: middle; }
           .file-component-list .file-row .file-entry .file-remove a:hover, .file-component-list .file-row .file-entry .file-remove .u_link:hover {
             text-decoration: underline; }
-  .file-component-list .file-component-list-empty {
-    color: #020620;
-    margin: 20px; }
-    .file-component-list .file-component-list-empty h2 {
-      font-size: 14px;
-      line-height: 20px;
-      padding: 0;
-      margin-top: 0; }
-    .file-component-list .file-component-list-empty p {
-      font-size: 12px;
-      line-height: 20px;
-      padding-bottom: 20px; }
-    .file-component-list .file-component-list-empty img {
-      width: 100%;
-      margin: 0 auto; }
-    @media (max-width: 768px) {
-      .file-component-list .file-component-list-empty .img-responsive {
-        width: 70% !important; } }
 
 .file-component-list-action-button-bar {
   height: var(--image-component-list-button-bar-height);
