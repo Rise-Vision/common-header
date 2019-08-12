@@ -18573,6 +18573,68 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     background-color: #107DDA;
     border: 0.15em solid #107DDA;
     box-shadow: inset 0 0 0 0.23em rgba(255, 255, 255, 0.95); }
+  .madero-style input[type='range'] {
+    margin: 0;
+    outline: none;
+    padding: 0;
+    width: 100%;
+    height: 30px;
+    background: transparent;
+    font: 1em/1 arial, sans-serif; }
+  .madero-style input[type='range'], .madero-style [type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none; }
+  .madero-style input[type='range']::-webkit-slider-runnable-track {
+    box-sizing: border-box;
+    border: solid 2px #979797;
+    border-radius: 0.5em;
+    width: 100%;
+    height: 0.75em;
+    background: transparent; }
+  .madero-style input[type='range']::-moz-range-track {
+    box-sizing: border-box;
+    border: solid 2px #979797;
+    width: 100%;
+    height: 0.75em;
+    border-radius: 0.5em;
+    background: transparent; }
+  .madero-style input[type='range']::-ms-track {
+    box-sizing: border-box;
+    border: solid 2px #979797;
+    width: 100%;
+    height: 0.75em;
+    border-radius: 0.5em;
+    background: transparent; }
+  .madero-style input[type='range']::-moz-range-progress {
+    height: 0.25em;
+    background: transparent; }
+  .madero-style input[type='range']::-ms-fill-lower {
+    height: 0.25em;
+    background: transparent; }
+  .madero-style input[type='range']::-webkit-slider-thumb {
+    margin-top: -10px;
+    box-sizing: border-box;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #107dda; }
+  .madero-style input[type='range']::-moz-range-thumb {
+    box-sizing: border-box;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #107dda; }
+  .madero-style input[type='range']::-ms-thumb {
+    margin-top: 0;
+    box-sizing: border-box;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #107dda; }
+  .madero-style input[type='range']::-ms-tooltip {
+    display: none; }
   .madero-style.centered-modal::before {
     display: inline-block;
     vertical-align: middle;
