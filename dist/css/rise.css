@@ -18072,7 +18072,8 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     font-size: 1.1em;
     height: var(--attribute-list-height);
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: auto; }
+  .attribute-editor .attribute-list-container {
     padding-left: 20px;
     padding-right: 20px; }
   .attribute-editor .attribute-row, .attribute-editor .attribute-row-first, .attribute-editor .attribute-row-last {
