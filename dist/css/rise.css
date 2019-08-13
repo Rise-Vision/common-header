@@ -19325,6 +19325,9 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     border: 1px solid #999999;
     border-left: 0; }
 
+.video-component-container {
+  --video-component-settings-height: 100px; }
+
 @media (min-width: 768px) {
   .video-component-container {
     --video-component-list-button-bar-height: 115px;
@@ -19335,5 +19338,8 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     --video-component-list-button-bar-height: 120px;
     --video-component-body-height: calc(100vh - var(--body-height)); } }
 
+.video-component-settings {
+  height: var(--video-component-settings-height); }
+
 .video-component-list {
-  height: calc(var(--video-component-body-height) - var(--video-component-list-button-bar-height)); }
+  height: calc(var(--video-component-body-height) - var(--video-component-settings-height) - var(--video-component-list-button-bar-height)); }
