@@ -21,5 +21,10 @@
 }
 
 .video-component-list {
-  height: calc(var(--video-component-body-height) - var(--video-component-settings-height) - var(--video-component-list-button-bar-height) - 20px);
+  height: calc(var(--video-component-body-height) - var(--video-component-list-button-bar-height));
+
+  &.not-empty {
+    height: calc(var(--video-component-body-height) - var(--video-component-settings-height) - var(--video-component-list-button-bar-height) - 20px);
+  }
+
 }

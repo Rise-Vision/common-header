@@ -19347,4 +19347,6 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   height: var(--video-component-settings-height); }
 
 .video-component-list {
-  height: calc(var(--video-component-body-height) - var(--video-component-settings-height) - var(--video-component-list-button-bar-height) - 20px); }
+  height: calc(var(--video-component-body-height) - var(--video-component-list-button-bar-height)); }
+  .video-component-list.not-empty {
+    height: calc(var(--video-component-body-height) - var(--video-component-settings-height) - var(--video-component-list-button-bar-height) - 20px); }
