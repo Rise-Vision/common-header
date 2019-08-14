@@ -64,7 +64,7 @@ var env = process.env.NODE_ENV || "dev",
     "test/unit/**/*.tests.js",
     "test/unit/services/svc-zendesk-override.js"
     ],
-    commonHeaderSrcFiles = ["./tmp/partials/templates.js", 
+    commonHeaderSrcFiles = ["./tmp/partials/templates.js",
     "./src/js/dtv-common-header.js",
     "./src/js/directives/*.js",
     "./src/js/filters/*.js",
@@ -274,7 +274,7 @@ gulp.task("test:unit", ["config"], factory.testUnitAngular({
 }));
 
 gulp.task("test:unit-watch", ["config"], factory.testUnitAngular({
-  testFiles: unitTestFiles, 
+  testFiles: unitTestFiles,
   coverageFiles: "../../src/js/**/*.js",
   watch: true
 }));
@@ -297,7 +297,7 @@ gulp.task("test:e2e:core", ["test:webdrive_update"], factory.testE2EAngular({
   loginPass: process.env.E2E_PASS2,
   loginUser2: process.env.E2E_USER,
   loginPass2: process.env.E2E_PASS,
-  testFiles: function(){ 
+  testFiles: function(){
     try{
       return JSON.parse(fs.readFileSync('/tmp/testFiles.txt').toString())
     } catch (e) {
@@ -312,7 +312,7 @@ gulp.task("test:e2e", function (cb) {
 gulp.task("coveralls", factory.coveralls());
 
 gulp.task("test", function (cb) {
-  runSequence("html2js", "test:unit", "coveralls", cb);
+  runSequence("html2js", "test:unit", cb);
 });
 
 // End - Testing
