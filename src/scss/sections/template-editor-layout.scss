@@ -261,10 +261,14 @@ $madero-light-blue: #107DDA;
 
   & .attribute-list {
     font-size: 1.1em;
-    font-weight: bold;
     height: var(--attribute-list-height);
     overflow-x: hidden;
     overflow-y: auto;
+  }
+
+  & .attribute-list-container {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   & .attribute-row {
@@ -272,8 +276,6 @@ $madero-light-blue: #107DDA;
     min-height: 45px;
     display: flex;
     align-items: center;
-    margin-left: 20px;
-    margin-right: 20px;
 
     @media (max-width: $screen-sm) {
       min-height: 40px;
