@@ -896,6 +896,12 @@ $madero-light-blue: #107DDA;
 
   p {
     font-size: 14px;
+
+    &.range-value {
+      font-weight: bold;
+      line-height: 20px;
+      text-align: center;
+    }
   }
 
   label {

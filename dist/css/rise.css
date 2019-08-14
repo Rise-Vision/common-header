@@ -18341,6 +18341,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   margin: 20px; }
   .item-list-empty h2 {
     font-size: 14px;
+    font-weight: bold;
     line-height: 20px;
     padding: 0;
     margin-top: 0; }
@@ -18514,6 +18515,10 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     font-weight: bold; }
   .madero-style p {
     font-size: 14px; }
+    .madero-style p.range-value {
+      font-weight: bold;
+      line-height: 20px;
+      text-align: center; }
   .madero-style label {
     margin-bottom: 5px;
     font-size: 14px; }
@@ -19326,7 +19331,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     border-left: 0; }
 
 .video-component-container {
-  --video-component-settings-height: 140px; }
+  --video-component-settings-height: 120px; }
 
 @media (min-width: 768px) {
   .video-component-container {
