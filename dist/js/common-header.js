@@ -10252,7 +10252,7 @@ angular.module("risevision.common.components.purchase-flow")
     function ($q, $interval, $window, userState, STRIPE_PROD_KEY, STRIPE_TEST_KEY) {
       var deferred = $q.defer();
 
-      var checkInterval = setInterval(function () {
+      var checkInterval = $interval(function () {
         if ($window.Stripe) {
           $interval.cancel(checkInterval);
 
