@@ -471,13 +471,7 @@ $madero-light-blue: #107DDA;
   }
 }
 
-.storage-selector-component {
-  --storage-column-width: 100%;
-
-  height: calc(var(--storage-selector-body-height) - var(--storage-selector-button-bar-height));
-  overflow-x: hidden;
-  overflow-y: auto;
-
+.storage-selector-component, .storage-selector-action-button-bar {
   &.no-files {
     @media (min-width: $screen-sm) {
       --storage-selector-button-bar-height: 65px;
@@ -487,6 +481,14 @@ $madero-light-blue: #107DDA;
       --storage-selector-button-bar-height: 70px;
     }
   }
+}
+
+.storage-selector-component {
+  --storage-column-width: 100%;
+
+  height: calc(var(--storage-selector-body-height) - var(--storage-selector-button-bar-height));
+  overflow-x: hidden;
+  overflow-y: auto;
 
   .storage-selector-list {
     column-count: 2;
