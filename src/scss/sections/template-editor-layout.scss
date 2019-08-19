@@ -461,10 +461,6 @@ $madero-light-blue: #107DDA;
   .storage-selector-container {
     --storage-selector-button-bar-height: 115px;
     --storage-selector-body-height: calc(100vh - var(--body-height) - var(--component-header-height));
-
-    &.no-files {
-      --storage-selector-button-bar-height: 65px;
-    }
   }
 }
 
@@ -472,10 +468,6 @@ $madero-light-blue: #107DDA;
   .storage-selector-container {
     --storage-selector-button-bar-height: 120px;
     --storage-selector-body-height: calc(100vh - var(--body-height));
-
-    &.no-files {
-      --storage-selector-button-bar-height: 70px;
-    }
   }
 }
 
@@ -485,6 +477,16 @@ $madero-light-blue: #107DDA;
   height: calc(var(--storage-selector-body-height) - var(--storage-selector-button-bar-height));
   overflow-x: hidden;
   overflow-y: auto;
+
+  &.no-files {
+    @media (min-width: $screen-sm) {
+      --storage-selector-button-bar-height: 65px;
+    }
+
+    @media (max-width: $screen-sm) {
+      --storage-selector-button-bar-height: 70px;
+    }
+  }
 
   .storage-selector-list {
     column-count: 2;
