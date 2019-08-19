@@ -18208,12 +18208,16 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
 @media (min-width: 768px) {
   .storage-selector-container {
     --storage-selector-button-bar-height: 115px;
-    --storage-selector-body-height: calc(100vh - var(--body-height) - var(--component-header-height)); } }
+    --storage-selector-body-height: calc(100vh - var(--body-height) - var(--component-header-height)); }
+    .storage-selector-container.no-files {
+      --storage-selector-button-bar-height: 65px; } }
 
 @media (max-width: 768px) {
   .storage-selector-container {
     --storage-selector-button-bar-height: 120px;
-    --storage-selector-body-height: calc(100vh - var(--body-height)); } }
+    --storage-selector-body-height: calc(100vh - var(--body-height)); }
+    .storage-selector-container.no-files {
+      --storage-selector-button-bar-height: 70px; } }
 
 .storage-selector-component {
   --storage-column-width: 100%;

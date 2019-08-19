@@ -461,6 +461,10 @@ $madero-light-blue: #107DDA;
   .storage-selector-container {
     --storage-selector-button-bar-height: 115px;
     --storage-selector-body-height: calc(100vh - var(--body-height) - var(--component-header-height));
+
+    &.no-files {
+      --storage-selector-button-bar-height: 65px;
+    }
   }
 }
 
@@ -468,6 +472,10 @@ $madero-light-blue: #107DDA;
   .storage-selector-container {
     --storage-selector-button-bar-height: 120px;
     --storage-selector-body-height: calc(100vh - var(--body-height));
+
+    &.no-files {
+      --storage-selector-button-bar-height: 70px;
+    }
   }
 }
 
