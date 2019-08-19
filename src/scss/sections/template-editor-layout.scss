@@ -670,13 +670,13 @@ $madero-light-blue: #107DDA;
   }
 
   img {
-    width: 100%;
-    margin: 0 auto;
+    width: 335px;
+    margin: 0;
   }
 
   @media (max-width: $screen-sm) {
     .img-responsive {
-      width: 70% !important;
+      width: 200px !important;
     }
   }
 }

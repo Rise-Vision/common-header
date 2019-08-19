@@ -18355,11 +18355,11 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     line-height: 18px;
     padding-bottom: 33px; }
   .item-list-empty img {
-    width: 100%;
-    margin: 0 auto; }
+    width: 335px;
+    margin: 0; }
   @media (max-width: 768px) {
     .item-list-empty .img-responsive {
-      width: 70% !important; } }
+      width: 200px !important; } }
 
 .storage-selector-action-button-bar {
   height: var(--storage-selector-button-bar-height);
