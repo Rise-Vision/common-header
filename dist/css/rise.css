@@ -18240,10 +18240,15 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
         .storage-selector-component .storage-selector-list .folder-entry a i, .storage-selector-component .storage-selector-list .folder-entry .u_link i {
           font-size: 42pt;
           color: #999999; }
+        .storage-selector-component .storage-selector-list .folder-entry a streamline-icon svg, .storage-selector-component .storage-selector-list .folder-entry .u_link streamline-icon svg {
+          fill: #999999;
+          width: 38px;
+          height: 30px; }
         .storage-selector-component .storage-selector-list .folder-entry a .folder-name, .storage-selector-component .storage-selector-list .folder-entry .u_link .folder-name {
           margin-top: 5px;
-          color: #4d4d4d;
-          font-weight: bold; }
+          color: #999999;
+          font-weight: bold;
+          font-size: 12px; }
     .storage-selector-component .storage-selector-list .file-entry {
       background: inherit; }
     .storage-selector-component .storage-selector-list .video-entry {
