@@ -698,10 +698,7 @@ $madero-light-blue: #107DDA;
     padding: 10px 0 0 0;
 
     button {
-      background: $white;
       border-width: 2px;
-      color: $rise-green;
-      border-color: $rise-green;
     }
   }
 }
@@ -916,9 +913,8 @@ $madero-light-blue: #107DDA;
 
   .btn-primary {
     &:hover, &:active, &:focus {
-      color: $white !important;
-      background-color: $rise-green !important;
-      border-color: $rise-green !important;
+      background-color: $rise-green;
+      border-color: $rise-green;
       box-shadow: none;
     }
   }

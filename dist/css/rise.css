@@ -18373,10 +18373,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   .storage-selector-action-button-bar .add-selected {
     padding: 10px 0 0 0; }
     .storage-selector-action-button-bar .add-selected button {
-      background: white;
-      border-width: 2px;
-      color: #4ab767;
-      border-color: #4ab767; }
+      border-width: 2px; }
 
 .storage-upload-panel {
   margin-top: 5px; }
@@ -18523,9 +18520,8 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     border-color: #4ab767;
     padding: 5px 12px; }
   .madero-style .btn-primary:hover, .madero-style .btn-primary:active, .madero-style .btn-primary:focus {
-    color: white !important;
-    background-color: #4ab767 !important;
-    border-color: #4ab767 !important;
+    background-color: #4ab767;
+    border-color: #4ab767;
     box-shadow: none; }
   .madero-style .radio {
     margin-top: 0px;
