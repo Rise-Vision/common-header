@@ -18215,6 +18215,14 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     --storage-selector-button-bar-height: 120px;
     --storage-selector-body-height: calc(100vh - var(--body-height)); } }
 
+@media (min-width: 768px) {
+  .storage-selector-component.no-files, .storage-selector-action-button-bar.no-files {
+    --storage-selector-button-bar-height: 65px; } }
+
+@media (max-width: 768px) {
+  .storage-selector-component.no-files, .storage-selector-action-button-bar.no-files {
+    --storage-selector-button-bar-height: 70px; } }
+
 .storage-selector-component {
   --storage-column-width: 100%;
   height: calc(var(--storage-selector-body-height) - var(--storage-selector-button-bar-height));
@@ -18334,10 +18342,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     .storage-selector-component .storage-selector-list img {
       width: 100%;
       margin-bottom: 5px;
-      background-color: white;
-      background-size: 14px 14px;
-      background-position: 0 0, 7px 7px;
-      background-image: linear-gradient(45deg, #999999 25%, transparent 25%, transparent 75%, #999999 75%, #999999), linear-gradient(45deg, #999999 25%, transparent 25%, transparent 75%, #999999 75%, #999999); }
+      background-color: #f2f2f2; }
     .storage-selector-component .storage-selector-list .selected-item {
       background-color: gray; }
 
