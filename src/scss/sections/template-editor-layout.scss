@@ -916,8 +916,9 @@ $madero-light-blue: #107DDA;
 
   .btn-primary {
     &:hover, &:active, &:focus {
-      background-color: #4ab767;
-      border-color: #4ab767;
+      color: $white !important;
+      background-color: $rise-green !important;
+      border-color: $rise-green !important;
       box-shadow: none;
     }
   }
