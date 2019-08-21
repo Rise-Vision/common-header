@@ -18520,10 +18520,14 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     border-color: #4ab767;
     padding: 5px 12px; }
   .madero-style .btn-primary, .madero-style .btn-primary:hover, .madero-style .btn-primary:active, .madero-style .btn-primary:focus {
-    color: white !important;
-    background-color: #4ab767 !important;
-    border-color: #4ab767 !important;
+    color: white;
+    background-color: #4ab767;
+    border-color: #4ab767;
     box-shadow: none; }
+  .madero-style .btn-not-primary, .madero-style .btn-not-primary:hover, .madero-style .btn-not-primary:active, .madero-style .btn-not-primary:focus {
+    background-color: white;
+    color: #4ab767;
+    border-color: #4ab767; }
   .madero-style .radio {
     margin-top: 0px;
     margin-bottom: 0px;
@@ -18731,10 +18735,7 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
       justify-content: center;
       margin-bottom: 0;
       font-size: 14px;
-      background: white;
-      border-width: 2px;
-      color: #4ab767;
-      border-color: #4ab767; }
+      border-width: 2px; }
 
 .streamline-component-icon {
   display: inline-block;

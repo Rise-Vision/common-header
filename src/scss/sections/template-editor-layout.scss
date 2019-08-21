@@ -913,10 +913,18 @@ $madero-light-blue: #107DDA;
 
   .btn-primary {
     &, &:hover, &:active, &:focus {
-      color: $white !important;
-      background-color: $rise-green !important;
-      border-color: $rise-green !important;
+      color: $white;
+      background-color: $rise-green;
+      border-color: $rise-green;
       box-shadow: none;
+    }
+  }
+
+  .btn-not-primary {
+    &, &:hover, &:active, &:focus {
+      background-color: $white;
+      color: $rise-green;
+      border-color: $rise-green;
     }
   }
 
@@ -1233,10 +1241,7 @@ $madero-light-blue: #107DDA;
       justify-content: center;
       margin-bottom: 0;
       font-size: 14px;
-      background: $white;
       border-width: 2px;
-      color: $rise-green;
-      border-color: $rise-green;
     }
   }
 
