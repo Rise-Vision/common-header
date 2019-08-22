@@ -920,14 +920,6 @@ $madero-light-blue: #107DDA;
     }
   }
 
-  .btn-not-primary {
-    &, &:hover, &:active, &:focus {
-      background-color: $white;
-      color: $rise-green;
-      border-color: $rise-green;
-    }
-  }
-
   .radio {
     margin-top: 0px;
     margin-bottom: 0px;
