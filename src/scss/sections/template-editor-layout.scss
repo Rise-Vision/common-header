@@ -780,11 +780,7 @@ $madero-light-blue: #107DDA;
         max-height: 100%;
         max-width: 100%;
         flex: 0;
-        background-color: $lighter-gray;
-        background-size: 12px 12px;
-        background-position: 0 0, 6px 6px;
-        background-image: linear-gradient(45deg, $mid-gray 25%, transparent 25%, transparent 75%, $mid-gray 75%, $mid-gray),
-                          linear-gradient(45deg, $mid-gray 25%, transparent 25%, transparent 75%, $mid-gray 75%, $mid-gray);
+        background-color: #f2f2f2;
       }
 
       .broken-link {
