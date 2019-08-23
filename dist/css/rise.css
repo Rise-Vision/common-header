@@ -18377,28 +18377,6 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
 
 .storage-upload-panel {
   margin-top: 5px; }
-  .storage-upload-panel .storage-upload-header {
-    background: #f7f7f7;
-    padding: 10px 15px;
-    color: #5b5b5b;
-    cursor: pointer;
-    overflow: hidden; }
-    .storage-upload-panel .storage-upload-header p {
-      float: left; }
-    @media (max-width: 768px) {
-      .storage-upload-panel .storage-upload-header p {
-        float: none; }
-      .storage-upload-panel .storage-upload-header .actions-block {
-        text-align: left; } }
-  .storage-upload-panel .storage-upload-body {
-    margin: 15px 20px;
-    color: #5b5b5b; }
-  .storage-upload-panel p {
-    overflow: hidden;
-    margin: 5px 0 5px 0; }
-    .storage-upload-panel p a, .storage-upload-panel p .u_link {
-      text-transform: capitalize;
-      float: right; }
   .storage-upload-panel .actions-block {
     text-align: right; }
   .storage-upload-panel .collapse-control {
@@ -18406,6 +18384,26 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     padding: 0 15px;
     margin-right: -15px;
     float: right; }
+  .storage-upload-panel .file-row {
+    flex-direction: column;
+    padding-top: 16px;
+    padding-bottom: 17px; }
+  .storage-upload-panel .file-entry {
+    width: 100%; }
+  .storage-upload-panel .progress {
+    height: 10px;
+    box-shadow: none;
+    background-color: transparent;
+    border: 1px solid #999999;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 0; }
+  .storage-upload-panel .progress-bar {
+    width: 50%;
+    background: #45b764;
+    animation: none;
+    height: 100%;
+    box-shadow: none; }
 
 .file-component-list {
   --thumbnail-width: 80px;
@@ -18415,70 +18413,76 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   @media (max-width: 768px) {
     .file-component-list {
       width: 100%; } }
-  .file-component-list .file-row {
+
+.file-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding: 4px 0px;
+  border-bottom: 1px solid #999999;
+  margin-left: 20px;
+  margin-right: 20px; }
+  .file-row .file-thumbnail {
     display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    padding: 4px 0px;
-    border-bottom: 1px solid #999999;
-    margin-left: 20px;
-    margin-right: 20px; }
-    .file-component-list .file-row .file-thumbnail {
+    justify-content: center;
+    width: var(--thumbnail-width);
+    height: 56px;
+    overflow: hidden;
+    margin-right: 10px;
+    flex: 0 0 auto; }
+    .file-row .file-thumbnail img {
+      max-height: 100%;
+      max-width: 100%;
+      flex: 0;
+      background-color: #f2f2f2;
+      background-size: 12px 12px;
+      background-position: 0 0, 6px 6px;
+      background-image: linear-gradient(45deg, #999999 25%, transparent 25%, transparent 75%, #999999 75%, #999999), linear-gradient(45deg, #999999 25%, transparent 25%, transparent 75%, #999999 75%, #999999); }
+    .file-row .file-thumbnail .broken-link {
       display: flex;
-      justify-content: center;
-      width: var(--thumbnail-width);
-      height: 56px;
-      overflow: hidden;
-      margin-right: 10px;
-      flex: 0 0 auto; }
-      .file-component-list .file-row .file-thumbnail img {
-        max-height: 100%;
-        max-width: 100%;
-        flex: 0;
-        background-color: #f2f2f2;
-        background-size: 12px 12px;
-        background-position: 0 0, 6px 6px;
-        background-image: linear-gradient(45deg, #999999 25%, transparent 25%, transparent 75%, #999999 75%, #999999), linear-gradient(45deg, #999999 25%, transparent 25%, transparent 75%, #999999 75%, #999999); }
-      .file-component-list .file-row .file-thumbnail .broken-link {
-        display: flex;
-        width: 100%;
-        align-items: center;
-        justify-content: center;
-        background-color: #f2f2f2;
-        border-radius: 2px; }
-        .file-component-list .file-row .file-thumbnail .broken-link streamline-icon {
-          display: flex; }
-        .file-component-list .file-row .file-thumbnail .broken-link svg {
-          height: 30px;
-          fill: #999999; }
-    .file-component-list .file-row .file-entry {
-      display: flex;
-      flex: 1;
+      width: 100%;
       align-items: center;
-      overflow: hidden;
-      font-size: 12px;
-      line-height: 18px; }
-      .file-component-list .file-row .file-entry .file-text {
-        flex: 1;
-        overflow: hidden; }
-        .file-component-list .file-row .file-entry .file-text .file-name {
-          color: #020620;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis; }
-        .file-component-list .file-row .file-entry .file-text .file-not-available {
-          color: #d9534f;
-          line-height: 14px; }
-      .file-component-list .file-row .file-entry .file-remove {
-        flex: 0; }
-        .file-component-list .file-row .file-entry .file-remove a, .file-component-list .file-row .file-entry .file-remove .u_link {
-          color: #d9534f;
-          font-weight: bold;
-          text-decoration: underline;
-          margin-left: 10px;
-          vertical-align: middle; }
-          .file-component-list .file-row .file-entry .file-remove a:hover, .file-component-list .file-row .file-entry .file-remove .u_link:hover {
-            text-decoration: underline; }
+      justify-content: center;
+      background-color: #f2f2f2;
+      border-radius: 2px; }
+      .file-row .file-thumbnail .broken-link streamline-icon {
+        display: flex; }
+      .file-row .file-thumbnail .broken-link svg {
+        height: 30px;
+        fill: #999999; }
+  .file-row .file-entry {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 18px;
+    max-width: 100%; }
+    .file-row .file-entry.is-error .file-text .file-name {
+      color: #999999; }
+    .file-row .file-entry .file-text {
+      flex: 1;
+      overflow: hidden; }
+      .file-row .file-entry .file-text .file-name {
+        color: #020620;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; }
+      .file-row .file-entry .file-text .file-error {
+        color: #d9534f;
+        line-height: 14px; }
+    .file-row .file-entry .file-remove {
+      flex: 0 0 auto; }
+      .file-row .file-entry .file-remove a, .file-row .file-entry .file-remove .u_link {
+        display: block;
+        color: #d9534f;
+        font-weight: bold;
+        text-decoration: underline;
+        margin-left: 10px;
+        vertical-align: middle;
+        text-transform: capitalize; }
+        .file-row .file-entry .file-remove a:hover, .file-row .file-entry .file-remove .u_link:hover {
+          text-decoration: underline; }
 
 .file-component-list-action-button-bar {
   height: var(--image-component-list-button-bar-height);
