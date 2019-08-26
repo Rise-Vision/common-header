@@ -2,6 +2,7 @@ $short-phone-height: 570px;
 $madero-black: #020620;
 $madero-gray: #999999;
 $madero-light-blue: #107DDA;
+$madero-success: #45b764;
 
 .template-editor {
   --common-header-height: 93px;
@@ -851,7 +852,7 @@ $madero-light-blue: #107DDA;
 
   .progress-bar {
     width: 50%;
-    background: #45b764;
+    background: $madero-success;
     animation: none;
     height: 100%;
     box-shadow: none;
@@ -1196,7 +1197,7 @@ $madero-light-blue: #107DDA;
       color: inherit;
     }
     .overlay-icon {
-      fill: #45b764;
+      fill: $madero-success;
     }
   }
 
