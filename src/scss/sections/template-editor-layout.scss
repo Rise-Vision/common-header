@@ -799,6 +799,13 @@ $madero-light-blue: #107DDA;
         display: flex;
       }
 
+      img {
+        max-height: 100%;
+        max-width: 100%;
+        flex: 0;
+        background-color: $lighter-gray;
+      }
+
       svg {
         height: 30px;
         fill: $mid-gray;

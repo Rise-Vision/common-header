@@ -18447,6 +18447,11 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
       border-radius: 2px; }
       .file-row .file-thumbnail .broken-link streamline-icon {
         display: flex; }
+      .file-row .file-thumbnail .broken-link img {
+        max-height: 100%;
+        max-width: 100%;
+        flex: 0;
+        background-color: #f2f2f2; }
       .file-row .file-thumbnail .broken-link svg {
         height: 30px;
         fill: #999999; }
