@@ -2,6 +2,7 @@ $short-phone-height: 570px;
 $madero-black: #020620;
 $madero-gray: #999999;
 $madero-light-blue: #107DDA;
+$madero-success: #45b764;
 
 .template-editor {
   --common-header-height: 93px;
@@ -211,6 +212,116 @@ $madero-light-blue: #107DDA;
     margin: 0 10px 10px 10px;
   }
 }
+
+.template-editor-file-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding: 4px 0px;
+  border-bottom: 1px solid $madero-gray;
+  margin-left: 20px;
+  margin-right: 20px;
+
+  .file-thumbnail {
+    display: flex;
+    justify-content: center;
+    width: var(--thumbnail-width);
+    height: 56px;
+    overflow: hidden;
+    margin-right: 10px;
+    flex: 0 0 auto;
+
+    img {
+      max-height: 100%;
+      max-width: 100%;
+      flex: 0;
+      background-color: $lighter-gray;
+      background-size: 12px 12px;
+      background-position: 0 0, 6px 6px;
+      background-image: linear-gradient(45deg, $mid-gray 25%, transparent 25%, transparent 75%, $mid-gray 75%, $mid-gray),
+                        linear-gradient(45deg, $mid-gray 25%, transparent 25%, transparent 75%, $mid-gray 75%, $mid-gray);
+    }
+
+    .broken-link {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      background-color: $lighter-gray;;
+      border-radius: 2px;
+
+      streamline-icon {
+        display: flex;
+      }
+
+      img {
+        max-height: 100%;
+        max-width: 100%;
+        flex: 0;
+        background-color: $lighter-gray;
+      }
+
+      svg {
+        height: 30px;
+        fill: $mid-gray;
+      }
+    }
+  }
+
+  .file-entry {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 18px;
+    max-width: 100%;
+
+    &.is-error {
+      .file-text {
+        .file-name {
+          color: $madero-gray;
+        }
+      }
+    }
+
+    .file-text {
+      flex: 1;
+      overflow: hidden;
+
+      .file-name {
+        color: $madero-black;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .file-error {
+        color: $danger;
+        line-height: 14px;
+      }
+    }
+
+    .file-remove {
+      flex: 0 0 auto;
+
+      a {
+        display: block;
+        color: $danger;
+        font-weight: bold;
+        text-decoration: underline;
+        margin-left: 10px;
+        vertical-align: middle;
+        text-transform: capitalize;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
 
 .attribute-editor {
   height: 100%;
@@ -706,44 +817,45 @@ $madero-light-blue: #107DDA;
 .storage-upload-panel {
   margin-top: 5px;
 
-  .storage-upload-header {
-    background: #f7f7f7;
-    padding: 10px 15px;
-    color: $gray;
-    cursor: pointer;
-    overflow: hidden;
-    p {
-      float: left;
-    }
-    @media (max-width: $screen-sm) {
-      p {
-        float: none;
-      }
-      .actions-block {
-        text-align: left;
-      }
-    }
-  }
-  .storage-upload-body {
-    margin: 15px 20px;
-    color: $gray;
-  }
-  p {
-    overflow: hidden;
-    margin: 5px 0 5px 0;
-    a {
-      text-transform: capitalize;
-      float: right;
-    }
-  }
   .actions-block {
     text-align: right;
   }
+
   .collapse-control {
     line-height: 28px;
     padding: 0 15px;
     margin-right: -15px;
     float: right;
+  }
+
+  .file-row {
+    @extend .template-editor-file-row;
+
+    flex-direction: column;
+    padding-top: 16px;
+    padding-bottom: 17px;
+
+    .file-entry {
+      width: 100%;
+    }
+  }
+
+  .progress {
+    height: 10px;
+    box-shadow: none;
+    background-color: transparent;
+    border: 1px solid $madero-gray;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 0;
+  }
+
+  .progress-bar {
+    width: 50%;
+    background: $madero-success;
+    animation: none;
+    height: 100%;
+    box-shadow: none;
   }
 }
 
@@ -759,90 +871,7 @@ $madero-light-blue: #107DDA;
   }
 
   .file-row {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    padding: 4px 0px;
-    border-bottom: 1px solid $madero-gray;
-    margin-left: 20px;
-    margin-right: 20px;
-
-    .file-thumbnail {
-      display: flex;
-      justify-content: center;
-      width: var(--thumbnail-width);
-      height: 56px;
-      overflow: hidden;
-      margin-right: 10px;
-      flex: 0 0 auto;
-
-      img {
-        max-height: 100%;
-        max-width: 100%;
-        flex: 0;
-        background-color: $lighter-gray;
-      }
-
-      .broken-link {
-        display: flex;
-        width: 100%;
-        align-items: center;
-        justify-content: center;
-        background-color: $lighter-gray;;
-        border-radius: 2px;
-
-        streamline-icon {
-          display: flex;
-        }
-
-        svg {
-          height: 30px;
-          fill: $mid-gray;
-        }
-      }
-    }
-
-    .file-entry {
-      display: flex;
-      flex: 1;
-      align-items: center;
-      overflow: hidden;
-      font-size: 12px;
-      line-height: 18px;
-
-      .file-text {
-        flex: 1;
-        overflow: hidden;
-
-        .file-name {
-          color: $madero-black;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-
-        .file-not-available {
-          color: $danger;
-          line-height: 14px;
-        }
-      }
-
-      .file-remove {
-        flex: 0;
-
-        a {
-          color: $danger;
-          font-weight: bold;
-          text-decoration: underline;
-          margin-left: 10px;
-          vertical-align: middle;
-
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-      }
-    }
+    @extend .template-editor-file-row;
   }
 
 }
@@ -1168,7 +1197,7 @@ $madero-light-blue: #107DDA;
       color: inherit;
     }
     .overlay-icon {
-      fill: #45b764;
+      fill: $madero-success;
     }
   }
 

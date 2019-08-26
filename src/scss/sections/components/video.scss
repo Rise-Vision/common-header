@@ -1,5 +1,5 @@
 .video-component-container {
-  --video-component-settings-height: 120px;
+  --video-component-settings-height: 140px;
 }
 
 @media (min-width: $screen-sm) {
@@ -19,10 +19,8 @@
 .video-component-settings {
   height: var(--video-component-settings-height);
 
-  .video-component-volume {
-    + p {
-      font-size: 12px;
-    }
+  .video-component-volume + p {
+    font-size: 12px;
   }
 }
 
