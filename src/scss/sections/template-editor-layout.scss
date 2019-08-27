@@ -2,7 +2,8 @@ $short-phone-height: 570px;
 $madero-black: #020620;
 $madero-gray: #999999;
 $madero-light-blue: #107DDA;
-$madero-success: #45b764;
+$madero-green: #45b764;
+$maderio-green-disabled: #a2dbb2;
 
 .template-editor {
   --common-header-height: 93px;
@@ -850,7 +851,7 @@ $madero-success: #45b764;
 
   .progress-bar {
     width: 50%;
-    background: $madero-success;
+    background: $madero-green;
     animation: none;
     height: 100%;
     box-shadow: none;
@@ -885,8 +886,8 @@ $madero-success: #45b764;
     button {
       background: $white;
       border-width: 2px;
-      color: $rise-green;
-      border-color: $rise-green;
+      color: $madero-green;
+      border-color: $madero-green;
     }
   }
 }
@@ -929,17 +930,30 @@ $madero-success: #45b764;
   .btn-default {
     background: $white;
     border-width: 2px;
-    color: $rise-green;
-    border-color: $rise-green;
+    color: $madero-green;
+    border-color: $madero-green;
     padding: 5px 12px;
+
+    &[disabled] {
+      opacity: 1;
+      border-color: $maderio-green-disabled;
+      color: $maderio-green-disabled;
+    }
   }
 
   .btn-primary {
     &, &:hover, &:active, &:focus {
       color: $white;
-      background-color: $rise-green;
-      border-color: $rise-green;
+      background-color: $madero-green;
+      border-color: $madero-green;
       box-shadow: none;
+    }
+
+    &[disabled] {
+      opacity: 1;
+      background-color: $maderio-green-disabled;
+      border-color: $maderio-green-disabled;
+      color: $white;
     }
   }
 
@@ -1150,8 +1164,8 @@ $madero-success: #45b764;
     & .btn-default {
       color: $white;
       border-width: 1px;
-      background: $rise-green;
-      border-color: $rise-green;
+      background: $madero-green;
+      border-color: $madero-green;
       padding: 6px 12px;
     }
   }
@@ -1195,7 +1209,7 @@ $madero-success: #45b764;
       color: inherit;
     }
     .overlay-icon {
-      fill: $madero-success;
+      fill: $madero-green;
     }
   }
 
