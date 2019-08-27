@@ -470,6 +470,10 @@ $maderio-green-disabled: #a2dbb2;
     }
   }
 
+  & .component-container {
+    overflow: hidden;
+  }
+
   & .arrow-icon {
     line-height: 10px;
   }

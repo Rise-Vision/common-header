@@ -18208,6 +18208,8 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
       margin-left: 15px; }
       .attribute-editor .component-header .component-icon svg {
         height: 16px; }
+  .attribute-editor .component-container {
+    overflow: hidden; }
   .attribute-editor .arrow-icon {
     line-height: 10px; }
 
