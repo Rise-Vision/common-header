@@ -611,12 +611,12 @@ $madero-success: #45b764;
       break-inside: avoid-column;
       -webkit-column-break-inside: avoid;
       -moz-column-break-inside: avoid;
+      padding-bottom: 5px;
     }
 
     .folder-entry {
       text-align: center;
       background-color: $lighter-gray;
-      margin-bottom: 5px;
       width: var(--storage-column-width);
 
       a {
@@ -652,7 +652,6 @@ $madero-success: #45b764;
     .video-entry {
       text-align: center;
       background-color: $lighter-gray;
-      margin-bottom: 5px;
       width: var(--storage-column-width);
 
       a {
@@ -759,7 +758,6 @@ $madero-success: #45b764;
 
     img {
       width: 100%;
-      margin-bottom: 5px;
       background-color: #f2f2f2;
     }
 
