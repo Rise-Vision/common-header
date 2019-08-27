@@ -18588,25 +18588,29 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     height: 30px;
     background: transparent;
     font: 1em/1 arial, sans-serif; }
+    .madero-style input[type='range']:hover::-webkit-slider-runnable-track, .madero-style input[type='range']:active::-webkit-slider-runnable-track {
+      box-shadow: inset 0 0 0 1px #107DDA; }
+    .madero-style input[type='range']:hover::-moz-range-track, .madero-style input[type='range']:hover::-ms-track, .madero-style input[type='range']:active::-moz-range-track, .madero-style input[type='range']:active::-ms-track {
+      border-color: #107DDA; }
   .madero-style input[type='range'], .madero-style [type='range']::-webkit-slider-thumb {
     -webkit-appearance: none; }
   .madero-style input[type='range']::-webkit-slider-runnable-track {
     box-sizing: border-box;
-    box-shadow: inset 0 0 0 2px #999999;
+    box-shadow: inset 0 0 0 1px #999999;
     border-radius: 0.5em;
     width: 100%;
     height: 0.75em;
     background: transparent; }
   .madero-style input[type='range']::-moz-range-track {
     box-sizing: border-box;
-    border: solid 2px #999999;
+    border: solid 1px #999999;
     width: 100%;
     height: 0.75em;
     border-radius: 0.5em;
     background: transparent; }
   .madero-style input[type='range']::-ms-track {
     box-sizing: border-box;
-    border: solid 2px #999999;
+    border: solid 1px #999999;
     width: 100%;
     height: 0.75em;
     border-radius: 0.5em;
