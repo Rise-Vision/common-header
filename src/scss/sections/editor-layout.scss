@@ -584,18 +584,6 @@
   transition: all .4s;
 }
 
-.background-color-picker-input {
-  .dropdown-menu {
-    &:before,
-    &:after {
-      width: 10px !important;
-    }
-  }
-  .close-colorpicker {
-    display: none !important;
-  }
-}
-
 .workspace-sidebar-content {
   .image-placeholder {
     width: auto;
