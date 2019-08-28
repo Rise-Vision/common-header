@@ -1105,7 +1105,7 @@ $maderio-green-disabled: #a2dbb2;
     display: inline-block;
     vertical-align: middle;
     content: " ";
-    height: 25%;
+    height: 100%;
   }
 
   &.centered-modal {
@@ -1118,10 +1118,6 @@ $maderio-green-disabled: #a2dbb2;
   }
 
   @media screen and (min-width: 768px) {
-    &.centered-modal::before {
-      height: 100%;
-    }
-
     &.centered-modal {
       & .modal-dialog {
         width: 460px;

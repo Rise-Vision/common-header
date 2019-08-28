@@ -18654,15 +18654,13 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
     display: inline-block;
     vertical-align: middle;
     content: " ";
-    height: 25%; }
+    height: 100%; }
   .madero-style.centered-modal {
     text-align: center; }
     .madero-style.centered-modal .modal-dialog {
       display: inline-block;
       vertical-align: middle; }
   @media screen and (min-width: 768px) {
-    .madero-style.centered-modal::before {
-      height: 100%; }
     .madero-style.centered-modal .modal-dialog {
       width: 460px; } }
   .madero-style .modal-content {
