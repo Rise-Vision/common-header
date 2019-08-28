@@ -18315,7 +18315,8 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
       break-inside: avoid-column;
       -webkit-column-break-inside: avoid;
       -moz-column-break-inside: avoid;
-      padding-bottom: 5px; }
+      padding-bottom: 5px;
+      overflow: hidden; }
     .storage-selector-component .storage-selector-list .folder-entry {
       text-align: center;
       background-color: #f2f2f2;
