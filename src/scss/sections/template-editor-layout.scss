@@ -326,6 +326,7 @@ $maderio-green-disabled: #a2dbb2;
 
 .attribute-editor {
   height: 100%;
+  overflow: hidden;
 
   @media (min-width: $screen-sm) {
     flex-grow: 1;

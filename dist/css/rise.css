@@ -18101,7 +18101,8 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
           text-decoration: underline; }
 
 .attribute-editor {
-  height: 100%; }
+  height: 100%;
+  overflow: hidden; }
   @media (min-width: 768px) {
     .attribute-editor {
       flex-grow: 1;
