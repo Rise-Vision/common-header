@@ -14284,20 +14284,11 @@ ul.tree ul li:last-child:before {
 .time-picker .btn, .time-picker .icon-nav label, .icon-nav .time-picker label {
   margin-left: 5px; }
 
-.colorpicker-swatch {
-  border: 1px solid #CCC;
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 3px;
-  background: url("http://192.254.220.36/~rvi/mockups/images/mini-pattern.png"); }
+.colorpicker .dropdown-menu:before, .colorpicker .dropdown-menu:after {
+  width: 10px !important; }
 
-.colorpicker-swatch span {
-  height: 22px;
-  width: 42px;
-  display: block; }
-
-.btn-colorpicker {
-  padding: 4px 12px 4px 4px; }
+.colorpicker .close-colorpicker {
+  display: none !important; }
 
 .filters {
   margin-top: 20px;
@@ -16057,12 +16048,6 @@ tr.blocked-file {
   padding: 12px;
   -webkit-transition: all .4s;
   transition: all .4s; }
-
-.background-color-picker-input .dropdown-menu:before, .background-color-picker-input .dropdown-menu:after {
-  width: 10px !important; }
-
-.background-color-picker-input .close-colorpicker {
-  display: none !important; }
 
 .workspace-sidebar-content .image-placeholder {
   width: auto;
