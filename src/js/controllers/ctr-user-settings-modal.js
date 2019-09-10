@@ -77,6 +77,11 @@ angular.module("risevision.common.header")
     };
 
     $scope.save = function () {
+      $scope.forms.userSettingsForm.email.$pristine = false;
+      $scope.forms.userSettingsForm.firstName.$pristine = false;
+      $scope.forms.userSettingsForm.lastName.$pristine = false;
+      $scope.forms.userSettingsForm.phone.$pristine = false;
+
       if ($scope.showChangePassword) {
         $scope.currentPasswordNotValid = false;
       }
