@@ -182,7 +182,6 @@ describe("controller: user settings", function() {
         email: {},
         firstName: {},
         lastName: {},
-        phone: {},
         $valid: true
       };
       setTimeout(function(){
@@ -201,20 +200,6 @@ describe("controller: user settings", function() {
       expect($modalInstance._closed).to.be.false;
     });
 
-    it("should flag form no longer pristine", function() {
-      $scope.forms.userSettingsForm.email.$pristine = true;
-      $scope.forms.userSettingsForm.firstName.$pristine = true;
-      $scope.forms.userSettingsForm.lastName.$pristine = true;
-      $scope.forms.userSettingsForm.phone.$pristine = true;
-
-      $scope.save();
-
-      expect($scope.forms.userSettingsForm.email.$pristine).to.be.false;
-      expect($scope.forms.userSettingsForm.firstName.$pristine).to.be.false;
-      expect($scope.forms.userSettingsForm.lastName.$pristine).to.be.false;
-      expect($scope.forms.userSettingsForm.phone.$pristine).to.be.false;
-    });
-    
     it("should save the user and close the modal",function(done){
       var userProfileSpy = sinon.spy(userState, "updateUserProfile");
 
