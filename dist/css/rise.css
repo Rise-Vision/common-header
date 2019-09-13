@@ -18773,6 +18773,29 @@ a.mfp-iframe:hover:after, .mfp-iframe.u_link:hover:after {
   -webkit-animation-delay: 1s;
   animation-delay: 1s; }
 
+.app-launcher-login {
+  padding-top: 55px;
+  background-color: #f2fcf4;
+  background-size: cover;
+  height: 100vh; }
+  .app-launcher-login h1 {
+    margin-top: 0; }
+  .app-launcher-login .panel, .app-launcher-login .select-subcompany-modal .list-group, .select-subcompany-modal .app-launcher-login .list-group, .app-launcher-login .panel-editable, .app-launcher-login .card, .app-launcher-login #appLauncherContainer .scrollable-list, #appLauncherContainer .app-launcher-login .scrollable-list {
+    padding: 32px; }
+  .app-launcher-login .rise-logo {
+    text-align: center;
+    padding: 210px 0; }
+    .app-launcher-login .rise-logo img {
+      width: 150px; }
+    @media (max-width: 768px) {
+      .app-launcher-login .rise-logo {
+        border-right: none;
+        text-align: left;
+        padding: 0;
+        margin-bottom: 22px; }
+        .app-launcher-login .rise-logo img {
+          width: 100px; } }
+
 .display-stats {
   display: flex;
   flex-direction: row; }
