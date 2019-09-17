@@ -24,7 +24,7 @@ rv-spinner-start-active="1">
         </div>
       </div>
       <div class="form-group"
-        ng-class="{ 'has-error' : forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine }"
+        ng-class="{ 'has-error' : forms.userSettingsForm.username.$invalid && (!forms.userSettingsForm.username.$pristine || forms.userSettingsForm.$submitted) }"
         ng-if="isAdd">
         <label>
           Username *
@@ -34,7 +34,7 @@ rv-spinner-start-active="1">
           class="form-control"
           ng-model="user.username"
           />
-          <p ng-show="forms.userSettingsForm.username.$invalid && !forms.userSettingsForm.username.$pristine"
+          <p ng-show="forms.userSettingsForm.username.$invalid && (!forms.userSettingsForm.username.$pristine || forms.userSettingsForm.$submitted)"
             class="help-block validation-error-message-email">User name must be a valid email address.</p>
       </div>
       <div class="row" ng-if="!isAdd">
@@ -109,7 +109,7 @@ rv-spinner-start-active="1">
         </div>
       </div>
       <div class="form-group"
-        ng-class="{ 'has-error' : forms.userSettingsForm.firstName.$invalid && !forms.userSettingsForm.firstName.$pristine }">
+        ng-class="{ 'has-error' : forms.userSettingsForm.firstName.$invalid && (!forms.userSettingsForm.firstName.$pristine || forms.userSettingsForm.$submitted) }">
         <label for="user-settings-first-name">
           First Name *
         </label>
@@ -118,11 +118,11 @@ rv-spinner-start-active="1">
           class="form-control"
           ng-model="user.firstName"
           />
-          <p ng-show="forms.userSettingsForm.firstName.$invalid && !forms.userSettingsForm.firstName.$pristine"
+          <p ng-show="forms.userSettingsForm.firstName.$invalid && (!forms.userSettingsForm.firstName.$pristine || forms.userSettingsForm.$submitted)"
             class="help-block validation-error-message-firstName">First Name is required.</p>
       </div>
       <div class="form-group"
-        ng-class="{ 'has-error' : forms.userSettingsForm.lastName.$invalid && !forms.userSettingsForm.lastName.$pristine }">
+        ng-class="{ 'has-error' : forms.userSettingsForm.lastName.$invalid && (!forms.userSettingsForm.lastName.$pristine || forms.userSettingsForm.$submitted) }">
         <label for="user-settings-last-name">
           Last Name *
         </label>
@@ -131,7 +131,7 @@ rv-spinner-start-active="1">
           class="form-control"
           ng-model="user.lastName"
           />
-          <p ng-show="forms.userSettingsForm.lastName.$invalid && !forms.userSettingsForm.lastName.$pristine"
+          <p ng-show="forms.userSettingsForm.lastName.$invalid && (!forms.userSettingsForm.lastName.$pristine || forms.userSettingsForm.$submitted)"
             class="help-block validation-error-message-lastName">Last Name is required.</p>
       </div>
       <div class="form-group">
@@ -157,7 +157,7 @@ rv-spinner-start-active="1">
            />
       </div>
       <div class="form-group"
-        ng-class="{ 'has-error' : forms.userSettingsForm.email.$invalid && !forms.userSettingsForm.email.$pristine }">
+        ng-class="{ 'has-error' : forms.userSettingsForm.email.$invalid && (!forms.userSettingsForm.email.$pristine || forms.userSettingsForm.$submitted) }">
         <label for="user-settings-email">
           Email *
         </label>
@@ -167,7 +167,7 @@ rv-spinner-start-active="1">
           class="form-control"
           ng-model="user.email"
           />
-          <p ng-show="forms.userSettingsForm.email.$invalid && !forms.userSettingsForm.email.$pristine"
+          <p ng-show="forms.userSettingsForm.email.$invalid && (!forms.userSettingsForm.email.$pristine || forms.userSettingsForm.$submitted)"
             class="help-block validation-error-message-email">A valid email address is required.</p>
       </div>
       <div class="form-group">

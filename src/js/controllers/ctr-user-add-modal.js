@@ -36,12 +36,6 @@ angular.module("risevision.common.header")
     });
 
     $scope.save = function () {
-
-      $scope.forms.userSettingsForm.email.$pristine = false;
-      $scope.forms.userSettingsForm.username.$pristine = false;
-      $scope.forms.userSettingsForm.firstName.$pristine = false;
-      $scope.forms.userSettingsForm.lastName.$pristine = false;
-
       if (!$scope.forms.userSettingsForm.$invalid) {
         $scope.loading = true;
         addUser(companyId, $scope.user.username, $scope.user)

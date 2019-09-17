@@ -199,7 +199,7 @@ describe("controller: user settings", function() {
       expect(trackerCalled).to.not.be.ok;
       expect($modalInstance._closed).to.be.false;
     });
-    
+
     it("should save the user and close the modal",function(done){
       var userProfileSpy = sinon.spy(userState, "updateUserProfile");
 
