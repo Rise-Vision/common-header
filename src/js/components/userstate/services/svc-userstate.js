@@ -176,6 +176,7 @@
           isTestCompanySelected: companyState.isTestCompanySelected,
           isRootCompany: companyState.isRootCompany,
           isSelectedCompanyChargebee: companyState.isSelectedCompanyChargebee,
+          isEducationCustomer: companyState.isEducationCustomer,
           // company functions
           updateCompanySettings: companyState.updateCompanySettings,
           updateUserCompanySettings: companyState.updateUserCompanySettings,

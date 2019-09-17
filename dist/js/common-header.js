@@ -6042,6 +6042,10 @@ angular.module("risevision.common.components.logging")
           },
           isSelectedCompanyChargebee: function () {
             return _state.selectedCompany && _state.selectedCompany.origin === "Chargebee";
+          },
+          isEducationCustomer: function () {
+            return _state.selectedCompany && (_state.selectedCompany.companyIndustry ===
+              "PRIMARY_SECONDARY_EDUCATION" || _state.selectedCompany.companyIndustry === "HIGHER_EDUCATION");
           }
         };
 
@@ -7281,6 +7285,7 @@ angular.module("risevision.common.components.logging")
           isTestCompanySelected: companyState.isTestCompanySelected,
           isRootCompany: companyState.isRootCompany,
           isSelectedCompanyChargebee: companyState.isSelectedCompanyChargebee,
+          isEducationCustomer: companyState.isEducationCustomer,
           // company functions
           updateCompanySettings: companyState.updateCompanySettings,
           updateUserCompanySettings: companyState.updateUserCompanySettings,

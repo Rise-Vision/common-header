@@ -80,7 +80,7 @@ describe("Services: userState", function() {
       "getCopyOfSelectedCompany", "isSubcompanySelected", 
       "isTestCompanySelected", "isRootCompany", "updateCompanySettings", 
       "updateUserCompanySettings", "resetCompany", "switchCompany", 
-      "isSeller"];
+      "isSeller", "isEducationCustomer"];
 
     userMethods = ["getUsername", "getUserEmail", "getCopyOfProfile", 
       "getUserPicture", "hasRole", "inRVAFrame", "isRiseAdmin", 

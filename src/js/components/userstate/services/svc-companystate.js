@@ -170,6 +170,10 @@
           },
           isSelectedCompanyChargebee: function () {
             return _state.selectedCompany && _state.selectedCompany.origin === "Chargebee";
+          },
+          isEducationCustomer: function () {
+            return _state.selectedCompany && (_state.selectedCompany.companyIndustry ===
+              "PRIMARY_SECONDARY_EDUCATION" || _state.selectedCompany.companyIndustry === "HIGHER_EDUCATION");
           }
         };
 
