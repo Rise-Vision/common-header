@@ -1,13 +1,13 @@
 angular.module("risevision.common.header")
   .controller("RegistrationModalCtrl", [
     "$q", "$scope", "$rootScope", "$modalInstance",
-    "$loading", "registerAccount", "$log", "cookieStore",
+    "$loading", "registerAccount", "$log", "$cookies",
     "userState", "pick", "uiFlowManager", "humanReadableError",
     "agreeToTermsAndUpdateUser", "account", "segmentAnalytics",
     "bigQueryLogging", "analyticsEvents", "updateCompany", "plansFactory",
     "COMPANY_INDUSTRY_FIELDS", "urlStateService",
     function ($q, $scope, $rootScope, $modalInstance, $loading, registerAccount,
-      $log, cookieStore, userState, pick, uiFlowManager, humanReadableError,
+      $log, $cookies, userState, pick, uiFlowManager, humanReadableError,
       agreeToTermsAndUpdateUser, account, segmentAnalytics, bigQueryLogging,
       analyticsEvents, updateCompany, plansFactory, COMPANY_INDUSTRY_FIELDS,
       urlStateService) {
@@ -20,7 +20,7 @@ angular.module("risevision.common.header")
       $scope.company = {};
 
       //remove cookie so that it will show next time user refreshes page
-      cookieStore.remove("surpressRegistration");
+      $cookies.remove("surpressRegistration");
 
       $scope.profile = pick(copyOfProfile, "email", "mailSyncEnabled",
         "firstName", "lastName");

@@ -48,8 +48,8 @@
   ])
 
   .factory("registeredAsRiseVisionUser", ["$q", "getUserProfile",
-    "cookieStore", "$log", "userState",
-    function ($q, getUserProfile, cookieStore, $log, userState) {
+    "$cookies", "$log", "userState",
+    function ($q, getUserProfile, $cookies, $log, userState) {
       return function () {
         var deferred = $q.defer();
 
@@ -57,14 +57,14 @@
           if (angular.isDefined(profile.email) &&
             angular.isDefined(profile.mailSyncEnabled)) {
             deferred.resolve(profile);
-          } else if (cookieStore.get("surpressRegistration")) {
+          } else if ($cookies.get("surpressRegistration")) {
             deferred.resolve({});
           } else {
             deferred.reject("registeredAsRiseVisionUser");
           }
         }, function (err) {
           if (err && err.code === 403) {
-            if (cookieStore.get("surpressRegistration")) {
+            if ($cookies.get("surpressRegistration")) {
               deferred.resolve({});
             } else {
               $log.debug("registeredAsRiseVisionUser rejected", err);

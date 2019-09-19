@@ -79,7 +79,7 @@ describe("controller: registration modal", function() {
       };
     });
     
-    $provide.factory("cookieStore", function() {
+    $provide.factory("$cookies", function() {
       return {
         put: function() {
           cookieStored = true;
@@ -148,7 +148,7 @@ describe("controller: registration modal", function() {
       $controller("RegistrationModalCtrl", {
         $scope : $scope,
         $modalInstance: $modalInstance,
-        cookieStore: $injector.get("cookieStore"),
+        $cookies: $injector.get("$cookies"),
         userState : userState,
         updateCompany: $injector.get("updateCompany"),
         agreeToTermsAndUpdateUser:$injector.get("agreeToTermsAndUpdateUser"),

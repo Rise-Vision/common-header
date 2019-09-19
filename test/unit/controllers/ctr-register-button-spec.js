@@ -6,7 +6,7 @@ describe("controller: register button ", function() {
   beforeEach(module("risevision.common.header"));
   beforeEach(module(function ($provide, $translateProvider) {
     
-    $provide.factory("cookieStore", function() {
+    $provide.factory("$cookies", function() {
       return {
         remove: function() {
           cookieStored = false;
@@ -47,7 +47,7 @@ describe("controller: register button ", function() {
 
       $controller("RegisterButtonCtrl", {
         $scope : $scope,
-        cookieStore : $injector.get("cookieStore"),
+        $cookies : $injector.get("$cookies"),
         uiFlowManager: $injector.get("uiFlowManager")
       });
       $scope.$digest();

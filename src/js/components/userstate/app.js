@@ -15,7 +15,7 @@
 
   angular.module("risevision.common.components.rvtokenstore", [
     "risevision.common.components.util", "LocalStorageModule",
-    "ngBiscuit"
+    "ngCookies"
   ]);
 
   angular.module("risevision.common.components.userstate", [

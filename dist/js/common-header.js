@@ -883,12 +883,12 @@ angular.module("risevision.common.header.filters")
 angular.module("risevision.common.header")
   .controller("AuthButtonsCtr", ["$scope", "$modal", "$templateCache",
     "userState", "userAuthFactory", "canAccessApps",
-    "$loading", "cookieStore",
+    "$loading", "$cookies",
     "$log", "uiFlowManager", "oauth2APILoader", "bindToScopeWithWatch",
     "$window", "APPS_URL",
     function ($scope, $modal, $templateCache, userState, userAuthFactory,
       canAccessApps,
-      $loading, cookieStore, $log, uiFlowManager, oauth2APILoader,
+      $loading, $cookies, $log, uiFlowManager, oauth2APILoader,
       bindToScopeWithWatch, $window, APPS_URL) {
 
       window.$loading = $loading; //DEBUG
@@ -903,11 +903,11 @@ angular.module("risevision.common.header")
 
       //clear state where user registration is surpressed
       $scope.$on("risevision.user.signedOut", function () {
-        cookieStore.remove("surpressRegistration");
+        $cookies.remove("surpressRegistration");
       });
 
       $scope.$on("risevision.uiStatus.validationCancelled", function () {
-        cookieStore.remove("surpressRegistration");
+        $cookies.remove("surpressRegistration");
       });
 
       //spinner
@@ -1591,11 +1591,11 @@ angular.module("risevision.common.header")
   ]);
 
 angular.module("risevision.common.header")
-  .controller("RegisterButtonCtrl", ["$scope", "cookieStore", "uiFlowManager",
-    function ($scope, cookieStore, uiFlowManager) {
+  .controller("RegisterButtonCtrl", ["$scope", "$cookies", "uiFlowManager",
+    function ($scope, $cookies, uiFlowManager) {
 
       $scope.register = function () {
-        cookieStore.remove("surpressRegistration");
+        $cookies.remove("surpressRegistration");
         uiFlowManager.invalidateStatus("registrationComplete");
       };
     }
@@ -1604,13 +1604,13 @@ angular.module("risevision.common.header")
 angular.module("risevision.common.header")
   .controller("RegistrationModalCtrl", [
     "$q", "$scope", "$rootScope", "$modalInstance",
-    "$loading", "registerAccount", "$log", "cookieStore",
+    "$loading", "registerAccount", "$log", "$cookies",
     "userState", "pick", "uiFlowManager", "humanReadableError",
     "agreeToTermsAndUpdateUser", "account", "segmentAnalytics",
     "bigQueryLogging", "analyticsEvents", "updateCompany", "plansFactory",
     "COMPANY_INDUSTRY_FIELDS", "urlStateService",
     function ($q, $scope, $rootScope, $modalInstance, $loading, registerAccount,
-      $log, cookieStore, userState, pick, uiFlowManager, humanReadableError,
+      $log, $cookies, userState, pick, uiFlowManager, humanReadableError,
       agreeToTermsAndUpdateUser, account, segmentAnalytics, bigQueryLogging,
       analyticsEvents, updateCompany, plansFactory, COMPANY_INDUSTRY_FIELDS,
       urlStateService) {
@@ -1623,7 +1623,7 @@ angular.module("risevision.common.header")
       $scope.company = {};
 
       //remove cookie so that it will show next time user refreshes page
-      cookieStore.remove("surpressRegistration");
+      $cookies.remove("surpressRegistration");
 
       $scope.profile = pick(copyOfProfile, "email", "mailSyncEnabled",
         "firstName", "lastName");
@@ -3183,8 +3183,8 @@ angular.module("risevision.common.geodata", [])
   ])
 
   .factory("registeredAsRiseVisionUser", ["$q", "getUserProfile",
-    "cookieStore", "$log", "userState",
-    function ($q, getUserProfile, cookieStore, $log, userState) {
+    "$cookies", "$log", "userState",
+    function ($q, getUserProfile, $cookies, $log, userState) {
       return function () {
         var deferred = $q.defer();
 
@@ -3192,14 +3192,14 @@ angular.module("risevision.common.geodata", [])
           if (angular.isDefined(profile.email) &&
             angular.isDefined(profile.mailSyncEnabled)) {
             deferred.resolve(profile);
-          } else if (cookieStore.get("surpressRegistration")) {
+          } else if ($cookies.get("surpressRegistration")) {
             deferred.resolve({});
           } else {
             deferred.reject("registeredAsRiseVisionUser");
           }
         }, function (err) {
           if (err && err.code === 403) {
-            if (cookieStore.get("surpressRegistration")) {
+            if ($cookies.get("surpressRegistration")) {
               deferred.resolve({});
             } else {
               $log.debug("registeredAsRiseVisionUser rejected", err);
@@ -5606,7 +5606,7 @@ angular.module("risevision.common.components.ui-flow")
 
   angular.module("risevision.common.components.rvtokenstore", [
     "risevision.common.components.util", "LocalStorageModule",
-    "ngBiscuit"
+    "ngCookies"
   ]);
 
   angular.module("risevision.common.components.userstate", [
@@ -6388,12 +6388,12 @@ angular.module("risevision.common.components.logging")
 
   angular.module("risevision.common.components.rvtokenstore")
     .value("TOKEN_STORE_KEY", "rv-auth-object")
-    .service("rvTokenStore", ["$log", "$location", "cookieStore",
+    .service("rvTokenStore", ["$log", "$location", "$cookies",
       "getBaseDomain", "TOKEN_STORE_KEY",
-      function ($log, $location, cookieStore, getBaseDomain,
+      function ($log, $location, $cookies, getBaseDomain,
         TOKEN_STORE_KEY) {
         var _readRvToken = function () {
-          var token = cookieStore.get(TOKEN_STORE_KEY);
+          var token = $cookies.get(TOKEN_STORE_KEY);
 
           try {
             return JSON.parse(token);
@@ -6405,11 +6405,11 @@ angular.module("risevision.common.components.logging")
         var _writeRvToken = function (value) {
           var baseDomain = getBaseDomain();
           if (baseDomain === "localhost") {
-            cookieStore.put(TOKEN_STORE_KEY, JSON.stringify(value), {
+            $cookies.put(TOKEN_STORE_KEY, JSON.stringify(value), {
               path: "/"
             });
           } else {
-            cookieStore.put(TOKEN_STORE_KEY, JSON.stringify(value), {
+            $cookies.put(TOKEN_STORE_KEY, JSON.stringify(value), {
               domain: baseDomain,
               path: "/"
             });
@@ -6419,11 +6419,11 @@ angular.module("risevision.common.components.logging")
         var _clearRvToken = function () {
           var baseDomain = getBaseDomain();
           if (baseDomain === "localhost") {
-            cookieStore.remove(TOKEN_STORE_KEY, {
+            $cookies.remove(TOKEN_STORE_KEY, {
               path: "/"
             });
           } else {
-            cookieStore.remove(TOKEN_STORE_KEY, {
+            $cookies.remove(TOKEN_STORE_KEY, {
               domain: baseDomain,
               path: "/"
             });

@@ -1,12 +1,12 @@
 angular.module("risevision.common.header")
   .controller("AuthButtonsCtr", ["$scope", "$modal", "$templateCache",
     "userState", "userAuthFactory", "canAccessApps",
-    "$loading", "cookieStore",
+    "$loading", "$cookies",
     "$log", "uiFlowManager", "oauth2APILoader", "bindToScopeWithWatch",
     "$window", "APPS_URL",
     function ($scope, $modal, $templateCache, userState, userAuthFactory,
       canAccessApps,
-      $loading, cookieStore, $log, uiFlowManager, oauth2APILoader,
+      $loading, $cookies, $log, uiFlowManager, oauth2APILoader,
       bindToScopeWithWatch, $window, APPS_URL) {
 
       window.$loading = $loading; //DEBUG
@@ -21,11 +21,11 @@ angular.module("risevision.common.header")
 
       //clear state where user registration is surpressed
       $scope.$on("risevision.user.signedOut", function () {
-        cookieStore.remove("surpressRegistration");
+        $cookies.remove("surpressRegistration");
       });
 
       $scope.$on("risevision.uiStatus.validationCancelled", function () {
-        cookieStore.remove("surpressRegistration");
+        $cookies.remove("surpressRegistration");
       });
 
       //spinner

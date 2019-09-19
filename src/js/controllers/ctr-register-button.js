@@ -1,9 +1,9 @@
 angular.module("risevision.common.header")
-  .controller("RegisterButtonCtrl", ["$scope", "cookieStore", "uiFlowManager",
-    function ($scope, cookieStore, uiFlowManager) {
+  .controller("RegisterButtonCtrl", ["$scope", "$cookies", "uiFlowManager",
+    function ($scope, $cookies, uiFlowManager) {
 
       $scope.register = function () {
-        cookieStore.remove("surpressRegistration");
+        $cookies.remove("surpressRegistration");
         uiFlowManager.invalidateStatus("registrationComplete");
       };
     }

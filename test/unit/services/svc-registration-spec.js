@@ -123,7 +123,7 @@ describe("Services: Registration", function() {
         };
       }]);
       
-      $provide.factory("cookieStore", function() {
+      $provide.factory("$cookies", function() {
         return {
           get: function() {
             return supressed;
