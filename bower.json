@@ -40,7 +40,7 @@
     "angular-ui-router": "^0.4.0",
     "checklist-model": "~1.0.0",
     "font-awesome": "~4.7.0",
-    "jquery": "^3",
+    "jquery": "~3.3.1",
     "lodash": "~4.17.4",
     "ngstorage": "~0.3.0",
     "ng-csv": "~0.3.6",
@@ -59,7 +59,7 @@
     "angular-ui-router": "^0.4.0",
     "checklist-model": "~1.0.0",
     "font-awesome": "~4.7.0",
-    "jquery": "^3",
+    "jquery": "~3.3.1",
     "ng-csv": "~0.3.6"
   }
 }
