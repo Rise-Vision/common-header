@@ -45,7 +45,7 @@
         var _resetUserState = function () {
           $log.debug("Clearing user token...");
           _cancelAccessTokenAutoRefresh();
-          _state.userToken = null;
+          delete _state.userToken;
           rvTokenStore.clear();
 
           userState._resetState();

@@ -223,7 +223,7 @@ describe("Services: userAuthFactory", function() {
           expect(msg).to.equal("Authentication Failure");
 
           // _clearUserToken
-          expect(userState._state.userToken).to.be.null;
+          expect(userState._state.userToken).to.be.undefined;
           rvTokenStore.clear.should.have.been.called;
           // Reset also happens before the authenticate process on forceAuth=true
           userState._resetState.should.have.been.calledTwice;
@@ -270,7 +270,7 @@ describe("Services: userAuthFactory", function() {
           expect(msg).to.equal("No user");
 
           // _clearUserToken
-          expect(userState._state.userToken).to.be.null;
+          expect(userState._state.userToken).to.be.undefined;
           rvTokenStore.clear.should.have.been.called;
           // Reset also happens before the authenticate process on forceAuth=true
           userState._resetState.should.have.been.calledTwice;
@@ -345,7 +345,7 @@ describe("Services: userAuthFactory", function() {
         expect(authInstance).to.be.undefined;
 
         // _clearUserToken
-        expect(userState._state.userToken).to.be.null;
+        expect(userState._state.userToken).to.be.undefined;
         rvTokenStore.clear.should.have.been.called;
 
         userState._resetState.should.have.been.called;
@@ -365,7 +365,7 @@ describe("Services: userAuthFactory", function() {
         authInstance.signOut.should.have.been.called;
 
         // _clearUserToken
-        expect(userState._state.userToken).to.be.null;
+        expect(userState._state.userToken).to.be.undefined;
         rvTokenStore.clear.should.have.been.called;
 
         userState._resetState.should.have.been.called;
