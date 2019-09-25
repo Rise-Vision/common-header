@@ -100,7 +100,6 @@ var env = process.env.NODE_ENV || "dev",
     "./bower_components/checklist-model/checklist-model.js",
     "./bower_components/ngstorage/ngStorage.js",
     "./bower_components/angular-spinner/dist/angular-spinner.js",
-    "./bower_components/spin.js/spin.js",
     "./bower_components/angular-cookies/angular-cookies.js",
     "./bower_components/lodash/dist/lodash.js",
     "./bower_components/ng-csv/build/ng-csv.js",
@@ -312,7 +311,7 @@ gulp.task("test:e2e", function (cb) {
 gulp.task("coveralls", factory.coveralls());
 
 gulp.task("test", function (cb) {
-  runSequence("html2js", "test:unit", cb);
+  runSequence("html2js", "test:unit", "coveralls", cb);
 });
 
 // End - Testing
