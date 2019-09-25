@@ -3296,6 +3296,29 @@ angular.module("risevision.common.geodata", [])
               });
             return deferred.promise;
           },
+          preparePurchase: function (jsonData) {
+            var deferred = $q.defer();
+            storeAPILoader().then(function (storeAPI) {
+              var obj = {
+                jsonData: jsonData
+              };
+              return storeAPI.purchase.prepare(obj);
+            })
+              .then(function (resp) {
+                if (resp && resp.result && !resp.result.error) {
+                  $log.debug("prepare purchase resp", resp);
+                  deferred.resolve(resp.result);
+                } else {
+                  deferred.reject(resp && resp.result && resp.result.error);
+                }
+              })
+              .then(null, function (resp) {
+                console.error("Failed to prepare Purchase.", resp);
+
+                deferred.reject(resp && resp.result && resp.result.error);
+              });
+            return deferred.promise;
+          },
           purchase: function (jsonData) {
             var deferred = $q.defer();
             storeAPILoader().then(function (storeAPI) {
@@ -6934,8 +6957,10 @@ angular.module("risevision.common.components.logging")
             var deferred = $q.defer();
 
             var obj = {
-              "username": username,
-              "password": password
+              data: {
+                username: username,
+                password: password
+              }
             };
             riseAPILoader().then(function (coreApi) {
               return coreApi.userauth.add(obj);
@@ -6954,9 +6979,11 @@ angular.module("risevision.common.components.logging")
             var deferred = $q.defer();
 
             var obj = {
-              "username": username,
-              "oldPassword": oldPassword,
-              "newPassword": newPassword
+              data: {
+                username: username,
+                oldPassword: oldPassword,
+                newPassword: newPassword
+              }
             };
             riseAPILoader().then(function (coreApi) {
               return coreApi.userauth.updatePassword(obj);
@@ -6976,8 +7003,10 @@ angular.module("risevision.common.components.logging")
             var deferred = $q.defer();
 
             var obj = {
-              "username": username,
-              "password": password
+              data: {
+                username: username,
+                password: password
+              }
             };
             riseAPILoader().then(function (coreApi) {
               return coreApi.userauth.login(obj);
@@ -6997,8 +7026,9 @@ angular.module("risevision.common.components.logging")
             var deferred = $q.defer();
 
             var obj = {
-              "username": username,
-              "token": token
+              data: {
+                token: token
+              }
             };
             riseAPILoader().then(function (coreApi) {
               return coreApi.userauth.refreshToken(obj);
@@ -7018,8 +7048,10 @@ angular.module("risevision.common.components.logging")
             var deferred = $q.defer();
 
             var obj = {
-              "username": username,
-              "userConfirmedToken": userConfirmedToken
+              data: {
+                username: username,
+                userConfirmedToken: userConfirmedToken
+              }
             };
             riseAPILoader().then(function (coreApi) {
               return coreApi.userauth.confirmUserCreation(obj);
@@ -7039,7 +7071,9 @@ angular.module("risevision.common.components.logging")
             var deferred = $q.defer();
 
             var obj = {
-              "username": username
+              data: {
+                username: username
+              }
             };
             riseAPILoader().then(function (coreApi) {
               return coreApi.userauth.requestConfirmationEmail(obj);
@@ -7061,7 +7095,9 @@ angular.module("risevision.common.components.logging")
             var deferred = $q.defer();
 
             var obj = {
-              "username": username
+              data: {
+                username: username
+              }
             };
             riseAPILoader().then(function (coreApi) {
               return coreApi.userauth.requestPasswordReset(obj);
@@ -7082,9 +7118,11 @@ angular.module("risevision.common.components.logging")
             var deferred = $q.defer();
 
             var obj = {
-              "username": username,
-              "passwordResetToken": passwordResetToken,
-              "newPassword": newPassword
+              data: {
+                username: username,
+                passwordResetToken: passwordResetToken,
+                newPassword: newPassword
+              }
             };
             riseAPILoader().then(function (coreApi) {
               return coreApi.userauth.resetPassword(obj);
@@ -10074,52 +10112,104 @@ angular.module("risevision.common.components.purchase-flow")
           });
         };
 
-        var _validateCard = function (card, isNew) {
-          card.validationErrors = stripeService.validateCard(card, isNew);
+        factory.initializeStripeElements = function (types) {
+          stripeService.prepareNewElementsGroup();
 
-          if (!card.validationErrors || card.validationErrors.length > 0) {
-            return false;
-          }
-
-          return true;
+          return $q.all(types.map(function (type) {
+            return stripeService.createElement(type);
+          }));
         };
 
-        factory.validatePaymentMethod = function () {
+        factory.authenticate3ds = function (intentSecret) {
+          return stripeService.authenticate3ds(intentSecret)
+            .then(function (result) {
+              if (result.error) {
+                factory.purchase.checkoutError = result.error;
+                return $q(function (res, rej) {
+                  rej(result.error);
+                });
+              }
+            })
+            .catch(function (error) {
+              console.log(error);
+              factory.purchase.checkoutError =
+                "Something went wrong, please retry or contact support@risevision.com";
+              return $q(function (res, rej) {
+                rej(error);
+              });
+            });
+        };
+
+        factory.preparePaymentIntent = function () {
           var paymentMethods = factory.purchase.paymentMethods;
           var deferred = $q.defer();
+
+          if (paymentMethods.paymentMethod === "invoice") {
+            deferred.resolve();
+          } else if (paymentMethods.paymentMethod === "card") {
+            var jsonData = _getOrderAsJson();
+
+            storeService.preparePurchase(jsonData)
+              .then(function (response) {
+                if (response.error) {
+                  factory.purchase.checkoutError = response.error;
+                  deferred.reject(response.error);
+                } else {
+                  paymentMethods.intentResponse = response;
+                  if (response.authenticationRequired) {
+                    deferred.resolve(factory.authenticate3ds(response.intentSecret));
+                  } else {
+                    deferred.resolve();
+                  }
+                }
+              })
+              .catch(function (error) {
+                factory.purchase.checkoutError = error.message || "Something went wrong, please retry";
+                deferred.reject(error);
+              });
+          }
+          return deferred.promise;
+        };
+
+        factory.validatePaymentMethod = function (element) {
+          var paymentMethods = factory.purchase.paymentMethods;
+          var deferred = $q.defer();
+
+          factory.purchase.checkoutError = null;
 
           if (paymentMethods.paymentMethod === "invoice") {
             // TODO: Check Invoice credit (?)
             deferred.resolve();
           } else if (paymentMethods.paymentMethod === "card") {
             if (!paymentMethods.selectedCard.isNew) {
-              if (_validateCard(paymentMethods.selectedCard, false)) {
-                // Existing Card selected
-                deferred.resolve();
-              } else {
-                deferred.reject();
-              }
+              deferred.resolve();
             } else {
-              if (_validateCard(paymentMethods.newCreditCard, true)) {
-                var address = paymentMethods.newCreditCard.address;
-                if (paymentMethods.newCreditCard.useBillingAddress) {
-                  address = paymentMethods.newCreditCard.billingAddress;
-                }
-
-                factory.loading = true;
-
-                return stripeService.createToken(paymentMethods.newCreditCard, address)
-                  .then(function (response) {
-                    paymentMethods.newCreditCard.id = response.id;
-                    paymentMethods.newCreditCard.last4 = response.card.last4;
-                    paymentMethods.newCreditCard.cardType = response.card.type;
-                  })
-                  .finally(function () {
-                    factory.loading = false;
-                  });
-              } else {
-                deferred.reject();
+              var address = paymentMethods.newCreditCard && paymentMethods.newCreditCard.address;
+              if (paymentMethods.newCreditCard && paymentMethods.newCreditCard.useBillingAddress) {
+                address = paymentMethods.newCreditCard.billingAddress;
               }
+
+              var details = {
+                billing_details: {
+                  name: paymentMethods.newCreditCard && paymentMethods.newCreditCard.name,
+                  address: address ? {
+                    city: address.city,
+                    country: address.country,
+                    postal_code: address.postalCode,
+                    state: address.province
+                  } : {}
+                }
+              };
+
+              stripeService.createPaymentMethod("card", element, details)
+                .then(function (response) {
+                  if (response.error) {
+                    deferred.reject(response.error);
+                  } else {
+                    paymentMethods.paymentMethodResponse = response;
+                    deferred.resolve();
+                  }
+                });
             }
           }
           return deferred.promise;
@@ -10177,6 +10267,7 @@ angular.module("risevision.common.components.purchase-flow")
 
         var _getOrderAsJson = function () {
           //clean up items
+          var paymentMethods = factory.purchase.paymentMethods;
           var newItems = [{
             id: _getChargebeePlanId(),
             qty: factory.purchase.plan.displays
@@ -10186,8 +10277,9 @@ angular.module("risevision.common.components.purchase-flow")
           }];
 
           var card = factory.purchase.paymentMethods.selectedCard;
-          var cardData = factory.purchase.paymentMethods.paymentMethod === "invoice" ? null : {
+          var cardData = paymentMethods.paymentMethod === "invoice" ? null : {
             cardId: card.id,
+            intentId: paymentMethods.intentResponse ? paymentMethods.intentResponse.intentId : null,
             isDefault: card.isDefault ? true : false
           };
 
@@ -10195,8 +10287,10 @@ angular.module("risevision.common.components.purchase-flow")
             billTo: addressService.copyAddress(factory.purchase.billingAddress),
             shipTo: addressService.copyAddress(factory.purchase.shippingAddress),
             items: newItems,
-            purchaseOrderNumber: factory.purchase.paymentMethods.purchaseOrderNumber,
-            card: cardData
+            purchaseOrderNumber: paymentMethods.purchaseOrderNumber,
+            card: cardData,
+            paymentMethodId: paymentMethods.paymentMethodResponse ?
+              paymentMethods.paymentMethodResponse.paymentMethod.id : null
           };
 
           return JSON.stringify(obj);
@@ -10251,20 +10345,18 @@ angular.module("risevision.common.components.purchase-flow")
     function ($q, $interval, $window, userState, STRIPE_PROD_KEY, STRIPE_TEST_KEY) {
       var deferred = $q.defer();
 
+      var isTest = userState.getCopyOfUserCompany().isTest;
+
       var checkInterval = $interval(function () {
         if ($window.Stripe) {
           $interval.cancel(checkInterval);
 
-          deferred.resolve($window.Stripe);
+          deferred.resolve($window.Stripe(isTest ? STRIPE_TEST_KEY : STRIPE_PROD_KEY));
         }
       }, 50);
 
       return function () {
         return deferred.promise.then(function (stripeClient) {
-          var isTest = userState.getCopyOfUserCompany().isTest;
-
-          stripeClient.setPublishableKey(isTest ? STRIPE_TEST_KEY : STRIPE_PROD_KEY);
-
           return stripeClient;
         });
       };
@@ -10276,95 +10368,33 @@ angular.module("risevision.common.components.purchase-flow")
 /*jshint camelcase: false */
 
 angular.module("risevision.common.components.purchase-flow")
-  .constant("STRIPE_ERRORS", {
-    invalid_number: "Invalid Card Number.",
-    incorrect_number: "Invalid Card Number.",
-    invalid_cvc: "Invalid Security Code.",
-    incorrect_cvc: "Invalid Security Code.",
-    invalid_expiry_month: "Invalid Exp. Month.",
-    invalid_expiry_year: "Invalid Exp. Year.",
-    incorrect_zip: "Invalid ZIP / Postal Code. The ZIP / Postal Code provided is not associated with the billing address of this card.",
-    expired_card: "The card provided has expired.",
-    card_declined: "The card was declined. Please confirm all information is correct. If the problem continues try a different card.",
-    missing: "No card associated with the account.",
-    processing_error: "An unexpected error has occurred. Please try again."
-  })
-  .service("stripeService", ["$q", "$log", "$window", "stripeLoader", "STRIPE_ERRORS",
-    function ($q, $log, $window, stripeLoader, STRIPE_ERRORS) {
+  .service("stripeService", ["$q", "$log", "$window", "stripeLoader",
+    function ($q, $log, $window, stripeLoader) {
 
-      this.validateCard = function (card, isNew) {
-        var errors = [];
-
-        if (!$window.Stripe) {
-          errors.push(STRIPE_ERRORS.processing_error);
-
-          return errors;
-        }
-
-        if (isNew) {
-          card.number = card.number ? card.number.trim() : "";
-
-          if (!$window.Stripe.card.validateCardNumber(card.number)) {
-            errors.push(STRIPE_ERRORS.invalid_number);
-          }
-          if (!$window.Stripe.card.validateCVC(card.cvc)) {
-            errors.push(STRIPE_ERRORS.invalid_cvc);
-          }
-        }
-
-        if (!$window.Stripe.card.validateExpiry(card.expMonth, card.expYear)) {
-          errors.push("Invalid Expiry Date.");
-        }
-
-        return errors;
-      };
-
-      var _processStripeError = function (errorCode) {
-        var message = STRIPE_ERRORS[errorCode];
-
-        if (!message) {
-          message = STRIPE_ERRORS.processing_error;
-        }
-
-        return message;
-      };
-
-      this.createToken = function (card, address) {
-        var deferred = $q.defer();
-
-        card.tokenError = null;
-        var cardObject = {
-          number: card.number,
-          cvc: card.cvc,
-          exp_month: card.expMonth,
-          exp_year: card.expYear,
-          name: card.name,
-          //address fields
-          address_line1: address.street,
-          address_line2: address.unit,
-          address_city: address.city,
-          address_state: address.province,
-          address_zip: address.postalCode,
-          address_country: address.country
-        };
-
-        stripeLoader().then(function (stripeClient) {
-          stripeClient.card.createToken(cardObject, function (status, response) {
-            if (response && response.card && !response.error) {
-              $log.debug("Create Token response: ", response);
-
-              deferred.resolve(response);
-            } else {
-              console.error("Failed to get Card Token: ", response);
-
-              card.tokenError = _processStripeError(response && response.error && response.error.code);
-
-              deferred.reject();
-            }
-          });
+      this.createPaymentMethod = function (type, element, details) {
+        return stripeLoader().then(function (stripeClient) {
+          return stripeClient.createPaymentMethod(type, element, details);
         });
+      };
 
-        return deferred.promise;
+      var elements;
+
+      this.prepareNewElementsGroup = function () {
+        elements = stripeLoader().then(function (stripeClient) {
+          return stripeClient.elements();
+        });
+      };
+
+      this.createElement = function (type, options) {
+        return elements.then(function (els) {
+          return els.create(type, options);
+        });
+      };
+
+      this.authenticate3ds = function (secret) {
+        return stripeLoader().then(function (stripeClient) {
+          return stripeClient.handleCardAction(secret);
+        });
       };
     }
   ]);
@@ -10503,11 +10533,31 @@ angular.module("risevision.common.components.purchase-flow")
         restrict: "E",
         template: $templateCache.get("purchase-flow/checkout-payment-methods.html"),
         link: function ($scope) {
+          var stripeElements = [
+            "cardNumber",
+            "cardExpiry",
+            "cardCvc"
+          ];
+
+          var stripeElementSelectors = [
+            "#new-card-number",
+            "#new-card-expiry",
+            "#new-card-cvc"
+          ];
+
           $scope.paymentMethods = purchaseFactory.purchase.paymentMethods;
           $scope.contactEmail = purchaseFactory.purchase.contact.email;
 
           $scope.purchase = purchaseFactory.purchase;
           $scope.showTaxExemptionModal = purchaseFactory.showTaxExemptionModal;
+
+          purchaseFactory.initializeStripeElements(stripeElements)
+            .then(function (elements) {
+              elements.forEach(function (el, idx) {
+                $scope[stripeElements[idx]] = el;
+                el.mount(stripeElementSelectors[idx]);
+              });
+            });
 
           $scope.getCardDescription = function (card) {
             return "***-" + card.last4 + ", " + card.cardType + (card.isDefault ? " (default)" : "");
@@ -10764,13 +10814,23 @@ angular.module("risevision.common.components.purchase-flow")
         });
     };
 
-    $scope.validatePaymentMethod = function () {
+    $scope.validatePaymentMethod = function (element) {
       if (!_isFormValid()) {
         return;
       }
 
-      purchaseFactory.validatePaymentMethod()
-        .then($scope.setNextStep);
+      purchaseFactory.loading = true;
+
+      purchaseFactory.validatePaymentMethod(element)
+        .then($scope.preparePayment)
+        .then($scope.setNextStep)
+        .finally(function () {
+          purchaseFactory.loading = false;
+        });
+    };
+
+    $scope.preparePayment = function () {
+      return purchaseFactory.preparePaymentIntent();
     };
 
     $scope.completePayment = function () {
@@ -10999,7 +11059,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('purchase-flow/checkout-payment-methods.html',
-    '<div id="checkout-payment-methods"><form id="form.paymentMethodsForm" role="form" class="u_margin-md-top" name="form.paymentMethodsForm" novalidate=""><div class="row u_margin-md-top"><div class="col-md-8 col-xs-12 form-inline"><div class="form-group"><label for="payment-method-select" class="u_margin-right">Payment Method</label><select id="payment-method-select" class="form-control selectpicker" ng-model="paymentMethods.paymentMethod" tabindex="1"><option value="card">Credit Card</option><option value="invoice">Invoice Me</option></select></div></div></div><hr><div id="credit-card-form" ng-if="paymentMethods.paymentMethod === \'card\'"><div class="row" ng-if="false"><div class="col-md-12"><div class="form-group"><label for="credit-card-select" class="hidden">Add New Credit Card</label><select id="credit-card-select" class="form-control selectpicker" ng-model="paymentMethods.selectedCard" ng-options="c as getCardDescription(c) for c in paymentMethods.existingCreditCards track by c.id"><option value="">Add New Credit Card</option></select></div></div></div><div id="new-credit-card-form" ng-if="paymentMethods.selectedCard.isNew"><div class="alert alert-danger" ng-show="form.paymentMethodsForm.$submitted && form.paymentMethodsForm.$invalid">Please complete the missing information below.</div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="paymentMethods.newCreditCard.validationErrors.length"><strong>Card Validation Error<span ng-show="paymentMethods.newCreditCard.validationErrors.length > 1">s</span></strong><ul><li ng-repeat="error in paymentMethods.newCreditCard.validationErrors">{{error}}</li></ul></div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="paymentMethods.newCreditCard.tokenError"><strong>Card Processing Error</strong> {{paymentMethods.newCreditCard.tokenError}}</div><div class="row"><div class="col-md-12"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardholderName.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardholderName.$invalid }"><label for="new-card-name" lass="control-label">Cardholder Name *</label> <input id="new-card-name" aria-required="true" tabindex="1" type="text" class="form-control" name="cardholderName" data-stripe="name" ng-model="paymentMethods.newCreditCard.name" autocomplete="cc-name" required=""></div></div></div><div class="row"><div class="col-md-12"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardNumber.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardNumber.$invalid }"><label for="new-card-number" class="control-label">Card Number *</label> <input id="new-card-number" type="text" aria-required="true" tabindex="1" class="form-control" placeholder="0000 0000 0000 0000" name="cardNumber" data-stripe="number" ng-model="paymentMethods.newCreditCard.number" autocomplete="cc-number" required=""></div></div></div><div class="row"><div class="col-md-4"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardExpiryMonth.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardExpiryMonth.$invalid }"><label for="new-card-expiry-month" class="control-label">Expiry Month *</label><select id="new-card-expiry-month" aria-required="true" tabindex="1" class="form-control" name="cardExpiryMonth" data-stripe="exp-month" ng-model="paymentMethods.newCreditCard.expMonth" autocomplete="cc-exp-month" integer-parser="" required=""><option ng-show="false" value="">&lt; Select Month &gt;</option><option value="1">01</option><option value="2">02</option><option value="3">03</option><option value="4">04</option><option value="5">05</option><option value="6">06</option><option value="7">07</option><option value="8">08</option><option value="9">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select></div></div><div class="col-md-4"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardExpiryYear.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardExpiryYear.$invalid }"><label for="expiry-year" class="control-label">Expiry Year *</label><year-selector id="new-card-expiry-year" class="form-control" name="cardExpiryYear" data-stripe="exp-year" ng-model="paymentMethods.newCreditCard.expYear" tabindex="1" autocomplete="cc-exp-year" integer-parser="" required=""></year-selector></div></div><div class="col-md-4"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardCvc.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardCvc.$invalid }"><label for="new-card-cvc" class="control-label">Security Code *</label> <input id="new-card-cvc" aria-required="true" tabindex="1" type="text" pattern="[0-9]*" class="form-control" name="cardCvc" data-stripe="cvc" ng-model="paymentMethods.newCreditCard.cvc" autocomplete="cc-csc" maxlength="4" required=""></div></div></div><div class="checkbox"><label for="toggleMatchBillingAddress" aria-label="Match Billing Address"><input type="checkbox" id="toggleMatchBillingAddress" ng-model="paymentMethods.newCreditCard.useBillingAddress" tabindex="1"> Same As Billing Address</label></div><div id="new-card-address"><address-form form-object="form.paymentMethodsForm" address-object="paymentMethods.newCreditCard.address" hide-company-name="true" ng-if="!paymentMethods.newCreditCard.useBillingAddress"></address-form></div></div><div id="existing-credit-card-form" ng-if="!paymentMethods.selectedCard.isNew"><div id="errorBox" class="alert alert-danger" role="alert" ng-show="paymentMethods.selectedCard.validationErrors.length"><strong>Card Validation Error</strong> {{paymentMethods.selectedCard.validationErrors[0]}}</div><div class="row"><div class="col-md-12"><div class="form-group"><label for="existing-card-name" class="control-label">Cardholder Name</label> <input id="existing-card-name" type="text" class="form-control" placeholder="{{paymentMethods.selectedCard.name}}" tabindex="1" disabled="disabled"></div></div></div><div class="row"><div class="col-md-12"><div class="form-group"><label for="existing-card-number" class="control-label">Card Number</label> <input id="existing-card-number" type="text" class="form-control" placeholder="{{paymentMethods.selectedCard.last4 | cardLastFour}}" tabindex="1" disabled="disabled"></div></div></div><div class="row form-group"><div class="col-md-4"><div class="form-group"><label for="existing-card-expiry-month" class="control-label">Expiry Month</label> <input id="existing-card-expiry-month" type="text" class="form-control masked" placeholder="{{paymentMethods.selectedCard.expMonth | paddedMonth}}" disabled="disabled" tabindex="1"></div></div><div class="col-md-4"><div class="form-group"><label for="existing-card-expiry-year" class="control-label">Expiry Year</label> <input id="existing-card-expiry-year" type="text" class="form-control masked" placeholder="{{paymentMethods.selectedCard.expYear}}" tabindex="1" disabled="disabled"></div></div></div></div></div><div id="generateInvoice" ng-if="paymentMethods.paymentMethod === \'invoice\'"><p>If you\'d like to be invoiced for your purchase (rather than paying now by credit card), please enter a <b>Purchase Order</b> number and continue with checkout.</p><p>You will receive an invoice for this purchase total at <span class="font-weight-bold">{{contactEmail}}</span>. Invoices are due within 30 days of creation, payable by check, wire transfer, or credit card.</p><p>Please note your invoice is generated only once this checkout is completed.</p><div class="row"><div class="col-xs-12 col-sm-6"><div class="form-group"><label for="invoice-po-number" class="control-label">Purchase Order Number</label> <input id="invoice-po-number" type="text" class="form-control" name="purchaseOrder" ng-model="paymentMethods.purchaseOrderNumber" tabindex="1"></div></div></div><div id="generateInvoiceOverdue" class="hidden"><p class="text-danger">You have overdue invoice payments on your account.</p><p>In order to complete this purchase by invoice, please pay your outstanding invoices <a href="#">here</a>.</p></div></div><hr><div class="row"><div class="col-xs-12 text-center u_margin-sm-bottom"><a id="showTaxExemption" href="#" aria-label="Are you Tax Exempt?" ng-click="showTaxExemptionModal()" ng-show="!purchase.taxExemptionSent" tabindex="3" translate="">Are you Tax Exempt?</a><h5 ng-show="purchase.taxExemptionSent">Tax Exemption Submitted</h5></div></div><div class="row"><div class="col-xs-12"><button id="backButton" type="button" aria-label="Go back to Shipping Address" class="btn btn-default pull-left" ng-click="setPreviousStep()" ng-hide="finalStep" tabindex="2" translate="">common.back</button> <button id="continueButton" type="submit" aria-label="Continue to Purchase Review" form="form.paymentMethodsForm" class="btn btn-primary pull-right" ng-click="validatePaymentMethod()" tabindex="1" translate="">common.continue</button></div></div></form></div>');
+    '<div id="checkout-payment-methods"><div id="errorBox" class="alert alert-danger" role="alert" ng-show="purchase.checkoutError"><strong>Payment Method Error</strong> {{purchase.checkoutError}}</div><form id="form.paymentMethodsForm" role="form" class="u_margin-md-top" name="form.paymentMethodsForm" novalidate=""><div class="row u_margin-md-top"><div class="col-md-8 col-xs-12 form-inline"><div class="form-group"><label for="payment-method-select" class="u_margin-right">Payment Method</label><select id="payment-method-select" class="form-control selectpicker" ng-model="paymentMethods.paymentMethod"><option value="card">Credit Card</option><option value="invoice">Invoice Me</option></select></div></div></div><hr><div id="credit-card-form" ng-if="paymentMethods.paymentMethod === \'card\'"><div class="row" ng-if="false"><div class="col-md-12"><div class="form-group"><label for="credit-card-select" class="hidden">Add New Credit Card</label><select id="credit-card-select" class="form-control selectpicker" ng-model="paymentMethods.selectedCard" ng-options="c as getCardDescription(c) for c in paymentMethods.existingCreditCards track by c.id"><option value="">Add New Credit Card</option></select></div></div></div><div id="new-credit-card-form" ng-if="paymentMethods.selectedCard.isNew"><div class="alert alert-danger" ng-show="form.paymentMethodsForm.$submitted && form.paymentMethodsForm.$invalid">Please complete the missing information below.</div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="paymentMethods.newCreditCard.validationErrors.length"><strong>Card Validation Error<span ng-show="paymentMethods.newCreditCard.validationErrors.length > 1">s</span></strong><ul><li ng-repeat="error in paymentMethods.newCreditCard.validationErrors">{{error}}</li></ul></div><div id="errorBox" class="alert alert-danger" role="alert" ng-show="paymentMethods.newCreditCard.tokenError"><strong>Card Processing Error</strong> {{paymentMethods.newCreditCard.tokenError}}</div><div class="row"><div class="col-md-12"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardholderName.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardholderName.$invalid }"><label for="new-card-name" class="control-label">Cardholder Name *</label> <input id="new-card-name" aria-required="true" type="text" class="form-control" name="cardholderName" data-stripe="name" ng-model="paymentMethods.newCreditCard.name" autocomplete="cc-name" required=""></div></div></div><div class="row"><div class="col-md-12"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardNumber.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardNumber.$invalid }"><label for="new-card-number" class="control-label">Card Number *</label><div id="new-card-number"></div></div></div></div><div class="row"><div class="col-md-4"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardExpiryMonth.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardExpiryMonth.$invalid }"><label for="new-card-expiry" class="control-label">Expiry*</label><div id="new-card-expiry"></div></div></div><div class="col-md-4"><div class="form-group" ng-class="{ \'has-error\': (form.paymentMethodsForm.cardCvc.$dirty || form.paymentMethodsForm.$submitted) && form.paymentMethodsForm.cardCvc.$invalid }"><label for="new-card-cvc" class="control-label">Security Code *</label><div id="new-card-cvc"></div></div></div></div><div class="checkbox"><label for="toggleMatchBillingAddress" aria-label="Match Billing Address"><input type="checkbox" id="toggleMatchBillingAddress" ng-model="paymentMethods.newCreditCard.useBillingAddress"> Same As Billing Address</label></div><div id="new-card-address"><address-form form-object="form.paymentMethodsForm" address-object="paymentMethods.newCreditCard.address" hide-company-name="true" ng-if="!paymentMethods.newCreditCard.useBillingAddress"></address-form></div></div><div id="existing-credit-card-form" ng-if="!paymentMethods.selectedCard.isNew"><div id="errorBox" class="alert alert-danger" role="alert" ng-show="paymentMethods.selectedCard.validationErrors.length"><strong>Card Validation Error</strong> {{paymentMethods.selectedCard.validationErrors[0]}}</div><div class="row"><div class="col-md-12"><div class="form-group"><label for="existing-card-name" class="control-label">Cardholder Name</label> <input id="existing-card-name" type="text" class="form-control" placeholder="{{paymentMethods.selectedCard.name}}" disabled="disabled"></div></div></div><div class="row"><div class="col-md-12"><div class="form-group"><label for="existing-card-number" class="control-label">Card Number</label> <input id="existing-card-number" type="text" class="form-control" placeholder="{{paymentMethods.selectedCard.last4 | cardLastFour}}" disabled="disabled"></div></div></div><div class="row form-group"><div class="col-md-4"><div class="form-group"><label for="existing-card-expiry-month" class="control-label">Expiry Month</label> <input id="existing-card-expiry-month" type="text" class="form-control masked" placeholder="{{paymentMethods.selectedCard.expMonth | paddedMonth}}" disabled="disabled"></div></div><div class="col-md-4"><div class="form-group"><label for="existing-card-expiry-year" class="control-label">Expiry Year</label> <input id="existing-card-expiry-year" type="text" class="form-control masked" placeholder="{{paymentMethods.selectedCard.expYear}}" disabled="disabled"></div></div></div></div></div><div id="generateInvoice" ng-if="paymentMethods.paymentMethod === \'invoice\'"><p>If you\'d like to be invoiced for your purchase (rather than paying now by credit card), please enter a <b>Purchase Order</b> number and continue with checkout.</p><p>You will receive an invoice for this purchase total at <span class="font-weight-bold">{{contactEmail}}</span>. Invoices are due within 30 days of creation, payable by check, wire transfer, or credit card.</p><p>Please note your invoice is generated only once this checkout is completed.</p><div class="row"><div class="col-xs-12 col-sm-6"><div class="form-group"><label for="invoice-po-number" class="control-label">Purchase Order Number</label> <input id="invoice-po-number" type="text" class="form-control" name="purchaseOrder" ng-model="paymentMethods.purchaseOrderNumber"></div></div></div><div id="generateInvoiceOverdue" class="hidden"><p class="text-danger">You have overdue invoice payments on your account.</p><p>In order to complete this purchase by invoice, please pay your outstanding invoices <a href="#">here</a>.</p></div></div><hr><div class="row"><div class="col-xs-12 text-center u_margin-sm-bottom"><a id="showTaxExemption" href="#" aria-label="Are you Tax Exempt?" ng-click="showTaxExemptionModal()" ng-show="!purchase.taxExemptionSent" translate="">Are you Tax Exempt?</a><h5 ng-show="purchase.taxExemptionSent">Tax Exemption Submitted</h5></div></div><div class="row"><div class="col-xs-12"><button id="backButton" type="button" aria-label="Go back to Shipping Address" class="btn btn-default pull-left" ng-click="setPreviousStep()" ng-hide="finalStep" translate="">common.back</button> <button id="continueButton" type="submit" aria-label="Continue to Purchase Review" form="form.paymentMethodsForm" class="btn btn-primary pull-right" ng-click="validatePaymentMethod(cardNumber)" translate="">common.continue</button></div></div></form></div>');
 }]);
 })();
 

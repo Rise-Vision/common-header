@@ -1343,8 +1343,10 @@ angular.module("risevision.common.components.logging")
             var deferred = $q.defer();
 
             var obj = {
-              "username": username,
-              "password": password
+              data: {
+                username: username,
+                password: password
+              }
             };
             riseAPILoader().then(function (coreApi) {
               return coreApi.userauth.add(obj);
@@ -1363,9 +1365,11 @@ angular.module("risevision.common.components.logging")
             var deferred = $q.defer();
 
             var obj = {
-              "username": username,
-              "oldPassword": oldPassword,
-              "newPassword": newPassword
+              data: {
+                username: username,
+                oldPassword: oldPassword,
+                newPassword: newPassword
+              }
             };
             riseAPILoader().then(function (coreApi) {
               return coreApi.userauth.updatePassword(obj);
@@ -1385,8 +1389,10 @@ angular.module("risevision.common.components.logging")
             var deferred = $q.defer();
 
             var obj = {
-              "username": username,
-              "password": password
+              data: {
+                username: username,
+                password: password
+              }
             };
             riseAPILoader().then(function (coreApi) {
               return coreApi.userauth.login(obj);
@@ -1406,8 +1412,9 @@ angular.module("risevision.common.components.logging")
             var deferred = $q.defer();
 
             var obj = {
-              "username": username,
-              "token": token
+              data: {
+                token: token
+              }
             };
             riseAPILoader().then(function (coreApi) {
               return coreApi.userauth.refreshToken(obj);
@@ -1427,8 +1434,10 @@ angular.module("risevision.common.components.logging")
             var deferred = $q.defer();
 
             var obj = {
-              "username": username,
-              "userConfirmedToken": userConfirmedToken
+              data: {
+                username: username,
+                userConfirmedToken: userConfirmedToken
+              }
             };
             riseAPILoader().then(function (coreApi) {
               return coreApi.userauth.confirmUserCreation(obj);
@@ -1448,7 +1457,9 @@ angular.module("risevision.common.components.logging")
             var deferred = $q.defer();
 
             var obj = {
-              "username": username
+              data: {
+                username: username
+              }
             };
             riseAPILoader().then(function (coreApi) {
               return coreApi.userauth.requestConfirmationEmail(obj);
@@ -1470,7 +1481,9 @@ angular.module("risevision.common.components.logging")
             var deferred = $q.defer();
 
             var obj = {
-              "username": username
+              data: {
+                username: username
+              }
             };
             riseAPILoader().then(function (coreApi) {
               return coreApi.userauth.requestPasswordReset(obj);
@@ -1491,9 +1504,11 @@ angular.module("risevision.common.components.logging")
             var deferred = $q.defer();
 
             var obj = {
-              "username": username,
-              "passwordResetToken": passwordResetToken,
-              "newPassword": newPassword
+              data: {
+                username: username,
+                passwordResetToken: passwordResetToken,
+                newPassword: newPassword
+              }
             };
             riseAPILoader().then(function (coreApi) {
               return coreApi.userauth.resetPassword(obj);
